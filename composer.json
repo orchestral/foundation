@@ -1,0 +1,21 @@
+{
+	"name": "orchestra/foundation",
+	"description": "Orchestra Foundation for Illuminate",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Mior Muhammad Zaki",
+			"email": "crynobone@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=5.3.3",
+		"orchestra/support": "dev-master"
+	},
+	"autoload": {
+		"psr-0": { 
+			"Orchestra\\Foundation" : "src/" 
+		}
+	},
+	"minimum-stability": "dev"
+}
