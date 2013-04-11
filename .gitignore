@@ -2,6 +2,16 @@
 composer.lock
 vendor/*
 
+# Code Coverage
+build/code-browser/*
+build/coverage/*
+build/logs/*
+build/pdepend/*
+!build/code-browser/.gitignore
+!build/coverage/.gitignore
+!build/logs/.gitignore
+!build/pdepend/.gitignore
+
 # always-ignore extensionsalways-ignore extensions
 *.diff
 *.err
