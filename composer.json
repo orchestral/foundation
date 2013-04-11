@@ -13,6 +13,7 @@
 		"jasonlewis/basset": "dev-master",
 		"orchestra/auth": "dev-master",
 		"orchestra/facile": "dev-master",
+		"orchestra/memory": "dev-master",
 		"orchestra/support": "dev-master",
 		"orchestra/widget": "dev-master"
 	},
