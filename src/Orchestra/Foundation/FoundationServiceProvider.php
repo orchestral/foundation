@@ -3,12 +3,33 @@
 use Illuminate\Support\ServiceProvider;
 
 class FoundationServiceProvider extends ServiceProvider {
+	
 	/**
 	 * Register the service provider.
 	 *
 	 * @return void
 	 */
-	public function register() {}
+	public function register() 
+	{
+		$this->app['orchestra.installed'] = false;
+
+		$this->registerInstaller();
+	}
+
+	/**
+	 * Register `orchestra.installer` the service provider.
+	 *
+	 * @return void
+	 */
+	protected function registerInstaller()
+	{
+		$app = $this->app;
+
+		$this->app['orchestra.installer'] = $this->app->share(function () use ($app)
+		{
+			return new Installer($app);
+		});
+	}
 
 	/**
 	 * Bootstrap the application events.

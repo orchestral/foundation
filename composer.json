@@ -11,6 +11,7 @@
 	"require": {
 		"php": ">=5.3.7",
 		"jasonlewis/basset": "dev-master",
+		"illuminate/foundation": "4.0.*@dev",
 		"orchestra/auth": "dev-master",
 		"orchestra/facile": "dev-master",
 		"orchestra/memory": "dev-master",
