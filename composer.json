@@ -11,6 +11,7 @@
 	"require": {
 		"php": ">=5.3.7",
 		"jasonlewis/basset": "dev-master",
+		"orchestra/auth": "dev-master",
 		"orchestra/facile": "dev-master",
 		"orchestra/support": "dev-master",
 		"orchestra/widget": "dev-master"
