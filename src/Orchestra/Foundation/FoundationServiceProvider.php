@@ -40,6 +40,6 @@ class FoundationServiceProvider extends ServiceProvider {
 	{
 		$this->package('orchestra/foundation', 'orchestra/foundation');
 
-		include_once __DIR__."../../start.php";
+		include_once __DIR__."/../../start.php";
 	}
 }
