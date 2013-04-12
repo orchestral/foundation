@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Widget;
+<?php namespace Orchestra\Foundation;
 
 use Illuminate\Support\ServiceProvider;
 
