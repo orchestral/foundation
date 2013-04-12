@@ -12,8 +12,11 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 
 	public function testInstalledMethod()
 	{
-		$request = \Mockery::mock('\Illuminate\Http\Request');
-		$app     = new \Illuminate\Foundation\Application($request);
+		$request = \Mockery::mock('\Illuminate\Http\Request')
+						->shouldReceive('ajax')
+							->andReturn(null);
+
+		$app     = new \Illuminate\Foundation\Application($request->getMock());
                 
 		$app['orchestra.installed'] = false;
 
