@@ -22,6 +22,9 @@
 		"mockery/mockery": "0.8.0"
 	},
 	"autoload": {
+		"files" : [
+			"src/start.php"
+		],
 		"psr-0": { 
 			"Orchestra\\Foundation" : "src/" 
 		}
