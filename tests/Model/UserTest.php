@@ -3,10 +3,52 @@
 class UserTest extends \PHPUnit_Framework_TestCase {
 
 	/**
+	 * Set mock connection
+	 */
+	protected function addMockConnection($model)
+	{
+		$model->setConnectionResolver(
+			$resolver = \Mockery::mock('Illuminate\Database\ConnectionResolverInterface')
+		);
+		$resolver->shouldReceive('connection')
+			->andReturn(\Mockery::mock('Illuminate\Database\Connection'));
+		$model->getConnection()
+			->shouldReceive('getQueryGrammar')
+				->andReturn(\Mockery::mock('Illuminate\Database\Query\Grammars\Grammar'));
+		$model->getConnection()
+			->shouldReceive('getPostProcessor')
+				->andReturn(\Mockery::mock('Illuminate\Database\Query\Processors\Processor'));
+	}
+
+	/**
+	 * Teardown test environment.
+	 */
+	public function tearDown()
+	{
+		\Mockery::close();
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Model\User::roles() method.
+	 *
+	 * @test
+	 */
+	public function testRolesMethod()
+	{
+		$model = new \Orchestra\Foundation\Model\User;
+
+		$this->addMockConnection($model);
+		
+		$stub = $model->roles();
+
+		$this->assertInstanceOf('\Illuminate\Database\Eloquent\Relations\BelongsToMany', $stub);
+		$this->assertInstanceOf('\Orchestra\Foundation\Model\Role', $stub->getQuery()->getModel());
+	}
+
+	/**
 	 * Test Orchestra\Foundation\Model\User::getAuthIdentifier() method.
 	 *
 	 * @test
-	 * @group model
 	 */
 	public function testGetAuthIdentifierMethod()
 	{
@@ -20,7 +62,6 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Foundation\Model\User::getAuthPassword() method.
 	 *
 	 * @test
-	 * @group model
 	 */
 	public function testGetAuthPasswordMethod()
 	{
@@ -34,7 +75,6 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 	 * Test Orchestra\Foundation\Model\User::getReminderEmail() method.
 	 * 
 	 * @test
-	 * @group model
 	 */
 	public function testGetReminderEmailMethod()
 	{

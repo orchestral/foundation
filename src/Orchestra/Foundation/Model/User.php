@@ -21,6 +21,17 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	protected $hidden = array('password');
 
 	/**
+	 * Has many and belongs to relationship with Role.
+	 *
+	 * @access public
+	 * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
+	public function roles() 
+	{
+		return $this->belongsToMany('\Orchestra\Foundation\Model\Role', 'user_role');
+	}
+
+	/**
 	 * Get the unique identifier for the user.
 	 *
 	 * @return mixed
