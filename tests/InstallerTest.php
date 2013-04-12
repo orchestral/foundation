@@ -10,6 +10,11 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 		\Mockery::close();
 	}
 
+	/**
+	 * Test Orchestra\Foundation\Installer::installed() method.
+	 *
+	 * @test
+	 */
 	public function testInstalledMethod()
 	{
 		$request = \Mockery::mock('\Illuminate\Http\Request')
@@ -25,8 +30,6 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($stub->installed());
 
 		$app['orchestra.installed'] = true;
-
-		$stub = new \Orchestra\Foundation\Installer($app);
 
 		$this->assertTrue($stub->installed());
 	}
