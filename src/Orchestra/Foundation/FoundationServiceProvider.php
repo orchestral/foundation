@@ -39,5 +39,7 @@ class FoundationServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('orchestra/foundation', 'orchestra/foundation');
+
+		include_once "../../start.php";
 	}
 }
