@@ -56,7 +56,7 @@ class Finder {
 
 		foreach ($this->paths as $path)
 		{
-			foreach (glob("{$path}*/*/composer.json") as $manifest)
+			foreach (glob("{$path}*/*/orchestra.json") as $manifest)
 			{
 				list($vendor, $package) = $this->getPackageSegmentsFromManifest($manifest);
 
