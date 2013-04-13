@@ -36,4 +36,56 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase {
 		$stub = new \Orchestra\Foundation\Extension($app);
 		$this->assertEquals('foo', $stub->detect());
 	}
+
+	/**
+	 * Test Orchestra\Foundation\Extension::load() method.
+	 *
+	 * @test
+	 */
+	public function testLoadMethod()
+	{
+		$app  = array(
+			'orchestra.memory'             => ($memory = \Mockery::mock('Memory')),
+			'events'                       => ($events = \Mockery::mock('Event')),
+			'files'                        => ($files  = \Mockery::mock('Filesystem')),
+			'orchestra.extension.provider' => ($provider = \Mockery::mock('ProviderRepository')),
+		);
+
+		$memory->shouldReceive('make')
+				->once()
+				->andReturn($memory)
+			->shouldReceive('get')
+				->once()
+				->with('extensions.available', array())
+				->andReturn(array('laravel/framework' => array(
+					'path'     => '/foo/path/laravel/framework/',
+					'config'   => array(),
+					'services' => array('Laravel\FrameworkServiceProvider'),
+				)))
+			->shouldReceive('get')
+				->once()
+				->with('extensions.active', array())
+				->andReturn(array('laravel/framework' => array()));
+
+		$events->shouldReceive('fire')
+			->once()
+			->andReturn(null);
+
+		$files->shouldReceive('isFile')
+				->once()
+				->with('/foo/path/laravel/framework/src/orchestra.php')
+				->andReturn(true)
+			->shouldReceive('getRequire')
+				->once()
+				->with('/foo/path/laravel/framework/src/orchestra.php')
+				->andReturn(true);
+
+		$provider->shouldReceive('services')
+				->once()
+				->with(array('Laravel\FrameworkServiceProvider'))
+				->andReturn(true);
+
+		$stub = new \Orchestra\Foundation\Extension($app);
+		$stub->load();
+	}
 }
