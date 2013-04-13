@@ -152,7 +152,7 @@ class Extension {
 	 * @param  string   $name
 	 * @return boolean
 	 */
-	public static function isActive($name)
+	public function isActive($name)
 	{
 		$memory = $this->app['orchestra.memory']->make();
 		return (is_array($memory->get("extensions.active.{$name}", null)));
