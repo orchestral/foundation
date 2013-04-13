@@ -26,7 +26,9 @@ class Finder {
 	public function __construct($app)
 	{
 		$this->app = $app;
-		$this->addPath(rtrim($app->make('path.base'), '/').'/vendor/');
+		$basePath  = rtrim($app->make('path.base'), '/');
+		$this->addPath("{$basePath}/vendor/");
+		$this->addPath(rtrim("{$basePath}/workbench/");
 	}
 
 	/**
@@ -55,10 +57,40 @@ class Finder {
 		{
 			foreach (glob("{$path}*/*/composer.json") as $manifest)
 			{
-				$extensions[] = $manifest;
+				list($vendor, $package) = $this->getPackageNameFromManifest($manifest);
+
+				if ( ! is_null($vendor) and ! is_null($package))
+				{
+					$extensions["{$vendor}/{$package}"] = $manifest;
+				}
 			}
 		}
 
 		return $extensions;
+	}
+
+	/**
+	 * Get package name from manifest.
+	 * 
+	 * @access protected
+	 * @param  string   $manifest
+	 * @return array
+	 */
+	protected function getPackageNameFromManifest($manifest)
+	{
+		$vendor   = null;
+		$package  = null; 
+		$fragment = explode('/', $manifest);
+
+		// Remove orchestra.json from fragment.
+		array_pop($fragment);
+
+		if (count($fragment) > 2)
+		{
+			$package = array_pop($fragment);
+			$vendor  = array_pop($fragment);
+		}
+
+		return array($vendor, $package);
 	}
 }
