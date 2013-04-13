@@ -76,11 +76,6 @@ class Extension {
 
 		if (isset($availables[$name]))
 		{
-			$availables[$name]['config'] = array_merge(
-				$availables[$name]['config'],
-				$actives[$name]['config']
-			);
-
 			$actives[$name] = $availables[$name];
 		}
 
