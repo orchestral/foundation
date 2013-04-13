@@ -11,6 +11,46 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Foundation\Extension::isActive() method.
+	 *
+	 * @test
+	 */
+	public function testIsAvailableMethod()
+	{
+		$app = array(
+			'orchestra.memory' => ($memory = \Mockery::mock('Memory')),
+		);
+
+		$memory->shouldReceive('make')->once()->andReturn($memory)
+			->shouldReceive('get')
+				->once()->with('extensions.available.laravel/framework')
+				->andReturn(array());
+
+		$stub = new \Orchestra\Foundation\Extension($app);
+		$this->assertTrue($stub->isAvailable('laravel/framework'));
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Extension::isActive() method.
+	 *
+	 * @test
+	 */
+	public function testIsActiveMethod()
+	{
+		$app = array(
+			'orchestra.memory' => ($memory = \Mockery::mock('Memory')),
+		);
+
+		$memory->shouldReceive('make')->once()->andReturn($memory)
+			->shouldReceive('get')
+				->once()->with('extensions.active.laravel/framework')
+				->andReturn(array());
+
+		$stub = new \Orchestra\Foundation\Extension($app);
+		$this->assertTrue($stub->isActive('laravel/framework'));
+	}
+
+	/**
 	 * Test Orchestra\Foundation\Extension::detect() method.
 	 *
 	 * @test
@@ -55,7 +95,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase {
 				->once()->with('extensions.available', array())
 				->andReturn(array('laravel/framework' => array(
 					'path'     => '/foo/path/laravel/framework/',
-					'config'   => array(),
+					'config'   => array('foo' => 'bar'),
 					'services' => array('Laravel\FrameworkServiceProvider'),
 				)))
 			->shouldReceive('get')
@@ -63,7 +103,11 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase {
 				->andReturn(array('laravel/framework' => array()));
 
 		$events->shouldReceive('fire')
-			->once()->andReturn(null);
+				->once()->with('extension.started: laravel/framework')
+				->andReturn(null)
+			->shouldReceive('fire')
+				->once()->with('extension.done: laravel/framework', \Mockery::any())
+				->andReturn(null);
 
 		$files->shouldReceive('isFile')
 				->once()->with('/foo/path/laravel/framework/src/orchestra.php')
@@ -78,5 +122,12 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase {
 
 		$stub = new \Orchestra\Foundation\Extension($app);
 		$stub->load();
+
+		$this->assertEquals(array('foo' => 'bar'), $stub->option('laravel/framework', 'config'));
+		$this->assertEquals('bad!', $stub->option('foobar/hello-world', 'config', 'bad!'));
+		$this->assertTrue($stub->started('laravel/framework'));
+		$this->assertFalse($stub->started('foobar/hello-world'));
+
+		$stub->shutdown();
 	}
 }

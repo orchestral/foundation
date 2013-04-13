@@ -76,10 +76,35 @@ class Extension {
 
 		if (isset($availables[$name]))
 		{
-			$actives[$name] = array_merge(
+			$availables[$name]['config'] = array_merge(
 				$availables[$name]['config'],
 				$actives[$name]['config']
 			);
+
+			$actives[$name] = $availables[$name];
+		}
+
+		$memory->put('extensions.active', $actives);
+	}
+
+	/**
+	 * Deactivate an extension
+	 *
+	 * @access public
+	 * @param  string   $name
+	 * @return void
+	 */
+	public function deactivate($name)
+	{
+		$memory  = $this->app['orchestra.memory']->make();
+		$current = $memory->get('extensions.active', array());
+		$actives = array();
+
+		foreach ($current as $extension => $config)
+		{
+			if ($extension === $name) continue;
+		
+			$actives[$extension] = $config;
 		}
 
 		$memory->put('extensions.active', $actives);
@@ -142,7 +167,7 @@ class Extension {
 	public function isAvailable($name)
 	{	
 		$memory = $this->app['orchestra.memory']->make();
-		return (is_array($memory->get("extensions.available.{$name}", null)));
+		return (is_array($memory->get("extensions.available.{$name}")));
 	}
 
 	/**
@@ -155,7 +180,7 @@ class Extension {
 	public function isActive($name)
 	{
 		$memory = $this->app['orchestra.memory']->make();
-		return (is_array($memory->get("extensions.active.{$name}", null)));
+		return (is_array($memory->get("extensions.active.{$name}")));
 	}
 
 	/**
