@@ -30,12 +30,7 @@ class ProviderRepository {
 	 */
 	public function services($providers)
 	{
-		$services = new \Illuminate\Foundation\ProviderRepository(
-			$this->app['files'],
-			$this->app['config']['manifest']
-		);
-
-		$services->load($this->app, $providers);
+		$this->app['orchestra.service.provider']->load($this->app, $providers);
 	}
 
 }

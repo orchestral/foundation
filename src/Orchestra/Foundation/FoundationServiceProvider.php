@@ -29,6 +29,14 @@ class FoundationServiceProvider extends ServiceProvider {
 		{
 			return new Application($app);
 		});
+
+		$this->app['orchestra.service.provider'] = $this->app->share(function ($app)
+		{
+			return new \Illuminate\Foundation\ProviderRepository(
+				$app['files'],
+				$app['config']['manifest']
+			);
+		});
 	}
 
 	/**
