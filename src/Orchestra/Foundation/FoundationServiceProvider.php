@@ -34,7 +34,7 @@ class FoundationServiceProvider extends ServiceProvider {
 		{
 			return new \Illuminate\Foundation\ProviderRepository(
 				$app['files'],
-				$app['config']->get('manifest')
+				$app['config']->get('orchestra/foundation::app.manifest')
 			);
 		});
 	}
