@@ -17,11 +17,10 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testInstalledMethod()
 	{
-		$request = \Mockery::mock('\Illuminate\Http\Request')
-						->shouldReceive('ajax')
-							->andReturn(null);
+		$request = \Mockery::mock('\Illuminate\Http\Request');
+		$request->shouldReceive('ajax')->andReturn(null);
 
-		$app = new \Illuminate\Foundation\Application($request->getMock());
+		$app = new \Illuminate\Foundation\Application($request);
 
 		$app['orchestra.installed'] = false;
 
@@ -42,22 +41,20 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testCheckDatabaseWithValidConnection()
 	{
-		$request = \Mockery::mock('\Illuminate\Http\Request')
-						->shouldReceive('ajax')
-							->andReturn(null);
+		$request = \Mockery::mock('\Illuminate\Http\Request');
+		$request->shouldReceive('ajax')->andReturn(null);
 
-		$app  = new \Illuminate\Foundation\Application($request->getMock());
+		$app  = new \Illuminate\Foundation\Application($request);
 
-		$dbMock = \Mockery::mock('DB');
+		\Illuminate\Support\Facades\DB::setFacadeApplication($app);
+		\Illuminate\Support\Facades\DB::swap($dbMock = \Mockery::mock('DB'));
+
 		$dbMock->shouldReceive('connection')
 				->once()
 				->andReturn(\Mockery::self())
 			->shouldReceive('getPdo')
 				->once()
 				->andReturn(true);
-
-		\Illuminate\Support\Facades\DB::setFacadeApplication($app);
-		\Illuminate\Support\Facades\DB::swap($dbMock);
 
 		$stub = new \Orchestra\Foundation\Installer($app);
 
@@ -72,22 +69,20 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testCheckDatabaseWithInvalidConnection()
 	{
-		$request = \Mockery::mock('\Illuminate\Http\Request')
-						->shouldReceive('ajax')
-							->andReturn(null);
+		$request = \Mockery::mock('\Illuminate\Http\Request');
+		$request->shouldReceive('ajax')->andReturn(null);
 
-		$app  = new \Illuminate\Foundation\Application($request->getMock());
+		$app  = new \Illuminate\Foundation\Application($request);
 
-		$dbMock = \Mockery::mock('DB');
+		\Illuminate\Support\Facades\DB::setFacadeApplication($app);
+		\Illuminate\Support\Facades\DB::swap($dbMock = \Mockery::mock('DB'));
+
 		$dbMock->shouldReceive('connection')
 				->once()
 				->andReturn(\Mockery::self())
 			->shouldReceive('getPdo')
 				->once()
 				->andThrow('PDOException');
-
-		\Illuminate\Support\Facades\DB::setFacadeApplication($app);
-		\Illuminate\Support\Facades\DB::swap($dbMock);
 
 		$stub = new \Orchestra\Foundation\Installer($app);
 

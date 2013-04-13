@@ -26,7 +26,7 @@ class Finder {
 	public function __construct($app)
 	{
 		$this->app = $app;
-		$basePath  = rtrim($app->make('path.base'), '/');
+		$basePath  = rtrim($app['path.base'], '/');
 
 		$this->addPath("{$basePath}/vendor/");
 		$this->addPath("{$basePath}/workbench/");
@@ -56,7 +56,7 @@ class Finder {
 
 		foreach ($this->paths as $path)
 		{
-			foreach (glob("{$path}*/*/orchestra.json") as $manifest)
+			foreach ($this->app['files']->glob("{$path}*/*/orchestra.json") as $manifest)
 			{
 				list($vendor, $package) = $this->getPackageSegmentsFromManifest($manifest);
 
