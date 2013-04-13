@@ -14,6 +14,7 @@ class FoundationServiceProvider extends ServiceProvider {
 		$this->app['orchestra.installed'] = false;
 
 		$this->registerInstaller();
+		$this->registerExtensionFinder();
 	}
 
 	/**
@@ -23,11 +24,22 @@ class FoundationServiceProvider extends ServiceProvider {
 	 */
 	protected function registerInstaller()
 	{
-		$app = $this->app;
-
-		$this->app['orchestra.installer'] = $this->app->share(function () use ($app)
+		$this->app['orchestra.installer'] = $this->app->share(function ($app)
 		{
 			return new Installer($app);
+		});
+	}
+
+	/**
+	 * Register `orchestra.extension.finder` the service provider.
+	 *
+	 * @return void
+	 */
+	protected function registerExtensionFinder()
+	{
+		$this->app['orchestra.extension.finder'] = $this->app->share(function ($app)
+		{
+			return new Extension\Finder($app);
 		});
 	}
 
