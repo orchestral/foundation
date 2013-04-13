@@ -37,6 +37,11 @@ class FoundationServiceProvider extends ServiceProvider {
 	 */
 	protected function registerExtensionFinder()
 	{
+		$this->app['orchestra.app'] = $this->app->share(function ($app)
+		{
+			return new Application($app);
+		});
+
 		$this->app['orchestra.extension'] = $this->app->share(function ($app)
 		{
 			return new Extension($app);
