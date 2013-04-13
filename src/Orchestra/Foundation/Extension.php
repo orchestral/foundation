@@ -62,6 +62,103 @@ class Extension {
 	}
 
 	/**
+	 * Activate an extension.
+	 *
+	 * @access public
+	 * @param  string   $name
+	 * @return void
+	 */
+	public function activate($name)
+	{
+		$memory     = $this->app['orchestra.memory']->make();
+		$availables = $memory->get('extensions.available', array());
+		$actives    = $memory->get('extensions.active', array());
+
+		if (isset($availables[$name]))
+		{
+			$actives[$name] = array_merge(
+				$availables[$name]['config'],
+				$actives[$name]['config']
+			);
+		}
+
+		$memory->put('extensions.active', $actives);
+	}
+
+	/**
+	 * Shutdown all Extensions.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function shutdown()
+	{
+		foreach ($this->extensions as $name => $extension)
+		{
+			$this->app['events']->fire("extension.done: {$name}", array($extension));
+		}
+
+		$this->extensions = array();
+	}
+
+	/**
+	 * Check if extension is started
+	 *
+	 * @access public
+	 * @param  string   $name
+	 * @return bool
+	 */
+	public function started($name)
+	{
+		return (array_key_exists($name, $this->extensions));
+	}
+
+	/**
+	 * Get an option for a given extension.
+	 *
+	 * @access public
+	 * @param  string   $name
+	 * @param  string   $option
+	 * @param  mixed    $default
+	 * @return mixed
+	 */
+	public function option($name, $option, $default = null)
+	{
+		if ( ! isset($this->extensions[$name]))
+		{
+			return value($default);
+		}
+
+		return array_get($this->extensions[$name], $option, $default);
+	}
+
+	/**
+	 * Check whether an extension is available.
+	 *
+	 * @access public
+	 * @param  string   $name
+	 * @return boolean
+	 */
+	public function isAvailable($name)
+	{	
+		$memory = $this->app['orchestra.memory']->make();
+		return (is_array($memory->get("extensions.available.{$name}", null)));
+	}
+
+	/**
+	 * Check whether an extension is active.
+	 *
+	 * @access public
+	 * @param  string   $name
+	 * @return boolean
+	 */
+	public static function isActive($name)
+	{
+		$memory = $this->app['orchestra.memory']->make();
+		return (is_array($memory->get("extensions.active.{$name}", null)));
+	}
+
+	/**
 	 * Detect all extensions.
 	 *
 	 * @access public
