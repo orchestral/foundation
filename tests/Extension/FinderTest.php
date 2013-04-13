@@ -57,8 +57,8 @@ class FinderTest extends \PHPUnit_Framework_TestCase {
 				->andReturn('{"name":"Laravel Framework"}');
 
 		$stub = new \Orchestra\Foundation\Extension\Finder($app);
-		$manifest = (object) array(
-			'path'        => '/foo/path/vendor/laravel/framework/orchestra.json',
+		$manifest = array(
+			'path'        => '/foo/path/vendor/laravel/framework/',
 			'name'        => 'Laravel Framework',
 			'description' => null,
 			'version'     => '>0',

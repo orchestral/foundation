@@ -75,7 +75,7 @@ class Finder {
 	 *
 	 * @access protected
 	 * @param  string   $manifest
-	 * @return stdClass
+	 * @return array
 	 */
 	protected function getManifestContents($manifest)
 	{
@@ -86,15 +86,15 @@ class Finder {
 			throw new ManifestRuntimeException("Cannot decode file [{$manifest}]");
 		}
 
-		$jsonable->path        = $manifest;
-		$jsonable->name        = (isset($jsonable->name) ? $jsonable->name : null);
-		$jsonable->description = (isset($jsonable->description) ? $jsonable->description : null);
-		$jsonable->version     = (isset($jsonable->version) ? $jsonable->version : '>0');
-		$jsonable->config      = (isset($jsonable->config) ? $jsonable->config : array());
-		$jsonable->require     = (isset($jsonable->require) ? $jsonable->require : array());
-		$jsonable->services    = (isset($jsonable->services) ? $jsonable->services : array());
-
-		return $jsonable;
+		return array(
+			'path'        => str_replace('orchestra.json', '', $manifest),
+			'name'        => (isset($jsonable->name) ? $jsonable->name : null),
+			'description' => (isset($jsonable->description) ? $jsonable->description : null),
+			'version'     => (isset($jsonable->version) ? $jsonable->version : '>0'),
+			'config'      => (isset($jsonable->config) ? $jsonable->config : array()),
+			'require'     => (isset($jsonable->require) ? $jsonable->require : array()),
+			'services'    => (isset($jsonable->services) ? $jsonable->services : array()),
+		);
 	}
 
 	/**
