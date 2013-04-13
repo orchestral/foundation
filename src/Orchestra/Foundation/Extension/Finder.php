@@ -27,8 +27,9 @@ class Finder {
 	{
 		$this->app = $app;
 		$basePath  = rtrim($app->make('path.base'), '/');
+
 		$this->addPath("{$basePath}/vendor/");
-		$this->addPath(rtrim("{$basePath}/workbench/");
+		$this->addPath("{$basePath}/workbench/");
 	}
 
 	/**
@@ -57,7 +58,7 @@ class Finder {
 		{
 			foreach (glob("{$path}*/*/composer.json") as $manifest)
 			{
-				list($vendor, $package) = $this->getPackageNameFromManifest($manifest);
+				list($vendor, $package) = $this->getPackageSegmentsFromManifest($manifest);
 
 				if ( ! is_null($vendor) and ! is_null($package))
 				{
@@ -76,7 +77,7 @@ class Finder {
 	 * @param  string   $manifest
 	 * @return array
 	 */
-	protected function getPackageNameFromManifest($manifest)
+	protected function getPackageSegmentsFromManifest($manifest)
 	{
 		$vendor   = null;
 		$package  = null; 
