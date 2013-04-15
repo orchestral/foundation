@@ -1,0 +1,214 @@
+@import "bootstrap/variables.less"; // Modify this for custom colors, font-sizes, etc
+@import "bootstrap/mixins.less";
+
+body {
+	background: url('../img/bg.png');
+}
+
+section.container, section.container-fluid {
+	padding-top: 45px;
+}
+
+.guest-form {
+	.form-actions {
+		background-color: transparent;
+	}
+}
+
+.nav > .dropdown.active > a:hover {
+	color:#333;
+}
+
+.navbar {
+	&.navbar-fixed-top {
+		.brand {
+			color: #333;
+			font-weight: bold;
+		}
+	}
+
+	.nav {
+		> li > a {
+			color: #666;
+
+			&:hover {
+				color: #333;
+			}
+		}
+
+		> .dropdown.open > a, > .dropdown.open > a:hover {
+			color:#333;
+		}
+
+		p {
+			margin-bottom: 5px;
+		}
+	}
+}
+
+@media (max-width: 978px) {
+	.navbar .nav > li {
+		> .dropdown-menu::after, > .dropdown-menu::before {
+			display: none;
+		}
+
+		a[rel="user-menu"] {
+			display: block;
+		}
+	}
+}
+
+.accordion-heading {
+	background: transparent url('../img/top-bar-white.png') repeat-x top left;
+}
+
+@media (min-width: 979px) {
+	&.navbar-fixed-top {
+		min-height: 40px;
+
+		.navbar-inner {
+			background: transparent url('../img/top-bar-white.png') repeat-x top left;
+			box-shadow: none;
+		}
+	}
+
+	.table {
+		thead {
+			tr {
+				background: transparent url('../img/top-bar-white.png') repeat-x top left;
+			}
+
+			th.th-action {
+				width: 100px;
+			}
+		}
+	}
+}
+
+.pagination a, .current, .previous_page, .next_page {
+	float: left;
+	line-height: (@baseLineHeight * 2) - 2;
+	text-decoration: none;
+	border-left-width: 0;
+}
+
+.pagination {
+	ul {
+		.box-shadow(0 0px 0px rgba(0, 0, 0, 0));
+	}
+	a, span {
+		background: transparent;
+		border: 0px solid #DDD;
+	}
+
+	li {
+		&:first-child {
+			border-left-width: 0px;
+			.border-radius(3px 0 0 3px);
+
+			a, span {
+				border-left-width: 0px;
+			}
+		}
+
+		&:last-child {
+			.border-radius(0 3px 3px 0);
+		}
+	}
+}
+
+.table {
+	tbody td {
+		.meta {
+			font-size: 11px;
+		}
+	}
+}
+
+.well-resources {
+	padding: 8px 0;
+
+	.nav-stacked {
+		a {
+			background: #fff;
+
+			.icon-chevron-right {
+				float: right;
+				margin-top: 2px;
+				margin-right: -6px;
+				opacity: .25;
+			}
+		}
+	}
+}
+
+.navbar-form .select2-container {
+	margin-top: 5px;
+}
+
+.select2-container {
+	&[class*="span"] {
+		margin-left: 0;
+	}
+}
+
+/*
+| Fixes for Delta jQuery UI
+*/
+form {
+	label.ui-state-active {
+		background: transparent;
+	}
+
+	.ui-slider .ui-slider-handle {
+		z-index: 1;
+	}
+}
+
+table {
+	&.ui-datepicker-calendar {
+		td.ui-datepicker-unselectable.ui-state-disabled {
+			span.ui-state-default {
+				display: block;
+				padding: 0 !important;
+				border: 0 none !important;
+				width: 30px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 12px;
+				text-decoration: none;
+				font-weight: normal !important;
+			}
+		}
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
+| Installation
+|--------------------------------------------------------------------------
+*/
+#installation {
+	table.requirements {
+		div.alert {
+			margin-top: 10px;
+		}
+	}
+
+	button.btn-block {
+		padding: 8px;
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
+| Melody Theme Manager
+|--------------------------------------------------------------------------
+*/
+.container .themes {
+	img {
+		margin: 0 auto;
+		display: block;
+	}
+}
