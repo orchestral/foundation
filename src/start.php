@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\App,
 
 App::make('orchestra.app')->start();
 
+include_once __DIR__.'/start/macro.php';
 include_once __DIR__.'/filters.php';
 include_once __DIR__.'/routes.php';
 
