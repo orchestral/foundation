@@ -9,7 +9,7 @@
 		}
 	],
 	"require": {
-		"php": ">=5.3.7",
+		"php": ">=5.3.3",
 		"jasonlewis/basset": "dev-master",
 		"illuminate/foundation": "4.0.*@dev",
 		"orchestra/auth": "dev-master",
