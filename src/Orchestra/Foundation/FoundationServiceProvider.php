@@ -28,6 +28,11 @@ class FoundationServiceProvider extends ServiceProvider {
 		{
 			return new Application($app);
 		});
+
+		$this->app['orchestra.site'] = $this->app->share(function ($app)
+		{
+			return new Site;
+		});
 	}
 
 	/**
