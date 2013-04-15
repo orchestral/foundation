@@ -15,6 +15,8 @@ class FoundationServiceProvider extends ServiceProvider {
 
 		$this->registerApplication();
 		$this->registerInstaller();
+
+		$this->package('orchestra/foundation', 'orchestra/foundation');
 	}
 
 	/**
@@ -55,8 +57,12 @@ class FoundationServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('orchestra/foundation', 'orchestra/foundation');
 
 		include_once __DIR__."/../../start.php";
+	}
+
+	public function provides()
+	{
+		return array('orchestra.app', 'orchestra.site', 'orchestra.installer');
 	}
 }
