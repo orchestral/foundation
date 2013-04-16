@@ -28,7 +28,11 @@
 			"Orchestra\\Foundation" : "src/"
 		},
 		"classmap" : [
+			"src/controllers",
 			"src/models"
+		],
+		"files": [
+			"src/helpers.php"
 		]
 	},
 	"minimum-stability": "dev"

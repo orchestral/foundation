@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Controllers;
+<?php namespace Orchestra\Foundation;
 
 use Illuminate\Support\Facades\View;
 

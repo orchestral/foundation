@@ -30,3 +30,14 @@ Blade::extend(function ($view)
 
 	return preg_replace($pattern, $replacement, $view);
 });
+
+/*
+|--------------------------------------------------------------------------
+| Decorator Macro for Navbar
+|--------------------------------------------------------------------------
+*/
+
+Orchestra\Decorator::macro('navbar', function ($navbar)
+{
+	return View::make('orchestra/foundation::layout.widgets.navbar', compact('navbar'));
+});
