@@ -19,6 +19,6 @@ class Role extends Eloquent {
 	 */
 	public function users() 
 	{
-		return $this->belongsToMany('\Orchestra\Foundation\Model\User', 'user_role');
+		return $this->belongsToMany('\Orchestra\Model\User', 'user_role');
 	}
 }

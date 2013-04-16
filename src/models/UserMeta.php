@@ -19,7 +19,7 @@ class UserMeta extends Eloquent {
 	 */
 	public function users()
 	{
-		return $this->belongsTo('\Orchestra\Foundation\Model\User', 'user_id');
+		return $this->belongsTo('\Orchestra\Model\User', 'user_id');
 	}
 
 }
