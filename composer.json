@@ -26,7 +26,10 @@
 	"autoload": {
 		"psr-0": { 
 			"Orchestra\\Foundation" : "src/"
-		}
+		},
+		"classmap" : [
+			"src/models"
+		]
 	},
 	"minimum-stability": "dev"
 }

@@ -29,56 +29,56 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Model\User::roles() method.
+	 * Test Orchestra\Model\User::roles() method.
 	 *
 	 * @test
 	 */
 	public function testRolesMethod()
 	{
-		$model = new \Orchestra\Foundation\Model\User;
+		$model = new \Orchestra\Model\User;
 
 		$this->addMockConnection($model);
 		
 		$stub = $model->roles();
 
 		$this->assertInstanceOf('\Illuminate\Database\Eloquent\Relations\BelongsToMany', $stub);
-		$this->assertInstanceOf('\Orchestra\Foundation\Model\Role', $stub->getQuery()->getModel());
+		$this->assertInstanceOf('\Orchestra\Model\Role', $stub->getQuery()->getModel());
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Model\User::getAuthIdentifier() method.
+	 * Test Orchestra\Model\User::getAuthIdentifier() method.
 	 *
 	 * @test
 	 */
 	public function testGetAuthIdentifierMethod()
 	{
-		$stub = new \Orchestra\Foundation\Model\User;
+		$stub = new \Orchestra\Model\User;
 		$stub->id = 5;
 
 		$this->assertEquals(5, $stub->getAuthIdentifier());
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Model\User::getAuthPassword() method.
+	 * Test Orchestra\Model\User::getAuthPassword() method.
 	 *
 	 * @test
 	 */
 	public function testGetAuthPasswordMethod()
 	{
-		$stub = new \Orchestra\Foundation\Model\User;
+		$stub = new \Orchestra\Model\User;
 		$stub->password = 'foo';
 
 		$this->assertEquals('foo', $stub->getAuthPassword());
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Model\User::getReminderEmail() method.
+	 * Test Orchestra\Model\User::getReminderEmail() method.
 	 * 
 	 * @test
 	 */
 	public function testGetReminderEmailMethod()
 	{
-		$stub = new \Orchestra\Foundation\Model\User;
+		$stub = new \Orchestra\Model\User;
 		$stub->email = 'admin@orchestraplatform.com';
 
 		$this->assertEquals('admin@orchestraplatform.com', $stub->getReminderEmail());

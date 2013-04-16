@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Model;
+<?php namespace Orchestra\Model;
 
 use Illuminate\Auth\UserInterface,
 	Illuminate\Auth\Reminders\RemindableInterface,

@@ -29,13 +29,13 @@ class UserMetaTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Model\UserMeta::users() method.
+	 * Test Orchestra\Model\UserMeta::users() method.
 	 *
 	 * @test
 	 */
 	public function testUsersMethod()
 	{
-		$model = new \Orchestra\Foundation\Model\UserMeta;
+		$model = new \Orchestra\Model\UserMeta;
 
 		$this->addMockConnection($model);
 		

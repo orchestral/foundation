@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Model;
+<?php namespace Orchestra\Model;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
