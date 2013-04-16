@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation;
 
 use PDOException,
-	Illuminate\Foundation\Application,
 	Illuminate\Support\Facades\DB;
 
 class Installer {
@@ -20,7 +19,7 @@ class Installer {
 	 * @param  Illuminate\Foundation\Application    $app
 	 * @return void
 	 */
-	public function __construct(Application $app)
+	public function __construct($app)
 	{
 		$this->app = $app;
 	}

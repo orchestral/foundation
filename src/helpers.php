@@ -12,7 +12,7 @@ if ( ! function_exists('memorize'))
 	 */
 	function memorize($key, $default = null)
 	{
-		return Orchestra\App::memory()->get($key, $default);
+		return Orchestra\Support\Facades\App::memory()->get($key, $default);
 	}
 }
 
@@ -35,19 +35,21 @@ if ( ! function_exists('handles'))
 
 		list($package, $route) = $resolver->parseKey($name);
 
-		if (empty($route)) $route = '/';
+		empty($route) and $route = '';
 
-		if ( ! is_null($package)) $handles = Config::get("{$package}::handles", '/');
+		if ( ! is_null($package)) 
+		{
+			$handles = Illuminate\Support\Facades\Config::get("{$package}::handles", '/');
 
-		if ( ! is_string($handles)) $handles = '/';
-		
-		$route = ltrim($route, '/');
+			if ( ! is_string($handles)) $handles = '';
+		}
 
 		// reappend query string.
 		empty($query) or $route = "{$route}?{$query}";
+		$handles = rtrim("{$handles}/{$route}", "/");
 
-		$handles = "{$handles}/{$route}";
+		empty($handles) and $handles = '/';
 
-		return url(rtrim($handles, "/"));
+		return url($handles);
 	}
 }

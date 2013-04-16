@@ -42,6 +42,6 @@ class RoleTest extends \PHPUnit_Framework_TestCase {
 		$stub = $model->users();
 
 		$this->assertInstanceOf('\Illuminate\Database\Eloquent\Relations\BelongsToMany', $stub);
-		$this->assertInstanceOf('\Orchestra\Foundation\Model\User', $stub->getQuery()->getModel());
+		$this->assertInstanceOf('\Orchestra\Model\User', $stub->getQuery()->getModel());
 	}
 }
