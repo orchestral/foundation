@@ -27,12 +27,8 @@ class Migration {
 	{
 		$this->app = $app;
 
-		// Boot migration dependency.
-		$this->app->make('migration.repository');
+		// Boot migration dependency
 		$this->migrator = $this->app->make('migrator');
-
-		// We need to make sure migration table is available.
-		$this->createMigrationRepository();
 	}
 
 	/**
@@ -57,6 +53,9 @@ class Migration {
 	 */
 	public function run($path)
 	{
+		// We need to make sure migration table is available.
+		$this->createMigrationRepository();
+
 		$this->migrator->run($path);
 	}
 }
