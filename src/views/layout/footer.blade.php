@@ -5,25 +5,15 @@
 	</div>
 </footer>
 
-<?php 
+<link href="{{ asset('packages/orchestra/foundation/vendor/select2/select2.css') }}" media="all" type="text/css" rel="stylesheet">
+<link href="{{ asset('packages/orchestra/foundation/vendor/delta/theme/jquery-ui.css') }}" media="all" type="text/css" rel="stylesheet">
+<script src="{{ asset('packages/orchestra/foundation/vendor/bootstrap/bootstrap.min.js') }}"></script>
+<script src="{{ asset('packages/orchestra/foundation/js/script.min.js') }}"></script>
+<script src="{{ asset('packages/orchestra/foundation/vendor/select2/select2.min.js') }}"></script>
+<script src="{{ asset('packages/orchestra/foundation/vendor/jquery.ui.js') }}"></script>
+<script src="{{ asset('packages/orchestra/foundation/vendor/delta/js/jquery-ui.toggleSwitch.js') }}"></script>
 
-Basset::collection('orchestra/foundation/footer', function ($collection) {
-	
-	$collection->directory('packages/orchestra/foundation', function ($asset)
-	{
-		$asset->add('vendor/select2/select2.css');
-		$asset->add('vendor/delta/theme/jquery-ui.css');
-		$asset->add('vendor/bootstrap/bootstrap.min.js');
-		$asset->add('js/script.min.js');
-		$asset->add('vendor/select2/select2.min.js');
-
-		// Add jQuery-UI Library with Delta theme.
-		$asset->add('vendor/jquery.ui.js');
-		$asset->add('vendor/delta/js/jquery-ui.toggleSwitch.js');
-	});
-}); ?>
-
-{{ Basset::show('orchestra/foundation/footer.css') }}
-{{ Basset::show('orchestra/foundation/footer.js') }}
+{{ basset_stylesheet('orchestra-foundation.footer') }}
+{{ basset_javascript('orchestra-foundation.footer') }}
 
 @placeholder("orchestra.layout: footer")

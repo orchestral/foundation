@@ -10,23 +10,14 @@
 <![endif]-->
 
 <!-- Le styles -->
-<?php
+<link href="{{ asset('packages/orchestra/foundation/vendor/bootstrap/bootstrap.min.css') }}" media="all" type="text/css" rel="stylesheet">
+<link href="{{ asset('packages/orchestra/foundation/vendor/bootstrap/bootstrap-responsive.min.css') }}" media="all" type="text/css" rel="stylesheet">
+<link href="{{ asset('packages/orchestra/foundation/css/style.css') }}" media="all" type="text/css" rel="stylesheet">
+<script src="{{ asset('packages/orchestra/foundation/js/underscore.min.js') }}"></script>
+<script src="{{ asset('packages/orchestra/foundation/js/jquery.min.js') }}"></script>
+<script src="{{ asset('packages/orchestra/foundation/js/javie.min.js') }}"></script>
 
-Basset::collection('orchestra/foundation', function ($collection) {
-
-	$collection->directory('packages/orchestra/foundation', function ($asset)
-	{
-		$asset->add('js/underscore.min.js');
-		$asset->add('js/jquery.min.js');
-		$asset->add('js/javie.min.js');
-
-		$asset->add('vendor/bootstrap/bootstrap.min.css');
-		$asset->add('vendor/bootstrap/bootstrap-responsive.min.css');
-		$asset->add('css/style.css');
-	});
-}); ?>
-
-{{ Basset::show('orchestra/foundation.css') }}
-{{ Basset::show('orchestra/foundation.js') }}
+{{ basset_stylesheet('orchestra-foundation.header') }}
+{{ basset_javascript('orchestra-foundation.header') }}
 
 @placeholder("orchestra.layout: header")
