@@ -20,6 +20,7 @@ class PublisherServiceProvider extends ServiceProvider {
 	{
 		$this->registerMigration();
 		$this->registerAssetPublisher();
+		$this->registerInstallationManager();
 	}
 
 	/**
@@ -51,12 +52,25 @@ class PublisherServiceProvider extends ServiceProvider {
 	}
 
 	/**
+	 * Register the service provider for Orchestra Platform installation manager.
+	 *
+	 * @return void
+	 */
+	protected function registerInstallationManager()
+	{
+		$this->app['orchestra.installation.manager'] = $this->app->share(function ($app)
+		{
+			return new Installation\Manager($app);
+		});
+	}
+
+	/**
 	 * Get the services provided by the provider.
 	 *
 	 * @return array
 	 */
 	public function provides()
 	{
-		return array('orchestra.migrator', 'orchestra.publisher');
+		return array('orchestra.migrator', 'orchestra.publisher', 'orchestra.installation.manager');
 	}
 }
