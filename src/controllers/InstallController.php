@@ -17,4 +17,10 @@ class InstallController extends BaseController {
 		$data = array();
 		return View::make('orchestra/foundation::install.index', $data);
 	}
+
+	public function getSchema()
+	{
+		$app       = app();
+		$migration = new Publisher\Migration(app());
+	}
 }
