@@ -82,11 +82,11 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testCheckDatabaseConnectionWithInvalidConnection()
 	{
-		\Illuminate\Support\Facades\DB::swap($dbMock = \Mockery::mock('DB'));
+		\Illuminate\Support\Facades\DB::swap($db = \Mockery::mock('DB'));
 
-		$dbMock->shouldReceive('connection')
+		$db->shouldReceive('connection')
 				->once()
-				->andReturn(\Mockery::self())
+				->andReturn($db)
 			->shouldReceive('getPdo')
 				->once()
 				->andThrow('PDOException');
