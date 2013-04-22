@@ -96,6 +96,17 @@ class Application {
 	}
 
 	/**
+	 * Get installation status.
+	 *
+	 * @access public
+	 * @return boolean
+	 */
+	public function installed()
+	{
+		return $this->app['orchestra.installed'];
+	}
+
+	/**
 	 * Magic method to get services.
 	 */
 	public function __call($method, $parameters)
