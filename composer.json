@@ -1,6 +1,7 @@
 {
 	"name": "orchestra/foundation",
 	"description": "Orchestra Foundation for Illuminate",
+	"keywords": ["orchestra-platform", "laravel"],
 	"license": "MIT",
 	"authors": [
 		{
@@ -8,21 +9,6 @@
 			"email": "crynobone@gmail.com"
 		}
 	],
-	"require": {
-		"php": ">=5.3.3",
-		"jasonlewis/basset": "dev-master",
-		"illuminate/foundation": "4.0.*@dev",
-		"orchestra/auth": "dev-master",
-		"orchestra/extension": "dev-master",
-		"orchestra/facile": "dev-master",
-		"orchestra/html": "dev-master",
-		"orchestra/memory": "dev-master",
-		"orchestra/support": "dev-master",
-		"orchestra/widget": "dev-master"
-	},
-	"require-dev": {
-		"mockery/mockery": "0.8.0"
-	},
 	"autoload": {
 		"psr-0": { 
 			"Orchestra\\Foundation" : "src/"
@@ -34,6 +20,26 @@
 		"files": [
 			"src/helpers.php"
 		]
+	},
+	"require": {
+		"php": ">=5.3.3",
+		"jasonlewis/basset": "dev-develop",
+		"illuminate/foundation": "4.0.*@dev",
+		"orchestra/auth": "2.0.*",
+		"orchestra/extension": "2.0.*",
+		"orchestra/facile": "2.0.*",
+		"orchestra/html": "2.0.*",
+		"orchestra/memory": "2.0.*",
+		"orchestra/support": "2.0.*",
+		"orchestra/widget": "2.0.*"
+	},
+	"require-dev": {
+		"mockery/mockery": "0.8.0"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "2.0.x-dev"
+		}
 	},
 	"minimum-stability": "dev"
 }
