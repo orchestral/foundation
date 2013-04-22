@@ -41,10 +41,6 @@ class Application {
 	{
 		$app = $this->app;
 
-		// Register filter parser so we can create dynamic routing.
-		$this->app->make('filter.parser');
-		$this->app->make('hash');
-
 		// Make Menu instance for backend and frontend appliction
 		$this->services['orchestra.menu'] = $app['orchestra.widget']->make('menu.orchestra');
 		$this->services['app.menu']       = $app['orchestra.widget']->make('menu.app');

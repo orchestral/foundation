@@ -71,6 +71,10 @@ class FoundationServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
+		// Some dependencies is registered as deferred, by manually running 
+		// make we ensure that these dependencies is booted.
+		$this->app->make('filter.parser');
+		$this->app->make('hash');
 
 		include_once __DIR__."/../../start.php";
 	}
