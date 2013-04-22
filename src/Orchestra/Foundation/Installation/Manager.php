@@ -30,9 +30,7 @@ class Manager {
 	public function install()
 	{
 		$migrator = $this->app->make('orchestra.migrator');
-		$basePath = rtrim($this->app['path.base'], '/');
 
-		$migrator->run("{$basePath}/vendor/orchestra/memory/src/migrations/");
-		$migrator->run("{$basePath}/vendor/orchestra/auth/src/migrations/");
+		$migrator->foundation();
 	}
 }

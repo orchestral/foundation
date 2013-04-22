@@ -58,4 +58,31 @@ class Migration {
 
 		$this->migrator->run($path);
 	}
+
+	/**
+	 * Migration Extension.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function extension($name)
+	{
+		$path = $this->app['orchestra.extension']->option($name, 'path');
+		
+		 ! is_null($path) and $this->migrator->run($path);
+	}
+
+	/**
+	 * Migration Orchestra Platform.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function foundation()
+	{
+		$basePath = rtrim($this->app['path.base'], '/');
+
+		$this->migrator->run("{$basePath}/vendor/orchestra/memory/src/migrations/");
+		$this->migrator->run("{$basePath}/vendor/orchestra/auth/src/migrations/");
+	}
 }
