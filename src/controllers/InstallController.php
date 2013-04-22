@@ -2,10 +2,16 @@
 
 use Illuminate\Support\Facades\View;
 
-class InstallController extends \Controller {
-
-	protected $restful = true;
+class InstallController extends BaseController {
 	
+	/**
+	 * Check installation requirement page.
+	 *
+	 * GET (:orchestra)/installer
+	 *
+	 * @access public
+	 * @return View
+	 */
 	public function anyIndex()
 	{
 		$data = array();

@@ -2,9 +2,7 @@
 
 use Illuminate\Support\Facades\View;
 
-class DashboardController extends \Controller {
-
-	protected $restful = true;
+class DashboardController extends AdminController {
 	
 	public function anyIndex()
 	{
