@@ -29,7 +29,80 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Installer::installed() method.
+	 * Test Orchestra\Foundation\Application::start() method.
+	 *
+	 * @test
+	 */
+	public function testStartMethod()
+	{
+		$app = $this->app;
+		$app['orchestra.installed'] = false;
+		$app['orchestra.acl'] = $acl = \Mockery::mock('Acl');
+		$app['orchestra.memory'] = $memory = \Mockery::mock('Memory');
+		$app['orchestra.widget'] = $widget = \Mockery::mock('Widget');
+
+		$acl->shouldReceive('make')->once()->andReturn($acl)
+			->shouldReceive('attach')->with($memory)->once()->andReturn($acl);
+		$memory->shouldReceive('make')->with()->once()->andReturn($memory)
+			->shouldReceive('make')->with('runtime.orchestra')->never()->andReturn($memory)
+			->shouldReceive('get')->with('site.name')->once()->andReturn('Orchestra')
+			->shouldReceive('put')->with('site.name', 'Orchestra')->never()->andReturn(null);
+		$widget->shouldReceive('make')->with('menu.orchestra')->once()->andReturn($widget)
+			->shouldReceive('make')->with('menu.app')->once()->andReturn($widget);
+
+		$stub = new \Orchestra\Foundation\Application($app);
+		$stub->start();
+
+		$this->assertTrue($app['orchestra.installed']);
+		$this->assertEquals($widget, $stub->menu());
+		$this->assertEquals($acl, $stub->acl());
+		$this->assertEquals($memory, $stub->memory());
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Application::start() method when database 
+	 * is not installed yet.
+	 *
+	 * @test
+	 */
+	public function testStartMethodWhenDatabaseIsNotInstalled()
+	{
+		$app = $this->app;
+		$app['orchestra.installed'] = false;
+		$app['orchestra.acl'] = $acl = \Mockery::mock('Acl');
+		$app['orchestra.memory'] = $memory = \Mockery::mock('Memory');
+		$app['orchestra.widget'] = $widget = \Mockery::mock('Widget');
+		$app['config'] = $config = \Mockery::mock('Config');
+		$app['env'] = 'production';
+		$app['url'] = $url = \Mockery::mock('Url');
+
+		$acl->shouldReceive('make')->once()->andReturn($acl)
+			->shouldReceive('attach')->never()->andReturn($acl);
+		$memory->shouldReceive('make')->with()->once()->andReturn($memory)
+			->shouldReceive('make')->with('runtime.orchestra')->once()->andReturn($memory)
+			->shouldReceive('get')->with('site.name')->once()->andReturn(null)
+			->shouldReceive('put')->with('site.name', 'Orchestra')->once()->andReturn(null);
+		$widget->shouldReceive('make')->with('menu.orchestra')->once()->andReturn($widget)
+			->shouldReceive('make')->with('menu.app')->once()->andReturn($widget)
+			->shouldReceive('add')->with('install')->once()->andReturn($widget)
+			->shouldReceive('title')->with('Install')->once()->andReturn($widget);
+			
+		$url->shouldReceive('to')->with('admin/installer', array(), null)->andReturn('admin/installer');
+		$config->shouldReceive('get')->with('orchestra/foundation::handles', '/')->andReturn('admin');
+
+		\Illuminate\Support\Facades\Config::setFacadeApplication($app);
+		\Illuminate\Support\Facades\Config::swap($config);
+
+		$widget->shouldReceive('link')->with(handles('orchestra/foundation::installer'));
+
+		$stub = new \Orchestra\Foundation\Application($app);
+		$stub->start();
+
+		$this->assertFalse($app['orchestra.installed']);
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Application::installed() method.
 	 *
 	 * @test
 	 */

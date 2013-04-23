@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation;
 
-use Exception,
-	PDOException;
+use Exception;
 
 class Application {
 
@@ -52,14 +51,7 @@ class Application {
 		{
 			// Initiate Memory class from App, this to allow advanced user
 			// to use other implementation if there is a need for it.
-			try 
-			{
-				$memory = $app['orchestra.memory']->make();
-			}
-			catch (PDOException $e)
-			{
-				throw new Exception($e);
-			}
+			$memory = $app['orchestra.memory']->make();
 
 			if (is_null($memory->get('site.name')))
 			{
@@ -81,7 +73,7 @@ class Application {
 			// In any case where Exception is catched, we can be assure that
 			// Installation is not done/completed, in this case we should
 			// use runtime/in-memory setup
-			$memory = $app->make('orchestra.memory')->driver('runtime.orchestra');
+			$memory = $app['orchestra.memory']->make('runtime.orchestra');
 			$memory->put('site.name', 'Orchestra');
 
 			$this->services['orchestra.menu']->add('install')
