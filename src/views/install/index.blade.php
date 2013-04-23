@@ -7,7 +7,7 @@
 		<ul class="nav nav-list">
 			<li class="nav-header">{{ trans('orchestra/foundation::install.process') }}</li>
 			<li class="active">
-				{{ HTML::link(handles('orchestra/foundation::install'), trans('orchestra/foundation::install.steps.requirement')) }}
+				{{ Html::link(handles('orchestra/foundation::install'), trans('orchestra/foundation::install.steps.requirement')) }}
 			</li>
 		</ul>
 
@@ -66,7 +66,7 @@
 		<h3>{{ trans('orchestra/foundation::install.database.title') }}</h3>
 
 		<p>
-			{{ trans('orchestra/foundation::install.verify', array('filename' => HTML::create('code', 'app/config/database.php', array('title' => app_path().'config/database.php')))) }}
+			{{ trans('orchestra/foundation::install.verify', array('filename' => Html::create('code', 'app/config/database.php', array('title' => app_path().'config/database.php')))) }}
 		</p>
 
 		<fieldset>
@@ -135,7 +135,7 @@
 			<h3>{{ trans('orchestra/foundation::install.auth.title') }}</h3>
 
 			<p>
-				{{ trans('orchestra/foundation::install.verify', array('filename' => HTML::create('code', 'app/config/auth.php', array('title' => app_path().'config/auth.php')))) }}
+				{{ trans('orchestra/foundation::install.verify', array('filename' => Html::create('code', 'app/config/auth.php', array('title' => app_path().'config/auth.php')))) }}
 			</p>
 
 			<div class="control-group">
@@ -158,7 +158,7 @@
 					<span class="uneditable-input input-xlarge">{{ $auth['model'] }}</span>
 					@if (false === $authentication)
 					<p class="help-block">
-						{{ trans('orchestra/foundation::install.auth.requirement.driver', array('class' => HTML::create('code', 'Orchestra\Model\User'))) }}
+						{{ trans('orchestra/foundation::install.auth.requirement.driver', array('class' => Html::create('code', 'Orchestra\Model\User'))) }}
 					</p>
 					@endif
 				</div>
@@ -169,7 +169,7 @@
 		@if ($installable)
 
 		<div class="form-actions clean">
-			{{ HTML::link(handles('orchestra/foundation::install/create'), trans('orchestra/foundation::label.next'), array('class' => 'btn btn-primary')) }}
+			{{ Html::link(handles('orchestra/foundation::install/create'), trans('orchestra/foundation::label.next'), array('class' => 'btn btn-primary')) }}
 		</div>
 
 		@endif

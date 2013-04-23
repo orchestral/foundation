@@ -8,13 +8,13 @@
 		<ul class="nav nav-list">
 			<li class="nav-header">{{ trans('orchestra/foundation::install.process') }}</li>
 			<li>
-				{{ HTML::link(handles('orchestra/foundation::install'), trans('orchestra/foundation::install.steps.requirement')) }}
+				{{ Html::link(handles('orchestra/foundation::install'), trans('orchestra/foundation::install.steps.requirement')) }}
 			</li>
 			<li>
-				{{ HTML::link(handles('orchestra/foundation::install/create'), trans('orchestra/foundation::install.steps.account')) }}
+				{{ Html::link(handles('orchestra/foundation::install/create'), trans('orchestra/foundation::install.steps.account')) }}
 			</li>
 			<li class="active">
-				{{ HTML::link(handles('orchestra/foundation::install/done'), trans('orchestra/foundation::install.steps.done')) }}
+				{{ Html::link(handles('orchestra/foundation::install/done'), trans('orchestra/foundation::install.steps.done')) }}
 			</li>
 		</ul>
 	</div>
