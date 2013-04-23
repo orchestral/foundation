@@ -5,7 +5,7 @@
 <div class="row">
 	<div class="well span3" style="padding: 8px 0;">
 		<ul class="nav nav-list">
-			<li class="nav-header">Installation Process</li>
+			<li class="nav-header">{{ trans('orchestra/foundation::install.process') }}</li>
 			<li class="active">
 				{{ HTML::link(handles('orchestra/foundation::install'), '1. Check Requirements') }}
 			</li>
@@ -27,6 +27,9 @@
 				</tr>
 			</thead>
 			<tbody>
+				<?php 
+				$databaseConnection = $checklist['databaseConnection'];
+				unset($checklist['databaseConnection']); ?>
 				@foreach ($checklist as $name => $requirement)
 				<tr>
 					<td>
@@ -63,7 +66,7 @@
 		<h3>{{ trans('orchestra/foundation::install.database.title') }}</h3>
 
 		<p>
-			{{ trans('orchestra/foundation::install.verify', array('filename' => HTML::create('code', 'application/config/database.php', array('title' => app_path().'config/database.php')))) }}
+			{{ trans('orchestra/foundation::install.verify', array('filename' => HTML::create('code', 'app/config/database.php', array('title' => app_path().'config/database.php')))) }}
 		</p>
 
 		<fieldset>
@@ -113,7 +116,7 @@
 			<div class="control-group">
 				<label class="control-label">{{ trans('orchestra/foundation::install.connection.status') }}</label>
 				<div class="controls">
-					@if (true === $checklist['databaseConnection']['is'])
+					@if (true === $databaseConnection['is'])
 					<button class="btn btn-success disabled input-xlarge">
 						{{ trans('orchestra/foundation::install.connection.success') }}
 					</button>
@@ -132,7 +135,7 @@
 			<h3>{{ trans('orchestra/foundation::install.auth.title') }}</h3>
 
 			<p>
-				{{ trans('orchestra/foundation::install.verify', array('filename' => HTML::create('code', 'application/config/auth.php', array('title' => app_path().'config/auth.php')))) }}
+				{{ trans('orchestra/foundation::install.verify', array('filename' => HTML::create('code', 'app/config/auth.php', array('title' => app_path().'config/auth.php')))) }}
 			</p>
 
 			<div class="control-group">
