@@ -1,4 +1,4 @@
-@extend(locate('orchestra::layout.main'))
+@extends('orchestra/foundation::layout.main')
 
 @section('content')
 
