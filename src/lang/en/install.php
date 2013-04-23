@@ -11,6 +11,7 @@ return array(
 		'work'  => 'Workable',
 		'not'   => 'Not Workable',
 	),
+
 	'connection' => array(
 		'status'  => 'Connection Status',
 		'success' => 'Successful',
@@ -26,6 +27,7 @@ return array(
 			'instanceof' => 'Model name should be an instance of :class',
 		),
 	),
+
 	'database' => array(
 		'title'    => 'Database Setting',
 		'host'     => 'Host',
@@ -34,6 +36,14 @@ return array(
 		'username' => 'Username',
 		'type'     => 'Database Type',
 	),
+
+	'steps'    => array(
+		'requirement' => 'Check Requirements',
+		'account'     => 'Create Administrator Account',
+		'application' => 'Application Information',
+		'done'        => 'Done',
+	),
+
 	'system'   => array(
 		'title'       => 'System Requirement',
 		'description' => 'Please ensure the following requirement is profilled before installing Orchestra Platform.',

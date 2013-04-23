@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
-use Config,
+use App,
+	Config,
 	View,
 	Orchestra\App,
 	Orchestra\Site,
@@ -24,7 +25,7 @@ class InstallController extends BaseController {
 	/**
 	 * Check installation requirement page.
 	 *
-	 * GET (:orchestra)/installer
+	 * GET (:orchestra)/install
 	 *
 	 * @access public
 	 * @return View
@@ -64,9 +65,26 @@ class InstallController extends BaseController {
 			'auth'           => $auth,
 			'authentication' => $authentication,
 			'installable'    => $installable,
-			'requirements'   => $requirement->getChecklist(),
+			'checklist'      => $requirement->getChecklist(),
 		);
 		
 		return View::make('orchestra/foundation::install.index', $data);
+	}
+
+	/**
+	 * Create adminstrator page.
+	 *
+	 * GET (:orchestra)/install/create
+	 *
+	 * @access public
+	 * @return View
+	 */
+	public function getCreate()
+	{
+		// Install required database schema for Orchestra Platform.
+		App::make('orchestra.installation.manager')->install();
+
+		return View::make('orchestra/foundation::install.create')
+			->with('siteName', 'Orchestra Platform');
 	}
 }

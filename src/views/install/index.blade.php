@@ -7,7 +7,7 @@
 		<ul class="nav nav-list">
 			<li class="nav-header">{{ trans('orchestra/foundation::install.process') }}</li>
 			<li class="active">
-				{{ HTML::link(handles('orchestra/foundation::install'), '1. Check Requirements') }}
+				{{ HTML::link(handles('orchestra/foundation::install'), trans('orchestra/foundation::install.steps.requirement')) }}
 			</li>
 		</ul>
 
@@ -169,7 +169,7 @@
 		@if ($installable)
 
 		<div class="form-actions clean">
-			{{ HTML::link(handles('orchestra/foundation::install/steps/1'), trans('orchestra/foundation::label.next'), array('class' => 'btn btn-primary')) }}
+			{{ HTML::link(handles('orchestra/foundation::install/create'), trans('orchestra/foundation::label.next'), array('class' => 'btn btn-primary')) }}
 		</div>
 
 		@endif
