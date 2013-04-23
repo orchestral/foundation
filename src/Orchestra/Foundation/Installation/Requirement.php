@@ -46,9 +46,20 @@ class Requirement {
 	 */
 	public function check()
 	{
-		$this->checkDatabaseConnection();
-		$this->checkWritableStorage();
-		$this->checkWritableAsset();
+		$this->checklist['databaseConnection'] = $this->checkDatabaseConnection();
+		$this->checklist['writableStorage']    = $this->checkWritableStorage();
+		$this->checklist['writableAsset']      = $this->checkWritableAsset();
+
+		foreach ($this->checklist as $requirement)
+		{
+			if ($requirement['is'] !== $requirement['should'] 
+				and true === $requirement['explicit'])
+			{
+				$this->installable = false;
+			}
+		}
+
+		return $this->installable;
 	}
 
 	/**
@@ -60,8 +71,7 @@ class Requirement {
 	public function checkDatabaseConnection()
 	{
 		$schema = array(
-			'is'       => true,
-			'explicit' => true,
+			'is' => true,
 		);
 
 		try
@@ -73,7 +83,7 @@ class Requirement {
 			$schema['is'] = false;
 		}
 
-		return $this->checklist['databaseConnection'] = array_merge($this->getChecklistSchema(), $schema);
+		return array_merge($this->getChecklistSchema(), $schema);
 	}
 
 	/**
@@ -84,16 +94,15 @@ class Requirement {
 	 */
 	public function checkWritableStorage()
 	{
-		$path   = rtrim($this->app['path.storage'], '/');
+		$path   = rtrim($this->app['path.storage'], '/').'/';
 		$schema = array(
-			'is'       => is_writable($path),
-			'explicit' => true,
-			'data'     => array(
-				'path' => Html::create('code', 'storage', array('title' => $path)),
+			'is'   => $this->checkPathIsWritable($path),
+			'data' => array(
+				'path' => $this->app['html']->create('code', 'storage', array('title' => $path)),
 			),
 		);
 
-		return $this->checklist['writableStorage'] = array_merge($this->getChecklistSchema(), $schema);
+		return array_merge($this->getChecklistSchema(), $schema);
 	}
 
 	/**
@@ -104,16 +113,16 @@ class Requirement {
 	 */
 	public function checkWritableAsset()
 	{
-		$path   = rtrim($this->app['path.public'], '/').'packages/';
+		$path   = rtrim($this->app['path.public'], '/').'/packages/';
 		$schema = array(
-			'is'       => is_writable($path),
-			'explicit' => false,
-			'data'     => array(
-				'path' => Html::create('code', 'storage', array('title' => $path)),
+			'is'   => $this->checkPathIsWritable($path),
+			'data' => array(
+				'path' => $this->app['html']->create('code', 'public/packages', array('title' => $path)),
 			),
+			'explicit' => false,
 		);
 
-		return $this->checklist['writableAsset'] = array_merge($this->getChecklistSchema(), $schema);
+		return array_merge($this->getChecklistSchema(), $schema);
 	}
 
 	/**
@@ -130,6 +139,18 @@ class Requirement {
 			'explicit' => true,
 			'data'     => array(),
 		);
+	}
+
+	/**
+	 * Check if path is writable.
+	 *
+	 * @access protected
+	 * @param  string   $path
+	 * @return boolean
+	 */
+	protected function checkPathIsWritable($path)
+	{
+		return is_writable($path);
 	}
 
 	/**

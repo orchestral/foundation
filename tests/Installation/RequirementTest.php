@@ -33,6 +33,30 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test construct Orchestra\Foundation\Installation\Requirement.
+	 *
+	 * @test
+	 */
+	public function testConstructMethod()
+	{
+		$app         = $this->app;
+		$stub        = new \Orchestra\Foundation\Installation\Requirement($app);
+		$refl        = new \ReflectionObject($stub);
+		$checklist   = $refl->getProperty('checklist');
+		$installable = $refl->getProperty('installable');
+
+		$checklist->setAccessible(true);
+		$installable->setAccessible(true);
+
+		$checklist->setValue($stub, array('foo', 'bar'));
+		$installable->setValue($stub, true);
+
+		$this->assertEquals(array('foo', 'bar'), $stub->getChecklist());
+		$this->assertTrue($stub->isInstallable());
+	}
+
+
+	/**
 	 * Test Orchestra\Foundation\Installation\Requirement::check() method.
 	 *
 	 * @test
@@ -40,15 +64,16 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	public function testCheckMethod()
 	{
 		$app  = $this->app;
-		$stub = \Mockery::mock('\Orchestra\Foundation\Installation\Requirement[checkDatabaseConnection,checkWritableStorage,checkWritableAsset]');
+		$stub = \Mockery::mock('\Orchestra\Foundation\Installation\Requirement[checkDatabaseConnection,checkWritableStorage,checkWritableAsset]', array($app));
 		$stub->shouldReceive('checkDatabaseConnection')
-				->once()->andReturn(array())
+				->once()->andReturn(array('is' => true, 'explicit' => true, 'should' => true))
 			->shouldReceive('checkWritableStorage')
-				->once()->andReturn(array())
+				->once()->andReturn(array('is' => false, 'explicit' => true, 'should' => true))
 			->shouldReceive('checkWritableAsset')
-				->once()->andReturn(array());
+				->once()->andReturn(array('is' => true, 'explicit' => true, 'should' => true));
 
-		$stub->check();
+		$this->assertFalse($stub->check());
+		$this->assertFalse($stub->isInstallable());
 	}
 
 	/**
@@ -72,6 +97,7 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 		$result = $stub->checkDatabaseConnection(); 
 
 		$this->assertTrue($result['is']);
+		$this->assertTrue($result['explicit']);
 	}
 
 	/**
@@ -95,5 +121,54 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 		$result = $stub->checkDatabaseConnection(); 
 
 		$this->assertFalse($result['is']);
+		$this->assertTrue($result['explicit']);
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Installation\Requirement::checkWritableStorage() 
+	 * method.
+	 *
+	 * @test
+	 */
+	public function testCheckWritableStorageMethod()
+	{
+		$app = $this->app;
+		$app['path.storage'] = '/foo/storage/';
+		$app['html'] = $html = \Mockery::mock('Html');
+
+		$html->shouldReceive('create')
+			->with('code', 'storage', array('title' => '/foo/storage/'))
+			->once()->andReturn('');
+
+		$stub = new \Orchestra\Foundation\Installation\Requirement($app);
+
+		$result = $stub->checkWritableStorage();
+
+		$this->assertFalse($result['is']);
+		$this->assertTrue($result['explicit']);
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Installation\Requirement::checkWritableAsset() 
+	 * method.
+	 *
+	 * @test
+	 */
+	public function testCheckWritableAssetMethod()
+	{
+		$app = $this->app;
+		$app['path.public'] = '/foo/public/';
+		$app['html'] = $html = \Mockery::mock('Html');
+
+		$html->shouldReceive('create')
+			->with('code', 'public/packages', \Mockery::any())
+			->once()->andReturn('');
+
+		$stub = new \Orchestra\Foundation\Installation\Requirement($app);
+
+		$result = $stub->checkWritableAsset();
+		
+		$this->assertFalse($result['is']);
+		$this->assertFalse($result['explicit']);
 	}
 }
