@@ -84,12 +84,10 @@ class CredentialController extends AdminController {
 		if ($this->authenticate($input))
 		{
 			Messages::add('success', __('orchestra/foundation::response.credential.logged-in'));
-
 			return Redirect::to(Input::get('redirect', handles('orchestra/foundation::/')));
 		}
 
 		Messages::add('error', __('orchestra/foundation::response.credential.invalid-combination'));
-
 		return Redirect::to(handles('orchestra/foundation::login'));
 	}
 
@@ -128,22 +126,18 @@ class CredentialController extends AdminController {
 		);
 
 		// We should now attempt to login the user using Auth class.
-		if (Auth::attempt($attempt))
+		if ( ! Auth::attempt($attempt)) return false;
+		
+		$user = Auth::user();
+
+		// Verify the user account if has not been verified.
+		if ((int) $user->status === User::UNVERIFIED)
 		{
-			$user = Auth::user();
-
-			// Verify the user account if has not been verified.
-			if ((int) $user->status === User::UNVERIFIED)
-			{
-				$user->status = User::VERIFIED;
-				$user->save();
-			}
-
-			Event::fire('orchestra.auth: login');
-
-			return true;
+			$user->status = User::VERIFIED;
+			$user->save();
 		}
 
-		return false;
+		Event::fire('orchestra.auth: login');
+		return true;
 	}
 }
