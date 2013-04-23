@@ -2,6 +2,9 @@
 
 use Auth,
 	Event,
+	Input,
+	Redirect,
+	Session,
 	View,
 	Orchestra\Messages,
 	Orchestra\Site;
@@ -68,7 +71,7 @@ class CredentialController extends AdminController {
 
 		Auth::logout();
 
-		Messages::make()->add('success', trans('orchestra/foundation::response.credential.logged-out'));
+		Messages::add('success', trans('orchestra/foundation::response.credential.logged-out'));
 
 		return Redirect::to(Input::get('redirect', handles('orchestra/foundation::login')));
 	}
