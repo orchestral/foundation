@@ -1,4 +1,4 @@
-@layout('orchestra/foundation::layout.main')
+@extends('orchestra/foundation::layout.main')
 
 @section('content')
 
@@ -17,7 +17,7 @@
 
 	<div class="span6 form-horizontal">
 
-		{{ Form::open(handles('orchestra/foundation::install/create'), 'POST', array('class' => 'form-horizontal')) }}
+		{{ Form::open(array('url' => handles('orchestra/foundation::install/create'), 'method' => 'POST', 'class' => 'form-horizontal')) }}
 
 		<fieldset>
 			<legend>{{ trans('orchestra/foundation::install.steps.account') }}</legend>

@@ -39,7 +39,7 @@ return array(
 
 	'steps'    => array(
 		'requirement' => 'Check Requirements',
-		'account'     => 'Create Administrator Account',
+		'account'     => 'Create Administrator',
 		'application' => 'Application Information',
 		'done'        => 'Done',
 	),
