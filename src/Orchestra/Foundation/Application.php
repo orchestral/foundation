@@ -99,6 +99,17 @@ class Application {
 	}
 
 	/**
+	 * Get Illuminate Application instance.
+	 *
+	 * @access public
+	 * @return Illuminate\Foundation\Application
+	 */
+	public function illuminate()
+	{
+		return $this->app;
+	}
+
+	/**
 	 * Magic method to get services.
 	 */
 	public function __call($method, $parameters)

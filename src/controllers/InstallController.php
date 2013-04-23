@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation;
 
-use App,
-	Config,
+use Config,
 	View,
 	Orchestra\App,
 	Orchestra\Site,
@@ -82,7 +81,7 @@ class InstallController extends BaseController {
 	public function getCreate()
 	{
 		// Install required database schema for Orchestra Platform.
-		App::make('orchestra.installation.manager')->install();
+		App::illuminate()->make('orchestra.installation.manager')->install();
 
 		return View::make('orchestra/foundation::install.create')
 			->with('siteName', 'Orchestra Platform');
