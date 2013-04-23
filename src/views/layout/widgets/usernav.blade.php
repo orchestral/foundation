@@ -1,2 +1,2 @@
-@if (Orchestra\Site::get('navigation::show-user-box', true))
+@if (Orchestra\Site::get('navigation::usernav', true))
 @endif
