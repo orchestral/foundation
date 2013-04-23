@@ -100,25 +100,36 @@ class Installer {
 	 */
 	protected function runApplicationSetup($input)
 	{
+		// Bootstrap auth services, so we can use orchestra/auth package 
+		// configuration.
 		$user    = $this->createUser($input);
+		$memory  = $this->app['orchestra.memory']->make();
 		$actions = array('Manage Orchestra', 'Manage Users');
-		$admin   = $this->app['config']->get('orchestra/auth::role.admin');
+		$admin   = $this->app['config']->get('orchestra/auth::role.admin', 1);
 		$roles   = Role::lists('name', 'id');
+		$site    = array(
+			'name'  => $input['site_name'],
+			'theme' => array(
+				'frontend' => 'default',
+				'backend'  => 'default',
+			),
+		);
 
 		// Attach Administrator role to the newly created administrator.
 		$user->roles()->sync(array($admin));
 
-		$memory = $this->app['orchestra.memory']->make();
-		$memory->put('site.name', $input['site_name']);
-		$memory->put('site.theme.backend', 'default');
-		$memory->put('site.theme.frontend', 'default');
+		// Add some basic configuration for Orchestra Platform, including 
+		// email configuration.
+		$memory->put('site', $site);
 		$memory->put('email', $this->app['config']->get('mail'));
 		$memory->put('email.from', array(
 			'name'    => $input['site_name'],
 			'address' => $input['email']
-		);
+		));
 
-		// We should also create a basic ACL for Orchestra.
+		// We should also create a basic ACL for Orchestra Platform, since 
+		// the basic roles is create using Fluent Query Builder we need 
+		// to manually insert the roles.
 		$acl = $this->app['orchestra.acl']->make('orchestra');
 		$acl->actions()->fill($actions);
 		$acl->roles()->fill(array_values($roles));
