@@ -87,13 +87,13 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('add')->with('install')->once()->andReturn($widget)
 			->shouldReceive('title')->with('Install')->once()->andReturn($widget);
 			
-		$url->shouldReceive('to')->with('admin/installer', array(), null)->andReturn('admin/installer');
+		$url->shouldReceive('to')->with('admin/install', array(), null)->andReturn('admin/install');
 		$config->shouldReceive('get')->with('orchestra/foundation::handles', '/')->andReturn('admin');
 
 		\Illuminate\Support\Facades\Config::setFacadeApplication($app);
 		\Illuminate\Support\Facades\Config::swap($config);
 
-		$widget->shouldReceive('link')->with(handles('orchestra/foundation::installer'));
+		$widget->shouldReceive('link')->with(handles('orchestra/foundation::install'));
 
 		$stub = new \Orchestra\Foundation\Application($app);
 		$stub->start();

@@ -78,7 +78,7 @@ class Application {
 
 			$this->services['orchestra.menu']->add('install')
 				->title('Install')
-				->link(handles('orchestra/foundation::installer'));
+				->link(handles('orchestra/foundation::install'));
 
 			$app['orchestra.installed'] = false;
 		}

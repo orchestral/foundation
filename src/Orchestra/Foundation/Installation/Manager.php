@@ -30,7 +30,6 @@ class Manager {
 	public function install()
 	{
 		$migrator = $this->app->make('orchestra.migrator');
-
 		$migrator->foundation();
 	}
 }
