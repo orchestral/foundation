@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
+use Event;
+
 abstract class AdminController extends BaseController {
 
 	/**
@@ -12,7 +14,7 @@ abstract class AdminController extends BaseController {
 	{
 		// Admin controllers should be accessible only after 
 		// Orchestra Platform is installed.
-		$this->filter('before', 'orchestra.installable');
+		$this->beforeFilter('orchestra.installable');
 
 		Event::fire('orchestra.started: admin');
 	}
