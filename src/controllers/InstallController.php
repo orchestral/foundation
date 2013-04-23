@@ -80,8 +80,8 @@ class InstallController extends BaseController {
 	 */
 	public function getCreate()
 	{
-		// Install required database schema for Orchestra Platform.
-		App::illuminate()->make('orchestra.installation.manager')->install();
+		// Migrate database schema for Orchestra Platform.
+		App::illuminate()->make('orchestra.publisher.migrate')->foundation();
 
 		return View::make('orchestra/foundation::install.create')
 			->with('siteName', 'Orchestra Platform');
