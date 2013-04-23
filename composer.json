@@ -1,6 +1,6 @@
 {
 	"name": "orchestra/foundation",
-	"description": "Orchestra Foundation for Illuminate",
+	"description": "Orchestra Platform Foundation Component",
 	"keywords": ["orchestra-platform", "laravel"],
 	"license": "MIT",
 	"authors": [
