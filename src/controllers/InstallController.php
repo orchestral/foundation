@@ -1,8 +1,10 @@
 <?php namespace Orchestra\Foundation;
 
-use Illuminate\Support\Facades\View,
-	Orchestra\Support\Facades\App,
-	Orchestra\Support\Facades\Site;
+use Config,
+	View,
+	Orchestra\App,
+	Orchestra\Site,
+	Orchestra\Model\User;
 
 class InstallController extends BaseController {
 
@@ -29,7 +31,42 @@ class InstallController extends BaseController {
 	 */
 	public function anyIndex()
 	{
-		$data = array();
+		$requirement    = new Installation\Requirement(App::getFacadeApplication());
+		$driver         = Config::get('database.default', 'mysql');
+		$database       = Config::get("database.connections.{$driver}", array());
+		$auth           = Config::get('auth');
+		$installable    = $requirement->check();
+		$authentication = false;
+
+		// For security, we shouldn't expose database connection to anyone, 
+		// This snippet change the password value into *.
+		if (isset($database['password'])
+			and ($password = strlen($database['password'])))
+		{
+			$database['password'] = str_repeat('*', $password);
+		}
+
+		// Orchestra Platform strictly require Eloquent based authentication 
+		// because our Role Based Access Role (RBAC) is utilizing on eloquent
+		// relationship to solve some of the requirement.
+		if ($auth['driver'] === 'eloquent')
+		{
+			if (class_exists($auth['model'])) $eloquent = with(new $auth['model']);
+			
+			if (isset($eloquent) 
+				and $eloquent instanceof \Orchestra\Model\User) $authentication = true;
+		}
+
+		(true === $authentication) or $installable = false;
+
+		$data = array(
+			'database'       => $database,
+			'auth'           => $auth,
+			'authentication' => $authentication,
+			'installable'    => $installable,
+			'requirements'   => $requirement->getChecklist(),
+		);
+		
 		return View::make('orchestra/foundation::install.index', $data);
 	}
 }
