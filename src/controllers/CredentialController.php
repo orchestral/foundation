@@ -119,14 +119,15 @@ class CredentialController extends AdminController {
 	 */
 	protected function authenticate($input)
 	{
-		$attempt = array(
+		$data = array(
 			'username' => $input['username'],
 			'password' => $input['password'],
-			'remember' => (isset($input['remember']) and $input['remember'] === 'yes'),
 		);
 
+		$remember = (isset($input['remember']) and $input['remember'] === 'yes');
+
 		// We should now attempt to login the user using Auth class.
-		if ( ! Auth::attempt($attempt)) return false;
+		if ( ! Auth::attempt($data, $remember)) return false;
 		
 		$user = Auth::user();
 
