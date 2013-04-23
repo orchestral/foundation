@@ -33,7 +33,7 @@ abstract class Validator {
 	 * @param  string   $event
 	 * @return void
 	 */
-	public function __construct($event)
+	public function __construct($event = null)
 	{
 		if (is_string($event)) $this->event = $event;
 	}

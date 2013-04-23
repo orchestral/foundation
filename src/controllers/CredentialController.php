@@ -66,11 +66,11 @@ class CredentialController extends AdminController {
 	 * @access public
 	 * @return Response
 	 */
-	public function post_login()
+	public function postLogin()
 	{
 		$input      = Input::all();
 		$validation = new \Orchestra\Services\Validation\Auth;
-		$validation->make($input, $rules);
+		$validation->make($input);
 
 		// Validate user login, if any errors is found redirect it back to
 		// login page with the errors.
@@ -83,11 +83,11 @@ class CredentialController extends AdminController {
 
 		if ($this->authenticate($input))
 		{
-			Messages::add('success', __('orchestra/foundation::response.credential.logged-in'));
+			Messages::add('success', trans('orchestra/foundation::response.credential.logged-in'));
 			return Redirect::to(Input::get('redirect', handles('orchestra/foundation::/')));
 		}
 
-		Messages::add('error', __('orchestra/foundation::response.credential.invalid-combination'));
+		Messages::add('error', trans('orchestra/foundation::response.credential.invalid-combination'));
 		return Redirect::to(handles('orchestra/foundation::login'));
 	}
 
@@ -120,7 +120,7 @@ class CredentialController extends AdminController {
 	protected function authenticate($input)
 	{
 		$data = array(
-			'username' => $input['username'],
+			'email'    => $input['username'],
 			'password' => $input['password'],
 		);
 
