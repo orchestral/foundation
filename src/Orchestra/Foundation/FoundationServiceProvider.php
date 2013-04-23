@@ -60,6 +60,11 @@ class FoundationServiceProvider extends ServiceProvider {
 		include_once __DIR__."/../../start.php";
 	}
 
+	/**
+	 * Get the services provided by the provider.
+	 *
+	 * @return array
+	 */
 	public function provides()
 	{
 		return array('orchestra.app', 'orchestra.site', 'orchestra.installed', 'orchestra.resources');
