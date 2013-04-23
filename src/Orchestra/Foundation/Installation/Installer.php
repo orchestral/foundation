@@ -74,18 +74,7 @@ class Installer {
 		{
 			! $multipleAdmin and $this->checkExistingUser();
 
-			// Create administator user
-			$user           = new User;
-			$user->email    = $input['email'];
-			$user->password = $input['password'];
-			$user->fullname = $input['fullname'];
-			$user->status   = 0;
-
-			$this->app['events']->fire('orchestra.install: user', array($user, $input));
-
-			$user->save();
-
-			$this->runApplicationSetup($user);
+			$this->runApplicationSetup($input);
 
 			// Installation is successful, we should be able to generate
 			// success message to notify the user. Installer route will be
@@ -106,36 +95,60 @@ class Installer {
 	 * Run application setup
 	 *
 	 * @access protected
+	 * @param  array    $input
 	 * @return void
 	 */
-	protected function runApplicationSetup(User $user)
+	protected function runApplicationSetup($input)
 	{
+		$user    = $this->createUser($input);
 		$actions = array('Manage Orchestra', 'Manage Users');
+		$admin   = $this->app['config']->get('orchestra/auth::role.admin');
+		$roles   = Role::lists('name', 'id');
 
-		// Attach Administrator role to the newly created administrator
-		// account.
-		$user->roles()->insert(array('name' => 'Administrator'));
+		// Attach Administrator role to the newly created administrator.
+		$user->roles()->sync(array($admin));
 
 		$memory = $this->app['orchestra.memory']->make();
-
-		// Save the default application site_name.
 		$memory->put('site.name', $input['site_name']);
 		$memory->put('site.theme.backend', 'default');
 		$memory->put('site.theme.frontend', 'default');
 		$memory->put('email', $this->app['config']->get('mail'));
-		$memory->put('email.from', $input['email']);
-
-		Role::create(array('name' => 'Member'));
+		$memory->put('email.from', array(
+			'name'    => $input['site_name'],
+			'address' => $input['email']
+		);
 
 		// We should also create a basic ACL for Orchestra.
 		$acl = $this->app['orchestra.acl']->make('orchestra');
 		$acl->actions()->fill($actions);
-		$acl->roles()->fill(array('Member', 'Administrator'));
-		$acl->allow('Administrator', $actions);
+		$acl->roles()->fill(array_values($roles));
+		$acl->allow($roles[$admin], $actions);
 
 		$this->app['events']->fire('orchestra.install: acl', array($acl));
 
 		$acl->attach($memory);
+	}
+
+	/**
+	 * Create user account.
+	 *
+	 * @access protected
+	 * @param  array    $input
+	 * @return Orchestra\Model\User
+	 */
+	protected function createUser($input)
+	{
+		$user           = new User;
+		$user->email    = $input['email'];
+		$user->password = $input['password'];
+		$user->fullname = $input['fullname'];
+		$user->status   = 0;
+
+		$this->app['events']->fire('orchestra.install: user', array($user, $input));
+
+		$user->save();
+
+		return $user;
 	}
 
 	/**
