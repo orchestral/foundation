@@ -2,6 +2,7 @@
 
 use Config,
 	Input,
+	Redirect,
 	View,
 	Orchestra\App,
 	Orchestra\Site,
@@ -24,6 +25,10 @@ class InstallController extends BaseController {
 	 */
 	public function __construct()
 	{
+		$this->beforeFilter('orchestra.not-installed', array(
+			'only' => array('index', 'getCreate', 'postCreate'),
+		));
+
 		Site::set('navigation::usernav', false);
 		Site::set('title', 'Installer');
 		App::memory()->put('site.name', 'Orchestra Platform');
@@ -110,9 +115,22 @@ class InstallController extends BaseController {
 	{
 		if ( ! $this->installer->createAdmin(Input::all()))
 		{
-			return 'false';
+			return Redirect::to(handles('orchestra/foundation::install/create'));
 		}
 
-		return 'done';
+		return Redirect::to(handles('orchestra/foundation::install/done'));
+	}
+
+	/**
+	 * End of installation.
+	 *
+	 * GET (:orchestra)/install/done
+	 *
+	 * @access public
+	 * @return View
+	 */
+	public function getDone()
+	{
+		return View::make('orchestra/foundation::install.done');
 	}
 }
