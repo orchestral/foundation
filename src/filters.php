@@ -19,7 +19,7 @@ Route::filter('orchestra.logged', function ($route, $request, $value = null)
 Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestra')
 {
 	// Redirect the user to login page if user is not logged in.
-	if ( ! Orchestra\App->acl()->can("manage-{$value}"))
+	if ( ! Orchestra\App::acl()->can("manage-{$value}"))
 	{
 		if (Auth::guest())
 		{
