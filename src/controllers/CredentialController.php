@@ -83,8 +83,6 @@ class CredentialController extends AdminController {
 
 		if ($this->authenticate($input))
 		{
-			Event::fire('orchestra.auth: login');
-
 			Messages::add('success', __('orchestra/foundation::response.credential.logged-in'));
 
 			return Redirect::to(Input::get('redirect', handles('orchestra/foundation::/')));
@@ -140,6 +138,8 @@ class CredentialController extends AdminController {
 				$user->status = User::VERIFIED;
 				$user->save();
 			}
+
+			Event::fire('orchestra.auth: login');
 
 			return true;
 		}
