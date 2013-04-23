@@ -15,8 +15,6 @@ class FoundationServiceProvider extends ServiceProvider {
 
 		$this->registerApplication();
 		$this->registerResources();
-
-		$this->package('orchestra/foundation', 'orchestra/foundation');
 	}
 
 	/**
@@ -57,10 +55,7 @@ class FoundationServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		// Some dependencies is registered as deferred, by manually running 
-		// make we ensure that these dependencies is booted.
-		$this->app->make('filter.parser');
-		$this->app->make('hash');
+		$this->package('orchestra/foundation', 'orchestra/foundation');
 
 		include_once __DIR__."/../../start.php";
 	}
