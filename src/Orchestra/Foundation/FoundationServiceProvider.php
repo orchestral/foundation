@@ -14,7 +14,6 @@ class FoundationServiceProvider extends ServiceProvider {
 		$this->app['orchestra.installed'] = false;
 
 		$this->registerApplication();
-		$this->registerInstaller();
 		$this->registerResources();
 
 		$this->package('orchestra/foundation', 'orchestra/foundation');
@@ -35,19 +34,6 @@ class FoundationServiceProvider extends ServiceProvider {
 		$this->app['orchestra.site'] = $this->app->share(function ($app)
 		{
 			return new Site;
-		});
-	}
-
-	/**
-	 * Register the service provider for Orchestra Platform Installer.
-	 *
-	 * @return void
-	 */
-	protected function registerInstaller()
-	{
-		$this->app['orchestra.installer'] = $this->app->share(function ($app)
-		{
-			return new Installer($app);
 		});
 	}
 
@@ -81,6 +67,6 @@ class FoundationServiceProvider extends ServiceProvider {
 
 	public function provides()
 	{
-		return array('orchestra.app', 'orchestra.site', 'orchestra.installer', 'orchestra.resources');
+		return array('orchestra.app', 'orchestra.site', 'orchestra.installed', 'orchestra.resources');
 	}
 }
