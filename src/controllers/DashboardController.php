@@ -3,9 +3,24 @@
 use Illuminate\Support\Facades\View;
 
 class DashboardController extends AdminController {
+
+	/**
+	 * Define the filters.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+
+		// User has to be authenticated before using this controller.
+		$this->beforeFilter('orchestra.auth');
+	}
 	
 	public function anyIndex()
 	{
-		return 'in dashboard';
+		return View::make('orchestra/foundation::dashboard.index')
+			->with('panes', Orchestra\Widget::make('pane.orchestra')->getItem());
 	}
 }
