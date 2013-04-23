@@ -13,13 +13,6 @@ abstract class Validator {
 	protected static $rules = array();
 
 	/**
-	 * Event listener for current service.
-	 *
-	 * @var string
-	 */
-	protected $event = null;
-
-	/**
 	 * Validation result.
 	 *
 	 * @var Illuminate\Validation\Validator
@@ -30,48 +23,19 @@ abstract class Validator {
 	 * Construct a new validation service.
 	 *
 	 * @access public
+	 * @param  array    $input
 	 * @param  string   $event
 	 * @return void
 	 */
-	public function __construct($event = null)
-	{
-		if (is_string($event)) $this->event = $event;
-	}
-
-	/**
-	 * Make a new validation service.
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function make($input)
+	public function with($input, $event = null)
 	{
 		$rules = static::$rules;
 
-		if ( ! is_null($this->event))
+		if ( ! is_null($event))
 		{
-			Event::fire($this->event, array( & $rules));
+			Event::fire($event, array( & $rules));
 		}
 
-		$this->validation = V::make($input, $rules);
-	}
-
-	/**
-	 * Get the validation errors.
-	 *
-	 * @access public
-	 * @return array
-	 */
-	public function get()
-	{
-		return $this->validation;
-	}
-
-	/**
-	 * Magic method to access Illuminate\Validation\Validator
-	 */
-	public function __call($method, $parameters)
-	{
-		return call_user_func_array(array($this->validation, $method), $parameters);
+		return V::make($input, $rules);
 	}
 }

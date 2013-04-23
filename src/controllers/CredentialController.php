@@ -6,6 +6,7 @@ use Auth,
 	Redirect,
 	Session,
 	View,
+	Orchestra\App,
 	Orchestra\Messages,
 	Orchestra\Model\User,
 	Orchestra\Site;
@@ -69,8 +70,7 @@ class CredentialController extends AdminController {
 	public function postLogin()
 	{
 		$input      = Input::all();
-		$validation = new \Orchestra\Services\Validation\Auth;
-		$validation->make($input);
+		$validation = App::make('Orchestra\Services\Validation\Auth')->with($input);
 
 		// Validate user login, if any errors is found redirect it back to
 		// login page with the errors.
@@ -78,7 +78,7 @@ class CredentialController extends AdminController {
 		{
 			return Redirect::to(handles('orchestra/foundation::login'))
 					->withInput()
-					->withErrors($validation->get());
+					->withErrors($validation);
 		}
 
 		if ($this->authenticate($input))

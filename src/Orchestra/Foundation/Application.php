@@ -99,6 +99,19 @@ class Application {
 	}
 
 	/**
+	 * Execute Illuminate\Foundation\Application::make().
+	 *
+	 * @access public
+	 * @return mixed
+	 */
+	public function make($make = null)
+	{
+		if ( ! is_null($make)) return $this->app->make($make);
+
+		return $this->app;
+	}
+
+	/**
 	 * Get Illuminate Application instance.
 	 *
 	 * @access public
