@@ -11,7 +11,19 @@
 
 Html::macro('title', function ()
 {
-	return "<title>Orchestra Platform</title>";
+	$siteTitle = $title = memorize('site.name');
+	$pageTitle = trim(Orchestra\Site::get('title', ''));
+	$format    = memorize('site.format.title', ':pageTitle &mdash; :siteTitle');
+
+	if ( ! empty($page_title)) 
+	{
+		$title = strtr($format, array(
+			":siteTitle" => $siteTitle,
+			":pageTitle" => $pageTitle,
+		));
+	}
+
+	return Html::create('title', $title);
 });
 
 /*
