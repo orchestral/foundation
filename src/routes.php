@@ -5,7 +5,7 @@ Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orc
 	Route::controller('install', 'Orchestra\Foundation\InstallController');
 	
 	Route::any('/', array(
-		'before' => 'orchestra.installed',
+		'before' => 'orchestra.installable',
 		'uses'   => 'Orchestra\Foundation\DashboardController@anyIndex'
 	));
 });

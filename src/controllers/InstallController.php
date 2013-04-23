@@ -25,8 +25,8 @@ class InstallController extends BaseController {
 	 */
 	public function __construct()
 	{
-		$this->beforeFilter('orchestra.not-installed', array(
-			'only' => array('index', 'getCreate', 'postCreate'),
+		$this->beforeFilter('orchestra.installed', array(
+			'only' => array('anyIndex', 'getCreate', 'postCreate'),
 		));
 
 		Site::set('navigation::usernav', false);
