@@ -1,12 +1,20 @@
 <?php namespace Orchestra\Foundation;
 
 use Config,
+	Input,
 	View,
 	Orchestra\App,
 	Orchestra\Site,
 	Orchestra\Model\User;
 
 class InstallController extends BaseController {
+
+	/**
+	 * Installer instance.
+	 *
+	 * @var Orchestra\Foundation\Installation\Installer
+	 */
+	protected $installer = null;
 
 	/**
 	 * Construct InstallController
@@ -19,6 +27,8 @@ class InstallController extends BaseController {
 		Site::set('navigation::usernav', false);
 		Site::set('title', 'Installer');
 		App::memory()->put('site.name', 'Orchestra Platform');
+
+		$this->installer = new Installation\Installer(App::illuminate());
 	}
 	
 	/**
@@ -57,6 +67,7 @@ class InstallController extends BaseController {
 				and $eloquent instanceof \Orchestra\Model\User) $authentication = true;
 		}
 
+		// If the auth status is false, installation shouldn't be possible.
 		(true === $authentication) or $installable = false;
 
 		$data = array(
@@ -71,7 +82,8 @@ class InstallController extends BaseController {
 	}
 
 	/**
-	 * Create adminstrator page.
+	 * Migrate database schema for Orchestra Platform and show create 
+	 * adminstrator page.
 	 *
 	 * GET (:orchestra)/install/create
 	 *
@@ -80,10 +92,27 @@ class InstallController extends BaseController {
 	 */
 	public function getCreate()
 	{
-		// Migrate database schema for Orchestra Platform.
-		App::illuminate()->make('orchestra.publisher.migrate')->foundation();
+		$this->installer->migrate();
 
 		return View::make('orchestra/foundation::install.create')
 			->with('siteName', 'Orchestra Platform');
+	}
+
+	/**
+	 * Create an adminstrator.
+	 *
+	 * POST (:orchestra)/install/create
+	 *
+	 * @access public
+	 * @return View
+	 */
+	public function postCreate()
+	{
+		if ( ! $this->installer->createAdmin(Input::all()))
+		{
+			return 'false';
+		}
+
+		return 'done';
 	}
 }

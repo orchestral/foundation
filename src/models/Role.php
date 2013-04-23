@@ -12,6 +12,15 @@ class Role extends Eloquent {
 	protected $table = 'roles';
 
 	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = array(
+		'name',
+	);
+
+	/**
 	 * Has many and belongs to relationship with User.
 	 *
 	 * @access public

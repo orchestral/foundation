@@ -59,4 +59,9 @@ return array(
 			'solution' => "Change the directory permission to 0777. Once installation is completed, please revert the permission to 0755.",
 		),
 	),
+
+	'user' => array(
+		'created'   => 'User created, you can now login to the administation page',
+		'duplicate' => 'Unable to install when there already user registered.',
+	),
 );
