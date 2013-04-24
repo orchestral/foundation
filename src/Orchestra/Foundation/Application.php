@@ -165,6 +165,19 @@ class Application {
 					->title(trans('orchestra/foundation::title.users.create'))
 					->link(handles('orchestra/foundation::users/view'));
 			}
+
+			// Add menu when logged-in user has authorization to
+			// `manage orchestra`
+			if ($acl->can('manage-orchestra'))
+			{
+				$menu->add('extensions', '>:home')
+					->title(trans('orchestra/foundation::title.extensions.list'))
+					->link(handles('orchestra/foundation::extensions'));
+
+				$menu->add('settings')
+					->title(trans('orchestra/foundation::title.settings.list'))
+					->link(handles('orchestra/foundation::settings'));
+			}
 		});
 	}
 }
