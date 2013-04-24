@@ -3,6 +3,7 @@
 @section('content')
 
 <div class="row-fluid">
+	@if ( ! empty($panes))
 	@forelse ($panes as $id => $pane) 
 		<div{{ Html::attributes($pane->attributes) }}>
 		@if ( ! empty($pane->html))
@@ -22,7 +23,7 @@
 			</table>
 		@endif
 		</div>
-	@empty
+	@else
 	<div class="hero-unit">
 		<h2>Welcome to your new Orchestra site!</h2>
 		<p>
@@ -32,8 +33,7 @@
 			screen and where to go for more assistance.-->
 		</p>
 	</div>
-
-	@endforelse
+	@endif
 </div>
 
 @stop

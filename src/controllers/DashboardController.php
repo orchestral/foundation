@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\View,
+	Orchestra\Widget;
 
 class DashboardController extends AdminController {
 
@@ -21,6 +22,6 @@ class DashboardController extends AdminController {
 	public function anyIndex()
 	{
 		return View::make('orchestra/foundation::dashboard.index')
-			->with('panes', Orchestra\Widget::make('pane.orchestra')->getItem());
+			->with('panes', Widget::make('pane.orchestra')->getItem());
 	}
 }
