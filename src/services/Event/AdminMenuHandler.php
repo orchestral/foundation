@@ -4,7 +4,13 @@ use Orchestra\App;
 
 class AdminMenuHandler {
 	
-	public function handles()
+	/**
+	 * Create a handler for `orchestra.ready: admin` event.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function handle()
 	{
 		$acl        = App::acl();
 		$menu       = App::menu();
