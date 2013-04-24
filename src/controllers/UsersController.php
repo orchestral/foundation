@@ -7,7 +7,7 @@ use Input,
 	Orchestra\Site,
 	Orchestra\Model\Role,
 	Orchestra\Model\User,
-	Services\UserPresenter;
+	Orchestra\Foundation\Services\UserPresenter;
 
 class UsersController extends AdminController {
 
@@ -34,8 +34,10 @@ class UsersController extends AdminController {
 	}
 
 	/**
-	 * List All Users Page
+	 * List all the users.
 	 *
+	 * GET (:orchestra)/users
+	 * 
 	 * @access public
 	 * @return Response
 	 */
@@ -71,7 +73,9 @@ class UsersController extends AdminController {
 	}
 
 	/**
-	 * Create a user
+	 * Create a new user.
+	 *
+	 * GET (:orchestra)/users/create
 	 *
 	 * @access public
 	 * @return Response
@@ -93,7 +97,9 @@ class UsersController extends AdminController {
 	}
 
 	/**
-	 * Create a user
+	 * Edit the user.
+	 *
+	 * GET (:orchestra)/users/$id/edit
 	 *
 	 * @access public
 	 * @return Response
@@ -102,7 +108,8 @@ class UsersController extends AdminController {
 	{
 		$user = User::find($id);
 
-		if (is_null($user)) App::illuminate()->abort(404);
+		if (is_null($user)) App::abort(404);
+
 		$form = UserPresenter::form($user, 'update');
 		$this->fireEvent('form', array($user, $form));
 
@@ -114,5 +121,37 @@ class UsersController extends AdminController {
 		Site::set('title', trans('orchestra/foundation::title.users.update'));
 
 		return View::make('orchestra/foundation::users.edit', $data);
+	}
+
+	/**
+	 * Request to delete a user.
+	 *
+	 * GET (:orchestra)/delete/$id
+	 * 
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
+	public function delete($id)
+	{
+		return $this->destroy($id);
+	}
+
+	public function destroy($id)
+	{
+		
+	}
+
+	/**
+	 * Fire Event related to eloquent process
+	 *
+	 * @access private
+	 * @param  string   $type
+	 * @param  array    $parameters
+	 * @return void
+	 */
+	private function fireEvent($type, $parameters)
+	{
+		Event::fire("orchestra.{$type}: users", $parameters);
+		Event::fire("orchestra.{$type}: user.account", $parameters);
 	}
 }

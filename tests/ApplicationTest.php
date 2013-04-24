@@ -115,17 +115,6 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertFalse($app['orchestra.installed']);
 	}
-	
-	/**
-	 * Test Orchestra\Foundation\Application::illuminate() method.
-	 *
-	 * @test
-	 */
-	public function testIlluminateMethod()
-	{
-		$stub = new \Orchestra\Foundation\Application($this->app);
-		$this->assertEquals($this->app, $stub->illuminate());
-	}
 
 	/**
 	 * Test Orchestra\Foundation\Application::installed() method.

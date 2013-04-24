@@ -8,7 +8,8 @@ Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orc
 	Route::controller('install', 'Orchestra\Foundation\InstallController');
 	Route::controller('register', 'Orchestra\Foundation\RegisterController');
 	Route::controller('resources', 'Orchestra\Foundation\ResourceController');
-	Route::controller('users', 'Orchestra\Foundation\UsersController');
+	Route::resource('users', 'Orchestra\Foundation\UsersController');
+	Route::any('users/{id}/delete', 'Orchestra\Foundation\UsersController@delete');
 	Route::controller('settings', 'Orchestra\Foundation\SettingController');
 
 	// Credential routing.
@@ -23,7 +24,7 @@ Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orc
 	));
 
 	// 404 routing.
-	Route::any('{missing}', array(
+	Route::any('missing', array(
 		'as'   => 'orchestra.404',
 		'uses' => 'Orchestra\Foundation\DashboardController@anyMissing',
 	));

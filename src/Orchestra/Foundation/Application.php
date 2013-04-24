@@ -101,37 +101,21 @@ class Application {
 	}
 
 	/**
-	 * Execute Illuminate\Foundation\Application::make().
-	 *
-	 * @access public
-	 * @return mixed
-	 */
-	public function make($make = null)
-	{
-		if ( ! is_null($make)) return $this->app->make($make);
-
-		return $this->app;
-	}
-
-	/**
-	 * Get Illuminate Application instance.
-	 *
-	 * @access public
-	 * @return Illuminate\Foundation\Application
-	 * @see    self::make()
-	 */
-	public function illuminate()
-	{
-		return $this->make();
-	}
-
-	/**
 	 * Magic method to get services.
 	 */
 	public function __call($method, $parameters)
 	{
-		$action = (count($parameters) < 1 ? "orchestra" : array_shift($parameters));
-		$method = "{$action}.{$method}";
+		$passtru = array('make', 'abort');
+
+		// Allow Orchestra\Foundation\Application to called method available 
+		// in Illuminate\Foundation\Application without any issue.
+		if (in_array($method, $passtru))
+		{
+			return call_user_func_array(array($this->app, $method), $parameters);
+		}
+
+		$action  = (count($parameters) < 1 ? "orchestra" : array_shift($parameters));
+		$method  = "{$action}.{$method}";
 
 		return (isset($this->services[$method]) ? $this->services[$method] : null);
 	}	

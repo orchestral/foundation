@@ -17,7 +17,7 @@ jQuery(function ($) {
 	$('a[rel="user-menu"]').on('click', function (e) {
 		e.preventDefault();
 		
-		window.location.href = "{{ URL::to(handles('orchestra::login')) }}";
+		window.location.href = "{{ handles('orchestra/foundation::login') }}";
 
 		return false;
 	});
