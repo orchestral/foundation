@@ -43,6 +43,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app['orchestra.widget'] = $widget = \Mockery::mock('Widget');
 		$app['translator'] = $translator = \Mockery::mock('Translator');
 		$app['url'] = ($url = \Mockery::mock('Url'));
+		$app['events'] = $event = \Mockery::mock('Event');
 
 		\Illuminate\Support\Facades\Config::setFacadeApplication($app);
 		\Illuminate\Support\Facades\Config::swap($config = \Mockery::mock('Config'));
@@ -58,9 +59,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('add')->andReturn($widget)
 			->shouldReceive('title')->once()->andReturn($widget)
 			->shouldReceive('link')->once()->andReturn(null);
-		$translator->shouldReceive('trans')->andReturn('foo');
+		$translator->shouldReceive('get')->andReturn('foo');
 		$config->shouldReceive('get')->andReturn('/');
 		$url->shouldReceive('to')->once()->with('/', array(), null)->andReturn('/');
+		$event->shouldReceive('listen')->with('orchestra.ready: admin', 'Orchestra\Foundation\Services\Event\AdminMenuHandler')->once()->andReturn(null)
+			->shouldReceive('fire')->with('orchestra.started')->once()->andReturn(null);
 
 		$stub = new \Orchestra\Foundation\Application($app);
 		$stub->start();

@@ -144,41 +144,15 @@ class Application {
 	 */
 	protected function createAdminMenu()
 	{
-		$acl        = $this->services['orchestra.acl'];
-		$menu       = $this->services['orchestra.menu'];
-		$translator = $this->app['translator'];
+		$menu = $this->services['orchestra.menu'];
 
 		$menu->add('home')
-			->title($translator->trans('orchestra/foundation::title.home'))
+			->title($this->app['translator']->get('orchestra/foundation::title.home'))
 			->link(handles('orchestra/foundation::/'));
 
-		$this->app['events']->listen('orchestra.ready: admin', function () use ($acl, $menu, $translator)
-		{
-			// Add menu when logged-user user has authorization to
-			// `manage users`
-			if ($acl->can('manage-users'))
-			{
-				$menu->add('users')
-					->title($translator->trans('orchestra/foundation::title.users.list'))
-					->link(handles('orchestra/foundation::users'));
-
-				$menu->add('add-users', '^:users')
-					->title($translator->trans('orchestra/foundation::title.users.create'))
-					->link(handles('orchestra/foundation::users/view'));
-			}
-
-			// Add menu when logged-in user has authorization to
-			// `manage orchestra`
-			if ($acl->can('manage-orchestra'))
-			{
-				$menu->add('extensions', '>:home')
-					->title($translator->trans('orchestra/foundation::title.extensions.list'))
-					->link(handles('orchestra/foundation::extensions'));
-
-				$menu->add('settings')
-					->title($translator->trans('orchestra/foundation::title.settings.list'))
-					->link(handles('orchestra/foundation::settings'));
-			}
-		});
+		$this->app['events']->listen(
+			'orchestra.ready: admin', 
+			'Orchestra\Foundation\Services\Event\AdminMenuHandler'
+		);
 	}
 }
