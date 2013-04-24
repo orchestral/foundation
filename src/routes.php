@@ -8,7 +8,7 @@ Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orc
 	Route::controller('install', 'Orchestra\Foundation\InstallController');
 	Route::controller('register', 'Orchestra\Foundation\RegisterController');
 	Route::controller('resources', 'Orchestra\Foundation\ResourceController');
-	Route::controller('users', 'Orchestra\Foundation\UserController');
+	Route::controller('users', 'Orchestra\Foundation\UsersController');
 	Route::controller('settings', 'Orchestra\Foundation\SettingController');
 
 	// Credential routing.

@@ -120,13 +120,13 @@ class UserPresenter {
 	 * @param  Orchestra\Model\User $model
 	 * @return Orchestra\Form
 	 */
-	public static function form($model)
+	public static function form($model, $type = 'create')
 	{
 		return Form::of('orchestra.users', function ($form) use ($model)
 		{
 			$form->row($model);
 			$form->attributes(array(
-				'action' => handles("orchestra/foundation::users/view/{$model->id}"),
+				'url' => handles("orchestra/foundation::users/view/{$model->id}"),
 				'method' => 'POST',
 			));
 

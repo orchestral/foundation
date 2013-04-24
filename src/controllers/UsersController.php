@@ -3,12 +3,20 @@
 use Input,
 	Event,
 	View,
-	Orchestra\Foundation\Services\UserPresenter,
+	Orchestra\App,
 	Orchestra\Site,
 	Orchestra\Model\Role,
-	Orchestra\Model\User;
+	Orchestra\Model\User,
+	Services\UserPresenter;
 
-class UserController extends AdminController {
+class UsersController extends AdminController {
+
+	/**
+	 * Use restful verb.
+	 * 
+	 * @var boolean
+	 */
+	protected $restful = false;
 
 	/**
 	 * Define the filters.
@@ -31,7 +39,7 @@ class UserController extends AdminController {
 	 * @access public
 	 * @return Response
 	 */
-	public function get_index()
+	public function index()
 	{
 		$keyword = Input::get('q', '');
 		$roles   = Input::get('roles', array());
@@ -60,5 +68,51 @@ class UserController extends AdminController {
 		Site::set('title', trans('orchestra/foundation::title.users.list'));
 
 		return View::make('orchestra/foundation::users.index', $data);
+	}
+
+	/**
+	 * Create a user
+	 *
+	 * @access public
+	 * @return Response
+	 */
+	public function create()
+	{
+		$user = new User;
+		$form = UserPresenter::form($user, 'create');
+		$this->fireEvent('form', array($user, $form));
+
+		$data = array(
+			'eloquent' => $user,
+			'form'     => $form,
+		);
+
+		Site::set('title', trans('orchestra/foundation::title.users.create'));
+
+		return View::make('orchestra/foundation::users.edit', $data);
+	}
+
+	/**
+	 * Create a user
+	 *
+	 * @access public
+	 * @return Response
+	 */
+	public function edit($id)
+	{
+		$user = User::find($id);
+
+		if (is_null($user)) App::illuminate()->abort(404);
+		$form = UserPresenter::form($user, 'update');
+		$this->fireEvent('form', array($user, $form));
+
+		$data = array(
+			'eloquent' => $user,
+			'form'     => $form,
+		);
+
+		Site::set('title', trans('orchestra/foundation::title.users.update'));
+
+		return View::make('orchestra/foundation::users.edit', $data);
 	}
 }
