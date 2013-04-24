@@ -8,8 +8,7 @@ class Auth extends Validator {
 	 * @var array
 	 */
 	protected static $rules = array(
-		'username' => array('required'),
+		'username' => array('required', 'email'),
 		'password' => array('required'),
 	);
-	
 }
