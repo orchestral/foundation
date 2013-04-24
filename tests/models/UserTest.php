@@ -65,10 +65,17 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testGetAuthPasswordMethod()
 	{
+		$app = \Mockery::mock('Application');
+		$app->shouldReceive('instance')->andReturn(true);
+
+		\Illuminate\Support\Facades\Hash::setFacadeApplication($app);
+		\Illuminate\Support\Facades\Hash::swap($hash = \Mockery::mock('Hash'));
+		$hash->shouldReceive('make')->once()->with('foo')->andReturn('foobar');
+
 		$stub = new \Orchestra\Model\User;
 		$stub->password = 'foo';
 
-		$this->assertEquals('foo', $stub->getAuthPassword());
+		$this->assertEquals('foobar', $stub->getAuthPassword());
 	}
 
 	/**
