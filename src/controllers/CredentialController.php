@@ -102,11 +102,9 @@ class CredentialController extends AdminController {
 	public function deleteLogin()
 	{
 		Event::fire('orchestra.auth: logout');
-
 		Auth::logout();
 
 		Messages::add('success', trans('orchestra/foundation::response.credential.logged-out'));
-
 		return Redirect::to(Input::get('redirect', handles('orchestra/foundation::login')));
 	}
 
@@ -126,12 +124,14 @@ class CredentialController extends AdminController {
 
 		$remember = (isset($input['remember']) and $input['remember'] === 'yes');
 
-		// We should now attempt to login the user using Auth class.
+		// We should now attempt to login the user using Auth class. If this 
+		// failed simply return false.
 		if ( ! Auth::attempt($data, $remember)) return false;
 		
 		$user = Auth::user();
 
-		// Verify the user account if has not been verified.
+		// Verify user account if has not been verified, other this should 
+		// be ignored in most cases.
 		if ((int) $user->status === User::UNVERIFIED)
 		{
 			$user->status = User::VERIFIED;
