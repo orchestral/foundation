@@ -36,10 +36,16 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	public function testStartMethod()
 	{
 		$app = $this->app;
+		$app['env'] = 'production';
 		$app['orchestra.installed'] = false;
 		$app['orchestra.acl'] = $acl = \Mockery::mock('Acl');
 		$app['orchestra.memory'] = $memory = \Mockery::mock('Memory');
 		$app['orchestra.widget'] = $widget = \Mockery::mock('Widget');
+		$app['translator'] = $translator = \Mockery::mock('Translator');
+		$app['url'] = ($url = \Mockery::mock('Url'));
+
+		\Illuminate\Support\Facades\Config::setFacadeApplication($app);
+		\Illuminate\Support\Facades\Config::swap($config = \Mockery::mock('Config'));
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
 			->shouldReceive('attach')->with($memory)->once()->andReturn($acl);
@@ -48,7 +54,13 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('get')->with('site.name')->once()->andReturn('Orchestra')
 			->shouldReceive('put')->with('site.name', 'Orchestra')->never()->andReturn(null);
 		$widget->shouldReceive('make')->with('menu.orchestra')->once()->andReturn($widget)
-			->shouldReceive('make')->with('menu.app')->once()->andReturn($widget);
+			->shouldReceive('make')->with('menu.app')->once()->andReturn($widget)
+			->shouldReceive('add')->andReturn($widget)
+			->shouldReceive('title')->once()->andReturn($widget)
+			->shouldReceive('link')->once()->andReturn(null);
+		$translator->shouldReceive('trans')->andReturn('foo');
+		$config->shouldReceive('get')->andReturn('/');
+		$url->shouldReceive('to')->once()->with('/', array(), null)->andReturn('/');
 
 		$stub = new \Orchestra\Foundation\Application($app);
 		$stub->start();
