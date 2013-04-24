@@ -135,16 +135,18 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 		$app = $this->app;
 		$app['path.storage'] = '/foo/storage/';
 		$app['html'] = $html = \Mockery::mock('Html');
+		$app['files'] = $file = \Mockery::mock('File');
 
 		$html->shouldReceive('create')
 			->with('code', 'storage', array('title' => '/foo/storage/'))
 			->once()->andReturn('');
+		$file->shouldReceive('isWritable')->with('/foo/storage/')->once()->andReturn(true);
 
 		$stub = new \Orchestra\Foundation\Installation\Requirement($app);
 
 		$result = $stub->checkWritableStorage();
 
-		$this->assertFalse($result['is']);
+		$this->assertTrue($result['is']);
 		$this->assertTrue($result['explicit']);
 	}
 
@@ -159,16 +161,18 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 		$app = $this->app;
 		$app['path.public'] = '/foo/public/';
 		$app['html'] = $html = \Mockery::mock('Html');
+		$app['files'] = $file = \Mockery::mock('File');
 
 		$html->shouldReceive('create')
 			->with('code', 'public/packages', \Mockery::any())
 			->once()->andReturn('');
+		$file->shouldReceive('isWritable')->with('/foo/public/packages/')->once()->andReturn(true);
 
 		$stub = new \Orchestra\Foundation\Installation\Requirement($app);
 
 		$result = $stub->checkWritableAsset();
 		
-		$this->assertFalse($result['is']);
+		$this->assertTrue($result['is']);
 		$this->assertFalse($result['explicit']);
 	}
 }

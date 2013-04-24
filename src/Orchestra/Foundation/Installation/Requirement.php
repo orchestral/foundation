@@ -150,7 +150,7 @@ class Requirement {
 	 */
 	protected function checkPathIsWritable($path)
 	{
-		return is_writable($path);
+		return $this->app['files']->isWritable($path);
 	}
 
 	/**
