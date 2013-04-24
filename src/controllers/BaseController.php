@@ -1,13 +1,20 @@
 <?php namespace Orchestra\Foundation;
 
-use Illuminate\Routing\Controllers\Controller;
+use Controller,
+	Response;
 
 abstract class BaseController extends Controller {
 
 	/**
-	 * Use restful verb.
-	 * 
-	 * @var boolean
+	 * Show missing pages.
+	 *
+	 * GET (:orchestra) return 404
+	 *
+	 * @access public
+	 * @return Response
 	 */
-	protected $restful = true;
+	public function missingMethod($parameters)
+	{
+		return Response::view('orchestra/foundation::dashboard.missing', array(), 404);
+	}
 }

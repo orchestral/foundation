@@ -46,6 +46,6 @@ class DashboardController extends AdminController {
 	 */
 	public function anyMissing()
 	{
-		return Response::view('orchestra/foundation::dashboard.missing', array(), 404);
+		return $this->missingMethod(array());
 	}
 }

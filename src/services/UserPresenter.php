@@ -80,7 +80,7 @@ class UserPresenter {
 				{
 					$btn = array();
 					$btn[] = Html::link(
-						handles("orchestra/foundation::users/view/{$row->id}"),
+						handles("orchestra/foundation::users/{$row->id}/edit"),
 						trans('orchestra/foundation::label.edit'),
 						array(
 							'class' => 'btn btn-mini btn-warning',
@@ -122,7 +122,7 @@ class UserPresenter {
 	{
 		return Form::of('orchestra.users', function ($form) use ($model)
 		{
-			$form->row($model);
+			$form->with($model);
 			$form->attributes(array(
 				'url' => handles("orchestra/foundation::users/view/{$model->id}"),
 				'method' => 'POST',
