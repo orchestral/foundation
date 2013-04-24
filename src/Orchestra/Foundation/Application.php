@@ -116,10 +116,11 @@ class Application {
 	 *
 	 * @access public
 	 * @return Illuminate\Foundation\Application
+	 * @see    self::make()
 	 */
 	public function illuminate()
 	{
-		return $this->app;
+		return $this->make();
 	}
 
 	/**
