@@ -67,6 +67,8 @@ class Application {
 			// Installation status to false routing for installation is
 			// enabled.
 			$app['orchestra.installed'] = true;
+
+			$this->createAdminMenu();
 		}
 		catch (Exception $e)
 		{
@@ -132,5 +134,37 @@ class Application {
 		$method = "{$action}.{$method}";
 
 		return (isset($this->services[$method]) ? $this->services[$method] : null);
+	}	
+
+	/**
+	 * Create Administration Menu for Orchestra Platform.
+	 *
+	 * @access protected
+	 * @return void
+	 */
+	protected function createAdminMenu()
+	{
+		$acl  = $this->services['orchestra.acl'];
+		$menu = $this->services['orchestra.menu'];
+
+		$menu->add('home')
+			->title(trans('orchestra/foundation::title.home'))
+			->link(handles('orchestra/foundation::/'));
+
+		$this->app['events']->listen('orchestra.ready: admin', function () use ($acl, $menu)
+		{
+			// Add menu when logged-user user has authorization to
+			// `manage users`
+			if ($acl->can('manage-users'))
+			{
+				$menu->add('users')
+					->title(trans('orchestra/foundation::title.users.list'))
+					->link(handles('orchestra/foundation::users'));
+
+				$menu->add('add-users', '^:users')
+					->title(trans('orchestra/foundation::title.users.create'))
+					->link(handles('orchestra/foundation::users/view'));
+			}
+		});
 	}
 }

@@ -15,7 +15,16 @@ abstract class AdminController extends BaseController {
 		// Admin controllers should be accessible only after 
 		// Orchestra Platform is installed.
 		$this->beforeFilter('orchestra.installable');
+		
+		$this->beforeFilter(function ()
+		{
+			Event::fire('orchestra.started: admin');
+			Event::fire('orchestra.ready: admin');
+		});
 
-		Event::fire('orchestra.started: admin');
+		$this->afterFilter(function ()
+		{
+			Event::fire('orchestra.done: admin');
+		});
 	}
 }
