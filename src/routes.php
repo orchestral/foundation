@@ -2,13 +2,18 @@
 
 Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orchestra')), function ()
 {
+	Route::controller('account', 'Orchestra\Foundation\AccountController');
+	Route::controller('extensions', 'Orchestra\Foundation\ExtensionController');
+	Route::controller('forgot', 'Orchestra\Foundation\ForgotController');
 	Route::controller('install', 'Orchestra\Foundation\InstallController');
+	Route::controller('register', 'Orchestra\Foundation\RegisterController');
+	Route::controller('resources', 'Orchestra\Foundation\ResourceController');
+	Route::controller('users', 'Orchestra\Foundation\UserController');
+	Route::controller('settings', 'Orchestra\Foundation\SettingController');
 
 	// Credential routing.
 	Route::get('login', 'Orchestra\Foundation\CredentialController@getLogin');
 	Route::post('login', 'Orchestra\Foundation\CredentialController@postLogin');
-	Route::get('register', 'Orchestra\Foundation\CredentialController@getRegister');
-	Route::post('register', 'Orchestra\Foundation\CredentialController@postRegister');
 	Route::any('logout', 'Orchestra\Foundation\CredentialController@deleteLogin');
 	
 	// Base routing.
