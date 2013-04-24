@@ -13,13 +13,6 @@ abstract class Validator {
 	protected static $rules = array();
 
 	/**
-	 * Validation result.
-	 *
-	 * @var Illuminate\Validation\Validator
-	 */
-	protected $validation = null;
-
-	/**
 	 * Construct a new validation service.
 	 *
 	 * @access public
