@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
-use Illuminate\Support\Facades\View,
+use Response,
+	View,
 	Orchestra\Widget;
 
 class DashboardController extends AdminController {
@@ -16,12 +17,35 @@ class DashboardController extends AdminController {
 		parent::__construct();
 
 		// User has to be authenticated before using this controller.
-		$this->beforeFilter('orchestra.auth');
+		$this->beforeFilter('orchestra.auth', array(
+			'only' => array('anyIndex'),
+		));
 	}
 	
+	/**
+	 * Show User Dashboard.
+	 *
+	 * GET (:orchestra)/
+	 *
+	 * @access public
+	 * @return Response
+	 */
 	public function anyIndex()
 	{
 		return View::make('orchestra/foundation::dashboard.index')
 			->with('panes', Widget::make('pane.orchestra')->getItem());
+	}
+
+	/**
+	 * Show missing pages.
+	 *
+	 * GET (:orchestra) return 404
+	 *
+	 * @access public
+	 * @return Response
+	 */
+	public function anyMissing()
+	{
+		return Response::view('orchestra/foundation::dashboard.missing', array(), 404);
 	}
 }
