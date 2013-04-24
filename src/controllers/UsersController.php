@@ -1,22 +1,19 @@
 <?php namespace Orchestra\Foundation;
 
-use Input,
+use Auth,
+	DB,
 	Event,
+	Input,
+	Redirect,
 	View,
 	Orchestra\App,
+	Orchestra\Messages,
 	Orchestra\Site,
 	Orchestra\Model\Role,
 	Orchestra\Model\User,
 	Orchestra\Foundation\Services\UserPresenter;
 
 class UsersController extends AdminController {
-
-	/**
-	 * Use restful verb.
-	 * 
-	 * @var boolean
-	 */
-	protected $restful = false;
 
 	/**
 	 * Define the filters.
@@ -126,19 +123,54 @@ class UsersController extends AdminController {
 	/**
 	 * Request to delete a user.
 	 *
-	 * GET (:orchestra)/delete/$id
+	 * GET (:orchestra)/$id/delete
 	 * 
-	 * @param  [type] $id [description]
-	 * @return [type]     [description]
+	 * @access public
+	 * @param  integer  $id 
+	 * @return Response
 	 */
 	public function delete($id)
 	{
 		return $this->destroy($id);
 	}
 
+	/**
+	 * Request to delete a user.
+	 *
+	 * DELETE (:orchestra)/$id
+	 * 
+	 * @access public
+	 * @param  integer  $id 
+	 * @return Response
+	 */
 	public function destroy($id)
 	{
+		$user = User::find($id);
+
+		if (is_null($user) or ($user->id === Auth::user()->id)) return App::abort(404);
 		
+		try
+		{
+			$this->fireEvent('deleting', array($user));
+
+			DB::transaction(function () use ($user)
+			{				
+				$user->roles()->sync(array());
+				$user->delete();
+			});
+
+			$this->fireEvent('deleted', array($user));
+
+			Messages::add('success', trans('orchestra/foundation::response.users.delete'));
+		}
+		catch (Exception $e)
+		{
+			Messages::add('error', trans('orchestra/foundation::response.db-failed', array(
+				'error' => $e->getMessage(),
+			)));
+		}
+
+		return Redirect::to(handles('orchestra/foundation::users'));
 	}
 
 	/**
