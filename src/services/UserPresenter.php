@@ -21,8 +21,6 @@ class UserPresenter {
 	{
 		return Table::of('orchestra.users', function ($table) use ($model)
 		{
-			$table->emptyMessage = trans('orchestra/foundation::label.no-data');
-
 			// attach Model and set pagination option to true
 			$table->with($model, true);
 
