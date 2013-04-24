@@ -2,9 +2,16 @@
 
 use Illuminate\Auth\UserInterface,
 	Illuminate\Auth\Reminders\RemindableInterface,
-	Illuminate\Database\Eloquent\Model as Eloquent;
+	Illuminate\Database\Eloquent\Model as Eloquent,
+	Illuminate\Support\Facades\Hash;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
+
+	/**
+	 * Available user status as constant.
+	 */
+	const UNVERIFIED = 0;
+	const VERIFIED   = 1;
 
 	/**
 	 * The database table used by the model.
@@ -30,6 +37,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	{
 		return $this->belongsToMany('\Orchestra\Model\Role', 'user_role');
 	}
+
+	/**
+	 * Set `password` mutator.
+	 *
+	 * @access public
+	 * @param  string   $value
+	 * @return void
+	 */
+	public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
 
 	/**
 	 * Get the unique identifier for the user.
