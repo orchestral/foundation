@@ -3,7 +3,7 @@
 Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orchestra')), function ()
 {
 	Route::controller('account', 'Orchestra\Foundation\AccountController');
-	Route::controller('extensions', 'Orchestra\Foundation\ExtensionController');
+	Route::controller('extensions', 'Orchestra\Foundation\ExtensionsController');
 	Route::controller('forgot', 'Orchestra\Foundation\ForgotController');
 	Route::controller('install', 'Orchestra\Foundation\InstallController');
 	Route::controller('register', 'Orchestra\Foundation\RegisterController');
