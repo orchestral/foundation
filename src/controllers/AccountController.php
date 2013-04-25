@@ -3,6 +3,7 @@
 use Auth,
 	DB,
 	Event,
+	Hash,
 	Input,
 	Redirect,
 	View,
@@ -38,7 +39,7 @@ class AccountController extends AdminController {
 	public function getIndex()
 	{
 		$eloquent = Auth::user();
-		$form     = AccountPresenter::profileForm($eloquent, handles('orchestra/foundation::account/index'));
+		$form     = AccountPresenter::profileForm($eloquent, handles('orchestra/foundation::account'));
 
 		Event::fire('orchestra.form: user.account', array($eloquent, $form));
 		Site::set('title', trans("orchestra/foundation::title.account.profile"));
@@ -57,8 +58,9 @@ class AccountController extends AdminController {
 	public function postIndex()
 	{
 		$input = Input::all();
+		$user  = Auth::user();
 		
-		if (Auth::user()->id !== $input['id']) return App::abort(500);
+		if ($user->id !== $input['id']) return App::abort(500);
 
 		$validation = App::make('Orchestra\Services\Validation\UserAccount')
 						->on('updateProfile')->with($input);
@@ -69,8 +71,6 @@ class AccountController extends AdminController {
 					->withInput()
 					->withErrors($validation);
 		}
-
-		$user = Auth::user();
 
 		$user->email    = $input['email'];
 		$user->fullname = $input['fullname'];
@@ -98,6 +98,75 @@ class AccountController extends AdminController {
 		}
 
 		return Redirect::to(handles('orchestra/foundation::account'));
+	}
+
+	/**
+	 * Edit Password Page
+	 *
+	 * GET (:orchestra)/account/password
+	 *
+	 * @access public
+	 * @return Response
+	 */
+	public function getPassword()
+	{
+		$eloquent = Auth::user();
+		$form     = AccountPresenter::passwordForm($eloquent);
+
+		Site::set('title', trans("orchestra/foundation::title.account.password"));
+
+		return View::make('orchestra/foundation::account.password', compact('eloquent', 'form'));
+	}
+
+	/**
+	 * POST Edit User Password
+	 *
+	 * POST (:orchestra)/account/password
+	 *
+	 * @access public
+	 * @return Response
+	 */
+	public function postPassword()
+	{
+		$input = Input::all();
+		$user  = Auth::user();
+		
+		if ($user->id !== $input['id']) return App::abort(500);
+
+		$validation = App::make('Orchestra\Services\Validation\UserAccount')
+						->on('changePassword')->with($input);
+
+		if ($validation->fails())
+		{
+			return Redirect::to(handles('orchestra/foundation::account/password'))
+					->withInput()
+					->withErrors($validation);
+		}
+
+		if (Hash::check($input['current_password'], $user->password))
+		{
+			$user->password = $input['new_password'];
+
+			try
+			{
+				DB::transaction(function () use ($user)
+				{
+					$user->save();
+				});
+
+				Messages::add('success', trans('orchestra/foundation::response.account.password.update'));
+			}
+			catch (Exception $e)
+			{
+				Messages::add('error', trans('orchestra/foundation::response.db-failed'));
+			}
+		}
+		else
+		{
+			Messages::add('error', trans('orchestra/foundation::response.account.password.invalid'));
+		}
+
+		return Redirect::to(handles('orchestra/foundation::account/password'));
 	}
 
 	/**

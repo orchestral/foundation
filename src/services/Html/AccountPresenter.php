@@ -41,4 +41,43 @@ class AccountPresenter {
 			});
 		});
 	}
+
+	/**
+	 * Form view generator for user account edit password.
+	 * 
+	 * @access public
+	 * @param  Orchestra\Model\User $model
+	 * @return Orchestra\Form
+	 */
+	public static function passwordForm($model)
+	{
+		return Form::of('orchestra.account: password', function ($form) use ($model)
+		{
+			$form->with($model);
+			$form->attributes(array(
+				'url'    => handles('orchestra/foundation::account/password'),
+				'method' => 'POST',
+			));
+
+			$form->hidden('id');
+
+			$form->fieldset(function ($fieldset)
+			{
+				$fieldset->control('input:password', 'current_password', function ($control)
+				{
+					$control->label(trans('orchestra/foundation::label.account.current_password'));
+				});
+
+				$fieldset->control('input:password', 'new_password', function ($control)
+				{
+					$control->label(trans('orchestra/foundation::label.account.new_password'));
+				});
+
+				$fieldset->control('input:password', 'confirm_password', function ($control)
+				{
+					$control->label(trans('orchestra/foundation::label.account.confirm_password'));
+				});
+			});
+		});
+	}
 }
