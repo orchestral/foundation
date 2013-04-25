@@ -9,7 +9,7 @@ use Auth,
 	Orchestra\App,
 	Orchestra\Messages,
 	Orchestra\Site,
-	Orchestra\Foundation\Services\Html\AccountPresenter;
+	Orchestra\Services\Html\AccountPresenter;
 
 class AccountController extends AdminController {
 

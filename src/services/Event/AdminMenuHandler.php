@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Services\Event;
+<?php namespace Orchestra\Services\Event;
 
 use Orchestra\App;
 

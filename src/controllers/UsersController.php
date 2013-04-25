@@ -11,7 +11,7 @@ use Auth,
 	Orchestra\Site,
 	Orchestra\Model\Role,
 	Orchestra\Model\User,
-	Orchestra\Foundation\Services\Html\UserPresenter;
+	Orchestra\Services\Html\UserPresenter;
 
 class UsersController extends AdminController {
 

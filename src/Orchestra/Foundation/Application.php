@@ -147,7 +147,7 @@ class Application {
 
 		$this->app['events']->listen(
 			'orchestra.ready: admin', 
-			'Orchestra\Foundation\Services\Event\AdminMenuHandler'
+			'Orchestra\Services\Event\AdminMenuHandler'
 		);
 	}
 }
