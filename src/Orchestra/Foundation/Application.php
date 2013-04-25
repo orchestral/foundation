@@ -112,6 +112,18 @@ class Application {
 	}
 
 	/**
+	 * Get extension handle.
+	 *
+	 * @access public
+	 * @param  string   $name
+	 * @return string
+	 */
+	public function handle($name)
+	{
+		return $this->app['config']->get("orchestra/extension::handles.{$name}", '/');
+	}
+
+	/**
 	 * Magic method to get services.
 	 */
 	public function __call($method, $parameters)
