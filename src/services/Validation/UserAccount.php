@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Services\Validation;
 
+use Orchestra\Support\Validator;
+
 class UserAccount extends Validator {
 	
 	/**
@@ -11,6 +13,7 @@ class UserAccount extends Validator {
 		'email'    => array('required', 'email'),
 		'fullname' => array('required'),
 	);
+	
 	/**
 	 * List of events.
 	 *

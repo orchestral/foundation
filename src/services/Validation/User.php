@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Services\Validation;
 
+use Orchestra\Support\Validator;
+
 class User extends Validator {
 	
 	/**
