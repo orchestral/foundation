@@ -21,7 +21,7 @@ class Setting extends Validator {
 	 *
 	 * @var array
 	 */
-	protected $events = array(
+	protected static $events = array(
 		'orchestra.validate: settings',
 	);
 
