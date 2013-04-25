@@ -40,33 +40,28 @@ class UsersController extends AdminController {
 	 */
 	public function index()
 	{
-		$keyword = Input::get('q', '');
-		$roles   = Input::get('roles', array());
+		//$keyword = Input::get('q', '');
+		//$roles   = Input::get('roles', array());
 
 		// Get Users (with roles) and limit it to only 30 results for
 		// pagination. Don't you just love it when pagination simply works.
 		//$users = User::search($keyword, $roles)->paginate(30);
-		$users = User::paginate(30);
+		$eloquent = User::paginate(30);
+		$roles = Role::lists('name', 'id');
 
 		// Build users table HTML using a schema liked code structure.
-		$table = UserPresenter::table($users);
+		$table = UserPresenter::table($eloquent);
 
-		Event::fire('orchestra.list: users', array($users, $table));
+		Event::fire('orchestra.list: users', array($eloquent, $table));
 
 		// Once all event listening to `orchestra.list: users` is executed,
-		// we can add we can now add the final column, edit and delete action
-		// for users
+		// we can add we can now add the final column, edit and delete 
+		// action for users.
 		UserPresenter::actions($table);
-
-		$data = array(
-			'eloquent' => $users,
-			'table'    => $table,
-			'roles'    => Role::lists('name', 'id'),
-		);
 
 		Site::set('title', trans('orchestra/foundation::title.users.list'));
 
-		return View::make('orchestra/foundation::users.index', $data);
+		return View::make('orchestra/foundation::users.index', compact('eloquent', 'table', 'roles'));
 	}
 
 	/**
@@ -92,18 +87,13 @@ class UsersController extends AdminController {
 	 */
 	public function create()
 	{
-		$user = new User;
-		$form = UserPresenter::form($user, 'create');
-		$this->fireEvent('form', array($user, $form));
+		$eloquent = new User;
+		$form     = UserPresenter::form($eloquent, 'create');
 
-		$data = array(
-			'eloquent' => $user,
-			'form'     => $form,
-		);
-
+		$this->fireEvent('form', array($eloquent, $form));
 		Site::set('title', trans('orchestra/foundation::title.users.create'));
 
-		return View::make('orchestra/foundation::users.edit', $data);
+		return View::make('orchestra/foundation::users.edit', compact('eloquent', 'form'));
 	}
 
 	/**
@@ -116,21 +106,13 @@ class UsersController extends AdminController {
 	 */
 	public function edit($id)
 	{
-		$user = User::find($id);
+		$eloquent = User::findOrFail($id);
+		$form     = UserPresenter::form($eloquent, 'update');
 
-		if (is_null($user)) App::abort(404);
-
-		$form = UserPresenter::form($user, 'update');
-		$this->fireEvent('form', array($user, $form));
-
-		$data = array(
-			'eloquent' => $user,
-			'form'     => $form,
-		);
-
+		$this->fireEvent('form', array($eloquent, $form));
 		Site::set('title', trans('orchestra/foundation::title.users.update'));
 
-		return View::make('orchestra/foundation::users.edit', $data);
+		return View::make('orchestra/foundation::users.edit', compact('eloquent', 'form'));
 	}
 
 	/**
@@ -154,7 +136,8 @@ class UsersController extends AdminController {
 					->withErrors($validation);
 		}
 
-		$user           = new User;
+		$user = new User;
+		
 		$user->status   = User::UNVERIFIED;
 		$user->password = $input['password'];
 
