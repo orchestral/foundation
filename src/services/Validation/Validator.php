@@ -13,22 +13,58 @@ abstract class Validator {
 	protected static $rules = array();
 
 	/**
-	 * Construct a new validation service.
+	 * List of events.
+	 *
+	 * @var array
+	 */
+	protected static $events = array();
+
+	/**
+	 * Create a scope scenario.
+	 *
+	 * @access public
+	 * @param  string   $scenario
+	 * @return self
+	 */
+	public function on($scenario)
+	{
+		$method = 'on'.ucfirst($scenario);
+
+		if (method_exists($this, $method)) $this->{$method}();
+
+		return $this;
+	}
+
+	/**
+	 * Execute validation service.
 	 *
 	 * @access public
 	 * @param  array    $input
 	 * @param  string   $event
 	 * @return void
 	 */
-	public function with($input, $event = null)
+	public function with($input, $events = array())
 	{
 		$rules = static::$rules;
 
-		if ( ! is_null($event))
+		$this->runValidationEvents($events);
+
+		return V::make($input, $rules);
+	}
+
+	/**
+	 * Run validation events.
+	 *
+	 * @access protected
+	 * @return void
+	 */
+	protected function runValidationEvents($events)
+	{
+		$events = array_merge(static::$events, (array) $events);
+
+		foreach ((array) $events as $event) 
 		{
 			Event::fire($event, array( & $rules));
 		}
-
-		return V::make($input, $rules);
 	}
 }

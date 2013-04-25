@@ -120,13 +120,21 @@ class UserPresenter {
 	 */
 	public static function form($model, $type = 'create')
 	{
-		return Form::of('orchestra.users', function ($form) use ($model)
+		return Form::of('orchestra.users', function ($form) use ($model, $type)
 		{
+			$url    = "orchestra/foundation::users";
+			$method = 'POST';
+
+			if ($type === 'update')
+			{
+				$url    = "orchestra/foundation::users/{$model->id}";
+				$method = 'PUT';
+			}
+
+			$url = handles($url);
+			
 			$form->with($model);
-			$form->attributes(array(
-				'url' => handles("orchestra/foundation::users/view/{$model->id}"),
-				'method' => 'POST',
-			));
+			$form->attributes(compact('url', 'method'));
 
 			$form->hidden('id');
 

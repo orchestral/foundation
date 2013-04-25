@@ -11,7 +11,7 @@ use Auth,
 	Orchestra\Site,
 	Orchestra\Model\Role,
 	Orchestra\Model\User,
-	Orchestra\Foundation\Services\UserPresenter;
+	Orchestra\Foundation\Services\Html\UserPresenter;
 
 class UsersController extends AdminController {
 
@@ -118,6 +118,115 @@ class UsersController extends AdminController {
 		Site::set('title', trans('orchestra/foundation::title.users.update'));
 
 		return View::make('orchestra/foundation::users.edit', $data);
+	}
+
+	/**
+	 * Create the user.
+	 *
+	 * POST (:orchestra)/users
+	 *
+	 * @access public
+	 * @return Response
+	 */
+	public function store() 
+	{
+		$input      = Input::all();
+		$validation = App::make('Orchestra\Services\Validation\User')
+						->on('create')->with($input);
+
+		if ($validation->fails())
+		{
+			return Redirect::to(handles("orchestra/foundation::users/create"))
+					->withInput()
+					->withErrors($validation);
+		}
+
+		$user           = new User;
+		$user->status   = User::UNVERIFIED;
+		$user->password = $input['password'];
+
+		$this->saving($user, $input, 'create');
+
+		return Redirect::to(handles('orchestra/foundation::users'));
+	}
+
+	/**
+	 * Update the user.
+	 *
+	 * PUT (:orchestra)/users/1
+	 *
+	 * @access public
+	 * @param  integer  $id
+	 * @return Response
+	 */
+	public function update($id) 
+	{
+		$input = Input::all();
+
+		// Check if provided id is the same as hidden id, just a pre-caution.
+		if ((int) $id !== (int) $input['id']) return App::abort(500);
+
+		$validation = App::make('Orchestra\Services\Validation\User')
+						->on('update')->with($input);
+
+		if ($validation->fails())
+		{
+			return Redirect::to(handles("orchestra/foundation::users/{$id}/edit"))
+					->withInput()
+					->withErrors($validation);
+		}
+
+		$user = User::findOrFail($id);
+
+		$this->saving($user, $input, 'update');
+
+		return Redirect::to(handles('orchestra/foundation::users'));
+	}
+
+	/**
+	 * Save the user.
+	 *
+	 * @access protected			
+	 * @param  Orchestra\Model\User $user
+	 * @param  array                $input
+	 * @param  string               $type
+	 * @return boolean
+	 */
+	protected function saving(User $user, $input = array(), $type = 'create')
+	{
+		$beforeEvent    = ($type === 'create' ? 'creating' : 'updating');
+		$afterEvent     = ($type === 'create' ? 'created' : 'updated');
+
+		$user->fullname = $input['fullname'];
+		$user->email    = $input['email'];
+
+		if ( ! empty($input['password'])) $user->password = $input['password'];
+
+		try
+		{
+			$this->fireEvent($beforeEvent, array($user));
+			$this->fireEvent('saving', array($user));
+
+			DB::transaction(function () use ($user, $input)
+			{
+				$user->save();
+				$user->roles()->sync($input['roles']);
+			});
+
+			$this->fireEvent($afterEvent, array($user));
+			$this->fireEvent('saved', array($user));
+
+			Messages::add('success', trans("orchestra/foundation::response.users.{$type}"));
+		}
+		catch (Exception $e)
+		{
+			Messages::add('error', trans('orchestra/foundation::response.db-failed', array(
+				'error' => $e->getMessage(),
+			)));
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
