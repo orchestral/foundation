@@ -24,7 +24,7 @@ class User extends Validator {
 	);
 
 	/**
-	 * on create scenario.
+	 * On create user scenario.
 	 *
 	 * @access protected
 	 * @return void

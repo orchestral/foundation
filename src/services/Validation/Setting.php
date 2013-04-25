@@ -14,11 +14,22 @@ class Setting extends Validator {
 		'email_port'    => array('numeric'),
 	);
 
+	/**
+	 * List of events.
+	 *
+	 * @var array
+	 */
 	protected $events = array(
 		'orchestra.validate: settings',
 	);
 
-	protected function onSmtpDriver()
+	/**
+	 * On update email using smtp driver scenario.
+	 *
+	 * @access protected
+	 * @return void
+	 */
+	protected function onSmtp()
 	{
 		static::$rules['email_username'] = array('required', 'email');
 		static::$rules['email_host']     = array('required');

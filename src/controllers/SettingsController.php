@@ -2,9 +2,11 @@
 
 use Event,
 	Input,
+	Redirect,
 	View,
 	Illuminate\Support\Fluent,
 	Orchestra\App,
+	Orchestra\Messages,
 	Orchestra\Site,
 	Orchestra\Services\Html\SettingPresenter;
 
@@ -70,25 +72,17 @@ class SettingsController extends AdminController {
 	 */
 	public function postIndex()
 	{
-		$input      = Input::all();
-		$validation = App::make('');
-		
-		if ( ! isset($input['email_driver'])
-		{
-			$input['email_driver'] = 'mail';
-		}
-		elseif ($input['email_driver'] === 'smtp')
-		{
-			$input['email_address'] = $input['email_username'];
-		}
+		$default    = array('email_driver' => 'mail');
+		$input      = array_merge($default, Input::all());
 
-		$validation = Validator::make($input, $rules);
+		$validation = App::make('Orchestra\Services\Validation\Setting')
+						->on($input['email_driver'])->with($input);
 
-		if ($val->fails())
+		if ($validation->fails())
 		{
-			return Redirect::to(handles('orchestra::settings'))
-					->with_input()
-					->with_errors($val);
+			return Redirect::to(handles('orchestra/foundation::settings'))
+					->withInput()
+					->withErrors($validation);
 		}
 
 		$memory = App::memory();
@@ -115,7 +109,7 @@ class SettingsController extends AdminController {
 		$memory->put('email.encryption', $input['email_encryption']);
 
 		Event::fire('orchestra.saved: settings', array($memory, $input));
-		Messages::add('success', __('orchestra::response.settings.update'));
+		Messages::add('success', trans('orchestra/foundation::response.settings.update'));
 
 		return Redirect::to(handles('orchestra/foundation::settings'));
 	}

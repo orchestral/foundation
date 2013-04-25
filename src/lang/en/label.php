@@ -21,14 +21,13 @@ return array(
 	),
 
 	'email' => array(
-		'transport'       => 'E-mail Transport',
-		'from'            => 'From E-mail Address',
-		'host'            => 'SMTP Host',
-		'port'            => 'SMTP Port',
-		'username'        => 'SMTP Username',
-		'password'        => 'SMTP Password',
-		'encryption'      => 'SMTP Encryption',
-		'command'         => 'Sendmail Command',
+		'driver'          => 'Driver',
+		'from'            => 'From Address',
+		'host'            => 'Host',
+		'port'            => 'Port',
+		'username'        => 'Username',
+		'password'        => 'Password',
+		'encryption'      => 'Encryption',
 		'change_password' => 'Change Password',
 	),
 

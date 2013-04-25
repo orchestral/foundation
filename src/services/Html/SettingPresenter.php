@@ -53,7 +53,7 @@ class SettingPresenter {
 			{
 				$fieldset->control('select', 'email_driver', function ($control)
 				{
-					$control->label(trans('orchestra/foundation::label.email.transport'));
+					$control->label(trans('orchestra/foundation::label.email.driver'));
 					$control->options(array(
 						'mail' => 'Mail',
 						'smtp' => 'SMTP',
