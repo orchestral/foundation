@@ -25,7 +25,6 @@ class UsersController extends AdminController {
 	{
 		parent::__construct();
 
-		// User has to be authenticated before using this controller.
 		$this->beforeFilter('orchestra.auth');
 		$this->beforeFilter('orchestra.manage:users');
 	}
