@@ -1,7 +1,10 @@
 <?php namespace Orchestra\Foundation;
 
 use Auth,
+	DB,
 	Event,
+	Input,
+	Redirect,
 	View,
 	Orchestra\App,
 	Orchestra\Messages,
@@ -57,7 +60,7 @@ class AccountController extends AdminController {
 		
 		if (Auth::user()->id !== $input['id']) return App::abort(500);
 
-		$validation = App::make('Orchestra\Foundation\Services\Validation\UserAccount')
+		$validation = App::make('Orchestra\Services\Validation\UserAccount')
 						->on('updateProfile')->with($input);
 
 		if ($validation->fails())
