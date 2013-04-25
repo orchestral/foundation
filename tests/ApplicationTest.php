@@ -62,7 +62,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$translator->shouldReceive('get')->andReturn('foo');
 		$config->shouldReceive('get')->andReturn('/');
 		$url->shouldReceive('to')->once()->with('/', array(), null)->andReturn('/');
-		$event->shouldReceive('listen')->with('orchestra.ready: admin', 'Orchestra\Foundation\Services\Event\AdminMenuHandler')->once()->andReturn(null)
+		$event->shouldReceive('listen')->with('orchestra.ready: admin', 'Orchestra\Services\Event\AdminMenuHandler')->once()->andReturn(null)
 			->shouldReceive('fire')->with('orchestra.started')->once()->andReturn(null);
 
 		$stub = new \Orchestra\Foundation\Application($app);
