@@ -31,18 +31,19 @@ use Illuminate\Support\Fluent,
 					<strong>
 						<?php 
 						$active  = Extension::isActive($name);
-						$started = Extension::started($name); ?>
+						$started = Extension::started($name);
+						$uid     = str_replace('/', '.', $name); ?>
 						@if ( ! ($started))
 							{{ $extension->name }}
 						@else
-							{{ Html::link(handles('orchestra/foundation::extensions/configure/'.$name), $extension->name) }}
+							{{ Html::link(handles("orchestra/foundation::extensions/configure/{$uid}"), $extension->name) }}
 						@endif
 					</strong>
 					<div class="pull-right btn-group">
 						@if ( ! ($started or $active))
-							{{ Html::link(handles('orchestra/foundation::extensions/activate/'.$name), trans('orchestra/foundation::label.extensions.actions.activate'), array('class' => 'btn btn-primary btn-mini')) }}
+							{{ Html::link(handles("orchestra/foundation::extensions/activate/{$uid}"), trans('orchestra/foundation::label.extensions.actions.activate'), array('class' => 'btn btn-primary btn-mini')) }}
 						@else
-							{{ Html::link(handles('orchestra/foundation::extensions/deactivate/'.$name), trans('orchestra/foundation::label.extensions.actions.deactivate'), array('class' => 'btn btn-warning btn-mini')) }}
+							{{ Html::link(handles("orchestra/foundation::extensions/deactivate/{$uid}"), trans('orchestra/foundation::label.extensions.actions.deactivate'), array('class' => 'btn btn-warning btn-mini')) }}
 						@endif
 
 					</div>

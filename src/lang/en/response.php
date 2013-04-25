@@ -29,7 +29,7 @@ return array(
 
 	'extensions' => array(
 		'activate'         => 'Extension :name activated',
-		'deactivate'       => 'Extension :name deactivate',
+		'deactivate'       => 'Extension :name deactivated',
 		'configure'        => 'Configuration for Extension :name has been updated',
 		'update'           => 'Extension :name has been updated',
 		'depends-on'       => 'Extension :name was not activated because depends on :dependencies',
