@@ -141,7 +141,7 @@ class ExtensionsController extends AdminController {
 
 		Event::fire("orchestra.saving: extension.{$name}", array($input));
 
-		$memory->put("extension.active.{$name}.config", $input);
+		$memory->put("extensions.active.{$name}.config", $input);
 		$memory->put("extension_{$name}", $input);
 		
 		Event::fire("orchestra.saved: extension.{$name}", array($input));
