@@ -10,7 +10,7 @@ Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orc
 	Route::controller('resources', 'Orchestra\Foundation\ResourceController');
 	Route::resource('users', 'Orchestra\Foundation\UsersController');
 	Route::any('users/{id}/delete', 'Orchestra\Foundation\UsersController@delete');
-	Route::controller('settings', 'Orchestra\Foundation\SettingController');
+	Route::controller('settings', 'Orchestra\Foundation\SettingsController');
 
 	// Credential routing.
 	Route::get('login', 'Orchestra\Foundation\CredentialController@getLogin');
