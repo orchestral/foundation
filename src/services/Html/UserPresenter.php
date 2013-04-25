@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Services;
+<?php namespace Orchestra\Foundation\Services\Html;
 
 use Illuminate\Support\Facades\Auth, 
 	Illuminate\Support\Facades\Html,
