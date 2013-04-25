@@ -70,6 +70,19 @@ class UsersController extends AdminController {
 	}
 
 	/**
+	 * Show a user.
+	 *
+	 * GET (:orchestra)/users/1
+	 * 
+	 * @access public
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		return $this->edit($id);
+	}
+
+	/**
 	 * Create a new user.
 	 *
 	 * GET (:orchestra)/users/create
