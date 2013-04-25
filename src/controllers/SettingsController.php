@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
 use Event,
+	Input,
 	View,
 	Illuminate\Support\Fluent,
 	Orchestra\App,
@@ -25,14 +26,14 @@ class SettingsController extends AdminController {
 	}
 
 	/**
-	 * Orchestra Settings Page
+	 * Show Settings Page
 	 *
-	 * GET (:bundle)/settings
+	 * GET (:orchestra)/settings
 	 *
 	 * @access public
 	 * @return Response
 	 */
-	public function get_index()
+	public function getIndex()
 	{
 		// Orchestra settings are stored using Orchestra\Memory, we need to
 		// fetch it and convert it to Fluent (to mimick Eloquent properties).
@@ -40,7 +41,7 @@ class SettingsController extends AdminController {
 		$eloquent = new Fluent(array(
 			'site_name'        => $memory->get('site.name', ''),
 			'site_description' => $memory->get('site.description', ''),
-			'site_registrable' => ($memory->get('site.users.registration', false) ? 'yes' : 'no'),
+			'site_registrable' => ($memory->get('site.registrable', false) ? 'yes' : 'no'),
 			
 			'email_driver'     => $memory->get('email.driver', ''),
 			'email_address'    => $memory->get('email.from.address', ''),
@@ -59,4 +60,63 @@ class SettingsController extends AdminController {
 		return View::make('orchestra/foundation::settings.index', compact('eloquent', 'form'));
 	}
 
+	/**
+	 * Update Settings
+	 *
+	 * POST (:orchestra)/settings
+	 *
+	 * @access public
+	 * @return Response
+	 */
+	public function postIndex()
+	{
+		$input      = Input::all();
+		$validation = App::make('');
+		
+		if ( ! isset($input['email_driver'])
+		{
+			$input['email_driver'] = 'mail';
+		}
+		elseif ($input['email_driver'] === 'smtp')
+		{
+			$input['email_address'] = $input['email_username'];
+		}
+
+		$validation = Validator::make($input, $rules);
+
+		if ($val->fails())
+		{
+			return Redirect::to(handles('orchestra::settings'))
+					->with_input()
+					->with_errors($val);
+		}
+
+		$memory = App::memory();
+
+		$memory->put('site.name', $input['site_name']);
+		$memory->put('site.description', $input['site_description']);
+		$memory->put('site.registrable', ($input['site_registrable'] === 'yes'));
+		$memory->put('email.driver', $input['email_driver']);
+
+		$memory->put('email.from', array(
+			'address' => $input['email_address'],
+			'name'    => $input['site_name'],
+		));
+
+		if ((empty($input['email_password']) and $input['change_password'] === 'no'))
+		{
+			$input['email_password'] = $memory->get('email.password');	
+		}
+		
+		$memory->put('email.host', $input['email_host']);
+		$memory->put('email.port', $input['email_port']);
+		$memory->put('email.username', $input['email_username']);
+		$memory->put('email.password', $input['email_password']);
+		$memory->put('email.encryption', $input['email_encryption']);
+
+		Event::fire('orchestra.saved: settings', array($memory, $input));
+		Messages::add('success', __('orchestra::response.settings.update'));
+
+		return Redirect::to(handles('orchestra/foundation::settings'));
+	}
 }

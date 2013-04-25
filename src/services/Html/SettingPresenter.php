@@ -1,7 +1,8 @@
 <?php namespace Orchestra\Services\Html;
 
 use Illuminate\Support\Facades\Html,
-	Orchestra\Support\Facades\Form, 
+	Illuminate\Support\Facades\Form as F,
+	Orchestra\Support\Facades\Form,
 	Orchestra\Support\Facades\Table;
 
 class SettingPresenter {
@@ -84,7 +85,7 @@ class SettingPresenter {
 					$help = array(
 						HTML::create('span', str_repeat('*', strlen($model->email_smtp_password))),
 						'&nbsp;&nbsp;',
-						HTML::link('#', trans('orchestra/foundation::label.email.change_password')->get(), array(
+						HTML::link('#', trans('orchestra/foundation::label.email.change_password'), array(
 							'id' => 'change_password_button',
 							'class' => 'btn btn-mini btn-warning',
 						)),

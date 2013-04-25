@@ -33,7 +33,7 @@ Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestr
 
 Route::filter('orchestra.registrable', function ($route, $request, $value = null)
 {
-	if ( ! memorize('site.users.registration', false)) App::abort(404);
+	if ( ! memorize('site.registrable', false)) App::abort(404);
 });
 
 Route::filter('orchestra.installable', function ($route, $request, $value = null)
