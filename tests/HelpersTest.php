@@ -3,15 +3,21 @@
 class HelpersTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
+	 * Application instance.
+	 *
+	 * @var Illuminate\Foundation\Application
+	 */
+	protected $app = null;
+
+	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		$app = \Mockery::mock('Application');
-		$app->shouldReceive('instance')->andReturn(true);
+		$this->app = \Mockery::mock('Application');
+		$this->app->shouldReceive('instance')->andReturn(true);
 
-		\Orchestra\Support\Facades\App::setFacadeApplication($app);
-		\Illuminate\Support\Facades\Config::setFacadeApplication($app);
+		\Illuminate\Support\Facades\Facade::setFacadeApplication($this->app);
 	}
 	/**
 	 * Teardown the test environment.
@@ -19,6 +25,21 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 	public function tearDown()
 	{
 		\Mockery::close();
+	}
+
+	/**
+	 * Test orchestra() method.
+	 *
+	 * @test
+	 */
+	public function testOrchestraMethod()
+	{
+		$app = $this->app;
+		$app->shouldReceive('make')->with('orchestra.app')->once()->andReturn('foo');
+
+		\Illuminate\Support\Facades\Facade::setFacadeApplication($app);
+
+		$this->assertEquals('foo', orchestra());
 	}
 
 	/**
