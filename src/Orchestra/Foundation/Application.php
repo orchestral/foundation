@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
-use Exception;
+use Exception,
+	Illuminate\Support\NamespacedItemResolver;
 
 class Application {
 
@@ -109,6 +110,42 @@ class Application {
 	public function illuminate()
 	{
 		return $this->app;
+	}
+
+	/**
+	 *  Return handles configuration for a package/app.
+	 *
+	 * @access public
+	 * @param  string   $name   Package name
+	 * @return string
+	 */
+	public function handles($name)
+	{
+		$path  = '';
+		$query = '';
+
+		// split URI and query string, the route resolver should not worry 
+		// about provided query string.
+		if (strpos($name, '?') !== false) list($name, $query) = explode('?', $name, 2);
+
+		list($package, $route) = with(new NamespacedItemResolver)->parseKey($name);
+
+		// Prepare route valid, since we already extract package from route 
+		// we can re append query string to route value.
+		empty($route) and $route = '';
+		empty($query) or $route = "{$route}?{$query}";
+
+		// If package is empty, we should consider that the route is using
+		// app (or root path), it doesn't matter at this stage if app is 
+		// an extension or simply handling root path.
+		if (empty($package)) $package = "app";
+
+		$path = $this->route($package);
+		$path = trim("{$path}/{$route}", "/");
+
+		empty($path) and $path = '/';
+
+		return $this->app['url']->to($path);
 	}
 
 	/**

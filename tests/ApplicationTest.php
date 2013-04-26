@@ -61,10 +61,12 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('title')->once()->andReturn($widget)
 			->shouldReceive('link')->once()->andReturn(null);
 		$translator->shouldReceive('get')->andReturn('foo');
-		$orchestra->shouldReceive('route')->once()->with('orchestra/foundation')->andReturn('/');
-		$url->shouldReceive('to')->once()->with('/', array(), null)->andReturn('/');
+		$orchestra->shouldReceive('handles')->once()->with('orchestra/foundation::/')->andReturn('/');
 		$event->shouldReceive('listen')->with('orchestra.ready: admin', 'Orchestra\Services\Event\AdminMenuHandler')->once()->andReturn(null)
 			->shouldReceive('fire')->with('orchestra.started')->once()->andReturn(null);
+
+		\Orchestra\Support\Facades\App::setFacadeApplication($app);
+		\Orchestra\Support\Facades\App::swap($orchestra);
 
 		$stub = new \Orchestra\Foundation\Application($app);
 		$stub->start();
@@ -103,9 +105,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('make')->with('menu.app')->once()->andReturn($widget)
 			->shouldReceive('add')->with('install')->once()->andReturn($widget)
 			->shouldReceive('title')->with('Install')->once()->andReturn($widget);
-			
-		$url->shouldReceive('to')->andReturn('admin/install');
-		$orchestra->shouldReceive('route')->once()->with('orchestra/foundation')->andReturn('admin');
+		$orchestra->shouldReceive('handles')->once()->with('orchestra/foundation::install')->andReturn('admin/install');
 
 		\Orchestra\Support\Facades\App::setFacadeApplication($app);
 		\Orchestra\Support\Facades\App::swap($orchestra);
@@ -134,5 +134,30 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$this->app['orchestra.installed'] = true;
 
 		$this->assertTrue($stub->installed());
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Application::handles() method.
+	 *
+	 * @test
+	 */
+	public function testHandlesMethod()
+	{
+		$app = $this->app;
+		$app['config'] = ($config = \Mockery::mock('Config'));
+		$app['url'] = ($url = \Mockery::mock('Url'));
+
+		$config->shouldReceive('get')->twice()->with('orchestra/extension::handles.app', '/')->andReturn('/')
+			->shouldReceive('get')->twice()->with('orchestra/extension::handles.orchestra/foundation', '/')->andReturn('admin');
+		$url->shouldReceive('to')->once()->with('/')->andReturn('/')
+			->shouldReceive('to')->once()->with('info')->andReturn('info')
+			->shouldReceive('to')->twice()->with('admin/installer')->andReturn('admin/installer');
+
+		$stub = new \Orchestra\Foundation\Application($app);
+
+		$this->assertEquals('/', $stub->handles('app::/'));
+		$this->assertEquals('info', $stub->handles('info'));
+		$this->assertEquals('admin/installer', $stub->handles('orchestra/foundation::installer'));
+		$this->assertEquals('admin/installer', $stub->handles('orchestra/foundation::installer/'));
 	}
 }

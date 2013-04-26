@@ -28,9 +28,9 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testMemorizeMethod()
 	{
-		\Orchestra\Support\Facades\App::swap($app = \Mockery::mock('\Orchestra\Foundation\Application'));
+		\Orchestra\Support\Facades\App::swap($orchestra = \Mockery::mock('\Orchestra\Foundation\Application'));
 
-		$app->shouldReceive('memory')->once()->andReturn($app)
+		$orchestra->shouldReceive('memory')->once()->andReturn($orchestra)
 			->shouldReceive('get')->once()->with('site.name', null)->andReturn('Orchestra');
 
 		$this->assertEquals('Orchestra', memorize('site.name'));
@@ -43,27 +43,11 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testHandlesMethod()
 	{
-		$request = \Mockery::mock('\Illuminate\Http\Request');
-		$request->shouldReceive('ajax')->andReturn(null);
+		\Orchestra\Support\Facades\App::swap($orchestra = \Mockery::mock('\Orchestra\Foundation\Application'));
 
-		$app = new \Illuminate\Foundation\Application($request);
-		$app['url'] = ($url = \Mockery::mock('Url'));
-		$app['orchestra.app'] = ($orchestra = \Mockery::mock('App'));
+		$orchestra->shouldReceive('handles')->once()->with('app::foo')->andReturn('foo');
 
-		\Orchestra\Support\Facades\App::setFacadeApplication($app);
-		\Orchestra\Support\Facades\App::swap($orchestra);
-
-		$orchestra->shouldReceive('route')->twice()->with('app')->andReturn('/')
-			->shouldReceive('route')->twice()->with('orchestra/foundation')->andReturn('admin');
-
-		$url->shouldReceive('to')->once()->with('/', array(), null)->andReturn('/')
-			->shouldReceive('to')->once()->with('info', array(), null)->andReturn('info')
-			->shouldReceive('to')->twice()->with('admin/installer', array(), null)->andReturn('admin/installer');
-
-		$this->assertEquals('/', handles('app::/'));
-		$this->assertEquals('info', handles('info'));
-		$this->assertEquals('admin/installer', handles('orchestra/foundation::installer'));
-		$this->assertEquals('admin/installer', handles('orchestra/foundation::installer/'));
+		$this->assertEquals('foo', handles('app::foo'));
 	}
 	
 }
