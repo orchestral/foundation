@@ -37,9 +37,15 @@ class Application {
 	 * @access public
 	 * @return void
 	 */
-	public function start()
+	public function boot()
 	{
 		$app = $this->app;
+
+		// Set Orchestra Platform routing prefix.
+		$app['config']->set(
+			'orchestra/extension::handles.orchestra/foundation', 
+			$app['config']->get('orchestra/foundation::handles', 'admin'),
+		);
 
 		// Make Menu instance for backend and frontend appliction
 		$this->services['orchestra.menu'] = $app['orchestra.widget']->make('menu.orchestra');

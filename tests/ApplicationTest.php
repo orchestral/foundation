@@ -29,11 +29,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Application::start() method.
+	 * Test Orchestra\Foundation\Application::boot() method.
 	 *
 	 * @test
 	 */
-	public function testStartMethod()
+	public function testBootMethod()
 	{
 		$app = $this->app;
 		$app['env'] = 'production';
@@ -69,7 +69,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		\Orchestra\Support\Facades\App::swap($orchestra);
 
 		$stub = new \Orchestra\Foundation\Application($app);
-		$stub->start();
+		$stub->boot();
 
 		$this->assertTrue($app['orchestra.installed']);
 		$this->assertEquals($widget, $stub->menu());

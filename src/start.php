@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\App,
 	Illuminate\Support\Facades\Event;
 
-App::make('orchestra.app')->start();
+App::make('orchestra.app')->boot();
 
 include_once __DIR__.'/start/macros.php';
 include_once __DIR__.'/start/events.php';
