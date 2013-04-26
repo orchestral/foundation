@@ -160,7 +160,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app['url'] = ($url = \Mockery::mock('Url'));
 
 		$config->shouldReceive('get')->twice()->with('orchestra/extension::handles.app', '/')->andReturn('/')
-			->shouldReceive('get')->twice()->with('orchestra/foundation::handles', 'admin')->andReturn('admin');
+			->shouldReceive('get')->twice()->with('orchestra/foundation::handles', '/')->andReturn('admin');
 		$url->shouldReceive('to')->once()->with('/')->andReturn('/')
 			->shouldReceive('to')->once()->with('info')->andReturn('info')
 			->shouldReceive('to')->twice()->with('admin/installer')->andReturn('admin/installer');

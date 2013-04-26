@@ -140,9 +140,9 @@ class Application {
 		// an extension or simply handling root path.
 		if (empty($package)) $package = "app";
 
+		// Get the path from route configuration, and append route.
 		$path = $this->route($package);
 		$path = trim("{$path}/{$route}", "/");
-
 		empty($path) and $path = '/';
 
 		return $this->app['url']->to($path);
@@ -158,13 +158,13 @@ class Application {
 	 */
 	public function route($name, $default = '/')
 	{
+		// All route should be manage via `orchestra/extension::handles.{name}` 
+		// config key, except for orchestra/foundation.
 		$key = "orchestra/extension::handles.{$name}";
 
-		if ($name === 'orchestra/foundation') 
-		{
-			$key     = 'orchestra/foundation::handles';
-			$default = 'admin';
-		}
+		// Orchestra Platform routing is managed by `orchestra/foundation::handles`
+		// and can be manage using configuration. 
+		$name === 'orchestra/foundation' and $key = 'orchestra/foundation::handles';
 
 		return $this->app['config']->get($key, $default);
 	}
@@ -183,8 +183,8 @@ class Application {
 			return call_user_func_array(array($this->app, $method), $parameters);
 		}
 
-		$action  = (count($parameters) < 1 ? "orchestra" : array_shift($parameters));
-		$method  = "{$action}.{$method}";
+		$action = (count($parameters) < 1 ? "orchestra" : array_shift($parameters));
+		$method = "{$action}.{$method}";
 
 		return (isset($this->services[$method]) ? $this->services[$method] : null);
 	}	
