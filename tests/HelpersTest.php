@@ -48,15 +48,16 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 
 		$app = new \Illuminate\Foundation\Application($request);
 		$app['url'] = ($url = \Mockery::mock('Url'));
+		$app['orchestra.app'] = ($orchestra = \Mockery::mock('App'));
 
-		\Illuminate\Support\Facades\Facade::setFacadeApplication($app);
-		\Illuminate\Support\Facades\Config::swap($config = \Mockery::mock('Config'));
+		\Orchestra\Support\Facades\App::setFacadeApplication($app);
+		\Orchestra\Support\Facades\App::swap($orchestra);
 
-		$config->shouldReceive('get')->once()->with('app::handles', '/')->andReturn('/')
-			->shouldReceive('get')->twice()->with('orchestra/foundation::handles', '/')->andReturn('admin');
-		
+		$orchestra->shouldReceive('route')->twice()->with('app')->andReturn('/')
+			->shouldReceive('route')->twice()->with('orchestra/foundation')->andReturn('admin');
+
 		$url->shouldReceive('to')->once()->with('/', array(), null)->andReturn('/')
-			->shouldReceive('to')->once()->with('/info', array(), null)->andReturn('info')
+			->shouldReceive('to')->once()->with('info', array(), null)->andReturn('info')
 			->shouldReceive('to')->twice()->with('admin/installer', array(), null)->andReturn('admin/installer');
 
 		$this->assertEquals('/', handles('app::/'));

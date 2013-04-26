@@ -38,6 +38,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app = $this->app;
 		$app['env'] = 'production';
 		$app['orchestra.installed'] = false;
+		$app['orchestra.app'] = $orchestra = \Mockery::mock('App');
 		$app['orchestra.acl'] = $acl = \Mockery::mock('Acl');
 		$app['orchestra.memory'] = $memory = \Mockery::mock('Memory');
 		$app['orchestra.widget'] = $widget = \Mockery::mock('Widget');
@@ -60,7 +61,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('title')->once()->andReturn($widget)
 			->shouldReceive('link')->once()->andReturn(null);
 		$translator->shouldReceive('get')->andReturn('foo');
-		$config->shouldReceive('get')->andReturn('/');
+		$orchestra->shouldReceive('route')->once()->with('orchestra/foundation')->andReturn('/');
 		$url->shouldReceive('to')->once()->with('/', array(), null)->andReturn('/');
 		$event->shouldReceive('listen')->with('orchestra.ready: admin', 'Orchestra\Services\Event\AdminMenuHandler')->once()->andReturn(null)
 			->shouldReceive('fire')->with('orchestra.started')->once()->andReturn(null);
@@ -84,6 +85,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	{
 		$app = $this->app;
 		$app['orchestra.installed'] = false;
+		$app['orchestra.app'] = $orchestra = \Mockery::mock('App');
 		$app['orchestra.acl'] = $acl = \Mockery::mock('Acl');
 		$app['orchestra.memory'] = $memory = \Mockery::mock('Memory');
 		$app['orchestra.widget'] = $widget = \Mockery::mock('Widget');
@@ -102,13 +104,13 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('add')->with('install')->once()->andReturn($widget)
 			->shouldReceive('title')->with('Install')->once()->andReturn($widget);
 			
-		$url->shouldReceive('to')->with('admin/install', array(), null)->andReturn('admin/install');
-		$config->shouldReceive('get')->with('orchestra/foundation::handles', '/')->andReturn('admin');
+		$url->shouldReceive('to')->andReturn('admin/install');
+		$orchestra->shouldReceive('route')->once()->with('orchestra/foundation')->andReturn('admin');
 
-		\Illuminate\Support\Facades\Config::setFacadeApplication($app);
-		\Illuminate\Support\Facades\Config::swap($config);
+		\Orchestra\Support\Facades\App::setFacadeApplication($app);
+		\Orchestra\Support\Facades\App::swap($orchestra);
 
-		$widget->shouldReceive('link')->with(handles('orchestra/foundation::install'));
+		$widget->shouldReceive('link')->with('admin/install');
 
 		$stub = new \Orchestra\Foundation\Application($app);
 		$stub->start();

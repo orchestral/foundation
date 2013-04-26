@@ -116,11 +116,12 @@ class Application {
 	 *
 	 * @access public
 	 * @param  string   $name
+	 * @param  string   $default
 	 * @return string
 	 */
-	public function handle($name)
+	public function route($name, $default = '/')
 	{
-		return $this->app['config']->get("orchestra/extension::handles.{$name}", '/');
+		return $this->app['config']->get("orchestra/extension::handles.{$name}", $default);
 	}
 
 	/**
@@ -157,9 +158,6 @@ class Application {
 			->title($this->app['translator']->get('orchestra/foundation::title.home'))
 			->link(handles('orchestra/foundation::/'));
 
-		$this->app['events']->listen(
-			'orchestra.ready: admin', 
-			'Orchestra\Services\Event\AdminMenuHandler'
-		);
+		$this->app['events']->listen('orchestra.ready: admin', 'Orchestra\Services\Event\AdminMenuHandler');
 	}
 }

@@ -37,16 +37,13 @@ if ( ! function_exists('handles'))
 
 		empty($route) and $route = '';
 
-		if ( ! is_null($package)) 
-		{
-			$handles = Illuminate\Support\Facades\Config::get("{$package}::handles", '/');
+		if (empty($package)) $package = "app";
 
-			if ( ! is_string($handles)) $handles = '';
-		}
+		$handles = Orchestra\Support\Facades\App::route($package);
 
 		// reappend query string.
 		empty($query) or $route = "{$route}?{$query}";
-		$handles = rtrim("{$handles}/{$route}", "/");
+		$handles = trim("{$handles}/{$route}", "/");
 
 		empty($handles) and $handles = '/';
 
