@@ -41,12 +41,6 @@ class Application {
 	{
 		$app = $this->app;
 
-		// Set Orchestra Platform routing prefix.
-		$app['config']->set(
-			'orchestra/extension::handles.orchestra/foundation', 
-			$app['config']->get('orchestra/foundation::handles', 'admin'),
-		);
-
 		// Make Menu instance for backend and frontend appliction
 		$this->services['orchestra.menu'] = $app['orchestra.widget']->make('menu.orchestra');
 		$this->services['app.menu']       = $app['orchestra.widget']->make('menu.app');
@@ -164,7 +158,15 @@ class Application {
 	 */
 	public function route($name, $default = '/')
 	{
-		return $this->app['config']->get("orchestra/extension::handles.{$name}", $default);
+		$key = "orchestra/extension::handles.{$name}";
+
+		if ($name === 'orchestra/foundation') 
+		{
+			$key     = 'orchestra/foundation::handles';
+			$default = 'admin';
+		}
+
+		return $this->app['config']->get($key, $default);
 	}
 
 	/**

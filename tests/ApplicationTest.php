@@ -78,12 +78,12 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Application::start() method when database 
+	 * Test Orchestra\Foundation\Application::boot() method when database 
 	 * is not installed yet.
 	 *
 	 * @test
 	 */
-	public function testStartMethodWhenDatabaseIsNotInstalled()
+	public function testBootMethodWhenDatabaseIsNotInstalled()
 	{
 		$app = $this->app;
 		$app['orchestra.installed'] = false;
@@ -97,7 +97,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
 			->shouldReceive('attach')->never()->andReturn($acl);
-		$memory->shouldReceive('make')->with()->once()->andReturn($memory)
+		$memory->shouldReceive('make')->once()->andReturn($memory)
 			->shouldReceive('make')->with('runtime.orchestra')->once()->andReturn($memory)
 			->shouldReceive('get')->with('site.name')->once()->andReturn(null)
 			->shouldReceive('put')->with('site.name', 'Orchestra')->once()->andReturn(null);
@@ -106,14 +106,14 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('add')->with('install')->once()->andReturn($widget)
 			->shouldReceive('title')->with('Install')->once()->andReturn($widget);
 		$orchestra->shouldReceive('handles')->once()->with('orchestra/foundation::install')->andReturn('admin/install');
-
+		
 		\Orchestra\Support\Facades\App::setFacadeApplication($app);
 		\Orchestra\Support\Facades\App::swap($orchestra);
 
 		$widget->shouldReceive('link')->with('admin/install');
 
 		$stub = new \Orchestra\Foundation\Application($app);
-		$stub->start();
+		$stub->boot();
 
 		$this->assertFalse($app['orchestra.installed']);
 	}
@@ -160,7 +160,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app['url'] = ($url = \Mockery::mock('Url'));
 
 		$config->shouldReceive('get')->twice()->with('orchestra/extension::handles.app', '/')->andReturn('/')
-			->shouldReceive('get')->twice()->with('orchestra/extension::handles.orchestra/foundation', '/')->andReturn('admin');
+			->shouldReceive('get')->twice()->with('orchestra/foundation::handles', 'admin')->andReturn('admin');
 		$url->shouldReceive('to')->once()->with('/')->andReturn('/')
 			->shouldReceive('to')->once()->with('info')->andReturn('info')
 			->shouldReceive('to')->twice()->with('admin/installer')->andReturn('admin/installer');
