@@ -33,7 +33,7 @@ class DashboardController extends AdminController {
 	public function anyIndex()
 	{
 		return View::make('orchestra/foundation::dashboard.index')
-			->with('panes', Widget::make('pane.orchestra')->getItem());
+			->with('panes', Widget::make('pane.orchestra'));
 	}
 
 	/**
