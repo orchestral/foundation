@@ -3,8 +3,8 @@
 @section('content')
 
 <div class="row-fluid">
-	@if ( ! empty($panes))
-	@forelse ($panes as $id => $pane) 
+	@if (count($panes) > 0)
+	@foreach ($panes as $id => $pane) 
 		<div{{ Html::attributes($pane->attributes) }}>
 		@if ( ! empty($pane->html))
 			{{ $pane->html }}
@@ -23,6 +23,7 @@
 			</table>
 		@endif
 		</div>
+	@endforeach
 	@else
 	<div class="hero-unit">
 		<h2>Welcome to your new Orchestra site!</h2>
