@@ -1,5 +1,8 @@
 <?php namespace Orchestra\Foundation\Tests;
 
+use Mockery as m;
+use Orchestra\Foundation\Site;
+
 class SiteTest extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -7,12 +10,12 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$app = \Mockery::mock('Application');
+		$app = m::mock('Application');
 		$app->shouldReceive('instance')->andReturn(true);
 
 		\Illuminate\Support\Facades\Auth::setFacadeApplication($app);
 		\Illuminate\Support\Facades\Config::setFacadeApplication($app);
-		\Illuminate\Support\Facades\Config::swap($config = \Mockery::mock('Config'));
+		\Illuminate\Support\Facades\Config::swap($config = m::mock('Config'));
 
 		$config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
 	}
@@ -22,7 +25,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		\Mockery::close();		
+		m::close();		
 	}
 
 	/**
@@ -33,7 +36,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testGetMethod()
 	{
-		$stub = new \Orchestra\Foundation\Site;
+		$stub = new Site;
 
 		$refl = new \ReflectionObject($stub);
 		$items = $refl->getProperty('items');
@@ -55,12 +58,12 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testSetMethod()
 	{
-		$stub = new \Orchestra\Foundation\Site;
+		$stub = new Site;
 		$stub->set('title', 'Foo');
 		$stub->set('foo.bar', 'Foobar');
 
-		$this->assertEquals(array('title' => 'Foo', 'foo' => array('bar' => 'Foobar')), 
-			$stub->all());
+		$expected = array('title' => 'Foo', 'foo' => array('bar' => 'Foobar'));
+		$this->assertEquals($expected, $stub->all());
 	}
 
 	/**
@@ -71,7 +74,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testHasMethod()
 	{
-		$stub = new \Orchestra\Foundation\Site;
+		$stub = new Site;
 
 		$refl = new \ReflectionObject($stub);
 		$items = $refl->getProperty('items');
@@ -95,7 +98,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testForgetMethod()
 	{
-		$stub = new \Orchestra\Foundation\Site;
+		$stub = new Site;
 
 		$refl = new \ReflectionObject($stub);
 		$items = $refl->getProperty('items');
@@ -128,14 +131,16 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testLocalTimeReturnProperDateTimeWhenIsGuest()
 	{
-		$stub = new \Orchestra\Foundation\Site;
+		$auth = m::mock('Illuminate\Auth\Guard');
 
-		\Illuminate\Support\Facades\Auth::swap($auth = \Mockery::mock('Illuminate\Auth\Guard'));
+		\Illuminate\Support\Facades\Auth::swap($auth);
 
 		$auth->shouldReceive('guest')->andReturn(true);
 
-		$this->assertEquals(new \DateTimeZone('UTC'),
-				$stub->localtime('2012-01-01 00:00:00')->getTimezone());
+		$stub = new Site;
+
+		$this->assertEquals(new \DateTimeZone('UTC'), 
+			$stub->localtime('2012-01-01 00:00:00')->getTimezone());
 	}
 
 	/**
@@ -146,17 +151,20 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testLocalTimeReturnProperDateTimeWhenIsUser()
 	{
-		$stub = new \Orchestra\Foundation\Site;
+		$auth = m::mock('Illuminate\Auth\Guard');
+		$user = m::mock('Orchestra\Foundation\Model\User');
+
+		\Illuminate\Support\Facades\Auth::swap($auth);
 
 		$date = new \DateTime('2012-01-01 00:00:00');
 
-		\Illuminate\Support\Facades\Auth::swap($auth = \Mockery::mock('Illuminate\Auth\Guard'));
-
 		$auth->shouldReceive('guest')->andReturn(false)
-			->shouldReceive('user')->andReturn($user = \Mockery::mock('Orchestra\Foundation\Model\User'));
+			->shouldReceive('user')->andReturn($user);
 
 		$user->shouldReceive('localtime')->with($date)
 			->andReturn($date->setTimeZone(new \DateTimeZone('Asia/Kuala_Lumpur')));
+
+		$stub = new Site;
 
 		$this->assertEquals(new \DateTimeZone('Asia/Kuala_Lumpur'),
 				$stub->localtime($date)->getTimezone());

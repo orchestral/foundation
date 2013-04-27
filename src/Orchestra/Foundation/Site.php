@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Foundation;
 
-use DateTime, 
-	DateTimeZone,
-	Illuminate\Support\Facades\Auth, 
-	Illuminate\Support\Facades\Config;
+use DateTime;
+use DateTimeZone;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class Site {
 

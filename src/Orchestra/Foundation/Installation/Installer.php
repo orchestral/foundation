@@ -1,10 +1,10 @@
 <?php namespace Orchestra\Foundation\Installation;
 
-use Exception,
-	Event,
-	Validator,
-	Orchestra\Model\User,
-	Orchestra\Model\Role;
+use Exception;
+use Event;
+use Validator;
+use Orchestra\Model\User;
+use Orchestra\Model\Role;
 
 class Installer {
 	

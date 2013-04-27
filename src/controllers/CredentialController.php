@@ -1,15 +1,15 @@
 <?php namespace Orchestra\Foundation;
 
-use Auth,
-	Event,
-	Input,
-	Redirect,
-	Session,
-	View,
-	Orchestra\App,
-	Orchestra\Messages,
-	Orchestra\Model\User,
-	Orchestra\Site;
+use Auth;
+use Event;
+use Input;
+use Redirect;
+use Session;
+use View;
+use Orchestra\App;
+use Orchestra\Messages;
+use Orchestra\Model\User;
+use Orchestra\Site;
 
 class CredentialController extends AdminController {
 

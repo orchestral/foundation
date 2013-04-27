@@ -1,15 +1,15 @@
 <?php namespace Orchestra\Foundation;
 
-use Input,
-	Event,
-	Redirect,
-	View,
-	Illuminate\Support\Fluent,
-	Orchestra\App,
-	Orchestra\Extension,
-	Orchestra\Messages,
-	Orchestra\Site,
-	Orchestra\Services\Html\ExtensionPresenter;
+use Input;
+use Event;
+use Redirect;
+use View;
+use Illuminate\Support\Fluent;
+use Orchestra\App;
+use Orchestra\Extension;
+use Orchestra\Messages;
+use Orchestra\Site;
+use Orchestra\Services\Html\ExtensionPresenter;
 
 class ExtensionsController extends AdminController {
 

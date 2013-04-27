@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Services\Html;
 
-use Illuminate\Support\Facades\Html,
-	Illuminate\Support\Facades\Form as F,
-	Orchestra\Support\Facades\Form,
-	Orchestra\Support\Facades\Table;
+use Illuminate\Support\Facades\Html;
+use Illuminate\Support\Facades\Form as F;
+use Orchestra\Support\Facades\Form;
+use Orchestra\Support\Facades\Table;
 
 class SettingPresenter {
 

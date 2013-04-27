@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Services\Html;
 
-use Illuminate\Support\Facades\Html,
-	Orchestra\Support\Facades\Form, 
-	Orchestra\Support\Facades\Table;
+use Illuminate\Support\Facades\Html;
+use Orchestra\Support\Facades\Form;
+use Orchestra\Support\Facades\Table;
 
 class AccountPresenter {
 

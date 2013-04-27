@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Model;
 
-use Illuminate\Auth\UserInterface,
-	Illuminate\Auth\Reminders\RemindableInterface,
-	Illuminate\Database\Eloquent\Model as Eloquent,
-	Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\UserInterface;
+use Illuminate\Auth\Reminders\RemindableInterface;
+use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 

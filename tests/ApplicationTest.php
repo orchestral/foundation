@@ -1,5 +1,8 @@
 <?php namespace Orchestra\Foundation\Tests;
 
+use Mockery as m;
+use Orchestra\Foundation\Application;
+
 class ApplicationTest extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -7,14 +10,14 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 * @var Illuminate\Foundation\Application
 	 */
-	protected $app = null;
+	private $app = null;
 
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		$request = \Mockery::mock('\Illuminate\Http\Request');
+		$request = m::mock('\Illuminate\Http\Request');
 		$request->shouldReceive('ajax')->andReturn(null);
 
 		$this->app = new \Illuminate\Foundation\Application($request);
@@ -25,7 +28,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		\Mockery::close();
+		m::close();
 	}
 
 	/**
@@ -38,16 +41,17 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app = $this->app;
 		$app['env'] = 'production';
 		$app['orchestra.installed'] = false;
-		$app['orchestra.app'] = $orchestra = \Mockery::mock('App');
-		$app['orchestra.acl'] = $acl = \Mockery::mock('Acl');
-		$app['orchestra.memory'] = $memory = \Mockery::mock('Memory');
-		$app['orchestra.widget'] = $widget = \Mockery::mock('Widget');
-		$app['translator'] = $translator = \Mockery::mock('Translator');
-		$app['url'] = ($url = \Mockery::mock('Url'));
-		$app['events'] = $event = \Mockery::mock('Event');
+		$app['orchestra.app'] = $orchestra = m::mock('App');
+		$app['orchestra.acl'] = $acl = m::mock('Acl');
+		$app['orchestra.memory'] = $memory = m::mock('Memory');
+		$app['orchestra.widget'] = $widget = m::mock('Widget');
+		$app['translator'] = $translator = m::mock('Translator');
+		$app['url'] = $url = m::mock('Url');
+		$app['events'] = $event = m::mock('Event');
+		$app['config'] = $config = m::mock('Config');
 
 		\Illuminate\Support\Facades\Config::setFacadeApplication($app);
-		\Illuminate\Support\Facades\Config::swap($config = \Mockery::mock('Config'));
+		\Illuminate\Support\Facades\Config::swap($config);
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
 			->shouldReceive('attach')->with($memory)->once()->andReturn($acl);
@@ -62,13 +66,14 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('link')->once()->andReturn(null);
 		$translator->shouldReceive('get')->andReturn('foo');
 		$orchestra->shouldReceive('handles')->once()->with('orchestra/foundation::/')->andReturn('/');
-		$event->shouldReceive('listen')->with('orchestra.ready: admin', 'Orchestra\Services\Event\AdminMenuHandler')->once()->andReturn(null)
+		$event->shouldReceive('listen')
+				->with('orchestra.ready: admin', 'Orchestra\Services\Event\AdminMenuHandler')->once()->andReturn(null)
 			->shouldReceive('fire')->with('orchestra.started')->once()->andReturn(null);
 
 		\Orchestra\Support\Facades\App::setFacadeApplication($app);
 		\Orchestra\Support\Facades\App::swap($orchestra);
 
-		$stub = new \Orchestra\Foundation\Application($app);
+		$stub = new Application($app);
 		$stub->boot();
 
 		$this->assertTrue($app['orchestra.installed']);
@@ -86,14 +91,14 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	public function testBootMethodWhenDatabaseIsNotInstalled()
 	{
 		$app = $this->app;
-		$app['orchestra.installed'] = false;
-		$app['orchestra.app'] = $orchestra = \Mockery::mock('App');
-		$app['orchestra.acl'] = $acl = \Mockery::mock('Acl');
-		$app['orchestra.memory'] = $memory = \Mockery::mock('Memory');
-		$app['orchestra.widget'] = $widget = \Mockery::mock('Widget');
-		$app['config'] = $config = \Mockery::mock('Config');
 		$app['env'] = 'production';
-		$app['url'] = $url = \Mockery::mock('Url');
+		$app['orchestra.installed'] = false;
+		$app['orchestra.app'] = $orchestra = m::mock('App');
+		$app['orchestra.acl'] = $acl = m::mock('Acl');
+		$app['orchestra.memory'] = $memory = m::mock('Memory');
+		$app['orchestra.widget'] = $widget = m::mock('Widget');
+		$app['config'] = $config = m::mock('Config');
+		$app['url'] = $url = m::mock('Url');
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
 			->shouldReceive('attach')->never()->andReturn($acl);
@@ -112,7 +117,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 
 		$widget->shouldReceive('link')->with('admin/install');
 
-		$stub = new \Orchestra\Foundation\Application($app);
+		$stub = new Application($app);
 		$stub->boot();
 
 		$this->assertFalse($app['orchestra.installed']);
@@ -127,7 +132,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	{
 		$this->app['orchestra.installed'] = false;
 
-		$stub = new \Orchestra\Foundation\Application($this->app);
+		$stub = new Application($this->app);
 
 		$this->assertFalse($stub->installed());
 
@@ -143,7 +148,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testIlluminateMethod()
 	{
-		$stub = new \Orchestra\Foundation\Application($this->app);
+		$stub = new Application($this->app);
 		$this->assertInstanceOf('\Illuminate\Foundation\Application', $stub->illuminate());
 		$this->assertInstanceOf('\Illuminate\Http\Request', $stub->make('request'));
 	}
@@ -156,8 +161,8 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	public function testHandlesMethod()
 	{
 		$app = $this->app;
-		$app['config'] = ($config = \Mockery::mock('Config'));
-		$app['url'] = ($url = \Mockery::mock('Url'));
+		$app['config'] = ($config = m::mock('Config'));
+		$app['url'] = ($url = m::mock('Url'));
 
 		$config->shouldReceive('get')->twice()->with('orchestra/extension::handles.app', '/')->andReturn('/')
 			->shouldReceive('get')->twice()->with('orchestra/foundation::handles', '/')->andReturn('admin');
@@ -165,7 +170,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('to')->once()->with('info')->andReturn('info')
 			->shouldReceive('to')->twice()->with('admin/installer')->andReturn('admin/installer');
 
-		$stub = new \Orchestra\Foundation\Application($app);
+		$stub = new Application($app);
 
 		$this->assertEquals('/', $stub->handles('app::/'));
 		$this->assertEquals('info', $stub->handles('info'));

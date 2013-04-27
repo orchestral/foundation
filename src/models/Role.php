@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Model;
 
-use Illuminate\Database\Eloquent\Model as Eloquent,
-	Orchestra\Acl;
+use Illuminate\Database\Eloquent\Model as Eloquent;
+use Orchestra\Acl;
 
 class Role extends Eloquent {
 

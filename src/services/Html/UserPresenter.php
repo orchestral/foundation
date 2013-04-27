@@ -1,11 +1,11 @@
 <?php namespace Orchestra\Services\Html;
 
-use Illuminate\Support\Facades\Auth, 
-	Illuminate\Support\Facades\Html,
-	Orchestra\Support\Facades\Form, 
-	Orchestra\Support\Facades\Table,
-	Orchestra\Html\Table\TableBuilder,
-	Orchestra\Model\Role;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Html;
+use Orchestra\Support\Facades\Form;
+use Orchestra\Support\Facades\Table;
+use Orchestra\Html\Table\TableBuilder;
+use Orchestra\Model\Role;
 
 class UserPresenter {
 

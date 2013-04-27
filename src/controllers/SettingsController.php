@@ -1,14 +1,14 @@
 <?php namespace Orchestra\Foundation;
 
-use Event,
-	Input,
-	Redirect,
-	View,
-	Illuminate\Support\Fluent,
-	Orchestra\App,
-	Orchestra\Messages,
-	Orchestra\Site,
-	Orchestra\Services\Html\SettingPresenter;
+use Event;
+use Input;
+use Redirect;
+use View;
+use Illuminate\Support\Fluent;
+use Orchestra\App;
+use Orchestra\Messages;
+use Orchestra\Site;
+use Orchestra\Services\Html\SettingPresenter;
 
 class SettingsController extends AdminController {
 
@@ -72,8 +72,8 @@ class SettingsController extends AdminController {
 	 */
 	public function postIndex()
 	{
-		$default    = array('email_driver' => 'mail');
-		$input      = array_merge($default, Input::all());
+		$default = array('email_driver' => 'mail');
+		$input   = array_merge($default, Input::all());
 
 		$validation = App::make('Orchestra\Services\Validation\Setting')
 						->on($input['email_driver'])->with($input);

@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
-use Exception,
-	Illuminate\Support\NamespacedItemResolver;
+use Exception;
+use Illuminate\Support\NamespacedItemResolver;
 
 class Application {
 

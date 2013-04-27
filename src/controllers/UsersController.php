@@ -1,17 +1,17 @@
 <?php namespace Orchestra\Foundation;
 
-use Auth,
-	DB,
-	Event,
-	Input,
-	Redirect,
-	View,
-	Orchestra\App,
-	Orchestra\Messages,
-	Orchestra\Site,
-	Orchestra\Model\Role,
-	Orchestra\Model\User,
-	Orchestra\Services\Html\UserPresenter;
+use Auth;
+use DB;
+use Event;
+use Input;
+use Redirect;
+use View;
+use Orchestra\App;
+use Orchestra\Messages;
+use Orchestra\Site;
+use Orchestra\Model\Role;
+use Orchestra\Model\User;
+use Orchestra\Services\Html\UserPresenter;
 
 class UsersController extends AdminController {
 

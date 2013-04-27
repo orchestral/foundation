@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Foundation\Tests;
 
+use Mockery as m;
+
 class HelpersTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
@@ -7,14 +9,14 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 	 *
 	 * @var Illuminate\Foundation\Application
 	 */
-	protected $app = null;
+	private $app = null;
 
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		$this->app = \Mockery::mock('Application');
+		$this->app = m::mock('Application');
 		$this->app->shouldReceive('instance')->andReturn(true);
 
 		\Illuminate\Support\Facades\Facade::setFacadeApplication($this->app);
@@ -24,7 +26,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		\Mockery::close();
+		m::close();
 	}
 
 	/**
@@ -49,7 +51,9 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testMemorizeMethod()
 	{
-		\Orchestra\Support\Facades\App::swap($orchestra = \Mockery::mock('\Orchestra\Foundation\Application'));
+		$orchestra = m::mock('\Orchestra\Foundation\Application');
+
+		\Orchestra\Support\Facades\App::swap($orchestra);
 
 		$orchestra->shouldReceive('memory')->once()->andReturn($orchestra)
 			->shouldReceive('get')->once()->with('site.name', null)->andReturn('Orchestra');
@@ -64,7 +68,9 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testHandlesMethod()
 	{
-		\Orchestra\Support\Facades\App::swap($orchestra = \Mockery::mock('\Orchestra\Foundation\Application'));
+		$orchestra = m::mock('\Orchestra\Foundation\Application');
+
+		\Orchestra\Support\Facades\App::swap($orchestra);
 
 		$orchestra->shouldReceive('handles')->once()->with('app::foo')->andReturn('foo');
 

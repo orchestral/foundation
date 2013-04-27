@@ -1,16 +1,16 @@
 <?php namespace Orchestra\Foundation;
 
-use Auth,
-	DB,
-	Event,
-	Hash,
-	Input,
-	Redirect,
-	View,
-	Orchestra\App,
-	Orchestra\Messages,
-	Orchestra\Site,
-	Orchestra\Services\Html\AccountPresenter;
+use Auth;
+use DB;
+use Event;
+use Hash;
+use Input;
+use Redirect;
+use View;
+use Orchestra\App;
+use Orchestra\Messages;
+use Orchestra\Site;
+use Orchestra\Services\Html\AccountPresenter;
 
 class AccountController extends AdminController {
 

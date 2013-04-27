@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\Installation;
 
-use PDOException,
-	Illuminate\Support\Facades\DB,
-	Illuminate\Support\Facades\Html;
+use PDOException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Html;
 
 class Requirement {
 
@@ -70,9 +70,7 @@ class Requirement {
 	 */
 	public function checkDatabaseConnection()
 	{
-		$schema = array(
-			'is' => true,
-		);
+		$schema = array('is' => true);
 
 		try
 		{

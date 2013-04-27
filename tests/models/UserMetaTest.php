@@ -1,5 +1,8 @@
 <?php namespace Orchestra\Foundation\Tests\Model;
 
+use Mockery as m;
+use Orchestra\Model\UserMeta;
+
 class UserMetaTest extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -7,17 +10,16 @@ class UserMetaTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected function addMockConnection($model)
 	{
-		$model->setConnectionResolver(
-			$resolver = \Mockery::mock('Illuminate\Database\ConnectionResolverInterface')
-		);
+		$resolver = m::mock('Illuminate\Database\ConnectionResolverInterface');
+		$model->setConnectionResolver($resolver);
 		$resolver->shouldReceive('connection')
-			->andReturn(\Mockery::mock('Illuminate\Database\Connection'));
+			->andReturn(m::mock('Illuminate\Database\Connection'));
 		$model->getConnection()
 			->shouldReceive('getQueryGrammar')
-				->andReturn(\Mockery::mock('Illuminate\Database\Query\Grammars\Grammar'));
+				->andReturn(m::mock('Illuminate\Database\Query\Grammars\Grammar'));
 		$model->getConnection()
 			->shouldReceive('getPostProcessor')
-				->andReturn(\Mockery::mock('Illuminate\Database\Query\Processors\Processor'));
+				->andReturn(m::mock('Illuminate\Database\Query\Processors\Processor'));
 	}
 
 	/**
@@ -25,7 +27,7 @@ class UserMetaTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
-		\Mockery::close();
+		m::close();
 	}
 
 	/**
@@ -35,7 +37,7 @@ class UserMetaTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testUsersMethod()
 	{
-		$model = new \Orchestra\Model\UserMeta;
+		$model = new UserMeta;
 
 		$this->addMockConnection($model);
 		

@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Services\Html;
 
-use Html,
-	Orchestra\Extension,
-	Orchestra\Form;
+use Html;
+use Orchestra\Extension;
+use Orchestra\Form;
 
 class ExtensionPresenter {
 
