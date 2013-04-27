@@ -70,7 +70,8 @@ class CredentialController extends AdminController {
 	public function postLogin()
 	{
 		$input      = Input::all();
-		$validation = App::make('Orchestra\Services\Validation\Auth')->with($input);
+		$validation = App::make('Orchestra\Services\Validation\Auth')
+						->on('login')->with($input);
 
 		// Validate user login, if any errors is found redirect it back to
 		// login page with the errors.
@@ -118,7 +119,7 @@ class CredentialController extends AdminController {
 	protected function authenticate($input)
 	{
 		$data = array(
-			'email'    => $input['username'],
+			'email'    => $input['email'],
 			'password' => $input['password'],
 		);
 

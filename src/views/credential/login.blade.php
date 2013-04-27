@@ -13,11 +13,11 @@
 			{{ Form::token() }}
 			<fieldset>
 
-				<div class="control-group {{ $errors->has('username') ? 'error' : '' }}">
-					{{ Form::label('username', trans("orchestra/foundation::label.users.email"), array('class' => 'control-label')) }}
+				<div class="control-group {{ $errors->has('email') ? 'error' : '' }}">
+					{{ Form::label('email', trans("orchestra/foundation::label.users.email"), array('class' => 'control-label')) }}
 					<div class="controls">
-						{{ Form::input('text', 'username', '', array('required' => true, 'class' => 'span12', 'tabindex' => 1)) }}
-						{{ $errors->first('username', '<p class="help-block">:message</p>') }}
+						{{ Form::input('text', 'email', '', array('required' => true, 'class' => 'span12', 'tabindex' => 1)) }}
+						{{ $errors->first('email', '<p class="help-block">:message</p>') }}
 					</div>
 				</div>
 

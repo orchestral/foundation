@@ -10,7 +10,17 @@ class Auth extends Validator {
 	 * @var array
 	 */
 	protected static $rules = array(
-		'username' => array('required', 'email'),
-		'password' => array('required'),
+		'email' => array('required', 'email'),
 	);
+
+	/**
+	 * On login scenario.
+	 *
+	 * @access protected
+	 * @return void
+	 */
+	protected function onLogin()
+	{
+		static::$rules['password'] = array('required');
+	}
 }
