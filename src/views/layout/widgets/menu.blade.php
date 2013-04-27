@@ -1,6 +1,6 @@
 <ul class="nav" role="menu">
 	
-	@foreach ($menu->getItem() as $item) 
+	@foreach ($menu as $item) 
 
 		@if (1 > count($item->childs)) 
 			<li>{{ HTML::link($item->link, $item->title) }}</li>

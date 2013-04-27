@@ -38,7 +38,8 @@ Html::macro('title', function ()
 Blade::extend(function ($view)
 {
 	$pattern     = '/(\s*)@placeholder\s?\(\s*(.*)\)/';
-	$replacement = '$1<?php foreach (Orchestra\Widget::make("placeholder.".$2)->getItem() as $__p): echo value($__p->value ?:""); endforeach; ?>';
+	$replacement = '$1<?php $__ps = Orchestra\Widget::make("placeholder.".$2); '
+		.'foreach ($__ps as $__p) { echo value($__p->value ?:""); } ?>';
 
 	return preg_replace($pattern, $replacement, $view);
 });
