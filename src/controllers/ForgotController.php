@@ -6,6 +6,8 @@ use Str;
 use View;
 use Orchestra\App;
 use Orchestra\Mail;
+use Orchestra\Memory;
+use Orchestra\Messages;
 use Orchestra\Site;
 use Orchestra\Model\User;
 
@@ -23,7 +25,7 @@ class ForgotController extends AdminController {
 		parent::__construct();
 
 		$this->beforeFilter('orchestra.logged');
-		//$this->beforeFilter('orchestra.csrf', array('only' => array('postIndex')));
+		$this->beforeFilter('orchestra.csrf', array('only' => array('postIndex')));
 	}
 
 	/**
@@ -55,8 +57,7 @@ class ForgotController extends AdminController {
 	public function postIndex()
 	{
 		$input      = Input::all();
-		$validation = App::make('Orchestra\Services\Validation\Auth')
-						->on('login')->with($input);
+		$validation = App::make('Orchestra\Services\Validation\Auth')->with($input);
 		
 		if ($validation->fails())
 		{
@@ -69,37 +70,96 @@ class ForgotController extends AdminController {
 					->withErrors($validation);
 		}
 
-		$user = User::where('email', '=', $input['email'])->first();
+		$user     = User::where('email', '=', $input['email'])->first();
+		$userMeta = Memory::make('userMeta');
 
 		if (is_null($user))
 		{
-			var_dump('foo');die();
 			// no user could be associated with the provided email address
 			Messages::add('error', trans('orchestra/foundation::response.db-404'));
 
 			return Redirect::to(handles('orchestra/foundation::forgot'));
 		}
 
-		var_dump($user);die();
-
-		$meta   = App::make('orchestra.memory')->driver('user');
 		$memory = App::memory();
 		$hash   = sha1($user->email.Str::random(10));
 		$url    = handles("orchestra/foundation::forgot/reset/{$user->id}/{$hash}");
-		$site   = $memory->get('site.name', 'Orchestra');
+		$site   = $memory->get('site.name', 'Orchestra Platform');
 		$data   = compact('user', 'url', 'site');
 		
-		Mail::send('orchestra/foundation::email.forgot.request', $data, function ($m) use ($site, $user)
+		$sent = Mail::send('orchestra/foundation::email.forgot.request', $data, function ($m) 
+			use ($site, $user)
 		{
 			$m->subject(trans('orchestra/foundation::email.forgot.request', compact('site')));
 			$m->to($user->email, $user->fullname);
 		});
-		
-		// Messages::add('error', trans('orchestra/foundation::response.forgot.email-fail'));
-		
-		$meta->put("reset_password_hash.{$user->id}", $hash);
-		Messages::add('success', trans('orchestra/foundation::response.forgot.email-send'));
+
+		if ($sent < 1)
+		{
+			Messages::add('error', trans('orchestra/foundation::response.forgot.email-fail'));
+		}
+		else
+		{
+			$userMeta->put("reset_password_hash.{$user->id}", $hash);
+			Messages::add('success', trans('orchestra/foundation::response.forgot.email-send'));
+		}
 
 		return Redirect::to(handles('orchestra/foundation::forgot'));
+	}
+
+	/**
+	 * Once user actually visit the reset my password page, we now should be
+	 * able to make the operation to create a temporary password on behave
+	 * of the user
+	 *
+	 * GET (:orchestra)/forgot/reset/(:userId)/(:hash)
+	 *
+	 * @access public
+	 * @param  int      $userId
+	 * @param  string   $hash
+	 * @return Response
+	 */
+	public function getReset($userId, $hash)
+	{
+		if ( ! (is_numeric($userId) and is_string($hash)) or empty($hash))
+		{
+			return App::abort(404);
+		}
+
+		$user     = User::find($userId);
+		$userMeta = Memory::make('userMeta');
+
+		if (is_null($user) or $hash !== $userMeta->get("reset_password_hash.{$userId}"))
+		{
+			return App::abort(404);
+		}
+
+		$memory   = App::memory();
+		$password = Str::random(5);
+		$site     = $memory->get('site.name', 'Orchestra Platform');
+		$data     = compact('password', 'user', 'site');
+
+		$sent = Mail::send('orchestra/foundation::email.forgot.reset', $data, function ($m) 
+			use ($site, $user)
+		{
+			$m->subject(trans('orchestra/foundation::email.forgot.reset', compact('site')));
+			$m->to($user->email, $user->fullname);
+		});
+
+		if ($sent < 1)
+		{
+			Messages::add('error', trans('orchestra/foundation::response.forgot.email-fail'));
+		}
+		else
+		{
+			$userMeta->put("reset_password_hash.{$userId}", "");
+
+			$user->password = $password;
+			$user->save();
+
+			Messages::add('success', trans('orchestra/foundation::response.forgot.email-send'));
+		}
+
+		return Redirect::to(handles('orchestra/foundation::login'));
 	}
 }

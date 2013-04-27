@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Services;
 
 use Orchestra\Model\UserMeta;
-use Orchestra\Support\Memory\Drivers\Driver;
+use Orchestra\Memory\Drivers\Driver;
 
-class User extends Driver {
+class UserMetaRepository extends Driver {
 	
 	/**
 	 * Storage name
@@ -46,9 +46,9 @@ class User extends Driver {
 
 		list($name, $userId) = explode('/user-', $key);
 
-		$userMeta = UserMeta::name($name, $userId);
+		$userMeta = UserMeta::search($name, $userId)->first();
 
-		if ( ! is_null($user_meta))
+		if ( ! is_null($userMeta))
 		{
 			$this->put($key, $userMeta->value);
 
@@ -110,13 +110,13 @@ class User extends Driver {
 			
 			if (array_key_exists($key, $this->keyMap))
 			{
-				$is_new = false;
+				$isNew = false;
 				extract($this->keyMap[$key]);
 			}
 
 			list($name, $userId) = explode('/user-', $key);
 
-			if ($checksum === md5($value) or empty($user_id)) continue;
+			if ($checksum === md5($value) or empty($userId)) continue;
 
 			$userMeta = UserMeta::where('name', '=', $name)
 						->where('user_id', '=', $userId)->first();
@@ -126,11 +126,11 @@ class User extends Driver {
 				if (is_null($value)) continue;
 
 				// Insert the new key:value
-				UserMeta::create(array(
-					'name'    => $name,
-					'user_id' => $userId,
-					'value'   => $value,
-				));
+				$userMeta          = new UserMeta(compact('value'));
+				$userMeta->name    = $name;
+				$userMeta->user_id = $userId;
+
+				$userMeta->save();
 			}
 			else
 			{

@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation;
 
 use Illuminate\Support\Facades\Mail as M;
-use Illuminate\Foundation\Application;
 
 class Mail {
 
@@ -38,6 +37,8 @@ class Mail {
 	{
 		$method = 'queue';
 		$memory = $this->app['orchestra.memory']->make();
+
+		$this->app['config']->set('mail', $memory->get('email'));
 
 		if ('no' === $memory->get('email.queue', 'no')) $method = 'send';
 
