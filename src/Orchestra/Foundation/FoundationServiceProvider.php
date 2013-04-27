@@ -18,6 +18,11 @@ class FoundationServiceProvider extends ServiceProvider {
 			return new Application($app);
 		});
 
+		$this->app['orchestra.mail'] = $this->app->share(function ($app)
+		{
+			return new Mail($app);
+		});
+
 		$this->app['orchestra.site'] = $this->app->share(function ($app)
 		{
 			return new Site;
@@ -43,6 +48,6 @@ class FoundationServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('orchestra.app', 'orchestra.site', 'orchestra.installed');
+		return array('orchestra.app', 'orchestra.mail', 'orchestra.site', 'orchestra.installed');
 	}
 }
