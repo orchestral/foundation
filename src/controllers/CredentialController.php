@@ -36,11 +36,7 @@ class CredentialController extends AdminController {
 			),
 		));
 
-		$this->beforeFilter('orchestra.csrf', array(
-			'only' => array(
-				'postLogin', 'postRegister',
-			),
-		));
+		$this->beforeFilter('orchestra.csrf', array('only' => array('postLogin')));
 	}
 
 	/**

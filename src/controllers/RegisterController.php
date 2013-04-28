@@ -29,6 +29,7 @@ class RegisterController extends AdminController {
 		// Registration controller should only be accessible if we allow 
 		// registration through the setting.
 		$this->beforeFilter('orchestra.registrable');
+		$this->beforeFilter('orchestra.csrf', array('only' => array('postIndex')));
 	}
 
 	/**
