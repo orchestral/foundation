@@ -7,7 +7,8 @@ Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orc
 	Route::controller('forgot', 'Orchestra\Foundation\ForgotController');
 	Route::controller('install', 'Orchestra\Foundation\InstallController');
 	Route::controller('register', 'Orchestra\Foundation\RegisterController');
-	Route::controller('resources', 'Orchestra\Foundation\ResourceController');
+	Route::any('resources{index?}', 'Orchestra\Foundation\ResourcesController@anyIndex')->where('index', '/index');
+	Route::any('resources{any}', 'Orchestra\Foundation\ResourcesController@call')->where('any', '(.*)');
 	Route::resource('users', 'Orchestra\Foundation\UsersController');
 	Route::any('users/{id}/delete', 'Orchestra\Foundation\UsersController@delete');
 	Route::controller('settings', 'Orchestra\Foundation\SettingsController');
