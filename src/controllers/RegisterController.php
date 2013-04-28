@@ -1,5 +1,19 @@
 <?php namespace Orchestra\Foundation;
 
+use Config;
+use DB;
+use Event;
+use Input;
+use Redirect;
+use Str;
+use View;
+use Orchestra\App;
+use Orchestra\Mail;
+use Orchestra\Messages;
+use Orchestra\Site;
+use Orchestra\Model\User;
+use Orchestra\Services\Html\AccountPresenter;
+
 class RegisterController extends AdminController {
 	
 	/**
@@ -15,5 +29,144 @@ class RegisterController extends AdminController {
 		// Registration controller should only be accessible if we allow 
 		// registration through the setting.
 		$this->beforeFilter('orchestra.registrable');
+	}
+
+	/**
+	 * User Registration Page.
+	 *
+	 * GET (:orchestra)/register
+	 *
+	 * @access public
+	 * @return Response
+	 */
+	public function getIndex()
+	{
+		$eloquent = App::make('orchestra.user');
+		$title    = 'orchestra/foundation::title.register';
+		$form     = AccountPresenter::profileForm($eloquent, handles('orchestra/foundation::register'));
+		
+		$form->extend(function ($form) use ($title)
+		{
+			$form->submit = $title;
+
+			$form->hidden('redirect', function ($field)
+			{
+				$field->value = handles('orchestra/foundation::login');
+			});
+
+			$form->token = true;
+		});
+
+		Event::fire('orchestra.form: user.account', array($eloquent, $form));
+		
+		Site::set('title', trans($title));
+		
+		return View::make('orchestra/foundation::credential.register', compact('eloquent', 'form'));
+	}
+
+	/**
+	 * Create a new user.
+	 *
+	 * POST (:orchestra)/register
+	 *
+	 * @access public
+	 * @return Response
+	 */
+	public function postIndex()
+	{
+		$input    = Input::all();
+		$password = Str::random(5);
+		
+		$validation = App::make('\Orchestra\Services\Validation\UserAccount')
+						->on('register')->with($input);
+	
+		// Validate user registration, if any errors is found redirect it 
+		// back to registration page with the errors
+		if ($validation->fails())
+		{
+			return Redirect::to(handles('orchestra/foundation::register'))
+					->withInput()
+					->withErrors($validation);
+		}
+
+		$user = App::make('orchestra.user');
+
+		$user->email    = $input['email'];
+		$user->fullname = $input['fullname'];
+		$user->password = $password;
+
+		try
+		{
+			$this->fireEvent('creating', array($user));
+			$this->fireEvent('saving', array($user));
+
+			DB::transaction(function () use ($user)
+			{
+				$user->save();
+				$user->roles()->sync(array(
+					Config::get('orchestra/auth::member', 2)
+				));
+			});
+
+			$this->fireEvent('created', array($user));
+			$this->fireEvent('saved', array($user));
+
+			Messages::add('success', trans("orchestra/foundation::response.users.create"));
+		}
+		catch (Exception $e)
+		{
+			Messages::add('error', trans('orchestra/foundation::response.db-failed', array(
+				'error' => $e->getMessage(),
+			)));
+			
+			return Redirect::to(handles('orchestra/foundation::register'));
+		}
+
+		return $this->sendEmail($user, $password);
+	}
+	/**
+	 * Send new registration e-mail to user.
+	 *
+	 * @access protected
+	 * @param  User     $user
+	 * @param  string   $password
+	 * @param  Messages $msg
+	 * @return Response
+	 */
+	protected function sendEmail(User $user, $password)
+	{
+		$site = App::memory()->get('site.name', 'Orchestra Platform');
+		$data = compact('password', 'site', 'user');
+
+		$sent = Mail::send('orchestra/foundation::email.credential.register', $data, function ($m) 
+			use ($data, $user, $site)
+		{
+			$m->subject(trans('orchestra/foundation::email.credential.register', compact('site')));
+			$m->to($user->email, $user->fullname);
+		});
+
+		if (count($sent) < 1)
+		{
+			Messages::add('error', trans('orchestra/foundation::response.credential.register.email-fail'));
+		}
+		else
+		{
+			Messages::add('success', trans('orchestra/foundation::response.credential.register.email-send'));
+		}
+
+		return Redirect::to(handles('orchestra/foundation::login'));
+	}
+
+	/**
+	 * Fire Event related to eloquent process
+	 *
+	 * @access protected
+	 * @param  string   $type
+	 * @param  array    $parameters
+	 * @return void
+	 */
+	protected function fireEvent($type, $parameters)
+	{
+		Event::fire("orchestra.{$type}: user.account", $parameters);
 	}
 }

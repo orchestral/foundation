@@ -44,7 +44,7 @@
 
 			<div class="form-actions">
 				<button type="submit" class="btn btn-primary">{{ trans('orchestra/foundation::title.login') }}</button>
-				@if(memorize('site.users.registration', false))
+				@if(memorize('site.registrable', false))
 				{{ Html::link(handles('orchestra/foundation::register'), trans('orchestra/foundation::title.register'), array('class' => 'btn')) }}
 				@endif
 			</div>

@@ -68,7 +68,7 @@ return array(
 	'users' => array(
 		'email'    => 'E-mail Address',
 		'username' => 'Username',
-		'fullname' => 'Full name',
+		'fullname' => 'Full Name',
 		'password' => 'Password',
 		'roles'    => 'Roles',
 	),

@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
 use Illuminate\Support\ServiceProvider;
+use Orchestra\Model\User;
 
 class SiteServiceProvider extends ServiceProvider {
 
@@ -27,6 +28,11 @@ class SiteServiceProvider extends ServiceProvider {
 		{
 			return new Site;
 		});
+
+		$this->app['orchestra.user'] = $this->app->share(function ($app)
+		{
+			return new User;
+		});
 	}
 
 	/**
@@ -36,6 +42,6 @@ class SiteServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('orchestra.mail', 'orchestra.site');
+		return array('orchestra.mail', 'orchestra.site', 'orchestra.user');
 	}
 }

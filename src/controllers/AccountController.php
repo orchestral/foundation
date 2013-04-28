@@ -63,7 +63,7 @@ class AccountController extends AdminController {
 		if ($user->id !== $input['id']) return App::abort(500);
 
 		$validation = App::make('Orchestra\Services\Validation\UserAccount')
-						->on('updateProfile')->with($input);
+						->with($input);
 
 		if ($validation->fails())
 		{

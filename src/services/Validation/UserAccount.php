@@ -24,12 +24,15 @@ class UserAccount extends Validator {
 	);
 
 	/**
-	 * On update profile scenario.
+	 * On register scenario.
 	 *
 	 * @access protected
 	 * @return void
 	 */
-	protected function onUpdateProfile() {}
+	protected function onRegister() 
+	{
+		static::$rules['email'] = array('required', 'email', 'unique:users,email');
+	}
 
 	/**
 	 * On update password scenario.
