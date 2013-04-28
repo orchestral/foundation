@@ -6,6 +6,7 @@ Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orc
 	Route::controller('extensions', 'Orchestra\Foundation\ExtensionsController');
 	Route::controller('forgot', 'Orchestra\Foundation\ForgotController');
 	Route::controller('install', 'Orchestra\Foundation\InstallController');
+	Route::controller('publisher', 'Orchestra\Foundation\PublisherController');
 	Route::controller('register', 'Orchestra\Foundation\RegisterController');
 	Route::any('resources{index?}', 'Orchestra\Foundation\ResourcesController@anyIndex')->where('index', '/index');
 	Route::any('resources{any}', 'Orchestra\Foundation\ResourcesController@call')->where('any', '(.*)');

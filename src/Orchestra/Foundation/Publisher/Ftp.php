@@ -66,7 +66,7 @@ class Ftp implements UploaderInterface {
 	 * @param  Orchestra\Support\FTP    $client
 	 * @return void
 	 */
-	public function setConnection(FtpClient $client)
+	public function setConnection($client)
 	{
 		$this->connection = $client;
 	}

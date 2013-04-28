@@ -8,7 +8,9 @@ use Illuminate\Support\Fluent;
 use Orchestra\App;
 use Orchestra\Extension;
 use Orchestra\Messages;
+use Orchestra\Publisher;
 use Orchestra\Site;
+use Orchestra\Extension\FilePermissionException;
 use Orchestra\Services\Html\ExtensionPresenter;
 
 class ExtensionsController extends AdminController {
@@ -60,9 +62,20 @@ class ExtensionsController extends AdminController {
 
 		if (Extension::started($name)) return App::abort(404);
 
-		Extension::activate($name);
-		Messages::add('success', trans('orchestra/foundation::response.extensions.activate', compact('name')));
+		try
+		{
+			Extension::activate($name);
+			Messages::add('success', trans('orchestra/foundation::response.extensions.activate', compact('name')));
+		}
+		catch (FilePermissionException $e)
+		{
+			Publisher::queue($name);
 
+			// In events where extension can't be activated due to 
+			// bundle:publish we need to put this under queue.
+			return Redirect::to(handles('orchestra/foundation::publisher'));
+		}
+		
 		return Redirect::to(handles('orchestra/foundation::extensions'));
 	}
 
@@ -164,8 +177,19 @@ class ExtensionsController extends AdminController {
 	{
 		if ( ! Extension::started($name)) return App::abort(404);
 
-		Extension::publish($name);
-		Messages::add('success', trans('orchestra/foundation::response.extensions.update', compact('name')));
+		try
+		{
+			Extension::publish($name);
+			Messages::add('success', trans('orchestra/foundation::response.extensions.update', compact('name')));
+		}
+		catch (FilePermissionException $e)
+		{
+			Publisher::queue($name);
+
+			// In events where extension can't be activated due to 
+			// bundle:publish we need to put this under queue.
+			return Redirect::to(handles('orchestra/foundation::publisher'));
+		}
 
 		return Redirect::to(handles('orchestra/foundation::extensions'));
 	}

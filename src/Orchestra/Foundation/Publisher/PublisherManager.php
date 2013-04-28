@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Publisher;
 
+use Exception;
 use Illuminate\Support\Manager;
 use Orchestra\Support\Ftp as FtpClient;
 
@@ -53,5 +54,41 @@ class PublisherManager extends Manager {
 	{
 		$memory = $this->app['orchestra.memory']->make();
 		return $memory->get('orchestra.publisher.queue', array());
+	}
+
+	/**
+	 * Execute the queue.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function execute()
+	{
+		$memory   = $this->app['orchestra.memory'];
+		$messages = $this->app['orchestra.messages'];
+		$queues   = $this->queued();
+
+		foreach ($queues as $key => $queue)
+		{
+			try
+			{
+				$this->driver()->upload($queue);
+				
+				$messages->add('success', trans('orchestra/foundation::response.extensions.activate', array(
+					'name' => $queue,
+				)));
+
+				unset($queues[$key]);
+			}
+			catch (Exception $e)
+			{
+				// this could be anything.
+				$messages->add('error', $e->getMessage());
+			}
+		}
+
+		$memory->get('orchestra.publisher.queue', $queues);
+
+		return $msg;
 	}
 }
