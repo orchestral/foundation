@@ -8,7 +8,7 @@
 		<ul class="nav nav-tabs nav-stacked">
 			@foreach ($resources['list'] as $name => $resource)
 			<li class="{{ Request::is("*/resources/{$name}*") ? 'active' : '' }}">
-				<a href="{{ handles("orchestra::resources/{$name}") }}">
+				<a href="{{ handles("orchestra/foundation::resources/{$name}") }}">
 					<i class="icon-chevron-right"></i>
 					{{ $resource->name }}
 				</a>
