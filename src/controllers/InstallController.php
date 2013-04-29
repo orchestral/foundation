@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Site;
+use Orchestra\Foundation\Installation\Requirement;
+use Orchestra\Foundation\Installation\Installer;
 use Orchestra\Model\User;
 
 class InstallController extends BaseController {
@@ -33,7 +35,7 @@ class InstallController extends BaseController {
 		Site::set('title', 'Installer');
 		App::memory()->put('site.name', 'Orchestra Platform');
 
-		$this->installer = new Installation\Installer(App::illuminate());
+		$this->installer = new Installer(App::illuminate());
 	}
 	
 	/**
@@ -46,7 +48,7 @@ class InstallController extends BaseController {
 	 */
 	public function anyIndex()
 	{
-		$requirement    = new Installation\Requirement(App::getFacadeApplication());
+		$requirement    = new Requirement(App::getFacadeApplication());
 		$driver         = Config::get('database.default', 'mysql');
 		$database       = Config::get("database.connections.{$driver}", array());
 		$auth           = Config::get('auth');

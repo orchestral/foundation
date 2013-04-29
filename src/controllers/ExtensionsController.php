@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Routing;
 
-use Illuminate\Suppost\Facades\Input;
-use Illuminate\Suppost\Facades\Event;
-use Illuminate\Suppost\Facades\Redirect;
-use Illuminate\Suppost\Facades\View;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Extension;
