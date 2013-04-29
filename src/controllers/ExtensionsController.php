@@ -1,4 +1,4 @@
-<?php namespace Orchestra;
+<?php namespace Orchestra\Routing;
 
 use Illuminate\Suppost\Facades\Input;
 use Illuminate\Suppost\Facades\Event;

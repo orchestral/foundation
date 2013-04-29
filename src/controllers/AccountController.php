@@ -1,4 +1,4 @@
-<?php namespace Orchestra;
+<?php namespace Orchestra\Routing;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

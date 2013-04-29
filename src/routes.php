@@ -2,27 +2,27 @@
 
 Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orchestra')), function ()
 {
-	Route::controller('account', 'Orchestra\AccountController');
-	Route::controller('extensions', 'Orchestra\ExtensionsController');
-	Route::controller('forgot', 'Orchestra\ForgotController');
-	Route::controller('install', 'Orchestra\InstallController');
-	Route::controller('publisher', 'Orchestra\PublisherController');
-	Route::controller('register', 'Orchestra\RegisterController');
-	Route::any('resources{index?}', 'Orchestra\ResourcesController@anyIndex')->where('index', '/index');
-	Route::any('resources{any}', 'Orchestra\ResourcesController@call')->where('any', '(.*)');
-	Route::resource('users', 'Orchestra\UsersController');
-	Route::any('users/{id}/delete', 'Orchestra\UsersController@delete');
-	Route::controller('settings', 'Orchestra\SettingsController');
+	Route::controller('account', 'Orchestra\Routing\AccountController');
+	Route::controller('extensions', 'Orchestra\Routing\ExtensionsController');
+	Route::controller('forgot', 'Orchestra\Routing\ForgotController');
+	Route::controller('install', 'Orchestra\Routing\InstallController');
+	Route::controller('publisher', 'Orchestra\Routing\PublisherController');
+	Route::controller('register', 'Orchestra\Routing\RegisterController');
+	Route::any('resources{index?}', 'Orchestra\Routing\ResourcesController@anyIndex')->where('index', '/index');
+	Route::any('resources{any}', 'Orchestra\Routing\ResourcesController@call')->where('any', '(.*)');
+	Route::resource('users', 'Orchestra\Routing\UsersController');
+	Route::any('users/{id}/delete', 'Orchestra\Routing\UsersController@delete');
+	Route::controller('settings', 'Orchestra\Routing\SettingsController');
 
 	// Credential routing.
-	Route::get('login', 'Orchestra\Foundation\CredentialController@getLogin');
-	Route::post('login', 'Orchestra\Foundation\CredentialController@postLogin');
-	Route::any('logout', 'Orchestra\Foundation\CredentialController@deleteLogin');
+	Route::get('login', 'Orchestra\Routing\CredentialController@getLogin');
+	Route::post('login', 'Orchestra\Routing\CredentialController@postLogin');
+	Route::any('logout', 'Orchestra\Routing\CredentialController@deleteLogin');
 	
 	// Base routing.
 	Route::any('/', array(
 		'before' => 'orchestra.installable',
-		'uses'   => 'Orchestra\Foundation\DashboardController@anyIndex'
+		'uses'   => 'Orchestra\Routing\DashboardController@anyIndex'
 	));
 
 	// 404 routing.
