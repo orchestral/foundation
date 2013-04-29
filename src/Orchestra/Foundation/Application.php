@@ -128,7 +128,9 @@ class Application {
 		// about provided query string.
 		if (strpos($name, '?') !== false) list($name, $query) = explode('?', $name, 2);
 
-		list($package, $route) = with(new NamespacedItemResolver)->parseKey($name);
+		list($package, $route, $item) = with(new NamespacedItemResolver)->parseKey($name);
+
+		! empty($item) and $route = "{$route}.{$item}";
 
 		// Prepare route valid, since we already extract package from route 
 		// we can re append query string to route value.
