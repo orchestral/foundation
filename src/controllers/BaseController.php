@@ -1,7 +1,7 @@
-<?php namespace Orchestra\Foundation;
+<?php namespace Orchestra;
 
-use Controller;
-use Response;
+use Illuminate\Routing\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 
 abstract class BaseController extends Controller {
 

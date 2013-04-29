@@ -1,8 +1,8 @@
-<?php namespace Orchestra\Foundation;
+<?php namespace Orchestra;
 
-use Response;
-use View;
-use Orchestra\Widget;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
+use Orchestra\Support\Facades\Widget;
 
 class DashboardController extends AdminController {
 

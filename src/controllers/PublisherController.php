@@ -1,13 +1,13 @@
-<?php namespace Orchestra\Foundation;
+<?php namespace Orchestra;
 
-use Input;
-use Redirect;
-use Session;
-use View;
-use Orchestra\App;
-use Orchestra\Messages;
-use Orchestra\Publisher;
-use Orchestra\Site;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\View;
+use Orchestra\Support\Facades\App;
+use Orchestra\Support\Facades\Messages;
+use Orchestra\Support\Facades\Publisher;
+use Orchestra\Support\Facades\Site;
 use Orchestra\Support\FTP\ServerException;
 
 class PublisherController extends AdminController {

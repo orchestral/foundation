@@ -1,11 +1,11 @@
-<?php namespace Orchestra\Foundation;
+<?php namespace Orchestra;
 
-use Config;
-use Input;
-use Redirect;
-use View;
-use Orchestra\App;
-use Orchestra\Site;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
+use Orchestra\Support\Facades\App;
+use Orchestra\Support\Facades\Site;
 use Orchestra\Model\User;
 
 class InstallController extends BaseController {

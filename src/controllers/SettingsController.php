@@ -1,13 +1,13 @@
-<?php namespace Orchestra\Foundation;
+<?php namespace Orchestra;
 
-use Event;
-use Input;
-use Redirect;
-use View;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Fluent;
-use Orchestra\App;
-use Orchestra\Messages;
-use Orchestra\Site;
+use Orchestra\Support\Facades\App;
+use Orchestra\Support\Facades\Messages;
+use Orchestra\Support\Facades\Site;
 use Orchestra\Services\Html\SettingPresenter;
 
 class SettingsController extends AdminController {

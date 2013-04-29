@@ -1,14 +1,14 @@
-<?php namespace Orchestra\Foundation;
+<?php namespace Orchestra;
 
-use Input;
-use Redirect;
-use Str;
-use View;
-use Orchestra\App;
-use Orchestra\Mail;
-use Orchestra\Memory;
-use Orchestra\Messages;
-use Orchestra\Site;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Str;
+use Illuminate\Support\Facades\View;
+use Orchestra\Support\Facades\App;
+use Orchestra\Support\Facades\Mail;
+use Orchestra\Support\Facades\Memory;
+use Orchestra\Support\Facades\Messages;
+use Orchestra\Support\Facades\Site;
 use Orchestra\Model\User;
 
 class ForgotController extends AdminController {

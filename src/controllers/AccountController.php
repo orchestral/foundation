@@ -1,15 +1,15 @@
-<?php namespace Orchestra\Foundation;
+<?php namespace Orchestra;
 
-use Auth;
-use DB;
-use Event;
-use Hash;
-use Input;
-use Redirect;
-use View;
-use Orchestra\App;
-use Orchestra\Messages;
-use Orchestra\Site;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
+use Orchestra\Support\Facades\App;
+use Orchestra\Support\Facades\Messages;
+use Orchestra\Support\Facades\Site;
 use Orchestra\Services\Html\AccountPresenter;
 
 class AccountController extends AdminController {

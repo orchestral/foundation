@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Services\Html;
 
-use Html;
+use Illuminate\Support\Facades\Html;
 use Orchestra\Extension;
 use Orchestra\Form;
 

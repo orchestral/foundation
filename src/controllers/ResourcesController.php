@@ -1,8 +1,8 @@
-<?php namespace Orchestra\Foundation;
+<?php namespace Orchestra;
 
-use View;
-use Orchestra\Resources;
-use Orchestra\Site;
+use Illuminate\Support\Facades\View;
+use Orchestra\Support\Facades\Resources;
+use Orchestra\Support\Facades\Site;
 use Orchestra\Services\Html\ResourcePresenter;
 
 class ResourcesController extends AdminController {

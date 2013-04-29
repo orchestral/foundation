@@ -1,16 +1,16 @@
-<?php namespace Orchestra\Foundation;
+<?php namespace Orchestra;
 
-use Config;
-use DB;
-use Event;
-use Input;
-use Redirect;
-use Str;
-use View;
-use Orchestra\App;
-use Orchestra\Mail;
-use Orchestra\Messages;
-use Orchestra\Site;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Str;
+use Illuminate\Support\Facades\View;
+use Orchestra\Support\Facades\App;
+use Orchestra\Support\Facades\Mail;
+use Orchestra\Support\Facades\Messages;
+use Orchestra\Support\Facades\Site;
 use Orchestra\Model\User;
 use Orchestra\Services\Html\AccountPresenter;
 

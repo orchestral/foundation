@@ -1,15 +1,15 @@
-<?php namespace Orchestra\Foundation;
+<?php namespace Orchestra;
 
-use Input;
-use Event;
-use Redirect;
-use View;
+use Illuminate\Suppost\Facades\Input;
+use Illuminate\Suppost\Facades\Event;
+use Illuminate\Suppost\Facades\Redirect;
+use Illuminate\Suppost\Facades\View;
 use Illuminate\Support\Fluent;
-use Orchestra\App;
-use Orchestra\Extension;
-use Orchestra\Messages;
-use Orchestra\Publisher;
-use Orchestra\Site;
+use Orchestra\Support\Facades\App;
+use Orchestra\Support\Facades\Extension;
+use Orchestra\Support\Facades\Messages;
+use Orchestra\Support\Facades\Publisher;
+use Orchestra\Support\Facades\Site;
 use Orchestra\Extension\FilePermissionException;
 use Orchestra\Services\Html\ExtensionPresenter;
 

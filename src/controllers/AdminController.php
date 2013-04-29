@@ -1,6 +1,6 @@
-<?php namespace Orchestra\Foundation;
+<?php namespace Orchestra;
 
-use Event;
+use Illuminate\Support\Facades\Event;
 
 abstract class AdminController extends BaseController {
 
