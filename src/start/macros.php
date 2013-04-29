@@ -15,7 +15,7 @@ Html::macro('title', function ()
 	$pageTitle = trim(Orchestra\Site::get('title', ''));
 	$format    = memorize('site.format.title', ':pageTitle &mdash; :siteTitle');
 
-	if ( ! empty($page_title)) 
+	if ( ! empty($pageTitle)) 
 	{
 		$title = strtr($format, array(
 			":siteTitle" => $siteTitle,
