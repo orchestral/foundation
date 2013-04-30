@@ -24,8 +24,7 @@
 	},
 	"require": {
 		"php": ">=5.3.3",
-		"jasonlewis/basset": "dev-master",
-		"illuminate/foundation": "4.0.*",
+		"laravel/framework": "4.0.*",
 		"orchestra/auth": "2.0.*",
 		"orchestra/extension": "2.0.*",
 		"orchestra/facile": "2.0.*",
@@ -33,7 +32,8 @@
 		"orchestra/memory": "2.0.*",
 		"orchestra/resources": "2.0.*",
 		"orchestra/support": "2.0.*",
-		"orchestra/widget": "2.0.*"
+		"orchestra/widget": "2.0.*",
+		"jasonlewis/basset": "dev-develop"
 	},
 	"require-dev": {
 		"mockery/mockery": "0.8.0"
