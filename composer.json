@@ -25,7 +25,7 @@
 	"require": {
 		"php": ">=5.3.3",
 		"jasonlewis/basset": "dev-master",
-		"illuminate/foundation": "4.0.*@dev",
+		"illuminate/foundation": "4.0.*",
 		"orchestra/auth": "2.0.*",
 		"orchestra/extension": "2.0.*",
 		"orchestra/facile": "2.0.*",
