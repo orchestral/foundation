@@ -1,118 +1,43 @@
-@import "bootstrap/variables.less"; // Modify this for custom colors, font-sizes, etc
-@import "bootstrap/mixins.less";
+@import "less/variables.less"; // Modify this for custom colors, font-sizes, etc
+@import "less/mixins.less";
 
-body {
-	background: url('../img/bg.png');
-}
-
-section.container, section.container-fluid {
+section.container {
+	clear: both;
 	padding-top: 45px;
-}
-
-.guest-form {
-	.form-actions {
-		background-color: transparent;
-	}
-}
-
-.nav > .dropdown.active > a:hover {
-	color:#333;
 }
 
 .navbar {
 	&.navbar-fixed-top {
-		.brand {
-			color: #333;
-			font-weight: bold;
-		}
-	}
+		background-color: #eceff1;
 
-	.nav {
-		> li > a {
-			color: #666;
+		a.navbar-brand {
+			color: #2c3e50;
+		}
+
+		ul.nav > li > a:not(.btn) {
+			color: #bdc1c5;
 
 			&:hover {
-				color: #333;
+				color: #2c3e50;
 			}
 		}
-
-		> .dropdown.open > a, > .dropdown.open > a:hover {
-			color:#333;
-		}
-
-		p {
-			margin-bottom: 5px;
-		}
 	}
-}
-
-@media (max-width: 978px) {
-	.navbar .nav > li {
-		> .dropdown-menu::after, > .dropdown-menu::before {
-			display: none;
-		}
-
-		a[rel="user-menu"] {
-			display: block;
-		}
-	}
-}
-
-.accordion-heading {
-	background: transparent url('../img/top-bar-white.png') repeat-x top left;
 }
 
 @media (min-width: 979px) {
-	&.navbar-fixed-top {
-		min-height: 40px;
-
-		.navbar-inner {
-			background: transparent url('../img/top-bar-white.png') repeat-x top left;
-			box-shadow: none;
+	.navbar {
+		&.navbar-fixed-top {
+			ul.nav {
+				padding-top: 5px;
+				height: 50px;
+			}
 		}
 	}
-
 	.table {
 		thead {
-			tr {
-				background: transparent url('../img/top-bar-white.png') repeat-x top left;
-			}
-
 			th.th-action {
 				width: 100px;
 			}
-		}
-	}
-}
-
-.pagination a, .current, .previous_page, .next_page {
-	float: left;
-	line-height: (@baseLineHeight * 2) - 2;
-	text-decoration: none;
-	border-left-width: 0;
-}
-
-.pagination {
-	ul {
-		.box-shadow(0 0px 0px rgba(0, 0, 0, 0));
-	}
-	a, span {
-		background: transparent;
-		border: 0px solid #DDD;
-	}
-
-	li {
-		&:first-child {
-			border-left-width: 0px;
-			.border-radius(3px 0 0 3px);
-
-			a, span {
-				border-left-width: 0px;
-			}
-		}
-
-		&:last-child {
-			.border-radius(0 3px 3px 0);
 		}
 	}
 }
@@ -125,32 +50,22 @@ section.container, section.container-fluid {
 	}
 }
 
-.well-resources {
-	padding: 8px 0;
-
-	.nav-stacked {
-		a {
-			background: #fff;
-
-			.icon-chevron-right {
-				float: right;
-				margin-top: 2px;
-				margin-right: -6px;
-				opacity: .25;
-			}
-		}
+.select2-container {
+	&.col {
+		padding-left: 0;
+		padding-right: 0;
 	}
 }
 
+.has-error {
+	.error {
+		color: #b94a48;
+	}
+}
 .navbar-form .select2-container {
 	margin-top: 5px;
 }
 
-.select2-container {
-	&[class*="span"] {
-		margin-left: 0;
-	}
-}
 
 /*
 | Fixes for Delta jQuery UI

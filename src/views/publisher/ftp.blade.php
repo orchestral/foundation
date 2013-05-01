@@ -1,8 +1,8 @@
 @extends('orchestra/foundation::layout.main')
 
 @section('content')
-<div class="row-fluid">
-	<div class="span8">
+<div class="row">
+	<div class="col col-lg-8">
 		
 		@include('orchestra/foundation::layout.widgets.header')
 
@@ -46,7 +46,7 @@
 		{{ Form::close() }}
 	</div>
 
-	<div class="span4">
+	<div class="col col-lg-4">
 
 	</div>
 </div>

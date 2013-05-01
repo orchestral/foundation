@@ -2,22 +2,20 @@
 
 @section('content')
 
-<div class="row-fluid">
+<div class="row">
 
-	<div class="span2 well-resources">
-		<ul class="nav nav-tabs nav-stacked">
+	<div class="col col-lg-2">
+		<div class="list-group">
 			@foreach ($resources['list'] as $name => $resource)
-			<li class="{{ Request::is("*/resources/{$name}*") ? 'active' : '' }}">
-				<a href="{{ handles("orchestra/foundation::resources/{$name}") }}">
-					<i class="icon-chevron-right"></i>
-					{{ $resource->name }}
-				</a>
-			</li>
+			<a href="{{ handles("orchestra/foundation::resources/{$name}") }}" class="list-group-item {{ Request::is("*/resources/{$name}*") ? 'active' : '' }}">
+				{{ $resource->name }}
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</a>
 			@endforeach
-		</ul>
+		</div>
 	</div>
 
-	<div class="span10">
+	<div class="col col-lg-10">
 		{{ $content }}
 	</div>
 	

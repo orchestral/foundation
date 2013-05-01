@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="row-fluid">
+<div class="row">
 	@include('orchestra/foundation::layout.widgets.header')
 	{{ $table }}
 </div>

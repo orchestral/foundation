@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="row-fluid">
+<div class="row">
 
-	<div class="span6 offset3 guest-form">
+	<div class="col col-lg-6 col-offset-3 guest-form">
 		
 		@include('orchestra/foundation::layout.widgets.header')
 
