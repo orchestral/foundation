@@ -1,8 +1,6 @@
 <?php namespace Orchestra\Foundation\Installation;
 
 use PDOException;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Html;
 
 class Requirement {
 
@@ -74,7 +72,7 @@ class Requirement {
 
 		try
 		{
-			DB::connection()->getPdo();
+			$this->app['db']->connection()->getPdo();
 		}
 		catch (PDOException $e)
 		{

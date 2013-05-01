@@ -1,5 +1,8 @@
 <?php namespace Orchestra\Foundation\Tests\Installation;
 
+use Mockery as m;
+use Orchestra\Foundation\Installation\Requirement;
+
 class RequirementTest extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -14,12 +17,11 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$request = \Mockery::mock('\Illuminate\Http\Request');
+		$request = m::mock('\Illuminate\Http\Request');
 		$request->shouldReceive('ajax')->andReturn(null);
 
 		$this->app = new \Illuminate\Foundation\Application($request);
-
-		\Illuminate\Support\Facades\DB::setFacadeApplication($this->app);
+		$this->app['db'] = m::mock('\Illuminate\Database\DatabaseManager');
 	}
 
 	/**
@@ -29,7 +31,7 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	{
 		unset($this->app);
 
-		\Mockery::close();
+		m::close();
 	}
 
 	/**
@@ -40,7 +42,7 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	public function testConstructMethod()
 	{
 		$app         = $this->app;
-		$stub        = new \Orchestra\Foundation\Installation\Requirement($app);
+		$stub        = new Requirement($app);
 		$refl        = new \ReflectionObject($stub);
 		$checklist   = $refl->getProperty('checklist');
 		$installable = $refl->getProperty('installable');
@@ -64,7 +66,7 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	public function testCheckMethod()
 	{
 		$app  = $this->app;
-		$stub = \Mockery::mock('\Orchestra\Foundation\Installation\Requirement[checkDatabaseConnection,checkWritableStorage,checkWritableAsset]', array($app));
+		$stub = m::mock('\Orchestra\Foundation\Installation\Requirement[checkDatabaseConnection,checkWritableStorage,checkWritableAsset]', array($app));
 		$stub->shouldReceive('checkDatabaseConnection')
 				->once()->andReturn(array('is' => true, 'explicit' => true, 'should' => true))
 			->shouldReceive('checkWritableStorage')
@@ -84,16 +86,12 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testCheckDatabaseConnectionWithValidConnection()
 	{
-		\Illuminate\Support\Facades\DB::swap($db = \Mockery::mock('DB'));
-
-		$db->shouldReceive('connection')
-				->once()
-				->andReturn($db)
+		$this->app['db']->shouldReceive('connection')
+				->once()->andReturn($this->app['db'])
 			->shouldReceive('getPdo')
-				->once()
-				->andReturn(true);
+				->once()->andReturn(true);
 
-		$stub = new \Orchestra\Foundation\Installation\Requirement($this->app);
+		$stub = new Requirement($this->app);
 		$result = $stub->checkDatabaseConnection(); 
 
 		$this->assertTrue($result['is']);
@@ -108,16 +106,12 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testCheckDatabaseConnectionWithInvalidConnection()
 	{
-		\Illuminate\Support\Facades\DB::swap($db = \Mockery::mock('DB'));
-
-		$db->shouldReceive('connection')
-				->once()
-				->andReturn($db)
+		$this->app['db']->shouldReceive('connection')
+				->once()->andReturn($this->app['db'])
 			->shouldReceive('getPdo')
-				->once()
-				->andThrow('PDOException');
+				->once()->andThrow('PDOException');
 
-		$stub   = new \Orchestra\Foundation\Installation\Requirement($this->app);
+		$stub   = new Requirement($this->app);
 		$result = $stub->checkDatabaseConnection(); 
 
 		$this->assertFalse($result['is']);
@@ -134,15 +128,14 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	{
 		$app = $this->app;
 		$app['path.storage'] = '/foo/storage/';
-		$app['html'] = $html = \Mockery::mock('Html');
-		$app['files'] = $file = \Mockery::mock('File');
+		$app['html'] = $html = m::mock('Html');
+		$app['files'] = $file = m::mock('File');
 
 		$html->shouldReceive('create')
-			->with('code', 'storage', array('title' => '/foo/storage/'))
-			->once()->andReturn('');
+			->with('code', 'storage', array('title' => '/foo/storage/'))->once()->andReturn('');
 		$file->shouldReceive('isWritable')->with('/foo/storage/')->once()->andReturn(true);
 
-		$stub = new \Orchestra\Foundation\Installation\Requirement($app);
+		$stub = new Requirement($app);
 
 		$result = $stub->checkWritableStorage();
 
@@ -160,15 +153,15 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	{
 		$app = $this->app;
 		$app['path.public'] = '/foo/public/';
-		$app['html'] = $html = \Mockery::mock('Html');
-		$app['files'] = $file = \Mockery::mock('File');
+		$app['html'] = $html = m::mock('Html');
+		$app['files'] = $file = m::mock('File');
 
 		$html->shouldReceive('create')
-			->with('code', 'public/packages', \Mockery::any())
+			->with('code', 'public/packages', m::any())
 			->once()->andReturn('');
 		$file->shouldReceive('isWritable')->with('/foo/public/packages/')->once()->andReturn(true);
 
-		$stub = new \Orchestra\Foundation\Installation\Requirement($app);
+		$stub = new Requirement($app);
 
 		$result = $stub->checkWritableAsset();
 		
