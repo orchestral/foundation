@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 {{ Html::title() }}
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
 
@@ -10,8 +10,7 @@
 <![endif]-->
 
 <!-- Le styles -->
-<link href="{{ asset('packages/orchestra/foundation/vendor/bootstrap/bootstrap.min.css') }}" media="all" type="text/css" rel="stylesheet">
-<link href="{{ asset('packages/orchestra/foundation/vendor/bootstrap/bootstrap-responsive.min.css') }}" media="all" type="text/css" rel="stylesheet">
+<link href="{{ asset('packages/orchestra/foundation/vendor/bootstrap/css/bootstrap.min.css') }}" media="all" type="text/css" rel="stylesheet">
 <link href="{{ asset('packages/orchestra/foundation/css/style.css') }}" media="all" type="text/css" rel="stylesheet">
 <script src="{{ asset('packages/orchestra/foundation/js/underscore.min.js') }}"></script>
 <script src="{{ asset('packages/orchestra/foundation/js/jquery.min.js') }}"></script>

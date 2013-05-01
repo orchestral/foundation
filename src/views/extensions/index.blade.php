@@ -7,11 +7,11 @@ use Illuminate\Support\Fluent,
 
 @section('content')
 
-<div class="row-fluid">
+<div class="row">
 
 	@include('orchestra/foundation::layout.widgets.header')
 
-	<table class="table table-bordered table-striped">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>{{ trans('orchestra/foundation::label.extensions.name') }}</th>

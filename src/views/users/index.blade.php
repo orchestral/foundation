@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="row-fluid">
+<div class="row">
 	<?php Orchestra\Site::set('header::add-button', true); ?>
 	@include('orchestra/foundation::layout.widgets.header')
 	{{ $table }}
