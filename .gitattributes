@@ -2,7 +2,7 @@
 
 # Ignore following folder/file.
 /build                  export-ignore
-/public/css/bootstrap   export-ignore
+/public/css/less        export-ignore
 /tests                  export-ignore
 /.gitignore             export-ignore
 /.travis.yml            export-ignore
