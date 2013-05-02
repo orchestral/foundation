@@ -47,7 +47,7 @@ class UserMetaRepository extends Driver {
 			$this->addKey($key, array(
 				'id'    => $key,
 				'value' => $userMeta->value,
-			);
+			));
 
 			return $userMeta->value;
 		}
