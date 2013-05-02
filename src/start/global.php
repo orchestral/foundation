@@ -1,6 +1,6 @@
 <?php
 
-Orchestra\Memory::extend('userMeta', function ($app, $name)
+Orchestra\Memory::extend('user', function ($app, $name)
 {
 	return new Orchestra\Services\UserMetaRepository($app, $name);
 });

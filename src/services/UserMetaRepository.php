@@ -11,15 +11,7 @@ class UserMetaRepository extends Driver {
 	 * @access  protected
 	 * @var     string  
 	 */
-	protected $storage = 'userMeta';
-
-	/**
-	 * Cached key value map with md5 checksum
-	 *
-	 * @access  protected
-	 * @var     array
-	 */
-	protected $keyMap = array();
+	protected $storage = 'user';
 
 	/**
 	 * Initiate the instance.
@@ -52,9 +44,9 @@ class UserMetaRepository extends Driver {
 		{
 			$this->put($key, $userMeta->value);
 
-			$this->keyMap[$key] = array(
-				'id'       => $key,
-				'checksum' => md5($userMeta->value),
+			$this->addKey($key, array(
+				'id'    => $key,
+				'value' => $userMeta->value,
 			);
 
 			return $userMeta->value;
@@ -105,28 +97,22 @@ class UserMetaRepository extends Driver {
 	{
 		foreach ($this->data as $key => $value)
 		{
-			$isNew    = true;
+			$isNew    = $this->isNewKey($key);
 			$checksum = '';
-			
-			if (array_key_exists($key, $this->keyMap))
-			{
-				$isNew = false;
-				extract($this->keyMap[$key]);
-			}
 
 			list($name, $userId) = explode('/user-', $key);
 
-			if ($checksum === md5($value) or empty($userId)) continue;
+			if ($this->check($key, $value) or empty($userId)) continue;
 
-			$userMeta = UserMeta::where('name', '=', $name)
-						->where('user_id', '=', $userId)->first();
+			$userMeta = UserMeta::search($name, $userId)->first();
 
 			if (true === $isNew and is_null($userMeta))
 			{
 				if (is_null($value)) continue;
 
 				// Insert the new key:value
-				$userMeta          = new UserMeta(compact('value'));
+				$userMeta          = new UserMeta;
+				$userMeta->value   = $value;
 				$userMeta->name    = $name;
 				$userMeta->user_id = $userId;
 

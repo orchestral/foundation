@@ -71,7 +71,7 @@ class ForgotController extends AdminController {
 		}
 
 		$user     = User::where('email', '=', $input['email'])->first();
-		$userMeta = Memory::make('userMeta');
+		$userMeta = Memory::make('user');
 
 		if (is_null($user))
 		{
@@ -127,7 +127,7 @@ class ForgotController extends AdminController {
 		}
 
 		$user     = User::find($userId);
-		$userMeta = Memory::make('userMeta');
+		$userMeta = Memory::make('user');
 
 		if (is_null($user) or $hash !== $userMeta->get("reset_password_hash.{$userId}"))
 		{
