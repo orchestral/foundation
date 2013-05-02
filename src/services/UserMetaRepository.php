@@ -126,7 +126,6 @@ class UserMetaRepository extends Driver {
 				}
 				else
 				{
-					// Update the key:value
 					$userMeta->value = $value;
 					$userMeta->save();
 				}
