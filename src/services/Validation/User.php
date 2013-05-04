@@ -33,6 +33,6 @@ class User extends Validator {
 	 */
 	protected function onCreate()
 	{
-		static::$rules['password'] = array('password');
+		static::$rules['password'] = array('required');
 	}
 }
