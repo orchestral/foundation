@@ -52,6 +52,7 @@ class SettingsController extends AdminController {
 			'email_username'   => $memory->get('email.username', ''),
 			'email_password'   => $memory->get('email.password', ''),
 			'email_encryption' => $memory->get('email.encryption', ''),
+			'email_queue'      => ($memory->get('email.queue', false) ? 'yes' : 'no'),
 		));
 
 		$form = SettingPresenter::form($eloquent);
@@ -107,6 +108,7 @@ class SettingsController extends AdminController {
 		$memory->put('email.username', $input['email_username']);
 		$memory->put('email.password', $input['email_password']);
 		$memory->put('email.encryption', $input['email_encryption']);
+		$memory->put('email.queue', ($input['email_queue'] === 'yes'));
 
 		Event::fire('orchestra.saved: settings', array($memory, $input));
 		Messages::add('success', trans('orchestra/foundation::response.settings.update'));

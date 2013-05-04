@@ -102,6 +102,16 @@ class SettingPresenter {
 				{
 					$control->label(trans('orchestra/foundation::label.email.encryption'));
 				});
+
+				$fieldset->control('select', 'email_queue', function ($control)
+				{
+					$control->label(trans('orchestra/foundation::label.settings.email-queue'));
+					$control->attributes(array('role' => 'switcher'));
+					$control->options(array(
+						'yes' => 'Yes',
+						'no'  => 'No',
+					));
+				});
 			});
 		});
 	}

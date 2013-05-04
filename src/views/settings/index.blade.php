@@ -39,8 +39,9 @@
 		ev.listen('setting.changed: email.driver', function listenToEmailDriverChange(e, self) {
 			var value = self.value ? self.value : '';
 
-			$('input[name^="email_"]')
-				.parent().parent().hide();
+			$('input[name^="email_"]').parent().parent().hide();
+
+			$('input[name="email_queue"]').parent().parent().hide();
 
 			switch (value) {
 				case 'smtp' :
