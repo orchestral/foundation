@@ -40,8 +40,8 @@ class Mail {
 
 		$this->app['config']->set('mail', $memory->get('email'));
 
-		if ('no' === $memory->get('email.queue', 'no')) $method = 'send';
-
+		if (false === $memory->get('email.queue', false)) $method = 'send';
+		
 		$forwardTo = array("\Illuminate\Support\Facades\Mail", $method);
 
 		return forward_static_call_array($forwardTo, array($view, $data, $callback));
