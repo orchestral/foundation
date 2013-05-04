@@ -98,10 +98,9 @@ class CredentialController extends AdminController {
 	 */
 	public function deleteLogin()
 	{
-		Event::fire('orchestra.auth: logout');
 		Auth::logout();
-
 		Messages::add('success', trans('orchestra/foundation::response.credential.logged-out'));
+		
 		return Redirect::to(Input::get('redirect', handles('orchestra/foundation::login')));
 	}
 
@@ -135,7 +134,6 @@ class CredentialController extends AdminController {
 			$user->save();
 		}
 
-		Event::fire('orchestra.auth: login');
 		return true;
 	}
 }
