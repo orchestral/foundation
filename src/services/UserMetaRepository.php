@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Services;
 
-use Orchestra\Model\UserMeta;
+use Orchestra\Support\Facades\App;
 use Orchestra\Memory\Drivers\Driver;
 
 class UserMetaRepository extends Driver {
@@ -14,12 +14,22 @@ class UserMetaRepository extends Driver {
 	protected $storage = 'user';
 
 	/**
+	 * Model name
+	 *
+	 * @var Orchestra\Model\UserMeta
+	 */
+	protected $model = null;
+
+	/**
 	 * Initiate the instance.
 	 *
 	 * @access  public
 	 * @return  void
 	 */
-	public function initiate() {}
+	public function initiate() 
+	{
+		$this->model = App::make('Orchestra\Model\UserMeta');
+	}
 
 	/**
 	 * Get value of a key
@@ -38,7 +48,7 @@ class UserMetaRepository extends Driver {
 
 		list($name, $userId) = explode('/user-', $key);
 
-		$userMeta = UserMeta::search($name, $userId)->first();
+		$userMeta = $this->model->search($name, $userId)->first();
 
 		if ( ! is_null($userMeta))
 		{
@@ -104,14 +114,14 @@ class UserMetaRepository extends Driver {
 
 			if ($this->check($key, $value) or empty($userId)) continue;
 
-			$userMeta = UserMeta::search($name, $userId)->first();
+			$userMeta = $this->model->search($name, $userId)->first();
 
 			if (true === $isNew and is_null($userMeta))
 			{
 				if (is_null($value)) continue;
 
 				// Insert the new key:value
-				$userMeta          = new UserMeta;
+				$userMeta          = $this->model->newInstance();
 				$userMeta->value   = $value;
 				$userMeta->name    = $name;
 				$userMeta->user_id = $userId;
