@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Services;
 
-use Orchestra\Support\Facades\App;
 use Orchestra\Memory\Drivers\Driver;
 
 class UserMetaRepository extends Driver {
@@ -28,7 +27,7 @@ class UserMetaRepository extends Driver {
 	 */
 	public function initiate() 
 	{
-		$this->model = App::make('Orchestra\Model\UserMeta');
+		$this->model = $this->app->make('Orchestra\Model\UserMeta');
 	}
 
 	/**
@@ -42,10 +41,28 @@ class UserMetaRepository extends Driver {
 	public function get($key = null, $default = null)
 	{
 		$key   = str_replace('.', '/user-', $key);
-		$value = array_get($this->data, $key, null);
+		$value = array_get($this->data, $key, $default);
 
+		// We need to consider if the value pending to be deleted, 
+		// in this case return the default.
+		if ($value === ':to-be-deleted:') return $default;
+
+		// If the result is available from data, simply return it so we
+		// don't have to fetch the same result again from the database.
 		if ( ! is_null($value)) return $value;
 
+		return $this->retrieveFromEloquent($key, $default);
+	}
+
+	/**
+	 * Get value from database.
+	 *
+	 * @access protected
+	 * @param  string   $key
+	 * @param  mixed    $default
+	 */
+	protected function retrieveFromEloquent($key, $default = null)
+	{
 		list($name, $userId) = explode('/user-', $key);
 
 		$userMeta = $this->model->search($name, $userId)->first();
@@ -55,7 +72,7 @@ class UserMetaRepository extends Driver {
 			$this->put($key, $userMeta->value);
 
 			$this->addKey($key, array(
-				'id'    => $key,
+				'id'    => $userMeta->id,
 				'value' => $userMeta->value,
 			));
 
@@ -94,7 +111,7 @@ class UserMetaRepository extends Driver {
 	public function forget($key = null)
 	{
 		$key = str_replace('.', '/user-', $key);
-		return array_set($this->data, $key, null);
+		return array_set($this->data, $key, ':to-be-deleted:');
 	}
 
 	/**
@@ -105,41 +122,33 @@ class UserMetaRepository extends Driver {
 	 */
 	public function shutdown() 
 	{
+		$model = $this->model;
+
 		foreach ($this->data as $key => $value)
 		{
-			$isNew    = $this->isNewKey($key);
-			$checksum = '';
+			$isNew = $this->isNewKey($key);
 
 			list($name, $userId) = explode('/user-', $key);
 
 			if ($this->check($key, $value) or empty($userId)) continue;
 
-			$userMeta = $this->model->search($name, $userId)->first();
+			$userMeta = $model->newInstance()->search($name, $userId)->first();
 
+			if (is_null($value) or $value === ':to-be-deleted:')
+			{
+				! is_null($userMeta) and $userMeta->delete();
+				continue;
+			}
 			if (true === $isNew and is_null($userMeta))
 			{
-				if (is_null($value)) continue;
+				$userMeta = $model->newInstance();
 
-				// Insert the new key:value
-				$userMeta          = $this->model->newInstance();
-				$userMeta->value   = $value;
 				$userMeta->name    = $name;
 				$userMeta->user_id = $userId;
-
-				$userMeta->save();
 			}
-			else
-			{
-				if (is_null($value))
-				{
-					$userMeta->delete();
-				}
-				else
-				{
-					$userMeta->value = $value;
-					$userMeta->save();
-				}
-			}
+			
+			$userMeta->value = $value;
+			$userMeta->save();
 		}
 	}
 }
