@@ -46,4 +46,19 @@ class UserMetaTest extends \PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('\Illuminate\Database\Eloquent\Relations\BelongsTo', $stub);
 		$this->assertInstanceOf('\Orchestra\Model\User', $stub->getQuery()->getModel());
 	}
+
+	/**
+	 * Test Orchestra\Model\UserMeta::search() method.
+	 *
+	 * @test
+	 */
+	public function testScopeSearchMethod()
+	{
+		$query = m::mock('Query');
+
+		$query->shouldReceive('where')->once()->with('user_id', '=', 1)->andReturn($query)
+			->shouldReceive('where')->once()->with('name', '=', 'foo')->andReturn($query);
+
+		with(new UserMeta)->scopeSearch($query, 'foo', 1);
+	}
 }

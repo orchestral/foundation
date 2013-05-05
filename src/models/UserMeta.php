@@ -41,12 +41,8 @@ class UserMeta extends Eloquent {
 	 */
 	public function scopeSearch($query, $name, $userId)
 	{
-		return $query->where(function ($q) 
-			use ($name, $userId)
-			{
-				$q->where('user_id', '=', $userId)
-					->where('name', '=', $name);
-			});
+		return $query->where('user_id', '=', $userId)
+			->where('name', '=', $name);
 	}
 
 }
