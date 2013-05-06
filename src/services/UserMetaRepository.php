@@ -115,12 +115,12 @@ class UserMetaRepository extends Driver {
 	}
 
 	/**
-	 * Add a shutdown event.
+	 * Add a finish event.
 	 *
 	 * @access  public
 	 * @return  void
 	 */
-	public function shutdown() 
+	public function finish() 
 	{
 		$model = $this->model;
 

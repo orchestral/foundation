@@ -34,7 +34,7 @@ class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * Teardown the test environment.
 	 */
-	public function tearDwn()
+	public function tearDown()
 	{
 		unset($this->app);
 		m::close();
@@ -57,7 +57,7 @@ class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase {
 		$fooNull->shouldReceive('first')->once()->andReturn(null);
 
 		$config->shouldReceive('get')->with('orchestra/memory::user.meta', array())->once()->andReturn(array());
-		$eloquent->shouldReceive('newInstance')->twice()->andReturn($eloquent)
+		$eloquent->shouldReceive('newInstance')->times(4)->andReturn($eloquent)
 			->shouldReceive('search')->with('foo', 1)->once()->andReturn($fooUser)
 			->shouldReceive('search')->with('foo', 2)->once()->andReturn($fooUser)
 			->shouldReceive('search')->with('foobar', 1)->once()->andReturn($fooNull)
@@ -86,7 +86,7 @@ class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase {
 			'foo/user-2' => array('id' => 6, 'value' => '', 'checksum' => md5('')),
 		));
 		
-		$stub->shutdown();
+		$stub->finish();
 	}
 
 	/**
