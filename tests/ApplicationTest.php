@@ -161,11 +161,43 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	public function testHandlesMethod()
 	{
 		$app = $this->app;
-		$app['config'] = ($config = m::mock('Config'));
-		$app['url'] = ($url = m::mock('Url'));
+		$app['env'] = 'production';
+		$app['orchestra.installed'] = false;
+		$app['orchestra.app'] = $orchestra = m::mock('App');
+		$app['orchestra.acl'] = $acl = m::mock('Acl');
+		$app['orchestra.memory'] = $memory = m::mock('Memory');
+		$app['orchestra.widget'] = $widget = m::mock('Widget');
+		$app['orchestra.extension'] = $extension = m::mock('Extension');
+		$app['translator'] = $translator = m::mock('Translator');
+		$app['url'] = $url = m::mock('Url');
+		$app['events'] = $event = m::mock('Event');
+		$app['config'] = $config = m::mock('Config');
 
-		$config->shouldReceive('get')->twice()->with('orchestra/extension::handles.app', '/')->andReturn('/')
-			->shouldReceive('get')->twice()->with('orchestra/foundation::handles', '/')->andReturn('admin');
+		\Illuminate\Support\Facades\Config::setFacadeApplication($app);
+		\Illuminate\Support\Facades\Config::swap($config);
+
+		$acl->shouldReceive('make')->once()->andReturn($acl)
+			->shouldReceive('attach')->with($memory)->once()->andReturn($acl);
+		$memory->shouldReceive('make')->with()->once()->andReturn($memory)
+			->shouldReceive('make')->with('runtime.orchestra')->never()->andReturn($memory)
+			->shouldReceive('get')->with('site.name')->once()->andReturn('Orchestra')
+			->shouldReceive('put')->with('site.name', 'Orchestra')->never()->andReturn(null);
+		$widget->shouldReceive('make')->with('menu.orchestra')->once()->andReturn($widget)
+			->shouldReceive('make')->with('menu.app')->once()->andReturn($widget)
+			->shouldReceive('add')->andReturn($widget)
+			->shouldReceive('title')->once()->andReturn($widget)
+			->shouldReceive('link')->once()->andReturn(null);
+		$translator->shouldReceive('get')->andReturn('foo');
+		$orchestra->shouldReceive('handles')->once()->with('orchestra/foundation::/')->andReturn('/');
+		$event->shouldReceive('listen')
+				->with('orchestra.ready: admin', 'Orchestra\Services\Event\AdminMenuHandler')->once()->andReturn(null)
+			->shouldReceive('fire')->with('orchestra.started')->once()->andReturn(null);
+
+		\Orchestra\Support\Facades\App::setFacadeApplication($app);
+		\Orchestra\Support\Facades\App::swap($orchestra);
+
+		$config->shouldReceive('get')->twice()->with('orchestra/foundation::handles', '/')->andReturn('admin');
+		$extension->shouldReceive('route')->twice()->with('app', '/')->andReturn('/');
 		$url->shouldReceive('to')->once()->with('/')->andReturn('/')
 			->shouldReceive('to')->once()->with('info')->andReturn('info')
 			->shouldReceive('to')->twice()->with('admin/installer')->andReturn('admin/installer');

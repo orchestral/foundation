@@ -20,6 +20,13 @@ class Application {
 	public $services = array();
 
 	/**
+	 * Booted indicator.
+	 *
+	 * @var boolean
+	 */
+	protected $booted = false;
+
+	/**
 	 * Construct a new Application instance.
 	 *
 	 * @access public
@@ -39,6 +46,11 @@ class Application {
 	 */
 	public function boot()
 	{
+		if ($this->booted) return $this;
+
+		// Set the indicator that Application has been booted.
+		$this->booted = true;
+
 		$app = $this->app;
 
 		// Make Menu instance for backend and frontend appliction
@@ -88,6 +100,8 @@ class Application {
 
 		$this->services['orchestra.memory'] = $memory;
 		$app['events']->fire('orchestra.started');
+
+		return $this;
 	}
 
 	/**
@@ -160,15 +174,17 @@ class Application {
 	 */
 	public function route($name, $default = '/')
 	{
-		// All route should be manage via `orchestra/extension::handles.{name}` 
-		// config key, except for orchestra/foundation.
-		$key = "orchestra/extension::handles.{$name}";
+		// Boot the application.
+		$this->boot();
 
 		// Orchestra Platform routing is managed by `orchestra/foundation::handles`
 		// and can be manage using configuration. 
-		$name === 'orchestra/foundation' and $key = 'orchestra/foundation::handles';
+		if ($name !== 'orchestra/foundation')
+		{
+			return $this->app['orchestra.extension']->route($name, $default);
+		}
 
-		return $this->app['config']->get($key, $default);
+		return $this->app['config']->get('orchestra/foundation::handles', $default);
 	}
 
 	/**
