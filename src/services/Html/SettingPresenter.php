@@ -83,9 +83,9 @@ class SettingPresenter {
 				$fieldset->control('input:password', 'email_password', function ($control) use ($model)
 				{
 					$help = array(
-						HTML::create('span', str_repeat('*', strlen($model->email_smtp_password))),
+						Html::create('span', str_repeat('*', strlen($model->email_smtp_password))),
 						'&nbsp;&nbsp;',
-						HTML::link('#', trans('orchestra/foundation::label.email.change_password'), array(
+						Html::link('#', trans('orchestra/foundation::label.email.change_password'), array(
 							'id' => 'change_password_button',
 							'class' => 'btn btn-mini btn-warning',
 						)),
@@ -93,7 +93,7 @@ class SettingPresenter {
 					);
 
 					$control->label(trans('orchestra/foundation::label.email.password'));
-					$control->help(HTML::create('span', HTML::raw(implode('', $help)), array(
+					$control->help(Html::create('span', Html::raw(implode('', $help)), array(
 						'id' => 'change_password_container',
 					)));
 				});

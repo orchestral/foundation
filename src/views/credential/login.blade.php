@@ -27,7 +27,7 @@
 						{{ Form::input('password', 'password', '', array('required' => true, 'class' => 'span12', 'tabindex' => 2)) }}
 						{{ $errors->first('password', '<p class="help-block">:message</p>') }}
 						<p class="help-block">
-							{{ Html::link(handles('orchestra/foundation::forgot'), trans('orchestra/foundation::title.forgot-password')) }}
+							{{ HTML::link(handles('orchestra/foundation::forgot'), trans('orchestra/foundation::title.forgot-password')) }}
 						</p>
 					</div>
 				</div>
@@ -45,7 +45,7 @@
 			<div class="form-actions">
 				<button type="submit" class="btn btn-primary">{{ trans('orchestra/foundation::title.login') }}</button>
 				@if(memorize('site.registrable', false))
-				{{ Html::link(handles('orchestra/foundation::register'), trans('orchestra/foundation::title.register'), array('class' => 'btn')) }}
+				{{ HTML::link(handles('orchestra/foundation::register'), trans('orchestra/foundation::title.register'), array('class' => 'btn')) }}
 				@endif
 			</div>
 			

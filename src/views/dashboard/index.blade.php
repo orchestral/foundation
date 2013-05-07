@@ -5,11 +5,11 @@
 <div class="row">
 	@if (count($panes) > 0)
 	@foreach ($panes as $id => $pane) 
-		<div{{ Html::attributes($pane->attributes) }}>
+		<div{{ HTML::attributes($pane->attributes) }}>
 		@if ( ! empty($pane->html))
 			{{ $pane->html }}
 		@else
-			<table{{ Html::attributes(array('class' => "table table-bordered")) }}>
+			<table{{ HTML::attributes(array('class' => "table table-bordered")) }}>
 				<thead>
 					<tr>
 						<th>{{ $pane->title }}</th>

@@ -2,14 +2,14 @@
 
 /*
 |--------------------------------------------------------------------------
-| Html::title() macro
+| HTML::title() macro
 |--------------------------------------------------------------------------
 |
 | Page title macro helper.
 |
 */
 
-Html::macro('title', function ()
+HTML::macro('title', function ()
 {
 	$siteTitle = $title = memorize('site.name');
 	$pageTitle = trim(Orchestra\Site::get('title', ''));
@@ -23,7 +23,7 @@ Html::macro('title', function ()
 		));
 	}
 
-	return Html::create('title', $title);
+	return HTML::create('title', $title);
 });
 
 /*
