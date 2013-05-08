@@ -4,20 +4,23 @@ use Mockery as m;
 use Orchestra\Foundation\Site;
 
 class SiteTest extends \PHPUnit_Framework_TestCase {
+	
+	/**
+	 * Application instance.
+	 *
+	 * @var Illuminate\Foundation\Application
+	 */
+	private $app = null;
 
 	/**
 	 * Setup the test environment.
 	 */
 	public function setUp()
 	{
-		$app = m::mock('Application');
-		$app->shouldReceive('instance')->andReturn(true);
+		$request = m::mock('\Illuminate\Http\Request');
+		$request->shouldReceive('ajax')->andReturn(null);
 
-		\Illuminate\Support\Facades\Auth::setFacadeApplication($app);
-		\Illuminate\Support\Facades\Config::setFacadeApplication($app);
-		\Illuminate\Support\Facades\Config::swap($config = m::mock('Config'));
-
-		$config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
+		$this->app = new \Illuminate\Foundation\Application($request);
 	}
 
 	/**
@@ -25,7 +28,25 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function tearDown()
 	{
+		unset($this->app);
 		m::close();		
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Site::boot() method.
+	 *
+	 * @test
+	 */
+	public function testBootMethod()
+	{
+		$app = $this->app;
+		$app['request'] = $request = m::mock('Request');
+		$app['session'] = $session = m::mock('Session');
+
+		$request->shouldReceive('input')->once()->with('redirect')->andReturn('foo');
+		$session->shouldReceive('flash')->once()->with('orchestra.redirect', 'foo')->andReturn(null);
+
+		with(new Site($app))->boot();
 	}
 
 	/**
@@ -36,7 +57,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testGetMethod()
 	{
-		$stub = new Site;
+		$stub = new Site($this->app);
 
 		$refl = new \ReflectionObject($stub);
 		$items = $refl->getProperty('items');
@@ -58,7 +79,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testSetMethod()
 	{
-		$stub = new Site;
+		$stub = new Site($this->app);
 		$stub->set('title', 'Foo');
 		$stub->set('foo.bar', 'Foobar');
 
@@ -74,7 +95,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testHasMethod()
 	{
-		$stub = new Site;
+		$stub = new Site($this->app);
 
 		$refl = new \ReflectionObject($stub);
 		$items = $refl->getProperty('items');
@@ -98,7 +119,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testForgetMethod()
 	{
-		$stub = new Site;
+		$stub = new Site($this->app);
 
 		$refl = new \ReflectionObject($stub);
 		$items = $refl->getProperty('items');
@@ -131,13 +152,15 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testLocalTimeReturnProperDateTimeWhenIsGuest()
 	{
-		$auth = m::mock('Illuminate\Auth\Guard');
+		$app = $this->app;
 
-		\Illuminate\Support\Facades\Auth::swap($auth);
+		$app['config'] = $config = m::mock('Config');
+		$app['auth']   = $auth = m::mock('Auth');
 
-		$auth->shouldReceive('guest')->andReturn(true);
+		$config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
+		$auth->shouldReceive('guest')->once()->andReturn(true);
 
-		$stub = new Site;
+		$stub = new Site($app);
 
 		$this->assertEquals(new \DateTimeZone('UTC'), 
 			$stub->localtime('2012-01-01 00:00:00')->getTimezone());
@@ -151,20 +174,21 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testLocalTimeReturnProperDateTimeWhenIsUser()
 	{
-		$auth = m::mock('Illuminate\Auth\Guard');
-		$user = m::mock('Orchestra\Foundation\Model\User');
+		$app = $this->app;
 
-		\Illuminate\Support\Facades\Auth::swap($auth);
+		$app['config'] = $config = m::mock('Config');
+		$app['auth'] = $auth = m::mock('Auth');
+		$app['orchestra.memory'] = $memory = m::mock('Memory');
+
+		$config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
+		$auth->shouldReceive('guest')->once()->andReturn(false)
+			->shouldReceive('user')->once()->andReturn((object) array('id' => 1));
+		$memory->shouldReceive('make')->once()->with('user')->andReturn($memory)
+			->shouldReceive('get')->once()->with('timezone.1', 'UTC')->andReturn('Asia/Kuala_Lumpur');
 
 		$date = new \DateTime('2012-01-01 00:00:00');
 
-		$auth->shouldReceive('guest')->andReturn(false)
-			->shouldReceive('user')->andReturn($user);
-
-		$user->shouldReceive('localtime')->with($date)
-			->andReturn($date->setTimeZone(new \DateTimeZone('Asia/Kuala_Lumpur')));
-
-		$stub = new Site;
+		$stub = new Site($app);
 
 		$this->assertEquals(new \DateTimeZone('Asia/Kuala_Lumpur'),
 				$stub->localtime($date)->getTimezone());

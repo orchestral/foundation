@@ -60,7 +60,7 @@ class SiteServiceProvider extends ServiceProvider {
 	{
 		$this->app['orchestra.site'] = $this->app->share(function ($app)
 		{
-			return new Site;
+			return new Site($app);
 		});
 	}
 

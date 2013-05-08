@@ -6,6 +6,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
 class Site {
+	
+	/**
+	 * Application instance.
+	 *
+	 * @var Illuminate\Foundation\Application
+	 */
+	protected $app = null;
 
 	/**
 	 * Data for site.
@@ -13,6 +20,34 @@ class Site {
 	 * @var array
 	 */
 	protected $items = array();
+
+	/**
+	 * Construct a new instance.
+	 *
+	 * @access public
+	 * @param  Illuminate\Foundation\Application    $app
+	 * @return void
+	 */
+	public function __construct($app)
+	{
+		$this->app = $app;
+	}
+
+	/**
+	 * Boot the instance.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function boot()
+	{
+		$redirect = $this->app['request']->input('redirect');
+
+		if ( ! is_null($redirect))
+		{
+			$this->app['session']->flash('orchestra.redirect', $redirect);
+		}
+	}
 
 	/**
 	 * Get a site value.
@@ -76,17 +111,26 @@ class Site {
 	 */
 	public function localtime($datetime)
 	{
+		$app         = $this->app;
+		$appTimeZone = $app['config']->get('app.timezone', 'UTC');
+
 		if ( ! ($datetime instanceof DateTime))
 		{
 			$datetime = new DateTime(
 				$datetime, 
-				new DateTimeZone(Config::get('app.timezone', 'UTC'))
+				new DateTimeZone($appTimeZone)
 			);
 		}
 
-		if (Auth::guest()) return $datetime;
+		if ($app['auth']->guest()) return $datetime;
 
-		return Auth::user()->localtime($datetime);
+		$userId       = $app['auth']->user()->id;
+		$userMeta     = $app['orchestra.memory']->make('user');
+		$userTimeZone = $userMeta->get("timezone.{$userId}", $appTimeZone);
+
+		$datetime->setTimeZone(new DateTimeZone($userTimeZone));
+
+		return $datetime;
 	}
 
 	/**

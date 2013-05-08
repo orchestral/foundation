@@ -2,16 +2,12 @@
 
 Route::filter('orchestra.auth', function ($route, $request, $value = null)
 {
-	Session::flash('orchestra.redirect', Input::get('redirect'));
-
 	// Redirect the user to login page if user is not logged in.
 	if (Auth::guest()) return Redirect::to(handles('orchestra/foundation::login'));
 });
 
 Route::filter('orchestra.logged', function ($route, $request, $value = null)
 {
-	Session::flash('orchestra.redirect', Input::get('redirect'));
-
 	// Redirect the user to dashboard page if user is logged in.
 	if ( ! Auth::guest()) return Redirect::to(handles('orchestra/foundation::/'));
 });
@@ -23,7 +19,6 @@ Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestr
 	{
 		if (Auth::guest())
 		{
-			Session::flash('orchestra.redirect', Input::get('redirect'));
 			return Redirect::to(handles('orchestra/foundation::login'));
 		}
 
