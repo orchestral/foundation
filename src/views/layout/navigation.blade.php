@@ -8,7 +8,7 @@
 	'subMenu'    => View::make('orchestra/foundation::layout.widgets.usernav'),
 )); ?>
 
-{{ Orchestra\Decorator::navbar($navbar) }}
+@decorator('navbar', $navbar)
 
 @if ( ! Auth::check())
 

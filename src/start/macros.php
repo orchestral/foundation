@@ -37,11 +37,16 @@ HTML::macro('title', function ()
 
 Blade::extend(function ($view)
 {
-	$pattern     = '/(\s*)@placeholder\s?\(\s*(.*)\)/';
-	$replacement = '$1<?php $__ps = Orchestra\Widget::make("placeholder.".$2); '
-		.'foreach ($__ps as $__p) { echo value($__p->value ?:""); } ?>';
+	$placeholder = '$1<?php $__ps = Orchestra\Widget::make("placeholder.".$2); '
+						.'foreach ($__ps as $__p) { echo value($__p->value ?:""); } ?>';
+	$decorator   = '$1<?php echo Orchestra\Decorator::render($2); ?>';
+	
+	foreach (compact('placeholder', 'decorator') as $name => $replacement)
+	{
+		$view = preg_replace('/(\s*)@'.$name.'\s?\(\s*(.*)\)/', $replacement, $view);
+	}
 
-	return preg_replace($pattern, $replacement, $view);
+	return $view;
 });
 
 /*
