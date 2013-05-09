@@ -89,7 +89,7 @@ class Application {
 			// Installation is not done/completed, in this case we should
 			// use runtime/in-memory setup
 			$memory = $app['orchestra.memory']->make('runtime.orchestra');
-			$memory->put('site.name', 'Orchestra');
+			$memory->put('site.name', 'Orchestra Platform');
 
 			$this->services['orchestra.menu']->add('install')
 				->title('Install')

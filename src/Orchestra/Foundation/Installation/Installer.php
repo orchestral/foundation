@@ -106,12 +106,9 @@ class Installer {
 		$actions = array('Manage Orchestra', 'Manage Users');
 		$admin   = $this->app['config']->get('orchestra/auth::role.admin', 1);
 		$roles   = Role::lists('name', 'id');
-		$site    = array(
-			'name'  => $input['site_name'],
-			'theme' => array(
-				'frontend' => 'default',
-				'backend'  => 'default',
-			),
+		$theme   = array(
+			'frontend' => 'default',
+			'backend'  => 'default',
 		);
 
 		// Attach Administrator role to the newly created administrator.
@@ -119,7 +116,8 @@ class Installer {
 
 		// Add some basic configuration for Orchestra Platform, including 
 		// email configuration.
-		$memory->put('site', $site);
+		$memory->put('site.name', $input['site_name']);
+		$memory->put('site.theme', $theme);
 		$memory->put('email', $this->app['config']->get('mail'));
 		$memory->put('email.from', array(
 			'name'    => $input['site_name'],

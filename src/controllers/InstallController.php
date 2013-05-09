@@ -33,7 +33,6 @@ class InstallController extends BaseController {
 
 		Site::set('navigation::usernav', false);
 		Site::set('title', 'Installer');
-		App::memory()->put('site.name', 'Orchestra Platform');
 
 		$this->installer = new Installer(App::illuminate());
 	}
