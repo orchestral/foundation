@@ -24,7 +24,7 @@ class ForgotController extends AdminController {
 	{
 		parent::__construct();
 
-		$this->beforeFilter('orchestra.logged');
+		$this->beforeFilter('orchestra.guest');
 		$this->beforeFilter('orchestra.csrf', array('only' => array('postIndex')));
 	}
 

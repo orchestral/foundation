@@ -23,7 +23,7 @@ class CredentialController extends AdminController {
 	{
 		parent::__construct();
 
-		$this->beforeFilter('orchestra.logged', array(
+		$this->beforeFilter('orchestra.guest', array(
 			'only' => array(
 				'getLogin', 'postLogin', 
 				'getRegister', 'postRegister',
