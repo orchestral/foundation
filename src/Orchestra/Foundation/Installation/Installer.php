@@ -39,6 +39,7 @@ class Installer {
 	public function migrate()
 	{
 		$this->app->make('orchestra.publisher.migrate')->foundation();
+		$this->app['events']->fire('orchestra.install.schema');
 	}
 
 	/**
