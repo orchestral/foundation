@@ -102,7 +102,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$memory->shouldReceive('make')->once()->andReturn($memory)
 			->shouldReceive('make')->with('runtime.orchestra')->once()->andReturn($memory)
 			->shouldReceive('get')->with('site.name')->once()->andReturn(null)
-			->shouldReceive('put')->with('site.name', 'Orchestra')->once()->andReturn(null);
+			->shouldReceive('put')->with('site.name', 'Orchestra Platform')->once()->andReturn(null);
 		$widget->shouldReceive('make')->with('menu.orchestra')->once()->andReturn($widget)
 			->shouldReceive('make')->with('menu.app')->once()->andReturn($widget)
 			->shouldReceive('add')->with('install')->once()->andReturn($widget)
