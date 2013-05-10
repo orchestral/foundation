@@ -48,8 +48,7 @@ class Role extends Eloquent {
 
 		static::updating(function ($role)
 		{
-			$oldName = $role->original['name'];
-			Acl::renameRole($oldName, $role->name);
+			Acl::renameRole($role->getOriginal('name'), $role->name);
 		});
 
 		static::deleting(function ($role)
