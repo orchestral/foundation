@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Services\Html;
 
-use Illuminate\Support\Facades\Html;
+use Illuminate\Support\Facades\HTML;
 use Orchestra\Support\Facades\Table;
 
 class ResourcePresenter {
@@ -25,8 +25,8 @@ class ResourcePresenter {
 				$column->escape(false);
 				$column->value(function ($row)
 				{
-					$link = Html::link(handles("orchestra/foundation::resources/{$row->id}"), e($row->name));
-					return Html::create('strong', Html::raw($link));
+					$link = HTML::link(handles("orchestra/foundation::resources/{$row->id}"), e($row->name));
+					return HTML::create('strong', HTML::raw($link));
 				});
 			});
 		});

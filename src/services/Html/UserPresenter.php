@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Services\Html;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Html;
+use Illuminate\Support\Facades\HTML;
 use Orchestra\Support\Facades\Form;
 use Orchestra\Support\Facades\Table;
 use Orchestra\Html\Table\TableBuilder;
@@ -36,16 +36,16 @@ class UserPresenter {
 
 					foreach ($roles as $role)
 					{
-						$value[] = Html::create('span', e($role->name), array(
+						$value[] = HTML::create('span', e($role->name), array(
 							'class' => 'label label-info',
 							'role'  => 'role',
 						));
 					}
 
 					return implode('', array(
-						Html::create('strong', e($row->fullname)),
-						Html::create('br'),
-						Html::create('span', Html::raw(implode(' ', $value)), array(
+						HTML::create('strong', e($row->fullname)),
+						HTML::create('br'),
+						HTML::create('span', HTML::raw(implode(' ', $value)), array(
 							'class' => 'meta',
 						)),
 					));
@@ -79,7 +79,7 @@ class UserPresenter {
 				$column->value(function ($row)
 				{
 					$btn = array();
-					$btn[] = Html::link(
+					$btn[] = HTML::link(
 						handles("orchestra/foundation::users/{$row->id}/edit"),
 						trans('orchestra/foundation::label.edit'),
 						array(
@@ -90,7 +90,7 @@ class UserPresenter {
 
 					if (Auth::user()->id !== $row->id)
 					{
-						$btn[] = Html::link(
+						$btn[] = HTML::link(
 							handles("orchestra/foundation::users/delete/{$row->id}"),
 							trans('orchestra/foundation::label.delete'),
 							array(
@@ -100,9 +100,9 @@ class UserPresenter {
 						);
 					}
 
-					return Html::create(
+					return HTML::create(
 						'div',
-						Html::raw(implode('', $btn)),
+						HTML::raw(implode('', $btn)),
 						array('class' => 'btn-group')
 					);
 				});
