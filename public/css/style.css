@@ -3,7 +3,7 @@ section.container{clear:both;padding-top:45px;}
 .navbar.navbar-fixed-top{background-color:#eceff1;}.navbar.navbar-fixed-top a.navbar-brand{color:#2c3e50;}
 .navbar.navbar-fixed-top ul.nav>li>a:not(.btn){color:#bdc1c5;}.navbar.navbar-fixed-top ul.nav>li>a:not(.btn):hover{color:#2c3e50;}
 @media (min-width:979px){.navbar.navbar-fixed-top ul.nav{padding-top:5px;height:50px;} .table thead th.th-action{width:100px;}}.navbar-form.user input[role="keyword"]{margin-top:5px;padding:8px 6px;width:250px;}
-.navbar-form.user select[role="roles"]{min-width:100px;}
+.navbar-form.user select[role="roles"],.navbar-form.user div.select2-container-multi{min-width:100px;}
 .navbar-form.user input[type="submit"]{margin-top:4px;}
 .table tbody td .meta{font-size:11px;}
 .select2-container.col{padding-left:0;padding-right:0;}
