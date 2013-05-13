@@ -18,7 +18,8 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	public function setUp()
 	{
 		$request = m::mock('\Illuminate\Http\Request');
-		$request->shouldReceive('ajax')->andReturn(null);
+		$request->shouldReceive('ajax')->andReturn(null)
+			->shouldReceive('wantsJson')->andReturn(false);
 
 		$this->app = new \Illuminate\Foundation\Application($request);
 		$this->app['db'] = m::mock('\Illuminate\Database\DatabaseManager');
