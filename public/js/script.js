@@ -1,6 +1,10 @@
 jQuery(function startOrchestra ($) { 'use strict';
 	var ev = new Javie.Events();
 
+	$('div.pagination > ul').each(function(i, item) {
+		$(item).addClass('pagination').parent().removeClass('pagination');
+	});
+
 	$('select[role="switcher"]').each(function(i, item) {
 		var el = $(item);
 
