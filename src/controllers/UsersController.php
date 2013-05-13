@@ -39,14 +39,13 @@ class UsersController extends AdminController {
 	 */
 	public function index()
 	{
-		//$keyword = Input::get('q', '');
-		//$roles   = Input::get('roles', array());
+		$searchKeyword = Input::get('q', '');
+		$searchRoles   = Input::get('roles', array());
 
 		// Get Users (with roles) and limit it to only 30 results for
 		// pagination. Don't you just love it when pagination simply works.
-		//$users = User::search($keyword, $roles)->paginate(30);
-		$eloquent = User::paginate(30);
-		$roles = Role::lists('name', 'id');
+		$eloquent = User::search($searchKeyword, $searchRoles)->paginate(30);
+		$roles    = Role::lists('name', 'id');
 
 		// Build users table HTML using a schema liked code structure.
 		$table = UserPresenter::table($eloquent);
@@ -60,7 +59,9 @@ class UsersController extends AdminController {
 
 		Site::set('title', trans('orchestra/foundation::title.users.list'));
 
-		return View::make('orchestra/foundation::users.index', compact('eloquent', 'table', 'roles'));
+		return View::make('orchestra/foundation::users.index', compact(
+			'eloquent', 'table', 'roles', 'searchKeyword', 'searchRoles'
+		));
 	}
 
 	/**

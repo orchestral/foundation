@@ -39,6 +39,40 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 	/**
+	 * Search user based on keyword as roles.
+	 *
+	 * @static
+	 * @access public 	
+	 * @param  string   $keyword
+	 * @param  array    $roles
+	 * @return Orchestra\Model\User
+	 */
+	public static function search($keyword = '', $roles = array())
+	{
+		$model = static::with('roles')->whereNotNull('users.id');
+		
+		if ( ! empty($roles))
+		{
+			$model->join('user_role', function ($join) use ($roles)
+			{
+				$join->on('users.id', '=', 'user_role.user_id');
+
+			})->whereIn('user_role.role_id', $roles);
+		}
+
+		if ( ! empty($keyword))
+		{
+			$model->where(function ($query) use ($keyword)
+			{
+				$query->where('email', 'LIKE', $keyword)
+					->orWhere('fullname', 'LIKE', $keyword);
+			});
+		}
+
+		return $model;
+	}
+
+	/**
 	 * Set `password` mutator.
 	 *
 	 * @access public
