@@ -5,15 +5,20 @@
 	</div>
 </footer>
 
-<link href="{{ asset('packages/orchestra/foundation/vendor/select2/select2.css') }}" media="all" type="text/css" rel="stylesheet">
-<link href="{{ asset('packages/orchestra/foundation/vendor/delta/theme/jquery-ui.css') }}" media="all" type="text/css" rel="stylesheet">
-<script src="{{ asset('packages/orchestra/foundation/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('packages/orchestra/foundation/js/script.min.js') }}"></script>
-<script src="{{ asset('packages/orchestra/foundation/vendor/select2/select2.min.js') }}"></script>
-<script src="{{ asset('packages/orchestra/foundation/vendor/jquery.ui.js') }}"></script>
-<script src="{{ asset('packages/orchestra/foundation/vendor/delta/js/jquery-ui.toggleSwitch.js') }}"></script>
+<?php
 
-{{ basset_stylesheet('orchestra-foundation.footer') }}
-{{ basset_javascript('orchestra-foundation.footer') }}
+$asset = Asset::container('orchestra/foundation::footer');
+
+$asset->style('select2', 'packages/orchestra/foundation/vendor/select2/select2.css');
+$asset->style('jquery-ui', 'packages/orchestra/foundation/vendor/delta/theme/jquery-ui.css');
+$asset->script('bootstrap', 'packages/orchestra/foundation/vendor/bootstrap/js/bootstrap.min.js');
+$asset->script('jquery-ui', 'packages/orchestra/foundation/vendor/jquery.ui.js');
+$asset->script('orchestra', 'packages/orchestra/foundation/js/script.min.js', array('bootstrap', 'jquery-ui'));
+$asset->script('jui-toggleSwitch', 'packages/orchestra/foundation/vendor/delta/js/jquery-ui.toggleSwitch.js', array('jquery-ui'));
+$asset->script('select2', 'packages/orchestra/foundation/vendor/select2/select2.min.js'); ?>
+
+
+{{ $asset->styles() }}
+{{ $asset->scripts() }}
 
 @placeholder("orchestra.layout: footer")
