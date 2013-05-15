@@ -81,6 +81,7 @@ class Ftp implements UploaderInterface {
 	public function connect($config = array())
 	{
 		$this->connection->setUp($config);
+
 		return $this->connection->connect();
 	}
 
@@ -92,9 +93,9 @@ class Ftp implements UploaderInterface {
 	 * @param  int      $mode
 	 * @return bool
 	 */
-	private function chmod($path, $mode = 0755)
+	private function permission($path, $mode = 0755)
 	{
-		return $this->connection->chmod($path, $mode);
+		return $this->connection->permission($path, $mode);
 	}
 
 	/**
@@ -105,13 +106,13 @@ class Ftp implements UploaderInterface {
 	 * @param  int      $mode
 	 * @return bool
 	 */
-	private function recursiveChmod($path, $mode = 0755)
+	private function recursivePermission($path, $mode = 0755)
 	{
-		$this->chmod($path, $mode);
+		$this->permission($path, $mode);
 
 		try
 		{
-			$lists = $this->connection->ls($path);
+			$lists = $this->connection->allFiles($path);
 
 			// this is to check if return value is just a single file, 
 			// avoiding infinite loop when we reach a file.
@@ -122,7 +123,7 @@ class Ftp implements UploaderInterface {
 				// Not a file or folder, ignore it.
 				if (substr($dir, -3) === '/..' or substr($dir, -2) === '/.') continue;
 				
-				$this->recursiveChmod($dir, $mode);
+				$this->recursivePermission($dir, $mode);
 			}
 		}
 		catch (RuntimeException $e)
@@ -157,12 +158,12 @@ class Ftp implements UploaderInterface {
 		if (is_dir(path('public').'packages'.DS.$name.DS)) 
 		{
 			$recursively = true;
-			$path        = $path.$name.DS;
+			$path = $path.$name.DS;
 		}
 
 		try 
 		{
-			($recursively ? $this->recursiveChmod($path, 0777) : $this->chmod($path, 0777));
+			($recursively ? $this->recursivePermission($path, 0777) : $this->permission($path, 0777));
 		}
 		catch (RuntimeException $e)
 		{
@@ -175,7 +176,7 @@ class Ftp implements UploaderInterface {
 		$this->app['orchestra.extension']->activate($name);
 		
 		// Revert chmod back to original state.
-		($recursively ? $this->recursiveChmod($path, 0755) : $this->chmod($path, 0755));
+		($recursively ? $this->recursivePermission($path, 0755) : $this->permission($path, 0755));
 		
 		return true;
 	}
