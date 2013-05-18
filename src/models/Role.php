@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Model;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
+use Illuminate\Support\Facades\Config;
 use Orchestra\Acl;
 
 class Role extends Eloquent {
@@ -55,5 +56,33 @@ class Role extends Eloquent {
 		{
 			Acl::removeRole($role->name);
 		});
+	}
+
+	/**
+	 * Get default roles for Orchestra Platform
+	 *
+	 * @static
+	 * @access public
+	 * @return self
+	 */
+	public static function admin()
+	{
+		return static::find(
+			Config::get('orchestra/auth::role.admin')
+		);
+	}
+
+	/**
+	 * Get default member roles for Orchestra Platform
+	 *
+	 * @static
+	 * @access public
+	 * @return self
+	 */
+	public static function member()
+	{
+		return static::find(
+			Config::get('orchestra/auth::role.member')
+		);
 	}
 }
