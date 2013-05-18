@@ -61,8 +61,8 @@ class Role extends Eloquent {
 			$deletedAt    = $role->getDeletedAtColumn();
 
 			if ($role->isSoftDeleting() 
-				and is_null($role->getAttribute($deletedAt) 
-				and ! is_null($role->getOriginal($deletedAt))
+				and is_null($role->getAttribute($deletedAt)) 
+				and ! is_null($role->getOriginal($deletedAt)))
 			{
 				Acl::addRole($currentName);
 			}
