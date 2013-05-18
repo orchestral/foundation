@@ -55,7 +55,7 @@ Blade::extend(function ($view)
 |--------------------------------------------------------------------------
 */
 
-Orchestra\Decorator::macro('navbar', function ($navbar)
+App::make('orchestra.decorator')->macro('navbar', function ($navbar)
 {
 	return View::make('orchestra/foundation::layout.widgets.navbar', compact('navbar'));
 });
