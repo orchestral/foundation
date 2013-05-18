@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
 
 class FoundationServiceProvider extends ServiceProvider {
 	
@@ -16,6 +17,12 @@ class FoundationServiceProvider extends ServiceProvider {
 		$this->app['orchestra.app'] = $this->app->share(function ($app)
 		{
 			return new Application($app);
+		});
+
+		$this->app->booting(function()
+		{
+			$loader = AliasLoader::getInstance();
+			$loader->alias('Orchestra\App', 'Orchestra\Support\Facades\App');
 		});
 	}
 

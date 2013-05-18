@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
 use Orchestra\Model\User;
 
 class SiteServiceProvider extends ServiceProvider {
@@ -23,6 +24,7 @@ class SiteServiceProvider extends ServiceProvider {
 		$this->registerPublisher();
 		$this->registerSite();
 		$this->registerUserEloquent();
+		$this->registerAliases();
 	}
 
 	/**
@@ -74,6 +76,22 @@ class SiteServiceProvider extends ServiceProvider {
 		$this->app['orchestra.user'] = $this->app->share(function ($app)
 		{
 			return new User;
+		});
+	}
+
+	/**
+	 * Register aliases.
+	 *
+	 * @return void
+	 */
+	protected function registerAliases()
+	{
+		$this->app->booting(function()
+		{
+			$loader = AliasLoader::getInstance();
+			$loader->alias('Orchestra\Mail', 'Orchestra\Support\Facades\Mail');
+			$loader->alias('Orchestra\Publisher', 'Orchestra\Support\Facades\Publisher');
+			$loader->alias('Orchestra\Site', 'Orchestra\Support\Facades\Site');
 		});
 	}
 
