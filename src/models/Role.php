@@ -23,6 +23,13 @@ class Role extends Eloquent {
 	);
 
 	/**
+	 * Indicates if the model should soft delete.
+	 *
+	 * @var bool
+	 */
+	protected $softDelete = true;
+
+	/**
 	 * Has many and belongs to relationship with User.
 	 *
 	 * @access public
@@ -44,17 +51,30 @@ class Role extends Eloquent {
 
 		static::creating(function ($role)
 		{
-			Acl::addRole($role->name);
+			Acl::addRole($role->getAttribute('name'));
 		});
 
 		static::updating(function ($role)
 		{
-			Acl::renameRole($role->getOriginal('name'), $role->name);
+			$originalName = $role->getOriginal('name');
+			$currentName  = $role->getAttribute('name');
+			$deletedAt    = $role->getDeletedAtColumn();
+
+			if ($role->isSoftDeleting() 
+				and is_null($role->getAttribute($deletedAt) 
+				and ! is_null($role->getOriginal($deletedAt))
+			{
+				Acl::addRole($currentName);
+			}
+			else 
+			{
+				Acl::renameRole($originalName, $currentName);
+			}
 		});
 
 		static::deleting(function ($role)
 		{
-			Acl::removeRole($role->name);
+			Acl::removeRole($role->getAttribute('name'));
 		});
 	}
 
