@@ -177,6 +177,8 @@ class ExtensionsController extends AdminController {
 	 */
 	public function getUpdate($name)
 	{
+		$name = str_replace('.', '/', $name);
+		
 		if ( ! Extension::started($name)) return App::abort(404);
 
 		try

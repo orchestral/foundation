@@ -48,6 +48,7 @@ class ExtensionPresenter {
 
 					$control->field(function() use ($name)
 					{
+						$name = str_replace('/', '.', $name);
 						return HTML::link(
 							handles("orchestra/foundation::extensions/update/{$name}"),
 							trans('orchestra/foundation::label.extensions.actions.update'),
