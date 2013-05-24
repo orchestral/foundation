@@ -1,4 +1,4 @@
-<ul class="nav" role="menu">
+<ul class="nav navbar-nav" role="menu">
 	
 	@foreach ($menu as $item) 
 
