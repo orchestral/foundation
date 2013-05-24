@@ -88,7 +88,7 @@ class Role extends Eloquent {
 	public static function admin()
 	{
 		return static::find(
-			Config::get('orchestra/auth::role.admin')
+			Config::get('orchestra/foundation::roles.admin')
 		);
 	}
 
@@ -102,7 +102,7 @@ class Role extends Eloquent {
 	public static function member()
 	{
 		return static::find(
-			Config::get('orchestra/auth::role.member')
+			Config::get('orchestra/foundation::roles.member')
 		);
 	}
 }

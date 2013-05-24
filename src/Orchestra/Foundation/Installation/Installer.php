@@ -104,7 +104,7 @@ class Installer {
 		$user    = $this->createUser($input);
 		$memory  = $this->app['orchestra.memory']->make();
 		$actions = array('Manage Orchestra', 'Manage Users');
-		$admin   = $this->app['config']->get('orchestra/auth::role.admin', 1);
+		$admin   = $this->app['config']->get('orchestra/foundation::roles.admin', 1);
 		$roles   = Role::lists('name', 'id');
 		$theme   = array(
 			'frontend' => 'default',
