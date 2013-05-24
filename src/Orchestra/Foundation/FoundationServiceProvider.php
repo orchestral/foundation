@@ -18,12 +18,6 @@ class FoundationServiceProvider extends ServiceProvider {
 		{
 			return new Application($app);
 		});
-
-		$this->app->booting(function()
-		{
-			$loader = AliasLoader::getInstance();
-			$loader->alias('Orchestra\App', 'Orchestra\Support\Facades\App');
-		});
 	}
 
 	/**
@@ -34,6 +28,22 @@ class FoundationServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('orchestra/foundation', 'orchestra/foundation');
+
+		$loader = AliasLoader::getInstance();
+		$loader->alias('Orchestra\Asset', 'Orchestra\Support\Facades\Asset');
+		$loader->alias('Orchestra\Acl', 'Orchestra\Support\Facades\Acl');
+		$loader->alias('Orchestra\App', 'Orchestra\Support\Facades\App');
+		$loader->alias('Orchestra\Config', 'Orchestra\Support\Facades\Config');
+		$loader->alias('Orchestra\Extension', 'Orchestra\Support\Facades\Extension');
+		$loader->alias('Orchestra\Form', 'Orchestra\Support\Facades\Form');
+		$loader->alias('Orchestra\Mail', 'Orchestra\Support\Facades\Mail');
+		$loader->alias('Orchestra\Memory', 'Orchestra\Support\Facades\Memory');
+		$loader->alias('Orchestra\Messages', 'Orchestra\Support\Facades\Messages');
+		$loader->alias('Orchestra\Resources', 'Orchestra\Support\Facades\Resources');
+		$loader->alias('Orchestra\Site', 'Orchestra\Support\Facades\Site');
+		$loader->alias('Orchestra\Table', 'Orchestra\Support\Facades\Table');
+		$loader->alias('Orchestra\Theme', 'Orchestra\Support\Facades\Theme');
+		$loader->alias('Orchestra\Widget', 'Orchestra\Support\Facades\Widget');
 
 		include_once __DIR__."/../../start.php";
 	}
