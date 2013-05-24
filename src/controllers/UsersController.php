@@ -250,17 +250,17 @@ class UsersController extends AdminController {
 	 */
 	public function destroy($id)
 	{
-		$user = User::find($id);
+		$user = User::findOrFail($id);
 
-		if (is_null($user) or ($user->id === Auth::user()->id)) return App::abort(404);
+		// Avoid self-deleting accident.
+		if ($user->id === Auth::user()->id) return App::abort(404);
 		
 		try
 		{
 			$this->fireEvent('deleting', array($user));
 
 			DB::transaction(function () use ($user)
-			{				
-				$user->roles()->sync(array());
+			{
 				$user->delete();
 			});
 
