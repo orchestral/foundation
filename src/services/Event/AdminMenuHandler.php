@@ -25,10 +25,6 @@ class AdminMenuHandler {
 			$menu->add('users')
 				->title($translator->trans('orchestra/foundation::title.users.list'))
 				->link(handles('orchestra/foundation::users'));
-
-			$menu->add('add-users', '^:users')
-				->title($translator->trans('orchestra/foundation::title.users.create'))
-				->link(handles('orchestra/foundation::users/create'));
 		}
 
 		// Add menu when logged-in user has authorization to
@@ -67,6 +63,5 @@ class AdminMenuHandler {
 					->link(handles("orchestra/foundation::resources/{$name}"));
 			}
 		}
-
 	}
 }
