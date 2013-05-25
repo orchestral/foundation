@@ -38,8 +38,10 @@ class Installer {
 	 */
 	public function migrate()
 	{
-		$this->app->make('orchestra.publisher.migrate')->foundation();
+		$this->app['orchestra.publisher.migrate']->foundation();
 		$this->app['events']->fire('orchestra.install.schema');
+
+		return true;
 	}
 
 	/**
@@ -71,7 +73,7 @@ class Installer {
 
 		try
 		{
-			! $multipleAdmin and $this->checkExistingUser();
+			! $multipleAdmin and $this->hasNoExistingUser();
 
 			$this->runApplicationSetup($input);
 
@@ -105,7 +107,7 @@ class Installer {
 		$memory  = $this->app['orchestra.memory']->make();
 		$actions = array('Manage Orchestra', 'Manage Users');
 		$admin   = $this->app['config']->get('orchestra/foundation::roles.admin', 1);
-		$roles   = Role::lists('name', 'id');
+		$roles   = $this->app['orchestra.role']->newQuery()->lists('name', 'id');
 		$theme   = array(
 			'frontend' => 'default',
 			'backend'  => 'default',
@@ -146,11 +148,16 @@ class Installer {
 	 */
 	protected function createUser($input)
 	{
-		$user           = new User;
-		$user->email    = $input['email'];
-		$user->password = $input['password'];
-		$user->fullname = $input['fullname'];
-		$user->status   = 0;
+		$user = $this->app['orchestra.user']->newQuery();
+		$user->fillable(array(
+			'email', 'password', 'fullname', 'status',
+		));
+		$user->fill(array(
+			'email'    => $input['email'],
+			'password' => $input['password'],
+			'fullname' => $input['fullname'],
+			'status'   => 0,
+		));
 
 		$this->app['events']->fire('orchestra.install: user', array($user, $input));
 
@@ -165,15 +172,14 @@ class Installer {
 	 * @access protected
 	 * @return boolean
 	 */
-	protected function checkExistingUser()
+	protected function hasNoExistingUser()
 	{
-		$users = User::all();
+		$users = $this->app['orchestra.user']->newQuery()->all();
 
 		// Before we create administrator, we should ensure that users table 
 		// is empty to avoid any possible hijack or invalid request.
-		if ( ! empty($users))
-		{
-			throw new Exception(trans('orchestra/foundation::install.user.duplicate'));
-		}
+		if (empty($users)) return true;
+
+		throw new Exception(trans('orchestra/foundation::install.user.duplicate'));
 	}
 }
