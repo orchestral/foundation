@@ -28,7 +28,7 @@ class InstallController extends BaseController {
 	public function __construct()
 	{
 		$this->beforeFilter('orchestra.installed', array(
-			'only' => array('anyIndex', 'getCreate', 'postCreate'),
+			'only' => array('getIndex', 'getCreate', 'postCreate'),
 		));
 
 		Site::set('navigation::usernav', false);
@@ -45,7 +45,7 @@ class InstallController extends BaseController {
 	 * @access public
 	 * @return View
 	 */
-	public function anyIndex()
+	public function getIndex()
 	{
 		$requirement    = new Requirement(App::getFacadeApplication());
 		$driver         = Config::get('database.default', 'mysql');

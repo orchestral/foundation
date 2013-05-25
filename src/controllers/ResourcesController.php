@@ -27,7 +27,7 @@ class ResourcesController extends AdminController {
 	 * @access public
 	 * @return Response
 	 */
-	public function anyIndex()
+	public function index()
 	{
 		$resources  = Resources::all();
 		$collection = array();

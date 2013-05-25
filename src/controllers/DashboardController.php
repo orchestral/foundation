@@ -18,7 +18,7 @@ class DashboardController extends AdminController {
 
 		// User has to be authenticated before using this controller.
 		$this->beforeFilter('orchestra.auth', array(
-			'only' => array('anyIndex'),
+			'only' => array('index'),
 		));
 	}
 	
@@ -30,7 +30,7 @@ class DashboardController extends AdminController {
 	 * @access public
 	 * @return Response
 	 */
-	public function anyIndex()
+	public function index()
 	{
 		return View::make('orchestra/foundation::dashboard.index')
 			->with('panes', Widget::make('pane.orchestra'));
@@ -44,7 +44,7 @@ class DashboardController extends AdminController {
 	 * @access public
 	 * @return Response
 	 */
-	public function anyMissing()
+	public function missing()
 	{
 		return $this->missingMethod(array());
 	}

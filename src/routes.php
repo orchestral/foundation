@@ -8,7 +8,7 @@ Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orc
 	Route::controller('install', 'Orchestra\Routing\InstallController');
 	Route::controller('publisher', 'Orchestra\Routing\PublisherController');
 	Route::controller('register', 'Orchestra\Routing\RegisterController');
-	Route::any('resources{index?}', 'Orchestra\Routing\ResourcesController@anyIndex')->where('index', '/index');
+	Route::any('resources{index?}', 'Orchestra\Routing\ResourcesController@index')->where('index', '/index');
 	Route::any('resources{any}', 'Orchestra\Routing\ResourcesController@call')->where('any', '(.*)');
 	Route::resource('users', 'Orchestra\Routing\UsersController');
 	Route::any('users/{id}/delete', 'Orchestra\Routing\UsersController@delete');
@@ -22,12 +22,12 @@ Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orc
 	// Base routing.
 	Route::any('/', array(
 		'before' => 'orchestra.installable',
-		'uses'   => 'Orchestra\Routing\DashboardController@anyIndex'
+		'uses'   => 'Orchestra\Routing\DashboardController@index'
 	));
 
 	// 404 routing.
 	Route::any('missing', array(
 		'as'   => 'orchestra.404',
-		'uses' => 'Orchestra\Foundation\DashboardController@anyMissing',
+		'uses' => 'Orchestra\Foundation\DashboardController@missing',
 	));
 });
