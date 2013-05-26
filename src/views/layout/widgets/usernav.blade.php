@@ -1,12 +1,10 @@
 @if (Orchestra\Site::get('navigation::usernav', true))
 <ul class="nav pull-right">
 	<li class="dropdown" id="user-menu">
-		<p>
-			<a href="#user-menu" rel="user-menu" class="btn dropdown-toggle" data-toggle="dropdown">
-				<i class="icon-user"></i> {{ ( ! Auth::guest() ? Auth::user()->fullname : trans('orchestra/foundation::title.login')) }}
-			</a> 
-		</p>
-
+		<a href="#user-menu" rel="user-menu" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown">
+			<i class="icon-user"></i> {{ ( ! Auth::guest() ? Auth::user()->fullname : trans('orchestra/foundation::title.login')) }}
+		</a> 
+		
 		@if (Auth::check())
 
 		<ul class="dropdown-menu">
