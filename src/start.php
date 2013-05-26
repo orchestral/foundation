@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\App,
-	Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Event;
 
 App::make('orchestra.app')->boot();
 App::make('orchestra.site')->boot();
