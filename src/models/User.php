@@ -48,19 +48,19 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	/**
 	 * Search user based on keyword as roles.
 	 *
-	 * @static
-	 * @access public 	
-	 * @param  string   $keyword
-	 * @param  array    $roles
+	 * @access public
+	 * @param  Illuminate\Database\Eloquent\Builder $query
+	 * @param  string                               $keyword
+	 * @param  array                                $roles
 	 * @return Orchestra\Model\User
 	 */
-	public static function search($keyword = '', $roles = array())
+	public function scopeSearch($query, $keyword = '', $roles = array())
 	{
-		$model = static::with('roles')->whereNotNull('users.id');
+		$query->with('roles')->whereNotNull('users.id');
 		
 		if ( ! empty($roles))
 		{
-			$model->join('user_role', function ($join) use ($roles)
+			$query->join('user_role', function ($join) use ($roles)
 			{
 				$join->on('users.id', '=', 'user_role.user_id');
 
@@ -69,14 +69,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 		if ( ! empty($keyword))
 		{
-			$model->where(function ($query) use ($keyword)
+			$query->where(function ($query) use ($keyword)
 			{
 				$query->where('email', 'LIKE', $keyword)
 					->orWhere('fullname', 'LIKE', $keyword);
 			});
 		}
 
-		return $model;
+		return $query;
 	}
 
 	/**
