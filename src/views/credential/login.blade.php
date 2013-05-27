@@ -10,7 +10,6 @@
 
 		{{ Form::open(array('url' => handles('orchestra/foundation::login'), 'action' => 'POST', 'class' => 'form-horizontal')) }}
 			{{ Form::hidden('redirect', $redirect) }}
-			{{ Form::token() }}
 			<fieldset>
 
 				<div class="control-group {{ $errors->has('email') ? 'error' : '' }}">

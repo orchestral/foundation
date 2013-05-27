@@ -9,7 +9,6 @@
 		@include('orchestra/foundation::layout.widgets.header')
 
 		{{ Form::open(array('url' => handles('orchestra/foundation::forgot'), 'method' => 'POST', 'class' => 'form-horizontal')) }}
-			{{ Form::token() }}
 			<fieldset>
 
 				<div class="control-group {{ $errors->has('email') ? 'error' : '' }}">

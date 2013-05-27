@@ -54,8 +54,6 @@ class RegisterController extends AdminController {
 			{
 				$field->value = handles('orchestra/foundation::login');
 			});
-
-			$form->token = true;
 		});
 
 		Event::fire('orchestra.form: user.account', array($eloquent, $form));
