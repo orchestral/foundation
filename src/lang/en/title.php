@@ -8,6 +8,7 @@ return array(
 
 	'remember-me'     => 'Remember Me',
 	'forgot-password' => 'Forgot Password',
+	'reset-password'  => 'Reset Password',
 
 	'account' => array(
 		'profile'  => 'Edit Profile',

@@ -36,7 +36,7 @@ return array(
 		'other-depends-on' => 'Extension :name was not deactivated because :dependencies depends on it',
 	),
 
-	'forgot' => array(
+	'reminders' => array(
 		'email-fail' => 'Unable to send Reset Password E-mail',
 		'email-send' => 'Reset Password E-mail has been sent, please check your inbox',
 	),
