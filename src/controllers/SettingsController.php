@@ -117,4 +117,19 @@ class SettingsController extends AdminController {
 
 		return Redirect::to(handles('orchestra/foundation::settings'));
 	}
+
+	/**
+	 * Update orchestra/foundation.
+	 *
+	 * @access public
+	 * @return Response
+	 */
+	public function getUpdate()
+	{
+		App::make('orchestra.publisher.asset')->foundation();
+		App::make('orchestra.publisher.migrate')->foundation();
+
+		Messages::add('success', trans('orchestra/foundation::response.settings.system-update'));
+		return Redirect::to(handles('orchestra/foundation::settings'));
+	}
 }

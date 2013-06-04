@@ -42,7 +42,8 @@ return array(
 	),
 
 	'settings' => array(
-		'update'  => 'Application settings has been updated',
+		'update'        => 'Application settings has been updated',
+		'system-update' => 'Orchestra Foundation has been updated',
 	),
 
 	'users' => array(
