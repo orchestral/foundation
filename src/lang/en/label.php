@@ -29,6 +29,7 @@ return array(
 		'password'        => 'Password',
 		'encryption'      => 'Encryption',
 		'change_password' => 'Change Password',
+		'command'         => 'Sendmail Command',
 		'queue'           => 'Mail via Queue',
 	),
 

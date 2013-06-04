@@ -55,8 +55,9 @@ class SettingPresenter {
 				{
 					$control->label(trans('orchestra/foundation::label.email.driver'));
 					$control->options(array(
-						'mail' => 'Mail',
-						'smtp' => 'SMTP',
+						'mail'     => 'Mail',
+						'smtp'     => 'SMTP',
+						'sendmail' => 'Sendmail'
 					));
 				});
 
@@ -101,6 +102,11 @@ class SettingPresenter {
 				$fieldset->control('input:text', 'email_encryption', function ($control)
 				{
 					$control->label(trans('orchestra/foundation::label.email.encryption'));
+				});
+
+				$fieldset->control('input:text', 'email_sendmail', function ($control)
+				{
+					$control->label(trans('orchestra/foundation::label.email.command'));
 				});
 
 				$fieldset->control('select', 'email_queue', function ($control)

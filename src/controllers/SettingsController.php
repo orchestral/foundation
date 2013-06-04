@@ -52,6 +52,7 @@ class SettingsController extends AdminController {
 			'email_username'   => $memory->get('email.username', ''),
 			'email_password'   => $memory->get('email.password', ''),
 			'email_encryption' => $memory->get('email.encryption', ''),
+			'email_sendmail'   => $memory->get('email.sendmail', ''),
 			'email_queue'      => ($memory->get('email.queue', false) ? 'yes' : 'no'),
 		));
 
@@ -108,11 +109,27 @@ class SettingsController extends AdminController {
 		$memory->put('email.username', $input['email_username']);
 		$memory->put('email.password', $input['email_password']);
 		$memory->put('email.encryption', $input['email_encryption']);
+		$memory->put('email.sendmail', $input['email_sendmail']);
 		$memory->put('email.queue', ($input['email_queue'] === 'yes'));
 
 		Event::fire('orchestra.saved: settings', array($memory, $input));
 		Messages::add('success', trans('orchestra/foundation::response.settings.update'));
 
+		return Redirect::to(handles('orchestra/foundation::settings'));
+	}
+
+	/**
+	 * Update orchestra/foundation.
+	 *
+	 * @access public
+	 * @return Response
+	 */
+	public function getUpdate()
+	{
+		App::make('orchestra.publisher.asset')->foundation();
+		App::make('orchestra.publisher.migrate')->foundation();
+
+		Messages::add('success', trans('orchestra/foundation::response.settings.system-update'));
 		return Redirect::to(handles('orchestra/foundation::settings'));
 	}
 }

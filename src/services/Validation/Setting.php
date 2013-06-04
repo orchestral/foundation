@@ -36,4 +36,15 @@ class Setting extends Validator {
 		static::$rules['email_username'] = array('required', 'email');
 		static::$rules['email_host']     = array('required');
 	}
+
+	/**
+	 * On update email using sendmail driver scenario.
+	 *
+	 * @access protected
+	 * @return void
+	 */
+	protected function onSendmail()
+	{
+		static::$rules['email_sendmail'] = array('required');
+	}
 }
