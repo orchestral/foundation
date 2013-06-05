@@ -26,7 +26,9 @@
 						<?php echo Form::input('password', 'password', '', array('required' => true, 'class' => 'span12', 'tabindex' => 2)); ?>
 						<?php echo $errors->first('password', '<p class="help-block">:message</p>'); ?>
 						<p class="help-block">
-							<?php echo HTML::link(handles('orchestra/foundation::forgot'), trans('orchestra/foundation::title.forgot-password')); ?>
+							<a href="<?php echo handles('orchestra/foundation::forgot'); ?>">
+								<?php echo trans('orchestra/foundation::title.forgot-password'); ?>
+							</a>
 						</p>
 					</div>
 				</div>
@@ -43,9 +45,11 @@
 
 			<div class="form-actions">
 				<button type="submit" class="btn btn-primary"><?php echo trans('orchestra/foundation::title.login'); ?></button>
-				@if(memorize('site.registrable', false))
-				<?php echo HTML::link(handles('orchestra/foundation::register'), trans('orchestra/foundation::title.register'), array('class' => 'btn')); ?>
-				@endif
+				<?php if (memorize('site.registrable', false)) : ?>
+				<a href="<?php echo handles('orchestra/foundation::register'); ?>" class="btn">
+					<?php echo trans('orchestra/foundation::title.register'); ?>
+				</a>
+				<?php endif; ?>
 			</div>
 			
 		<?php echo Form::close(); ?>

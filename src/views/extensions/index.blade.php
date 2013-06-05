@@ -19,38 +19,39 @@ use Orchestra\Support\Facades\Extension; ?>
 			</tr>
 		</thead>
 		<tbody>
-			@if (empty($extensions))
+			<?php if (empty($extensions)) : ?>
 			<tr>
 				<td colspan="2"><?php echo trans('orchestra/foundation::label.no-extension'); ?></td>
 			</tr>
-			@else
-			@foreach ($extensions as $name => $extension)
-			<?php $extension = new Fluent($extension); ?>
+			<?php else : 
+			foreach ($extensions as $name => $extension) :
+				$extension = new Fluent($extension); ?>
 			<tr>
 				<td>
 					<strong>
 						<?php 
 						$active  = Extension::isActive($name);
 						$started = Extension::started($name);
-						$uid     = str_replace('/', '.', $name); ?>
-						@if ( ! ($started))
-							<?php echo $extension->name; ?>
-						@else
+						$uid     = str_replace('/', '.', $name);
+
+						if ( ! ($started)) :
+							echo $extension->name;
+						else : ?>
 							<a href="<?php echo handles("orchestra/foundation::extensions/configure/{$uid}"); ?>">
 								<?php echo $extension->name; ?>
 							</a>
-						@endif
+						<?php endif; ?>
 					</strong>
 					<div class="pull-right btn-group">
-						@if ( ! ($started or $active))
+						<?php if ( ! ($started or $active)) : ?>
 							<a href="<?php echo handles("orchestra/foundation::extensions/activate/{$uid}"); ?>" class="btn btn-primary btn-mini">
 								<?php echo trans('orchestra/foundation::label.extensions.actions.activate'); ?>
 							</a>
-						@else
+						<?php else : ?>
 							<a href="<?php echo handles("orchestra/foundation::extensions/deactivate/{$uid}"); ?>" class="btn btn-warning btn-mini">
 								<?php echo trans('orchestra/foundation::label.extensions.actions.deactivate'); ?>
 							</a>
-						@endif
+						<?php endif; ?>
 
 					</div>
 				</td>
@@ -61,12 +62,12 @@ use Orchestra\Support\Facades\Extension; ?>
 
 					<span class="meta">
 						<?php echo trans('orchestra/foundation::label.extensions.version', array('version' => $extension->version )); ?> |
-						<?php echo trans('orchestra/foundation::label.extensions.author', array('author' => HTML::link($extension->url ?: '#', $extension->author))); ?>
+						<?php echo trans('orchestra/foundation::label.extensions.author', array('author' => '<a href="'.($extension->url ?: '#').'">'.$extension->author.'</a>')); ?>
 					</span>
 				</td>
 			</tr>
-			@endforeach
-			@endif
+			<?php endforeach;
+			endif; ?>
 		</tbody>
 	</table>
 

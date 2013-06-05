@@ -37,44 +37,47 @@
 			<tbody>
 				<?php 
 				$databaseConnection = $checklist['databaseConnection'];
-				unset($checklist['databaseConnection']); ?>
-				@foreach ($checklist as $name => $requirement)
+				unset($checklist['databaseConnection']);
+
+				foreach ($checklist as $name => $requirement) : ?>
 				<tr>
 					<td>
 						<?php echo trans("orchestra/foundation::install.system.{$name}.name", $requirement['data']); ?>
-						@unless ($requirement['is'] === $requirement['should'])
+						<?php if ( ! ($requirement['is'] === $requirement['should'])) : ?>
 						<div class="alert<?php echo true === $requirement['explicit'] ? ' alert-error ' : ''; ?>">
 							<strong><?php echo trans("orchestra/foundation::install.solution"); ?>:</strong>
 							<?php echo trans("orchestra/foundation::install.system.{$name}.solution", $requirement['data']); ?>
 						</div>
-						@endunless
+						<?php endif; ?>
 					</td>
 					<td>
-						@if ($requirement['is'] === $requirement['should'])
+						<?php if ($requirement['is'] === $requirement['should']) : ?>
 							<button class="btn btn-success btn-block disabled">
 								<?php echo trans('orchestra/foundation::install.status.work'); ?>
 							</button>
-						@else
-							@if (true === $requirement['explicit'])
+						<?php else : 
+							if (true === $requirement['explicit']) : ?>
 								<button class="btn btn-danger btn-block disabled">
 									<?php echo trans('orchestra/foundation::install.status.not'); ?>
 								</button>
-							@else
+							<?php else : ?>
 								<button class="btn btn-warning btn-block disabled">
 									<?php echo trans('orchestra/foundation::install.status.still'); ?>
 								</button>
-							@endif
-						@endif
+							<?php endif;
+						endif; ?>
 					</td>
 				</tr>
-				@endforeach
+				<?php endforeach; ?>
 			</tbody>
 		</table>
 
 		<h3><?php echo trans('orchestra/foundation::install.database.title'); ?></h3>
 
 		<p>
-			<?php echo trans('orchestra/foundation::install.verify', array('filename' => HTML::create('code', 'app/config/database.php', array('title' => app_path().'config/database.php')))); ?>
+			<?php echo trans('orchestra/foundation::install.verify', array(
+				'filename' => '<code title="'.app_path().'config/database.php'.'">app/config/database.php</code>'
+			)); ?>
 		</p>
 
 		<fieldset>
@@ -86,14 +89,14 @@
 				</div>
 			</div>
 
-			@if (isset($database['host']))
+			<?php if (isset($database['host'])) : ?>
 			<div class="control-group">
 				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.host'); ?></label>
 				<div class="controls">
 					<span class="uneditable-input input-xlarge"><?php echo $database['host']; ?></span>
 				</div>
 			</div>
-			@endif
+			<?php endif; ?>
 
 			<div class="control-group">
 				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.name'); ?></label>
@@ -102,16 +105,16 @@
 				</div>
 			</div>
 
-			@if (isset($database['username']))
+			<?php if (isset($database['username'])) : ?>
 			<div class="control-group">
 				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.username'); ?></label>
 				<div class="controls">
 					<span class="uneditable-input input-xlarge"><?php echo $database['username']; ?></span>
 				</div>
 			</div>
-			@endif
+			<?php endif;
 
-			@if (isset($database['password']))
+			if (isset($database['password'])) : ?>
 			<div class="control-group">
 				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.password'); ?></label>
 				<div class="controls">
@@ -119,20 +122,20 @@
 					<p class="help-block"><?php echo trans('orchestra/foundation::install.hide-password'); ?></p>
 				</div>
 			</div>
-			@endif
+			<?php endif; ?>
 
 			<div class="control-group">
 				<label class="control-label"><?php echo trans('orchestra/foundation::install.connection.status'); ?></label>
 				<div class="controls">
-					@if (true === $databaseConnection['is'])
+					<?php if (true === $databaseConnection['is']) : ?>
 					<button class="btn btn-success disabled input-xlarge">
 						<?php echo trans('orchestra/foundation::install.connection.success'); ?>
 					</button>
-					@else
+					<?php else : ?>
 					<button class="btn btn-danger disabled input-xlarge">
 						<?php echo trans('orchestra/foundation::install.connection.fail'); ?>
 					</button>
-					@endif
+					<?php endif; ?>
 				</div>
 			</div>
 
@@ -143,7 +146,9 @@
 			<h3><?php echo trans('orchestra/foundation::install.auth.title'); ?></h3>
 
 			<p>
-				<?php echo trans('orchestra/foundation::install.verify', array('filename' => HTML::create('code', 'app/config/auth.php', array('title' => app_path().'config/auth.php')))); ?>
+				<?php echo trans('orchestra/foundation::install.verify', array(
+					'filename' => HTML::create('code', 'app/config/auth.php', array('title' => app_path().'config/auth.php'))
+				)); ?>
 			</p>
 
 			<div class="control-group">
@@ -152,35 +157,40 @@
 				</label>
 				<div class="controls">
 					<span class="uneditable-input input-xlarge"><?php echo $auth['driver']; ?></span>
-					@if ('fluent' === $auth['driver'])
+					<?php if ('fluent' === $auth['driver']) : ?>
 					<p class="help-block"><?php echo trans('orchestra/foundation::install.auth.requirement.driver'); ?></p>
-					@endif
+					<?php endif; ?>
 				</div>
 			</div>
 
-			<div class="control-group <?php echo false === $authentication ? 'error' : ''; ?> <?php echo 'eloquent' !== $auth['driver'] ? 'hide' : ''; ?>">
+			<div class="control-group
+				<?php echo false === $authentication ? ' error' : ''; echo 'eloquent' !== $auth['driver'] ? ' hide' : ''; ?>">
 				<label class="control-label">
 					<?php echo trans('orchestra/foundation::install.auth.model'); ?>
 				</label>
 				<div class="controls">
 					<span class="uneditable-input input-xlarge"><?php echo $auth['model']; ?></span>
-					@if (false === $authentication)
+					<?php if (false === $authentication) : ?>
 					<p class="help-block">
-						<?php echo trans('orchestra/foundation::install.auth.requirement.driver', array('class' => HTML::create('code', 'Orchestra\Model\User'))); ?>
+						<?php echo trans('orchestra/foundation::install.auth.requirement.driver', array(
+							'class' => HTML::create('code', 'Orchestra\Model\User')
+						)); ?>
 					</p>
-					@endif
+					<?php endif; ?>
 				</div>
 			</div>
 
 		</fieldset>
 
-		@if ($installable)
+		<?php if ($installable) : ?>
 
 		<div class="form-actions clean">
-			<?php echo HTML::link(handles('orchestra/foundation::install/create'), trans('orchestra/foundation::label.next'), array('class' => 'btn btn-primary')); ?>
+			<a href="<?php echo handles('orchestra/foundation::install/create'); ?>" class="btn btn-primary">
+				<?php echo trans('orchestra/foundation::label.next'); ?>
+			</a>
 		</div>
 
-		@endif
+		<?php endif; ?>
 
 	</div>
 

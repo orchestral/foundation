@@ -3,12 +3,12 @@
 @section('content')
 
 <div class="row">
-	@if (count($panes) > 0)
-	@foreach ($panes as $id => $pane) 
+	<?php if (count($panes) > 0) :
+	foreach ($panes as $id => $pane) : ?>
 		<div<?php echo HTML::attributes($pane->attributes); ?>>
-		@if ( ! empty($pane->html))
-			<?php echo $pane->html; ?>
-		@else
+		<?php if ( ! empty($pane->html)) :
+			echo $pane->html; 
+		else : ?>
 			<table<?php echo HTML::attributes(array('class' => "table table-bordered")); ?>>
 				<thead>
 					<tr>
@@ -21,10 +21,10 @@
 					</tr>
 				</tbody>
 			</table>
-		@endif
+		<?php endif; ?>
 		</div>
-	@endforeach
-	@else
+	<?php endforeach;
+	else : ?>
 	<div class="jumbotron">
 		<h2>Welcome to your new Orchestra Platform site!</h2>
 		<p>
@@ -34,7 +34,7 @@
 			screen and where to go for more assistance.-->
 		</p>
 	</div>
-	@endif
+	<?php endif; ?>
 </div>
 
 @stop
