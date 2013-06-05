@@ -6,7 +6,7 @@
 
 	<div class="span8">
 		@include('orchestra/foundation::layout.widgets.header')
-		{{ $form }}
+		<?php echo $form; ?>
 	</div>
 
 	<div class="span4">

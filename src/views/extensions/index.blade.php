@@ -2,8 +2,8 @@
 
 <?php 
 
-use Illuminate\Support\Fluent,
-	Orchestra\Extension; ?>
+use Illuminate\Support\Fluent;
+use Orchestra\Support\Facades\Extension; ?>
 
 @section('content')
 
@@ -14,51 +14,60 @@ use Illuminate\Support\Fluent,
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>{{ trans('orchestra/foundation::label.extensions.name') }}</th>
-				<th>{{ trans('orchestra/foundation::label.description') }}</th>
+				<th><?php echo trans('orchestra/foundation::label.extensions.name'); ?></th>
+				<th><?php echo trans('orchestra/foundation::label.description'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
-			@if (empty($extensions))
+			<?php if (empty($extensions)) : ?>
 			<tr>
-				<td colspan="2">{{ trans('orchestra/foundation::label.no-extension') }}</td>
+				<td colspan="2"><?php echo trans('orchestra/foundation::label.no-extension'); ?></td>
 			</tr>
-			@else
-			@foreach ($extensions as $name => $extension)
-			<?php $extension = new Fluent($extension); ?>
+			<?php else : 
+			foreach ($extensions as $name => $extension) :
+				$extension = new Fluent($extension); ?>
 			<tr>
 				<td>
 					<strong>
 						<?php 
 						$active  = Extension::isActive($name);
 						$started = Extension::started($name);
-						$uid     = str_replace('/', '.', $name); ?>
-						@if ( ! ($started))
-							{{ $extension->name }}
-						@else
-							{{ HTML::link(handles("orchestra/foundation::extensions/configure/{$uid}"), $extension->name) }}
-						@endif
+						$uid     = str_replace('/', '.', $name);
+
+						if ( ! ($started)) :
+							echo $extension->name;
+						else : ?>
+							<a href="<?php echo handles("orchestra/foundation::extensions/configure/{$uid}"); ?>">
+								<?php echo $extension->name; ?>
+							</a>
+						<?php endif; ?>
 					</strong>
 					<div class="pull-right btn-group">
-						@if ( ! ($started or $active))
-							{{ HTML::link(handles("orchestra/foundation::extensions/activate/{$uid}"), trans('orchestra/foundation::label.extensions.actions.activate'), array('class' => 'btn btn-primary btn-mini')) }}
-						@else
-							{{ HTML::link(handles("orchestra/foundation::extensions/deactivate/{$uid}"), trans('orchestra/foundation::label.extensions.actions.deactivate'), array('class' => 'btn btn-warning btn-mini')) }}
-						@endif
+						<?php if ( ! ($started or $active)) : ?>
+							<a href="<?php echo handles("orchestra/foundation::extensions/activate/{$uid}"); ?>" class="btn btn-primary btn-mini">
+								<?php echo trans('orchestra/foundation::label.extensions.actions.activate'); ?>
+							</a>
+						<?php else : ?>
+							<a href="<?php echo handles("orchestra/foundation::extensions/deactivate/{$uid}"); ?>" class="btn btn-warning btn-mini">
+								<?php echo trans('orchestra/foundation::label.extensions.actions.deactivate'); ?>
+							</a>
+						<?php endif; ?>
 
 					</div>
 				</td>
 				<td>
-					<p>{{ $extension->description }}</p>
+					<p>
+						<?php echo $extension->description; ?>
+					</p>
 
 					<span class="meta">
-						{{ trans('orchestra/foundation::label.extensions.version', array('version' => $extension->version )) }} |
-						{{ trans('orchestra/foundation::label.extensions.author', array('author' => HTML::link($extension->url ?: '#', $extension->author))) }}
+						<?php echo trans('orchestra/foundation::label.extensions.version', array('version' => $extension->version )); ?> |
+						<?php echo trans('orchestra/foundation::label.extensions.author', array('author' => '<a href="'.($extension->url ?: '#').'">'.$extension->author.'</a>')); ?>
 					</span>
 				</td>
 			</tr>
-			@endforeach
-			@endif
+			<?php endforeach;
+			endif; ?>
 		</tbody>
 	</table>
 

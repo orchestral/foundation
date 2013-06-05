@@ -5,14 +5,14 @@
 <div class="row">
 	<div class="col col-lg-3">
 		<div class="list-group">
-			<a href="{{ handles('orchestra/foundation::install') }}" class="list-group-item active">
-				{{ trans('orchestra/foundation::install.steps.requirement') }}
+			<a href="<?php echo handles('orchestra/foundation::install'); ?>" class="list-group-item active">
+				<?php echo trans('orchestra/foundation::install.steps.requirement'); ?>
 			</a>
 			<a href="#" class="list-group-item disabled">
-				{{ trans('orchestra/foundation::install.steps.account') }}
+				<?php echo trans('orchestra/foundation::install.steps.account'); ?>
 			</a>
 			<a href="#" class="list-group-item disabled">
-				{{ trans('orchestra/foundation::install.steps.done') }}
+				<?php echo trans('orchestra/foundation::install.steps.done'); ?>
 			</a>
 		</div>
 
@@ -23,116 +23,119 @@
 
 	<div id="installation" class="col col-lg-6 form-horizontal">
 
-		<h3>{{ trans('orchestra/foundation::install.system.title') }}</h3>
+		<h3><?php echo trans('orchestra/foundation::install.system.title'); ?></h3>
 
-		<p>{{ trans('orchestra/foundation::install.system.description') }}</p>
+		<p><?php echo trans('orchestra/foundation::install.system.description'); ?></p>
 
 		<table class="table table-bordered table-striped requirements">
 			<thead>
 				<tr>
-					<th>{{ trans('orchestra/foundation::install.system.requirement') }}</th>
-					<th>{{ trans('orchestra/foundation::install.system.status') }}</th>
+					<th><?php echo trans('orchestra/foundation::install.system.requirement'); ?></th>
+					<th><?php echo trans('orchestra/foundation::install.system.status'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
 				<?php 
 				$databaseConnection = $checklist['databaseConnection'];
-				unset($checklist['databaseConnection']); ?>
-				@foreach ($checklist as $name => $requirement)
+				unset($checklist['databaseConnection']);
+
+				foreach ($checklist as $name => $requirement) : ?>
 				<tr>
 					<td>
-						{{ trans("orchestra/foundation::install.system.{$name}.name", $requirement['data']) }}
-						@unless ($requirement['is'] === $requirement['should'])
-						<div class="alert{{ true === $requirement['explicit'] ? ' alert-error ' : '' }}">
-							<strong>{{ trans("orchestra/foundation::install.solution") }}:</strong>
-							{{ trans("orchestra/foundation::install.system.{$name}.solution", $requirement['data']) }}
+						<?php echo trans("orchestra/foundation::install.system.{$name}.name", $requirement['data']); ?>
+						<?php if ( ! ($requirement['is'] === $requirement['should'])) : ?>
+						<div class="alert<?php echo true === $requirement['explicit'] ? ' alert-error ' : ''; ?>">
+							<strong><?php echo trans("orchestra/foundation::install.solution"); ?>:</strong>
+							<?php echo trans("orchestra/foundation::install.system.{$name}.solution", $requirement['data']); ?>
 						</div>
-						@endunless
+						<?php endif; ?>
 					</td>
 					<td>
-						@if ($requirement['is'] === $requirement['should'])
+						<?php if ($requirement['is'] === $requirement['should']) : ?>
 							<button class="btn btn-success btn-block disabled">
-								{{ trans('orchestra/foundation::install.status.work') }}
+								<?php echo trans('orchestra/foundation::install.status.work'); ?>
 							</button>
-						@else
-							@if (true === $requirement['explicit'])
+						<?php else : 
+							if (true === $requirement['explicit']) : ?>
 								<button class="btn btn-danger btn-block disabled">
-									{{ trans('orchestra/foundation::install.status.not') }}
+									<?php echo trans('orchestra/foundation::install.status.not'); ?>
 								</button>
-							@else
+							<?php else : ?>
 								<button class="btn btn-warning btn-block disabled">
-									{{ trans('orchestra/foundation::install.status.still') }}
+									<?php echo trans('orchestra/foundation::install.status.still'); ?>
 								</button>
-							@endif
-						@endif
+							<?php endif;
+						endif; ?>
 					</td>
 				</tr>
-				@endforeach
+				<?php endforeach; ?>
 			</tbody>
 		</table>
 
-		<h3>{{ trans('orchestra/foundation::install.database.title') }}</h3>
+		<h3><?php echo trans('orchestra/foundation::install.database.title'); ?></h3>
 
 		<p>
-			{{ trans('orchestra/foundation::install.verify', array('filename' => HTML::create('code', 'app/config/database.php', array('title' => app_path().'config/database.php')))) }}
+			<?php echo trans('orchestra/foundation::install.verify', array(
+				'filename' => '<code title="'.app_path().'config/database.php'.'">app/config/database.php</code>'
+			)); ?>
 		</p>
 
 		<fieldset>
 
 			<div class="control-group">
-				<label class="control-label">{{ trans('orchestra/foundation::install.database.type') }}</label>
+				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.type'); ?></label>
 				<div class="controls">
-					<span class="uneditable-input input-xlarge">{{ $database['driver'] }}</span>
+					<span class="uneditable-input input-xlarge"><?php echo $database['driver']; ?></span>
 				</div>
 			</div>
 
-			@if (isset($database['host']))
+			<?php if (isset($database['host'])) : ?>
 			<div class="control-group">
-				<label class="control-label">{{ trans('orchestra/foundation::install.database.host') }}</label>
+				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.host'); ?></label>
 				<div class="controls">
-					<span class="uneditable-input input-xlarge">{{ $database['host'] }}</span>
+					<span class="uneditable-input input-xlarge"><?php echo $database['host']; ?></span>
 				</div>
 			</div>
-			@endif
+			<?php endif; ?>
 
 			<div class="control-group">
-				<label class="control-label">{{ trans('orchestra/foundation::install.database.name') }}</label>
+				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.name'); ?></label>
 				<div class="controls">
-					<span class="uneditable-input input-xlarge">{{ $database['database'] }}</span>
+					<span class="uneditable-input input-xlarge"><?php echo $database['database']; ?></span>
 				</div>
 			</div>
 
-			@if (isset($database['username']))
+			<?php if (isset($database['username'])) : ?>
 			<div class="control-group">
-				<label class="control-label">{{ trans('orchestra/foundation::install.database.username') }}</label>
+				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.username'); ?></label>
 				<div class="controls">
-					<span class="uneditable-input input-xlarge">{{ $database['username'] }}</span>
+					<span class="uneditable-input input-xlarge"><?php echo $database['username']; ?></span>
 				</div>
 			</div>
-			@endif
+			<?php endif;
 
-			@if (isset($database['password']))
+			if (isset($database['password'])) : ?>
 			<div class="control-group">
-				<label class="control-label">{{ trans('orchestra/foundation::install.database.password') }}</label>
+				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.password'); ?></label>
 				<div class="controls">
-					<span class="uneditable-input input-xlarge">{{ $database['password'] }}</span>
-					<p class="help-block">{{ trans('orchestra/foundation::install.hide-password') }}</p>
+					<span class="uneditable-input input-xlarge"><?php echo $database['password']; ?></span>
+					<p class="help-block"><?php echo trans('orchestra/foundation::install.hide-password'); ?></p>
 				</div>
 			</div>
-			@endif
+			<?php endif; ?>
 
 			<div class="control-group">
-				<label class="control-label">{{ trans('orchestra/foundation::install.connection.status') }}</label>
+				<label class="control-label"><?php echo trans('orchestra/foundation::install.connection.status'); ?></label>
 				<div class="controls">
-					@if (true === $databaseConnection['is'])
+					<?php if (true === $databaseConnection['is']) : ?>
 					<button class="btn btn-success disabled input-xlarge">
-						{{ trans('orchestra/foundation::install.connection.success') }}
+						<?php echo trans('orchestra/foundation::install.connection.success'); ?>
 					</button>
-					@else
+					<?php else : ?>
 					<button class="btn btn-danger disabled input-xlarge">
-						{{ trans('orchestra/foundation::install.connection.fail') }}
+						<?php echo trans('orchestra/foundation::install.connection.fail'); ?>
 					</button>
-					@endif
+					<?php endif; ?>
 				</div>
 			</div>
 
@@ -140,47 +143,54 @@
 
 		<fieldset>
 
-			<h3>{{ trans('orchestra/foundation::install.auth.title') }}</h3>
+			<h3><?php echo trans('orchestra/foundation::install.auth.title'); ?></h3>
 
 			<p>
-				{{ trans('orchestra/foundation::install.verify', array('filename' => HTML::create('code', 'app/config/auth.php', array('title' => app_path().'config/auth.php')))) }}
+				<?php echo trans('orchestra/foundation::install.verify', array(
+					'filename' => HTML::create('code', 'app/config/auth.php', array('title' => app_path().'config/auth.php'))
+				)); ?>
 			</p>
 
 			<div class="control-group">
-				<label class="control-label {{ 'fluent' === $auth['driver'] ? 'error' : '' }}">
-					{{ trans('orchestra/foundation::install.auth.driver') }}
+				<label class="control-label <?php echo 'fluent' === $auth['driver'] ? 'error' : ''; ?>">
+					<?php echo trans('orchestra/foundation::install.auth.driver'); ?>
 				</label>
 				<div class="controls">
-					<span class="uneditable-input input-xlarge">{{ $auth['driver'] }}</span>
-					@if ('fluent' === $auth['driver'])
-					<p class="help-block">{{ trans('orchestra/foundation::install.auth.requirement.driver') }}</p>
-					@endif
+					<span class="uneditable-input input-xlarge"><?php echo $auth['driver']; ?></span>
+					<?php if ('fluent' === $auth['driver']) : ?>
+					<p class="help-block"><?php echo trans('orchestra/foundation::install.auth.requirement.driver'); ?></p>
+					<?php endif; ?>
 				</div>
 			</div>
 
-			<div class="control-group {{ false === $authentication ? 'error' : '' }} {{ 'eloquent' !== $auth['driver'] ? 'hide' : '' }}">
+			<div class="control-group
+				<?php echo false === $authentication ? ' error' : ''; echo 'eloquent' !== $auth['driver'] ? ' hide' : ''; ?>">
 				<label class="control-label">
-					{{ trans('orchestra/foundation::install.auth.model') }}
+					<?php echo trans('orchestra/foundation::install.auth.model'); ?>
 				</label>
 				<div class="controls">
-					<span class="uneditable-input input-xlarge">{{ $auth['model'] }}</span>
-					@if (false === $authentication)
+					<span class="uneditable-input input-xlarge"><?php echo $auth['model']; ?></span>
+					<?php if (false === $authentication) : ?>
 					<p class="help-block">
-						{{ trans('orchestra/foundation::install.auth.requirement.driver', array('class' => HTML::create('code', 'Orchestra\Model\User'))) }}
+						<?php echo trans('orchestra/foundation::install.auth.requirement.driver', array(
+							'class' => HTML::create('code', 'Orchestra\Model\User')
+						)); ?>
 					</p>
-					@endif
+					<?php endif; ?>
 				</div>
 			</div>
 
 		</fieldset>
 
-		@if ($installable)
+		<?php if ($installable) : ?>
 
 		<div class="form-actions clean">
-			{{ HTML::link(handles('orchestra/foundation::install/create'), trans('orchestra/foundation::label.next'), array('class' => 'btn btn-primary')) }}
+			<a href="<?php echo handles('orchestra/foundation::install/create'); ?>" class="btn btn-primary">
+				<?php echo trans('orchestra/foundation::label.next'); ?>
+			</a>
 		</div>
 
-		@endif
+		<?php endif; ?>
 
 	</div>
 
