@@ -1,4 +1,3 @@
-{{-- Define navbar attributes --}}
 <?php $navbar = new Illuminate\Support\Fluent(array(
 	'id'         => 'main',
 	'title'      => memorize('site.name', 'Orchestra'),
@@ -6,11 +5,11 @@
 	'attributes' => array('class' => 'navbar-fixed-top'),
 	'menu'       => View::make('orchestra/foundation::layout.widgets.menu', array('menu' => Orchestra\App::menu('orchestra'))),
 	'subMenu'    => View::make('orchestra/foundation::layout.widgets.usernav'),
-)); ?>
+));
 
-@decorator('navbar', $navbar)
+echo Orchestra\Support\Facades\Decorator::render('navbar', $navbar);
 
-@if ( ! Auth::check())
+if ( ! Auth::check()) : ?>
 
 <script>
 jQuery(function ($) {
@@ -24,6 +23,6 @@ jQuery(function ($) {
 });
 </script>
 
-@endif
+<?php endif; ?>
 
 <br>

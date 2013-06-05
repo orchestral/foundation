@@ -20,6 +20,8 @@ $asset->script('jquery', 'packages/orchestra/foundation/js/jquery.min.js');
 $asset->script('javie', 'packages/orchestra/foundation/js/javie.min.js', array('jquery', 'underscore'));
 
 echo $asset->styles();
-echo $asset->scripts(); ?>
+echo $asset->scripts();
 
-@placeholder("orchestra.layout: header")
+foreach (Orchestra\Support\Facades\Widget::make("placeholder.orchestra.layout: header") as $__p) :
+	echo value($__p->value ?: "");
+endforeach;
