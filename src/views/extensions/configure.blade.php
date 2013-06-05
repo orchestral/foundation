@@ -5,8 +5,7 @@
 <div class="row">
 	<div class="col col-lg-8">
 		@include('orchestra/foundation::layout.widgets.header')
-
-		{{ $form }}
+		<?php echo $form; ?>
 	</div>
 
 	<div class="col col-lg-4">

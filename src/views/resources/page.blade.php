@@ -7,8 +7,9 @@
 	<div class="col col-lg-2">
 		<div class="list-group">
 			@foreach ($resources['list'] as $name => $resource)
-			<a href="{{ handles("orchestra/foundation::resources/{$name}") }}" class="list-group-item {{ Request::is("*/resources/{$name}*") ? 'active' : '' }}">
-				{{ $resource->name }}
+			<a href="<?php echo handles("orchestra/foundation::resources/{$name}"); ?>" 
+				class="list-group-item <?php echo Request::is("*/resources/{$name}*") ? 'active' : ''; ?>">
+				<?php echo $resource->name; ?>
 				<span class="glyphicon glyphicon-chevron-right"></span>
 			</a>
 			@endforeach
@@ -16,7 +17,7 @@
 	</div>
 
 	<div class="col col-lg-10">
-		{{ $content }}
+		<?php echo $content; ?>
 	</div>
 	
 </div>

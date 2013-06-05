@@ -5,14 +5,14 @@
 <div class="row">
 	<div class="col col-lg-3">
 		<div class="list-group">
-			<a href="{{ handles('orchestra/foundation::install') }}" class="list-group-item">
-				{{ trans('orchestra/foundation::install.steps.requirement') }}
+			<a href="<?php echo handles('orchestra/foundation::install'); ?>" class="list-group-item">
+				<?php echo trans('orchestra/foundation::install.steps.requirement'); ?>
 			</a>
-			<a href="{{ handles('orchestra/foundation::install/create') }}" class="list-group-item">
-				{{ trans('orchestra/foundation::install.steps.account') }}
+			<a href="<?php echo handles('orchestra/foundation::install/create'); ?>" class="list-group-item">
+				<?php echo trans('orchestra/foundation::install.steps.account'); ?>
 			</a>
-			<a href="{{ handles('orchestra/foundation::install/done') }}" class="list-group-item active">
-				{{ trans('orchestra/foundation::install.steps.done') }}
+			<a href="<?php echo handles('orchestra/foundation::install/done'); ?>" class="list-group-item active">
+				<?php echo trans('orchestra/foundation::install.steps.done'); ?>
 			</a>
 		</div>
 
@@ -23,7 +23,7 @@
 
 	<div class="col col-lg-6 form-horizontal">
 
-		<h2>{{ trans('orchestra/foundation::install.steps.done') }}</h2>
+		<h2><?php echo trans('orchestra/foundation::install.steps.done'); ?></h2>
 
 	</div>
 

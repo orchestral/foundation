@@ -4,7 +4,7 @@
 
 <div class="row">
 	@include('orchestra/foundation::layout.widgets.header')
-	{{ $table }}
+	<?php echo $table; ?>
 </div>
 
 @stop

@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-{{ HTML::title() }}
+<?php echo HTML::title(); ?>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Orchestra Platform">
 <meta name="author" content="Orchestra Platform">
@@ -17,9 +17,9 @@ $asset->style('bootstrap', 'packages/orchestra/foundation/vendor/bootstrap/css/b
 $asset->style('orchestra', 'packages/orchestra/foundation/css/style.css', array('bootstrap'));
 $asset->script('underscore', 'packages/orchestra/foundation/js/underscore.min.js');
 $asset->script('jquery', 'packages/orchestra/foundation/js/jquery.min.js');
-$asset->script('javie', 'packages/orchestra/foundation/js/javie.min.js', array('jquery', 'underscore')); ?>
+$asset->script('javie', 'packages/orchestra/foundation/js/javie.min.js', array('jquery', 'underscore'));
 
-{{ $asset->styles() }}
-{{ $asset->scripts() }}
+echo $asset->styles();
+echo $asset->scripts(); ?>
 
 @placeholder("orchestra.layout: header")
