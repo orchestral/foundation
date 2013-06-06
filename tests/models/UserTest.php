@@ -37,7 +37,7 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testRolesMethod()
 	{
-		$model = new \Orchestra\Model\User;
+		$model = new User;
 
 		$this->addMockConnection($model);
 		
@@ -48,13 +48,42 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Model\User::scopeSearch() method.
+	 *
+	 * @test
+	 */
+	public function testScopeSearchMethod()
+	{
+		$model = new User;
+		$this->addMockConnection($model);
+
+		$keyword = 'foo';
+		$roles   = array('admin');
+
+		$query = m::mock('QueryBuilder');
+		$query->shouldReceive('with')->once()->with('roles')->andReturn($query)
+			->shouldReceive('whereNotNull')->once()->with('users.id')->andReturn($query)
+			->shouldReceive('join')->once()->with('user_role', 'users.id', '=', 'user_role.user_id')->andReturn($query)
+			->shouldReceive('whereIn')->once()->with('user_role.role_id', $roles)->andReturn(null)
+			->shouldReceive('where')->once()->with('email', 'LIKE', $keyword)->andReturn($query)
+			->shouldReceive('orWhere')->once()->with('fullname', 'LIKE', $keyword)->andReturn(null)
+			->shouldReceive('where')->once()->with(m::type('Closure'))->andReturnUsing(function ($q) use ($query, $keyword)
+			{
+				$q($query);
+			});
+
+		$this->assertEquals($query, $model->scopeSearch($query, $keyword, $roles));
+
+	}
+
+	/**
 	 * Test Orchestra\Model\User::getAuthIdentifier() method.
 	 *
 	 * @test
 	 */
 	public function testGetAuthIdentifierMethod()
 	{
-		$stub = new \Orchestra\Model\User;
+		$stub = new User;
 		$stub->id = 5;
 
 		$this->assertEquals(5, $stub->getAuthIdentifier());
@@ -74,7 +103,7 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 		\Illuminate\Support\Facades\Hash::swap($hash = \Mockery::mock('Hash'));
 		$hash->shouldReceive('make')->once()->with('foo')->andReturn('foobar');
 
-		$stub = new \Orchestra\Model\User;
+		$stub = new User;
 		$stub->password = 'foo';
 
 		$this->assertEquals('foobar', $stub->getAuthPassword());
@@ -87,7 +116,7 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testGetReminderEmailMethod()
 	{
-		$stub = new \Orchestra\Model\User;
+		$stub        = new User;
 		$stub->email = 'admin@orchestraplatform.com';
 
 		$this->assertEquals('admin@orchestraplatform.com', $stub->getReminderEmail());
