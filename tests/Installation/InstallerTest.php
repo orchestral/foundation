@@ -124,9 +124,9 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 
 		$validator->shouldReceive('make')->once()->with($input, $rules)->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(false);
-		$user->shouldReceive('newQuery')->twice()->andReturn($user)
+		$user->shouldReceive('newQuery')->once()->andReturn($user)
 			->shouldReceive('all')->once()->andReturn(null)
-			->shouldReceive('fillable')->once()->with(array('email', 'password', 'fullname', 'status'))->andReturn(null)
+			->shouldReceive('newInstance')->once()->andReturn($user)
 			->shouldReceive('fill')->once()->andReturn(null)
 			->shouldReceive('save')->once()->andReturn(null)
 			->shouldReceive('roles')->once()->andReturn($user)
