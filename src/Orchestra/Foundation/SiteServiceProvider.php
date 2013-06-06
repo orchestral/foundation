@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
+use Orchestra\Model\Role;
 use Orchestra\Model\User;
 
 class SiteServiceProvider extends ServiceProvider {
@@ -23,6 +24,7 @@ class SiteServiceProvider extends ServiceProvider {
 		$this->registerMailer();
 		$this->registerPublisher();
 		$this->registerSite();
+		$this->registerRoleEloquent();
 		$this->registerUserEloquent();
 		$this->registerAliases();
 	}
@@ -71,6 +73,19 @@ class SiteServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
+	protected function registerRoleEloquent()
+	{
+		$this->app['orchestra.role'] = $this->app->share(function ($app)
+		{
+			return new Role;
+		});
+	}
+
+	/**
+	 * Register the service provider for user.
+	 *
+	 * @return void
+	 */
 	protected function registerUserEloquent()
 	{
 		$this->app['orchestra.user'] = $this->app->share(function ($app)
@@ -102,6 +117,9 @@ class SiteServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('orchestra.mail', 'orchestra.publisher', 'orchestra.site', 'orchestra.user');
+		return array(
+			'orchestra.mail', 'orchestra.publisher', 'orchestra.site', 
+			'orchestra.role', 'orchestra.user',
+		);
 	}
 }

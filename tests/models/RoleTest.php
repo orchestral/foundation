@@ -37,7 +37,7 @@ class RoleTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testUsersMethod()
 	{
-		$model = new \Orchestra\Model\Role;
+		$model = new Role;
 
 		$this->addMockConnection($model);
 		
