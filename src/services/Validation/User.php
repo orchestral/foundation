@@ -9,7 +9,7 @@ class User extends Validator {
 	 *
 	 * @var array
 	 */
-	protected static $rules = array(
+	protected $rules = array(
 		'email'    => array('required', 'email'),
 		'fullname' => array('required'),
 		'roles'    => array('required'),
@@ -20,7 +20,7 @@ class User extends Validator {
 	 *
 	 * @var array
 	 */
-	protected static $events = array(
+	protected $events = array(
 		'orchestra.validate: users', 
 		'orchestra.validate: user.account',
 	);
@@ -33,6 +33,6 @@ class User extends Validator {
 	 */
 	protected function onCreate()
 	{
-		static::$rules['password'] = array('required');
+		$this->rules['password'] = array('required');
 	}
 }

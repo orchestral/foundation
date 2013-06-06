@@ -9,7 +9,7 @@ class Setting extends Validator {
 	 *
 	 * @var array
 	 */
-	protected static $rules = array(
+	protected $rules = array(
 		'site_name'     => array('required'),
 		'email_address' => array('required', 'email'),
 		'email_driver'  => array('required', 'in:mail,smtp,sendmail'),
@@ -21,7 +21,7 @@ class Setting extends Validator {
 	 *
 	 * @var array
 	 */
-	protected static $events = array(
+	protected $events = array(
 		'orchestra.validate: settings',
 	);
 
@@ -33,9 +33,8 @@ class Setting extends Validator {
 	 */
 	protected function onSmtp()
 	{
-		unset(static::$rules['email_sendmail']);
-		static::$rules['email_username'] = array('required');
-		static::$rules['email_host']     = array('required');
+		$this->rules['email_username'] = array('required');
+		$this->rules['email_host']     = array('required');
 	}
 
 	/**
@@ -46,8 +45,6 @@ class Setting extends Validator {
 	 */
 	protected function onSendmail()
 	{
-		unset(static::$rules['email_username']);
-		unset(static::$rules['email_host']);
-		static::$rules['email_sendmail'] = array('required');
+		$this->rules['email_sendmail'] = array('required');
 	}
 }
