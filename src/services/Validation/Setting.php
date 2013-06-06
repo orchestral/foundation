@@ -33,7 +33,8 @@ class Setting extends Validator {
 	 */
 	protected function onSmtp()
 	{
-		static::$rules['email_username'] = array('required', 'email');
+		unset(static::$rules['email_sendmail']);
+		static::$rules['email_username'] = array('required');
 		static::$rules['email_host']     = array('required');
 	}
 
@@ -45,6 +46,8 @@ class Setting extends Validator {
 	 */
 	protected function onSendmail()
 	{
+		unset(static::$rules['email_username']);
+		unset(static::$rules['email_host']);
 		static::$rules['email_sendmail'] = array('required');
 	}
 }
