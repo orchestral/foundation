@@ -9,7 +9,7 @@ class UserAccount extends Validator {
 	 *
 	 * @var array
 	 */
-	protected static $rules = array(
+	protected $rules = array(
 		'email'    => array('required', 'email'),
 		'fullname' => array('required'),
 	);
@@ -19,7 +19,7 @@ class UserAccount extends Validator {
 	 *
 	 * @var array
 	 */
-	protected static $events = array(
+	protected $events = array(
 		'orchestra.validate: user.account',
 	);
 
@@ -31,7 +31,7 @@ class UserAccount extends Validator {
 	 */
 	protected function onRegister() 
 	{
-		static::$rules['email'] = array('required', 'email', 'unique:users,email');
+		$this->rules['email'] = array('required', 'email', 'unique:users,email');
 	}
 
 	/**
@@ -42,12 +42,12 @@ class UserAccount extends Validator {
 	 */
 	protected function onChangePassword()
 	{
-		static::$rules = array(
+		$this->rules = array(
 			'current_password' => array('required'),
 			'new_password'     => array('required', 'different:current_password'),
 			'confirm_password' => array('same:new_password'),
 		);
 
-		static::$events = array();
+		$this->events = array();
 	}
 }

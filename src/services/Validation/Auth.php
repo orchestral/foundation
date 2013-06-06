@@ -9,7 +9,7 @@ class Auth extends Validator {
 	 *
 	 * @var array
 	 */
-	protected static $rules = array(
+	protected $rules = array(
 		'email' => array('required', 'email'),
 	);
 
@@ -21,6 +21,6 @@ class Auth extends Validator {
 	 */
 	protected function onLogin()
 	{
-		static::$rules['password'] = array('required');
+		$this->rules['password'] = array('required');
 	}
 }
