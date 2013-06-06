@@ -91,7 +91,7 @@ class UserPresenter {
 					if (Auth::user()->id !== $row->id)
 					{
 						$btn[] = HTML::link(
-							handles("orchestra/foundation::users/delete/{$row->id}"),
+							handles("orchestra/foundation::users/{$row->id}/delete"),
 							trans('orchestra/foundation::label.delete'),
 							array(
 								'class' => 'btn btn-mini btn-danger',
