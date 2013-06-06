@@ -2,7 +2,6 @@
 
 use Exception;
 use Orchestra\Model\User;
-use Orchestra\Model\Role;
 
 class Installer {
 	
@@ -148,10 +147,9 @@ class Installer {
 	 */
 	protected function createUser($input)
 	{
-		$user = $this->app['orchestra.user']->newQuery();
-		$user->fillable(array(
-			'email', 'password', 'fullname', 'status',
-		));
+		User::unguard();
+		$user = $this->app['orchestra.user']->newInstance();
+
 		$user->fill(array(
 			'email'    => $input['email'],
 			'password' => $input['password'],
