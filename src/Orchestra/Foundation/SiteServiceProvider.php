@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
+use Orchestra\Support\Ftp as FtpClient;
 use Orchestra\Model\Role;
 use Orchestra\Model\User;
 
@@ -49,6 +50,11 @@ class SiteServiceProvider extends ServiceProvider {
 	 */
 	protected function registerPublisher()
 	{
+		$this->app['orchestra.publisher.ftp'] = $this->app->share(function ($app)
+		{
+			return new FtpClient;
+		});
+
 		$this->app['orchestra.publisher'] = $this->app->share(function ($app)
 		{
 			return new Publisher\PublisherManager($app);
@@ -118,8 +124,8 @@ class SiteServiceProvider extends ServiceProvider {
 	public function provides()
 	{
 		return array(
-			'orchestra.mail', 'orchestra.publisher', 'orchestra.site', 
-			'orchestra.role', 'orchestra.user',
+			'orchestra.mail', 'orchestra.publisher', 'orchestra.publisher.ftp', 
+			'orchestra.site', 'orchestra.role', 'orchestra.user',
 		);
 	}
 }

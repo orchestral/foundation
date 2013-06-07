@@ -24,7 +24,7 @@ class AdminMenuHandler {
 		{
 			$menu->add('users')
 				->title($translator->trans('orchestra/foundation::title.users.list'))
-				->link(handles('orchestra/foundation::users'));
+				->link(App::handles('orchestra/foundation::users'));
 		}
 
 		// Add menu when logged-in user has authorization to
@@ -33,11 +33,11 @@ class AdminMenuHandler {
 		{
 			$menu->add('extensions', '>:home')
 				->title($translator->trans('orchestra/foundation::title.extensions.list'))
-				->link(handles('orchestra/foundation::extensions'));
+				->link(App::handles('orchestra/foundation::extensions'));
 
 			$menu->add('settings')
 				->title($translator->trans('orchestra/foundation::title.settings.list'))
-				->link(handles('orchestra/foundation::settings'));
+				->link(App::handles('orchestra/foundation::settings'));
 		}
 
 		// If user aren't logged in, we should stop at this point,
@@ -51,8 +51,8 @@ class AdminMenuHandler {
 		if ( ! empty($resources))
 		{
 			$menu->add('resources', '>:extensions')
-				->title(trans('orchestra/foundation::title.resources.list'))
-				->link(handles('orchestra/foundation::resources'));
+				->title($translator->trans('orchestra/foundation::title.resources.list'))
+				->link(App::handles('orchestra/foundation::resources'));
 
 			foreach ($resources as $name => $option)
 			{
@@ -60,7 +60,7 @@ class AdminMenuHandler {
 
 				$menu->add($name, '^:resources')
 					->title($option->name)
-					->link(handles("orchestra/foundation::resources/{$name}"));
+					->link(App::handles("orchestra/foundation::resources/{$name}"));
 			}
 		}
 	}
