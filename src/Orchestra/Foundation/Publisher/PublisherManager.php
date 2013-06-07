@@ -11,9 +11,9 @@ class PublisherManager extends Manager {
 	 *
 	 * @return Orchestra\Foundation\Publisher\Ftp
 	 */
-	public function createFtpDriver()
+	protected function createFtpDriver()
 	{
-		return new Ftp($this->app, new FtpClient);
+		return new Ftp($this->app, $this->app['orchestra.publisher.ftp']);
 	}
 
 	/**
@@ -29,6 +29,42 @@ class PublisherManager extends Manager {
 	}
 
 	/**
+	 * Execute the queue.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function execute()
+	{
+		$memory   = $this->app['orchestra.memory'];
+		$messages = $this->app['orchestra.messages'];
+		$queues   = $this->queued();
+		$fails    = array();
+
+		foreach ($queues as $key => $queue)
+		{
+			try
+			{
+				$this->driver()->upload($queue);
+				
+				$messages->add('success', trans('orchestra/foundation::response.extensions.activate', array(
+					'name' => $queue,
+				)));
+			}
+			catch (Exception $e)
+			{
+				// this could be anything.
+				$messages->add('error', $e->getMessage());
+				$fails[] = $queue;
+			}
+		}
+
+		$memory->put('orchestra.publisher.queue', $fails);
+
+		return true;
+	}
+
+	/**
 	 * Add a process to be queue.
 	 *
 	 * @access public
@@ -37,9 +73,9 @@ class PublisherManager extends Manager {
 	 */
 	public function queue($queue)
 	{
-		$this->app['orchestra.memory']->make();
-		$queue = $this->queued() + (array) $queue;
-		$memory->put('site.publisher.queue', $queue);
+		$memory = $this->app['orchestra.memory']->make();
+		$queue  = array_unique(array_merge($this->queued(), (array) $queue));
+		$memory->put('orchestra.publisher.queue', $queue);
 
 		return true;
 	}
@@ -54,41 +90,5 @@ class PublisherManager extends Manager {
 	{
 		$memory = $this->app['orchestra.memory']->make();
 		return $memory->get('orchestra.publisher.queue', array());
-	}
-
-	/**
-	 * Execute the queue.
-	 * 
-	 * @access public
-	 * @return void
-	 */
-	public function execute()
-	{
-		$memory   = $this->app['orchestra.memory'];
-		$messages = $this->app['orchestra.messages'];
-		$queues   = $this->queued();
-
-		foreach ($queues as $key => $queue)
-		{
-			try
-			{
-				$this->driver()->upload($queue);
-				
-				$messages->add('success', trans('orchestra/foundation::response.extensions.activate', array(
-					'name' => $queue,
-				)));
-
-				unset($queues[$key]);
-			}
-			catch (Exception $e)
-			{
-				// this could be anything.
-				$messages->add('error', $e->getMessage());
-			}
-		}
-
-		$memory->get('orchestra.publisher.queue', $queues);
-
-		return $msg;
 	}
 }

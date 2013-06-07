@@ -150,20 +150,27 @@ class Ftp implements UploaderInterface {
 		// Start chmod from public/packages directory, if the extension folder
 		// is yet to be created, it would be created and own by the web server
 		// (Apache or Nginx). If otherwise, we would then emulate chmod -Rf
-		$public = rtrim($public, DS).DS;
-		$path   = $public.'packages'.DS;
+		$public = rtrim($public, '/').'/';
+		$path   = $public.'packages/';
 
 		// If the extension directory exist, we should start chmod from the
 		// folder instead.
-		if (is_dir(path('public').'packages'.DS.$name.DS)) 
+		if ($this->app['files']->isDirectory($folder = "{$path}{$name}/")) 
 		{
 			$recursively = true;
-			$path = $path.$name.DS;
+			$path = $folder;
 		}
 
 		try 
 		{
-			($recursively ? $this->recursivePermission($path, 0777) : $this->permission($path, 0777));
+			if ($recursively)
+			{
+				$this->recursivePermission($path, 0777);
+			} 
+			else 
+			{
+				$this->permission($path, 0777);
+			}
 		}
 		catch (RuntimeException $e)
 		{
@@ -195,7 +202,7 @@ class Ftp implements UploaderInterface {
 		// would only gain access to it's /home/username directory.
 		if (preg_match('/^\/(home)\/([a-zA-Z0-9]+)\/(.*)$/', $path, $matches))
 		{
-			$path = DS.ltrim($matches[3], DS);
+			$path = '/'.ltrim($matches[3], '/');
 		}
 
 		return $path;
