@@ -17,6 +17,18 @@ class RoleObserver {
 	}
 
 	/**
+	 * On deleting observer.
+	 * 
+	 * @access public
+	 * @param  Orchestra\Model\Role $model
+	 * @return void
+	 */
+	public function deleting($model)
+	{
+		Acl::removeRole($model->getAttribute('name'));
+	}
+
+	/**
 	 * On updating/restoring observer.
 	 * 
 	 * @access public
@@ -39,17 +51,5 @@ class RoleObserver {
 		{
 			Acl::renameRole($originalName, $currentName);
 		}
-	}
-
-	/**
-	 * On deleting observer.
-	 * 
-	 * @access public
-	 * @param  Orchestra\Model\Role $model
-	 * @return void
-	 */
-	public function deleting($model)
-	{
-		Acl::removeRole($model->getAttribute('name'));
 	}
 }
