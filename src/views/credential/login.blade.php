@@ -9,7 +9,6 @@
 		@include('orchestra/foundation::layout.widgets.header')
 
 		<?php echo Form::open(array('url' => handles('orchestra/foundation::login'), 'action' => 'POST', 'class' => 'form-horizontal')); ?>
-			<?php echo Form::hidden('redirect', $redirect); ?>
 			<fieldset>
 
 				<div class="control-group <?php echo $errors->has('email') ? 'error' : ''; ?>">

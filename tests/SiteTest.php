@@ -34,23 +34,6 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Site::boot() method.
-	 *
-	 * @test
-	 */
-	public function testBootMethod()
-	{
-		$app = $this->app;
-		$app['request'] = $request = m::mock('Request');
-		$app['session'] = $session = m::mock('Session');
-
-		$request->shouldReceive('input')->once()->with('redirect')->andReturn('foo');
-		$session->shouldReceive('flash')->once()->with('orchestra.redirect', 'foo')->andReturn(null);
-
-		with(new Site($app))->boot();
-	}
-
-	/**
 	 * Test Orchestra\Foundation\Site::get() method.
 	 *
 	 * @test

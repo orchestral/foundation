@@ -34,22 +34,6 @@ class Site {
 	}
 
 	/**
-	 * Boot the instance.
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function boot()
-	{
-		$redirect = $this->app['request']->input('redirect');
-
-		if ( ! is_null($redirect))
-		{
-			$this->app['session']->flash('orchestra.redirect', $redirect);
-		}
-	}
-
-	/**
 	 * Get a site value.
 	 *
 	 * @access public 	

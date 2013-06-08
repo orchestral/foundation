@@ -14,7 +14,7 @@ Route::filter('orchestra.auth', function ($route, $request, $value = null)
 {
 	if (Auth::guest())
 	{
-		return Redirect::to(handles('orchestra/foundation::login'));
+		return Redirect::guest(handles('orchestra/foundation::login'));
 	}
 });
 

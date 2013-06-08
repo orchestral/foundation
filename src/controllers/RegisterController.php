@@ -49,11 +49,6 @@ class RegisterController extends AdminController {
 		$form->extend(function ($form) use ($title)
 		{
 			$form->submit = $title;
-
-			$form->hidden('redirect', function ($field)
-			{
-				$field->value = handles('orchestra/foundation::login');
-			});
 		});
 
 		Event::fire('orchestra.form: user.account', array($eloquent, $form));
@@ -153,7 +148,7 @@ class RegisterController extends AdminController {
 			Messages::add('success', trans('orchestra/foundation::response.credential.register.email-send'));
 		}
 
-		return Redirect::to(handles('orchestra/foundation::login'));
+		return Redirect::intended(handles('orchestra/foundation::login'));
 	}
 
 	/**
