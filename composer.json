@@ -40,6 +40,7 @@
 	},
 	"require-dev": {
 		"mockery/mockery": "0.8.0",
+		"orchestra/testbench": "self.version",
 		"satooshi/php-coveralls": "~0.6"
 	},
 	"extra": {

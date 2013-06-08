@@ -1,5 +1,11 @@
 <?php
 
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\HTML;
+use Illuminate\Support\Facades\View;
+use Orchestra\Support\Facades\Site;
+
 /*
 |--------------------------------------------------------------------------
 | HTML::title() macro
@@ -12,7 +18,7 @@
 HTML::macro('title', function ()
 {
 	$siteTitle = $title = memorize('site.name');
-	$pageTitle = trim(Orchestra\Site::get('title', ''));
+	$pageTitle = trim(Site::get('title', ''));
 	$format    = memorize('site.format.title', ':pageTitle &mdash; :siteTitle');
 
 	if ( ! empty($pageTitle)) 
