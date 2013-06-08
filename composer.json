@@ -1,12 +1,14 @@
 {
 	"name": "orchestra/foundation",
 	"description": "Orchestra Platform Foundation Component",
-	"keywords": ["orchestra-platform", "laravel"],
+	"homepage": "http://orchestraplatform.com/docs/2.0/",
+	"keywords": ["orchestra-platform", "orchestral", "laravel"],
 	"license": "MIT",
 	"authors": [
 		{
 			"name": "Mior Muhammad Zaki",
-			"email": "crynobone@gmail.com"
+			"email": "crynobone@gmail.com",
+			"homepage": "https://github.com/crynobone"
 		}
 	],
 	"autoload": {
@@ -25,16 +27,16 @@
 	"require": {
 		"php": ">=5.3.3",
 		"laravel/framework": "4.0.*",
-		"orchestra/asset": "2.0.*",
-		"orchestra/auth": "2.0.*",
-		"orchestra/extension": "2.0.*",
-		"orchestra/facile": "2.0.*",
-		"orchestra/html": "2.0.*",
-		"orchestra/memory": "2.0.*",
-		"orchestra/resources": "2.0.*",
-		"orchestra/support": "2.0.*",
-		"orchestra/view": "2.0.*",
-		"orchestra/widget": "2.0.*"
+		"orchestra/asset": "self.version",
+		"orchestra/auth": "self.version",
+		"orchestra/extension": "self.version",
+		"orchestra/facile": "self.version",
+		"orchestra/html": "self.version",
+		"orchestra/memory": "self.version",
+		"orchestra/resources": "self.version",
+		"orchestra/support": "self.version",
+		"orchestra/view": "self.version",
+		"orchestra/widget": "self.version"
 	},
 	"require-dev": {
 		"mockery/mockery": "0.8.0",
