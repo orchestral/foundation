@@ -1,10 +1,13 @@
 <?php
 
-$title       = Orchestra\Site::get('title');
-$description = Orchestra\Site::get('description'); ?>
+use Illuminate\Support\Facades\URL;
+use Orchestra\Support\Facades\Site;
+
+$title       = Site::get('title');
+$description = Site::get('description'); ?>
 
 <div class="page-header">
-	<?php if (Orchestra\Site::get('header::add-button')) : ?>
+	<?php if (Site::get('header::add-button')) : ?>
 	<div class="pull-right">
 		<a href="<?php echo URL::current(); ?>/create" class="btn btn-primary">
 			<?php echo trans('orchestra/foundation::label.add'); ?>

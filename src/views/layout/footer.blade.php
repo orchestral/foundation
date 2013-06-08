@@ -1,3 +1,6 @@
+<?php
+
+use Orchestra\Support\Facades\Asset; ?>
 <footer>
 	<div class="container">
 		<hr>
@@ -18,8 +21,6 @@ $asset->script('jui-toggleSwitch', 'packages/orchestra/foundation/vendor/delta/j
 $asset->script('select2', 'packages/orchestra/foundation/vendor/select2/select2.min.js');
 
 echo $asset->styles();
-echo $asset->scripts(); 
+echo $asset->scripts(); ?>
 
-foreach (Orchestra\Support\Facades\Widget::make("placeholder.orchestra.layout: footer") as $__p) :
-	echo value($__p->value ?: "");
-endforeach;
+@placeholder("orchestra.layout: footer")
