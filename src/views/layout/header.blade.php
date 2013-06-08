@@ -1,3 +1,6 @@
+<?php
+
+use Illuminate\Support\Facades\HTML; ?>
 <meta charset="utf-8">
 <?php echo HTML::title(); ?>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,8 +23,6 @@ $asset->script('jquery', 'packages/orchestra/foundation/js/jquery.min.js');
 $asset->script('javie', 'packages/orchestra/foundation/js/javie.min.js', array('jquery', 'underscore'));
 
 echo $asset->styles();
-echo $asset->scripts();
+echo $asset->scripts(); ?>
 
-foreach (Orchestra\Support\Facades\Widget::make("placeholder.orchestra.layout: header") as $__p) :
-	echo value($__p->value ?: "");
-endforeach;
+@placeholder("orchestra.layout: header") 

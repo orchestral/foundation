@@ -1,5 +1,12 @@
 <?php
 
+use Illuminate\Support\Facade\Auth;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+use Orchestra\Support\Facades\App;
+
 /*
 |--------------------------------------------------------------------------
 | Authentication Filters
@@ -73,7 +80,7 @@ Route::filter('orchestra.csrf', function ($route, $request, $value = null)
 
 Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestra')
 {
-	if ( ! Orchestra\App::acl()->can("manage-{$value}"))
+	if ( ! App::acl()->can("manage-{$value}"))
 	{
 		$redirect = (Auth::guest() ? 'login' : '/');
 		
