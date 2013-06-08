@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="row-fluid">
+<div class="row">
 
 	<div class="span8">
 		@include('orchestra/foundation::layout.widgets.header')
