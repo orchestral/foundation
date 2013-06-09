@@ -2,27 +2,9 @@
 
 use Mockery as m;
 use Orchestra\Foundation\Application;
+use Orchestra\Services\TestCase;
 
-class ApplicationTest extends \PHPUnit_Framework_TestCase {
-
-	/**
-	 * Application instance.
-	 *
-	 * @var Illuminate\Foundation\Application
-	 */
-	private $app = null;
-
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		$request = m::mock('\Illuminate\Http\Request');
-		$request->shouldReceive('ajax')->andReturn(null)
-			->shouldReceive('wantsJson')->andReturn(false);
-
-		$this->app = new \Illuminate\Foundation\Application($request);
-	}
+class ApplicationTest extends TestCase {
 
 	/**
 	 * Teardown the test environment.
@@ -47,10 +29,9 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app['orchestra.widget'] = $widget = m::mock('Widget');
 		$app['translator'] = $translator = m::mock('Translator');
 		$app['url'] = $url = m::mock('Url');
-		$app['events'] = $event = m::mock('Event');
-		$app['config'] = $config = m::mock('Config');
+		$app['events'] = $event = m::mock('Event\Dispatcher');
+		$app['config'] = $config = m::mock('Config\Manager');
 
-		\Illuminate\Support\Facades\Config::setFacadeApplication($app);
 		\Illuminate\Support\Facades\Config::swap($config);
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
@@ -91,12 +72,12 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app = $this->app;
 		$app['env'] = 'production';
 		$app['orchestra.installed'] = false;
-		$app['orchestra.app'] = $orchestra = m::mock('App');
+		$app['orchestra.app'] = $orchestra = m::mock('Orchestra');
 		$app['orchestra.acl'] = $acl = m::mock('Acl');
 		$app['orchestra.memory'] = $memory = m::mock('Memory');
 		$app['orchestra.widget'] = $widget = m::mock('Widget');
-		$app['config'] = $config = m::mock('Config');
-		$app['url'] = $url = m::mock('Url');
+		$app['config'] = $config = m::mock('Config\Manager');
+		$app['url'] = $url = m::mock('Url\Generator');
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
 			->shouldReceive('attach')->never()->andReturn($acl);
@@ -159,17 +140,16 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app = $this->app;
 		$app['env'] = 'production';
 		$app['orchestra.installed'] = false;
-		$app['orchestra.app'] = $orchestra = m::mock('App');
+		$app['orchestra.app'] = $orchestra = m::mock('Orchestra');
 		$app['orchestra.acl'] = $acl = m::mock('Acl');
 		$app['orchestra.memory'] = $memory = m::mock('Memory');
 		$app['orchestra.widget'] = $widget = m::mock('Widget');
 		$app['orchestra.extension'] = $extension = m::mock('Extension');
 		$app['translator'] = $translator = m::mock('Translator');
-		$app['url'] = $url = m::mock('Url');
-		$app['events'] = $event = m::mock('Event');
-		$app['config'] = $config = m::mock('Config');
+		$app['url'] = $url = m::mock('Url\Generator');
+		$app['events'] = $event = m::mock('Event\Dispatcher');
+		$app['config'] = $config = m::mock('Config\Manager');
 
-		\Illuminate\Support\Facades\Config::setFacadeApplication($app);
 		\Illuminate\Support\Facades\Config::swap($config);
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)

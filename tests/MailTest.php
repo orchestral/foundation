@@ -21,7 +21,7 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 	public function testSendMethodUsesSend()
 	{
 		$app = array(
-			'config' => $config = m::mock('Config'),
+			'config' => $config = m::mock('Config\Manager'),
 			'orchestra.memory' => ($memory = m::mock('Memory')),
 			'mailer' => $mailer = m::mock('Mailer'),
 		);
@@ -44,7 +44,7 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 	public function testSendMethodUsesQueue()
 	{
 		$app = array(
-			'config' => $config = m::mock('Config'),
+			'config' => $config = m::mock('Config\Manager'),
 			'orchestra.memory' => $memory = m::mock('Memory'),
 			'mailer' => $mailer = m::mock('Mailer'),
 		);

@@ -1,8 +1,9 @@
 <?php namespace Orchestra\Foundation\Tests\Routing;
 
 use Mockery as m;
+use Orchestra\Services\TestCase;
 
-class AdminControllerTest extends \PHPUnit_Framework_TestCase {
+class AdminControllerTest extends TestCase {
 
 	/**
 	 * Teardown the test environment.
@@ -17,7 +18,7 @@ class AdminControllerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testFilters()
 	{
-		\Illuminate\Support\Facades\Event::swap($event = m::mock('Event'));
+		\Illuminate\Support\Facades\Event::swap($event = m::mock('\Illuminate\Events\Dispatcher'));
 
 		$event->shouldReceive('fire')->once()->with('orchestra.started: admin')->andReturn(null)
 			->shouldReceive('fire')->once()->with('orchestra.ready: admin')->andReturn(null)

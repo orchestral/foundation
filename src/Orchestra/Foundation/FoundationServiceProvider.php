@@ -45,7 +45,7 @@ class FoundationServiceProvider extends ServiceProvider {
 		$loader->alias('Orchestra\Theme', 'Orchestra\Support\Facades\Theme');
 		$loader->alias('Orchestra\Widget', 'Orchestra\Support\Facades\Widget');
 
-		include_once __DIR__."/../../start.php";
+		include __DIR__."/../../start.php";
 	}
 
 	/**

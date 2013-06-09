@@ -31,6 +31,6 @@ Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orc
 	// 404 routing.
 	Route::any('missing', array(
 		'as'   => 'orchestra.404',
-		'uses' => 'Orchestra\Foundation\DashboardController@missing',
+		'uses' => 'Orchestra\Routing\DashboardController@missing',
 	));
 });

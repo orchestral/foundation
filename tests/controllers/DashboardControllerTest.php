@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Tests\Routing;
 
-use \Orchestra\Services\TestCase;
+use Orchestra\Services\TestCase;
 
 class DashboardControllerTest extends TestCase {
 
@@ -9,8 +9,16 @@ class DashboardControllerTest extends TestCase {
 	 */
 	public function testIndexAction()
 	{
-		$this->action('GET', 'Orchestra\Routing\DashboardController@index');
+		$this->call('GET', 'admin');
 		$this->assertResponseOk();
-		$this->assertFalse(false);
+	}
+
+	/**
+	 * @test
+	 */
+	public function testMissingAction()
+	{
+		$this->call('GET', 'admin/missing');
+		$this->assertResponseStatus(404);
 	}
 }

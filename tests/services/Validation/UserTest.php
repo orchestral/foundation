@@ -34,11 +34,11 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 			'roles'    => array('required'),
 		);
 		
-		$validator = m::mock('Validator');
+		$validator = m::mock('Validator\Environment');
 		$validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
 		Validator::swap($validator);
 
-		$events = m::mock('Event');
+		$events = m::mock('Event\Dispatcher');
 		$events->shouldReceive('fire')->once()->with('orchestra.validate: users', m::any())->andReturn(null)
 			->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturn(null);
 		Event::swap($events);
@@ -70,11 +70,11 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 			'password' => array('required'),
 		);
 
-		$validator = m::mock('Validator');
+		$validator = m::mock('Validator\Environment');
 		$validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
 		Validator::swap($validator);
 
-		$events = m::mock('Event');
+		$events = m::mock('Event\Dispatcher');
 		$events->shouldReceive('fire')->once()->with('orchestra.validate: users', m::any())->andReturn(null)
 			->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturn(null);
 		Event::swap($events);

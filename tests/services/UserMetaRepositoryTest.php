@@ -24,11 +24,7 @@ class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$request = m::mock('\Illuminate\Http\Request');
-		$request->shouldReceive('ajax')->andReturn(null)
-			->shouldReceive('wantsJson')->andReturn(false);
-
-		$this->app   = new \Illuminate\Foundation\Application($request);
+		$this->app   = new \Illuminate\Container\Container;
 		$this->model = m::mock('UserMeta');
 	}
 
@@ -49,7 +45,7 @@ class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase {
 	public function testInitiateMethod()
 	{
 		$app = $this->app;
-		$app['config'] = $config = m::mock('Config');
+		$app['config'] = $config = m::mock('Config\Manager');
 		$eloquent = $this->model;
 		$fooUser = m::mock('UserMeta');
 		$fooNull = m::mock('UserMeta');
@@ -98,7 +94,7 @@ class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase {
 	public function testGetMethod()
 	{
 		$app = $this->app;
-		$app['config'] = $config = m::mock('Config');
+		$app['config'] = $config = m::mock('Config\Manager');
 		$eloquent = $this->model;
 
 		$foo = (object) array(
@@ -134,7 +130,7 @@ class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase {
 	public function testForgetMethod()
 	{
 		$app = $this->app;
-		$app['config'] = $config = m::mock('Config');
+		$app['config'] = $config = m::mock('Config\Manager');
 		$eloquent = $this->model;
 		
 		$config->shouldReceive('get')->with('orchestra/memory::user.meta', array())->once()->andReturn(array());

@@ -54,7 +54,7 @@ class RoleTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testAdminMethod()
 	{
-		\Illuminate\Support\Facades\Config::swap($config = m::mock('Config'));
+		\Illuminate\Support\Facades\Config::swap($config = m::mock('Config\Manager'));
 
 		$config->shouldReceive('get')->once()->with('orchestra/foundation::roles.admin')->andReturn(1);
 
@@ -85,7 +85,7 @@ class RoleTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testMemberMethod()
 	{
-		\Illuminate\Support\Facades\Config::swap($config = m::mock('Config'));
+		\Illuminate\Support\Facades\Config::swap($config = m::mock('Config\Manager'));
 
 		$config->shouldReceive('get')->once()->with('orchestra/foundation::roles.member')->andReturn(2);
 

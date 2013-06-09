@@ -36,11 +36,11 @@ class SettingTest extends \PHPUnit_Framework_TestCase {
 			'email_port'    => array('numeric'),
 		);
 		
-		$validator = m::mock('Validator');
+		$validator = m::mock('Validator\Environment');
 		$validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
 		Validator::swap($validator);
 
-		$events = m::mock('Event');
+		$events = m::mock('Event\Dispatcher');
 		$events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturn(null);
 		Event::swap($events);
 
@@ -75,11 +75,11 @@ class SettingTest extends \PHPUnit_Framework_TestCase {
 			'email_host'     => array('required'),
 		);
 
-		$validator = m::mock('Validator');
+		$validator = m::mock('Validator\Environment');
 		$validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
 		Validator::swap($validator);
 
-		$events = m::mock('Event');
+		$events = m::mock('Event\Dispatcher');
 		$events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturn(null);
 		Event::swap($events);
 
@@ -112,11 +112,11 @@ class SettingTest extends \PHPUnit_Framework_TestCase {
 			'email_sendmail' => array('required'),
 		);
 
-		$validator = m::mock('Validator');
+		$validator = m::mock('Validator\Environment');
 		$validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
 		Validator::swap($validator);
 
-		$events = m::mock('Event');
+		$events = m::mock('Event\Dispatcher');
 		$events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturn(null);
 		Event::swap($events);
 
