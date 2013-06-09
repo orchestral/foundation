@@ -1,4 +1,8 @@
-<?php $attributes = HTML::decorate($navbar->attributes ?: array(), array('class' => 'navbar')); ?>
+<?php 
+
+use Illuminate\Support\Facades\HTML;
+
+$attributes = HTML::decorate($navbar->attributes ?: array(), array('class' => 'navbar')); ?>
 
 <div<?php echo HTML::attributes($attributes); ?>>
 	<div class="container">

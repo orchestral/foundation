@@ -43,9 +43,9 @@ HTML::macro('title', function ()
 
 Blade::extend(function ($view)
 {
-	$placeholder = '$1<?php $__ps = Orchestra\Widget::make("placeholder.".$2); '
+	$placeholder = '$1<?php $__ps = Orchestra\Support\Facades\Widget::make("placeholder.".$2); '
 						.'foreach ($__ps as $__p) { echo value($__p->value ?:""); } ?>';
-	$decorator   = '$1<?php echo Orchestra\Decorator::render($2); ?>';
+	$decorator   = '$1<?php echo Orchestra\Support\Facades\Decorator::render($2); ?>';
 	
 	foreach (compact('placeholder', 'decorator') as $name => $replacement)
 	{

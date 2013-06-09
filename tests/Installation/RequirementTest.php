@@ -21,7 +21,7 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 		$request->shouldReceive('ajax')->andReturn(null)
 			->shouldReceive('wantsJson')->andReturn(false);
 
-		$this->app = new \Illuminate\Foundation\Application($request);
+		$this->app = new \Illuminate\Container\Container;
 		$this->app['db'] = m::mock('\Illuminate\Database\DatabaseManager');
 	}
 
@@ -129,8 +129,8 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	{
 		$app = $this->app;
 		$app['path.storage'] = '/foo/storage/';
-		$app['html'] = $html = m::mock('Html');
-		$app['files'] = $file = m::mock('File');
+		$app['html'] = $html = m::mock('HtmlBuilder');
+		$app['files'] = $file = m::mock('Filesystem');
 
 		$html->shouldReceive('create')
 			->with('code', 'storage', array('title' => '/foo/storage/'))->once()->andReturn('');
@@ -154,8 +154,8 @@ class RequirementTest extends \PHPUnit_Framework_TestCase {
 	{
 		$app = $this->app;
 		$app['path.public'] = '/foo/public/';
-		$app['html'] = $html = m::mock('Html');
-		$app['files'] = $file = m::mock('File');
+		$app['html'] = $html = m::mock('HtmlBuilder');
+		$app['files'] = $file = m::mock('Filesystem');
 
 		$html->shouldReceive('create')
 			->with('code', 'public/packages', m::any())

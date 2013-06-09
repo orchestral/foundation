@@ -20,8 +20,6 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 		$request = m::mock('\Illuminate\Http\Request');
 		$request->shouldReceive('ajax')->andReturn(null)
 			->shouldReceive('wantsJson')->andReturn(false);
-
-		$this->app = new \Illuminate\Foundation\Application($request);
 	}
 
 	/**
@@ -138,8 +136,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	{
 		$app = $this->app;
 
-		$app['config'] = $config = m::mock('Config');
-		$app['auth']   = $auth = m::mock('Auth');
+		$app['config'] = $config = m::mock('Config\Manager');
+		$app['auth']   = $auth = m::mock('Auth\Guard');
 
 		$config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
 		$auth->shouldReceive('guest')->once()->andReturn(true);
@@ -160,8 +158,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	{
 		$app = $this->app;
 
-		$app['config'] = $config = m::mock('Config');
-		$app['auth'] = $auth = m::mock('Auth');
+		$app['config'] = $config = m::mock('Config\Manager');
+		$app['auth'] = $auth = m::mock('Auth\Guard');
 		$app['orchestra.memory'] = $memory = m::mock('Memory');
 
 		$config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');

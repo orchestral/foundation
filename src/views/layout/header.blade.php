@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\HTML; ?>
+use Illuminate\Support\Facades\HTML;
+use Orchestra\Support\Facades\Asset; ?>
+
 <meta charset="utf-8">
 <?php echo HTML::title(); ?>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">

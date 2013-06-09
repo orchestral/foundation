@@ -19,12 +19,6 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 	{
 		$this->app = new \Illuminate\Container\Container;
 		$this->app['path'] = '/var/app';
-
-		$this->app['translator'] = $translator = m::mock('Translator');
-
-		$translator->shouldReceive('trans')->andReturn('translated');
-
-		\Illuminate\Support\Facades\Facade::setFacadeApplication($this->app);
 	}
 
 	/**
@@ -44,7 +38,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 	 */
 	private function getFilesMock()
 	{
-		$files = m::mock('File');
+		$files = m::mock('Filesystem');
 		$files->shouldReceive('exists')->once()->with('/var/app/orchestra/installer.php')->andReturn(true)
 			->shouldReceive('requireOnce')->once()->with('/var/app/orchestra/installer.php')->andReturn(null);
 
@@ -92,8 +86,8 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 	{
 		$app = $this->app;
 		$app['files'] = $this->getFilesMock();
-		$app['orchestra.publisher.migrate'] = $migrate = m::mock('migrate');
-		$app['events'] = $events = m::mock('Event');
+		$app['orchestra.publisher.migrate'] = $migrate = m::mock('Migrate');
+		$app['events'] = $events = m::mock('Event\Dispatcher');
 
 		$migrate->shouldReceive('foundation')->once()->andReturn(null);
 		$events->shouldReceive('fire')->once()->with('orchestra.install.schema')->andReturn(null);
@@ -110,13 +104,13 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 	{
 		$app = $this->app;
 		$app['files'] = $this->getFilesMock();
-		$app['validator'] = $validator = m::mock('Validator');
+		$app['validator'] = $validator = m::mock('Validator\Environment');
 		$app['orchestra.role'] = $role = m::mock('Role');
 		$app['orchestra.user'] = $user = m::mock('User');
-		$app['orchestra.messages'] = $messages = m::mock('Messages');
-		$app['events'] = $events = m::mock('Event');
+		$app['orchestra.messages'] = $messages = m::mock('Messages\Dispatcher');
+		$app['events'] = $events = m::mock('Event\Dispatcher');
 		$app['orchestra.memory'] = $memory = m::mock('Memory');
-		$app['config'] = $config = m::mock('Config');
+		$app['config'] = $config = m::mock('Config\Manager');
 		$app['orchestra.acl'] = $acl = m::mock('Acl');
 
 		$input = $this->getUserInput();
@@ -149,7 +143,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('allow')->once()->andReturn(null)
 			->shouldReceive('attach')->once()->with($memory)->andReturn(null);
 
-		$messages->shouldReceive('add')->once()->with('success', 'translated')->andReturn(null);
+		$messages->shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
 
 		$stub = new Installer($app);
 		$this->assertTrue($stub->createAdmin($input, false));
@@ -165,8 +159,8 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 	{
 		$app = $this->app;
 		$app['files'] = $this->getFilesMock();
-		$app['validator'] = $validator = m::mock('Validator');
-		$app['session'] = $session = m::mock('Session');
+		$app['validator'] = $validator = m::mock('Validator\Environment');
+		$app['session'] = $session = m::mock('Session\Store');
 
 		$input = $this->getUserInput();
 		$rules = $this->getValidationRules();
@@ -191,7 +185,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 	{
 		$app = $this->app;
 		$app['files'] = $this->getFilesMock();
-		$app['validator'] = $validator = m::mock('Validator');
+		$app['validator'] = $validator = m::mock('Validator\Environment');
 		$app['orchestra.user'] = $user = m::mock('User');
 		$app['orchestra.messages'] = $messages = m::mock('Messages');
 
@@ -202,7 +196,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('fails')->once()->andReturn(false);
 		$user->shouldReceive('newQuery')->once()->andReturn($user)
 			->shouldReceive('all')->once()->andReturn(array('not so empty'));
-		$messages->shouldReceive('add')->once()->with('error', 'translated')->andReturn(null);
+		$messages->shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
 
 		$stub = new Installer($app);
 		$this->assertFalse($stub->createAdmin($input, false));

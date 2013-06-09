@@ -1,26 +1,10 @@
 <?php namespace Orchestra\Foundation\Tests;
 
 use Mockery as m;
+use Orchestra\Services\TestCase;
 
-class HelpersTest extends \PHPUnit_Framework_TestCase {
-	
-	/**
-	 * Application instance.
-	 *
-	 * @var Illuminate\Foundation\Application
-	 */
-	private $app = null;
+class HelpersTest extends TestCase {
 
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		$this->app = m::mock('Application');
-		$this->app->shouldReceive('instance')->andReturn(true);
-
-		\Illuminate\Support\Facades\Facade::setFacadeApplication($this->app);
-	}
 	/**
 	 * Teardown the test environment.
 	 */
@@ -36,12 +20,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testOrchestraMethod()
 	{
-		$app = $this->app;
-		$app->shouldReceive('make')->with('orchestra.app')->once()->andReturn('foo');
-
-		\Illuminate\Support\Facades\Facade::setFacadeApplication($app);
-
-		$this->assertEquals('foo', orchestra());
+		$this->assertInstanceOf('\Orchestra\Foundation\Application', orchestra());
 	}
 
 	/**

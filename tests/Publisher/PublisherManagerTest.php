@@ -54,7 +54,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase {
 	{
 		$app = $this->app;
 
-		$app['session'] = $session = m::mock('Session');
+		$app['session'] = $session = m::mock('Session\Store');
 		$app['orchestra.memory'] = $memory = $this->getMemoryMock();
 		$app['orchestra.publisher.ftp'] = $client = m::mock('\Orchestra\Support\Ftp');
 
@@ -79,7 +79,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase {
 	{
 		$app    = $this->app;
 
-		$app['session'] = $session = m::mock('Session');
+		$app['session'] = $session = m::mock('Session\Store');
 		$app['orchestra.memory'] = $memory = m::mock('Memory');
 		$app['orchestra.messages'] = $messages = m::mock('Messages');
 		$app['path.public'] = '/var/foo/public';

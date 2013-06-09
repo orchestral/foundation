@@ -1,3 +1,6 @@
 <?php
 
-Orchestra\Model\Role::observe(new Orchestra\Services\Event\RoleObserver);
+use Orchestra\Model\Role;
+use Orchestra\Services\Event\RoleObserver;
+
+Role::observe(new RoleObserver);

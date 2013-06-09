@@ -1,8 +1,9 @@
 <?php namespace Orchestra\Foundation\Tests\Routing;
 
 use Mockery as m;
+use Orchestra\Services\TestCase;
 
-class BaseControllerTest extends \PHPUnit_Framework_TestCase {
+class BaseControllerTest extends TestCase {
 
 	/**
 	 * Teardown the test environment.
@@ -14,14 +15,14 @@ class BaseControllerTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test Orchestra\Routing\BaseController::missingMethod() action.
+	 *
+	 * @test
 	 */
 	public function testMissingMethodAction()
 	{
-		\Illuminate\Support\Facades\Facade::setFacadeApplication($app = new \Illuminate\Container\Container);
-
-		$app['view'] = $view = m::mock('View');
-
-		$view->shouldReceive('make')->once()->with('orchestra/foundation::dashboard.missing', array())->andReturn('foo');
+		
+		\Illuminate\Support\Facades\View::shouldReceive('make')->once()
+			->with('orchestra/foundation::dashboard.missing', array())->andReturn('foo');
 
 		$response = with(new StubBaseController)->missingMethod(array());
 

@@ -1,4 +1,6 @@
-<?php $message = Orchestra\Messages::retrieve();
+<?php 
+
+$message = Orchestra\Support\Facades\Messages::retrieve();
 
 if ($message instanceof Orchestra\Support\Messages) :
 	foreach (array('error', 'info', 'success') as $key) :

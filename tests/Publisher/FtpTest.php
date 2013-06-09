@@ -46,7 +46,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase {
 	 */
 	private function getSessionMock()
 	{
-		$session = m::mock('Session');
+		$session = m::mock('Session\Store');
 
 		$session->shouldReceive('get')->once()->with('orchestra.ftp', array())->andReturn(array('ftpconfig'));
 
