@@ -30,6 +30,9 @@
             <directory suffix=".php">src/</directory>
 
             <exclude>
+                <directory suffix=".php">src/config/</directory>
+                <directory suffix=".php">src/lang/</directory>
+                <directory suffix=".php">src/start/</directory>
                 <directory suffix=".php">src/views/</directory>
                 <file>src/filters.php</file>
             </exclude>

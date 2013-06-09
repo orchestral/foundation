@@ -1,9 +1,29 @@
 <?php namespace Orchestra\Foundation\Tests;
 
 use Mockery as m;
-use Orchestra\Services\TestCase;
 
-class HelpersTest extends TestCase {
+class HelpersTest extends \PHPUnit_Framework_TestCase {
+	/**
+	 * Application instance.
+	 *
+	 * @var Illuminate\Foundation\Application
+	 */
+	private $app = null;
+
+	/**
+	 * Setup the test environment.
+	 */
+	public function setUp()
+	{
+		$this->app = new \Illuminate\Foundation\Application;
+		$this->app['translator'] = $trans = m::mock('Translator');
+		$this->app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application');
+
+		\Illuminate\Support\Facades\Facade::clearResolvedInstances();
+		\Illuminate\Support\Facades\Facade::setFacadeApplication($this->app);
+
+		$trans->shouldReceive('trans')->andReturn('translated');
+	}
 
 	/**
 	 * Teardown the test environment.

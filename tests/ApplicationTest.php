@@ -2,9 +2,26 @@
 
 use Mockery as m;
 use Orchestra\Foundation\Application;
-use Orchestra\Services\TestCase;
 
-class ApplicationTest extends TestCase {
+class ApplicationTest extends \PHPUnit_Framework_TestCase {
+
+	/**
+	 * Application instance.
+	 *
+	 * @var Illuminate\Foundation\Application
+	 */
+	private $app = null;
+
+	/**
+	 * Setup the test environment.
+	 */
+	public function setUp()
+	{
+		$this->app = new \Illuminate\Foundation\Application;
+
+		\Illuminate\Support\Facades\Facade::clearResolvedInstances();
+		\Illuminate\Support\Facades\Facade::setFacadeApplication($this->app);
+	}
 
 	/**
 	 * Teardown the test environment.
