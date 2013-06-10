@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Services\Html;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\HTML;
 use Orchestra\Support\Facades\Form;
@@ -69,13 +70,13 @@ class UserPresenter {
 	 */
 	public static function actions(TableBuilder $table)
 	{
-		$table->extend(function ($table)
+		return $table->extend(function ($table)
 		{
 			$table->column('action', function ($column)
 			{
 				$column->label('');
 				$column->escape(false);
-				$column->label_attributes(array('class' => 'th-action'));
+				$column->headers(array('class' => 'th-action'));
 				$column->value(function ($row)
 				{
 					$btn = array();
@@ -157,8 +158,10 @@ class UserPresenter {
 
 				$fieldset->control('select', 'roles[]', function ($control)
 				{
+					$roles = App::make('orchestra.role');
+
 					$control->label(trans('orchestra/foundation::label.users.roles'));
-					$control->options(Role::lists('name', 'id'));
+					$control->options($roles->lists('name', 'id'));
 					$control->attributes(array('multiple' => true));
 					$control->value(function ($row)
 					{

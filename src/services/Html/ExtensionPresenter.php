@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Services\Html;
 
 use Illuminate\Support\Facades\HTML;
-use Orchestra\Extension;
-use Orchestra\Form;
+use Orchestra\Support\Facades\Extension;
+use Orchestra\Support\Facades\Form;
 
 class ExtensionPresenter {
 
@@ -48,9 +48,9 @@ class ExtensionPresenter {
 
 					$control->field(function() use ($name)
 					{
-						$name = str_replace('/', '.', $name);
+						$uid = str_replace('/', '.', $name);
 						return HTML::link(
-							handles("orchestra/foundation::extensions/update/{$name}"),
+							handles("orchestra/foundation::extensions/update/{$uid}"),
 							trans('orchestra/foundation::label.extensions.actions.update'),
 							array('class' => 'btn btn-info')
 						);

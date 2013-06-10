@@ -49,7 +49,7 @@ class SettingPresenter {
 				});
 			});
 
-			$form->fieldset(trans('orchestra/foundation::label.settings.messages'), function ($fieldset) use ($model)
+			$form->fieldset(trans('orchestra/foundation::label.settings.mail'), function ($fieldset) use ($model)
 			{
 				$fieldset->control('select', 'email_driver', function ($control)
 				{

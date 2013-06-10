@@ -3,7 +3,7 @@
 use Mockery as m;
 use Orchestra\Services\TestCase;
 
-class MacroTest extends TestCase {
+class MacrosTest extends TestCase {
 
 	/**
 	 * Teardown the test environment.
@@ -47,5 +47,20 @@ class MacroTest extends TestCase {
 			->andReturn(':pageTitle &mdash; :siteTitle');
 
 		$this->assertEquals('<title>Foobar &mdash; Foo</title>', \Illuminate\Support\Facades\HTML::title());
+	}
+
+	/**
+	 * Test Orchestra\Decorator navbar is registered.
+	 *
+	 * @test
+	 */
+	public function testDecoratorIsRegistered()
+	{
+		$stub = \Illuminate\Support\Facades\App::make('orchestra.decorator');
+		$view = $stub->render('navbar', array());
+
+		$this->assertInstanceOf('\Orchestra\View\Decorator', $stub);
+		$this->assertInstanceOf('\Illuminate\View\View', $view);
+		$this->assertEquals('orchestra/foundation::layout.widgets.navbar', $view->getName());
 	}
 }
