@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Routing;
 
+use Exception;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
@@ -71,7 +72,7 @@ class RegisterController extends AdminController {
 		$input    = Input::all();
 		$password = Str::random(5);
 		
-		$validation = App::make('\Orchestra\Services\Validation\UserAccount')
+		$validation = App::make('Orchestra\Services\Validation\UserAccount')
 						->on('register')->with($input);
 	
 		// Validate user registration, if any errors is found redirect it 
