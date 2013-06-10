@@ -2,7 +2,7 @@
 
 use PDOException;
 
-class Requirement {
+class Requirement implements RequirementInterface {
 
 	/**
 	 * Application instance.

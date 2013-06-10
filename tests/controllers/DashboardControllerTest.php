@@ -5,15 +5,20 @@ use Orchestra\Services\TestCase;
 class DashboardControllerTest extends TestCase {
 
 	/**
+	 * Test GET /admin
+	 * 
 	 * @test
 	 */
 	public function testIndexAction()
 	{
 		$this->call('GET', 'admin');
 		$this->assertResponseOk();
+		$this->assertViewHas('panes');
 	}
 
 	/**
+	 * Test GET /admin/missing
+	 * 
 	 * @test
 	 */
 	public function testMissingAction()
