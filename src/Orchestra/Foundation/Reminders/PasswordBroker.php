@@ -171,11 +171,7 @@ class PasswordBroker {
 	 */
 	protected function validateReset(array $credentials)
 	{
-		try
-		{
-			$user = $this->getUser($credentials);
-		}
-		catch (\UnexpectedValueException $e)
+		if (is_null($user = $this->getUser($credentials)))
 		{
 			return $this->makeErrorRedirect('user');
 		}

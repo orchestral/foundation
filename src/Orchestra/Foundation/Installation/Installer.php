@@ -3,7 +3,7 @@
 use Exception;
 use Orchestra\Model\User;
 
-class Installer {
+class Installer implements InstallerInterface {
 	
 	/**
 	 * Application instance.

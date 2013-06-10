@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Foundation\Installation\Requirement;
-use Orchestra\Foundation\Installation\Installer;
+use Orchestra\Foundation\Installation\InstallerInterface;
+use Orchestra\Foundation\Installation\RequirementInterface;
 use Orchestra\Model\User;
 
 class InstallController extends BaseController {
@@ -20,12 +20,19 @@ class InstallController extends BaseController {
 	protected $installer = null;
 
 	/**
+	 * Requirement instance.
+	 *
+	 * @var Orchestra\Foundation\Installation\Requirement
+	 */
+	protected $requirement = null;
+
+	/**
 	 * Construct InstallController
 	 *
 	 * @access public
 	 * @return void
 	 */
-	public function __construct()
+	public function __construct(InstallerInterface $installer, RequirementInterface $requirement)
 	{
 		$this->beforeFilter('orchestra.installed', array(
 			'only' => array('getIndex', 'getCreate', 'postCreate'),
@@ -34,7 +41,8 @@ class InstallController extends BaseController {
 		Site::set('navigation::usernav', false);
 		Site::set('title', 'Installer');
 
-		$this->installer = new Installer(App::illuminate());
+		$this->installer   = $installer;
+		$this->requirement = $requirement;
 	}
 	
 	/**
@@ -47,7 +55,7 @@ class InstallController extends BaseController {
 	 */
 	public function getIndex()
 	{
-		$requirement    = new Requirement(App::getFacadeApplication());
+		$requirement    = $this->requirement;
 		$driver         = Config::get('database.default', 'mysql');
 		$database       = Config::get("database.connections.{$driver}", array());
 		$auth           = Config::get('auth');
@@ -67,7 +75,7 @@ class InstallController extends BaseController {
 		// relationship to solve some of the requirement.
 		if ($auth['driver'] === 'eloquent')
 		{
-			if (class_exists($auth['model'])) $eloquent = with(new $auth['model']);
+			if (class_exists($auth['model'])) $eloquent = App::make($auth['model']);
 			
 			if (isset($eloquent) 
 				and $eloquent instanceof \Orchestra\Model\User) $authentication = true;

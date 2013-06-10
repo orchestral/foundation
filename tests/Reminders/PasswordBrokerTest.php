@@ -127,7 +127,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase {
 
 		$callback = function($user, $pass) {};
 
-		$user->shouldReceive('retrieveByCredentials')->once()->with(array('username' => 'user-foo'))->andReturn('foo');
+		$user->shouldReceive('retrieveByCredentials')->once()->with(array('username' => 'user-foo'))->andReturn(null);
 		$messages->shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
 		$redirector->shouldReceive('refresh')->once()->andReturn('foo');
 		
