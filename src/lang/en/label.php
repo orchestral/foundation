@@ -63,7 +63,7 @@ return array(
 
 	'settings' => array(
 		'application'       => 'Application',
-		'messages'          => 'E-mail and Messaging',
+		'mail'              => 'E-mail',
 		'user-registration' => 'Allow User Registration',
 	),
 

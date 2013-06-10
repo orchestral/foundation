@@ -1,9 +1,10 @@
 <?php namespace Orchestra\Foundation\Tests\Services\Html;
 
 use Mockery as m;
+use Orchestra\Services\TestCase;
 use Orchestra\Services\Html\ExtensionPresenter;
 
-class ExtensionPresenterTest extends \PHPUnit_Framework_TestCase {
+class ExtensionPresenterTest extends TestCase {
 
 	/**
 	 * Teardown the test environment.
