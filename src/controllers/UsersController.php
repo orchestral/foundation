@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Routing;
 
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
@@ -44,8 +45,8 @@ class UsersController extends AdminController {
 
 		// Get Users (with roles) and limit it to only 30 results for
 		// pagination. Don't you just love it when pagination simply works.
-		$eloquent = User::search($searchKeyword, $searchRoles)->paginate(30);
-		$roles    = Role::lists('name', 'id');
+		$eloquent = App::make('orchestra.user')->search($searchKeyword, $searchRoles)->paginate(30);
+		$roles    = App::make('orchestra.role')->lists('name', 'id');
 
 		// Build users table HTML using a schema liked code structure.
 		$table = UserPresenter::table($eloquent);
@@ -65,19 +66,6 @@ class UsersController extends AdminController {
 	}
 
 	/**
-	 * Show a user.
-	 *
-	 * GET (:orchestra)/users/1
-	 * 
-	 * @access public
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		return $this->edit($id);
-	}
-
-	/**
 	 * Create a new user.
 	 *
 	 * GET (:orchestra)/users/create
@@ -87,7 +75,7 @@ class UsersController extends AdminController {
 	 */
 	public function create()
 	{
-		$eloquent = new User;
+		$eloquent = App::make('orchestra.user');
 		$form     = UserPresenter::form($eloquent, 'create');
 
 		$this->fireEvent('form', array($eloquent, $form));
@@ -106,7 +94,7 @@ class UsersController extends AdminController {
 	 */
 	public function edit($id)
 	{
-		$eloquent = User::findOrFail($id);
+		$eloquent = App::make('orchestra.user')->findOrFail($id);
 		$form     = UserPresenter::form($eloquent, 'update');
 
 		$this->fireEvent('form', array($eloquent, $form));
@@ -136,8 +124,7 @@ class UsersController extends AdminController {
 					->withErrors($validation);
 		}
 
-		$user = new User;
-		
+		$user           = App::make('orchestra.user');
 		$user->status   = User::UNVERIFIED;
 		$user->password = $input['password'];
 
@@ -172,7 +159,9 @@ class UsersController extends AdminController {
 					->withErrors($validation);
 		}
 
-		$user = User::findOrFail($id);
+		$user = App::make('orchestra.user')->findOrFail($id);
+		
+		if ( ! empty($input['password'])) $user->password = $input['password'];
 
 		$this->saving($user, $input, 'update');
 
@@ -190,13 +179,11 @@ class UsersController extends AdminController {
 	 */
 	protected function saving(User $user, $input = array(), $type = 'create')
 	{
-		$beforeEvent    = ($type === 'create' ? 'creating' : 'updating');
-		$afterEvent     = ($type === 'create' ? 'created' : 'updated');
+		$beforeEvent = ($type === 'create' ? 'creating' : 'updating');
+		$afterEvent  = ($type === 'create' ? 'created' : 'updated');
 
 		$user->fullname = $input['fullname'];
 		$user->email    = $input['email'];
-
-		if ( ! empty($input['password'])) $user->password = $input['password'];
 
 		try
 		{
@@ -250,7 +237,7 @@ class UsersController extends AdminController {
 	 */
 	public function destroy($id)
 	{
-		$user = User::findOrFail($id);
+		$user = App::make('orchestra.user')->findOrFail($id);
 
 		// Avoid self-deleting accident.
 		if ($user->id === Auth::user()->id) return App::abort(404);

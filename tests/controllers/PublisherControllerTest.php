@@ -34,6 +34,9 @@ class PublisherControllerTest extends TestCase {
 	 */
 	public function testGetFtpAction()
 	{
+		\Illuminate\Support\Facades\View::shouldReceive('make')->once()
+			->with('orchestra/foundation::publisher.ftp')->andReturn('foo');
+
 		$this->call('GET', 'admin/publisher/ftp');
 		$this->assertResponseOk();
 	}

@@ -88,6 +88,7 @@ class ForgotController extends AdminController {
 	public function getReset($token)
 	{
 		Site::set('title', trans('orchestra/foundation::title.reset-password'));
+		
 		return View::make('orchestra/foundation::forgot.reset')->with('token', $token);
 	}
 

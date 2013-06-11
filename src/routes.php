@@ -13,7 +13,7 @@ Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orc
 	Route::controller('register', 'Orchestra\Routing\RegisterController');
 	Route::any('resources{index?}', 'Orchestra\Routing\ResourcesController@index')->where('index', '/index');
 	Route::any('resources{any}', 'Orchestra\Routing\ResourcesController@call')->where('any', '(.*)');
-	Route::resource('users', 'Orchestra\Routing\UsersController');
+	Route::resource('users', 'Orchestra\Routing\UsersController', array('except' => array('show')));
 	Route::any('users/{id}/delete', 'Orchestra\Routing\UsersController@delete');
 	Route::controller('settings', 'Orchestra\Routing\SettingsController');
 

@@ -20,6 +20,9 @@ class ForgotControllerTest extends TestCase {
 	 */
 	public function testGetIndexAction()
 	{
+		\Illuminate\Support\Facades\View::shouldReceive('make')->once()
+			->with('orchestra/foundation::forgot.index')->andReturn('foo');
+
 		$this->call('GET', 'admin/forgot');
 		$this->assertResponseOk();
 	}
@@ -91,9 +94,17 @@ class ForgotControllerTest extends TestCase {
 	 */
 	public function testGetResetAction()
 	{
+		$view = m::mock('View\Environment');
+
+		\Illuminate\Support\Facades\View::swap($view);
+
+		\Illuminate\Support\Facades\View::shouldReceive('make')->once()
+			->with('orchestra/foundation::forgot.reset')->andReturn(m::self());
+		\Illuminate\Support\Facades\View::shouldReceive('with')->once()
+			->with('token', 'auniquetoken')->andReturn('foo');
+
 		$this->call('GET', 'admin/forgot/reset/auniquetoken');
 		$this->assertResponseOk();
-		$this->assertViewHas('token', 'auniquetoken');
 	}
 
 	/**
