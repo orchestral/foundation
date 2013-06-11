@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Routing;
 
+use Closure;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
@@ -62,21 +63,11 @@ class ExtensionsController extends AdminController {
 
 		if (Extension::started($name)) return App::abort(404);
 
-		try
+		return $this->run($name, function ($name)
 		{
 			Extension::activate($name);
 			Messages::add('success', trans('orchestra/foundation::response.extensions.activate', compact('name')));
-		}
-		catch (FilePermissionException $e)
-		{
-			Publisher::queue($name);
-
-			// In events where extension can't be activated due to 
-			// bundle:publish we need to put this under queue.
-			return Redirect::to(handles('orchestra/foundation::publisher'));
-		}
-		
-		return Redirect::to(handles('orchestra/foundation::extensions'));
+		});
 	}
 
 	/**
@@ -178,13 +169,29 @@ class ExtensionsController extends AdminController {
 	public function getUpdate($name)
 	{
 		$name = str_replace('.', '/', $name);
-		
+
 		if ( ! Extension::started($name)) return App::abort(404);
 
-		try
+		return $this->run($name, function ($name)
 		{
 			Extension::publish($name);
 			Messages::add('success', trans('orchestra/foundation::response.extensions.update', compact('name')));
+		});
+	}
+
+	/**
+	 * Run installation or update for an extension.
+	 * 
+	 * @access protected
+	 * @param  string   $name       name of the extension
+	 * @param  Closure  $callback
+	 * @return Response
+	 */
+	protected function run($name, Closure $callback)
+	{
+		try
+		{
+			call_user_func($callback, $name);
 		}
 		catch (FilePermissionException $e)
 		{
