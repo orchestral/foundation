@@ -12,8 +12,8 @@ class SettingPresenter {
 	 *
 	 * @static
 	 * @access public
-	 * @param  Illuminate\Support\Fluent    $model
-	 * @return Orchestra\Form
+	 * @param  \Illuminate\Support\Fluent   $model
+	 * @return \Orchestra\Html\Form\FormBuilder
 	 */
 	public static function form($model)
 	{

@@ -15,8 +15,8 @@ class UserPresenter {
 	 *
 	 * @static
 	 * @access public
-	 * @param  Orchestra\Model\User $model
-	 * @return Orchestra\Table
+	 * @param  \Orchestra\Model\User    $model
+	 * @return \Orchestra\Html\Table\TableBuilder
 	 */
 	public static function table($model)
 	{
@@ -65,8 +65,8 @@ class UserPresenter {
 	 *
 	 * @static
 	 * @access public
-	 * @param  Orchestra\Table  $model
-	 * @return Orchestra\Table
+	 * @param  \Orchestra\Html\Table\TableBuilder   $table
+	 * @return \Orchestra\Html\Table\TableBuilder
 	 */
 	public static function actions(TableBuilder $table)
 	{
@@ -116,8 +116,8 @@ class UserPresenter {
 	 *
 	 * @static
 	 * @access public
-	 * @param  Orchestra\Model\User $model
-	 * @return Orchestra\Form
+	 * @param  \Orchestra\Model\User    $model
+	 * @return \Orchestra\Html\Form\FormBuilder
 	 */
 	public static function form($model, $type = 'create')
 	{

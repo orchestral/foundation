@@ -11,9 +11,9 @@ class ExtensionPresenter {
 	 *
 	 * @static
 	 * @access public
-	 * @param  Illuminate\Support\Fluent    $model
+	 * @param  \Illuminate\Support\Fluent   $model
 	 * @param  string                       $name
-	 * @return Orchestra\Form
+	 * @return \Orchestra\Html\Form\FormBuilder
 	 */
 	public static function form($model, $name)
 	{

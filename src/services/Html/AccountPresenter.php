@@ -11,9 +11,9 @@ class AccountPresenter {
 	 *
 	 * @static
 	 * @access public
-	 * @param  Orchestra\Model\User $model
-	 * @param  string               $url
-	 * @return Orchestra\Form
+	 * @param  \Orchestra\Model\User    $model
+	 * @param  string                   $url
+	 * @return \Orchestra\Html\Form\FormBuilder
 	 */
 	public static function profileForm($model, $url)
 	{
@@ -44,10 +44,11 @@ class AccountPresenter {
 
 	/**
 	 * Form view generator for user account edit password.
-	 * 
+	 *
+	 * @static
 	 * @access public
-	 * @param  Orchestra\Model\User $model
-	 * @return Orchestra\Form
+	 * @param  \Orchestra\Model\User    $model
+	 * @return \Orchestra\Html\Form\FormBuilder
 	 */
 	public static function passwordForm($model)
 	{

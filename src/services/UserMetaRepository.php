@@ -14,7 +14,7 @@ class UserMetaRepository extends Driver {
 	/**
 	 * Model name.
 	 *
-	 * @var Orchestra\Model\UserMeta
+	 * @var \Orchestra\Model\UserMeta
 	 */
 	protected $model = null;
 
