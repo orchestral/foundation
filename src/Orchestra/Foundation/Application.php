@@ -180,7 +180,7 @@ class Application {
 
 		// Orchestra Platform routing is managed by `orchestra/foundation::handles`
 		// and can be manage using configuration. 
-		if ($name !== 'orchestra/foundation')
+		if ( ! in_array($name, array('orchestra', 'orchestra/foundation')))
 		{
 			return $this->app['orchestra.extension']->route($name, $default);
 		}
