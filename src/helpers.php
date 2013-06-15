@@ -5,7 +5,7 @@ if ( ! function_exists('orchestra'))
 	/**
 	 * Return orchestra.app instance.
 	 *
-	 * @return Orchestra\Foundation\Application
+	 * @return \Orchestra\Foundation\Application
 	 */
 	function orchestra()
 	{
@@ -17,12 +17,12 @@ if ( ! function_exists('orchestra'))
 if ( ! function_exists('memorize'))
 {
 	/**
-	 * Return memory configuration associated to the request
+	 * Return memory configuration associated to the request.
 	 *
-	 * @see    Orchestra\Core::memory()
 	 * @param  string   $key
 	 * @param  string   $default
 	 * @return mixed
+	 * @see    \Orchestra\Foundation\Application::memory()
 	 */
 	function memorize($key, $default = null)
 	{
@@ -35,7 +35,7 @@ if ( ! function_exists('handles'))
 	/**
 	 * Return handles configuration for a package/app.
 	 * 
-	 * @param  string   $name   Package name
+	 * @param  string   $name   Route
 	 * @return string
 	 */
 	function handles($name)

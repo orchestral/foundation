@@ -10,8 +10,8 @@ class ResourcePresenter {
 	 *
 	 * @static
 	 * @access public
-	 * @param  Orchestra\Resources  $model
-	 * @return Orchestra\Table
+	 * @param  array    $model
+	 * @return \Orchestra\Html\Table\TableBuilder
 	 */
 	public static function table($model)
 	{

@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Services;
 
-use \Orchestra\Testbench\TestCase as TestbenchTestCase;
+use Orchestra\Testbench\TestCase as TestbenchTestCase;
 
 abstract class TestCase extends TestbenchTestCase {
 
