@@ -6,7 +6,7 @@ interface RequirementInterface {
 	 * Check all requirement.
 	 *
 	 * @access public
-	 * @return 
+	 * @return boolean
 	 */
 	public function check();
 
@@ -22,7 +22,7 @@ interface RequirementInterface {
 	 * Get installable status.
 	 * 
 	 * @access public
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isInstallable();
 	

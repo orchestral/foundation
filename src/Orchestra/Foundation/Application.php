@@ -8,7 +8,7 @@ class Application {
 	/**
 	 * Application instance.
 	 *
-	 * @var Illuminate\Foundation\Application
+	 * @var \Illuminate\Foundation\Application
 	 */
 	protected $app = null;
 
@@ -30,7 +30,7 @@ class Application {
 	 * Construct a new Application instance.
 	 *
 	 * @access public
-	 * @param  Illuminate\Foundation\Application    $app
+	 * @param  \Illuminate\Foundation\Application   $app
 	 * @return void
 	 */
 	public function __construct($app)
@@ -42,7 +42,8 @@ class Application {
 	 * Start the application.
 	 *
 	 * @access public
-	 * @return void
+	 * @return self
+	 * @throws \Exception
 	 */
 	public function boot()
 	{
@@ -119,7 +120,7 @@ class Application {
 	 * Get Application instance.
 	 *
 	 * @access public
-	 * @return Illuminate\Foundation\Application
+	 * @return \Illuminate\Foundation\Application
 	 */
 	public function illuminate()
 	{

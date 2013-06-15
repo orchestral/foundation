@@ -9,14 +9,14 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Application instance.
 	 *
-	 * @var Illuminate\Foundation\Application
+	 * @var \Illuminate\Foundation\Application
 	 */
 	protected $app = null;
 
 	/**
 	 * FTP Connection instance.
 	 * 
-	 * @var Orchestra\Support\FTP
+	 * @var \Orchestra\Support\FTP
 	 */
 	protected $connection = null;
 
@@ -24,9 +24,10 @@ class Ftp implements UploaderInterface {
 	 * Construct a new FTP instance.
 	 *
 	 * @access public
-	 * @param  Illuminate\Foundation\Application    $app
-	 * @param  Orchestra\Support\Ftp                $client
+	 * @param  \Illuminate\Foundation\Application   $app
+	 * @param  \Orchestra\Support\Ftp               $client
 	 * @return void
+	 * @throws \Orchestra\Support\Ftp\ServerException
 	 */
 	public function __construct($app, FtpClient $client)
 	{
@@ -52,7 +53,7 @@ class Ftp implements UploaderInterface {
 	 * Get service connection instance.
 	 *
 	 * @access public
-	 * @return Orchestra\Support\FTP
+	 * @return \Orchestra\Support\FTP
 	 */
 	public function getConnection()
 	{
@@ -63,7 +64,7 @@ class Ftp implements UploaderInterface {
 	 * Set service connection instance.
 	 *
 	 * @access public
-	 * @param  Orchestra\Support\FTP    $client
+	 * @param  \Orchestra\Support\FTP   $client
 	 * @return void
 	 */
 	public function setConnection($client)
@@ -76,7 +77,7 @@ class Ftp implements UploaderInterface {
 	 *
 	 * @access public	
 	 * @param  array    $config
-	 * @return bool
+	 * @return boolean
 	 */
 	public function connect($config = array())
 	{
@@ -90,8 +91,8 @@ class Ftp implements UploaderInterface {
 	 *
 	 * @access private
 	 * @param  string   $path
-	 * @param  int      $mode
-	 * @return bool
+	 * @param  integer  $mode
+	 * @return boolean
 	 */
 	private function permission($path, $mode = 0755)
 	{
@@ -103,8 +104,9 @@ class Ftp implements UploaderInterface {
 	 *
 	 * @access private
 	 * @param  string   $path
-	 * @param  int      $mode
-	 * @return bool
+	 * @param  integer  $mode
+	 * @return boolean
+	 * @throws \RuntimeException
 	 */
 	private function recursivePermission($path, $mode = 0755)
 	{
@@ -140,8 +142,9 @@ class Ftp implements UploaderInterface {
 	 *
 	 * @access public
 	 * @param  string   $name           Extension name
-	 * @param  bool     $recursively
-	 * @return bool
+	 * @param  boolean  $recursively
+	 * @return boolean
+	 * @throws \RuntimeException
 	 */
 	public function upload($name, $recursively = false)
 	{
@@ -189,7 +192,7 @@ class Ftp implements UploaderInterface {
 	}
 
 	/**
-	 * Get base path for FTP
+	 * Get base path for FTP.
 	 *
 	 * @access public
 	 * @param  string   $path
@@ -212,7 +215,7 @@ class Ftp implements UploaderInterface {
 	 * Verify that FTP driver is connected to a service.
 	 * 
 	 * @access public
-	 * @return bool
+	 * @return boolean
 	 */
 	public function connected()
 	{

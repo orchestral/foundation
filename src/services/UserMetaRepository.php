@@ -5,15 +5,14 @@ use Orchestra\Memory\Drivers\Driver;
 class UserMetaRepository extends Driver {
 	
 	/**
-	 * Storage name
+	 * Storage name.
 	 * 
-	 * @access  protected
-	 * @var     string  
+	 * @var string  
 	 */
 	protected $storage = 'user';
 
 	/**
-	 * Model name
+	 * Model name.
 	 *
 	 * @var Orchestra\Model\UserMeta
 	 */
@@ -22,8 +21,8 @@ class UserMetaRepository extends Driver {
 	/**
 	 * Initiate the instance.
 	 *
-	 * @access  public
-	 * @return  void
+	 * @access public
+	 * @return void
 	 */
 	public function initiate() 
 	{
@@ -33,10 +32,10 @@ class UserMetaRepository extends Driver {
 	/**
 	 * Get value of a key
 	 *
-	 * @access  public
-	 * @param   string  $key        A string of key to search.
-	 * @param   mixed   $default    Default value if key doesn't exist.
-	 * @return  mixed
+	 * @access public
+	 * @param  string   $key        A string of key to search.
+	 * @param  mixed    $default    Default value if key doesn't exist.
+	 * @return mixed
 	 */
 	public function get($key = null, $default = null)
 	{
@@ -56,10 +55,11 @@ class UserMetaRepository extends Driver {
 
 	/**
 	 * Get value from database.
-	 *
+	 * 
 	 * @access protected
 	 * @param  string   $key
 	 * @param  mixed    $default
+	 * @return mixed
 	 */
 	protected function retrieveFromEloquent($key, $default = null)
 	{
@@ -85,12 +85,12 @@ class UserMetaRepository extends Driver {
 	}
 
 	/**
-	 * Set a value from a key
+	 * Set a value from a key.
 	 *
-	 * @access  public
-	 * @param   string  $key        A string of key to add the value.
-	 * @param   mixed   $value      The value.
-	 * @return  mixed
+	 * @access public
+	 * @param  string   $key        A string of key to add the value.
+	 * @param  mixed    $value      The value.
+	 * @return mixed
 	 */
 	public function put($key, $value = '')
 	{
@@ -102,11 +102,11 @@ class UserMetaRepository extends Driver {
 	}
 
 	/**
-	 * Delete value of a key
+	 * Delete value of a key.
 	 *
-	 * @access  public
-	 * @param   string  $key        A string of key to delete.
-	 * @return  bool
+	 * @access public
+	 * @param  string   $key        A string of key to delete.
+	 * @return boolean
 	 */
 	public function forget($key = null)
 	{

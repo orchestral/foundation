@@ -10,7 +10,7 @@ class Site {
 	/**
 	 * Application instance.
 	 *
-	 * @var Illuminate\Foundation\Application
+	 * @var \Illuminate\Foundation\Application
 	 */
 	protected $app = null;
 
@@ -25,7 +25,7 @@ class Site {
 	 * Construct a new instance.
 	 *
 	 * @access public
-	 * @param  Illuminate\Foundation\Application    $app
+	 * @param  \Illuminate\Foundation\Application   $app
 	 * @return void
 	 */
 	public function __construct($app)
@@ -64,7 +64,7 @@ class Site {
 	 *
 	 * @access public 	
 	 * @param  string   $key
-	 * @return bool
+	 * @return boolean
 	 */
 	public function has($key)
 	{
@@ -88,10 +88,9 @@ class Site {
 	 * Convert given time to user localtime, however if it a guest user 
 	 * return based on default timezone.
 	 *
-	 * @static
 	 * @access public
 	 * @param  mixed    $datetime
-	 * @return DateTime
+	 * @return \DateTime
 	 */
 	public function localtime($datetime)
 	{

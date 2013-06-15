@@ -8,7 +8,7 @@ class Installer implements InstallerInterface {
 	/**
 	 * Application instance.
 	 *
-	 * @var Illuminate\Foundation\Application
+	 * @var \Illuminate\Foundation\Application
 	 */
 	protected $app = null;
 
@@ -16,6 +16,7 @@ class Installer implements InstallerInterface {
 	 * Construct a new instance.
 	 *
 	 * @access public
+	 * @param  \Illuminate\Foundation\Application   $app
 	 * @return void
 	 */
 	public function __construct($app)
@@ -33,7 +34,7 @@ class Installer implements InstallerInterface {
 	 * Migrate Orchestra Platform schema.
 	 *
 	 * @access public
-	 * @return void
+	 * @return boolean
 	 */
 	public function migrate()
 	{
@@ -48,7 +49,8 @@ class Installer implements InstallerInterface {
 	 *
 	 * @access public	
 	 * @param  array    $input
-	 * @return void
+	 * @return boolean
+	 * @throws \Exception
 	 */
 	public function createAdmin($input, $multipleAdmin = true) 
 	{
@@ -92,7 +94,7 @@ class Installer implements InstallerInterface {
 	}
 
 	/**
-	 * Run application setup
+	 * Run application setup.
 	 *
 	 * @access protected
 	 * @param  array    $input
@@ -143,7 +145,7 @@ class Installer implements InstallerInterface {
 	 *
 	 * @access protected
 	 * @param  array    $input
-	 * @return Orchestra\Model\User
+	 * @return \Orchestra\Model\User
 	 */
 	protected function createUser($input)
 	{
@@ -169,6 +171,7 @@ class Installer implements InstallerInterface {
 	 *
 	 * @access protected
 	 * @return boolean
+	 * @throws \Exception
 	 */
 	protected function hasNoExistingUser()
 	{
