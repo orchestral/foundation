@@ -7,7 +7,7 @@ class Mail {
 	/**
 	 * Application instance.
 	 *
-	 * @var Illuminate\Foundation\Application
+	 * @var \Illuminate\Foundation\Application
 	 */
 	protected $app = null;
 
@@ -15,7 +15,7 @@ class Mail {
 	 * Construct a new Mail instance.
 	 *
 	 * @access public
-	 * @param  Illuminate\Foundation\Application    $app
+	 * @param  \Illuminate\Foundation\Application   $app
 	 * @return void
 	 */
 	public function __construct($app)
@@ -31,7 +31,7 @@ class Mail {
 	 * @param  string           $view
 	 * @param  array            $data
 	 * @param  Closure|string   $callback
-	 * @return Illuminate\Mail\Mailer
+	 * @return \Illuminate\Mail\Mailer
 	 */
 	public function send($view, array $data, $callback)
 	{

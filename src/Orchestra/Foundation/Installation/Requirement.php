@@ -7,7 +7,7 @@ class Requirement implements RequirementInterface {
 	/**
 	 * Application instance.
 	 *
-	 * @var Illuminate\Foundation\Application
+	 * @var \Illuminate\Foundation\Application
 	 */
 	protected $app = null;
 	
@@ -19,7 +19,7 @@ class Requirement implements RequirementInterface {
 	protected $checklist = array();
 
 	/**
-	 * Installable status
+	 * Installable status.
 	 *
 	 * @var boolean
 	 */
@@ -29,6 +29,7 @@ class Requirement implements RequirementInterface {
 	 * Construct a new instance.
 	 *
 	 * @access public
+	 * @param  \Illuminate\Foundation\Application   $app
 	 * @return void
 	 */
 	public function __construct($app)
@@ -40,7 +41,7 @@ class Requirement implements RequirementInterface {
 	 * Check all requirement.
 	 *
 	 * @access public
-	 * @return 
+	 * @return boolean
 	 */
 	public function check()
 	{
@@ -164,7 +165,7 @@ class Requirement implements RequirementInterface {
 	 * Get installable status.
 	 * 
 	 * @access public
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isInstallable()
 	{

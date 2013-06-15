@@ -9,7 +9,8 @@ class PublisherManager extends Manager {
 	/**
 	 * Create an instance of the Ftp driver.
 	 *
-	 * @return Orchestra\Foundation\Publisher\Ftp
+	 * @access protected
+	 * @return \Orchestra\Foundation\Publisher\Ftp
 	 */
 	protected function createFtpDriver()
 	{
@@ -19,6 +20,7 @@ class PublisherManager extends Manager {
 	/**
 	 * Get the default authentication driver name.
 	 *
+	 * @access protected
 	 * @return string
 	 */
 	protected function getDefaultDriver()
@@ -32,7 +34,8 @@ class PublisherManager extends Manager {
 	 * Execute the queue.
 	 * 
 	 * @access public
-	 * @return void
+	 * @return boolean
+	 * @throws \Exception
 	 */
 	public function execute()
 	{
@@ -69,7 +72,7 @@ class PublisherManager extends Manager {
 	 *
 	 * @access public
 	 * @param  string   $queue
-	 * @return bool
+	 * @return boolean
 	 */
 	public function queue($queue)
 	{
