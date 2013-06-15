@@ -43,3 +43,18 @@ if ( ! function_exists('handles'))
 		return Orchestra\Support\Facades\App::handles($name);
 	}
 }
+
+if ( ! function_exists('resources'))
+{
+	/**
+	 * Return resources route.
+	 * 
+	 * @param  string   $name   Route
+	 * @return string
+	 */
+	function resources($name)
+	{
+		$name = ltrim($name, '/');
+		return Orchestra\Support\Facades\App::handles("orchestra/foundation::resources/{$name}");
+	}
+}

@@ -75,5 +75,22 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals('foo', handles('app::foo'));
 	}
+
+	/**
+	 * Test resources() method.
+	 *
+	 * @test
+	 */
+	public function testResourcesMethod()
+	{
+		$orchestra = m::mock('\Orchestra\Foundation\Application');
+
+		\Orchestra\Support\Facades\App::swap($orchestra);
+
+		$orchestra->shouldReceive('handles')->once()
+			->with('orchestra/foundation::resources/foo')->andReturn('foo');
+
+		$this->assertEquals('foo', resources('foo'));
+	}
 	
 }
