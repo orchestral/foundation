@@ -1,39 +1,43 @@
 @import "less/variables.less"; // Modify this for custom colors, font-sizes, etc
 @import "less/mixins.less";
 
+
+@op-base: #ECEFF1;
+@op-base-hover: #ECEFF1;
+@op-contra: #508EC7;
+@op-contra-hover: #508EC7;
+@op-base-text: #333;
+@op-base-text-hover: #000;
+@op-contra-text: #fff;
+@op-contra-text-hover: #eee;
+
+form {
+	&.navbar-form.user {
+		input[role="keyword"] {
+			margin-top: 5px;
+			padding: 8px 6px;
+			width: 250px;
+		}
+
+		select[role="roles"], div.select2-container-multi {
+			min-width: 200px;
+		}
+
+		input[type="submit"] {
+			margin-top: 4px;
+		}
+	}
+	
+	.has-error {
+		.error {
+			color: #b94a48;
+		}
+	}
+}
+
 section.container {
 	clear: both;
 	padding-top: 45px;
-}
-
-.navbar {
-	&.navbar-fixed-top {
-		background-color: #eceff1;
-
-		a.navbar-brand {
-			color: #2c3e50;
-		}
-
-		ul.nav > li > a:not(.btn) {
-			color: #bdc1c5;
-
-			&:hover {
-				color: #2c3e50;
-			}
-		}
-
-		ul.nav.pull-right > li.dropdown {
-			margin-top: 3px;
-
-			&.open a.btn {
-				background: #333;
-			}
-
-			a.btn:hover {
-				background: #333;
-			}
-		}
-	}
 }
 
 @media (min-width: 979px) {
@@ -44,21 +48,71 @@ section.container {
 	}
 }
 
-.navbar-form.user {
-	input[role="keyword"] {
-		margin-top: 5px;
-		padding: 8px 6px;
-		width: 250px;
-	}
+.btn-mini {
+	font-size: 11px;
+	padding: 3px 6px;
+}
 
-	select[role="roles"], div.select2-container-multi {
-		min-width: 200px;
-	}
+.list-group {
+	.list-group-item {
+		color: @op-contra;
 
-	input[type="submit"] {
-		margin-top: 4px;
+		&.active {
+			background: @op-contra;
+			border-color: @op-contra;
+			color: @op-contra-text;
+
+			&:hover {
+				color: @op-contra-text-hover;
+			}
+		}
 	}
 }
+
+.navbar {
+	background-color: @op-base;
+		
+	a.navbar-brand {
+		color: @op-base-text;
+	}
+
+	ul.nav {
+		> li {
+			> a {
+				color: @op-base-text;
+
+				&:hover {
+					color: @op-base-text-hover;
+				}
+			}
+
+			&.active {
+				a {
+					color: @op-contra-text;
+					background: @op-contra;
+
+					&:hover {
+						color: @op-contra-text-hover;
+					}
+				}
+			}
+
+			&.dropdown.open {
+				a.dropdown-toggle {
+					color: @op-contra-text;
+					background: @op-contra;
+				}
+
+				ul.dropdown-menu {
+					a:hover {
+						background: @op-contra;
+					}
+				}
+			}
+		}
+	}
+}
+
 
 .table {
 	tbody td {
@@ -68,6 +122,12 @@ section.container {
 	}
 }
 
+/*
+---------------------------------------------------------------------------
+| Fixes for Select2
+---------------------------------------------------------------------------
+*/
+
 .select2-container {
 	&.col {
 		padding-left: 0;
@@ -75,19 +135,17 @@ section.container {
 	}
 }
 
-.has-error {
-	.error {
-		color: #b94a48;
-	}
-}
 .navbar-form .select2-container {
 	margin-top: 5px;
 }
 
 
 /*
+---------------------------------------------------------------------------
 | Fixes for Delta jQuery UI
+---------------------------------------------------------------------------
 */
+
 form {
 	label.ui-state-active {
 		background: transparent;
@@ -122,6 +180,7 @@ table {
 | Installation
 |--------------------------------------------------------------------------
 */
+
 #installation {
 	table.requirements {
 		div.alert {
@@ -139,6 +198,7 @@ table {
 | Melody Theme Manager
 |--------------------------------------------------------------------------
 */
+
 .container .themes {
 	img {
 		margin: 0 auto;

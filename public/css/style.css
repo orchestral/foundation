@@ -1,15 +1,18 @@
 
+form.navbar-form.user input[role="keyword"]{margin-top:5px;padding:8px 6px;width:250px;}
+form.navbar-form.user select[role="roles"],form.navbar-form.user div.select2-container-multi{min-width:200px;}
+form.navbar-form.user input[type="submit"]{margin-top:4px;}
+form .has-error .error{color:#b94a48;}
 section.container{clear:both;padding-top:45px;}
-.navbar.navbar-fixed-top{background-color:#eceff1;}.navbar.navbar-fixed-top a.navbar-brand{color:#2c3e50;}
-.navbar.navbar-fixed-top ul.nav>li>a:not(.btn){color:#bdc1c5;}.navbar.navbar-fixed-top ul.nav>li>a:not(.btn):hover{color:#2c3e50;}
-.navbar.navbar-fixed-top ul.nav.pull-right>li.dropdown{margin-top:3px;}.navbar.navbar-fixed-top ul.nav.pull-right>li.dropdown.open a.btn{background:#333;}
-.navbar.navbar-fixed-top ul.nav.pull-right>li.dropdown a.btn:hover{background:#333;}
-@media (min-width:979px){.table th.th-action,.table td.th-action{width:100px;}}.navbar-form.user input[role="keyword"]{margin-top:5px;padding:8px 6px;width:250px;}
-.navbar-form.user select[role="roles"],.navbar-form.user div.select2-container-multi{min-width:200px;}
-.navbar-form.user input[type="submit"]{margin-top:4px;}
+@media (min-width:979px){.table th.th-action,.table td.th-action{width:100px;}}.btn-mini{font-size:11px;padding:3px 6px;}
+.list-group .list-group-item{color:#508ec7;}.list-group .list-group-item.active{background:#508ec7;border-color:#508ec7;color:#ffffff;}.list-group .list-group-item.active:hover{color:#eeeeee;}
+.navbar{background-color:#eceff1;}.navbar a.navbar-brand{color:#333333;}
+.navbar ul.nav>li>a{color:#333333;}.navbar ul.nav>li>a:hover{color:#000000;}
+.navbar ul.nav>li.active a{color:#ffffff;background:#508ec7;}.navbar ul.nav>li.active a:hover{color:#eeeeee;}
+.navbar ul.nav>li.dropdown.open a.dropdown-toggle{color:#ffffff;background:#508ec7;}
+.navbar ul.nav>li.dropdown.open ul.dropdown-menu a:hover{background:#508ec7;}
 .table tbody td .meta{font-size:11px;}
 .select2-container.col{padding-left:0;padding-right:0;}
-.has-error .error{color:#b94a48;}
 .navbar-form .select2-container{margin-top:5px;}
 form label.ui-state-active{background:transparent;}
 form .ui-slider .ui-slider-handle{z-index:1;}
