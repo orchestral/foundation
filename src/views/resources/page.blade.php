@@ -4,7 +4,7 @@
 
 <div class="row">
 
-	<div class="col col-lg-2">
+	<div class="col col-lg-3">
 		<div class="list-group">
 			<?php foreach ($resources['list'] as $name => $resource) : ?>
 			<a href="<?php echo handles("orchestra/foundation::resources/{$name}"); ?>" 
@@ -16,7 +16,7 @@
 		</div>
 	</div>
 
-	<div class="col col-lg-10">
+	<div class="col col-lg-9">
 		<?php echo $content; ?>
 	</div>
 	

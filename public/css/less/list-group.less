@@ -67,7 +67,7 @@ a.list-group-item:focus {
 // Active class on item itself, not parent
 a.list-group-item.active {
   z-index: 2; // Place active items above their siblings for proper border styling
-  color: @list-group-active-text;
+  color: @list-group-active-color;
   background-color: @list-group-active-bg;
   border-color: @list-group-active-border;
 
@@ -86,9 +86,6 @@ a.list-group-item.active {
 .list-group-item > .badge,
 .list-group-item > .glyphicon-chevron-right {
   float: right;
-  margin-right: -15px;
-}
-.list-group-item > .glyphicon-chevron-right {
   margin-right: -15px;
 }
 .list-group-item > .glyphicon + .badge {
