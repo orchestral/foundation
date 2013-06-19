@@ -82,51 +82,51 @@
 
 		<fieldset>
 
-			<div class="control-group">
-				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.type'); ?></label>
-				<div class="controls">
-					<span class="uneditable-input input-xlarge"><?php echo $database['driver']; ?></span>
+			<div class="row">
+				<label class="col-lg-3 control-label"><?php echo trans('orchestra/foundation::install.database.type'); ?></label>
+				<div class="col-lg-9">
+					<input disabled type="text" value="<?php echo $database['driver']; ?>">
 				</div>
 			</div>
 
 			<?php if (isset($database['host'])) : ?>
-			<div class="control-group">
-				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.host'); ?></label>
-				<div class="controls">
-					<span class="uneditable-input input-xlarge"><?php echo $database['host']; ?></span>
+			<div class="row">
+				<label class="col-lg-3 control-label"><?php echo trans('orchestra/foundation::install.database.host'); ?></label>
+				<div class="col-lg-9">
+					<input disabled type="text" value="<?php echo $database['host']; ?>">
 				</div>
 			</div>
 			<?php endif; ?>
 
-			<div class="control-group">
-				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.name'); ?></label>
-				<div class="controls">
-					<span class="uneditable-input input-xlarge"><?php echo $database['database']; ?></span>
+			<div class="row">
+				<label class="col-lg-3 control-label"><?php echo trans('orchestra/foundation::install.database.name'); ?></label>
+				<div class="col-lg-9">
+					<input disabled type="text" value="<?php echo $database['database']; ?>">
 				</div>
 			</div>
 
 			<?php if (isset($database['username'])) : ?>
-			<div class="control-group">
-				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.username'); ?></label>
-				<div class="controls">
-					<span class="uneditable-input input-xlarge"><?php echo $database['username']; ?></span>
+			<div class="row">
+				<label class="col-lg-3 control-label"><?php echo trans('orchestra/foundation::install.database.username'); ?></label>
+				<div class="col-lg-9">
+					<input disabled type="text" value="<?php echo $database['username']; ?>">
 				</div>
 			</div>
 			<?php endif;
 
 			if (isset($database['password'])) : ?>
-			<div class="control-group">
-				<label class="control-label"><?php echo trans('orchestra/foundation::install.database.password'); ?></label>
-				<div class="controls">
-					<span class="uneditable-input input-xlarge"><?php echo $database['password']; ?></span>
+			<div class="row">
+				<label class="col-lg-3 control-label"><?php echo trans('orchestra/foundation::install.database.password'); ?></label>
+				<div class="col-lg-9">
+					<input disabled type="text" value="<?php echo $database['password']; ?>">
 					<p class="help-block"><?php echo trans('orchestra/foundation::install.hide-password'); ?></p>
 				</div>
 			</div>
 			<?php endif; ?>
 
-			<div class="control-group">
-				<label class="control-label"><?php echo trans('orchestra/foundation::install.connection.status'); ?></label>
-				<div class="controls">
+			<div class="row">
+				<label class="col-lg-3 control-label"><?php echo trans('orchestra/foundation::install.connection.status'); ?></label>
+				<div class="col-lg-9">
 					<?php if (true === $databaseConnection['is']) : ?>
 					<button class="btn btn-success disabled input-xlarge">
 						<?php echo trans('orchestra/foundation::install.connection.success'); ?>
@@ -151,25 +151,25 @@
 				)); ?>
 			</p>
 
-			<div class="control-group">
-				<label class="control-label <?php echo 'fluent' === $auth['driver'] ? 'error' : ''; ?>">
+			<div class="row">
+				<label class="col-lg-3 control-label <?php echo 'fluent' === $auth['driver'] ? 'error' : ''; ?>">
 					<?php echo trans('orchestra/foundation::install.auth.driver'); ?>
 				</label>
-				<div class="controls">
-					<span class="uneditable-input input-xlarge"><?php echo $auth['driver']; ?></span>
+				<div class="col-lg-9">
+					<input disabled type="text" value="<?php echo $auth['driver']; ?>">
 					<?php if ('fluent' === $auth['driver']) : ?>
 					<p class="help-block"><?php echo trans('orchestra/foundation::install.auth.requirement.driver'); ?></p>
 					<?php endif; ?>
 				</div>
 			</div>
 
-			<div class="control-group
+			<div class="row
 				<?php echo false === $authentication ? ' error' : ''; echo 'eloquent' !== $auth['driver'] ? ' hide' : ''; ?>">
-				<label class="control-label">
+				<label class="col-lg-3 control-label">
 					<?php echo trans('orchestra/foundation::install.auth.model'); ?>
 				</label>
-				<div class="controls">
-					<span class="uneditable-input input-xlarge"><?php echo $auth['model']; ?></span>
+				<div class="col-lg-9">
+					<input disabled type="text" value="<?php echo $auth['model']; ?>">
 					<?php if (false === $authentication) : ?>
 					<p class="help-block">
 						<?php echo trans('orchestra/foundation::install.auth.requirement.driver', array(
@@ -180,17 +180,19 @@
 				</div>
 			</div>
 
+			<?php if ($installable) : ?>
+			<hr>
+			<div class="row">
+				<div class="col-lg-9 col-offset-3">
+					<a href="<?php echo handles('orchestra/foundation::install/create'); ?>" class="btn btn-primary">
+						<?php echo trans('orchestra/foundation::label.next'); ?>
+					</a>
+				</div>
+			</div>
+
+			<?php endif; ?>
+
 		</fieldset>
-
-		<?php if ($installable) : ?>
-
-		<div class="form-actions clean">
-			<a href="<?php echo handles('orchestra/foundation::install/create'); ?>" class="btn btn-primary">
-				<?php echo trans('orchestra/foundation::label.next'); ?>
-			</a>
-		</div>
-
-		<?php endif; ?>
 
 	</div>
 
