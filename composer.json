@@ -27,20 +27,20 @@
 	"require": {
 		"php": ">=5.3.3",
 		"laravel/framework": "4.0.*",
-		"orchestra/asset": "self.version",
-		"orchestra/auth": "self.version",
-		"orchestra/extension": "self.version",
-		"orchestra/facile": "self.version",
-		"orchestra/html": "self.version",
-		"orchestra/memory": "self.version",
-		"orchestra/resources": "self.version",
-		"orchestra/support": "self.version",
-		"orchestra/view": "self.version",
-		"orchestra/widget": "self.version"
+		"orchestra/asset": "2.0.*",
+		"orchestra/auth": "2.0.*",
+		"orchestra/extension": "2.0.*",
+		"orchestra/facile": "2.0.*",
+		"orchestra/html": "2.0.*",
+		"orchestra/memory": "2.0.*",
+		"orchestra/resources": "2.0.*",
+		"orchestra/support": "2.0.*",
+		"orchestra/view": "2.0.*",
+		"orchestra/widget": "2.0.*"
 	},
 	"require-dev": {
 		"mockery/mockery": "0.8.0",
-		"orchestra/testbench": "self.version",
+		"orchestra/testbench": "2.0.*",
 		"satooshi/php-coveralls": "~0.6"
 	},
 	"extra": {
