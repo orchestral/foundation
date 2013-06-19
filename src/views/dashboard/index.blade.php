@@ -5,22 +5,12 @@
 <div class="row">
 	<?php if (count($panes) > 0) :
 	foreach ($panes as $id => $pane) : ?>
-		<div<?php echo HTML::attributes($pane->attributes); ?>>
+		<div<?php echo HTML::attributes(HTML::decorate($pane->attributes, array('class' => 'panel'))); ?>>
 		<?php if ( ! empty($pane->html)) :
 			echo $pane->html; 
 		else : ?>
-			<table<?php echo HTML::attributes(array('class' => "table table-bordered")); ?>>
-				<thead>
-					<tr>
-						<th><?php echo $pane->title; ?></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><?php echo $pane->content; ?></td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="panel-heading"><?php echo $pane->title; ?></div>
+			<?php echo $pane->content; ?>
 		<?php endif; ?>
 		</div>
 	<?php endforeach;

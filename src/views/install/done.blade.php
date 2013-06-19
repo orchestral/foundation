@@ -21,7 +21,7 @@
 		</div>
 	</div>
 
-	<div class="col col-lg-6 form-horizontal">
+	<div class="col col-lg-6">
 
 		<h2><?php echo trans('orchestra/foundation::install.steps.done'); ?></h2>
 
