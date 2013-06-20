@@ -1,6 +1,6 @@
 {
 	"name": "orchestra/foundation",
-	"description": "Orchestra Platform Foundation Component",
+	"description": "Orchestra Platform 2 Foundation Component",
 	"homepage": "http://orchestraplatform.com/docs/2.0/",
 	"keywords": ["orchestra-platform", "orchestral", "laravel"],
 	"license": "MIT",

@@ -110,13 +110,22 @@ class ExtensionsControllerTest extends TestCase {
 			'_token'  => 'somesessiontoken', 
 		);
 
-		$memory = m::mock('Memory');
+		$memory     = m::mock('Memory');
+		$validation = m::mock('Validation');
+
 		$memory->shouldReceive('get')->once()
 				->with('extension.active.laravel/framework.config', array())->andReturn(array())
 			->shouldReceive('put')->once()
 				->with('extensions.active.laravel/framework.config', array('handles' => 'foo'))->andReturn(null)
 			->shouldReceive('put')->once()
 				->with('extension_laravel/framework', array('handles' => 'foo'))->andReturn(null);
+
+		$validation->shouldReceive('with')->once()
+				->with($input, array("orchestra.validate: extension.laravel/framework"))->andReturn($validation)
+			->shouldReceive('fails')->once()->andReturn(false);
+
+		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
+			->with('Orchestra\Services\Validation\Extension')->andReturn($validation);
 
 		\Orchestra\Support\Facades\Extension::shouldReceive('started')->once()
 			->with('laravel/framework')->andReturn(true);
@@ -126,6 +135,36 @@ class ExtensionsControllerTest extends TestCase {
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('success', m::any())->andReturn(null);
 
+		$this->call('POST', 'admin/extensions/configure/laravel.framework', $input);
+		$this->assertRedirectedTo('extensions');
+	}
+
+	/**
+	 * Test POST /admin/extensions/configure/(:name) with validation error.
+	 *
+	 * @test
+	 */
+	public function testPostConfigureActionGivenValidationError()
+	{
+		$input = array(
+			'handles' => 'foo',
+			'_token'  => 'somesessiontoken', 
+		);
+
+		$validation = m::mock('Validation');
+
+		$validation->shouldReceive('with')->once()
+				->with($input, array("orchestra.validate: extension.laravel/framework"))->andReturn($validation)
+			->shouldReceive('fails')->once()->andReturn(true);
+
+		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
+			->with('Orchestra\Services\Validation\Extension')->andReturn($validation);
+
+		\Orchestra\Support\Facades\Extension::shouldReceive('started')->once()
+			->with('laravel/framework')->andReturn(true);
+		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
+			->with('orchestra/foundation::extension/configure/laravel.framework')->andReturn('extensions');
+		
 		$this->call('POST', 'admin/extensions/configure/laravel.framework', $input);
 		$this->assertRedirectedTo('extensions');
 	}
