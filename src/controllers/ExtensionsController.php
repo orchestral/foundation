@@ -142,14 +142,14 @@ class ExtensionsController extends AdminController {
 		$input  = Input::all();
 		$memory = App::memory();
 		$config = (array) $memory->get("extension.active.{$name}.config", array());
-		$input  = array_merge($config, $input);
+		$input  = new Fluent(array_merge($config, $input));
 
 		unset($input['_token']);
 
 		Event::fire("orchestra.saving: extension.{$name}", array( & $input));
 
-		$memory->put("extensions.active.{$name}.config", $input);
-		$memory->put("extension_{$name}", $input);
+		$memory->put("extensions.active.{$name}.config", $input->getAttributes());
+		$memory->put("extension_{$name}", $input->getAttributes());
 		
 		Event::fire("orchestra.saved: extension.{$name}", array($input));
 
