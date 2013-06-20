@@ -146,7 +146,7 @@ class ExtensionsController extends AdminController {
 
 		if ($validation->fails())
 		{
-			return Redirect::to(handles("orchestra/foundation::extension/configure/{$uid}"))
+			return Redirect::to(handles("orchestra/foundation::extensions/configure/{$uid}"))
 					->withInput()
 					->withErrors($validation);
 		}

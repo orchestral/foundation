@@ -163,7 +163,7 @@ class ExtensionsControllerTest extends TestCase {
 		\Orchestra\Support\Facades\Extension::shouldReceive('started')->once()
 			->with('laravel/framework')->andReturn(true);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::extension/configure/laravel.framework')->andReturn('extensions');
+			->with('orchestra/foundation::extensions/configure/laravel.framework')->andReturn('extensions');
 		
 		$this->call('POST', 'admin/extensions/configure/laravel.framework', $input);
 		$this->assertRedirectedTo('extensions');
