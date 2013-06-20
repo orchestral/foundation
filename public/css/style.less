@@ -1,7 +1,6 @@
 @import "less/variables.less"; // Modify this for custom colors, font-sizes, etc
 @import "less/mixins.less";
 
-
 @op-base: #ECEFF1;
 @op-base-hover: #ECEFF1;
 @op-contra: #508EC7;
@@ -12,6 +11,11 @@
 @op-contra-text-hover: #eee;
 
 form {
+	fieldset legend {
+		clear: 0;
+		padding: 20px 0 0;
+	}
+
 	&.navbar-form.user {
 		input[role="keyword"] {
 			margin-top: 5px;
@@ -19,7 +23,7 @@ form {
 			width: 250px;
 		}
 
-		select[role="roles"], div.select2-container-multi {
+		select[role="roles"] {
 			min-width: 200px;
 		}
 
@@ -137,6 +141,14 @@ section.container {
 
 .navbar-form .select2-container {
 	margin-top: 5px;
+
+	.select2-container-multi {
+		min-width: 200px;
+		
+		.select2-choices .select2-search-field input {
+			max-height: 34px;
+		}
+	}
 }
 
 

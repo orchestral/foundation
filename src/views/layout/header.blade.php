@@ -18,8 +18,10 @@ use Orchestra\Support\Facades\Asset; ?>
 
 $asset = Asset::container('orchestra/foundation::header');
 
+$asset->style('select2', 'packages/orchestra/foundation/vendor/select2/select2.css');
+$asset->style('jquery-ui', 'packages/orchestra/foundation/vendor/delta/theme/jquery-ui.css');
 $asset->style('bootstrap', 'packages/orchestra/foundation/vendor/bootstrap/css/bootstrap.min.css');
-$asset->style('orchestra', 'packages/orchestra/foundation/css/style.css', array('bootstrap'));
+$asset->style('orchestra', 'packages/orchestra/foundation/css/style.css', array('bootstrap', 'select2'));
 $asset->script('underscore', 'packages/orchestra/foundation/js/underscore.min.js');
 $asset->script('jquery', 'packages/orchestra/foundation/js/jquery.min.js');
 $asset->script('javie', 'packages/orchestra/foundation/js/javie.min.js', array('jquery', 'underscore'));
