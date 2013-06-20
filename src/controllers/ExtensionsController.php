@@ -108,8 +108,9 @@ class ExtensionsController extends AdminController {
 
 		// Load configuration from memory.
 		$memory        = App::memory();
-		$config        = $memory->get("extensions.active.{$name}.config", array());
-		$eloquent      = new Fluent((array) $memory->get("extension_{$name}", $config));
+		$activeConfig  = (array) $memory->get("extensions.active.{$name}.config", array());
+		$baseConfig    = (array) $memory->get("extension_{$name}", array());
+		$eloquent      = new Fluent(array_merge($activeConfig, $baseConfig));
 		$extensionName = $memory->get("extensions.available.{$name}.name", $name);
 
 		// Add basic form, allow extension to add custom configuration field
