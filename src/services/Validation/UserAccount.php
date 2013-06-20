@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Services\Validation;
 
+use Illuminate\Support\Fluent;
 use Orchestra\Support\Validator;
 
 class UserAccount extends Validator {
@@ -42,11 +43,11 @@ class UserAccount extends Validator {
 	 */
 	protected function onChangePassword()
 	{
-		$this->rules = array(
+		$this->rules = new Fluent(array(
 			'current_password' => array('required'),
 			'new_password'     => array('required', 'different:current_password'),
 			'confirm_password' => array('same:new_password'),
-		);
+		));
 
 		$this->events = array();
 	}

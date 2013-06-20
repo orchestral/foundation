@@ -135,11 +135,22 @@ class ExtensionsController extends AdminController {
 	 */
 	public function postConfigure($name)
 	{
+		$uid  = $name;
 		$name = str_replace('.', '/', $name);
 
 		if ( ! Extension::started($name)) return App::abort(404);
 
-		$input  = Input::all();
+		$input      = Input::all();
+		$validation = App::make('Orchestra\Services\Validation\Extension')
+			->with($input, array("orchestra.validate: extension.{$name}"));
+
+		if ($validation->fails())
+		{
+			return Redirect::to(handles("orchestra/foundation::extensions/configure/{$uid}"))
+					->withInput()
+					->withErrors($validation);
+		}
+
 		$memory = App::memory();
 		$config = (array) $memory->get("extension.active.{$name}.config", array());
 		$input  = new Fluent(array_merge($config, $input));
