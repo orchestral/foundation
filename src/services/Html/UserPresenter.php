@@ -84,8 +84,9 @@ class UserPresenter {
 						handles("orchestra/foundation::users/{$row->id}/edit"),
 						trans('orchestra/foundation::label.edit'),
 						array(
-							'class' => 'btn btn-mini btn-warning',
-							'role'  => 'edit',
+							'class'   => 'btn btn-mini btn-warning',
+							'role'    => 'edit',
+							'data-id' => $row->id,
 						)
 					);
 
@@ -95,8 +96,9 @@ class UserPresenter {
 							handles("orchestra/foundation::users/{$row->id}/delete"),
 							trans('orchestra/foundation::label.delete'),
 							array(
-								'class' => 'btn btn-mini btn-danger',
-								'role'  => 'delete',
+								'class'   => 'btn btn-mini btn-danger',
+								'role'    => 'delete',
+								'data-id' => $row->id,
 							)
 						);
 					}

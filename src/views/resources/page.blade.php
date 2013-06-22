@@ -14,6 +14,9 @@
 			</a>
 			<?php endforeach; ?>
 		</div>
+		
+		@placeholder("orchestra.resources: {$resource->name}")
+		@placeholder('orchestra.resources')
 	</div>
 
 	<div class="col col-lg-9">
