@@ -43,7 +43,7 @@ class UserAccount extends Validator {
 	 */
 	protected function onChangePassword()
 	{
-		$this->rules = new Fluent(array(
+		$this->setRules(array(
 			'current_password' => array('required'),
 			'new_password'     => array('required', 'different:current_password'),
 			'confirm_password' => array('same:new_password'),
