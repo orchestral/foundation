@@ -8,20 +8,6 @@ use Orchestra\Services\Html\ResourcePresenter;
 class ResourcesController extends AdminController {
 
 	/**
-	 * Construct Resources Controller, only authenticated user should be able
-	 * to access this controller.
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-
-		$this->beforeFilter('orchestra.auth');
-	}
-
-	/**
 	 * Route to Resources List.
 	 *
 	 * @access public

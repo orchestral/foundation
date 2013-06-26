@@ -40,10 +40,6 @@ class AdminMenuHandler {
 				->link(App::handles('orchestra/foundation::settings'));
 		}
 
-		// If user aren't logged in, we should stop at this point,
-		// Resources only be available to logged-in user.
-		if (Auth::guest()) return;
-
 		$resources = Resources::all();
 
 		// Resources menu should only be appended if there is actually
