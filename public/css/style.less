@@ -138,15 +138,28 @@ section.container {
 		padding-right: 0;
 	}
 }
-
-.navbar-form .select2-container {
-	margin-top: 5px;
-
+.navbar-form {
 	.select2-container-multi {
-		min-width: 200px;
-		
-		.select2-choices .select2-search-field input {
-			max-height: 34px;
+		.select2-choices {
+			min-width: 200px;
+			height: 38px !important;
+		}
+	}
+
+	.select2-container {
+		margin-top: 5px;
+
+		.select2-container-multi {
+			min-width: 200px;
+			
+			.select2-choices {
+				min-width: 200px;
+				height: 34px;
+				
+				.select2-search-field input {
+					max-height: 34px;
+				}
+			}
 		}
 	}
 }
