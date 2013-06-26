@@ -22,7 +22,6 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase {
 	{
 		\Orchestra\Support\Facades\App::swap($app = m::mock('Orchestra'));
 		\Orchestra\Support\Facades\Resources::swap($resources = m::mock('Resources'));
-		\Illuminate\Support\Facades\Auth::swap($auth = m::mock('Auth\Guard'));
 
 		$app->shouldReceive('acl')->once()->andReturn($acl = m::mock('Acl'))
 			->shouldReceive('menu')->once()->andReturn($menu = m::mock('Menu'))
@@ -46,8 +45,6 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase {
 		$menu->shouldReceive('add')->once()->with('settings')->andReturn($menu)
 			->shouldReceive('title')->once()->with('setting')->andReturn($menu)
 			->shouldReceive('link')->once()->with('setting')->andReturn(null);
-
-		$auth->shouldReceive('guest')->once()->andReturn(false);
 
 		$foo = new \Illuminate\Support\Fluent(array(
 			'name'    => 'Foo',
