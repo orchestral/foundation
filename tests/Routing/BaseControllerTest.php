@@ -14,7 +14,7 @@ class BaseControllerTest extends TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Routing\BaseController::missingMethod() action.
+	 * Test Orchestra\Foundation\Routing\BaseController::missingMethod() action.
 	 *
 	 * @test
 	 */
@@ -31,4 +31,4 @@ class BaseControllerTest extends TestCase {
 	}
 }
 
-class StubBaseController extends \Orchestra\Routing\BaseController {}
+class StubBaseController extends \Orchestra\Foundation\Routing\BaseController {}

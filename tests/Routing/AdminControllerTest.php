@@ -14,7 +14,7 @@ class AdminControllerTest extends TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Routing\AdminController filters.
+	 * Test Orchestra\Foundation\Routing\AdminController filters.
 	 */
 	public function testFilters()
 	{
@@ -51,4 +51,4 @@ class AdminControllerTest extends TestCase {
 	}
 }
 
-class StubAdminController extends \Orchestra\Routing\AdminController {}
+class StubAdminController extends \Orchestra\Foundation\Routing\AdminController {}

@@ -16,7 +16,6 @@
 			"Orchestra\\Foundation" : "src/"
 		},
 		"classmap" : [
-			"src/controllers",
 			"src/models"
 		],
 		"files": [
