@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Tests;
 
 use Mockery as m;
-use Orchestra\Services\TestCase;
+use Orchestra\Foundation\Services\TestCase;
 
 class MacrosTest extends TestCase {
 

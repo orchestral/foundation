@@ -13,13 +13,9 @@
 	],
 	"autoload": {
 		"psr-0": { 
-			"Orchestra\\Foundation" : "src/"
+			"Orchestra\\Foundation" : "src/",
+			"Orchestra\\Model" : "src/"
 		},
-		"classmap" : [
-			"src/controllers",
-			"src/models",
-			"src/services"
-		],
 		"files": [
 			"src/helpers.php"
 		]

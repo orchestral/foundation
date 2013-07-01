@@ -64,7 +64,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('link')->once()->andReturn(null);
 		$translator->shouldReceive('get')->andReturn('foo');
 		$event->shouldReceive('listen')
-				->with('orchestra.ready: admin', 'Orchestra\Services\Event\AdminMenuHandler')->once()->andReturn(null)
+				->with('orchestra.ready: admin', 'Orchestra\Foundation\Services\Event\AdminMenuHandler')->once()->andReturn(null)
 			->shouldReceive('fire')->with('orchestra.started')->once()->andReturn(null);
 		$config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
 		$url->shouldReceive('to')->once()->with('admin')->andReturn('admin');
@@ -182,7 +182,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('link')->once()->andReturn(null);
 		$translator->shouldReceive('get')->andReturn('foo');
 		$event->shouldReceive('listen')
-				->with('orchestra.ready: admin', 'Orchestra\Services\Event\AdminMenuHandler')->once()->andReturn(null)
+				->with('orchestra.ready: admin', 'Orchestra\Foundation\Services\Event\AdminMenuHandler')->once()->andReturn(null)
 			->shouldReceive('fire')->with('orchestra.started')->once()->andReturn(null);
 		
 		$config->shouldReceive('get')->times(3)->with('orchestra/foundation::handles', '/')->andReturn('admin');

@@ -2,7 +2,7 @@
 
 use Mockery as m;
 use Illuminate\Support\Facades\App;
-use Orchestra\Services\TestCase;
+use Orchestra\Foundation\Services\TestCase;
 
 class ServiceProviderTest extends TestCase {
 
@@ -43,7 +43,7 @@ class ServiceProviderTest extends TestCase {
 	public function testInstanceOfOrchestraMemory()
 	{
 		$stub = App::make('orchestra.memory')->driver('user');
-		$this->assertInstanceOf('\Orchestra\Services\UserMetaRepository', $stub);
+		$this->assertInstanceOf('\Orchestra\Foundation\Services\UserMetaRepository', $stub);
 	}
 
 	/**
