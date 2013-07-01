@@ -53,6 +53,6 @@ return array(
 	|
 	*/
 
-	'menu' => 'Orchestra\Services\Event\AdminMenuHandler',
+	'menu' => 'Orchestra\Foundation\Services\Event\AdminMenuHandler',
 
 );
