@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Tests\Routing;
 
 use Mockery as m;
-use Orchestra\Services\TestCase;
+use Orchestra\Foundation\Services\TestCase;
 
 class ExtensionsControllerTest extends TestCase {
 	
@@ -125,7 +125,7 @@ class ExtensionsControllerTest extends TestCase {
 			->shouldReceive('fails')->once()->andReturn(false);
 
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
-			->with('Orchestra\Services\Validation\Extension')->andReturn($validation);
+			->with('Orchestra\Foundation\Services\Validation\Extension')->andReturn($validation);
 
 		\Orchestra\Support\Facades\Extension::shouldReceive('started')->once()
 			->with('laravel/framework')->andReturn(true);
@@ -158,7 +158,7 @@ class ExtensionsControllerTest extends TestCase {
 			->shouldReceive('fails')->once()->andReturn(true);
 
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
-			->with('Orchestra\Services\Validation\Extension')->andReturn($validation);
+			->with('Orchestra\Foundation\Services\Validation\Extension')->andReturn($validation);
 
 		\Orchestra\Support\Facades\Extension::shouldReceive('started')->once()
 			->with('laravel/framework')->andReturn(true);

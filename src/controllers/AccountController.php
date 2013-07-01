@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Services\Html\AccountPresenter;
+use Orchestra\Foundation\Services\Html\AccountPresenter;
 
 class AccountController extends AdminController {
 
@@ -63,7 +63,7 @@ class AccountController extends AdminController {
 		
 		if ($user->id !== $input['id']) return App::abort(500);
 
-		$validation = App::make('Orchestra\Services\Validation\UserAccount')
+		$validation = App::make('Orchestra\Foundation\Services\Validation\UserAccount')
 						->with($input);
 
 		if ($validation->fails())
@@ -134,7 +134,7 @@ class AccountController extends AdminController {
 		
 		if ($user->id !== $input['id']) return App::abort(500);
 
-		$validation = App::make('Orchestra\Services\Validation\UserAccount')
+		$validation = App::make('Orchestra\Foundation\Services\Validation\UserAccount')
 						->on('changePassword')->with($input);
 
 		if ($validation->fails())

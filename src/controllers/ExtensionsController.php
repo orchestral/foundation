@@ -12,7 +12,7 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Publisher;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Extension\FilePermissionException;
-use Orchestra\Services\Html\ExtensionPresenter;
+use Orchestra\Foundation\Services\Html\ExtensionPresenter;
 
 class ExtensionsController extends AdminController {
 
@@ -141,7 +141,7 @@ class ExtensionsController extends AdminController {
 		if ( ! Extension::started($name)) return App::abort(404);
 
 		$input      = Input::all();
-		$validation = App::make('Orchestra\Services\Validation\Extension')
+		$validation = App::make('Orchestra\Foundation\Services\Validation\Extension')
 			->with($input, array("orchestra.validate: extension.{$name}"));
 
 		if ($validation->fails())

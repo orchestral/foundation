@@ -8,7 +8,7 @@ use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Services\Html\SettingPresenter;
+use Orchestra\Foundation\Services\Html\SettingPresenter;
 
 class SettingsController extends AdminController {
 
@@ -77,7 +77,7 @@ class SettingsController extends AdminController {
 		$default = array('email_driver' => 'mail');
 		$input   = array_merge($default, Input::all());
 
-		$validation = App::make('Orchestra\Services\Validation\Setting')
+		$validation = App::make('Orchestra\Foundation\Services\Validation\Setting')
 						->on($input['email_driver'])->with($input);
 
 		if ($validation->fails())

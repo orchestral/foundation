@@ -12,7 +12,7 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Model\Role;
 use Orchestra\Model\User;
-use Orchestra\Services\Html\UserPresenter;
+use Orchestra\Foundation\Services\Html\UserPresenter;
 
 class UsersController extends AdminController {
 
@@ -114,7 +114,7 @@ class UsersController extends AdminController {
 	public function store() 
 	{
 		$input      = Input::all();
-		$validation = App::make('Orchestra\Services\Validation\User')
+		$validation = App::make('Orchestra\Foundation\Services\Validation\User')
 						->on('create')->with($input);
 
 		if ($validation->fails())
@@ -149,7 +149,7 @@ class UsersController extends AdminController {
 		// Check if provided id is the same as hidden id, just a pre-caution.
 		if ((int) $id !== (int) $input['id']) return App::abort(500);
 
-		$validation = App::make('Orchestra\Services\Validation\User')
+		$validation = App::make('Orchestra\Foundation\Services\Validation\User')
 						->on('update')->with($input);
 
 		if ($validation->fails())

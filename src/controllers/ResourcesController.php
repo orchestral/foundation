@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Resources;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Services\Html\ResourcePresenter;
+use Orchestra\Foundation\Services\Html\ResourcePresenter;
 
 class ResourcesController extends AdminController {
 

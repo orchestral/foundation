@@ -66,7 +66,7 @@ class CredentialController extends AdminController {
 	public function postLogin()
 	{
 		$input      = Input::all();
-		$validation = App::make('Orchestra\Services\Validation\Auth')
+		$validation = App::make('Orchestra\Foundation\Services\Validation\Auth')
 						->on('login')->with($input);
 
 		// Validate user login, if any errors is found redirect it back to

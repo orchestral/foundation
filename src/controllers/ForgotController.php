@@ -53,7 +53,7 @@ class ForgotController extends AdminController {
 	public function postIndex()
 	{
 		$input      = Input::all();
-		$validation = App::make('Orchestra\Services\Validation\Auth')->with($input);
+		$validation = App::make('Orchestra\Foundation\Services\Validation\Auth')->with($input);
 		
 		if ($validation->fails())
 		{

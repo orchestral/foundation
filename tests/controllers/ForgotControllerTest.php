@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Tests\Routing;
 
 use Mockery as m;
-use Orchestra\Services\TestCase;
+use Orchestra\Foundation\Services\TestCase;
 
 class ForgotControllerTest extends TestCase {
 
@@ -42,7 +42,7 @@ class ForgotControllerTest extends TestCase {
 		$mailer     = m::mock('Mailer');
 
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
-			->with('Orchestra\Services\Validation\Auth')->andReturn($validation);
+			->with('Orchestra\Foundation\Services\Validation\Auth')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('memory')->once()
 			->andReturn($memory = m::mock('Memory'));
 		\Illuminate\Support\Facades\Password::swap($password = m::mock('PasswordBroker'));
@@ -75,7 +75,7 @@ class ForgotControllerTest extends TestCase {
 		$validation = m::mock('AuthValidation');
 
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
-			->with('Orchestra\Services\Validation\Auth')->andReturn($validation);
+			->with('Orchestra\Foundation\Services\Validation\Auth')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
 			->with('orchestra/foundation::forgot')->andReturn('forgot');
 

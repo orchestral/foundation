@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Tests\Routing;
 
 use Mockery as m;
-use Orchestra\Services\TestCase;
+use Orchestra\Foundation\Services\TestCase;
 
 class SettingsControllerTest extends TestCase {
 	
@@ -70,7 +70,7 @@ class SettingsControllerTest extends TestCase {
 
 		\Orchestra\Support\Facades\App::shouldReceive('memory')->once()->andReturn($memory);
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
-			->with('Orchestra\Services\Validation\Setting')->andReturn($validation);
+			->with('Orchestra\Foundation\Services\Validation\Setting')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
 			->with('orchestra/foundation::settings')->andReturn('settings');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
@@ -111,7 +111,7 @@ class SettingsControllerTest extends TestCase {
 			->shouldReceive('fails')->once()->andReturn(true);
 
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
-			->with('Orchestra\Services\Validation\Setting')->andReturn($validation);
+			->with('Orchestra\Foundation\Services\Validation\Setting')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
 			->with('orchestra/foundation::settings')->andReturn('settings');
 

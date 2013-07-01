@@ -13,7 +13,7 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Support\Str;
 use Orchestra\Model\User;
-use Orchestra\Services\Html\AccountPresenter;
+use Orchestra\Foundation\Services\Html\AccountPresenter;
 
 class RegisterController extends AdminController {
 	
@@ -72,7 +72,7 @@ class RegisterController extends AdminController {
 		$input    = Input::all();
 		$password = Str::random(5);
 		
-		$validation = App::make('Orchestra\Services\Validation\UserAccount')
+		$validation = App::make('Orchestra\Foundation\Services\Validation\UserAccount')
 						->on('register')->with($input);
 	
 		// Validate user registration, if any errors is found redirect it 

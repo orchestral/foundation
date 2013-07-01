@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Tests\Routing;
 
 use Mockery as m;
-use Orchestra\Services\TestCase;
+use Orchestra\Foundation\Services\TestCase;
 
 class UsersControllerTest extends TestCase {
 	
@@ -120,7 +120,7 @@ class UsersControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('orchestra.user')->andReturn($user);
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
-			->with('Orchestra\Services\Validation\User')->andReturn($validation);
+			->with('Orchestra\Foundation\Services\Validation\User')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
 			->with('orchestra/foundation::users')->andReturn('users');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
@@ -170,7 +170,7 @@ class UsersControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('orchestra.user')->andReturn($user);
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
-			->with('Orchestra\Services\Validation\User')->andReturn($validation);
+			->with('Orchestra\Foundation\Services\Validation\User')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
 			->with('orchestra/foundation::users')->andReturn('users');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
@@ -211,7 +211,7 @@ class UsersControllerTest extends TestCase {
 			->shouldReceive('fails')->once()->andReturn(true);
 
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
-			->with('Orchestra\Services\Validation\User')->andReturn($validation);
+			->with('Orchestra\Foundation\Services\Validation\User')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
 			->with('orchestra/foundation::users/create')->andReturn('users/create');
 
@@ -256,7 +256,7 @@ class UsersControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('orchestra.user')->andReturn($builder);
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
-			->with('Orchestra\Services\Validation\User')->andReturn($validation);
+			->with('Orchestra\Foundation\Services\Validation\User')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
 			->with('orchestra/foundation::users')->andReturn('users');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
@@ -308,7 +308,7 @@ class UsersControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('orchestra.user')->andReturn($builder);
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
-			->with('Orchestra\Services\Validation\User')->andReturn($validation);
+			->with('Orchestra\Foundation\Services\Validation\User')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
 			->with('orchestra/foundation::users')->andReturn('users');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
@@ -346,7 +346,7 @@ class UsersControllerTest extends TestCase {
 			->shouldReceive('fails')->once()->andReturn(true);
 
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
-			->with('Orchestra\Services\Validation\User')->andReturn($validation);
+			->with('Orchestra\Foundation\Services\Validation\User')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
 			->with('orchestra/foundation::users/foo/edit')->andReturn('users/foo/edit');
 

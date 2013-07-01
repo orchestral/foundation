@@ -222,6 +222,6 @@ class Application {
 			->title($this->app['translator']->get('orchestra/foundation::title.home'))
 			->link($this->handles('orchestra/foundation::/'));
 
-		$this->app['events']->listen('orchestra.ready: admin', 'Orchestra\Services\Event\AdminMenuHandler');
+		$this->app['events']->listen('orchestra.ready: admin', 'Orchestra\Foundation\Services\Event\AdminMenuHandler');
 	}
 }
