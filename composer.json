@@ -17,8 +17,7 @@
 		},
 		"classmap" : [
 			"src/controllers",
-			"src/models",
-			"src/services"
+			"src/models"
 		],
 		"files": [
 			"src/helpers.php"
