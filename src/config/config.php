@@ -43,4 +43,16 @@ return array(
 
 	),
 
+	/*
+	|----------------------------------------------------------------------
+	| Orchestra Platform Menu
+	|----------------------------------------------------------------------
+	|
+	| Register Event handler to generate menu for Orchestra Platform 
+	| Administration Interface.
+	|
+	*/
+
+	'menu' => 'Orchestra\Services\Event\AdminMenuHandler',
+
 );

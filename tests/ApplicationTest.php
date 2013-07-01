@@ -63,10 +63,10 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('title')->once()->andReturn($widget)
 			->shouldReceive('link')->once()->andReturn(null);
 		$translator->shouldReceive('get')->andReturn('foo');
-		$event->shouldReceive('listen')
-				->with('orchestra.ready: admin', 'Orchestra\Services\Event\AdminMenuHandler')->once()->andReturn(null)
-			->shouldReceive('fire')->with('orchestra.started')->once()->andReturn(null);
-		$config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
+		$event->shouldReceive('listen')->once()->with('orchestra.ready: admin', 'FooAdminMenuHandler')->andReturn(null)
+			->shouldReceive('fire')->once()->with('orchestra.started')->andReturn(null);
+		$config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin')
+			->shouldReceive('get')->once()->with('orchestra/foundation::menu')->andReturn('FooAdminMenuHandler');
 		$url->shouldReceive('to')->once()->with('admin')->andReturn('admin');
 
 		$stub = new Application($app);
@@ -181,11 +181,10 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('title')->once()->andReturn($widget)
 			->shouldReceive('link')->once()->andReturn(null);
 		$translator->shouldReceive('get')->andReturn('foo');
-		$event->shouldReceive('listen')
-				->with('orchestra.ready: admin', 'Orchestra\Services\Event\AdminMenuHandler')->once()->andReturn(null)
+		$event->shouldReceive('listen')->once()->with('orchestra.ready: admin', 'FooAdminMenuHandler')->andReturn(null)
 			->shouldReceive('fire')->with('orchestra.started')->once()->andReturn(null);
-		
-		$config->shouldReceive('get')->times(3)->with('orchestra/foundation::handles', '/')->andReturn('admin');
+		$config->shouldReceive('get')->times(3)->with('orchestra/foundation::handles', '/')->andReturn('admin')
+			->shouldReceive('get')->once()->with('orchestra/foundation::menu')->andReturn('FooAdminMenuHandler');
 		$extension->shouldReceive('route')->twice()->with('app', '/')->andReturn('/');
 		$url->shouldReceive('to')->once()->with('/')->andReturn('/')
 			->shouldReceive('to')->once()->with('info')->andReturn('info')
