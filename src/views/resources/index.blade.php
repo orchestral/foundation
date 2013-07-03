@@ -3,8 +3,9 @@
 @section('content')
 
 <div class="row">
-	@include('orchestra/foundation::layout.widgets.header')
-	<?php echo $table; ?>
+	<div class="col col-lg-12 box">
+		<?php echo $table; ?>
+	</div>
 </div>
 
 @stop

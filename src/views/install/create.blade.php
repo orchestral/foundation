@@ -21,12 +21,13 @@
 		</div>
 	</div>
 
-	<div class="col col-lg-6">
+	<div class="col col-lg-6 box">
 
 		<?php echo Form::open(array('url' => handles('orchestra/foundation::install/create'), 'method' => 'POST', 'class' => 'form-horizontal')); ?>
-
+		
+		<h3><?php echo trans('orchestra/foundation::install.steps.account'); ?></h3>
+		
 		<fieldset>
-			<legend><?php echo trans('orchestra/foundation::install.steps.account'); ?></legend>
 
 			<div class="row<?php echo $errors->has('email') ? ' error' : ''; ?>">
 				<?php echo Form::label('email', trans('orchestra/foundation::label.users.email'), array('class' => 'col-lg-3 control-label')); ?>
@@ -54,9 +55,10 @@
 
 		</fieldset>
 
-		<fieldset>
-			<legend><?php echo trans('orchestra/foundation::install.steps.application'); ?></legend>
+		<h3><?php echo trans('orchestra/foundation::install.steps.application'); ?></h3>
 
+		<fieldset>
+			
 			<div class="row<?php echo $errors->has('site_name') ? ' error' : ''; ?>">
 				<?php echo Form::label('site_name', trans('orchestra/foundation::label.name'), array('class' => 'col-lg-3 control-label')); ?>
 				<div class="col-lg-9">
