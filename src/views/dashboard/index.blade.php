@@ -4,6 +4,11 @@
 
 <div class="row">
 	<?php if (count($panes) > 0) :
+	
+	$panes->add('mini-profile', '<')->title('Mini Profile')
+		->attributes(array('class' => 'col col-lg-3 widget'))
+		->content(View::make('orchestra/foundation::layout.widgets.miniprofile'));
+
 	foreach ($panes as $id => $pane) : ?>
 		<div<?php echo HTML::attributes(HTML::decorate($pane->attributes, array('class' => 'panel'))); ?>>
 		<?php if ( ! empty($pane->html)) :
