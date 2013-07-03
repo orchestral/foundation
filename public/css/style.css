@@ -6,7 +6,7 @@ form.navbar-form select[role="roles"]{min-width:200px;}
 form.navbar-form input[type="submit"]{margin-top:4px;}
 form .has-error .error{color:#b94a48;}
 section.container.main{clear:both;margin-top:40px;}
-@media (min-width:979px){.table th.th-action,.table td.th-action{width:100px;}}.box{background:#ffffff;margin:0 5px;padding:10px 20px 30px;}.box.black{background:#000000;color:#ffffff;}
+@media (min-width:979px){.table th.th-action,.table td.th-action{width:100px;}}.box{background:#ffffff;margin:0 5px;padding:30px 20px 30px;}.box.black{background:#000000;color:#ffffff;}
 .box.dark-blue{background:#43484d;color:#ffffff;}
 .box.white{background:#ffffff;color:#000000;}
 .box.no-padding{padding:0;}
