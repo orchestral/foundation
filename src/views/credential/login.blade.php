@@ -3,10 +3,8 @@
 @section('content')
 
 <div class="row">
-
+	
 	<div class="col col-lg-6 col-offset-3 guest-form">
-
-		@include('orchestra/foundation::layout.widgets.header')
 
 		<?php echo Form::open(array('url' => handles('orchestra/foundation::login'), 'action' => 'POST', 'class' => 'form-horizontal')); ?>
 			<fieldset>

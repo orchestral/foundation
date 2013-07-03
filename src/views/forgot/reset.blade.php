@@ -6,10 +6,10 @@
 
 	<div class="col col-lg-6 col-offset-3 guest-form">
 		
-		@include('orchestra/foundation::layout.widgets.header')
-
 		<?php echo Form::open(array('url' => handles("orchestra/foundation::forgot/reset/{$token}"), 'method' => 'POST', 'class' => 'form-horizontal')); ?>
+			
 			<input type="hidden" name="token" value="<?php echo $token; ?>">
+			
 			<fieldset>
 
 				<div class="row<?php echo $errors->has('email') ? ' error' : ''; ?>">

@@ -4,8 +4,7 @@
 
 <div class="row">
 	
-	<div class="col col-lg-8">
-		@include('orchestra/foundation::layout.widgets.header')
+	<div class="col col-lg-8 box rounded">
 		<?php echo $form; ?>
 	</div>
 

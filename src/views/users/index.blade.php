@@ -1,18 +1,15 @@
 @extends('orchestra/foundation::layout.main')
 
+<?php Orchestra\Site::set('header::add-button', true); ?>
+
 @section('content')
 
 <div class="row">
-	<?php Orchestra\Site::set('header::add-button', true); ?>
-	@include('orchestra/foundation::layout.widgets.header')
 	@include('orchestra/foundation::users.search')
-	<?php echo $table; ?>
+	<div class="col col-lg-12 box rounded">
+		<?php echo $table; ?>
+	</div>
 </div>
 
-<script>
-jQuery(function($) {
-	$('select').select2();
-});
-</script>
 
 @stop

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
+use Orchestra\Support\Facades\Site;
 use Orchestra\Support\Facades\Widget;
 
 class DashboardController extends AdminController {
@@ -32,6 +33,8 @@ class DashboardController extends AdminController {
 	 */
 	public function index()
 	{
+		Site::set('title', trans("orchestra/foundation::title.home"));
+
 		return View::make('orchestra/foundation::dashboard.index')
 			->with('panes', Widget::make('pane.orchestra'));
 	}
