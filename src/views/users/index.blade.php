@@ -6,7 +6,7 @@
 
 <div class="row">
 	@include('orchestra/foundation::users.search')
-	<div class="col col-lg-12 box">
+	<div class="col col-lg-12 box rounded">
 		<?php echo $table; ?>
 	</div>
 </div>

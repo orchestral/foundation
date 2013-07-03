@@ -21,7 +21,7 @@
 		</div>
 	</div>
 
-	<div class="col col-lg-6 box">
+	<div class="col col-lg-6 box rounded">
 
 		<h3><?php echo trans('orchestra/foundation::install.steps.done'); ?></h3>
 

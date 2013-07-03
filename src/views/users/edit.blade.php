@@ -4,7 +4,7 @@
 
 <div class="row">
 	
-	<div class="col col-lg-8 box">
+	<div class="col col-lg-8 box rounded">
 		<?php echo $form; ?>
 	</div>
 
