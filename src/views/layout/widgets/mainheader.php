@@ -6,7 +6,7 @@ use Orchestra\Support\Facades\Site;
 $title       = Site::get('title');
 $description = Site::get('description'); ?>
 
-<div class="page-header">
+<div class="main-header">
 	<div class="container">
 		<?php if (Site::get('header::add-button')) : ?>
 		<div class="pull-right">

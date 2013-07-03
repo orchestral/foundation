@@ -9,7 +9,7 @@ $navbar = new Fluent(array(
 	'id'         => 'main',
 	'title'      => memorize('site.name', 'Orchestra'),
 	'url'        => handles('orchestra/foundation::/'),
-	'attributes' => array('class' => 'navbar-fixed-top'),
+	'attributes' => array('class' => 'navbar-fixed-top navbar-inverse'),
 	'menu'       => View::make('orchestra/foundation::layout.widgets.menu', array('menu' => App::menu('orchestra'))),
 	'subMenu'    => View::make('orchestra/foundation::layout.widgets.usernav'),
 )); ?>
