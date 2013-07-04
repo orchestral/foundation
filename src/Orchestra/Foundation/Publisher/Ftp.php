@@ -164,6 +164,19 @@ class Ftp implements UploaderInterface {
 			$path = $folder;
 		}
 
+		// Alternatively if vendor has been created before, we need to 
+		// change the permission on the vendor folder instead of 
+		// public/packages.
+		if ( ! $recursively and str_contains($name, '/'))
+		{
+			list($vendor, $package) = explode('/', $name);
+
+			if ($this->app['files']->isDirectory($folder = "{$path}{$vendor}/")) 
+			{
+				$path = $folder;
+			}
+		}
+
 		try 
 		{
 			if ($recursively)

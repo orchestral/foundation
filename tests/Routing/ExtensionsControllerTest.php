@@ -39,6 +39,8 @@ class ExtensionsControllerTest extends TestCase {
 	{
 		\Orchestra\Support\Facades\Extension::shouldReceive('started')->once()
 			->with('laravel/framework')->andReturn(false);
+		\Orchestra\Support\Facades\Extension::shouldReceive('isWritableWithAsset')->once()
+			->with('laravel/framework')->andReturn(true);
 		\Orchestra\Support\Facades\Extension::shouldReceive('activate')->once()
 			->with('laravel/framework')->andReturn(true);
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
@@ -178,6 +180,8 @@ class ExtensionsControllerTest extends TestCase {
 	{
 		\Orchestra\Support\Facades\Extension::shouldReceive('started')->once()
 			->with('laravel/framework')->andReturn(true);
+		\Orchestra\Support\Facades\Extension::shouldReceive('isWritableWithAsset')->once()
+			->with('laravel/framework')->andReturn(true);
 		\Orchestra\Support\Facades\Extension::shouldReceive('publish')->once()
 			->with('laravel/framework')->andReturn(true);
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
@@ -198,8 +202,8 @@ class ExtensionsControllerTest extends TestCase {
 	{
 		\Orchestra\Support\Facades\Extension::shouldReceive('started')->once()
 			->with('laravel/framework')->andReturn(true);
-		\Orchestra\Support\Facades\Extension::shouldReceive('publish')->once()
-			->with('laravel/framework')->andThrow('\Orchestra\Extension\FilePermissionException');
+		\Orchestra\Support\Facades\Extension::shouldReceive('isWritableWithAsset')->once()
+			->with('laravel/framework')->andReturn(false);
 		\Orchestra\Support\Facades\Publisher::shouldReceive('queue')->once()
 			->with('laravel/framework')->andReturn(null);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()

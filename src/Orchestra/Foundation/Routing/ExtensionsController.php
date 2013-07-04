@@ -3,6 +3,7 @@
 use Closure;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Fluent;
@@ -203,6 +204,14 @@ class ExtensionsController extends AdminController {
 	{
 		try
 		{
+			// Check if folder is writable via the web instance, this would 
+			// avoid issue running Orchestra Platform with debug as true where 
+			// creating/copying the directory would throw an ErrorException.
+			if ( ! Extension::isWritableWithAsset($name))
+			{
+				throw new FilePermissionException("[{$name}] is not writable.");
+			}
+
 			call_user_func($callback, $name);
 		}
 		catch (FilePermissionException $e)
