@@ -202,17 +202,14 @@ class ExtensionsController extends AdminController {
 	 */
 	protected function run($name, Closure $callback)
 	{
-		$publicPath = App::make('path.public');
-		$isWritable = File::isWritable($destination = "{$publicPath}/packages/{$name}");
-		
 		try
 		{
 			// Check if folder is writable via the web instance, this would 
 			// avoid issue running Orchestra Platform with debug as true where 
 			// creating/copying the directory would throw an ErrorException.
-			if ( ! $isWritable)
+			if ( ! Extension::isWritableWithAsset($name))
 			{
-				throw new FilePermissionException("[{$destination}] is not writable.");
+				throw new FilePermissionException("[{$name}] is not writable.");
 			}
 
 			call_user_func($callback, $name);

@@ -129,4 +129,32 @@ class FtpTest extends \PHPUnit_Framework_TestCase {
 		$stub = new Ftp($app, $client);
 		$stub->upload('laravel/framework');
 	}
+
+	/**
+	 * Test Orchestra\Foundation\Publisher\Ftp::upload() method chmod vendor 
+	 * folder.
+	 *
+	 * @test
+	 */
+	public function testUploadMethodChmodVendorFolder()
+	{
+		$app    = $this->app;
+		$client = $this->client;
+
+		$app['session'] = $this->getSessionMock();
+		$app['path.public'] = '/var/foo/public';
+		$app['files'] = $file = m::mock('Filesystem');
+		$app['orchestra.extension'] = $extension = m::mock('Extension');
+
+		$client->shouldReceive('setUp')->once()->with(array('ftpconfig'))->andReturn(null)
+			->shouldReceive('connect')->once()->andReturn(true)
+			->shouldReceive('permission')->once()->with('/var/foo/public/packages/laravel/', 0777)->andReturn(null)
+			->shouldReceive('permission')->once()->with('/var/foo/public/packages/laravel/', 0755)->andReturn(null);
+		$file->shouldReceive('isDirectory')->once()->with('/var/foo/public/packages/laravel/framework/')->andReturn(false)
+			->shouldReceive('isDirectory')->once()->with('/var/foo/public/packages/laravel/')->andReturn(true);
+		$extension->shouldReceive('activate')->once()->with('laravel/framework')->andReturn(null);
+
+		$stub = new Ftp($app, $client);
+		$stub->upload('laravel/framework');
+	}
 }
