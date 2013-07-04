@@ -41,18 +41,27 @@ class AdminMenuHandler {
 		}
 
 		$resources = Resources::all();
+		$isLoaded  = false;
+		$boot      = function ($menu, $translator) 
+		{
+			$menu->add('resources', '>:extensions')
+				->title($translator->trans('orchestra/foundation::title.resources.list'))
+				->link(App::handles('orchestra/foundation::resources'));
+		};
 
 		// Resources menu should only be appended if there is actually
 		// resources to be displayed.
 		if ( ! empty($resources))
 		{
-			$menu->add('resources', '>:extensions')
-				->title($translator->trans('orchestra/foundation::title.resources.list'))
-				->link(App::handles('orchestra/foundation::resources'));
-
 			foreach ($resources as $name => $option)
 			{
 				if (false === value($option->visible)) continue;
+
+				if ( ! $isLoaded)
+				{
+					$boot($menu, $translator);
+					$isLoaded = true;
+				}
 
 				$menu->add($name, '^:resources')
 					->title($option->name)
