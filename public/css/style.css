@@ -5,26 +5,22 @@ form label.checkboxes{font-weight:normal;}
 form.navbar-form input[role="keyword"]{margin-top:5px;padding:8px 6px;width:250px;}
 form.navbar-form select[role="roles"]{min-width:200px;}
 form.navbar-form input[type="submit"]{margin-top:4px;}
-form .has-error .error{color:#b94a48;}
-section.container.main{clear:both;margin-top:40px;}
-@media (min-width:979px){.table th.th-action,.table td.th-action{width:100px;}}.box{background:#ffffff;padding:30px 20px 30px;}.box.black{background:#000000;color:#ffffff;}
-.box.dark-blue{background:#43484d;color:#ffffff;}
-.box.white{background:#ffffff;color:#000000;}
-.box.no-padding{padding:0;}
+form .has-error .error{color:#ac193d;}
+section.container.main{clear:both;margin-top:40px;}section.container.main .themes img{margin:0 auto;display:block;}
+@media (min-width:979px){.table th.th-action,.table td.th-action{width:100px;}}.box{background:#ffffff;padding:30px 20px 30px;}.box.no-padding{padding:0;}
 .box.list-group a{border:none;}.box.list-group a:not(:last-child){border-bottom:1px solid #f5f5f5;}
 .box-padding{padding:30px;}
-.btn:hover,.btn:focus{color:#43484d;}
-.btn .btn-mini{font-size:11px;padding:3px 6px;}
+.btn.btn-mini{font-size:11px;padding:3px 6px;}
 .list-group .list-group-item{color:#000000;}.list-group .list-group-item.active{background:#000000;border-color:#000000;color:#ffffff;}.list-group .list-group-item.active:hover{color:#f5f5f5;}
 .main-header{background:#ffffff;margin-top:20px;padding:20px 0;}.main-header .pull-right a.btn{margin-top:20px;}
 .navbar{background-color:#44484d;}.navbar.navbar-inverse{background-color:#33373b;}
-.navbar a.navbar-brand{border-right:#444 solid 1px;color:#fff;font-weight:500;line-height:1;}
+.navbar a.navbar-brand{border-right:#444 solid 1px;color:#ffffff;font-weight:500;line-height:1;}
 .navbar ul.nav>li>a{color:#888888;}.navbar ul.nav>li>a:hover{color:#ffffff;}
 .navbar ul.nav>li.active>a{color:#ffffff;background:#000000;}.navbar ul.nav>li.active>a:hover{color:#f5f5f5;}
 .navbar ul.nav>li.dropdown.open a.dropdown-toggle{color:#ffffff;background:#000000;}
 .navbar ul.nav>li.dropdown.open ul.dropdown-menu a:hover{background:#000000;}
 .panel.widget{margin:5px;padding:0px;background:transparent;border:none;border-radius:0;-webkit-box-shadow:inset 0 0 0 #eeeff2;box-shadow:inset 0 0 0 #eeeff2;}.panel.widget .panel-content{padding:15px;}
-.panel.widget .panel-heading{background-color:#eeeff2;border:none;color:#484E54;font-size:16px;font-weight:normal;margin:0;text-transform:uppercase;}
+.panel.widget .panel-heading{background-color:#eeeff2;border:none;color:#43484d;font-size:16px;font-weight:normal;margin:0;text-transform:uppercase;}
 .pull-center{text-align:center;}
 .rounded{border-radius:4px;}
 .rounded-bottom{border-bottom-right-radius:4px;border-bottom-left-radius:4px;}
@@ -38,4 +34,19 @@ form .ui-slider .ui-slider-handle{z-index:1;}
 table.ui-datepicker-calendar td.ui-datepicker-unselectable.ui-state-disabled span.ui-state-default{display:block;padding:0 !important;border:0 none !important;width:30px;height:30px;line-height:30px;text-align:center;font-size:12px;text-decoration:none;font-weight:normal !important;}
 #installation table.requirements div.alert{margin-top:10px;}
 #installation button.btn-block{padding:8px;}
-.container .themes img{margin:0 auto;display:block;}
+.black{background:#000000;color:#ffffff;}
+.blue{background:#0072c6;color:#ffffff;}
+.brown{background:#570000;color:#ffffff;}
+.dark-blue{background:#43484d;color:#ffffff;}
+.dark-grey{background:#333333;color:#ffffff;}
+.green{background:#008a17;color:#ffffff;}
+.grey{background:#888888;color:#ffffff;}
+.light-green{background:#82ba00;color:#000000;}
+.light-grey{background:#f5f5f5;color:#000000;}
+.orange{background:#ef754a;color:#000000;}
+.pink{background:#dc4fad;color:#000000;}
+.purple{background:#8c0095;color:#ffffff;}
+.red{background:#ac193d;color:#ffffff;}
+.turqoise{background:#2abf9e;color:#000000;}
+.white{background:#ffffff;color:#000000;}
+.yellow{background:#f1c40f;color:#000000;}

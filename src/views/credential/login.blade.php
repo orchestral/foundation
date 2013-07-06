@@ -44,7 +44,7 @@
 							<?php echo trans('orchestra/foundation::title.login'); ?>
 						</button>
 						<?php if (memorize('site.registrable', false)) : ?>
-						<a href="<?php echo handles('orchestra::register'); ?>" class="btn">
+						<a href="<?php echo handles('orchestra::register'); ?>" class="btn btn-link">
 							<?php echo trans('orchestra/foundation::title.register'); ?>
 						</a>
 						<?php endif; ?>
