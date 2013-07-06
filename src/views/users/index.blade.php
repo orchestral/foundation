@@ -8,7 +8,7 @@ Site::set('header::add-button', true); ?>
 
 <div class="row">
 	@include('orchestra/foundation::users.search')
-	<div class="col col-lg-12 box rounded">
+	<div class="twelve columns rounded box">
 		<?php echo $table; ?>
 	</div>
 </div>

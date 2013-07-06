@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\View; ?>
 	<?php if (count($panes) > 0) :
 	
 	$panes->add('mini-profile', '<')->title('Mini Profile')
-		->attributes(array('class' => 'col col-lg-3 widget'))
+		->attributes(array('class' => 'three columns widget'))
 		->content(View::make('orchestra/foundation::layout.widgets.miniprofile'));
 
 	foreach ($panes as $id => $pane) : ?>

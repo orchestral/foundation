@@ -82,6 +82,35 @@ section {
 	}
 }
 
+.row {
+	.columns, .col {
+		&.one { .make-column(1); }
+		&.two { .make-column(2); }
+		&.three { .make-column(3); }
+		&.four { .make-column(4); }
+		&.five { .make-column(5); }
+		&.six { .make-column(6); }
+		&.seven { .make-column(7); }
+		&.eight { .make-column(8); }
+		&.nine { .make-column(9); }
+		&.ten { .make-column(10); }
+		&.eleven { .make-column(11); }
+		&.twelve { .make-column(12); }
+		&.offset-by-one { .make-column-offset(1); }
+		&.offset-by-two { .make-column-offset(2); }
+		&.offset-by-three { .make-column-offset(3); }
+		&.offset-by-four { .make-column-offset(4); }
+		&.offset-by-five { .make-column-offset(5); }
+		&.offset-by-six { .make-column-offset(6); }
+		&.offset-by-seven { .make-column-offset(7); }
+		&.offset-by-eight { .make-column-offset(8); }
+		&.offset-by-nine { .make-column-offset(9); }
+		&.offset-by-ten { .make-column-offset(10); }
+		&.offset-by-eleven { .make-column-offset(11); }
+		&.offset-by-twelve { .make-column-offset(12); }
+	}
+}
+
 @media (min-width: 979px) {
 	.table {
 		th.th-action, td.th-action {
@@ -92,7 +121,7 @@ section {
 
 .box {
 	background: @op-active-bg;
-	padding: 30px 20px 30px;
+	padding: 30px 20px 30px !important;
 
 	&.no-padding {
 		padding: 0;
@@ -201,7 +230,7 @@ section {
 .panel {
 	&.widget {
 		margin: 5px;
-		padding: 0px;
+		padding: 0px !important;
 		background: @transparent;
 		border: none;
 		border-radius: 0;
@@ -236,23 +265,6 @@ section {
 
 .rounded-top {
 	.border-top-radius(4px);
-}
-
-.row {
-	.columns, .col {
-		&.one { .make-column(1); }
-		&.two { .make-column(2); }
-		&.three { .make-column(3); }
-		&.four { .make-column(4); }
-		&.five { .make-column(5); }
-		&.six { .make-column(6); }
-		&.seven { .make-column(7); }
-		&.eight { .make-column(8); }
-		&.nine { .make-column(9); }
-		&.ten { .make-column(10); }
-		&.eleven { .make-column(11); }
-		&.twelve { .make-column(12); }
-	}
 }
 
 .select2-container {

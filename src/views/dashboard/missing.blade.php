@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-	<div class="col col-lg-6 col-offset-3">
+	<div class="six columns offset-by-three">
 		<h2>I think we're lost.</h2>
 
 		<hr>

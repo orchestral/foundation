@@ -8,7 +8,7 @@ use Orchestra\Support\Facades\Extension; ?>
 @section('content')
 
 <div class="row">
-	<div class="col col-lg-12 box rounded">
+	<div class="twelve columns rounded box">
 		<table class="table table-striped">
 			<thead>
 				<tr>

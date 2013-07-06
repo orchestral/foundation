@@ -1,7 +1,7 @@
 <?php use Illuminate\Support\Facades\HTML; ?>
 
 <div class="row">
-	<div class="col col-lg-12 box rounded">
+	<div class="twelve columns rounded box">
 		<h3><?php echo trans('orchestra/foundation::install.auth.title'); ?></h3>
 
 		<p>
@@ -11,10 +11,10 @@
 		</p>
 
 		<div class="row">
-			<label class="col-lg-3 control-label <?php echo 'fluent' === $auth['driver'] ? 'error' : ''; ?>">
+			<label class="three columns control-label <?php echo 'fluent' === $auth['driver'] ? 'error' : ''; ?>">
 				<?php echo trans('orchestra/foundation::install.auth.driver'); ?>
 			</label>
-			<div class="col-lg-9">
+			<div class="nine columns">
 				<input disabled type="text" value="<?php echo $auth['driver']; ?>">
 				<?php if ('fluent' === $auth['driver']) : ?>
 				<p class="help-block"><?php echo trans('orchestra/foundation::install.auth.requirement.driver'); ?></p>
@@ -24,10 +24,10 @@
 
 		<div class="row
 			<?php echo false === $authentication ? ' error' : ''; echo 'eloquent' !== $auth['driver'] ? ' hide' : ''; ?>">
-			<label class="col-lg-3 control-label">
+			<label class="three columns control-label">
 				<?php echo trans('orchestra/foundation::install.auth.model'); ?>
 			</label>
-			<div class="col-lg-9">
+			<div class="nine columns">
 				<input disabled type="text" value="<?php echo $auth['model']; ?>">
 				<?php if (false === $authentication) : ?>
 				<p class="help-block">
@@ -42,7 +42,7 @@
 		<?php if ($installable) : ?>
 		<hr>
 		<div class="row">
-			<div class="col-lg-9 col-offset-3">
+			<div class="nine columns offset-by-three">
 				<a href="<?php echo handles('orchestra/foundation::install/create'); ?>" class="btn btn-primary">
 					<?php echo trans('orchestra/foundation::label.next'); ?>
 				</a>

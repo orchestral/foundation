@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-	<div class="col col-lg-3">
+	<div class="three column">
 		<div class="list-group">
 			<a href="<?php echo handles('orchestra::install'); ?>" class="list-group-item">
 				<?php echo trans('orchestra/foundation::install.steps.requirement'); ?>
@@ -21,7 +21,7 @@
 		</div>
 	</div>
 
-	<div class="col col-lg-6 box rounded">
+	<div class="six columns rounded box">
 
 		<h3><?php echo trans('orchestra/foundation::install.steps.done'); ?></h3>
 

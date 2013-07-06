@@ -4,7 +4,7 @@
 
 <div class="row">
 
-	<div class="col col-lg-3">
+	<div class="three columns">
 		<div class="list-group">
 			<?php foreach ($resources['list'] as $name => $resource) : ?>
 			<a href="<?php echo resources($name); ?>" 
@@ -19,7 +19,7 @@
 		@placeholder('orchestra.resources')
 	</div>
 
-	<div class="col col-lg-9">
+	<div class="nine columns">
 		<?php echo $content; ?>
 	</div>
 	
