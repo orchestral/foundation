@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-	<div class="twelve columns rounded box">
+	<div class="twelve columns white rounded box">
 		<?php echo $table; ?>
 	</div>
 </div>
