@@ -47,7 +47,7 @@ form.navbar-form select[role="roles"]{min-width:200px;}
 form.navbar-form input[type="submit"]{margin-top:4px;}
 form .has-error .error{color:#ac193d;}
 section.container.main{clear:both;margin-top:40px;}section.container.main .themes img{margin:0 auto;display:block;}
-@media (min-width:979px){.table th.th-action,.table td.th-action{width:100px;}}.box{background:#ffffff;padding:30px 20px 30px !important;}.box.no-padding{padding:0;}
+@media (min-width:979px){.table th.th-action,.table td.th-action{width:100px;}}.box{background:#ffffff;padding:30px 20px 30px !important;}.box.no-padding{padding:0 !important;}
 .box.list-group a{border:none;}.box.list-group a:not(:last-child){border-bottom:1px solid #f5f5f5;}
 .box-padding{padding:30px;}
 .btn.btn-mini{font-size:11px;padding:3px 6px;}
