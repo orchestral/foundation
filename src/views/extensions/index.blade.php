@@ -35,18 +35,18 @@ use Orchestra\Support\Facades\Extension; ?>
 							if ( ! ($started)) :
 								echo $extension->name;
 							else : ?>
-								<a href="<?php echo handles("orchestra/foundation::extensions/configure/{$uid}"); ?>">
+								<a href="<?php echo handles("orchestra::extensions/configure/{$uid}"); ?>">
 									<?php echo $extension->name; ?>
 								</a>
 							<?php endif; ?>
 						</strong>
 						<div class="pull-right btn-group">
 							<?php if ( ! ($started or $active)) : ?>
-								<a href="<?php echo handles("orchestra/foundation::extensions/activate/{$uid}"); ?>" class="btn btn-primary btn-mini">
+								<a href="<?php echo handles("orchestra::extensions/activate/{$uid}"); ?>" class="btn btn-primary btn-mini">
 									<?php echo trans('orchestra/foundation::label.extensions.actions.activate'); ?>
 								</a>
 							<?php else : ?>
-								<a href="<?php echo handles("orchestra/foundation::extensions/deactivate/{$uid}"); ?>" class="btn btn-warning btn-mini">
+								<a href="<?php echo handles("orchestra::extensions/deactivate/{$uid}"); ?>" class="btn btn-warning btn-mini">
 									<?php echo trans('orchestra/foundation::label.extensions.actions.deactivate'); ?>
 								</a>
 							<?php endif; ?>
@@ -60,7 +60,7 @@ use Orchestra\Support\Facades\Extension; ?>
 
 						<span class="meta">
 							<?php echo trans('orchestra/foundation::label.extensions.version', array('version' => $extension->version )); ?> |
-							<?php echo trans('orchestra/foundation::label.extensions.author', array('author' => '<a href="'.($extension->url ?: '#').'">'.$extension->author.'</a>')); ?>
+							<?php echo trans('orchestra/foundation::label.extensions.author', array('author' => sprintf('<a href="%s">%s</a>', $extension->url ?: '#', $extension->author))); ?>
 						</span>
 					</td>
 				</tr>

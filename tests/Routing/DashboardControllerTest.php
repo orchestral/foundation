@@ -23,9 +23,9 @@ class DashboardControllerTest extends TestCase {
 		\Illuminate\Support\Facades\View::shouldReceive('make')->once()
 			->with('orchestra/foundation::dashboard.index')->andReturn(m::self());
 		\Illuminate\Support\Facades\View::shouldReceive('with')->once()
-			->with('panes', 'panes-widget')->andReturn('foo');
+			->with('panes', array())->andReturn('foo');
 		\Orchestra\Support\Facades\Widget::shouldReceive('make')->once()
-			->with('pane.orchestra')->andReturn('panes-widget');
+			->with('pane.orchestra')->andReturn(array());
 
 		$this->call('GET', 'admin');
 		$this->assertResponseOk();

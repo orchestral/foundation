@@ -1,12 +1,14 @@
 @extends('orchestra/foundation::layout.main')
 
+<?php use Illuminate\Support\Facades\Form; ?>
+
 @section('content')
 
 <div class="row">
 	
 	<div class="col col-lg-6 col-offset-3 guest-form">
 
-		<?php echo Form::open(array('url' => handles('orchestra/foundation::login'), 'action' => 'POST', 'class' => 'form-horizontal')); ?>
+		<?php echo Form::open(array('url' => handles('orchestra::login'), 'action' => 'POST', 'class' => 'form-horizontal')); ?>
 			<fieldset>
 
 				<div class="row<?php echo $errors->has('email') ? ' error' : ''; ?>">
@@ -23,7 +25,7 @@
 						<?php echo Form::input('password', 'password', '', array('required' => true, 'class' => 'span12', 'tabindex' => 2)); ?>
 						<?php echo $errors->first('password', '<p class="help-block">:message</p>'); ?>
 						<p class="help-block">
-							<a href="<?php echo handles('orchestra/foundation::forgot'); ?>">
+							<a href="<?php echo handles('orchestra::forgot'); ?>">
 								<?php echo trans('orchestra/foundation::title.forgot-password'); ?>
 							</a>
 						</p>
@@ -42,7 +44,7 @@
 							<?php echo trans('orchestra/foundation::title.login'); ?>
 						</button>
 						<?php if (memorize('site.registrable', false)) : ?>
-						<a href="<?php echo handles('orchestra/foundation::register'); ?>" class="btn">
+						<a href="<?php echo handles('orchestra::register'); ?>" class="btn">
 							<?php echo trans('orchestra/foundation::title.register'); ?>
 						</a>
 						<?php endif; ?>

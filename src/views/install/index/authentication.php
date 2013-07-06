@@ -1,3 +1,5 @@
+<?php use Illuminate\Support\Facades\HTML; ?>
+
 <div class="row">
 	<div class="col col-lg-12 box rounded">
 		<h3><?php echo trans('orchestra/foundation::install.auth.title'); ?></h3>

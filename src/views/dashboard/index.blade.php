@@ -1,5 +1,10 @@
 @extends('orchestra/foundation::layout.main')
 
+<?php
+
+use Illuminate\Support\Facades\HTML;
+use Illuminate\Support\Facades\View; ?>
+
 @section('content')
 
 <div class="row">
@@ -25,8 +30,6 @@
 		<p>
 			If you need help getting started, check out our documentation on First Steps with Orchestra Platform. 
 			If you’d rather dive right in, here are a few things most people do first when they set up a new Orchestra Platform site. 
-			<!-- If you need help, use the Help tabs in the upper right corner to get information on how to use your current 
-			screen and where to go for more assistance.-->
 		</p>
 	</div>
 	<?php endif; ?>

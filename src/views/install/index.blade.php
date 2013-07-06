@@ -11,7 +11,7 @@ unset($checklist['databaseConnection']); ?>
 <div class="row">
 	<div class="col col-lg-3">
 		<div class="list-group">
-			<a href="<?php echo handles('orchestra/foundation::install'); ?>" class="list-group-item active">
+			<a href="<?php echo handles('orchestra::install'); ?>" class="list-group-item active">
 				<?php echo trans('orchestra/foundation::install.steps.requirement'); ?>
 			</a>
 			<a href="#" class="list-group-item disabled">

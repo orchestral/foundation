@@ -1,5 +1,33 @@
 jQuery(function startOrchestra ($) { 'use strict';
-	var ev = new Javie.Events();
+	var events = new Javie.Events;
+
+	// Listen to email.driver changed event. 
+	events.listen('setting.changed: email.driver', function listenToEmailDriverChange(e, self) {
+		var value, smtp;
+
+		value = self.value ? self.value : '';
+		smtp  = ['email_host', 'email_port', 'email_address', 'email_username', 'email_password', 'email_encryption'];
+
+		$('input[name^="email_"]').parent().parent().hide();
+
+		$('input[name="email_queue"]').parent().parent().hide();
+
+		switch (value) {
+			case 'smtp' :
+				$.each(smtp, function (index, name) {
+					$('input[name="'+name+'"]').parent().parent().show();
+				});
+
+				break;
+			case 'sendmail' :
+				$('input[name^="email_address"]').parent().parent().show();
+				$('input[name^="email_sendmail"]').parent().parent().show();
+				break;
+			default :
+				$('input[name^="email_address"]').parent().parent().show();
+				break;
+		}
+	});
 
 	$('div.pagination > ul').each(function(i, item) {
 		$(item).addClass('pagination').parent().removeClass('pagination');

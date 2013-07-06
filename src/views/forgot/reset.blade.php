@@ -1,12 +1,17 @@
 @extends('orchestra/foundation::layout.main')
 
+<?php 
+
+use Illuminate\Support\Facades\Form;
+use Orchestra\Support\Facades\Site; ?>
+
 @section('content')
 
 <div class="row">
 
 	<div class="col col-lg-6 col-offset-3 guest-form">
 		
-		<?php echo Form::open(array('url' => handles("orchestra/foundation::forgot/reset/{$token}"), 'method' => 'POST', 'class' => 'form-horizontal')); ?>
+		<?php echo Form::open(array('url' => handles("orchestra::forgot/reset/{$token}"), 'method' => 'POST', 'class' => 'form-horizontal')); ?>
 			
 			<input type="hidden" name="token" value="<?php echo $token; ?>">
 			
@@ -39,7 +44,7 @@
 
 				<div class="row">
 					<div class="col-lg-9 col-offset-3">
-						<button type="submit" class="btn btn-primary"><?php echo Orchestra\Site::get('title', 'Submit'); ?></button>
+						<button type="submit" class="btn btn-primary"><?php echo Site::get('title', 'Submit'); ?></button>
 					</div>
 				</div>
 

@@ -1,10 +1,15 @@
 @extends('orchestra/foundation::layout.main')
 
+<?php 
+
+use Illuminate\Support\Facades\Form; ?>
+
 @section('content')
+
 <div class="row">
 	<div class="col col-lg-8 box rounded">
 		
-		<?php echo Form::open(array('url' => handles('orchestra/foundation::publisher/ftp'), 'method' => 'POST', 'class' => 'form-horizontal')); ?>
+		<?php echo Form::open(array('url' => handles('orchestra::publisher/ftp'), 'method' => 'POST', 'class' => 'form-horizontal')); ?>
 			<fieldset>
 				<div class="row<?php echo $errors->has('host') ? ' error' : ''; ?>">
 					<?php echo Form::label('host', trans('orchestra/foundation::label.extensions.publisher.host'), array('class' => 'col-lg-3 control-label')); ?>

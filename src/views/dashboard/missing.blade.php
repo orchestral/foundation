@@ -15,7 +15,7 @@
 		</p>
 
 		<p>
-			Perhaps you would like to go to our <a href="<?php echo handles('orchestra/foundation::/'); ?>">home page</a>?
+			Perhaps you would like to go to our <a href="<?php echo handles('orchestra::/'); ?>">home page</a>?
 		</p>
 	</div>
 </div>

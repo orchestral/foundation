@@ -1,6 +1,8 @@
 @extends('orchestra/foundation::layout.main')
 
-<?php Orchestra\Site::set('header::add-button', true); ?>
+<?php use Orchestra\Support\Facades\Site;
+
+Site::set('header::add-button', true); ?>
 
 @section('content')
 

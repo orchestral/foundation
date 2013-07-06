@@ -5,13 +5,13 @@
 <div class="row">
 	<div class="col col-lg-3">
 		<div class="list-group">
-			<a href="<?php echo handles('orchestra/foundation::install'); ?>" class="list-group-item">
+			<a href="<?php echo handles('orchestra::install'); ?>" class="list-group-item">
 				<?php echo trans('orchestra/foundation::install.steps.requirement'); ?>
 			</a>
-			<a href="<?php echo handles('orchestra/foundation::install/create'); ?>" class="list-group-item">
+			<a href="<?php echo handles('orchestra::install/create'); ?>" class="list-group-item">
 				<?php echo trans('orchestra/foundation::install.steps.account'); ?>
 			</a>
-			<a href="<?php echo handles('orchestra/foundation::install/done'); ?>" class="list-group-item active">
+			<a href="<?php echo handles('orchestra::install/done'); ?>" class="list-group-item active">
 				<?php echo trans('orchestra/foundation::install.steps.done'); ?>
 			</a>
 		</div>

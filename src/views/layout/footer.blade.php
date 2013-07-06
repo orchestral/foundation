@@ -1,6 +1,7 @@
 <?php
 
 use Orchestra\Support\Facades\Asset; ?>
+
 <footer>
 	<div class="container">
 		<hr>
