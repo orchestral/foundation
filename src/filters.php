@@ -84,7 +84,7 @@ Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestr
 	{
 		$redirect = (Auth::guest() ? 'login' : '/');
 		
-		Redirect::to(handles("orchestra/foundation::{$redirect}"));
+		return Redirect::to(handles("orchestra/foundation::{$redirect}"));
 	}
 });
 
@@ -101,7 +101,7 @@ Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestr
 
 Route::filter('orchestra.registrable', function ($route, $request, $value = null)
 {
-	if ( ! memorize('site.registrable', false)) App::abort(404);
+	if ( ! memorize('site.registrable', false)) return App::abort(404);
 });
 
 /*
