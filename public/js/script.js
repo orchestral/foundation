@@ -40,7 +40,7 @@ jQuery(function startOrchestra ($) { 'use strict';
 			highlight: $(item).data("highlight"),
 			width: 25,
 			change : function () {
-				ev.fire('switcher.change', this);
+				events.fire('switcher.change', this);
 			}
 		})
 
