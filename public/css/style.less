@@ -239,22 +239,24 @@ section {
 }
 
 .row {
-	.one.columns { .make-column(1); }
-	.two.columns { .make-column(2); }
-	.three.columns { .make-column(3); }
-	.four.columns { .make-column(4); }
-	.five.columns { .make-column(5); }
-	.six.columns { .make-column(6); }
-	.seven.columns { .make-column(7); }
-	.eight.columns { .make-column(8); }
-	.nine.columns { .make-column(9); }
-	.ten.columns { .make-column(10); }
-	.eleven.columns { .make-column(11); }
-	.twelve.columns { .make-column(12); }
+	.columns, .col {
+		&.one { .make-column(1); }
+		&.two { .make-column(2); }
+		&.three { .make-column(3); }
+		&.four { .make-column(4); }
+		&.five { .make-column(5); }
+		&.six { .make-column(6); }
+		&.seven { .make-column(7); }
+		&.eight { .make-column(8); }
+		&.nine { .make-column(9); }
+		&.ten { .make-column(10); }
+		&.eleven { .make-column(11); }
+		&.twelve { .make-column(12); }
+	}
 }
 
 .select2-container {
-	&.col {
+	&.col, &.columns {
 		padding-left: 0;
 		padding-right: 0;
 	}
