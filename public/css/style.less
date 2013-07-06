@@ -1,24 +1,8 @@
 @import "less/variables.less"; // Modify this for custom colors, font-sizes, etc
 @import "less/mixins.less";
 
-@blue : #0072C6;
-@orange : #EF754A;
-@green : #008A17;
-@light-green : #82BA00;
-@turqoise : #2ABF9E;
-@yellow : #f1c40f;
-@red : #AC193D;
-@dark-grey: #333;
-@grey : #888;
-@light-grey : #f5f5f5;
-@purple : #8C0095;
-@brown: #570000;
-@pink: #DC4FAD;
-@black: #000;
-@white: #fff;
-@dark-blue: #43484d;
-@darker-bg : rgba(0,0,0,0.1);
-@transparent: transparent;
+@import "grid.less";
+@import "color.less";
 
 @op-base-bg: #EEEFF2;
 @op-active-bg: @white;
@@ -41,6 +25,10 @@ form {
 		padding: 20px 0 0;
 	}
 
+	label.checkboxes {
+		font-weight: normal;
+	}
+
 	&.navbar-form {
 		input[role="keyword"] {
 			margin-top: 5px;
@@ -59,7 +47,7 @@ form {
 	
 	.has-error {
 		.error {
-			color: #b94a48;
+			color: @red;
 		}
 	}
 }
@@ -68,8 +56,16 @@ section {
 	&.container.main {
 		clear: both;
 		margin-top: 40px;
+
+		.themes {
+			img {
+				margin: 0 auto;
+				display: block;
+			}
+		}
 	}
 }
+
 
 @media (min-width: 979px) {
 	.table {
@@ -80,24 +76,10 @@ section {
 }
 
 .box {
-	background: @op-active-bg;
-	padding: 30px 20px 30px;
-	
-	&.black {
-		background: @black;
-		color: @white;
-	}
-	&.dark-blue {
-		background: @dark-blue;
-		color: @white;
-	}
-	&.white {
-		background: @white;
-		color: @black;
-	}
+	padding: 30px 20px 30px !important;
 
 	&.no-padding {
-		padding: 0;
+		padding: 0 !important;
 	}
 
 	&.list-group {
@@ -114,9 +96,11 @@ section {
 	padding: 30px;
 }
 
-.btn-mini {
-	font-size: 11px;
-	padding: 3px 6px;
+.btn {
+	&.btn-mini {
+		font-size: 11px;
+		padding: 3px 6px;
+	}
 }
 
 .list-group {
@@ -156,7 +140,7 @@ section {
 
 	a.navbar-brand {
 		border-right: #444 solid 1px;
-		color: #fff;
+		color: @white;
 		font-weight: 500;
 		line-height: 1;
 	}
@@ -201,7 +185,7 @@ section {
 .panel {
 	&.widget {
 		margin: 5px;
-		padding: 0px;
+		padding: 0px !important;
 		background: @transparent;
 		border: none;
 		border-radius: 0;
@@ -213,7 +197,7 @@ section {
 		.panel-heading {
 			background-color: @op-base-bg;
 			border: none;
-			color: #484E54;
+			color: @dark-blue;
 			font-size: 16px;
 			font-weight: normal;
 			margin: 0;
@@ -239,7 +223,7 @@ section {
 }
 
 .select2-container {
-	&.col {
+	&.col, &.columns {
 		padding-left: 0;
 		padding-right: 0;
 	}
@@ -335,18 +319,5 @@ table {
 
 	button.btn-block {
 		padding: 8px;
-	}
-}
-
-/*
-|--------------------------------------------------------------------------
-| Melody Theme Manager
-|--------------------------------------------------------------------------
-*/
-
-.container .themes {
-	img {
-		margin: 0 auto;
-		display: block;
 	}
 }

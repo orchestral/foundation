@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col col-lg-12 box rounded">
+	<div class="twelve columns rounded box">
 		<h3><?php echo trans('orchestra/foundation::install.system.title'); ?></h3>
 
 		<p><?php echo trans('orchestra/foundation::install.system.description'); ?></p>

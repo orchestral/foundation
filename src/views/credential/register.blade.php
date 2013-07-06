@@ -4,7 +4,7 @@
 
 <div class="row">
 
-	<div class="col col-lg-6 col-offset-3 guest-form">
+	<div class="six columns offset-by-three">
 		<?php echo $form; ?>
 	</div>
 

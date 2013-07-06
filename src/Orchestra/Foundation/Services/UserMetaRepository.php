@@ -40,7 +40,7 @@ class UserMetaRepository extends Driver {
 	public function get($key = null, $default = null)
 	{
 		$key   = str_replace('.', '/user-', $key);
-		$value = array_get($this->data, $key, $default);
+		$value = array_get($this->data, $key);
 
 		// We need to consider if the value pending to be deleted, 
 		// in this case return the default.

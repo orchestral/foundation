@@ -4,11 +4,11 @@
 
 <div class="row">
 	
-	<div class="col col-lg-8 box rounded">
+	<div class="eight columns rounded box">
 		<?php echo $form; ?>
 	</div>
 
-	<div class="col col-lg-4">
+	<div class="four columns">
 		@placeholder('orchestra.users')
 		@placeholder('orchestra.helps')
 	</div>

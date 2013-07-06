@@ -99,7 +99,7 @@ class RegisterController extends AdminController {
 			{
 				$user->save();
 				$user->roles()->sync(array(
-					Config::get('orchestra/auth::member', 2)
+					Config::get('orchestra/foundation::roles.member', 2)
 				));
 			});
 

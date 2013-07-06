@@ -1,18 +1,18 @@
 jQuery(function startOrchestra ($) { 'use strict';
-	var ev = new Javie.Events();
+	var events = new Javie.Events;
 
-	$('div.pagination > ul').each(function(i, item) {
+	$('div.pagination > ul').each(function onEachPaginator (i, item) {
 		$(item).addClass('pagination').parent().removeClass('pagination');
 	});
 
-	$('select[role="switcher"]').each(function(i, item) {
+	$('select[role="switcher"]').each(function onEachSwitcher (i, item) {
 		var el = $(item);
 
 		el.toggleSwitch({
 			highlight: $(item).data("highlight"),
 			width: 25,
 			change : function () {
-				ev.fire('switcher.change', this);
+				events.fire('switcher.change', this);
 			}
 		})
 
@@ -23,7 +23,7 @@ jQuery(function startOrchestra ($) { 'use strict';
 
 	$('*[role="tooltip"]').tooltip();
 
-	$('div.btn-group[data-toggle-name]').each(function() {
+	$('div.btn-group[data-toggle-name]').each(function loopEachBtnGroup () {
 		var group, form, name, hidden, buttons;
 
 		group   = $(this);
@@ -32,7 +32,7 @@ jQuery(function startOrchestra ($) { 'use strict';
 		hidden  = $('input[name="' + name + '"]', form);
 		buttons = $('button', group);
 
-		buttons.each(function(){
+		buttons.each(function setStateOnEachButton () {
 			var button, setActive;
 
 			button = $(this);
