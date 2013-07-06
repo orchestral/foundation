@@ -1,6 +1,7 @@
 
 body{background:#eeeff2;font-family:'Roboto',Helvetica,sans-serif;}
 form fieldset legend{clear:0;padding:20px 0 0;}
+form label.checkboxes{font-weight:normal;}
 form.navbar-form input[role="keyword"]{margin-top:5px;padding:8px 6px;width:250px;}
 form.navbar-form select[role="roles"]{min-width:200px;}
 form.navbar-form input[type="submit"]{margin-top:4px;}
@@ -12,7 +13,8 @@ section.container.main{clear:both;margin-top:40px;}
 .box.no-padding{padding:0;}
 .box.list-group a{border:none;}.box.list-group a:not(:last-child){border-bottom:1px solid #f5f5f5;}
 .box-padding{padding:30px;}
-.btn-mini{font-size:11px;padding:3px 6px;}
+.btn:hover,.btn:focus{color:#43484d;}
+.btn .btn-mini{font-size:11px;padding:3px 6px;}
 .list-group .list-group-item{color:#000000;}.list-group .list-group-item.active{background:#000000;border-color:#000000;color:#ffffff;}.list-group .list-group-item.active:hover{color:#f5f5f5;}
 .main-header{background:#ffffff;margin-top:20px;padding:20px 0;}.main-header .pull-right a.btn{margin-top:20px;}
 .navbar{background-color:#44484d;}.navbar.navbar-inverse{background-color:#33373b;}

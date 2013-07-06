@@ -41,6 +41,10 @@ form {
 		padding: 20px 0 0;
 	}
 
+	label.checkboxes {
+		font-weight: normal;
+	}
+
 	&.navbar-form {
 		input[role="keyword"] {
 			margin-top: 5px;
@@ -114,9 +118,15 @@ section {
 	padding: 30px;
 }
 
-.btn-mini {
-	font-size: 11px;
-	padding: 3px 6px;
+.btn {
+	&:hover, &:focus {
+		color: @dark-blue;
+	}
+
+	.btn-mini {
+		font-size: 11px;
+		padding: 3px 6px;
+	}
 }
 
 .list-group {
