@@ -1,39 +1,11 @@
 jQuery(function startOrchestra ($) { 'use strict';
 	var events = new Javie.Events;
 
-	// Listen to email.driver changed event. 
-	events.listen('setting.changed: email.driver', function listenToEmailDriverChange(e, self) {
-		var value, smtp;
-
-		value = self.value ? self.value : '';
-		smtp  = ['email_host', 'email_port', 'email_address', 'email_username', 'email_password', 'email_encryption'];
-
-		$('input[name^="email_"]').parent().parent().hide();
-
-		$('input[name="email_queue"]').parent().parent().hide();
-
-		switch (value) {
-			case 'smtp' :
-				$.each(smtp, function (index, name) {
-					$('input[name="'+name+'"]').parent().parent().show();
-				});
-
-				break;
-			case 'sendmail' :
-				$('input[name^="email_address"]').parent().parent().show();
-				$('input[name^="email_sendmail"]').parent().parent().show();
-				break;
-			default :
-				$('input[name^="email_address"]').parent().parent().show();
-				break;
-		}
-	});
-
-	$('div.pagination > ul').each(function(i, item) {
+	$('div.pagination > ul').each(function onEachPaginator (i, item) {
 		$(item).addClass('pagination').parent().removeClass('pagination');
 	});
 
-	$('select[role="switcher"]').each(function(i, item) {
+	$('select[role="switcher"]').each(function onEachSwitcher (i, item) {
 		var el = $(item);
 
 		el.toggleSwitch({
@@ -51,7 +23,7 @@ jQuery(function startOrchestra ($) { 'use strict';
 
 	$('*[role="tooltip"]').tooltip();
 
-	$('div.btn-group[data-toggle-name]').each(function() {
+	$('div.btn-group[data-toggle-name]').each(function loopEachBtnGroup () {
 		var group, form, name, hidden, buttons;
 
 		group   = $(this);
@@ -60,7 +32,7 @@ jQuery(function startOrchestra ($) { 'use strict';
 		hidden  = $('input[name="' + name + '"]', form);
 		buttons = $('button', group);
 
-		buttons.each(function(){
+		buttons.each(function setStateOnEachButton () {
 			var button, setActive;
 
 			button = $(this);
