@@ -22,6 +22,7 @@ class ExtensionPresenter {
 			$uid = str_replace('/', '.', $name);
 			
 			$form->with($model);
+			$form->layout('orchestra/foundation::components.form');
 			$form->attributes(array(
 				'url'    => handles("orchestra/foundation::extensions/configure/{$uid}"),
 				'method' => "POST",

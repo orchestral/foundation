@@ -17,8 +17,9 @@ class ResourcePresenter {
 	{
 		return Table::of('orchestra.resources: list', function ($table) use ($model)
 		{
-			// attach the list
 			$table->with($model, false);
+			
+			$table->layout('orchestra/foundation::components.table');
 
 			$table->column('name', function ($column)
 			{

@@ -20,6 +20,7 @@ class AccountPresenter {
 		return Form::of('orchestra.account', function ($form) use ($model, $url)
 		{
 			$form->with($model);
+			$form->layout('orchestra/foundation::components.form');
 			$form->attributes(array(
 				'url'    => $url,
 				'method' => 'POST',
@@ -55,6 +56,7 @@ class AccountPresenter {
 		return Form::of('orchestra.account: password', function ($form) use ($model)
 		{
 			$form->with($model);
+			$form->layout('orchestra/foundation::components.form');
 			$form->attributes(array(
 				'url'    => handles('orchestra/foundation::account/password'),
 				'method' => 'POST',
