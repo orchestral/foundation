@@ -40,6 +40,7 @@ class UserPresenterTest extends TestCase {
 					$c($value);
 				});
 		$table->shouldReceive('with')->once()->with($model, true)->andReturn(null)
+			->shouldReceive('layout')->once()->with('orchestra/foundation::components.table')->andReturn(null)
 			->shouldReceive('column')->once()->with('fullname', m::type('Closure'))->andReturnUsing(
 				function ($n, $c) use ($column)
 				{
@@ -170,6 +171,7 @@ class UserPresenterTest extends TestCase {
 						$c($control);
 					});
 		$form->shouldReceive('with')->once()->andReturn(null)
+			->shouldReceive('layout')->once()->with('orchestra/foundation::components.form')->andReturn(null)
 			->shouldReceive('attributes')->once()
 				->with(array('url' => handles('orchestra/foundation::users/1'), 'method' => 'PUT'))->andReturn(null)
 			->shouldReceive('hidden')->once()->with('id')->andReturn(null)

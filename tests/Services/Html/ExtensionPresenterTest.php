@@ -41,6 +41,7 @@ class ExtensionPresenterTest extends TestCase {
 						$c($control);
 					});
 		$form->shouldReceive('with')->once()->with($model)->andReturn(null)
+			->shouldReceive('layout')->once()->with('orchestra/foundation::components.form')->andReturn(null)
 			->shouldReceive('attributes')->once()
 				->with(array('url' => handles('orchestra/foundation::extensions/configure/foo.bar'), 'method' => 'POST'))
 				->andReturn(null)

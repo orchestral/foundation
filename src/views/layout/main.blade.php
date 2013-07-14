@@ -5,7 +5,8 @@
 	</head>
 	<body>
 		@include('orchestra/foundation::layout.navigation')
-		@include('orchestra/foundation::layout.widgets.mainheader')
+		<?php Orchestra\Support\Facades\Site::set('header::class', 'main-header'); ?>
+		@include('orchestra/foundation::layout.widgets.header')
 		<section class="container main">
 			@include('orchestra/foundation::layout.widgets.messages')
 			@yield('content')
