@@ -20,6 +20,7 @@ class SettingPresenter {
 		return Form::of('orchestra.settings', function ($form) use ($model)
 		{
 			$form->with($model);
+			$form->layout('orchestra/foundation::components.form');
 			$form->attributes(array(
 				'url'    => handles('orchestra/foundation::settings'),
 				'method' => 'POST',

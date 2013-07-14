@@ -25,6 +25,8 @@ class UserPresenter {
 			// attach Model and set pagination option to true
 			$table->with($model, true);
 
+			$table->layout('orchestra/foundation::components.table');
+
 			// Add columns
 			$table->column('fullname', function ($column)
 			{
@@ -137,6 +139,7 @@ class UserPresenter {
 			$url = handles($url);
 			
 			$form->with($model);
+			$form->layout('orchestra/foundation::components.form');
 			$form->attributes(compact('url', 'method'));
 
 			$form->hidden('id');

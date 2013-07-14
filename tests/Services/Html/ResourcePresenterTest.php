@@ -37,6 +37,7 @@ class ResourcePresenterTest extends TestCase {
 					$c($value);
 				});
 		$table->shouldReceive('with')->once()->with($model, false)->andReturn(null)
+			->shouldReceive('layout')->once()->with('orchestra/foundation::components.table')->andReturn(null)
 			->shouldReceive('column')->once()->with('name', m::type('Closure'))->andReturnUsing(
 				function ($n, $c) use ($column)
 				{
