@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation;
 
-use DateTime;
-use DateTimeZone;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
@@ -92,17 +91,14 @@ class Site {
 	 * @param  mixed    $datetime
 	 * @return \DateTime
 	 */
-	public function localtime($datetime)
+	public function toLocalTime($datetime)
 	{
 		$app         = $this->app;
 		$appTimeZone = $app['config']->get('app.timezone', 'UTC');
 
 		if ( ! ($datetime instanceof DateTime))
 		{
-			$datetime = new DateTime(
-				$datetime, 
-				new DateTimeZone($appTimeZone)
-			);
+			$datetime = $this->convertToDateTime($datetime, $appTimeZone);
 		}
 
 		if ($app['auth']->guest()) return $datetime;
@@ -111,7 +107,63 @@ class Site {
 		$userMeta     = $app['orchestra.memory']->make('user');
 		$userTimeZone = $userMeta->get("timezone.{$userId}", $appTimeZone);
 
-		$datetime->setTimeZone(new DateTimeZone($userTimeZone));
+		$datetime->timezone = $userTimeZone;
+
+		return $datetime;
+	}
+
+	/**
+	 * Convert given time to user from localtime, however if it a guest user 
+	 * return based on default timezone.
+	 *
+	 * @access public
+	 * @param  mixed    $datetime
+	 * @return \DateTime
+	 */
+	public function fromLocalTime($datetime)
+	{
+		$app          = $this->app;
+		$appTimeZone  = $app['config']->get('app.timezone', 'UTC');
+
+		if ($app['auth']->guest()) 
+		{
+			return $this->convertToDateTime($datetime, $appTimeZone);
+		}
+
+		$userId       = $app['auth']->user()->id;
+		$userMeta     = $app['orchestra.memory']->make('user');
+		$userTimeZone = $userMeta->get("timezone.{$userId}", $appTimeZone);
+		$datetime     = $this->convertToDateTime($datetime, $userTimeZone);
+
+		$datetime->timezone = $appTimeZone;
+
+		return $datetime;
+	}
+
+	/**
+	 * Convert datetime string to DateTime.
+	 *
+	 * @access public
+	 * @param  mixed    $datetime
+	 * @param  string   $timezone
+	 * @return \DateTime
+	 */
+	public function convertToDateTime($datetime, $timezone = null)
+	{
+		// Convert instanceof DateTime to Carbon
+		if ($datetime instanceof \DateTime) 
+		{
+			$datetime = Carbon::instance($datetime);
+		}
+
+		if ( ! ($datetime instanceof Carbon))
+		{
+			if (is_null($timezone)) return new Carbon($datetime);
+
+			return new Carbon($datetime, $timezone);
+		}
+
+		! is_null($timezone) and $datetime->timezone = $timezone;
 
 		return $datetime;
 	}

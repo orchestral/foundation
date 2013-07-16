@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Tests;
 
 use Mockery as m;
+use Carbon\Carbon;
 use Orchestra\Foundation\Site;
 
 class SiteTest extends \PHPUnit_Framework_TestCase {
@@ -125,12 +126,13 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test localtime() return proper datetime when is guest.
+	 * Test Orchestra\Foundation\Site::toLocalTime() method return proper 
+	 * datetime when is guest.
 	 *
 	 * @test
 	 * @group support
 	 */
-	public function testLocalTimeReturnProperDateTimeWhenIsGuest()
+	public function testToLocalTimeReturnProperDateTimeWhenIsGuest()
 	{
 		$app = $this->app;
 
@@ -140,19 +142,19 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 		$config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
 		$auth->shouldReceive('guest')->once()->andReturn(true);
 
-		$stub = new Site($app);
+		$stub = with(new Site($app))->toLocalTime(new Carbon('2012-01-01 00:00:00'));
 
-		$this->assertEquals(new \DateTimeZone('UTC'), 
-			$stub->localtime('2012-01-01 00:00:00')->getTimezone());
+		$this->assertEquals(new \DateTimeZone('UTC'), $stub->getTimezone());
 	}
 
 	/**
-	 * Test localtime() return proper datetime when is user.
+	 * Test Orchestra\Foundation\Site::toLocalTime() method return proper 
+	 * datetime when is user.
 	 *
 	 * @test
 	 * @group support
 	 */
-	public function testLocalTimeReturnProperDateTimeWhenIsUser()
+	public function testToLocalTimeReturnProperDateTimeWhenIsUser()
 	{
 		$app = $this->app;
 
@@ -166,11 +168,58 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 		$memory->shouldReceive('make')->once()->with('user')->andReturn($memory)
 			->shouldReceive('get')->once()->with('timezone.1', 'UTC')->andReturn('Asia/Kuala_Lumpur');
 
-		$date = new \DateTime('2012-01-01 00:00:00');
+		$stub = with(new Site($app))->toLocalTime(new Carbon('2012-01-01 00:00:00'));
 
-		$stub = new Site($app);
+		$this->assertEquals(new \DateTimeZone('Asia/Kuala_Lumpur'), $stub->timezone);
+		$this->assertEquals('2012-01-01 08:00:00', $stub->toDateTimeString());
+	}
 
-		$this->assertEquals(new \DateTimeZone('Asia/Kuala_Lumpur'),
-				$stub->localtime($date)->getTimezone());
+	/**
+	 * Test Orchestra\Foundation\Site::toGlobalTime() method return proper 
+	 * datetime when is guest.
+	 *
+	 * @test
+	 * @group support
+	 */
+	public function testFromLocalTimeReturnProperDateTimeWhenIsGuest()
+	{
+		$app = $this->app;
+
+		$app['config'] = $config = m::mock('Config\Manager');
+		$app['auth']   = $auth = m::mock('Auth\Guard');
+
+		$config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
+		$auth->shouldReceive('guest')->once()->andReturn(true);
+
+		$stub = with(new Site($app))->fromLocalTime('2012-01-01 00:00:00');
+
+		$this->assertEquals(new \DateTimeZone('UTC'), $stub->timezone);
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Site::fromLocalTime() method return proper 
+	 * datetime when is user.
+	 *
+	 * @test
+	 * @group support
+	 */
+	public function testFromLocalTimeReturnProperDateTimeWhenIsUser()
+	{
+		$app = $this->app;
+
+		$app['config'] = $config = m::mock('Config\Manager');
+		$app['auth'] = $auth = m::mock('Auth\Guard');
+		$app['orchestra.memory'] = $memory = m::mock('Memory');
+
+		$config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
+		$auth->shouldReceive('guest')->once()->andReturn(false)
+			->shouldReceive('user')->once()->andReturn((object) array('id' => 1));
+		$memory->shouldReceive('make')->once()->with('user')->andReturn($memory)
+			->shouldReceive('get')->once()->with('timezone.1', 'UTC')->andReturn('Asia/Kuala_Lumpur');
+
+		$stub = with(new Site($app))->fromLocalTime('2012-01-01 08:00:00');
+
+		$this->assertEquals(new \DateTimeZone('UTC'), $stub->timezone);
+		$this->assertEquals('2012-01-01 00:00:00', $stub->toDateTimeString());
 	}
 }
