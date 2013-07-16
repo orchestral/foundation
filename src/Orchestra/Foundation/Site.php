@@ -84,12 +84,23 @@ class Site {
 	}
 
 	/**
+	 * Get all available items.
+	 *
+	 * @access public
+	 * @return array
+	 */
+	public function all()
+	{
+		return $this->items;
+	}
+
+	/**
 	 * Convert given time to user localtime, however if it a guest user 
 	 * return based on default timezone.
 	 *
 	 * @access public
 	 * @param  mixed    $datetime
-	 * @return \DateTime
+	 * @return \Carbon\Carbon
 	 */
 	public function toLocalTime($datetime)
 	{
@@ -118,7 +129,7 @@ class Site {
 	 *
 	 * @access public
 	 * @param  mixed    $datetime
-	 * @return \DateTime
+	 * @return \Carbon\Carbon
 	 */
 	public function fromLocalTime($datetime)
 	{
@@ -146,7 +157,7 @@ class Site {
 	 * @access public
 	 * @param  mixed    $datetime
 	 * @param  string   $timezone
-	 * @return \DateTime
+	 * @return \Carbon\Carbon
 	 */
 	public function convertToDateTime($datetime, $timezone = null)
 	{
@@ -166,16 +177,5 @@ class Site {
 		! is_null($timezone) and $datetime->timezone = $timezone;
 
 		return $datetime;
-	}
-
-	/**
-	 * Get all available items.
-	 *
-	 * @access public
-	 * @return array
-	 */
-	public function all()
-	{
-		return $this->items;
 	}
 }
