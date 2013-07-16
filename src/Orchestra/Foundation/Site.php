@@ -100,7 +100,7 @@ class Site {
 	 *
 	 * @access public
 	 * @param  mixed    $datetime
-	 * @return \DateTime
+	 * @return \Carbon\Carbon
 	 */
 	public function toLocalTime($datetime)
 	{
@@ -129,7 +129,7 @@ class Site {
 	 *
 	 * @access public
 	 * @param  mixed    $datetime
-	 * @return \DateTime
+	 * @return \Carbon\Carbon
 	 */
 	public function fromLocalTime($datetime)
 	{
@@ -157,7 +157,7 @@ class Site {
 	 * @access public
 	 * @param  mixed    $datetime
 	 * @param  string   $timezone
-	 * @return \DateTime
+	 * @return \Carbon\Carbon
 	 */
 	public function convertToDateTime($datetime, $timezone = null)
 	{
