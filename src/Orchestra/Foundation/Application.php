@@ -128,13 +128,13 @@ class Application {
 	}
 
 	/**
-	 *  Return handles configuration for a package/app.
+	 *  Return locate handles configuration for a package/app.
 	 *
 	 * @access public
 	 * @param  string   $name   Package name
 	 * @return string
 	 */
-	public function handles($name)
+	public function locate($name)
 	{
 		$path  = '';
 		$query = '';
@@ -162,7 +162,19 @@ class Application {
 		$path = trim("{$path}/{$route}", "/");
 		empty($path) and $path = '/';
 
-		return $this->app['url']->to($path);
+		return $path;
+	}
+
+	/**
+	 *  Return handles URL for a package/app.
+	 *
+	 * @access public
+	 * @param  string   $name   Package name
+	 * @return string
+	 */
+	public function handles($path)
+	{
+		return $this->app['url']->to($this->locate($path));
 	}
 
 	/**
