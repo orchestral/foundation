@@ -92,7 +92,7 @@ class Site {
 	 * @param  mixed    $datetime
 	 * @return \DateTime
 	 */
-	public function localtime($datetime)
+	public function toLocalTime($datetime)
 	{
 		$app         = $this->app;
 		$appTimeZone = $app['config']->get('app.timezone', 'UTC');

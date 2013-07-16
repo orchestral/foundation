@@ -125,12 +125,13 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test localtime() return proper datetime when is guest.
+	 * Test Orchestra\Foundation\Site::toLocalTime() method return proper 
+	 * datetime when is guest.
 	 *
 	 * @test
 	 * @group support
 	 */
-	public function testLocalTimeReturnProperDateTimeWhenIsGuest()
+	public function testToLocalTimeReturnProperDateTimeWhenIsGuest()
 	{
 		$app = $this->app;
 
@@ -143,16 +144,17 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 		$stub = new Site($app);
 
 		$this->assertEquals(new \DateTimeZone('UTC'), 
-			$stub->localtime('2012-01-01 00:00:00')->getTimezone());
+			$stub->toLocalTime('2012-01-01 00:00:00')->getTimezone());
 	}
 
 	/**
-	 * Test localtime() return proper datetime when is user.
+	 * Test Orchestra\Foundation\Site::toLocalTime() method return proper 
+	 * datetime when is user.
 	 *
 	 * @test
 	 * @group support
 	 */
-	public function testLocalTimeReturnProperDateTimeWhenIsUser()
+	public function testToLocalTimeReturnProperDateTimeWhenIsUser()
 	{
 		$app = $this->app;
 
@@ -171,6 +173,6 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 		$stub = new Site($app);
 
 		$this->assertEquals(new \DateTimeZone('Asia/Kuala_Lumpur'),
-				$stub->localtime($date)->getTimezone());
+				$stub->toLocalTime($date)->getTimezone());
 	}
 }
