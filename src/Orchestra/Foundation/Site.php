@@ -84,6 +84,17 @@ class Site {
 	}
 
 	/**
+	 * Get all available items.
+	 *
+	 * @access public
+	 * @return array
+	 */
+	public function all()
+	{
+		return $this->items;
+	}
+
+	/**
 	 * Convert given time to user localtime, however if it a guest user 
 	 * return based on default timezone.
 	 *
@@ -166,16 +177,5 @@ class Site {
 		! is_null($timezone) and $datetime->timezone = $timezone;
 
 		return $datetime;
-	}
-
-	/**
-	 * Get all available items.
-	 *
-	 * @access public
-	 * @return array
-	 */
-	public function all()
-	{
-		return $this->items;
 	}
 }
