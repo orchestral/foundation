@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Request;
 use Orchestra\Support\Facades\Asset; ?>
 
 <footer>
@@ -23,3 +24,11 @@ echo $asset->styles();
 echo $asset->scripts(); ?>
 
 @placeholder("orchestra.layout: footer")
+
+<script>
+jQuery(function onPageReady ($) { 'use strict';
+	var events = new Javie.Events;
+
+	events.fire("orchestra.ready: <?php echo Request::path(); ?>");
+});
+</script>
