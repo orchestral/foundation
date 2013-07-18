@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Foundation\Services\Validation;
 
-use Illuminate\Support\Fluent;
 use Orchestra\Support\Validator;
 
 class UserAccount extends Validator {
