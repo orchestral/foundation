@@ -149,7 +149,8 @@ class FtpTest extends \PHPUnit_Framework_TestCase {
 		$client->shouldReceive('setUp')->once()->with(array('ftpconfig'))->andReturn(null)
 			->shouldReceive('connect')->once()->andReturn(true)
 			->shouldReceive('permission')->once()->with('/var/foo/public/packages/laravel/', 0777)->andReturn(null)
-			->shouldReceive('permission')->once()->with('/var/foo/public/packages/laravel/', 0755)->andReturn(null);
+			->shouldReceive('permission')->once()->with('/var/foo/public/packages/laravel/', 0755)->andReturn(null)
+			->shouldReceive('makeDirectory')->once()->with('/var/foo/public/packages/laravel/framework/')->andReturn(true);
 		$file->shouldReceive('isDirectory')->once()->with('/var/foo/public/packages/laravel/framework/')->andReturn(false)
 			->shouldReceive('isDirectory')->once()->with('/var/foo/public/packages/laravel/')->andReturn(true);
 		$extension->shouldReceive('activate')->once()->with('laravel/framework')->andReturn(null);

@@ -98,7 +98,9 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase {
 		$client->shouldReceive('setUp')->once()->with(array('manager-foo'))->andReturn(null)
 			->shouldReceive('connect')->once()->andReturn(true)
 			->shouldReceive('permission')->with('/var/foo/public/packages/', 0777)->andReturn(true)
-			->shouldReceive('permission')->with('/var/foo/public/packages/', 0755)->andReturn(true);
+			->shouldReceive('permission')->with('/var/foo/public/packages/', 0755)->andReturn(true)
+			->shouldReceive('makeDirectory')->with('/var/foo/public/packages/a/')->andReturn(true)
+			->shouldReceive('makeDirectory')->with('/var/foo/public/packages/b/')->andReturn(true);
 		$file->shouldReceive('isDirectory')->once()->with('/var/foo/public/packages/a/')->andReturn(false)
 			->shouldReceive('isDirectory')->once()->with('/var/foo/public/packages/b/')->andReturn(false);
 		$extension->shouldReceive('activate')->once()->with('a')->andReturn(null)

@@ -83,6 +83,17 @@ class Ftp implements UploaderInterface {
 	}
 
 	/**
+	 * Make a directory.
+	 *
+	 * @param  string   $path
+	 * @return boolean
+	 */
+	private function makeDirectory($path)
+	{
+		return $this->connection->makeDirectory($path);
+	}
+
+	/**
 	 * CHMOD a directory/file.
 	 *
 	 * @param  string   $path
@@ -141,20 +152,27 @@ class Ftp implements UploaderInterface {
 	 */
 	public function upload($name, $recursively = false)
 	{
+		$folderExist = true;
+		$recursively = false;
+
 		$public = $this->basePath($this->app['path.public']);
 
 		// Start chmod from public/packages directory, if the extension folder
 		// is yet to be created, it would be created and own by the web server
 		// (Apache or Nginx). If otherwise, we would then emulate chmod -Rf
 		$public = rtrim($public, '/').'/';
-		$path   = $public.'packages/';
+		$path   = $basePath = "{$public}packages/";
 
 		// If the extension directory exist, we should start chmod from the
 		// folder instead.
-		if ($this->app['files']->isDirectory($folder = "{$path}{$name}/")) 
+		if ($this->app['files']->isDirectory($folder = "{$basePath}{$name}/")) 
 		{
 			$recursively = true;
 			$path = $folder;
+		} 
+		else 
+		{
+			$folderExist = false;
 		}
 
 		// Alternatively if vendor has been created before, we need to 
@@ -164,7 +182,7 @@ class Ftp implements UploaderInterface {
 		{
 			list($vendor, $package) = explode('/', $name);
 
-			if ($this->app['files']->isDirectory($folder = "{$path}{$vendor}/")) 
+			if ($this->app['files']->isDirectory($folder = "{$basePath}{$vendor}/")) 
 			{
 				$path = $folder;
 			}
@@ -179,6 +197,8 @@ class Ftp implements UploaderInterface {
 			else 
 			{
 				$this->permission($path, 0777);
+
+				if ( ! $folderExist) $this->makeDirectory("{$basePath}{$name}/");
 			}
 		}
 		catch (RuntimeException $e)
