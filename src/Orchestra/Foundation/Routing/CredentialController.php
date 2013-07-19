@@ -16,7 +16,6 @@ class CredentialController extends AdminController {
 	/**
 	 * Define the filters.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function __construct()
@@ -44,7 +43,6 @@ class CredentialController extends AdminController {
 	 *
 	 * GET (:orchestra)/login
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function getLogin()
@@ -60,7 +58,6 @@ class CredentialController extends AdminController {
 	 *
 	 * POST (:orchestra)/login
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function postLogin()
@@ -95,7 +92,6 @@ class CredentialController extends AdminController {
 	 *
 	 * DELETE (:bundle)/login
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function deleteLogin()
@@ -109,7 +105,6 @@ class CredentialController extends AdminController {
 	/**
 	 * Authenticate the user.
 	 *
-	 * @access protected
 	 * @param  array    $input
 	 * @return boolean
 	 */

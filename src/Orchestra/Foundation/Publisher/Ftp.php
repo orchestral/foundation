@@ -23,7 +23,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Construct a new FTP instance.
 	 *
-	 * @access public
 	 * @param  \Illuminate\Foundation\Application   $app
 	 * @param  \Orchestra\Support\Ftp               $client
 	 * @return void
@@ -52,7 +51,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Get service connection instance.
 	 *
-	 * @access public
 	 * @return \Orchestra\Support\FTP
 	 */
 	public function getConnection()
@@ -63,7 +61,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Set service connection instance.
 	 *
-	 * @access public
 	 * @param  \Orchestra\Support\FTP   $client
 	 * @return void
 	 */
@@ -75,7 +72,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Connect to the service.
 	 *
-	 * @access public	
 	 * @param  array    $config
 	 * @return boolean
 	 */
@@ -89,7 +85,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * CHMOD a directory/file.
 	 *
-	 * @access private
 	 * @param  string   $path
 	 * @param  integer  $mode
 	 * @return boolean
@@ -102,7 +97,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Check chmod for a file/directory recursively.
 	 *
-	 * @access private
 	 * @param  string   $path
 	 * @param  integer  $mode
 	 * @return boolean
@@ -140,7 +134,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Upload the file.
 	 *
-	 * @access public
 	 * @param  string   $name           Extension name
 	 * @param  boolean  $recursively
 	 * @return boolean
@@ -207,7 +200,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Get base path for FTP.
 	 *
-	 * @access public
 	 * @param  string   $path
 	 * @return string
 	 */
@@ -227,7 +219,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Verify that FTP driver is connected to a service.
 	 * 
-	 * @access public
 	 * @return boolean
 	 */
 	public function connected()

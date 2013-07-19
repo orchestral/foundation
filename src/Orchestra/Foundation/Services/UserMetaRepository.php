@@ -21,7 +21,6 @@ class UserMetaRepository extends Driver {
 	/**
 	 * Initiate the instance.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function initiate() 
@@ -32,7 +31,6 @@ class UserMetaRepository extends Driver {
 	/**
 	 * Get value of a key
 	 *
-	 * @access public
 	 * @param  string   $key        A string of key to search.
 	 * @param  mixed    $default    Default value if key doesn't exist.
 	 * @return mixed
@@ -56,7 +54,6 @@ class UserMetaRepository extends Driver {
 	/**
 	 * Get value from database.
 	 * 
-	 * @access protected
 	 * @param  string   $key
 	 * @param  mixed    $default
 	 * @return mixed
@@ -87,7 +84,6 @@ class UserMetaRepository extends Driver {
 	/**
 	 * Set a value from a key.
 	 *
-	 * @access public
 	 * @param  string   $key        A string of key to add the value.
 	 * @param  mixed    $value      The value.
 	 * @return mixed
@@ -104,7 +100,6 @@ class UserMetaRepository extends Driver {
 	/**
 	 * Delete value of a key.
 	 *
-	 * @access public
 	 * @param  string   $key        A string of key to delete.
 	 * @return boolean
 	 */
@@ -117,8 +112,7 @@ class UserMetaRepository extends Driver {
 	/**
 	 * Add a finish event.
 	 *
-	 * @access  public
-	 * @return  void
+	 * @return void
 	 */
 	public function finish() 
 	{

@@ -16,7 +16,6 @@ class Auth extends Validator {
 	/**
 	 * On login scenario.
 	 *
-	 * @access protected
 	 * @return void
 	 */
 	protected function onLogin()

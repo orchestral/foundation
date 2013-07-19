@@ -10,7 +10,6 @@ class ResourcesController extends AdminController {
 	/**
 	 * Route to Resources List.
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function index()
@@ -36,7 +35,6 @@ class ResourcesController extends AdminController {
 	/**
 	 * Add a drop-in resource anywhere on Orchestra
 	 *
-	 * @access public
 	 * @param  string $request
 	 * @param  array  $arguments
 	 * @return Response

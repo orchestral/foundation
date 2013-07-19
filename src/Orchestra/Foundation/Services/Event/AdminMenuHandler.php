@@ -9,7 +9,6 @@ class AdminMenuHandler {
 	/**
 	 * Create a handler for `orchestra.ready: admin` event.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function handle()

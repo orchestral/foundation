@@ -7,7 +7,6 @@ abstract class TestCase extends TestbenchTestCase {
 	/**
 	 * Get application aliases.
 	 *
-	 * @access protected
 	 * @return array
 	 */
 	protected function getApplicationAliases()
@@ -18,7 +17,6 @@ abstract class TestCase extends TestbenchTestCase {
 	/**
 	 * Get package aliases.
 	 *
-	 * @access protected
 	 * @return array
 	 */
 	protected function getPackageAliases()
@@ -31,7 +29,6 @@ abstract class TestCase extends TestbenchTestCase {
 	/**
 	 * Get application providers.
 	 *
-	 * @access protected
 	 * @return array
 	 */
 	protected function getApplicationProviders()
@@ -42,7 +39,6 @@ abstract class TestCase extends TestbenchTestCase {
 	/**
 	 * Get package providers.
 	 *
-	 * @access protected
 	 * @return array
 	 */
 	protected function getPackageProviders()

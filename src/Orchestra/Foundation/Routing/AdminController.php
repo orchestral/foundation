@@ -7,7 +7,6 @@ abstract class AdminController extends BaseController {
 	/**
 	 * Define the filters.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function __construct()

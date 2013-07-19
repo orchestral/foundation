@@ -30,14 +30,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	/**
 	 * Indicates if the model should soft delete.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $softDelete = true;
 
 	/**
 	 * Has many and belongs to relationship with Role.
 	 *
-	 * @access public
 	 * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
 	 */
 	public function roles() 
@@ -48,7 +47,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	/**
 	 * Search user based on keyword as roles.
 	 *
-	 * @access public
 	 * @param  Illuminate\Database\Eloquent\Builder $query
 	 * @param  string                               $keyword
 	 * @param  array                                $roles
@@ -79,7 +77,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	/**
 	 * Set `password` mutator.
 	 *
-	 * @access public
 	 * @param  string   $value
 	 * @return void
 	 */

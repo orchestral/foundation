@@ -28,7 +28,6 @@ class User extends Validator {
 	/**
 	 * On create user scenario.
 	 *
-	 * @access protected
 	 * @return void
 	 */
 	protected function onCreate()

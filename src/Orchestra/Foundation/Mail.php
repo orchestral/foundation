@@ -14,7 +14,6 @@ class Mail {
 	/**
 	 * Construct a new Mail instance.
 	 *
-	 * @access public
 	 * @param  \Illuminate\Foundation\Application   $app
 	 * @return void
 	 */
@@ -27,7 +26,6 @@ class Mail {
 	 * Allow Orchestra Platform to either use send or queue based on 
 	 * settings.
 	 *
-	 * @access public			
 	 * @param  string           $view
 	 * @param  array            $data
 	 * @param  Closure|string   $callback

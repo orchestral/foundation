@@ -8,8 +8,6 @@ class ResourcePresenter {
 	/**
 	 * Table View Generator for Orchestra\Resources.
 	 *
-	 * @static
-	 * @access public
 	 * @param  array    $model
 	 * @return \Orchestra\Html\Table\TableBuilder
 	 */

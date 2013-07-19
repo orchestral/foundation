@@ -28,7 +28,6 @@ class Setting extends Validator {
 	/**
 	 * On update email using smtp driver scenario.
 	 *
-	 * @access protected
 	 * @return void
 	 */
 	protected function onSmtp()
@@ -40,7 +39,6 @@ class Setting extends Validator {
 	/**
 	 * On update email using sendmail driver scenario.
 	 *
-	 * @access protected
 	 * @return void
 	 */
 	protected function onSendmail()

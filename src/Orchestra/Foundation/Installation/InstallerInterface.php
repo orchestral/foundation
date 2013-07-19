@@ -5,7 +5,6 @@ interface InstallerInterface {
 	/**
 	 * Migrate Orchestra Platform schema.
 	 *
-	 * @access public
 	 * @return boolean
 	 */
 	public function migrate();
@@ -13,7 +12,6 @@ interface InstallerInterface {
 	/**
 	 * Create adminstrator account.
 	 *
-	 * @access public	
 	 * @param  array    $input
 	 * @return boolean
 	 */

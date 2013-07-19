@@ -19,7 +19,6 @@ class AccountController extends AdminController {
 	 * Construct Account Controller to allow user to update own profile.
 	 * Only authenticated user should be able to access this controller.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function __construct()
@@ -34,7 +33,6 @@ class AccountController extends AdminController {
 	 *
 	 * GET (:orchestra)/account
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function getIndex()
@@ -53,7 +51,6 @@ class AccountController extends AdminController {
 	 *
 	 * POST (:orchestra)/account
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function postIndex()
@@ -106,7 +103,6 @@ class AccountController extends AdminController {
 	 *
 	 * GET (:orchestra)/account/password
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function getPassword()
@@ -124,7 +120,6 @@ class AccountController extends AdminController {
 	 *
 	 * POST (:orchestra)/account/password
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function postPassword()
@@ -173,7 +168,6 @@ class AccountController extends AdminController {
 	/**
 	 * Fire Event related to eloquent process
 	 *
-	 * @access private
 	 * @param  string   $type
 	 * @param  array    $parameters
 	 * @return void

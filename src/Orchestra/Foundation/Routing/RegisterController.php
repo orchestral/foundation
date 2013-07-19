@@ -20,7 +20,6 @@ class RegisterController extends AdminController {
 	/**
 	 * Define the filters.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function __construct()
@@ -38,7 +37,6 @@ class RegisterController extends AdminController {
 	 *
 	 * GET (:orchestra)/register
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function getIndex()
@@ -64,7 +62,6 @@ class RegisterController extends AdminController {
 	 *
 	 * POST (:orchestra)/register
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function postIndex()
@@ -122,7 +119,6 @@ class RegisterController extends AdminController {
 	/**
 	 * Send new registration e-mail to user.
 	 *
-	 * @access protected
 	 * @param  User     $user
 	 * @param  string   $password
 	 * @param  Messages $msg
@@ -155,7 +151,6 @@ class RegisterController extends AdminController {
 	/**
 	 * Fire Event related to eloquent process
 	 *
-	 * @access protected
 	 * @param  string   $type
 	 * @param  array    $parameters
 	 * @return void
