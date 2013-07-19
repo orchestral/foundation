@@ -198,7 +198,11 @@ class Ftp implements UploaderInterface {
 			{
 				$this->permission($path, 0777);
 
-				if ( ! $folderExist) $this->makeDirectory("{$basePath}{$name}/");
+				if ( ! $folderExist) 
+				{
+					$this->makeDirectory("{$basePath}{$name}/");
+					$this->permission("{$basePath}{$name}/", 0777);
+				}
 			}
 		}
 		catch (RuntimeException $e)
@@ -212,7 +216,14 @@ class Ftp implements UploaderInterface {
 		$this->app['orchestra.extension']->activate($name);
 		
 		// Revert chmod back to original state.
-		($recursively ? $this->recursivePermission($path, 0755) : $this->permission($path, 0755));
+		if ($recursively)
+		{
+			$this->recursivePermission($path, 0755);
+		}
+		else 
+		{
+			$this->permission($path, 0755);
+		}
 		
 		return true;
 	}
