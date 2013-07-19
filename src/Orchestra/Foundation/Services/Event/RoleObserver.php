@@ -7,7 +7,6 @@ class RoleObserver {
 	/**
 	 * On creating observer.
 	 *
-	 * @access public
 	 * @param  \Orchestra\Model\Role    $model
 	 * @return void
 	 */
@@ -19,7 +18,6 @@ class RoleObserver {
 	/**
 	 * On deleting observer.
 	 * 
-	 * @access public
 	 * @param  \Orchestra\Model\Role    $model
 	 * @return void
 	 */
@@ -31,7 +29,6 @@ class RoleObserver {
 	/**
 	 * On updating/restoring observer.
 	 * 
-	 * @access public
 	 * @param  \Orchestra\Model\Role    $model
 	 * @return void
 	 */

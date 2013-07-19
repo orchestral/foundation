@@ -10,7 +10,6 @@ class DashboardController extends AdminController {
 	/**
 	 * Define the filters.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function __construct()
@@ -28,7 +27,6 @@ class DashboardController extends AdminController {
 	 *
 	 * GET (:orchestra)/
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function index()
@@ -44,7 +42,6 @@ class DashboardController extends AdminController {
 	 *
 	 * GET (:orchestra) return 404
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function missing()

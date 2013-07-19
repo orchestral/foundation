@@ -10,8 +10,6 @@ class SettingPresenter {
 	/**
 	 * Form View Generator for Setting Page.
 	 *
-	 * @static
-	 * @access public
 	 * @param  \Illuminate\Support\Fluent   $model
 	 * @return \Orchestra\Html\Form\FormBuilder
 	 */

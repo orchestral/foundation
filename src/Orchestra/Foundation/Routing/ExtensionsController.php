@@ -21,7 +21,6 @@ class ExtensionsController extends AdminController {
 	 * Construct Extensions Controller, only authenticated user should be
 	 * able to access this controller.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function __construct()
@@ -37,7 +36,6 @@ class ExtensionsController extends AdminController {
 	 * 
 	 * GET (:orchestra)/extensions
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function getIndex()
@@ -54,7 +52,6 @@ class ExtensionsController extends AdminController {
 	 *
 	 * GET (:orchestra)/extensions/activate/(:name)
 	 *
-	 * @access public
 	 * @param  string   $name   name of the extension
 	 * @return Response
 	 */
@@ -76,7 +73,6 @@ class ExtensionsController extends AdminController {
 	 *
 	 * GET (:orchestra)/extensions/deactivate/(:name)
 	 *
-	 * @access public
 	 * @param  string   $name   name of the extension
 	 * @return Response
 	 */
@@ -97,7 +93,6 @@ class ExtensionsController extends AdminController {
 	 *
 	 * GET (:orchestra)/extensions/configure/(:name)
 	 *
-	 * @access public
 	 * @param  string   $name name of the extension
 	 * @return Response
 	 */
@@ -130,7 +125,6 @@ class ExtensionsController extends AdminController {
 	 *
 	 * POST (:orchestra)/extensions/configure/(:name)
 	 *
-	 * @access public
 	 * @param  string   $name   name of the extension
 	 * @return Response
 	 */
@@ -175,7 +169,6 @@ class ExtensionsController extends AdminController {
 	 *
 	 * GET (:orchestra)/extensions/update/(:name)
 	 *
-	 * @access public
 	 * @param  string   $name   name of the extension
 	 * @return Response
 	 */
@@ -195,7 +188,6 @@ class ExtensionsController extends AdminController {
 	/**
 	 * Run installation or update for an extension.
 	 * 
-	 * @access protected
 	 * @param  string   $name       name of the extension
 	 * @param  Closure  $callback
 	 * @return Response

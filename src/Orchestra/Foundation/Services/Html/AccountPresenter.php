@@ -9,8 +9,6 @@ class AccountPresenter {
 	/**
 	 * Form view generator for User Account.
 	 *
-	 * @static
-	 * @access public
 	 * @param  \Orchestra\Model\User    $model
 	 * @param  string                   $url
 	 * @return \Orchestra\Html\Form\FormBuilder
@@ -46,8 +44,6 @@ class AccountPresenter {
 	/**
 	 * Form view generator for user account edit password.
 	 *
-	 * @static
-	 * @access public
 	 * @param  \Orchestra\Model\User    $model
 	 * @return \Orchestra\Html\Form\FormBuilder
 	 */

@@ -9,8 +9,6 @@ class ExtensionPresenter {
 	/**
 	 * Form View Generator for Orchestra\Extension.
 	 *
-	 * @static
-	 * @access public
 	 * @param  \Illuminate\Support\Fluent   $model
 	 * @param  string                       $name
 	 * @return \Orchestra\Html\Form\FormBuilder

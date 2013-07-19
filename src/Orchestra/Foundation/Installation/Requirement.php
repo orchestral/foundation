@@ -28,7 +28,6 @@ class Requirement implements RequirementInterface {
 	/**
 	 * Construct a new instance.
 	 *
-	 * @access public
 	 * @param  \Illuminate\Foundation\Application   $app
 	 * @return void
 	 */
@@ -40,7 +39,6 @@ class Requirement implements RequirementInterface {
 	/**
 	 * Check all requirement.
 	 *
-	 * @access public
 	 * @return boolean
 	 */
 	public function check()
@@ -64,7 +62,6 @@ class Requirement implements RequirementInterface {
 	/**
 	 * Check database connection.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function checkDatabaseConnection()
@@ -86,7 +83,6 @@ class Requirement implements RequirementInterface {
 	/**
 	 * Check whether storage folder is writable.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function checkWritableStorage()
@@ -105,7 +101,6 @@ class Requirement implements RequirementInterface {
 	/**
 	 * Check whether asset folder is writable.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function checkWritableAsset()
@@ -125,7 +120,6 @@ class Requirement implements RequirementInterface {
 	/**
 	 * Get checklist schema.
 	 *
-	 * @access protected
 	 * @return array
 	 */
 	protected function getCheckListSchema()
@@ -141,7 +135,6 @@ class Requirement implements RequirementInterface {
 	/**
 	 * Check if path is writable.
 	 *
-	 * @access protected
 	 * @param  string   $path
 	 * @return boolean
 	 */
@@ -153,7 +146,6 @@ class Requirement implements RequirementInterface {
 	/**
 	 * Get checklist result.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function getChecklist()
@@ -164,7 +156,6 @@ class Requirement implements RequirementInterface {
 	/**
 	 * Get installable status.
 	 * 
-	 * @access public
 	 * @return boolean
 	 */
 	public function isInstallable()

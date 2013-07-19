@@ -13,7 +13,6 @@ class ForgotController extends AdminController {
 	 * Construct Forgot Password Controller with some pre-define
 	 * configuration
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function __construct()
@@ -30,7 +29,6 @@ class ForgotController extends AdminController {
 	 *
 	 * GET (:orchestra)/forgot
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function getIndex()
@@ -47,7 +45,6 @@ class ForgotController extends AdminController {
 	 *
 	 * POST (:orchestra)/forgot
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function postIndex()
@@ -81,7 +78,6 @@ class ForgotController extends AdminController {
 	 *
 	 * GET (:orchestra)/forgot/reset/(:hash)
 	 *
-	 * @access public
 	 * @param  string   $token
 	 * @return Response
 	 */
@@ -97,7 +93,6 @@ class ForgotController extends AdminController {
 	 *
 	 * POST (:orchestra)/forgot/reset/(:hash)
 	 *
-	 * @access public
 	 * @param  string   $token
 	 * @return Response
 	 */

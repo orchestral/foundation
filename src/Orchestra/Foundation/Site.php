@@ -23,7 +23,6 @@ class Site {
 	/**
 	 * Construct a new instance.
 	 *
-	 * @access public
 	 * @param  \Illuminate\Foundation\Application   $app
 	 * @return void
 	 */
@@ -35,7 +34,6 @@ class Site {
 	/**
 	 * Get a site value.
 	 *
-	 * @access public 	
 	 * @param  string   $key
 	 * @param  mixed    $default
 	 * @return mixed
@@ -48,7 +46,6 @@ class Site {
 	/**
 	 * Set a site value.
 	 *
-	 * @access public 	
 	 * @param  string   $key
 	 * @param  mixed    $value
 	 * @return mixed
@@ -61,7 +58,6 @@ class Site {
 	/**
 	 * Check if site key has a value.
 	 *
-	 * @access public 	
 	 * @param  string   $key
 	 * @return boolean
 	 */
@@ -73,8 +69,6 @@ class Site {
 	/**
 	 * Remove a site key.
 	 *
-	 * @static
-	 * @access public
 	 * @param  string   $key
 	 * @return void
 	 */
@@ -86,7 +80,6 @@ class Site {
 	/**
 	 * Get all available items.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function all()
@@ -98,7 +91,6 @@ class Site {
 	 * Convert given time to user localtime, however if it a guest user 
 	 * return based on default timezone.
 	 *
-	 * @access public
 	 * @param  mixed    $datetime
 	 * @return \Carbon\Carbon
 	 */
@@ -127,7 +119,6 @@ class Site {
 	 * Convert given time to user from localtime, however if it a guest user 
 	 * return based on default timezone.
 	 *
-	 * @access public
 	 * @param  mixed    $datetime
 	 * @return \Carbon\Carbon
 	 */
@@ -154,7 +145,6 @@ class Site {
 	/**
 	 * Convert datetime string to DateTime.
 	 *
-	 * @access public
 	 * @param  mixed    $datetime
 	 * @param  string   $timezone
 	 * @return \Carbon\Carbon

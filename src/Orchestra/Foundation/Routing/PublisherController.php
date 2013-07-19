@@ -15,7 +15,6 @@ class PublisherController extends AdminController {
 	/**
 	 * Define the filters.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function __construct()
@@ -28,7 +27,6 @@ class PublisherController extends AdminController {
 	/**
 	 * Load publisher based on service.
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function getIndex()
@@ -42,7 +40,6 @@ class PublisherController extends AdminController {
 	/**
 	 * Show FTP configuration form or run the queue.
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function getFtp()
@@ -58,7 +55,6 @@ class PublisherController extends AdminController {
 	 *
 	 * POST (orchestra)/publisher/ftp
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function postFtp()

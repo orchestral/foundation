@@ -13,8 +13,6 @@ class UserPresenter {
 	/**
 	 * Table View Generator for Orchestra\Model\User.
 	 *
-	 * @static
-	 * @access public
 	 * @param  \Orchestra\Model\User    $model
 	 * @return \Orchestra\Html\Table\TableBuilder
 	 */
@@ -65,8 +63,6 @@ class UserPresenter {
 	/**
 	 * Table actions View Generator for Orchestra\Model\User.
 	 *
-	 * @static
-	 * @access public
 	 * @param  \Orchestra\Html\Table\TableBuilder   $table
 	 * @return \Orchestra\Html\Table\TableBuilder
 	 */
@@ -118,8 +114,6 @@ class UserPresenter {
 	/**
 	 * Form View Generator for Orchestra\Model\User.
 	 *
-	 * @static
-	 * @access public
 	 * @param  \Orchestra\Model\User    $model
 	 * @return \Orchestra\Html\Form\FormBuilder
 	 */

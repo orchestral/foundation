@@ -29,7 +29,6 @@ class InstallController extends BaseController {
 	/**
 	 * Construct InstallController
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function __construct(InstallerInterface $installer, RequirementInterface $requirement)
@@ -50,7 +49,6 @@ class InstallController extends BaseController {
 	 *
 	 * GET (:orchestra)/install
 	 *
-	 * @access public
 	 * @return View
 	 */
 	public function getIndex()
@@ -101,7 +99,6 @@ class InstallController extends BaseController {
 	 *
 	 * GET (:orchestra)/install/create
 	 *
-	 * @access public
 	 * @return View
 	 */
 	public function getCreate()
@@ -117,7 +114,6 @@ class InstallController extends BaseController {
 	 *
 	 * POST (:orchestra)/install/create
 	 *
-	 * @access public
 	 * @return View
 	 */
 	public function postCreate()
@@ -135,7 +131,6 @@ class InstallController extends BaseController {
 	 *
 	 * GET (:orchestra)/install/done
 	 *
-	 * @access public
 	 * @return View
 	 */
 	public function getDone()

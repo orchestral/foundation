@@ -19,7 +19,6 @@ class UsersController extends AdminController {
 	/**
 	 * Define the filters.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function __construct()
@@ -35,7 +34,6 @@ class UsersController extends AdminController {
 	 *
 	 * GET (:orchestra)/users
 	 * 
-	 * @access public
 	 * @return Response
 	 */
 	public function index()
@@ -70,7 +68,6 @@ class UsersController extends AdminController {
 	 *
 	 * GET (:orchestra)/users/create
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function create()
@@ -89,7 +86,6 @@ class UsersController extends AdminController {
 	 *
 	 * GET (:orchestra)/users/$id/edit
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function edit($id)
@@ -108,7 +104,6 @@ class UsersController extends AdminController {
 	 *
 	 * POST (:orchestra)/users
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function store() 
@@ -138,7 +133,6 @@ class UsersController extends AdminController {
 	 *
 	 * PUT (:orchestra)/users/1
 	 *
-	 * @access public
 	 * @param  integer  $id
 	 * @return Response
 	 */
@@ -171,7 +165,6 @@ class UsersController extends AdminController {
 	/**
 	 * Save the user.
 	 *
-	 * @access protected			
 	 * @param  Orchestra\Model\User $user
 	 * @param  array                $input
 	 * @param  string               $type
@@ -217,7 +210,6 @@ class UsersController extends AdminController {
 	 *
 	 * GET (:orchestra)/$id/delete
 	 * 
-	 * @access public
 	 * @param  integer  $id 
 	 * @return Response
 	 */
@@ -231,7 +223,6 @@ class UsersController extends AdminController {
 	 *
 	 * DELETE (:orchestra)/$id
 	 * 
-	 * @access public
 	 * @param  integer  $id 
 	 * @return Response
 	 */
@@ -268,7 +259,6 @@ class UsersController extends AdminController {
 	/**
 	 * Fire Event related to eloquent process
 	 *
-	 * @access private
 	 * @param  string   $type
 	 * @param  array    $parameters
 	 * @return void

@@ -26,7 +26,6 @@ class UserAccount extends Validator {
 	/**
 	 * On register scenario.
 	 *
-	 * @access protected
 	 * @return void
 	 */
 	protected function onRegister() 
@@ -37,7 +36,6 @@ class UserAccount extends Validator {
 	/**
 	 * On update password scenario.
 	 *
-	 * @access protected
 	 * @return void
 	 */
 	protected function onChangePassword()

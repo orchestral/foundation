@@ -16,7 +16,6 @@ class SettingsController extends AdminController {
 	 * Construct Settings Controller, only authenticated user should be able
 	 * to access this controller.
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function __construct()
@@ -32,7 +31,6 @@ class SettingsController extends AdminController {
 	 *
 	 * GET (:orchestra)/settings
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function getIndex()
@@ -69,7 +67,6 @@ class SettingsController extends AdminController {
 	 *
 	 * POST (:orchestra)/settings
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function postIndex()
@@ -121,7 +118,6 @@ class SettingsController extends AdminController {
 	/**
 	 * Update orchestra/foundation.
 	 *
-	 * @access public
 	 * @return Response
 	 */
 	public function getUpdate()

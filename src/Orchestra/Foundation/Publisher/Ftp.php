@@ -23,7 +23,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Construct a new FTP instance.
 	 *
-	 * @access public
 	 * @param  \Illuminate\Foundation\Application   $app
 	 * @param  \Orchestra\Support\Ftp               $client
 	 * @return void
@@ -52,7 +51,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Get service connection instance.
 	 *
-	 * @access public
 	 * @return \Orchestra\Support\FTP
 	 */
 	public function getConnection()
@@ -63,7 +61,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Set service connection instance.
 	 *
-	 * @access public
 	 * @param  \Orchestra\Support\FTP   $client
 	 * @return void
 	 */
@@ -75,7 +72,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Connect to the service.
 	 *
-	 * @access public	
 	 * @param  array    $config
 	 * @return boolean
 	 */
@@ -87,9 +83,19 @@ class Ftp implements UploaderInterface {
 	}
 
 	/**
+	 * Make a directory.
+	 *
+	 * @param  string   $path
+	 * @return boolean
+	 */
+	private function makeDirectory($path)
+	{
+		return $this->connection->makeDirectory($path);
+	}
+
+	/**
 	 * CHMOD a directory/file.
 	 *
-	 * @access private
 	 * @param  string   $path
 	 * @param  integer  $mode
 	 * @return boolean
@@ -102,7 +108,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Check chmod for a file/directory recursively.
 	 *
-	 * @access private
 	 * @param  string   $path
 	 * @param  integer  $mode
 	 * @return boolean
@@ -140,7 +145,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Upload the file.
 	 *
-	 * @access public
 	 * @param  string   $name           Extension name
 	 * @param  boolean  $recursively
 	 * @return boolean
@@ -148,20 +152,27 @@ class Ftp implements UploaderInterface {
 	 */
 	public function upload($name, $recursively = false)
 	{
+		$folderExist = true;
+		$recursively = false;
+
 		$public = $this->basePath($this->app['path.public']);
 
 		// Start chmod from public/packages directory, if the extension folder
 		// is yet to be created, it would be created and own by the web server
 		// (Apache or Nginx). If otherwise, we would then emulate chmod -Rf
 		$public = rtrim($public, '/').'/';
-		$path   = $public.'packages/';
+		$path   = $basePath = "{$public}packages/";
 
 		// If the extension directory exist, we should start chmod from the
 		// folder instead.
-		if ($this->app['files']->isDirectory($folder = "{$path}{$name}/")) 
+		if ($this->app['files']->isDirectory($folder = "{$basePath}{$name}/")) 
 		{
 			$recursively = true;
 			$path = $folder;
+		} 
+		else 
+		{
+			$folderExist = false;
 		}
 
 		// Alternatively if vendor has been created before, we need to 
@@ -171,7 +182,7 @@ class Ftp implements UploaderInterface {
 		{
 			list($vendor, $package) = explode('/', $name);
 
-			if ($this->app['files']->isDirectory($folder = "{$path}{$vendor}/")) 
+			if ($this->app['files']->isDirectory($folder = "{$basePath}{$vendor}/")) 
 			{
 				$path = $folder;
 			}
@@ -186,6 +197,8 @@ class Ftp implements UploaderInterface {
 			else 
 			{
 				$this->permission($path, 0777);
+
+				if ( ! $folderExist) $this->makeDirectory("{$basePath}{$name}/");
 			}
 		}
 		catch (RuntimeException $e)
@@ -207,7 +220,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Get base path for FTP.
 	 *
-	 * @access public
 	 * @param  string   $path
 	 * @return string
 	 */
@@ -227,7 +239,6 @@ class Ftp implements UploaderInterface {
 	/**
 	 * Verify that FTP driver is connected to a service.
 	 * 
-	 * @access public
 	 * @return boolean
 	 */
 	public function connected()

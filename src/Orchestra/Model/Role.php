@@ -24,14 +24,13 @@ class Role extends Eloquent {
 	/**
 	 * Indicates if the model should soft delete.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $softDelete = true;
 
 	/**
 	 * Has many and belongs to relationship with User.
 	 *
-	 * @access public
 	 * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
 	 */
 	public function users() 
@@ -42,8 +41,6 @@ class Role extends Eloquent {
 	/**
 	 * Get default roles for Orchestra Platform
 	 *
-	 * @static
-	 * @access public
 	 * @return self
 	 */
 	public static function admin()
@@ -56,8 +53,6 @@ class Role extends Eloquent {
 	/**
 	 * Get default member roles for Orchestra Platform
 	 *
-	 * @static
-	 * @access public
 	 * @return self
 	 */
 	public static function member()

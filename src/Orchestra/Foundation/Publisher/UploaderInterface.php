@@ -5,7 +5,6 @@ interface UploaderInterface {
 	/**
 	 * Get service connection instance.
 	 *
-	 * @access public
 	 * @return self
 	 */
 	public function getConnection();
@@ -13,7 +12,6 @@ interface UploaderInterface {
 	/**
 	 * Get service connection instance.
 	 *
-	 * @access public
 	 * @param  Object   $client
 	 * @return void
 	 */
@@ -22,7 +20,6 @@ interface UploaderInterface {
 	/**
 	 * Connect to the service.
 	 *
-	 * @access public	
 	 * @param  array    $config
 	 * @return void
 	 */
@@ -31,7 +28,6 @@ interface UploaderInterface {
 	/**
 	 * Upload the file.
 	 *
-	 * @access public
 	 * @param  string   $name   Extension name
 	 * @return boolean
 	 */
@@ -40,7 +36,6 @@ interface UploaderInterface {
 	/**
 	 * Verify that the driver is connected to a service.
 	 *
-	 * @access public
 	 * @return boolean
 	 */
 	public function connected();

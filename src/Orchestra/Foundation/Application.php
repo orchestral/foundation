@@ -29,7 +29,6 @@ class Application {
 	/**
 	 * Construct a new Application instance.
 	 *
-	 * @access public
 	 * @param  \Illuminate\Foundation\Application   $app
 	 * @return void
 	 */
@@ -41,9 +40,7 @@ class Application {
 	/**
 	 * Start the application.
 	 *
-	 * @access public
 	 * @return self
-	 * @throws \Exception
 	 */
 	public function boot()
 	{
@@ -108,7 +105,6 @@ class Application {
 	/**
 	 * Get installation status.
 	 *
-	 * @access public
 	 * @return boolean
 	 */
 	public function installed()
@@ -119,7 +115,6 @@ class Application {
 	/**
 	 * Get Application instance.
 	 *
-	 * @access public
 	 * @return \Illuminate\Foundation\Application
 	 */
 	public function illuminate()
@@ -130,7 +125,6 @@ class Application {
 	/**
 	 *  Return locate handles configuration for a package/app.
 	 *
-	 * @access public
 	 * @param  string   $name   Package name
 	 * @return string
 	 */
@@ -168,7 +162,6 @@ class Application {
 	/**
 	 *  Return handles URL for a package/app.
 	 *
-	 * @access public
 	 * @param  string   $name   Package name
 	 * @return string
 	 */
@@ -180,7 +173,6 @@ class Application {
 	/**
 	 * Get extension handle.
 	 *
-	 * @access public
 	 * @param  string   $name
 	 * @param  string   $default
 	 * @return string
@@ -202,6 +194,10 @@ class Application {
 
 	/**
 	 * Magic method to get services.
+	 *
+	 * @param  string   $method
+	 * @param  array    $parameters
+	 * @return mixed
 	 */
 	public function __call($method, $parameters)
 	{
@@ -223,7 +219,6 @@ class Application {
 	/**
 	 * Create Administration Menu for Orchestra Platform.
 	 *
-	 * @access protected
 	 * @return void
 	 */
 	protected function createAdminMenu()

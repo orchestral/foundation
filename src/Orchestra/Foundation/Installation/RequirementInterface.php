@@ -5,7 +5,6 @@ interface RequirementInterface {
 	/**
 	 * Check all requirement.
 	 *
-	 * @access public
 	 * @return boolean
 	 */
 	public function check();
@@ -13,7 +12,6 @@ interface RequirementInterface {
 	/**
 	 * Get checklist result.
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public function getChecklist();
@@ -21,7 +19,6 @@ interface RequirementInterface {
 	/**
 	 * Get installable status.
 	 * 
-	 * @access public
 	 * @return boolean
 	 */
 	public function isInstallable();
