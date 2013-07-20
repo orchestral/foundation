@@ -5,6 +5,39 @@ use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Resources;
 
 class AdminMenuHandler {
+
+	/**
+	 * ACL instance.
+	 *
+	 * @var \Orchestra\Auth\Acl\Container
+	 */
+	protected $acl;
+
+	/**
+	 * Menu instance.
+	 *
+	 * @var \Orchestra\Widget\Drivers\Menu
+	 */
+	protected $menu;
+
+	/**
+	 * Translator instance.
+	 *
+	 * @var \Illuminate\Translation\Translator
+	 */
+	protected $translator;
+
+	/**
+	 * Construct a new handler.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		$this->menu       = App::menu();
+		$this->acl        = App::acl();
+		$this->translator = App::make('translator');
+	}
 	
 	/**
 	 * Create a handler for `orchestra.ready: admin` event.
@@ -13,9 +46,9 @@ class AdminMenuHandler {
 	 */
 	public function handle()
 	{
-		$acl        = App::acl();
-		$menu       = App::menu();
-		$translator = App::make('translator');
+		$acl        = $this->acl;
+		$menu       = $this->menu;
+		$translator = $this->translator;
 
 		// Add menu when logged-user user has authorization to
 		// `manage users`
@@ -38,6 +71,20 @@ class AdminMenuHandler {
 				->title($translator->trans('orchestra/foundation::title.settings.list'))
 				->link(App::handles('orchestra/foundation::settings'));
 		}
+
+		$this->resources();
+	}
+
+	/**
+	 * Resources link.
+	 * 
+	 * @return void
+	 */
+	protected function resources()
+	{
+		$acl        = $this->acl;
+		$menu       = $this->menu;
+		$translator = $this->translator;
 
 		$resources = Resources::all();
 		$isLoaded  = false;
