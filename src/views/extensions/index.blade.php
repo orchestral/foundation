@@ -28,7 +28,7 @@ use Orchestra\Support\Facades\Extension; ?>
 					<td>
 						<strong>
 							<?php 
-							$active  = Extension::isActive($name);
+							$active  = Extension::activated($name);
 							$started = Extension::started($name);
 							$uid     = str_replace('/', '.', $name);
 
