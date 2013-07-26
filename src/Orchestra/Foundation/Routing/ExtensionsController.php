@@ -80,7 +80,7 @@ class ExtensionsController extends AdminController {
 	{
 		$name = str_replace('.', '/', $name);
 
-		if ( ! Extension::started($name) and ! Extension::active($name)) return App::abort(404);
+		if ( ! Extension::started($name) and ! Extension::isActive($name)) return App::abort(404);
 		
 		Extension::deactivate($name);
 		Messages::add('success', trans('orchestra/foundation::response.extensions.deactivate', compact('name')));
