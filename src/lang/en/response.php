@@ -1,6 +1,8 @@
 <?php
 
 return array(
+	'safe-mode' => 'Orchestra Platform is running on safe mode.',
+	
 	'account' => array(
 		'password' => array(
 			'invalid' => 'Current password does not match our record, please try again',
@@ -9,7 +11,6 @@ return array(
 		'profile' => array(
 			'update' => 'Your profile has been updated',
 		),
-
 	),
 
 	'credential' => array(
