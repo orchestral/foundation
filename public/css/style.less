@@ -224,8 +224,8 @@ section {
 
 .select2-container {
 	&.col, &.columns {
-		padding-left: 0;
-		padding-right: 0;
+		padding-left: 0 !important;
+		padding-right: 0 !important;
 	}
 }
 
@@ -242,25 +242,19 @@ section {
 	margin-bottom: 5px;
 
 	.navbar-form {
-		.select2-container-multi {
-			.select2-choices {
-				min-width: 200px;
-				height: 38px !important;
-			}
-		}
-
 		.select2-container {
 			margin-top: 5px;
 
-			.select2-container-multi {
+			&.select2-container-multi {
 				min-width: 200px;
 				
 				.select2-choices {
 					min-width: 200px;
-					height: 34px;
+					height: 40px !important;
 					
 					.select2-search-field input {
-						max-height: 34px;
+						height: 40px !important;
+						max-height: 40px;
 					}
 				}
 			}

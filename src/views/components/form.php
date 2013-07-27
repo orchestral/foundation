@@ -14,10 +14,10 @@ foreach ($fieldsets as $fieldset) { ?>
 
 		<?php foreach ($fieldset->controls() as $control) { ?>
 		
-		<div class="row<?php echo $errors->has($control->name) ? ' has-error' : '' ?>">
-			<?php echo Form::label($control->name, $control->label, array('class' => 'col-lg-3 control-label')); ?>
+		<div class="form-group<?php echo $errors->has($control->name) ? ' has-error' : '' ?>">
+			<?php echo Form::label($control->name, $control->label, array('class' => 'three columns control-label')); ?>
 			
-			<div class="col-lg-9">
+			<div class="nine columns">
 				<?php echo call_user_func($control->field, $row, $control, array()); ?>
 				<?php if( $control->inlineHelp ) : ?><span class="help-inline"><?php echo $control->inlineHelp; ?></span><?php endif; ?>
 				<?php if( $control->help ) : ?><p class="help-block"><?php echo $control->help; ?></p><?php endif; ?>
@@ -35,7 +35,7 @@ foreach ($fieldsets as $fieldset) { ?>
 		<?php /* Fixed row issue on Bootstrap 3 */ ?>
 	</div>
 	<div class="row">
-		<div class="col-lg-9 col-offset-3">
+		<div class="nine columns offset-by-three">
 			<button type="submit" class="btn btn-primary"><?php echo $submit; ?></button>
 		</div>
 	</div>

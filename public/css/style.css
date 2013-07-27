@@ -65,10 +65,9 @@ section.container.main{clear:both;margin-top:40px;}section.container.main .theme
 .rounded{border-radius:4px;}
 .rounded-bottom{border-bottom-right-radius:4px;border-bottom-left-radius:4px;}
 .rounded-top{border-top-right-radius:4px;border-top-left-radius:4px;}
-.select2-container.col,.select2-container.columns{padding-left:0;padding-right:0;}
+.select2-container.col,.select2-container.columns{padding-left:0 !important;padding-right:0 !important;}
 .table tbody td .meta{font-size:11px;}
-.user-search{background:#eeeff2;margin-bottom:5px;}.user-search .navbar-form .select2-container-multi .select2-choices{min-width:200px;height:38px !important;}
-.user-search .navbar-form .select2-container{margin-top:5px;}.user-search .navbar-form .select2-container .select2-container-multi{min-width:200px;}.user-search .navbar-form .select2-container .select2-container-multi .select2-choices{min-width:200px;height:34px;}.user-search .navbar-form .select2-container .select2-container-multi .select2-choices .select2-search-field input{max-height:34px;}
+.user-search{background:#eeeff2;margin-bottom:5px;}.user-search .navbar-form .select2-container{margin-top:5px;}.user-search .navbar-form .select2-container.select2-container-multi{min-width:200px;}.user-search .navbar-form .select2-container.select2-container-multi .select2-choices{min-width:200px;height:40px !important;}.user-search .navbar-form .select2-container.select2-container-multi .select2-choices .select2-search-field input{height:40px !important;max-height:40px;}
 form label.ui-state-active{background:transparent;}
 form .ui-slider .ui-slider-handle{z-index:1;}
 table.ui-datepicker-calendar td.ui-datepicker-unselectable.ui-state-disabled span.ui-state-default{display:block;padding:0 !important;border:0 none !important;width:30px;height:30px;line-height:30px;text-align:center;font-size:12px;text-decoration:none;font-weight:normal !important;}

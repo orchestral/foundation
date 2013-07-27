@@ -11,18 +11,18 @@
 		<?php echo Form::open(array('url' => handles('orchestra::login'), 'action' => 'POST', 'class' => 'form-horizontal')); ?>
 			<fieldset>
 
-				<div class="row<?php echo $errors->has('email') ? ' error' : ''; ?>">
+				<div class="form-group<?php echo $errors->has('email') ? ' error' : ''; ?>">
 					<?php echo Form::label('email', trans("orchestra/foundation::label.users.email"), array('class' => 'three columns control-label')); ?>
 					<div class="nine columns">
-						<?php echo Form::input('text', 'email', '', array('required' => true, 'tabindex' => 1)); ?>
+						<?php echo Form::input('text', 'email', '', array('required' => true, 'tabindex' => 1, 'class' => 'form-control')); ?>
 						<?php echo $errors->first('email', '<p class="help-block">:message</p>'); ?>
 					</div>
 				</div>
 
-				<div class="row<?php echo $errors->has('password') ? ' error' : ''; ?>">
+				<div class="form-group<?php echo $errors->has('password') ? ' error' : ''; ?>">
 					<?php echo Form::label('password', trans('orchestra/foundation::label.users.password'), array('class' => 'three columns control-label')); ?>
 					<div class="nine columns">
-						<?php echo Form::input('password', 'password', '', array('required' => true, 'tabindex' => 2)); ?>
+						<?php echo Form::input('password', 'password', '', array('required' => true, 'tabindex' => 2, 'class' => 'form-control')); ?>
 						<?php echo $errors->first('password', '<p class="help-block">:message</p>'); ?>
 						<p class="help-block">
 							<a href="<?php echo handles('orchestra::forgot'); ?>">

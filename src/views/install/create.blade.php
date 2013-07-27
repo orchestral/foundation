@@ -33,26 +33,26 @@
 			</div>
 		
 
-			<div class="row<?php echo $errors->has('email') ? ' error' : ''; ?>">
+			<div class="form-group<?php echo $errors->has('email') ? ' error' : ''; ?>">
 				<?php echo Form::label('email', trans('orchestra/foundation::label.users.email'), array('class' => 'three columns control-label')); ?>
 				<div class="nine columns">
-					<?php echo Form::input('email', 'email', '', array('required' => true, 'class' => 'input-xlarge')); ?>
+					<?php echo Form::input('email', 'email', '', array('required' => true, 'class' => 'form-control')); ?>
 					<?php echo $errors->first('email', '<p class="help-block">:message</p>'); ?>
 				</div>
 			</div>
 
-			<div class="row<?php echo $errors->has('password') ? ' error' : ''; ?>">
+			<div class="form-group<?php echo $errors->has('password') ? ' error' : ''; ?>">
 				<?php echo Form::label('password', trans('orchestra/foundation::label.users.password'), array('class' => 'three columns control-label')); ?>
 				<div class="nine columns">
-					<?php echo Form::input('password', 'password', '', array('required' => true, 'class' => 'input-xlarge')); ?>
+					<?php echo Form::input('password', 'password', '', array('required' => true, 'class' => 'form-control')); ?>
 					<?php echo $errors->first('password', '<p class="help-block">:message</p>'); ?>
 				</div>
 			</div>
 
-			<div class="row<?php echo $errors->has('fullname') ? ' error' : ''; ?>">
+			<div class="form-group<?php echo $errors->has('fullname') ? ' error' : ''; ?>">
 				<?php echo Form::label('fullname', trans('orchestra/foundation::label.users.fullname'), array('class' => 'three columns control-label')); ?>
 				<div class="nine columns">
-					<?php echo Form::input('text', 'fullname', 'Administrator', array('required' => true, 'class' => 'input-xlarge')); ?>
+					<?php echo Form::input('text', 'fullname', 'Administrator', array('required' => true, 'class' => 'form-control')); ?>
 					<?php echo $errors->first('fullname', '<p class="help-block">:message</p>'); ?>
 				</div>
 			</div>
@@ -64,10 +64,10 @@
 				<h3><?php echo trans('orchestra/foundation::install.steps.application'); ?></h3>
 			</div>
 
-			<div class="row<?php echo $errors->has('site_name') ? ' error' : ''; ?>">
+			<div class="form-group<?php echo $errors->has('site_name') ? ' error' : ''; ?>">
 				<?php echo Form::label('site_name', trans('orchestra/foundation::label.name'), array('class' => 'three columns control-label')); ?>
 				<div class="nine columns">
-					<?php echo Form::input('text', 'site_name', $siteName, array('required' => true, 'class' => 'input-xlarge')); ?>
+					<?php echo Form::input('text', 'site_name', $siteName, array('required' => true, 'class' => 'form-control')); ?>
 					<?php echo $errors->first('site_name', '<p class="help-block">:message</p>'); ?>
 				</div>
 			</div>
