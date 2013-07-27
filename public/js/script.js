@@ -5,7 +5,7 @@ jQuery(function startOrchestra ($) { 'use strict';
 		$(item).addClass('pagination').parent().removeClass('pagination');
 	});
 
-	$('select[role="switcher"]').each(function onEachSwitcher (i, item) {
+	$('select[role="switcher"]').removeClass('form-control').each(function onEachSwitcher (i, item) {
 		var el = $(item);
 
 		el.toggleSwitch({
@@ -19,7 +19,7 @@ jQuery(function startOrchestra ($) { 'use strict';
 		el.css('display', 'none');
 	})
 
-	$('select[role!="switcher"]').select2();
+	$('select[role!="switcher"]').removeClass('form-control').select2();
 
 	$('*[role="tooltip"]').tooltip();
 

@@ -8,49 +8,49 @@
 			)); ?>
 		</p>
 
-		<div class="row">
+		<div class="form-group">
 			<label class="three columns control-label"><?php echo trans('orchestra/foundation::install.database.type'); ?></label>
 			<div class="nine columns">
-				<input disabled type="text" value="<?php echo $database['driver']; ?>">
+				<input disabled class="form-control" type="text" value="<?php echo $database['driver']; ?>">
 			</div>
 		</div>
 
 		<?php if (isset($database['host'])) : ?>
-		<div class="row">
+		<div class="form-group">
 			<label class="three columns control-label"><?php echo trans('orchestra/foundation::install.database.host'); ?></label>
 			<div class="nine columns">
-				<input disabled type="text" value="<?php echo $database['host']; ?>">
+				<input disabled class="form-control" type="text" value="<?php echo $database['host']; ?>">
 			</div>
 		</div>
 		<?php endif; ?>
 
-		<div class="row">
+		<div class="form-group">
 			<label class="three columns control-label"><?php echo trans('orchestra/foundation::install.database.name'); ?></label>
 			<div class="nine columns">
-				<input disabled type="text" value="<?php echo $database['database']; ?>">
+				<input disabled class="form-control" type="text" value="<?php echo $database['database']; ?>">
 			</div>
 		</div>
 
 		<?php if (isset($database['username'])) : ?>
-		<div class="row">
+		<div class="form-group">
 			<label class="three columns control-label"><?php echo trans('orchestra/foundation::install.database.username'); ?></label>
 			<div class="nine columns">
-				<input disabled type="text" value="<?php echo $database['username']; ?>">
+				<input disabled class="form-control" type="text" value="<?php echo $database['username']; ?>">
 			</div>
 		</div>
 		<?php endif;
 
 		if (isset($database['password'])) : ?>
-		<div class="row">
+		<div class="form-group">
 			<label class="three columns control-label"><?php echo trans('orchestra/foundation::install.database.password'); ?></label>
 			<div class="nine columns">
-				<input disabled type="text" value="<?php echo $database['password']; ?>">
+				<input disabled class="form-control" type="text" value="<?php echo $database['password']; ?>">
 				<p class="help-block"><?php echo trans('orchestra/foundation::install.hide-password'); ?></p>
 			</div>
 		</div>
 		<?php endif; ?>
 
-		<div class="row">
+		<div class="form-group">
 			<label class="three columns control-label"><?php echo trans('orchestra/foundation::install.connection.status'); ?></label>
 			
 			<div class="nine columns">
