@@ -44,11 +44,9 @@ Event::listen('composing: *', function ()
 {
 	if ('on' === App::make('session')->get('orchestra.safemode'))
 	{
-		$messages = App::make('orchestra.messages')->retrieve();
-
-		($messages instanceof Messages) or $messages = new Messages;
-
-		$messages->add('info', trans('orchestra/foundation::response.safe-mode'));
-		$messages->save();
+		App::make('orchestra.messages')->extend(function ($messages)
+		{
+			$messages->add('info', trans('orchestra/foundation::response.safe-mode'));
+		});
 	}
 });
