@@ -38,7 +38,7 @@ class AccountController extends AdminController {
 	public function getIndex()
 	{
 		$eloquent = Auth::user();
-		$form     = AccountPresenter::profileForm($eloquent, handles('orchestra/foundation::account'));
+		$form     = AccountPresenter::profileForm($eloquent, handles('orchestra::account'));
 
 		Event::fire('orchestra.form: user.account', array($eloquent, $form));
 		Site::set('title', trans("orchestra/foundation::title.account.profile"));
@@ -65,7 +65,7 @@ class AccountController extends AdminController {
 
 		if ($validation->fails())
 		{
-			return Redirect::to(handles('orchestra/foundation::account'))
+			return Redirect::to(handles('orchestra::account'))
 					->withInput()
 					->withErrors($validation);
 		}
@@ -95,7 +95,7 @@ class AccountController extends AdminController {
 			)));
 		}
 
-		return Redirect::to(handles('orchestra/foundation::account'));
+		return Redirect::to(handles('orchestra::account'));
 	}
 
 	/**
@@ -134,7 +134,7 @@ class AccountController extends AdminController {
 
 		if ($validation->fails())
 		{
-			return Redirect::to(handles('orchestra/foundation::account/password'))
+			return Redirect::to(handles('orchestra::account/password'))
 					->withInput()
 					->withErrors($validation);
 		}
@@ -162,7 +162,7 @@ class AccountController extends AdminController {
 			Messages::add('error', trans('orchestra/foundation::response.account.password.invalid'));
 		}
 
-		return Redirect::to(handles('orchestra/foundation::account/password'));
+		return Redirect::to(handles('orchestra::account/password'));
 	}
 
 	/**

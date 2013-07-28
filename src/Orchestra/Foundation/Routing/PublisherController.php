@@ -33,7 +33,7 @@ class PublisherController extends AdminController {
 	{
 		if (Publisher::connected()) Publisher::execute();
 
-		return Redirect::to(handles('orchestra/foundation::publisher/ftp'));
+		return Redirect::to(handles('orchestra::publisher/ftp'));
 	}
 	
 
@@ -74,13 +74,13 @@ class PublisherController extends AdminController {
 			Session::forget('orchestra.ftp');
 			Messages::add('error', $e->getMessage());
 
-			return Redirect::to(handles('orchestra/foundation::publisher/ftp'))->withInput();
+			return Redirect::to(handles('orchestra::publisher/ftp'))->withInput();
 		}
 
 		Session::put('orchestra.ftp', $input);
 
 		if (Publisher::connected() and ! empty($queues)) Publisher::execute();
 
-		return Redirect::to(handles('orchestra/foundation::publisher/ftp'));
+		return Redirect::to(handles('orchestra::publisher/ftp'));
 	}
 }

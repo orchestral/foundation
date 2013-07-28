@@ -54,7 +54,7 @@ class AccountPresenter {
 			$form->with($model);
 			$form->layout('orchestra/foundation::components.form');
 			$form->attributes(array(
-				'url'    => handles('orchestra/foundation::account/password'),
+				'url'    => handles('orchestra::account/password'),
 				'method' => 'POST',
 			));
 

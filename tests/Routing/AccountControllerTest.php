@@ -61,7 +61,7 @@ class AccountControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::account')->andReturn('account');
+			->with('orchestra::account')->andReturn('account');
 		\Illuminate\Support\Facades\DB::shouldReceive('transaction')->once()
 			->with(m::type('Closure'))->andReturnUsing(
 				function ($c)
@@ -104,7 +104,7 @@ class AccountControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::account')->andReturn('account');
+			->with('orchestra::account')->andReturn('account');
 		\Illuminate\Support\Facades\DB::shouldReceive('transaction')->once()
 			->with(m::type('Closure'))->andThrow('\Exception');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
@@ -140,7 +140,7 @@ class AccountControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::account')->andReturn('account');
+			->with('orchestra::account')->andReturn('account');
 
 		$this->call('POST', 'admin/account', $input);
 		$this->assertRedirectedTo('account');
@@ -204,7 +204,7 @@ class AccountControllerTest extends TestCase {
 					$c();
 				});
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::account/password')->andReturn('account/password');
+			->with('orchestra::account/password')->andReturn('account/password');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('success', m::any())->andReturn(null);
 
@@ -246,7 +246,7 @@ class AccountControllerTest extends TestCase {
 		\Illuminate\Support\Facades\DB::shouldReceive('transaction')->once()
 			->with(m::type('Closure'))->andThrow('\Exception');
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::account/password')->andReturn('account/password');
+			->with('orchestra::account/password')->andReturn('account/password');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('error', m::any())->andReturn(null);
 
@@ -284,7 +284,7 @@ class AccountControllerTest extends TestCase {
 		\Illuminate\Support\Facades\Hash::shouldReceive('check')->once()
 			->with($input['current_password'], 'hashedstring')->andReturn(false);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::account/password')->andReturn('account/password');
+			->with('orchestra::account/password')->andReturn('account/password');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('error', m::any())->andReturn(null);
 
@@ -319,7 +319,7 @@ class AccountControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::account/password')->andReturn('account/password');
+			->with('orchestra::account/password')->andReturn('account/password');
 
 		$this->call('POST', 'admin/account/password', $input);
 		$this->assertRedirectedTo('account/password');

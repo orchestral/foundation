@@ -85,7 +85,7 @@ class ExtensionsController extends AdminController {
 		Extension::deactivate($name);
 		Messages::add('success', trans('orchestra/foundation::response.extensions.deactivate', compact('name')));
 
-		return Redirect::to(handles('orchestra/foundation::extensions'));
+		return Redirect::to(handles('orchestra::extensions'));
 	}
 
 	/**
@@ -141,7 +141,7 @@ class ExtensionsController extends AdminController {
 
 		if ($validation->fails())
 		{
-			return Redirect::to(handles("orchestra/foundation::extensions/configure/{$uid}"))
+			return Redirect::to(handles("orchestra::extensions/configure/{$uid}"))
 					->withInput()
 					->withErrors($validation);
 		}
@@ -161,7 +161,7 @@ class ExtensionsController extends AdminController {
 
 		Messages::add('success', trans("orchestra/foundation::response.extensions.configure", compact('name')));
 
-		return Redirect::to(handles('orchestra/foundation::extensions'));
+		return Redirect::to(handles('orchestra::extensions'));
 	}
 
 	/**
@@ -212,9 +212,9 @@ class ExtensionsController extends AdminController {
 
 			// In events where extension can't be activated due to 
 			// bundle:publish we need to put this under queue.
-			return Redirect::to(handles('orchestra/foundation::publisher'));
+			return Redirect::to(handles('orchestra::publisher'));
 		}
 
-		return Redirect::to(handles('orchestra/foundation::extensions'));
+		return Redirect::to(handles('orchestra::extensions'));
 	}
 }

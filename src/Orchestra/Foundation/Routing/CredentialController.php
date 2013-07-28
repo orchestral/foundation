@@ -49,8 +49,7 @@ class CredentialController extends AdminController {
 	{
 		Site::set('title', trans("orchestra/foundation::title.login"));
 
-		return View::make('orchestra/foundation::credential.login')
-			->with('redirect', Session::get('orchestra.redirect', handles('orchestra/foundation::/')));
+		return View::make('orchestra/foundation::credential.login');
 	}
 
 	/**
@@ -70,7 +69,7 @@ class CredentialController extends AdminController {
 		// login page with the errors.
 		if ($validation->fails())
 		{
-			return Redirect::to(handles('orchestra/foundation::login'))
+			return Redirect::to(handles('orchestra::login'))
 					->withInput()
 					->withErrors($validation);
 		}
@@ -79,12 +78,12 @@ class CredentialController extends AdminController {
 		{
 			Messages::add('success', trans('orchestra/foundation::response.credential.logged-in'));
 
-			return Redirect::intended(handles('orchestra/foundation::/'));
+			return Redirect::intended(handles('orchestra::/'));
 		}
 
 		Messages::add('error', trans('orchestra/foundation::response.credential.invalid-combination'));
 
-		return Redirect::to(handles('orchestra/foundation::login'));
+		return Redirect::to(handles('orchestra::login'));
 	}
 
 	/**
@@ -99,7 +98,7 @@ class CredentialController extends AdminController {
 		Auth::logout();
 		Messages::add('success', trans('orchestra/foundation::response.credential.logged-out'));
 		
-		return Redirect::intended(handles('orchestra/foundation::login'));
+		return Redirect::intended(handles('orchestra::login'));
 	}
 
 	/**

@@ -114,7 +114,7 @@ class InstallControllerTest extends TestCase {
 			});
 
 		$this->call('POST', 'admin/install/create', $input);
-		$this->assertRedirectedTo(handles('orchestra/foundation::install/done'));
+		$this->assertRedirectedTo(handles('orchestra::install/done'));
 	}
 
 	/**
@@ -134,7 +134,7 @@ class InstallControllerTest extends TestCase {
 			});
 
 		$this->call('POST', 'admin/install/create', $input);
-		$this->assertRedirectedTo(handles('orchestra/foundation::install/create'));
+		$this->assertRedirectedTo(handles('orchestra::install/create'));
 	}
 
 	/**

@@ -79,7 +79,7 @@ class SettingsController extends AdminController {
 
 		if ($validation->fails())
 		{
-			return Redirect::to(handles('orchestra/foundation::settings'))
+			return Redirect::to(handles('orchestra::settings'))
 					->withInput()
 					->withErrors($validation);
 		}
@@ -112,7 +112,7 @@ class SettingsController extends AdminController {
 		Event::fire('orchestra.saved: settings', array($memory, $input));
 		Messages::add('success', trans('orchestra/foundation::response.settings.update'));
 
-		return Redirect::to(handles('orchestra/foundation::settings'));
+		return Redirect::to(handles('orchestra::settings'));
 	}
 
 	/**
@@ -126,6 +126,6 @@ class SettingsController extends AdminController {
 		App::make('orchestra.publisher.migrate')->foundation();
 
 		Messages::add('success', trans('orchestra/foundation::response.settings.system-update'));
-		return Redirect::to(handles('orchestra/foundation::settings'));
+		return Redirect::to(handles('orchestra::settings'));
 	}
 }

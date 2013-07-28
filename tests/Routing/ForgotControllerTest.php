@@ -77,7 +77,7 @@ class ForgotControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\Auth')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::forgot')->andReturn('forgot');
+			->with('orchestra::forgot')->andReturn('forgot');
 
 		$validation->shouldReceive('with')->once()->with(m::type('Array'))->andReturn($validation)
 			->shouldReceive('fails')->once()->andReturn(true);
@@ -122,7 +122,7 @@ class ForgotControllerTest extends TestCase {
 
 		\Illuminate\Support\Facades\Password::swap($password = m::mock('PasswordBroker'));
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::login')->andReturn('login');
+			->with('orchestra::login')->andReturn('login');
 		$user->shouldReceive('setAttribute')->once()
 				->with('password', 'foo')->andReturn(null)
 			->shouldReceive('save')->once()->andReturn(null);

@@ -91,7 +91,7 @@ class Application {
 
 			$this->services['orchestra.menu']->add('install')
 				->title('Install')
-				->link($this->handles('orchestra/foundation::install'));
+				->link($this->handles('orchestra::install'));
 
 			$app['orchestra.installed'] = false;
 		}
@@ -228,7 +228,7 @@ class Application {
 
 		$menu->add('home')
 			->title($this->app['translator']->get('orchestra/foundation::title.home'))
-			->link($this->handles('orchestra/foundation::/'));
+			->link($this->handles('orchestra::/'));
 
 		$this->app['events']->listen('orchestra.ready: admin', $handler);
 	}

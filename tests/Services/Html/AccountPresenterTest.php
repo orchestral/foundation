@@ -78,7 +78,7 @@ class AccountPresenterTest extends TestCase {
 		$form->shouldReceive('with')->once()->with($model)->andReturn(null)
 			->shouldReceive('layout')->once()->with('orchestra/foundation::components.form')->andReturn(null)
 			->shouldReceive('attributes')->once()
-				->with(array('url' => handles('orchestra/foundation::account/password'), 'method' => 'POST'))->andReturn(null)
+				->with(array('url' => handles('orchestra::account/password'), 'method' => 'POST'))->andReturn(null)
 			->shouldReceive('hidden')->once()->with('id')->andReturn(null)
 			->shouldReceive('fieldset')->once()->with(m::type('Closure'))->andReturnUsing(
 				function ($c) use ($fieldset)

@@ -173,7 +173,7 @@ class UserPresenterTest extends TestCase {
 		$form->shouldReceive('with')->once()->andReturn(null)
 			->shouldReceive('layout')->once()->with('orchestra/foundation::components.form')->andReturn(null)
 			->shouldReceive('attributes')->once()
-				->with(array('url' => handles('orchestra/foundation::users/1'), 'method' => 'PUT'))->andReturn(null)
+				->with(array('url' => handles('orchestra::users/1'), 'method' => 'PUT'))->andReturn(null)
 			->shouldReceive('hidden')->once()->with('id')->andReturn(null)
 			->shouldReceive('fieldset')->once()->with(m::type('Closure'))->andReturnUsing(
 				function ($c) use ($fieldset)

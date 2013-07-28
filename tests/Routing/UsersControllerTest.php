@@ -122,7 +122,7 @@ class UsersControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\User')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::users')->andReturn('users');
+			->with('orchestra::users')->andReturn('users');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('success', m::any())->andReturn(null);
 		\Illuminate\Support\Facades\DB::shouldReceive('transaction')->once()
@@ -172,7 +172,7 @@ class UsersControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\User')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::users')->andReturn('users');
+			->with('orchestra::users')->andReturn('users');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('error', m::any())->andReturn(null);
 		\Illuminate\Support\Facades\DB::shouldReceive('transaction')->once()
@@ -213,7 +213,7 @@ class UsersControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\User')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::users/create')->andReturn('users/create');
+			->with('orchestra::users/create')->andReturn('users/create');
 
 		$this->call('POST', 'admin/users', $input);
 		$this->assertRedirectedTo('users/create');
@@ -258,7 +258,7 @@ class UsersControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\User')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::users')->andReturn('users');
+			->with('orchestra::users')->andReturn('users');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('success', m::any())->andReturn(null);
 		\Illuminate\Support\Facades\DB::shouldReceive('transaction')->once()
@@ -310,7 +310,7 @@ class UsersControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\User')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::users')->andReturn('users');
+			->with('orchestra::users')->andReturn('users');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('error', m::any())->andReturn(null);
 		\Illuminate\Support\Facades\DB::shouldReceive('transaction')->once()
@@ -348,7 +348,7 @@ class UsersControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\User')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::users/foo/edit')->andReturn('users/foo/edit');
+			->with('orchestra::users/foo/edit')->andReturn('users/foo/edit');
 
 		$this->call('PUT', 'admin/users/foo', $input);
 		$this->assertRedirectedTo('users/foo/edit');
@@ -375,7 +375,7 @@ class UsersControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('orchestra.user')->andReturn($builder);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::users')->andReturn('users');
+			->with('orchestra::users')->andReturn('users');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('success', m::any())->andReturn(null);
 		\Illuminate\Support\Facades\Auth::shouldReceive('user')->once()->andReturn($auth);
@@ -410,7 +410,7 @@ class UsersControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('orchestra.user')->andReturn($builder);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::users')->andReturn('users');
+			->with('orchestra::users')->andReturn('users');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('error', m::any())->andReturn(null);
 		\Illuminate\Support\Facades\Auth::shouldReceive('user')->once()->andReturn($auth);
