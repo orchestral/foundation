@@ -8,7 +8,7 @@ use Orchestra\Support\Facades\App;
 $navbar = new Fluent(array(
 	'id'         => 'main',
 	'title'      => memorize('site.name', 'Orchestra'),
-	'url'        => handles('orchestra/foundation::/'),
+	'url'        => handles('orchestra::/'),
 	'attributes' => array('class' => 'navbar-fixed-top navbar-inverse'),
 	'menu'       => View::make('orchestra/foundation::layout.widgets.menu', array('menu' => App::menu('orchestra'))),
 	'subMenu'    => View::make('orchestra/foundation::layout.widgets.usernav'),
@@ -23,7 +23,7 @@ jQuery(function ($) {
 	$('a[rel="user-menu"]').on('click', function (e) {
 		e.preventDefault();
 		
-		window.location.href = "<?php echo handles('orchestra/foundation::login'); ?>";
+		window.location.href = "<?php echo handles('orchestra::login'); ?>";
 
 		return false;
 	});

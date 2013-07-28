@@ -67,11 +67,11 @@ class InstallControllerTest extends TestCase {
 	}
 
 	/**
-	 * Test GET /admin/install/create
+	 * Test GET /admin/install/prepare
 	 * 
 	 * @test
 	 */
-	public function testGetCreateAction()
+	public function testGetPrepareAction()
 	{
 		$installer = m::mock('\Orchestra\Foundation\Installation\InstallerInterface');
 		$installer->shouldReceive('migrate')->once()->andReturn(null);
@@ -81,6 +81,17 @@ class InstallControllerTest extends TestCase {
 				return $installer;
 			});
 
+		$this->call('GET', 'admin/install/prepare');
+		$this->assertRedirectedTo(handles('orchestra::install/create'));
+	}
+
+	/**
+	 * Test GET /admin/install/create
+	 * 
+	 * @test
+	 */
+	public function testGetCreateAction()
+	{
 		$this->call('GET', 'admin/install/create');
 		$this->assertResponseOk();
 		$this->assertViewHas('siteName', 'Orchestra Platform');

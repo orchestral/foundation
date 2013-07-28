@@ -43,7 +43,7 @@
 		<hr>
 		<div class="form-group">
 			<div class="nine columns offset-by-three">
-				<a href="<?php echo handles('orchestra/foundation::install/create'); ?>" class="btn btn-primary">
+				<a href="<?php echo handles('orchestra::install/prepare'); ?>" class="btn btn-primary">
 					<?php echo trans('orchestra/foundation::label.next'); ?>
 				</a>
 			</div>

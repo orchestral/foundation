@@ -14,18 +14,18 @@ if (Site::get('navigation::usernav', true)) : ?>
 
 		<ul class="dropdown-menu">
 			<li>
-				<a href="<?php echo handles('orchestra/foundation::account'); ?>">
+				<a href="<?php echo handles('orchestra::account'); ?>">
 					<?php echo trans('orchestra/foundation::title.account.profile'); ?>
 				</a>
 			</li>
 			<li>
-				<a href="<?php echo handles('orchestra/foundation::account/password'); ?>">
+				<a href="<?php echo handles('orchestra::account/password'); ?>">
 					<?php echo trans('orchestra/foundation::title.account.password'); ?>
 				</a>
 			</li>
 			<li class="divider"></li>
 			<li>
-				<a href="<?php echo handles('orchestra/foundation::logout'); ?>">
+				<a href="<?php echo handles('orchestra::logout'); ?>">
 					<?php echo trans('orchestra/foundation::title.logout'); ?>
 				</a>
 			</li>

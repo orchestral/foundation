@@ -94,8 +94,20 @@ class InstallController extends BaseController {
 	}
 
 	/**
-	 * Migrate database schema for Orchestra Platform and show create 
-	 * adminstrator page.
+	 * Migrate database schema for Orchestra Platform.
+	 *
+	 * GET (:orchestra)/install/prepare
+	 *
+	 * @return Redirect
+	 */
+	public function getPrepare()
+	{
+		$this->installer->migrate();
+
+		return Redirect::to(handles('orchestra::install/create'));
+	}
+	/**
+	 * Show create adminstrator page.
 	 *
 	 * GET (:orchestra)/install/create
 	 *
@@ -103,8 +115,6 @@ class InstallController extends BaseController {
 	 */
 	public function getCreate()
 	{
-		$this->installer->migrate();
-
 		return View::make('orchestra/foundation::install.create')
 			->with('siteName', 'Orchestra Platform');
 	}
@@ -120,10 +130,10 @@ class InstallController extends BaseController {
 	{
 		if ( ! $this->installer->createAdmin(Input::all()))
 		{
-			return Redirect::to(handles('orchestra/foundation::install/create'));
+			return Redirect::to(handles('orchestra::install/create'));
 		}
 
-		return Redirect::to(handles('orchestra/foundation::install/done'));
+		return Redirect::to(handles('orchestra::install/done'));
 	}
 
 	/**
