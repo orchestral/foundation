@@ -196,7 +196,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals('/', $stub->handles('app::/'));
 		$this->assertEquals('info', $stub->handles('info'));
-		$this->assertEquals('admin/installer', $stub->handles('orchestra/foundation::installer'));
-		$this->assertEquals('admin/installer', $stub->handles('orchestra/foundation::installer/'));
+		$this->assertEquals('admin/installer', $stub->handles('orchestra::installer'));
+		$this->assertEquals('admin/installer', $stub->handles('orchestra::installer/'));
 	}
 }

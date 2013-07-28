@@ -114,7 +114,7 @@ class UsersController extends AdminController {
 
 		if ($validation->fails())
 		{
-			return Redirect::to(handles("orchestra/foundation::users/create"))
+			return Redirect::to(handles("orchestra::users/create"))
 					->withInput()
 					->withErrors($validation);
 		}
@@ -125,7 +125,7 @@ class UsersController extends AdminController {
 
 		$this->saving($user, $input, 'create');
 
-		return Redirect::to(handles('orchestra/foundation::users'));
+		return Redirect::to(handles('orchestra::users'));
 	}
 
 	/**
@@ -148,7 +148,7 @@ class UsersController extends AdminController {
 
 		if ($validation->fails())
 		{
-			return Redirect::to(handles("orchestra/foundation::users/{$id}/edit"))
+			return Redirect::to(handles("orchestra::users/{$id}/edit"))
 					->withInput()
 					->withErrors($validation);
 		}
@@ -159,7 +159,7 @@ class UsersController extends AdminController {
 
 		$this->saving($user, $input, 'update');
 
-		return Redirect::to(handles('orchestra/foundation::users'));
+		return Redirect::to(handles('orchestra::users'));
 	}
 
 	/**
@@ -253,7 +253,7 @@ class UsersController extends AdminController {
 			)));
 		}
 
-		return Redirect::to(handles('orchestra/foundation::users'));
+		return Redirect::to(handles('orchestra::users'));
 	}
 
 	/**

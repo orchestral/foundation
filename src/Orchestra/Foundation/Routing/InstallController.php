@@ -106,6 +106,7 @@ class InstallController extends BaseController {
 
 		return Redirect::to(handles('orchestra::install/create'));
 	}
+	
 	/**
 	 * Show create adminstrator page.
 	 *

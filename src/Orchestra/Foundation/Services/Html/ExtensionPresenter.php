@@ -22,7 +22,7 @@ class ExtensionPresenter {
 			$form->with($model);
 			$form->layout('orchestra/foundation::components.form');
 			$form->attributes(array(
-				'url'    => handles("orchestra/foundation::extensions/configure/{$uid}"),
+				'url'    => handles("orchestra::extensions/configure/{$uid}"),
 				'method' => "POST",
 			));
 
@@ -49,7 +49,7 @@ class ExtensionPresenter {
 					{
 						$uid = str_replace('/', '.', $name);
 						return HTML::link(
-							handles("orchestra/foundation::extensions/update/{$uid}"),
+							handles("orchestra::extensions/update/{$uid}"),
 							trans('orchestra/foundation::label.extensions.actions.update'),
 							array('class' => 'btn btn-info')
 						);

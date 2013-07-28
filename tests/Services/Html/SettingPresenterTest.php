@@ -54,7 +54,7 @@ class SettingPresenterTest extends TestCase {
 		$form->shouldReceive('with')->once()->with($model)->andReturn(null)
 			->shouldReceive('layout')->once()->with('orchestra/foundation::components.form')->andReturn(null)
 			->shouldReceive('attributes')->once()
-				->with(array('url' => handles('orchestra/foundation::settings'), 'method' => 'POST'))->andReturn(null)
+				->with(array('url' => handles('orchestra::settings'), 'method' => 'POST'))->andReturn(null)
 			->shouldReceive('fieldset')->once()
 				->with(trans('orchestra/foundation::label.settings.application'), m::type('Closure'))->andReturnUsing(
 					function ($t, $c) use ($siteFieldset)

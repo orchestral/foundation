@@ -25,7 +25,7 @@ class RegisterControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('orchestra.user')->andReturn($user);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::register')->andReturn('register');
+			->with('orchestra::register')->andReturn('register');
 		\Orchestra\Support\Facades\Form::swap($form = m::mock('FormGrid'));
 
 		$form->shouldReceive('of')->once()->with('orchestra.account', m::type('Closure'))->andReturn($form)
@@ -79,7 +79,7 @@ class RegisterControllerTest extends TestCase {
 			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('memory')->once()->andReturn($memory);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::login')->andReturn('login');
+			->with('orchestra::login')->andReturn('login');
 		\Illuminate\Support\Facades\DB::shouldReceive('transaction')->once()
 			->with(m::type('Closure'))->andReturnUsing(
 				function ($c)
@@ -137,7 +137,7 @@ class RegisterControllerTest extends TestCase {
 			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('memory')->once()->andReturn($memory);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::login')->andReturn('login');
+			->with('orchestra::login')->andReturn('login');
 		\Illuminate\Support\Facades\DB::shouldReceive('transaction')->once()
 			->with(m::type('Closure'))->andReturnUsing(
 				function ($c)
@@ -187,7 +187,7 @@ class RegisterControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::register')->andReturn('register');
+			->with('orchestra::register')->andReturn('register');
 		\Illuminate\Support\Facades\DB::shouldReceive('transaction')->once()
 			->with(m::type('Closure'))->andThrow('\Exception');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
@@ -217,7 +217,7 @@ class RegisterControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::register')->andReturn('register');
+			->with('orchestra::register')->andReturn('register');
 
 		$this->call('POST', 'admin/register', $input);
 		$this->assertRedirectedTo('register');

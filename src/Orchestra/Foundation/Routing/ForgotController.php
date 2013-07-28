@@ -58,7 +58,7 @@ class ForgotController extends AdminController {
 			// to tell it the the user. This might not be important but a
 			// good practice to make sure all form use the same e-mail
 			// address validation
-			return Redirect::to(handles('orchestra/foundation::forgot'))
+			return Redirect::to(handles('orchestra::forgot'))
 					->withInput()
 					->withErrors($validation);
 		}
@@ -103,7 +103,7 @@ class ForgotController extends AdminController {
 			$user->password = $password;
 			$user->save();
 
-			return Redirect::to(handles('orchestra/foundation::login'));
+			return Redirect::to(handles('orchestra::login'));
 		});
 	}
 }
