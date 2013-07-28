@@ -24,7 +24,7 @@ class ResourcePresenter {
 				$column->escape(false);
 				$column->value(function ($row)
 				{
-					$link = HTML::link(handles("orchestra/foundation::resources/{$row->id}"), e($row->name));
+					$link = HTML::link(handles("orchestra::resources/{$row->id}"), e($row->name));
 					return HTML::create('strong', HTML::raw($link));
 				});
 			});

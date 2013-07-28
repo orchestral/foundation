@@ -56,7 +56,7 @@ class AdminMenuHandler {
 		{
 			$menu->add('users')
 				->title($translator->trans('orchestra/foundation::title.users.list'))
-				->link(App::handles('orchestra/foundation::users'));
+				->link(App::handles('orchestra::users'));
 		}
 
 		// Add menu when logged-in user has authorization to
@@ -65,11 +65,11 @@ class AdminMenuHandler {
 		{
 			$menu->add('extensions', '>:home')
 				->title($translator->trans('orchestra/foundation::title.extensions.list'))
-				->link(App::handles('orchestra/foundation::extensions'));
+				->link(App::handles('orchestra::extensions'));
 
 			$menu->add('settings')
 				->title($translator->trans('orchestra/foundation::title.settings.list'))
-				->link(App::handles('orchestra/foundation::settings'));
+				->link(App::handles('orchestra::settings'));
 		}
 
 		$this->resources();
@@ -92,7 +92,7 @@ class AdminMenuHandler {
 		{
 			$menu->add('resources', '>:extensions')
 				->title($translator->trans('orchestra/foundation::title.resources.list'))
-				->link(App::handles('orchestra/foundation::resources'));
+				->link(App::handles('orchestra::resources'));
 		};
 
 		// Resources menu should only be appended if there is actually
@@ -111,7 +111,7 @@ class AdminMenuHandler {
 
 				$menu->add($name, '^:resources')
 					->title($option->name)
-					->link(App::handles("orchestra/foundation::resources/{$name}"));
+					->link(App::handles("orchestra::resources/{$name}"));
 			}
 		}
 	}

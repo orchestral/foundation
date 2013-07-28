@@ -24,7 +24,7 @@ class PublisherControllerTest extends TestCase {
 		\Orchestra\Support\Facades\Publisher::shouldReceive('execute')->once()->andReturn(true);
 
 		$this->call('GET', 'admin/publisher');
-		$this->assertRedirectedTo(handles('orchestra/foundation::publisher/ftp'));
+		$this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
 	}
 
 	/**
@@ -63,7 +63,7 @@ class PublisherControllerTest extends TestCase {
 		$input['connection-type'] = 'ftp';
 
 		$this->call('POST', 'admin/publisher/ftp', $input);
-		$this->assertRedirectedTo(handles('orchestra/foundation::publisher/ftp'));
+		$this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
 	}
 
 	/**
@@ -89,6 +89,6 @@ class PublisherControllerTest extends TestCase {
 		$input['connection-type'] = 'ftp';
 
 		$this->call('POST', 'admin/publisher/ftp', $input);
-		$this->assertRedirectedTo(handles('orchestra/foundation::publisher/ftp'));
+		$this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
 	}
 }

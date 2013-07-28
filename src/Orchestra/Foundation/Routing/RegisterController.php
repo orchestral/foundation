@@ -43,7 +43,7 @@ class RegisterController extends AdminController {
 	{
 		$eloquent = App::make('orchestra.user');
 		$title    = 'orchestra/foundation::title.register';
-		$form     = AccountPresenter::profileForm($eloquent, handles('orchestra/foundation::register'));
+		$form     = AccountPresenter::profileForm($eloquent, handles('orchestra::register'));
 		
 		$form->extend(function ($form) use ($title)
 		{
@@ -76,7 +76,7 @@ class RegisterController extends AdminController {
 		// back to registration page with the errors
 		if ($validation->fails())
 		{
-			return Redirect::to(handles('orchestra/foundation::register'))
+			return Redirect::to(handles('orchestra::register'))
 					->withInput()
 					->withErrors($validation);
 		}
@@ -111,7 +111,7 @@ class RegisterController extends AdminController {
 				'error' => $e->getMessage(),
 			)));
 			
-			return Redirect::to(handles('orchestra/foundation::register'));
+			return Redirect::to(handles('orchestra::register'));
 		}
 
 		return $this->sendEmail($user, $password);
@@ -145,7 +145,7 @@ class RegisterController extends AdminController {
 			Messages::add('success', trans('orchestra/foundation::response.credential.register.email-send'));
 		}
 
-		return Redirect::intended(handles('orchestra/foundation::login'));
+		return Redirect::intended(handles('orchestra::login'));
 	}
 
 	/**

@@ -20,7 +20,7 @@ class SettingPresenter {
 			$form->with($model);
 			$form->layout('orchestra/foundation::components.form');
 			$form->attributes(array(
-				'url'    => handles('orchestra/foundation::settings'),
+				'url'    => handles('orchestra::settings'),
 				'method' => 'POST',
 			));
 

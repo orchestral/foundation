@@ -72,7 +72,7 @@ class SettingsControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\Setting')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::settings')->andReturn('settings');
+			->with('orchestra::settings')->andReturn('settings');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('success', m::any())->andReturn(null);
 
@@ -113,7 +113,7 @@ class SettingsControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('Orchestra\Foundation\Services\Validation\Setting')->andReturn($validation);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::settings')->andReturn('settings');
+			->with('orchestra::settings')->andReturn('settings');
 
 		$this->call('POST', 'admin/settings', $input);
 		$this->assertRedirectedTo('settings');
@@ -138,7 +138,7 @@ class SettingsControllerTest extends TestCase {
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
 			->with('orchestra.publisher.migrate')->andReturn($migrate);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::settings')->andReturn('settings');
+			->with('orchestra::settings')->andReturn('settings');
 
 		$this->call('GET', 'admin/settings/update');
 		$this->assertRedirectedTo('settings');

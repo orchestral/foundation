@@ -46,7 +46,7 @@ class ExtensionsControllerTest extends TestCase {
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('success', m::any())->andReturn(null);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::extensions')->andReturn('extensions');
+			->with('orchestra::extensions')->andReturn('extensions');
 
 		$this->call('GET', 'admin/extensions/activate/laravel.framework');
 		$this->assertRedirectedTo('extensions');
@@ -66,7 +66,7 @@ class ExtensionsControllerTest extends TestCase {
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('success', m::any())->andReturn(null);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::extensions')->andReturn('extensions');
+			->with('orchestra::extensions')->andReturn('extensions');
 
 		$this->call('GET', 'admin/extensions/deactivate/laravel.framework');
 		$this->assertRedirectedTo('extensions');
@@ -133,7 +133,7 @@ class ExtensionsControllerTest extends TestCase {
 			->with('laravel/framework')->andReturn(true);
 		\Orchestra\Support\Facades\App::shouldReceive('memory')->once()->andReturn($memory);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::extensions')->andReturn('extensions');
+			->with('orchestra::extensions')->andReturn('extensions');
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('success', m::any())->andReturn(null);
 
@@ -165,7 +165,7 @@ class ExtensionsControllerTest extends TestCase {
 		\Orchestra\Support\Facades\Extension::shouldReceive('started')->once()
 			->with('laravel/framework')->andReturn(true);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::extensions/configure/laravel.framework')->andReturn('extensions');
+			->with('orchestra::extensions/configure/laravel.framework')->andReturn('extensions');
 		
 		$this->call('POST', 'admin/extensions/configure/laravel.framework', $input);
 		$this->assertRedirectedTo('extensions');
@@ -187,7 +187,7 @@ class ExtensionsControllerTest extends TestCase {
 		\Orchestra\Support\Facades\Messages::shouldReceive('add')->once()
 			->with('success', m::any())->andReturn(null);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::extensions')->andReturn('extensions');
+			->with('orchestra::extensions')->andReturn('extensions');
 
 		$this->call('GET', 'admin/extensions/update/laravel.framework');
 		$this->assertRedirectedTo('extensions');
@@ -207,7 +207,7 @@ class ExtensionsControllerTest extends TestCase {
 		\Orchestra\Support\Facades\Publisher::shouldReceive('queue')->once()
 			->with('laravel/framework')->andReturn(null);
 		\Orchestra\Support\Facades\App::shouldReceive('handles')->once()
-			->with('orchestra/foundation::publisher')->andReturn('publisher');
+			->with('orchestra::publisher')->andReturn('publisher');
 
 		$this->call('GET', 'admin/extensions/update/laravel.framework');
 		$this->assertRedirectedTo('publisher');
