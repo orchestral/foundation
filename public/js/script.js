@@ -23,6 +23,8 @@ jQuery(function startOrchestra ($) { 'use strict';
 
 	$('*[role="tooltip"]').tooltip();
 
+	$('input[type="date"]').datepicker({ dateFormat: "yy-mm-dd" });
+		
 	$('div.btn-group[data-toggle-name]').each(function loopEachBtnGroup () {
 		var group, form, name, hidden, buttons;
 
