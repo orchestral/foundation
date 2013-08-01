@@ -28,6 +28,7 @@
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src/Orchestra/</directory>
+            <file>src/helpers.php</file>
 
             <exclude>
                 <file>src/Orchestra/Foundation/Services/ApplicationTestCase.php</file>
