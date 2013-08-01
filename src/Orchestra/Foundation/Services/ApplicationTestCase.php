@@ -1,8 +1,5 @@
 <?php namespace Orchestra\Foundation\Services;
 
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Config;
-
 abstract class ApplicationTestCase extends TestCase {
 
 	/**
@@ -12,18 +9,18 @@ abstract class ApplicationTestCase extends TestCase {
 	{
 		parent::setUp();
 
-		$this->environmentSetUp();
-		$this->installationSetUp();
+		$this->runInstallation();
 	}
 	
 	/**
-	 * Setup database connection.
-	 *
+	 * Define environment setup.
+	 * 
+	 * @param  Illuminate\Foundation\Application    $app
 	 * @return void
 	 */
-	protected function environmentSetUp() 
+	protected function getEnvironmentSetUp($app) 
 	{
-		Config::set('auth.model', 'Orchestra\Model\User');
+		$app['config']->set('auth.model', 'Orchestra\Model\User');
 	}
 
 	/**
@@ -31,19 +28,22 @@ abstract class ApplicationTestCase extends TestCase {
 	 *
 	 * @return void
 	 */
-	protected function installationSetUp()
+	protected function runInstallation()
 	{
-		$installer   = App::make('Orchestra\Foundation\Installation\InstallerInterface');
-		$requirement = App::make('Orchestra\Foundation\Installation\RequirementInterface');
+		$installer   = new \Orchestra\Foundation\Installation\Installer($this->app);
+		$requirement = new \Orchestra\Foundation\Installation\Requirement($this->app);
 
 		if ( ! $requirement->check())
 		{
 			$this->markTestIncomplete('This testcase requirement a database connection.');
 		} 
 
-		$installer->migrate();
+		if ( ! $installer->migrate())
+		{
+			$this->markTestIncomplete('Unable to install the application.');
+		}
 		
-		if ( !$this->installer->createAdmin($this->getApplicationFixture()))
+		if ( ! $installer->createAdmin($this->getApplicationFixture()))
 		{
 			$this->markTestIncomplete('Unable to setup the application.');
 		}
