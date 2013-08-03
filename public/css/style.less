@@ -29,6 +29,12 @@ form {
 		font-weight: normal;
 	}
 
+	.form-group {
+		.select2-container {
+			width: 100%;
+		}
+	}
+
 	&.navbar-form {
 		input[role="keyword"] {
 			margin-top: 5px;
@@ -225,9 +231,32 @@ section {
 }
 
 .select2-container {
+
 	&.col, &.columns {
 		padding-left: 0 !important;
 		padding-right: 0 !important;
+	}
+
+	&.select2-container-multi {
+		min-width: 200px;
+		
+		.select2-choices {
+			min-width: 200px;
+			height: 40px !important;
+
+			.select2-search-choice {
+				line-height: 23px !important;
+
+				.select2-search-choice-close {
+					top: 8px !important;
+				}
+			}
+			
+			.select2-search-field input {
+				height: 40px !important;
+				max-height: 40px;
+			}
+		}
 	}
 }
 
@@ -246,20 +275,6 @@ section {
 	.navbar-form {
 		.select2-container {
 			margin-top: 5px;
-
-			&.select2-container-multi {
-				min-width: 200px;
-				
-				.select2-choices {
-					min-width: 200px;
-					height: 40px !important;
-					
-					.select2-search-field input {
-						height: 40px !important;
-						max-height: 40px;
-					}
-				}
-			}
 		}
 	}
 
