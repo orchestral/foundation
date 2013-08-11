@@ -113,6 +113,9 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 		$app['config'] = $config = m::mock('Config\Manager');
 		$app['orchestra.acl'] = $acl = m::mock('Acl');
 
+		$aclFluent = m::mock('Acl\Fluent');
+		$aclFluent->shouldReceive('attach')->twice()->andReturn(null);
+
 		$input = $this->getUserInput();
 		$rules = $this->getValidationRules();
 
@@ -137,9 +140,8 @@ class InstallerTest extends \PHPUnit_Framework_TestCase {
 		$config->shouldReceive('get')->once()->with('orchestra/foundation::roles.admin', 1)->andReturn(1)
 			->shouldReceive('get')->once()->with('mail')->andReturn('email-config');
 		$acl->shouldReceive('make')->once()->with('orchestra')->andReturn($acl)
-			->shouldReceive('actions')->once()->andReturn($acl)
-			->shouldReceive('roles')->once()->andReturn($acl)
-			->shouldReceive('fill')->twice()->andReturn(null)
+			->shouldReceive('actions')->once()->andReturn($aclFluent)
+			->shouldReceive('roles')->once()->andReturn($aclFluent)
 			->shouldReceive('allow')->once()->andReturn(null)
 			->shouldReceive('attach')->once()->with($memory)->andReturn(null);
 
