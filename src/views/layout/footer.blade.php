@@ -6,7 +6,9 @@ use Orchestra\Support\Facades\Asset; ?>
 <footer>
 	<div class="container">
 		<hr>
-		<p>&copy; 2012 Orchestra Platform</p>
+		<p>
+			Powered by <a href="http://orchestraplatform.com" target="_blank">Orchestra Platform</a>.
+		</p>
 	</div>
 </footer>
 

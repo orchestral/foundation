@@ -69,7 +69,6 @@ section.container.main{clear:both;margin-top:40px;}section.container.main .theme
 .select2-container.col,.select2-container.columns{padding-left:0 !important;padding-right:0 !important;}
 .select2-container.select2-container-multi{min-width:200px;}.select2-container.select2-container-multi .select2-choices{min-width:200px;height:40px !important;}.select2-container.select2-container-multi .select2-choices .select2-search-choice{line-height:23px !important;}.select2-container.select2-container-multi .select2-choices .select2-search-choice .select2-search-choice-close{top:8px !important;}
 .select2-container.select2-container-multi .select2-choices .select2-search-field input{height:40px !important;max-height:40px;}
-.table tbody td .meta{font-size:11px;}
 .user-search{background:#eeeff2;margin-bottom:5px;}.user-search .navbar-form .select2-container{margin-top:5px;}
 form label.ui-state-active{background:transparent;}
 form .ui-slider .ui-slider-handle{z-index:1;}
