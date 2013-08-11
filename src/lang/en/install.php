@@ -23,7 +23,7 @@ return array(
 		'driver'      => 'Driver',
 		'model'       => 'Model',
 		'requirement' => array(
-			'driver'     => 'Orchestra only work with Eloquent Driver for Auth',
+			'driver'     => 'Orchestra Platform require Auth using the Eloquent Driver',
 			'instanceof' => 'Model name should be an instance of :class',
 		),
 	),
