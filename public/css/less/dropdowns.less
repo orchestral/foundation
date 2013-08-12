@@ -4,21 +4,24 @@
 
 
 // Dropdown arrow/caret
-// --------------------
 .caret {
   display: inline-block;
   width: 0;
   height: 0;
   margin-left: 2px;
   vertical-align: middle;
-  border-top:   4px solid @dropdown-caret-color;
-  border-right: 4px solid transparent;
-  border-left:  4px solid transparent;
+  border-top:   @caret-width-base solid @dropdown-caret-color;
+  border-right: @caret-width-base solid transparent;
+  border-left:  @caret-width-base solid transparent;
   content: "";
 }
 
+// The dropdown wrapper (div)
+.dropdown {
+  position: relative;
+}
+
 // The dropdown menu (ul)
-// ----------------------
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -61,18 +64,17 @@
 }
 
 // Hover/Focus state
-// -----------
 .dropdown-menu > li > a {
   &:hover,
   &:focus {
     text-decoration: none;
     color: @dropdown-link-hover-color;
     #gradient > .vertical(@start-color: @dropdown-link-hover-bg; @end-color: darken(@dropdown-link-hover-bg, 5%));
+    background-color: darken(@dropdown-link-hover-bg, 5%);
   }
 }
 
 // Active state
-// ------------
 .dropdown-menu > .active > a {
   &,
   &:hover,
@@ -81,17 +83,19 @@
     text-decoration: none;
     outline: 0;
     #gradient > .vertical(@start-color: @dropdown-link-active-bg; @end-color: darken(@dropdown-link-active-bg, 5%));
+    background-color: darken(@dropdown-link-active-bg, 5%);
   }
 }
 
 // Disabled state
-// --------------
+//
 // Gray out text and ensure the hover/focus state remains gray
+
 .dropdown-menu > .disabled > a {
   &,
   &:hover,
   &:focus {
-    color: @gray-light;
+    color: @dropdown-link-disabled-color;
   }
 }
 // Nuke hover/focus effects
@@ -107,7 +111,6 @@
 }
 
 // Open state for the dropdown
-// ---------------------------
 .open {
   // Show the menu
   > .dropdown-menu {
@@ -121,19 +124,15 @@
 }
 
 // Dropdown section headers
-// ---------------------------
 .dropdown-header {
   display: block;
   padding: 3px 20px;
   font-size: @font-size-small;
   line-height: @line-height-base;
-  color: @gray-light;
+  color: @dropdown-header-color;
 }
 
-
-
 // Backdrop to catch body clicks on mobile, etc.
-// ---------------------------
 .dropdown-backdrop {
   position: fixed;
   left: 0;
@@ -144,16 +143,16 @@
 }
 
 // Right aligned dropdowns
-// ---------------------------
 .pull-right > .dropdown-menu {
   right: 0;
   left: auto;
 }
 
 // Allow for dropdowns to go bottom up (aka, dropup-menu)
-// ------------------------------------------------------
+//
 // Just add .dropup after the standard .dropdown class and you're set, bro.
 // TODO: abstract this so that the navbar fixed styles are not placed here?
+
 .dropup,
 .navbar-fixed-bottom .dropdown {
   // Reverse the caret
