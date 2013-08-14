@@ -25,9 +25,10 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase {
 			$user = m::mock('\Illuminate\Auth\UserProviderInterface'),
 			$redirector = m::mock('\Illuminate\Routing\Redirector'),
 			$mailer = m::mock('\Orchestra\Foundation\Mail'),
-			$messages = m::mock('\Orchestra\Support\Messages'),
 			$view = 'foo'
 		);
+
+		$stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
 
 		$callback = function () {};
 
@@ -63,9 +64,10 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase {
 			$user = m::mock('\Illuminate\Auth\UserProviderInterface'),
 			$redirector = m::mock('\Illuminate\Routing\Redirector'),
 			$mailer = m::mock('\Orchestra\Foundation\Mail'),
-			$messages = m::mock('\Orchestra\Support\Messages'),
 			$view = 'foo'
 		);
+		
+		$stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
 
 		$user->shouldReceive('retrieveByCredentials')->once()
 			->with(array('username' => 'user-foo'))->andReturn(null);
@@ -87,9 +89,10 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase {
 			$user = m::mock('\Illuminate\Auth\UserProviderInterface'),
 			$redirector = m::mock('\Illuminate\Routing\Redirector'),
 			$mailer = m::mock('\Orchestra\Foundation\Mail'),
-			$messages = m::mock('\Orchestra\Support\Messages'),
 			$view = 'foo'
 		);
+		
+		$stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
 
 		$callback = function($user, $pass) {
 			return 'foo';
@@ -121,9 +124,10 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase {
 			$user = m::mock('\Illuminate\Auth\UserProviderInterface'),
 			$redirector = m::mock('\Illuminate\Routing\Redirector'),
 			$mailer = m::mock('\Orchestra\Foundation\Mail'),
-			$messages = m::mock('\Orchestra\Support\Messages'),
 			$view = 'foo'
 		);
+		
+		$stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
 
 		$callback = function($user, $pass) {};
 
@@ -147,9 +151,10 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase {
 			$user = m::mock('\Illuminate\Auth\UserProviderInterface'),
 			$redirector = m::mock('\Illuminate\Routing\Redirector'),
 			$mailer = m::mock('\Orchestra\Foundation\Mail'),
-			$messages = m::mock('\Orchestra\Support\Messages'),
 			$view = 'foo'
 		);
+		
+		$stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
 
 		$callback = function($user, $pass) {};
 
@@ -178,9 +183,10 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase {
 			$user = m::mock('\Illuminate\Auth\UserProviderInterface'),
 			$redirector = m::mock('\Illuminate\Routing\Redirector'),
 			$mailer = m::mock('\Orchestra\Foundation\Mail'),
-			$messages = m::mock('\Orchestra\Support\Messages'),
 			$view = 'foo'
 		);
+		
+		$stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
 
 		$callback = function($user, $pass) {};
 
