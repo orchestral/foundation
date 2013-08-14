@@ -47,7 +47,7 @@ class PasswordBroker extends Broker {
 	 * @param  \Orchestra\Support\Messages  $messages
 	 * @return self
 	 */
-	public function setMessageBag($messages)
+	public function setMessageBag(Messages $messages)
 	{
 		$this->messages = $messages;
 
