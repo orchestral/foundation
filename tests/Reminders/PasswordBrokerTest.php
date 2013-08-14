@@ -14,6 +14,25 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Foundation\Reminders\PasswordBroker::getMessageBag() method.
+	 *
+	 * @test
+	 */
+	public function testGetMessageBagMethod()
+	{
+		$stub = new PasswordBroker(
+			$reminders = m::mock('\Illuminate\Auth\Reminders\ReminderRepositoryInterface'),
+			$user = m::mock('\Illuminate\Auth\UserProviderInterface'),
+			$redirector = m::mock('\Illuminate\Routing\Redirector'),
+			$mailer = m::mock('\Orchestra\Foundation\Mail'),
+			$view = 'foo'
+		);
+		
+		$stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
+		$this->assertEquals($messages, $stub->getMessageBag());
+	}
+
+	/**
 	 * Test Orchestra\Foundation\Reminders\PasswordBroker::remind() method.
 	 *
 	 * @test
