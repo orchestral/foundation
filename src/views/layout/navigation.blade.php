@@ -10,8 +10,8 @@ $navbar = new Fluent(array(
 	'title'      => memorize('site.name', 'Orchestra'),
 	'url'        => handles('orchestra::/'),
 	'attributes' => array('class' => 'navbar-fixed-top navbar-inverse'),
-	'menu'       => View::make('orchestra/foundation::layout.widgets.menu', array('menu' => App::menu('orchestra'))),
-	'subMenu'    => View::make('orchestra/foundation::layout.widgets.usernav'),
+	'left'       => View::make('orchestra/foundation::layout.widgets.menu', array('menu' => App::menu('orchestra'))),
+	'right'      => View::make('orchestra/foundation::layout.widgets.usernav'),
 )); ?>
 
 @decorator('navbar', $navbar)
