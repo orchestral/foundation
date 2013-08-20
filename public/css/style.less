@@ -78,15 +78,6 @@ section {
 	}
 }
 
-
-@media (min-width: 979px) {
-	.table {
-		th.th-action, td.th-action {
-			width: 100px;
-		}
-	}
-}
-
 .box {
 	padding: 30px 20px 30px !important;
 
@@ -278,6 +269,15 @@ section {
 	}
 }
 
+.table {
+	@media (min-width: 979px) {
+		th.th-action, td.th-action,
+		th.th-actions, td.th-actions {
+			width: 100px;
+		}
+	}
+}
+
 .user-search {
 	background: @op-base-bg;
 	margin-bottom: 5px;
@@ -289,7 +289,6 @@ section {
 			margin-top: 5px;
 		}
 	}
-
 }
 
 /*
