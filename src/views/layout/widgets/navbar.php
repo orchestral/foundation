@@ -21,7 +21,6 @@ $attributes = HTML::decorate($navbar->attributes ?: array(), array('class' => 'n
 			<?php echo $navbar->left; ?>
 			<?php echo $navbar->right; ?>
 			<?php echo $navbar->menu; ?>
-			<?php echo $navbar->subMenu; ?>
 		</div>
 	</div>
 </nav>
