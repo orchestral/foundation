@@ -3,7 +3,6 @@
 # Ignore following folder/file.
 /build                          export-ignore
 /public/css/*.less              export-ignore
-/public/vendor/bootstrap/fonts  export-ignore
 /public/vendor/bootstrap/less   export-ignore
 /tests                          export-ignore
 /.coveralls.yml                 export-ignore
