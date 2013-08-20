@@ -14,6 +14,10 @@
 @op-active-text: @white;
 @op-active-text-hover: @light-grey;
 
+.alert-error {
+	.alert-variant(@alert-danger-bg; @alert-danger-border; @alert-danger-text);
+}
+
 body {
 	background: @op-base-bg;
 	font-family: 'Roboto', Helvetica, sans-serif;
@@ -167,6 +171,7 @@ section {
 				color: @op-base-text;
 
 				&:hover {
+					background: @op-active;
 					color: @op-base-text-hover;
 				}
 			}
@@ -277,6 +282,7 @@ section {
 	background: @op-base-bg;
 	margin-bottom: 5px;
 	border: none;
+	z-index: 999;
 
 	.navbar-form {
 		.select2-container {
