@@ -31,6 +31,7 @@
 		"orchestra/memory": "2.0.*",
 		"orchestra/resources": "2.0.*",
 		"orchestra/support": "2.0.*",
+		"orchestra/translation": "2.0.*",
 		"orchestra/view": "2.0.*",
 		"orchestra/widget": "2.0.*"
 	},
