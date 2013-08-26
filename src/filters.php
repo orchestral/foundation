@@ -101,7 +101,7 @@ Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestr
 
 Route::filter('orchestra.registrable', function ($route, $request, $value = null)
 {
-	if ( ! memorize('site.registrable', false)) return App::abort(404);
+	if ( ! App::memory()->get('site.registrable', false)) return App::abort(404);
 });
 
 /*
