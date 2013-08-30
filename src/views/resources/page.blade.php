@@ -6,8 +6,7 @@
 
 	<div class="three columns">
 		@include('orchestra/foundation::resources.list')
-		
-		@placeholder("orchestra.resources: {$resource->name}")
+		@placeholder("orchestra.resources: {$resources['name']}")
 		@placeholder('orchestra.resources')
 	</div>
 
