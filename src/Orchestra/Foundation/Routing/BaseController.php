@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Illuminate\Routing\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Response;
 
 abstract class BaseController extends Controller {
