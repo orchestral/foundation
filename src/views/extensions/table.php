@@ -1,3 +1,7 @@
+<?php 
+
+use Illuminate\Support\Fluent;
+use Orchestra\Support\Facades\Extension; ?>
 <table class="table table-striped">
 	<thead>
 		<tr>
