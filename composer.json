@@ -22,7 +22,8 @@
 	},
 	"require": {
 		"php": ">=5.3.3",
-		"laravel/framework": "4.1.*",
+		"laravel/framework": "4.0.*@dev",
+		"illuminate/remote": "4.1.*@dev",
 		"orchestra/asset": "2.1.*",
 		"orchestra/auth": "2.1.*",
 		"orchestra/extension": "2.1.*",
@@ -37,7 +38,7 @@
 	},
 	"require-dev": {
 		"mockery/mockery": "0.8.0",
-		"orchestra/testbench": "2.1.*",
+		"orchestra/testbench": "2.0.*",
 		"satooshi/php-coveralls": "~0.6"
 	},
 	"extra": {
