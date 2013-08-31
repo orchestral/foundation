@@ -19,8 +19,8 @@ return array(
 		'logged-out'          => 'You have been logged out',
 		'unauthorized'        => 'You are not authorized to access this action',
 		'register'            => array(
-			'email-fail'    => 'Unable to send User Registration Confirmation E-mail',
-			'email-send'    => 'User Registration Confirmation E-mail has been sent, please check your inbox',
+			'email-fail'    => 'Unable to send User Registration Confirmation e-mail',
+			'email-send'    => 'User Registration Confirmation e-mail has been sent to your inbox',
 			'existing-user' => 'This e-mail address is already associated with another user',
 		),
 	),
@@ -38,8 +38,8 @@ return array(
 	),
 
 	'reminders' => array(
-		'email-fail' => 'Unable to send Reset Password E-mail',
-		'email-send' => 'Reset Password E-mail has been sent, please check your inbox',
+		'email-fail' => 'Unable to send Reset Password e-mail',
+		'email-send' => 'Reset Password e-mail has been sent, please check your inbox',
 	),
 
 	'settings' => array(
