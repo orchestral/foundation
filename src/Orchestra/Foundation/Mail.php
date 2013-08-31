@@ -36,12 +36,25 @@ class Mail {
 		$method = 'queue';
 		$memory = $this->app['orchestra.memory']->make();
 
+		// Push configuration from database to runtime configuration.
 		$this->app['config']->set('mail', $memory->get('email'));
 
 		if (false === $memory->get('email.queue', false)) $method = 'send';
 
-		$compact = array($view, $data, $callback);
-		
-		return call_user_func_array(array($this->app['mailer'], $method), $compact);
+		return $this->push($method, $view, $data, $callback);
+	}
+
+	/**
+	 * Execute mail using selected method.
+	 * 
+	 * @param  string           $method
+	 * @param  string           $view
+	 * @param  array            $data
+	 * @param  Closure|string   $callback
+	 * @return \Illuminate\Mail\Mailer
+	 */
+	protected function push($method, $view, $data, $callback)
+	{
+		return call_user_func(array($this->app['mailer'], $method), $view, $data, $callback);
 	}
 }
