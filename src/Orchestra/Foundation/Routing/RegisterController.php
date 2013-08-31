@@ -130,10 +130,10 @@ class RegisterController extends AdminController {
 		// object. This allow the data to be transferred to JSON if the 
 		// mail is send using queue.
 		$user = (object) $user->toArray();
-
-		$site = App::memory()->get('site.name', 'Orchestra Platform');
-		$data = compact('password', 'site', 'user');
-
+		
+		$memory   = App::memory();
+		$site     = $memory->get('site.name', 'Orchestra Platform');
+		$data     = compact('password', 'site', 'user');
 		$callback = function ($mail) use ($data, $user, $site)
 		{
 			$mail->subject(trans('orchestra/foundation::email.credential.register', compact('site')));
@@ -142,15 +142,15 @@ class RegisterController extends AdminController {
 
 		$sent = Mail::send('orchestra/foundation::email.credential.register', $data, $callback);
 
-		if (count($sent) < 1)
-		{
-			Messages::add('error', trans('orchestra/foundation::response.credential.register.email-fail'));
-		}
-		else
+		if (count($sent) > 0 or true === $memory->get('email.queue', false))
 		{
 			Messages::add('success', trans('orchestra/foundation::response.credential.register.email-send'));
 		}
-
+		else
+		{
+			Messages::add('error', trans('orchestra/foundation::response.credential.register.email-fail'));
+		}
+		
 		return Redirect::intended(handles('orchestra::login'));
 	}
 

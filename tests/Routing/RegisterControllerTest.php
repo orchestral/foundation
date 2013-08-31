@@ -126,7 +126,8 @@ class RegisterControllerTest extends TestCase {
 			->shouldReceive('roles')->once()->andReturn($user)
 			->shouldReceive('sync')->once()->with(m::any())->andReturn(null)
 			->shouldReceive('toArray')->once()->andReturn($input);
-		$memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('foo');
+		$memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('foo')
+			->shouldReceive('get')->once()->with('email.queue', false)->andReturn(false);
 		$mailer->shouldReceive('subject')->once()->andReturn(null)
 			->shouldReceive('to')->once()->andReturn(null);
 		\Orchestra\Support\Facades\App::shouldReceive('make')->once()
