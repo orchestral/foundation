@@ -110,4 +110,29 @@ class PasswordBroker extends Broker {
 		return $this->redirect->refresh();
 	}
 
+	/**
+	 * Send the password reminder e-mail.
+	 *
+	 * @param  \Illuminate\Auth\Reminders\RemindableInterface  $user
+	 * @param  string   $token
+	 * @param  Closure  $callback
+	 * @return void
+	 */
+	public function sendReminder(RemindableInterface $user, $token, Closure $callback = null)
+	{
+		// We will use the reminder view that was given to the broker to display the
+		// password reminder e-mail. We'll pass a "token" variable into the views
+		// so that it may be displayed for an user to click for password reset.
+		$view = $this->reminderView;
+
+		$closure = function($m) use ($user, $callback)
+		{
+			$m->to($user->getReminderEmail());
+
+			if ( ! is_null($callback)) call_user_func($callback, $m, $user);
+		};
+
+		return $this->mailer->forceSend($view, compact('token', 'user'), $closure);
+	}
+
 }
