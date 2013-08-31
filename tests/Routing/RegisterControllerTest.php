@@ -62,14 +62,13 @@ class RegisterControllerTest extends TestCase {
 		$validation->shouldReceive('on')->once()->with('register')->andReturn($validation)
 			->shouldReceive('with')->once()->with($input)->andReturn($validation)
 			->shouldReceive('fails')->once()->andReturn(false);
-		$user->shouldReceive('getAttribute')->once()->with('email')->andReturn($input['email'])
-			->shouldReceive('getAttribute')->once()->with('fullname')->andReturn($input['fullname'])
-			->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturn(null)
+		$user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturn(null)
 			->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturn(null)
 			->shouldReceive('setAttribute')->once()->with('password', m::any())->andReturn(null)
 			->shouldReceive('save')->once()->andReturn(null)
 			->shouldReceive('roles')->once()->andReturn($user)
-			->shouldReceive('sync')->once()->with(m::any())->andReturn(null);
+			->shouldReceive('sync')->once()->with(m::any())->andReturn(null)
+			->shouldReceive('toArray')->once()->andReturn($input);
 		$memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('foo');
 		$mailer->shouldReceive('subject')->once()->andReturn(null)
 			->shouldReceive('to')->once()->andReturn(null);
@@ -120,14 +119,13 @@ class RegisterControllerTest extends TestCase {
 		$validation->shouldReceive('on')->once()->with('register')->andReturn($validation)
 			->shouldReceive('with')->once()->with($input)->andReturn($validation)
 			->shouldReceive('fails')->once()->andReturn(false);
-		$user->shouldReceive('getAttribute')->once()->with('email')->andReturn($input['email'])
-			->shouldReceive('getAttribute')->once()->with('fullname')->andReturn($input['fullname'])
-			->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturn(null)
+		$user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturn(null)
 			->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturn(null)
 			->shouldReceive('setAttribute')->once()->with('password', m::any())->andReturn(null)
 			->shouldReceive('save')->once()->andReturn(null)
 			->shouldReceive('roles')->once()->andReturn($user)
-			->shouldReceive('sync')->once()->with(m::any())->andReturn(null);
+			->shouldReceive('sync')->once()->with(m::any())->andReturn(null)
+			->shouldReceive('toArray')->once()->andReturn($input);
 		$memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('foo');
 		$mailer->shouldReceive('subject')->once()->andReturn(null)
 			->shouldReceive('to')->once()->andReturn(null);

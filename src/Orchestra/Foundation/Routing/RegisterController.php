@@ -126,15 +126,21 @@ class RegisterController extends AdminController {
 	 */
 	protected function sendEmail(User $user, $password)
 	{
+		// Converting the user to an object allow the data to be a generic 
+		// object. This allow the data to be transferred to JSON if the 
+		// mail is send using queue.
+		$user = (object) $user->toArray();
+
 		$site = App::memory()->get('site.name', 'Orchestra Platform');
 		$data = compact('password', 'site', 'user');
 
-		$sent = Mail::send('orchestra/foundation::email.credential.register', $data, function ($m) 
-			use ($data, $user, $site)
+		$callback = function ($mail) use ($data, $user, $site)
 		{
-			$m->subject(trans('orchestra/foundation::email.credential.register', compact('site')));
-			$m->to($user->email, $user->fullname);
-		});
+			$mail->subject(trans('orchestra/foundation::email.credential.register', compact('site')));
+			$mail->to($user->email, $user->fullname);
+		};
+
+		$sent = Mail::send('orchestra/foundation::email.credential.register', $data, $callback);
 
 		if (count($sent) < 1)
 		{
