@@ -63,13 +63,14 @@ class ForgotController extends AdminController {
 					->withErrors($validation);
 		}
 
-		$memory = App::memory();
-		$site   = $memory->get('site.name', 'Orchestra Platform');
-
-		return Password::remind(array('email' => $input['email']), function($mail) use ($site)
+		$memory   = App::memory();
+		$site     = $memory->get('site.name', 'Orchestra Platform');
+		$callback = function($mail) use ($site)
 		{
 			$mail->subject(trans('orchestra/foundation::email.forgot.request', compact('site')));
-		});
+		};
+
+		return Password::remind(array('email' => $input['email']), $callback);
 	}
 
 	/**
