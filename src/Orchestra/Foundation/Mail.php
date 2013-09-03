@@ -53,7 +53,7 @@ class Mail {
 	 * @param  Closure|string   $callback
 	 * @return \Illuminate\Mail\Mailer
 	 */
-	public function send($view, array $data, $callback)
+	public function push($view, array $data, $callback)
 	{
 		$this->loadMemoryProvider();
 
@@ -61,7 +61,7 @@ class Mail {
 
 		if (false === $this->memory->get('email.queue', false)) $method = 'send';
 
-		return $this->sendUsingMailer($method, $view, $data, $callback);
+		return $this->dispatchMailer($method, $view, $data, $callback);
 	}
 
 	/**
@@ -72,11 +72,11 @@ class Mail {
 	 * @param  Closure|string   $callback
 	 * @return \Illuminate\Mail\Mailer
 	 */
-	public function forceSend($view, array $data, $callback)
+	public function send($view, array $data, $callback)
 	{
 		$this->loadMemoryProvider();
 		
-		return $this->sendUsingMailer('send', $view, $data, $callback);
+		return $this->dispatchMailer('send', $view, $data, $callback);
 	}
 
 	/**
@@ -87,11 +87,11 @@ class Mail {
 	 * @param  Closure|string   $callback
 	 * @return \Illuminate\Mail\Mailer
 	 */
-	public function forceQueue($view, array $data, $callback)
+	public function queue($view, array $data, $callback)
 	{
 		$this->loadMemoryProvider();
 		
-		return $this->sendUsingMailer('queue', $view, $data, $callback);
+		return $this->dispatchMailer('queue', $view, $data, $callback);
 	}
 
 	/**
@@ -103,7 +103,7 @@ class Mail {
 	 * @param  Closure|string   $callback
 	 * @return \Illuminate\Mail\Mailer
 	 */
-	protected function sendUsingMailer($method, $view, $data, $callback)
+	protected function dispatchMailer($method, $view, $data, $callback)
 	{
 		return call_user_func(array($this->app['mailer'], $method), $view, $data, $callback);
 	}

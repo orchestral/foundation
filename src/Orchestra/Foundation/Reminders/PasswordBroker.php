@@ -132,7 +132,7 @@ class PasswordBroker extends Broker {
 			if ( ! is_null($callback)) call_user_func($callback, $m, $user);
 		};
 
-		return $this->mailer->forceSend($view, compact('token', 'user'), $closure);
+		return $this->mailer->send($view, compact('token', 'user'), $closure);
 	}
 
 }

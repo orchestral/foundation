@@ -85,7 +85,7 @@ class RegisterControllerTest extends TestCase {
 				{
 					$c();
 				});
-		\Orchestra\Support\Facades\Mail::shouldReceive('send')->once()
+		\Orchestra\Support\Facades\Mail::shouldReceive('push')->once()
 			->with('orchestra/foundation::email.credential.register', m::type('Array'), m::type('Closure'))
 			->andReturnUsing(function ($v, $d, $c) use ($mailer)
 				{
@@ -143,7 +143,7 @@ class RegisterControllerTest extends TestCase {
 				{
 					$c();
 				});
-		\Orchestra\Support\Facades\Mail::shouldReceive('send')->once()
+		\Orchestra\Support\Facades\Mail::shouldReceive('push')->once()
 			->with('orchestra/foundation::email.credential.register', m::type('Array'), m::type('Closure'))
 			->andReturnUsing(function ($v, $d, $c) use ($mailer)
 				{

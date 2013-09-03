@@ -140,7 +140,7 @@ class RegisterController extends AdminController {
 			$mail->to($user->email, $user->fullname);
 		};
 
-		$sent = Mail::send('orchestra/foundation::email.credential.register', $data, $callback);
+		$sent = Mail::push('orchestra/foundation::email.credential.register', $data, $callback);
 
 		if (count($sent) > 0 or true === $memory->get('email.queue', false))
 		{
