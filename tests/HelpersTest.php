@@ -1,6 +1,8 @@
 <?php namespace Orchestra\Foundation\Tests;
 
 use Mockery as m;
+use Illuminate\Support\Facades\Facade;
+use Orchestra\Support\Facades\App;
 
 class HelpersTest extends \PHPUnit_Framework_TestCase {
 	/**
@@ -19,8 +21,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 		$this->app['translator'] = $trans = m::mock('Translator');
 		$this->app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application');
 
-		\Illuminate\Support\Facades\Facade::clearResolvedInstances();
-		\Illuminate\Support\Facades\Facade::setFacadeApplication($this->app);
+		Facade::clearResolvedInstances();
+		Facade::setFacadeApplication($this->app);
 
 		$trans->shouldReceive('trans')->andReturn('translated');
 	}
@@ -52,7 +54,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 	{
 		$orchestra = m::mock('\Orchestra\Foundation\Application');
 
-		\Orchestra\Support\Facades\App::swap($orchestra);
+		App::swap($orchestra);
 
 		$orchestra->shouldReceive('memory')->once()->andReturn($orchestra)
 			->shouldReceive('get')->once()->with('site.name', null)->andReturn('Orchestra');
@@ -69,7 +71,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 	{
 		$orchestra = m::mock('\Orchestra\Foundation\Application');
 
-		\Orchestra\Support\Facades\App::swap($orchestra);
+		App::swap($orchestra);
 
 		$orchestra->shouldReceive('handles')->once()->with('app::foo')->andReturn('foo');
 
@@ -85,7 +87,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase {
 	{
 		$orchestra = m::mock('\Orchestra\Foundation\Application');
 
-		\Orchestra\Support\Facades\App::swap($orchestra);
+		App::swap($orchestra);
 
 		$orchestra->shouldReceive('handles')->once()
 			->with('orchestra/foundation::resources/foo')->andReturn('foo');

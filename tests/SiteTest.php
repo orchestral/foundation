@@ -2,6 +2,7 @@
 
 use Mockery as m;
 use Carbon\Carbon;
+use Illuminate\Container\Container;
 use Orchestra\Foundation\Site;
 
 class SiteTest extends \PHPUnit_Framework_TestCase {
@@ -18,7 +19,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function setUp()
 	{
-		$this->app = new \Illuminate\Container\Container;
+		$this->app = new Container;
+		date_default_timezone_set('UTC');
 	}
 
 	/**

@@ -1,6 +1,8 @@
 <?php namespace Orchestra\Foundation\Tests;
 
 use Mockery as m;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Facade;
 use Orchestra\Foundation\Application;
 
 class ApplicationTest extends \PHPUnit_Framework_TestCase {
@@ -19,8 +21,8 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	{
 		$this->app = new \Illuminate\Foundation\Application;
 
-		\Illuminate\Support\Facades\Facade::clearResolvedInstances();
-		\Illuminate\Support\Facades\Facade::setFacadeApplication($this->app);
+		Facade::clearResolvedInstances();
+		Facade::setFacadeApplication($this->app);
 	}
 
 	/**
@@ -49,7 +51,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app['events'] = $event = m::mock('Event\Dispatcher');
 		$app['config'] = $config = m::mock('Config\Manager');
 
-		\Illuminate\Support\Facades\Config::swap($config);
+		Config::swap($config);
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
 			->shouldReceive('attach')->with($memory)->once()->andReturn($acl);
@@ -167,7 +169,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app['events'] = $event = m::mock('Event\Dispatcher');
 		$app['config'] = $config = m::mock('Config\Manager');
 
-		\Illuminate\Support\Facades\Config::swap($config);
+		Config::swap($config);
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
 			->shouldReceive('attach')->with($memory)->once()->andReturn($acl);
