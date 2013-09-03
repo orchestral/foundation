@@ -1,7 +1,10 @@
-<?php namespace Orchestra\Foundation\Tests;
+<?php namespace Orchestra\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Facades\HTML;
 use Orchestra\Foundation\Services\TestCase;
+use Orchestra\Support\Facades\App;
+use Orchestra\Support\Facades\Site;
 
 class MacrosTest extends TestCase {
 
@@ -20,14 +23,14 @@ class MacrosTest extends TestCase {
 	 */
 	public function testHtmlTitleMacro()
 	{
-		\Orchestra\Support\Facades\App::shouldReceive('memory')->twice()
+		App::shouldReceive('memory')->twice()
 			->andReturn($memory = m::mock('Memory'));
 		
 		$memory->shouldReceive('get')->once()->with('site.name', '')->andReturn('Foo')
 			->shouldReceive('get')->once()->with('site.format.title', ':pageTitle &mdash; :siteTitle')
 			->andReturn(':pageTitle &mdash; :siteTitle');
 
-		$this->assertEquals('<title>Foo</title>', \Illuminate\Support\Facades\HTML::title());
+		$this->assertEquals('<title>Foo</title>', HTML::title());
 	}
 
 	/**
@@ -37,16 +40,16 @@ class MacrosTest extends TestCase {
 	 */
 	public function testHtmlTitleMacroWithPageTitle()
 	{
-		\Orchestra\Support\Facades\App::shouldReceive('memory')->twice()
+		App::shouldReceive('memory')->twice()
 			->andReturn($memory = m::mock('Memory'));
-		\Orchestra\Support\Facades\Site::shouldReceive('get')->once()
+		Site::shouldReceive('get')->once()
 			->with('title', '')->andReturn('Foobar');
 		
 		$memory->shouldReceive('get')->once()->with('site.name', '')->andReturn('Foo')
 			->shouldReceive('get')->once()->with('site.format.title', ':pageTitle &mdash; :siteTitle')
 			->andReturn(':pageTitle &mdash; :siteTitle');
 
-		$this->assertEquals('<title>Foobar &mdash; Foo</title>', \Illuminate\Support\Facades\HTML::title());
+		$this->assertEquals('<title>Foobar &mdash; Foo</title>', HTML::title());
 	}
 
 	/**
@@ -56,7 +59,7 @@ class MacrosTest extends TestCase {
 	 */
 	public function testDecoratorIsRegistered()
 	{
-		$stub = \Illuminate\Support\Facades\App::make('orchestra.decorator');
+		$stub = App::make('orchestra.decorator');
 		$view = $stub->render('navbar', array());
 
 		$this->assertInstanceOf('\Orchestra\View\Decorator', $stub);
