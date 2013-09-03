@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Tests;
+<?php namespace Orchestra\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Facades\HTML;
