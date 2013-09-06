@@ -69,7 +69,8 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 		$model = new User;
 		$this->addMockConnection($model);
 
-		$keyword = 'foo';
+		$keyword = 'foo*';
+		$search  = 'foo%';
 		$roles   = array('admin');
 
 		$query = m::mock('QueryBuilder');
@@ -77,8 +78,8 @@ class UserTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('whereNotNull')->once()->with('users.id')->andReturn($query)
 			->shouldReceive('join')->once()->with('user_role', 'users.id', '=', 'user_role.user_id')->andReturn($query)
 			->shouldReceive('whereIn')->once()->with('user_role.role_id', $roles)->andReturn(null)
-			->shouldReceive('where')->once()->with('email', 'LIKE', $keyword)->andReturn($query)
-			->shouldReceive('orWhere')->once()->with('fullname', 'LIKE', $keyword)->andReturn(null)
+			->shouldReceive('orWhere')->once()->with('email', 'LIKE', $search)->andReturn($query)
+			->shouldReceive('orWhere')->once()->with('fullname', 'LIKE', $search)->andReturn(null)
 			->shouldReceive('where')->once()->with(m::type('Closure'))->andReturnUsing(function ($q) use ($query, $keyword)
 			{
 				$q($query);
