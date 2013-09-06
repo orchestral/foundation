@@ -4,6 +4,7 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Support\Facades\Hash;
+use Orchestra\Support\Str;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
@@ -66,8 +67,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		{
 			$query->where(function ($query) use ($keyword)
 			{
-				$query->where('email', 'LIKE', $keyword)
-					->orWhere('fullname', 'LIKE', $keyword);
+				$keyword = Str::searchable($keyword);
+				
+				foreach ($keyword as $key)
+				{
+					$query->orWhere('email', 'LIKE', $key)
+						->orWhere('fullname', 'LIKE', $key);
+				}
 			});
 		}
 
