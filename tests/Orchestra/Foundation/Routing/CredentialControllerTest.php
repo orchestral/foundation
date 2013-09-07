@@ -2,12 +2,21 @@
 
 use Mockery as m;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Services\TestCase;
 use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 
 class CredentialControllerTest extends TestCase {
+
+	/**
+	 * Teardown the test environment.
+	 */
+	public function tearDown()
+	{
+		m::close();
+	}
 
 	/**
 	 * Test GET /admin/login
@@ -130,5 +139,19 @@ class CredentialControllerTest extends TestCase {
 
 		$this->call('GET', 'admin/logout');
 		$this->assertRedirectedTo('login');
+	}
+
+	/**
+	 * Test GET /admin/logout?redirect=home
+	 *
+	 * @test
+	 */
+	public function testDeleteLoginActionWithRedirection()
+	{
+		Auth::shouldReceive('logout')->once()->andReturn(null);
+		Orchestra::shouldReceive('handles')->once()->with('home')->andReturn('home');
+
+		$this->call('GET', 'admin/logout', array('redirect' => 'home'));
+		$this->assertRedirectedTo('home');
 	}
 }

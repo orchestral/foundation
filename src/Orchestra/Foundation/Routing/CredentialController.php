@@ -97,8 +97,12 @@ class CredentialController extends AdminController {
 	{
 		Auth::logout();
 		Messages::add('success', trans('orchestra/foundation::response.credential.logged-out'));
+
+		$intended = 'orchestra::login';
+
+		is_null($redirect = Input::get('redirect')) or $intended = $redirect;
 		
-		return Redirect::intended(handles('orchestra::login'));
+		return Redirect::intended(handles($intended));
 	}
 
 	/**
