@@ -49,7 +49,7 @@ form.navbar-form input[role="keyword"]{margin-top:5px;padding:8px 6px;width:250p
 form.navbar-form select[role="roles"]{min-width:200px;}
 @media (max-width:768px){form.navbar-form input[type="submit"]{margin-top:4px;}}
 form .has-error .error{color:#ac193d;}
-form .ui-toggle-switch{padding:5px 0;}
+form .ui-toggle-switch{padding:6px 0;}
 section.container.main{clear:both;margin-top:40px;}section.container.main .themes img{margin:0 auto;display:block;}
 .box{padding:30px 20px 30px !important;}.box.no-padding{margin-top:0;padding:0 !important;}
 .box.small-padding{padding:10px 15px !important;}
