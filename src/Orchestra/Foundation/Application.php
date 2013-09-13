@@ -224,7 +224,7 @@ class Application {
 	protected function createAdminMenu()
 	{
 		$menu    = $this->services['orchestra.menu'];
-		$handler = $this->app['config']->get('orchestra/foundation::menu');
+		$handler = 'Orchestra\Foundation\Services\Event\AdminMenuHandler';
 
 		$menu->add('home')
 			->title($this->app['translator']->get('orchestra/foundation::title.home'))

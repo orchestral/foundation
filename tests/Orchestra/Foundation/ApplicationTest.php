@@ -51,6 +51,8 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app['events'] = $event = m::mock('Event\Dispatcher');
 		$app['config'] = $config = m::mock('Config\Manager');
 
+		$menuHandler = 'Orchestra\Foundation\Services\Event\AdminMenuHandler';
+
 		Config::swap($config);
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
@@ -65,10 +67,9 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('title')->once()->andReturn($widget)
 			->shouldReceive('link')->once()->andReturn(null);
 		$translator->shouldReceive('get')->andReturn('foo');
-		$event->shouldReceive('listen')->once()->with('orchestra.ready: admin', 'FooAdminMenuHandler')->andReturn(null)
+		$event->shouldReceive('listen')->once()->with('orchestra.ready: admin', $menuHandler)->andReturn(null)
 			->shouldReceive('fire')->once()->with('orchestra.started')->andReturn(null);
-		$config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin')
-			->shouldReceive('get')->once()->with('orchestra/foundation::menu')->andReturn('FooAdminMenuHandler');
+		$config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
 		$url->shouldReceive('to')->once()->with('admin')->andReturn('admin');
 
 		$stub = new Application($app);
@@ -169,6 +170,8 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app['events'] = $event = m::mock('Event\Dispatcher');
 		$app['config'] = $config = m::mock('Config\Manager');
 
+		$menuHandler = 'Orchestra\Foundation\Services\Event\AdminMenuHandler';
+
 		Config::swap($config);
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
@@ -183,10 +186,9 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('title')->once()->andReturn($widget)
 			->shouldReceive('link')->once()->andReturn(null);
 		$translator->shouldReceive('get')->andReturn('foo');
-		$event->shouldReceive('listen')->once()->with('orchestra.ready: admin', 'FooAdminMenuHandler')->andReturn(null)
+		$event->shouldReceive('listen')->once()->with('orchestra.ready: admin', $menuHandler)->andReturn(null)
 			->shouldReceive('fire')->with('orchestra.started')->once()->andReturn(null);
-		$config->shouldReceive('get')->times(3)->with('orchestra/foundation::handles', '/')->andReturn('admin')
-			->shouldReceive('get')->once()->with('orchestra/foundation::menu')->andReturn('FooAdminMenuHandler');
+		$config->shouldReceive('get')->times(3)->with('orchestra/foundation::handles', '/')->andReturn('admin');
 		$extension->shouldReceive('route')->twice()->with('app', '/')->andReturn('/');
 		$url->shouldReceive('to')->once()->with('/')->andReturn('/')
 			->shouldReceive('to')->once()->with('info')->andReturn('info')
