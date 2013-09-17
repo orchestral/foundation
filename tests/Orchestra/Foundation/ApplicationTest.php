@@ -56,20 +56,22 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		Config::swap($config);
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
-			->shouldReceive('attach')->with($memory)->once()->andReturn($acl);
-		$memory->shouldReceive('make')->with()->once()->andReturn($memory)
-			->shouldReceive('make')->with('runtime.orchestra')->never()->andReturn($memory)
-			->shouldReceive('get')->with('site.name')->once()->andReturn('Orchestra')
-			->shouldReceive('put')->with('site.name', 'Orchestra')->never()->andReturn(null);
-		$widget->shouldReceive('make')->with('menu.orchestra')->once()->andReturn($widget)
-			->shouldReceive('make')->with('menu.app')->once()->andReturn($widget)
+			->shouldReceive('attach')->once()->with($memory)->andReturn($acl);
+		$memory->shouldReceive('make')->once()->andReturn($memory)
+			->shouldReceive('make')->never()->with('runtime.orchestra')->andReturn($memory)
+			->shouldReceive('get')->once()->with('site.name')->andReturn('Orchestra')
+			->shouldReceive('put')->never()->with('site.name', 'Orchestra')->andReturn(null)
+			->shouldReceive('get')->once()->with('email')->andReturn('memory.email');
+		$widget->shouldReceive('make')->once()->with('menu.orchestra')->andReturn($widget)
+			->shouldReceive('make')->once()->with('menu.app')->andReturn($widget)
 			->shouldReceive('add')->andReturn($widget)
 			->shouldReceive('title')->once()->andReturn($widget)
 			->shouldReceive('link')->once()->andReturn(null);
 		$translator->shouldReceive('get')->andReturn('foo');
 		$event->shouldReceive('listen')->once()->with('orchestra.ready: admin', $menuHandler)->andReturn(null)
 			->shouldReceive('fire')->once()->with('orchestra.started')->andReturn(null);
-		$config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
+		$config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin')
+			->shouldReceive('set')->once()->with('mail', 'memory.email')->andReturn(null);
 		$url->shouldReceive('to')->once()->with('admin')->andReturn('admin');
 
 		$stub = new Application($app);
@@ -102,14 +104,16 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$acl->shouldReceive('make')->once()->andReturn($acl)
 			->shouldReceive('attach')->never()->andReturn($acl);
 		$memory->shouldReceive('make')->once()->andReturn($memory)
-			->shouldReceive('make')->with('runtime.orchestra')->once()->andReturn($memory)
-			->shouldReceive('get')->with('site.name')->once()->andReturn(null)
-			->shouldReceive('put')->with('site.name', 'Orchestra Platform')->once()->andReturn(null);
-		$widget->shouldReceive('make')->with('menu.orchestra')->once()->andReturn($widget)
-			->shouldReceive('make')->with('menu.app')->once()->andReturn($widget)
-			->shouldReceive('add')->with('install')->once()->andReturn($widget)
-			->shouldReceive('title')->with('Install')->once()->andReturn($widget);
-		$config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
+			->shouldReceive('make')->once()->with('runtime.orchestra')->andReturn($memory)
+			->shouldReceive('get')->once()->with('site.name')->andReturn(null)
+			->shouldReceive('put')->once()->with('site.name', 'Orchestra Platform')->andReturn(null)
+			->shouldReceive('get')->never()->with('email')->andReturn('memory.email');
+		$widget->shouldReceive('make')->once()->with('menu.orchestra')->andReturn($widget)
+			->shouldReceive('make')->once()->with('menu.app')->andReturn($widget)
+			->shouldReceive('add')->once()->with('install')->andReturn($widget)
+			->shouldReceive('title')->once()->with('Install')->andReturn($widget);
+		$config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin')
+			->shouldReceive('set')->never()->with('mail', 'memory.email')->andReturn(null);
 		$url->shouldReceive('to')->once()->with('admin/install')->andReturn('admin/install');
 
 		$widget->shouldReceive('link')->with('admin/install');
@@ -175,20 +179,22 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		Config::swap($config);
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
-			->shouldReceive('attach')->with($memory)->once()->andReturn($acl);
-		$memory->shouldReceive('make')->with()->once()->andReturn($memory)
-			->shouldReceive('make')->with('runtime.orchestra')->never()->andReturn($memory)
-			->shouldReceive('get')->with('site.name')->once()->andReturn('Orchestra')
-			->shouldReceive('put')->with('site.name', 'Orchestra')->never()->andReturn(null);
-		$widget->shouldReceive('make')->with('menu.orchestra')->once()->andReturn($widget)
-			->shouldReceive('make')->with('menu.app')->once()->andReturn($widget)
+			->shouldReceive('attach')->once()->with($memory)->andReturn($acl);
+		$memory->shouldReceive('make')->once()->with()->andReturn($memory)
+			->shouldReceive('make')->never()->with('runtime.orchestra')->andReturn($memory)
+			->shouldReceive('get')->once()->with('site.name')->andReturn('Orchestra')
+			->shouldReceive('put')->never()->with('site.name', 'Orchestra')->andReturn(null)
+			->shouldReceive('get')->once()->with('email')->andReturn('memory.email');
+		$widget->shouldReceive('make')->once()->with('menu.orchestra')->andReturn($widget)
+			->shouldReceive('make')->once()->with('menu.app')->andReturn($widget)
 			->shouldReceive('add')->andReturn($widget)
-			->shouldReceive('title')->once()->andReturn($widget)
-			->shouldReceive('link')->once()->andReturn(null);
+			->shouldReceive('title')->andReturn($widget)
+			->shouldReceive('link')->andReturn(null);
 		$translator->shouldReceive('get')->andReturn('foo');
 		$event->shouldReceive('listen')->once()->with('orchestra.ready: admin', $menuHandler)->andReturn(null)
 			->shouldReceive('fire')->with('orchestra.started')->once()->andReturn(null);
-		$config->shouldReceive('get')->times(3)->with('orchestra/foundation::handles', '/')->andReturn('admin');
+		$config->shouldReceive('get')->times(3)->with('orchestra/foundation::handles', '/')->andReturn('admin')
+			->shouldReceive('set')->once()->with('mail', 'memory.email')->andReturn(null);
 		$extension->shouldReceive('route')->twice()->with('app', '/')->andReturn('/');
 		$url->shouldReceive('to')->once()->with('/')->andReturn('/')
 			->shouldReceive('to')->once()->with('info')->andReturn('info')
