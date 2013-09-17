@@ -26,22 +26,8 @@ class Mail {
 	 */
 	public function __construct($app)
 	{
-		$this->app = $app;
-	}
-
-	/**
-	 * Load Memory Provider.
-	 *
-	 * @return void
-	 */
-	protected function loadMemoryProvider()
-	{
-		if ( ! is_null($this->memory)) return ;
-
+		$this->app    = $app;
 		$this->memory = $this->app['orchestra.memory']->make();
-
-		// Push configuration from database to runtime configuration.
-		$this->app['config']->set('mail', $this->memory->get('email'));
 	}
 	
 	/**
@@ -55,8 +41,6 @@ class Mail {
 	 */
 	public function push($view, array $data, $callback)
 	{
-		$this->loadMemoryProvider();
-
 		$method = 'queue';
 
 		if (false === $this->memory->get('email.queue', false)) $method = 'send';
@@ -73,9 +57,7 @@ class Mail {
 	 * @return \Illuminate\Mail\Mailer
 	 */
 	public function send($view, array $data, $callback)
-	{
-		$this->loadMemoryProvider();
-		
+	{		
 		return $this->dispatchMailer('send', $view, $data, $callback);
 	}
 
@@ -88,9 +70,7 @@ class Mail {
 	 * @return \Illuminate\Mail\Mailer
 	 */
 	public function queue($view, array $data, $callback)
-	{
-		$this->loadMemoryProvider();
-		
+	{		
 		return $this->dispatchMailer('queue', $view, $data, $callback);
 	}
 
