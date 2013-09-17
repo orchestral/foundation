@@ -12,13 +12,6 @@ class Mail {
 	protected $app = null;
 
 	/**
-	 * Memory instance.
-	 *
-	 * @var \Orchestra\Memory\Drivers\Driver
-	 */
-	protected $memory = null;
-
-	/**
 	 * Construct a new Mail instance.
 	 *
 	 * @param  \Illuminate\Foundation\Application   $app
@@ -27,7 +20,6 @@ class Mail {
 	public function __construct($app)
 	{
 		$this->app    = $app;
-		$this->memory = $this->app['orchestra.memory']->make();
 	}
 	
 	/**
@@ -42,8 +34,9 @@ class Mail {
 	public function push($view, array $data, $callback)
 	{
 		$method = 'queue';
+		$memory = $this->app['orchestra.memory']->makeOrFallback();
 
-		if (false === $this->memory->get('email.queue', false)) $method = 'send';
+		if (false === $memory->get('email.queue', false)) $method = 'send';
 
 		return $this->dispatchMailer($method, $view, $data, $callback);
 	}

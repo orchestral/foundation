@@ -81,7 +81,9 @@ class Application {
 
 			$this->createAdminMenu();
 
-			$app['config']->set('mail', $memory->get('email'));
+			$email = $memory->get('email');
+
+			is_null($email) or $app['config']->set('mail', $email);
 		}
 		catch (Exception $e)
 		{
