@@ -19,7 +19,7 @@ class Mail {
 	 */
 	public function __construct($app)
 	{
-		$this->app    = $app;
+		$this->app = $app;
 	}
 	
 	/**
