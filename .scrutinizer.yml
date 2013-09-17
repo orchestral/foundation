@@ -1,7 +1,13 @@
 before_commands:
     - 'composer install --prefer-source --no-interaction --dev'
+filter:
+    paths:
+        - 'src/*'
+    excluded_paths:
+        - 'vendor/*'
+        - 'tests/*'
 tools:
-    php_mess_detector: true
+    php_mess_detector: true=
     php_code_coverage:
         config_path: phpunit.xml
     php_cpd:
