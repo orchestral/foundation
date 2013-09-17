@@ -80,6 +80,10 @@ class Application {
 			$app['orchestra.installed'] = true;
 
 			$this->createAdminMenu();
+
+			$email = $memory->get('email');
+
+			is_null($email) or $app['config']->set('mail', $email);
 		}
 		catch (Exception $e)
 		{

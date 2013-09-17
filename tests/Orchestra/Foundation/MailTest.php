@@ -21,14 +21,11 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 	public function testPushMethodUsesSend()
 	{
 		$app = array(
-			'config' => $config = m::mock('Config\Manager'),
 			'orchestra.memory' => ($memory = m::mock('Memory')),
 			'mailer' => $mailer = m::mock('Mailer'),
 		);
 
-		$config->shouldReceive('set')->once()->with('mail', 'email-config')->andReturn(null);
-		$memory->shouldReceive('make')->once()->andReturn($memory)
-			->shouldReceive('get')->once()->with('email')->andReturn('email-config')
+		$memory->shouldReceive('makeOrFallback')->once()->andReturn($memory)
 			->shouldReceive('get')->once()->with('email.queue', false)->andReturn(false);
 		$mailer->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
 
@@ -44,14 +41,11 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 	public function testPushMethodUsesQueue()
 	{
 		$app = array(
-			'config' => $config = m::mock('Config\Manager'),
 			'orchestra.memory' => $memory = m::mock('Memory'),
 			'mailer' => $mailer = m::mock('Mailer'),
 		);
 
-		$config->shouldReceive('set')->once()->with('mail', 'email-config')->andReturn(null);
-		$memory->shouldReceive('make')->once()->andReturn($memory)
-			->shouldReceive('get')->once()->with('email')->andReturn('email-config')
+		$memory->shouldReceive('makeOrFallback')->once()->andReturn($memory)
 			->shouldReceive('get')->once()->with('email.queue', false)->andReturn(true);
 		$mailer->shouldReceive('queue')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
 
@@ -67,14 +61,9 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 	public function testSendMethod()
 	{
 		$app = array(
-			'config' => $config = m::mock('Config\Manager'),
-			'orchestra.memory' => ($memory = m::mock('Memory')),
 			'mailer' => $mailer = m::mock('Mailer'),
 		);
 
-		$config->shouldReceive('set')->once()->with('mail', 'email-config')->andReturn(null);
-		$memory->shouldReceive('make')->once()->andReturn($memory)
-			->shouldReceive('get')->once()->with('email')->andReturn('email-config');
 		$mailer->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
 
 		$stub = new Mail($app);
@@ -89,14 +78,9 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 	public function testQueueMethod()
 	{
 		$app = array(
-			'config' => $config = m::mock('Config\Manager'),
-			'orchestra.memory' => ($memory = m::mock('Memory')),
 			'mailer' => $mailer = m::mock('Mailer'),
 		);
 
-		$config->shouldReceive('set')->once()->with('mail', 'email-config')->andReturn(null);
-		$memory->shouldReceive('make')->once()->andReturn($memory)
-			->shouldReceive('get')->once()->with('email')->andReturn('email-config');
 		$mailer->shouldReceive('queue')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
 
 		$stub = new Mail($app);
