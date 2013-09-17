@@ -1,3 +1,5 @@
+before_commands:
+    - 'composer install --prefer-source --no-interaction --dev'
 tools:
     php_mess_detector: true
     php_code_coverage:
