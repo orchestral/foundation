@@ -6,6 +6,7 @@ use Illuminate\Auth\Reminders\PasswordBroker as Broker;
 use Illuminate\Auth\Reminders\ReminderRepositoryInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Auth\UserProviderInterface;
+use Illuminate\Support\SerializableClosure;
 use Orchestra\Foundation\Mail as Mailer;
 use Orchestra\Support\Messages;
 
@@ -124,15 +125,17 @@ class PasswordBroker extends Broker {
 		// password reminder e-mail. We'll pass a "token" variable into the views
 		// so that it may be displayed for an user to click for password reset.
 		$view = $this->reminderView;
+		
+		if ($callback instanceof Closure) $callback = new SerializableClosure($callback);
 
 		$closure = function($m) use ($user, $callback)
 		{
 			$m->to($user->getReminderEmail());
 
-			if ( ! is_null($callback)) call_user_func($callback, $m, $user);
+			if (is_callable($callback)) call_user_func($callback, $m, $user);
 		};
 
-		return $this->mailer->send($view, compact('token', 'user'), $closure);
+		return $this->mailer->push($view, compact('token', 'user'), $closure);
 	}
 
 }
