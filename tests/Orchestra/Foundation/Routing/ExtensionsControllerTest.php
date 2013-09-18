@@ -84,7 +84,9 @@ class ExtensionsControllerTest extends TestCase {
 	 */
 	public function testGetConfigureAction()
 	{
-		$memory = m::mock('Memory');
+		$memory    = m::mock('Memory');
+		$presenter = m::mock('ExtensionPresenter');
+
 		$memory->shouldReceive('get')->once()
 				->with('extensions.active.laravel/framework.config', array())->andReturn(array())
 			->shouldReceive('get')->once()
@@ -92,12 +94,12 @@ class ExtensionsControllerTest extends TestCase {
 			->shouldReceive('get')->once()
 				->with('extensions.available.laravel/framework.name', 'laravel/framework')
 				->andReturn('Laravel Framework');
+		$presenter->shouldReceive('form')->once()->andReturn('edit.extension');
 
-		Extension::shouldReceive('started')->once()
-			->with('laravel/framework')->andReturn(true);
-		Form::shouldReceive('of')->once()
-			->with('orchestra.extension: laravel/framework', m::type('Closure'))->andReturn('form');
+		Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
 		Orchestra::shouldReceive('memory')->once()->andReturn($memory);
+		Orchestra::shouldReceive('make')->once()
+			->with('Orchestra\Foundation\Services\Html\ExtensionPresenter')->andReturn($presenter);
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::extensions.configure', m::type('Array'))->andReturn('foo');
 

@@ -75,7 +75,9 @@ class UserPresenterTest extends TestCase {
 			->shouldReceive('create')->once()->with('span', 'raw-foo', m::any())->andReturn(null)
 			->shouldReceive('raw')->once()->with('administrator member')->andReturn('raw-foo');
 		
-		$this->assertEquals('foo', UserPresenter::table($model));
+		$stub = new UserPresenter;
+
+		$this->assertEquals('foo', $stub->table($model));
 	}
 
 	/**
@@ -86,7 +88,6 @@ class UserPresenterTest extends TestCase {
 	 */
 	public function testActionsMethod()
 	{
-		$model   = new Fluent;
 		$builder = m::mock('\Orchestra\Html\Table\TableBuilder');
 		$table   = m::mock('TableGenerator');
 		$column  = m::mock('ColumnBuilder');
@@ -127,7 +128,9 @@ class UserPresenterTest extends TestCase {
 		Auth::shouldReceive('user')->once()
 			->andReturn((object) array('id' => 2));
 
-		$this->assertEquals('foo', UserPresenter::actions($builder));
+		$stub = new UserPresenter;
+
+		$this->assertEquals('foo', $stub->actions($builder));
 	}
 
 	/**
@@ -195,7 +198,9 @@ class UserPresenterTest extends TestCase {
 
 		$app['orchestra.role'] = $roles = m::mock('Role');
 		$roles->shouldReceive('lists')->once()->with('name', 'id')->andReturn('roles');
+
+		$stub = new UserPresenter;
 		
-		$this->assertEquals('foo', UserPresenter::form($model, 'update'));
+		$this->assertEquals('foo', $stub->form($model, 'update'));
 	}
 }

@@ -13,7 +13,6 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Publisher;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Extension\FilePermissionException;
-use Orchestra\Foundation\Services\Html\ExtensionPresenter;
 
 class ExtensionsController extends AdminController {
 
@@ -108,10 +107,11 @@ class ExtensionsController extends AdminController {
 		$baseConfig    = (array) $memory->get("extension_{$name}", array());
 		$eloquent      = new Fluent(array_merge($activeConfig, $baseConfig));
 		$extensionName = $memory->get("extensions.available.{$name}.name", $name);
+		$presenter     = App::make('Orchestra\Foundation\Services\Html\ExtensionPresenter');
 
 		// Add basic form, allow extension to add custom configuration field
 		// to this form using events.
-		$form = ExtensionPresenter::form($eloquent, $name);
+		$form = $presenter->form($eloquent, $name);
 
 		Event::fire("orchestra.form: extension.{$name}", array($eloquent, $form));
 		Site::set('title', $extensionName);

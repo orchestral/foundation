@@ -4,6 +4,7 @@ use Mockery as m;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Services\TestCase;
+use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Resources;
 use Orchestra\Support\Facades\Table;
 
@@ -31,9 +32,12 @@ class ResourcesControllerTest extends TestCase {
 			)),
 		);
 
+		$presenter = m::mock('ResourcePresenter');
+		$presenter->shouldReceive('table')->once()->andReturn('list.resources');
+
 		Resources::shouldReceive('all')->once()->andReturn($resources);
-		Table::shouldReceive('of')->once()
-			->with('orchestra.resources: list', m::type('Closure'))->andReturn('table');
+		Orchestra::shouldReceive('make')->once()
+			->with('Orchestra\Foundation\Services\Html\ResourcePresenter')->andReturn($presenter);
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::resources.index', m::type('Array'))->andReturn('foo');
 

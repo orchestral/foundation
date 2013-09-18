@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Services\Html\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\HTML;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Services\TestCase;
 use Orchestra\Foundation\Services\Html\SettingPresenter;
@@ -24,9 +24,10 @@ class SettingPresenterTest extends TestCase {
 	 */
 	public function testFormMethod()
 	{
-		$model    = new Fluent(array(
-			'email_smtp_password' => 123456,
+		$model = new Fluent(array(
+			'email_password' => 123456,
 		));
+
 		$form          = m::mock('FormBuilder');
 		$siteFieldset  = m::mock('SiteFieldsetBuilder');
 		$emailFieldset = m::mock('EmailFieldsetBuilder');
@@ -40,7 +41,7 @@ class SettingPresenterTest extends TestCase {
 		$emailControl->shouldReceive('label')->times(9)->andReturn(null)
 			->shouldReceive('attributes')->once()->andReturn(null)
 			->shouldReceive('options')->twice()->andReturn(null)
-			->shouldReceive('help')->once()->with('help-foo');
+			->shouldReceive('help')->once()->with('email.password.help');
 
 		$siteFieldset->shouldReceive('control')->times(3)->with(m::any(), m::any(), m::type('Closure'))->andReturnUsing(
 			function ($t, $n, $c) use ($siteControl)
@@ -77,16 +78,13 @@ class SettingPresenterTest extends TestCase {
 					$c($form);
 					return 'foo';
 				});
-		HTML::shouldReceive('create')->once()
-			->with('span', '******')->andReturn('span');
-		HTML::shouldReceive('link')->once()
-			->with('#', m::any(), m::type('Array'))->andReturn('link');
-		\Illuminate\Support\Facades\Form::shouldReceive('hidden')->once()
-			->with('change_password', 'no')->andReturn('hidden');
-		HTML::shouldReceive('create')->once()
-			->with('span', 'raw-help-foo', m::type('Array'))->andReturn('help-foo');
-		HTML::shouldReceive('raw')->once()
-			->with('span&nbsp;&nbsp;linkhidden')->andReturn('raw-help-foo');
-		$this->assertEquals('foo', SettingPresenter::form($model));
+
+		View::shouldReceive('make')->once()
+			->with('orchestra/foundation::settings.email-password', compact('model'))
+			->andReturn('email.password.help');
+
+		$stub = new SettingPresenter;
+
+		$this->assertEquals('foo', $stub->form($model));
 	}
 }

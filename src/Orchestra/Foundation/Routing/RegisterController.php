@@ -13,7 +13,6 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Support\Str;
 use Orchestra\Model\User;
-use Orchestra\Foundation\Services\Html\AccountPresenter;
 
 class RegisterController extends AdminController {
 	
@@ -41,9 +40,10 @@ class RegisterController extends AdminController {
 	 */
 	public function getIndex()
 	{
-		$eloquent = App::make('orchestra.user');
-		$title    = 'orchestra/foundation::title.register';
-		$form     = AccountPresenter::profileForm($eloquent, handles('orchestra::register'));
+		$eloquent  = App::make('orchestra.user');
+		$title     = 'orchestra/foundation::title.register';
+		$presenter = App::make('Orchestra\Foundation\Services\Html\AccountPresenter');
+		$form      = $presenter->profileForm($eloquent, handles('orchestra::register'));
 		
 		$form->extend(function ($form) use ($title)
 		{

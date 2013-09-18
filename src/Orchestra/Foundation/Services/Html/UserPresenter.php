@@ -16,7 +16,7 @@ class UserPresenter {
 	 * @param  \Orchestra\Model\User    $model
 	 * @return \Orchestra\Html\Table\TableBuilder
 	 */
-	public static function table($model)
+	public function table($model)
 	{
 		return Table::of('orchestra.users', function ($table) use ($model)
 		{
@@ -66,7 +66,7 @@ class UserPresenter {
 	 * @param  \Orchestra\Html\Table\TableBuilder   $table
 	 * @return \Orchestra\Html\Table\TableBuilder
 	 */
-	public static function actions(TableBuilder $table)
+	public function actions(TableBuilder $table)
 	{
 		return $table->extend(function ($table)
 		{
@@ -117,7 +117,7 @@ class UserPresenter {
 	 * @param  \Orchestra\Model\User    $model
 	 * @return \Orchestra\Html\Form\FormBuilder
 	 */
-	public static function form($model, $type = 'create')
+	public function form($model, $type = 'create')
 	{
 		return Form::of('orchestra.users', function ($form) use ($model, $type)
 		{

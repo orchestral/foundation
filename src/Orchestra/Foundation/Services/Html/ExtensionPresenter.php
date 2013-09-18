@@ -13,7 +13,7 @@ class ExtensionPresenter {
 	 * @param  string                       $name
 	 * @return \Orchestra\Html\Form\FormBuilder
 	 */
-	public static function form($model, $name)
+	public function form($model, $name)
 	{
 		return Form::of("orchestra.extension: {$name}", function ($form) use ($model, $name)
 		{
