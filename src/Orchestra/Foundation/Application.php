@@ -49,14 +49,13 @@ class Application {
 		// Set the indicator that Application has been booted.
 		$this->booted = true;
 
-		$app = $this->app;
+		$app    = $this->app;
+		$memory = null;
 
 		// Make Menu instance for backend and frontend appliction
 		$this->services['orchestra.menu'] = $app['orchestra.widget']->make('menu.orchestra');
 		$this->services['app.menu']       = $app['orchestra.widget']->make('menu.app');
 		$this->services['orchestra.acl']  = $app['orchestra.acl']->make('orchestra');
-
-		$memory = null;
 
 		try
 		{
@@ -81,9 +80,11 @@ class Application {
 
 			$this->createAdminMenu();
 
-			$email = $memory->get('email');
-
-			is_null($email) or $app['config']->set('mail', $email);
+			// Ensure that e-mail information is passed to configuration 
+			// on every request. This would allow both Mail and 
+			// Orchestra\Mail to work with database configuration without 
+			// mode especially for Queue.
+			is_null($email = $memory->get('email')) or $app['config']->set('mail', $email);
 		}
 		catch (Exception $e)
 		{
