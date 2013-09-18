@@ -9,11 +9,12 @@ abstract class BaseController extends Controller {
 	 * Show missing pages.
 	 *
 	 * GET (:orchestra) return 404
-	 *
+	 * 
+	 * @param  array    $parameters
 	 * @return Response
 	 */
-	public function missingMethod()
+	public function missingMethod($parameters)
 	{
-		return Response::view('orchestra/foundation::dashboard.missing', array(), 404);
+		return Response::view('orchestra/foundation::dashboard.missing', $parameters, 404);
 	}
 }
