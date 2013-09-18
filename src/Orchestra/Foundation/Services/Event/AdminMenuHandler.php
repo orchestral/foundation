@@ -82,7 +82,6 @@ class AdminMenuHandler {
 	 */
 	protected function resources()
 	{
-		$acl        = $this->acl;
 		$menu       = $this->menu;
 		$translator = $this->translator;
 
