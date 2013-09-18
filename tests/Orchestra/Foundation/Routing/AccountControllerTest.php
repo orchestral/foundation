@@ -27,10 +27,13 @@ class AccountControllerTest extends TestCase {
 	 */
 	public function testGetIndexAction()
 	{
-		Auth::shouldReceive('user')->once()->andReturn('auth');
-		Form::shouldReceive('of')->once()
-			->with('orchestra.account', m::type('Closure'))->andReturn('form');
+		$presenter = m::mock('AccountPresenter');
+		$presenter->shouldReceive('profileForm')->once()->andReturn('edit.account.form');
 
+		Auth::shouldReceive('user')->once()->andReturn('auth');
+		Orchestra::shouldReceive('make')->once()
+			->with('Orchestra\Foundation\Services\Html\AccountPresenter')->andReturn($presenter);
+		Orchestra::shouldReceive('handles')->once()->with('orchestra::account')->andReturn('account');
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::account.index', m::type('Array'))->andReturn('foo');
 
@@ -151,10 +154,12 @@ class AccountControllerTest extends TestCase {
 	 */
 	public function testGetPasswordAction()
 	{
-		Auth::shouldReceive('user')->once()->andReturn('auth');
-		Form::shouldReceive('of')->once()
-			->with('orchestra.account: password', m::type('Closure'))->andReturn('form');
+		$presenter = m::mock('AccountPresenter');
+		$presenter->shouldReceive('passwordForm')->once()->andReturn('edit.password.form');
 
+		Auth::shouldReceive('user')->once()->andReturn('auth');
+		Orchestra::shouldReceive('make')->once()
+			->with('Orchestra\Foundation\Services\Html\AccountPresenter')->andReturn($presenter);
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::account.password', m::type('Array'))->andReturn('foo');
 

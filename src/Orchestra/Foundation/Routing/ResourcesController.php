@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Resources;
+use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Foundation\Services\Html\ResourcePresenter;
 
 class ResourcesController extends AdminController {
 
@@ -16,6 +16,7 @@ class ResourcesController extends AdminController {
 	{
 		$resources  = Resources::all();
 		$collection = array();
+		$presenter  = App::make('Orchestra\Foundation\Services\Html\ResourcePresenter');
 
 		foreach ($resources as $name => $options)
 		{
@@ -24,7 +25,7 @@ class ResourcesController extends AdminController {
 			$collection[$name] = $options;
 		}
 
-		$table = ResourcePresenter::table($collection);
+		$table = $presenter->table($collection);
 
 		Site::set('title', trans('orchestra/foundation::title.resources.list'));
 		Site::set('description', trans('orchestra/foundation::title.resources.list-detail'));

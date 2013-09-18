@@ -26,19 +26,21 @@ class RegisterControllerTest extends TestCase {
 	 */
 	public function testGetIndexAction()
 	{
-		$user = m::mock('\Orchestra\Model\User');
+		$form      = m::mock('FormGrid');
+		$presenter = m::mock('AccountPresenter');
+		$user      = m::mock('\Orchestra\Model\User');
 
-		Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
-		Orchestra::shouldReceive('handles')->once()->with('orchestra::register')->andReturn('register');
-		Form::swap($form = m::mock('FormGrid'));
-
-		$form->shouldReceive('of')->once()->with('orchestra.account', m::type('Closure'))->andReturn($form)
-			->shouldReceive('extend')->once()->with(m::type('Closure'))->andReturnUsing(
+		$form->shouldReceive('extend')->once()->with(m::type('Closure'))->andReturnUsing(
 				function ($c) use ($form)
 				{
 					$c($form);
 				});
+		$presenter->shouldReceive('profileForm')->once()->andReturn($form);
 
+		Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
+		Orchestra::shouldReceive('make')->once()
+			->with('Orchestra\Foundation\Services\Html\AccountPresenter')->andReturn($presenter);
+		Orchestra::shouldReceive('handles')->once()->with('orchestra::register')->andReturn('register');
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::credential.register', m::type('Array'))->andReturn('foo');
 

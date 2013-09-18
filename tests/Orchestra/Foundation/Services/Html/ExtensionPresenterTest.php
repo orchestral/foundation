@@ -26,10 +26,10 @@ class ExtensionPresenterTest extends TestCase {
 	 */
 	public function testFormMethod()
 	{
-		$model    = new Fluent;
-		$form     = m::mock('FormBuilder');
-		$fieldset = m::mock('FieldsetBuilder');
-		$control  = m::mock('ControlBuilder');
+		$model     = new Fluent;
+		$form      = m::mock('FormBuilder');
+		$fieldset  = m::mock('FieldsetBuilder');
+		$control   = m::mock('ControlBuilder');
 
 		$control->shouldReceive('label')->twice()->andReturn(null)
 			->shouldReceive('value')->once()->andReturn(null)
@@ -67,6 +67,8 @@ class ExtensionPresenterTest extends TestCase {
 		HTML::shouldReceive('link')->once()
 			->with(handles("orchestra/foundation::extensions/update/foo.bar"), m::any(), m::any())->andReturn('foo');
 		
-		$this->assertEquals('foo', ExtensionPresenter::form($model, 'foo/bar'));
+		$stub = new ExtensionPresenter;
+
+		$this->assertEquals('foo', $stub->form($model, 'foo/bar'));
 	}
 }
