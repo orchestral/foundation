@@ -180,7 +180,7 @@ class Ftp implements UploaderInterface {
 		// public/packages.
 		if ( ! $recursively and str_contains($name, '/'))
 		{
-			list($vendor, $package) = explode('/', $name);
+			list($vendor,) = explode('/', $name);
 
 			if ($this->app['files']->isDirectory($folder = "{$basePath}{$vendor}/")) 
 			{

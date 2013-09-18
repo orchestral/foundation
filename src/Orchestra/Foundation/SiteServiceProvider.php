@@ -81,7 +81,7 @@ class SiteServiceProvider extends ServiceProvider {
 	 */
 	protected function registerRoleEloquent()
 	{
-		$this->app['orchestra.role'] = $this->app->share(function ($app)
+		$this->app['orchestra.role'] = $this->app->share(function ()
 		{
 			return new Role;
 		});
@@ -94,7 +94,7 @@ class SiteServiceProvider extends ServiceProvider {
 	 */
 	protected function registerUserEloquent()
 	{
-		$this->app['orchestra.user'] = $this->app->share(function ($app)
+		$this->app['orchestra.user'] = $this->app->share(function ()
 		{
 			return new User;
 		});
