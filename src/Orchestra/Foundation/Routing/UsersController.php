@@ -12,7 +12,6 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Model\Role;
 use Orchestra\Model\User;
-use Orchestra\Foundation\Services\Html\UserPresenter;
 
 class UsersController extends AdminController {
 
@@ -43,18 +42,19 @@ class UsersController extends AdminController {
 
 		// Get Users (with roles) and limit it to only 30 results for
 		// pagination. Don't you just love it when pagination simply works.
-		$eloquent = App::make('orchestra.user')->search($searchKeyword, $searchRoles)->paginate(30);
-		$roles    = App::make('orchestra.role')->lists('name', 'id');
+		$eloquent  = App::make('orchestra.user')->search($searchKeyword, $searchRoles)->paginate(30);
+		$roles     = App::make('orchestra.role')->lists('name', 'id');
+		$presenter = App::make('Orchestra\Foundation\Services\Html\UserPresenter');
 
 		// Build users table HTML using a schema liked code structure.
-		$table = UserPresenter::table($eloquent);
+		$table = $presenter->table($eloquent);
 
 		Event::fire('orchestra.list: users', array($eloquent, $table));
 
 		// Once all event listening to `orchestra.list: users` is executed,
 		// we can add we can now add the final column, edit and delete 
 		// action for users.
-		UserPresenter::actions($table);
+		$presenter->actions($table);
 
 		Site::set('title', trans('orchestra/foundation::title.users.list'));
 
@@ -72,8 +72,9 @@ class UsersController extends AdminController {
 	 */
 	public function create()
 	{
-		$eloquent = App::make('orchestra.user');
-		$form     = UserPresenter::form($eloquent, 'create');
+		$eloquent  = App::make('orchestra.user');
+		$presenter = App::make('Orchestra\Foundation\Services\Html\UserPresenter');
+		$form      = $presenter->form($eloquent, 'create');
 
 		$this->fireEvent('form', array($eloquent, $form));
 		Site::set('title', trans('orchestra/foundation::title.users.create'));
@@ -90,8 +91,9 @@ class UsersController extends AdminController {
 	 */
 	public function edit($id)
 	{
-		$eloquent = App::make('orchestra.user')->findOrFail($id);
-		$form     = UserPresenter::form($eloquent, 'update');
+		$eloquent  = App::make('orchestra.user')->findOrFail($id);
+		$presenter = App::make('Orchestra\Foundation\Services\Html\UserPresenter');
+		$form      = $presenter->form($eloquent, 'update');
 
 		$this->fireEvent('form', array($eloquent, $form));
 		Site::set('title', trans('orchestra/foundation::title.users.update'));

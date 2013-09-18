@@ -13,7 +13,7 @@ class SettingPresenter {
 	 * @param  \Illuminate\Support\Fluent   $model
 	 * @return \Orchestra\Html\Form\FormBuilder
 	 */
-	public static function form($model)
+	public function form($model)
 	{
 		return Form::of('orchestra.settings', function ($form) use ($model)
 		{

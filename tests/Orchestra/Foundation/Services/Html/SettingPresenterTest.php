@@ -87,6 +87,9 @@ class SettingPresenterTest extends TestCase {
 			->with('span', 'raw-help-foo', m::type('Array'))->andReturn('help-foo');
 		HTML::shouldReceive('raw')->once()
 			->with('span&nbsp;&nbsp;linkhidden')->andReturn('raw-help-foo');
-		$this->assertEquals('foo', SettingPresenter::form($model));
+
+		$stub = new SettingPresenter;
+
+		$this->assertEquals('foo', $stub->form($model));
 	}
 }

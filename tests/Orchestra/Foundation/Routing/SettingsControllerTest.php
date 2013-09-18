@@ -24,13 +24,15 @@ class SettingsControllerTest extends TestCase {
 	 */
 	public function testGetIndexAction()
 	{
-		$memory = m::mock('Memory');
+		$memory    = m::mock('Memory');
+		$presenter = m::mock('SettingPresenter');
 
 		$memory->shouldReceive('get')->times(12)->andReturn('');
+		$presenter->shouldReceive('form')->once()->andReturn('edit.settings');
 
 		Orchestra::shouldReceive('memory')->once()->andReturn($memory);
-		Form::shouldReceive('of')->once()
-			->with('orchestra.settings', m::type('Closure'))->andReturn('form');
+		Orchestra::shouldReceive('make')->once()
+			->with('Orchestra\Foundation\Services\Html\SettingPresenter')->andReturn($presenter);
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::settings.index', m::type('Array'))->andReturn('foo');
 
@@ -62,12 +64,11 @@ class SettingsControllerTest extends TestCase {
 			'email_queue'      => 'no',
 		);
 
-		$memory = m::mock('Memory');
+		$memory     = m::mock('Memory');
 		$validation = m::mock('SettingValidation');
 
 		$memory->shouldReceive('put')->times(12)->andReturn(null)
 			->shouldReceive('get')->once()->with('email.password')->andReturn('foo');
-
 		$validation->shouldReceive('on')->once()->with('smtp')->andReturn($validation)
 			->shouldReceive('with')->once()->with($input)->andReturn($validation)
 			->shouldReceive('fails')->once()->andReturn(false);

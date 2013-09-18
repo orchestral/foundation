@@ -11,7 +11,7 @@ class ResourcePresenter {
 	 * @param  array    $model
 	 * @return \Orchestra\Html\Table\TableBuilder
 	 */
-	public static function table($model)
+	public function table($model)
 	{
 		return Table::of('orchestra.resources: list', function ($table) use ($model)
 		{

@@ -61,6 +61,8 @@ class ResourcePresenterTest extends TestCase {
 		HTML::shouldReceive('raw')->once()
 			->with('foo')->andReturn('Foobar');
 		
-		$this->assertEquals('foo', ResourcePresenter::table($model));
+		$stub = new ResourcePresenter;
+		
+		$this->assertEquals('foo', $stub->table($model));
 	}
 }

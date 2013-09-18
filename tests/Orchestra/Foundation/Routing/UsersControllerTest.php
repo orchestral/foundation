@@ -27,19 +27,20 @@ class UsersControllerTest extends TestCase {
 	 */
 	public function testGetIndexAction()
 	{
-		$user  = m::mock('\Orchestra\Model\User');
-		$role  = m::mock('\Orchestra\Model\Role');
-		$table = m::mock('\Orchestra\Html\Table\TableBuilder');
+		$user      = m::mock('\Orchestra\Model\User');
+		$role      = m::mock('\Orchestra\Model\Role');
+		$presenter = m::mock('UserPresenter');
 
 		$user->shouldReceive('search')->once()->with('', array())->andReturn($user)
 			->shouldReceive('paginate')->once()->with(30)->andReturn(array());
 		$role->shouldReceive('lists')->once()->with('name', 'id')->andReturn(array());
-		$table->shouldReceive('extend')->once()->with(m::type('Closure'))->andReturn($table);
+		$presenter->shouldReceive('table')->once()->andReturn('list.users')
+			->shouldReceive('actions')->once()->with('list.users')->andReturn('list.users');
 
 		Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
 		Orchestra::shouldReceive('make')->once()->with('orchestra.role')->andReturn($role);
-		Table::shouldReceive('of')->once()
-			->with('orchestra.users', m::type('Closure'))->andReturn($table);
+		Orchestra::shouldReceive('make')->once()
+			->with('Orchestra\Foundation\Services\Html\UserPresenter')->andReturn($presenter);
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::users.index', m::type('Array'))->andReturn('foo');
 
@@ -54,10 +55,12 @@ class UsersControllerTest extends TestCase {
 	 */
 	public function testGetCreateAction()
 	{
-		$form = m::mock('\Orchestra\Html\Form\FormBuilder');
+		$presenter = m::mock('UserPresenter');
+		$presenter->shouldReceive('form')->once()->andReturn('form.users');
 
 		Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn(array());
-		Form::shouldReceive('of')->once()->with('orchestra.users', m::type('Closure'))->andReturn($form);
+		Orchestra::shouldReceive('make')->once()
+			->with('Orchestra\Foundation\Services\Html\UserPresenter')->andReturn($presenter);
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::users.edit', m::type('Array'))->andReturn('foo');
 
@@ -72,14 +75,15 @@ class UsersControllerTest extends TestCase {
 	 */
 	public function testGetEditAction()
 	{
-		$builder = m::mock('UserModelBuilder');
-		$user    = m::mock('\Orchestra\Model\User');
-		$form    = m::mock('FormBuilder');
+		$builder   = m::mock('UserModelBuilder');
+		$presenter = m::mock('UserPresenter');
 
-		$builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
+		$builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user = m::mock('\Orchestra\Model\User'));
+		$presenter->shouldReceive('form')->once()->andReturn('form.users');
 
 		Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
-		Form::shouldReceive('of')->once()->with('orchestra.users', m::type('Closure'))->andReturn($form);
+		Orchestra::shouldReceive('make')->once()
+			->with('Orchestra\Foundation\Services\Html\UserPresenter')->andReturn($presenter);
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::users.edit', m::type('Array'))->andReturn('foo');
 

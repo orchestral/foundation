@@ -13,7 +13,7 @@ class AccountPresenter {
 	 * @param  string                   $url
 	 * @return \Orchestra\Html\Form\FormBuilder
 	 */
-	public static function profileForm($model, $url)
+	public function profileForm($model, $url)
 	{
 		return Form::of('orchestra.account', function ($form) use ($model, $url)
 		{
@@ -47,7 +47,7 @@ class AccountPresenter {
 	 * @param  \Orchestra\Model\User    $model
 	 * @return \Orchestra\Html\Form\FormBuilder
 	 */
-	public static function passwordForm($model)
+	public function passwordForm($model)
 	{
 		return Form::of('orchestra.account: password', function ($form) use ($model)
 		{

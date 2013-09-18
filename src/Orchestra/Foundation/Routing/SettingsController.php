@@ -8,7 +8,6 @@ use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Foundation\Services\Html\SettingPresenter;
 
 class SettingsController extends AdminController {
 
@@ -54,7 +53,8 @@ class SettingsController extends AdminController {
 			'email_queue'      => ($memory->get('email.queue', false) ? 'yes' : 'no'),
 		));
 
-		$form = SettingPresenter::form($eloquent);
+		$presenter = App::make('Orchestra\Foundation\Services\Html\SettingPresenter');
+		$form      = $presenter->form($eloquent);
 
 		Event::fire('orchestra.form: settings', array($eloquent, $form));
 		Site::set('title', trans('orchestra/foundation::title.settings.list'));

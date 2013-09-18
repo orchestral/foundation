@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Foundation\Services\Html\AccountPresenter;
 
 class AccountController extends AdminController {
 
@@ -37,8 +36,9 @@ class AccountController extends AdminController {
 	 */
 	public function getIndex()
 	{
-		$eloquent = Auth::user();
-		$form     = AccountPresenter::profileForm($eloquent, handles('orchestra::account'));
+		$eloquent  = Auth::user();
+		$presenter = App::make('Orchestra\Foundation\Services\Html\AccountPresenter');
+		$form      = $presenter->profileForm($eloquent, handles('orchestra::account'));
 
 		Event::fire('orchestra.form: user.account', array($eloquent, $form));
 		Site::set('title', trans("orchestra/foundation::title.account.profile"));
@@ -107,8 +107,9 @@ class AccountController extends AdminController {
 	 */
 	public function getPassword()
 	{
-		$eloquent = Auth::user();
-		$form     = AccountPresenter::passwordForm($eloquent);
+		$eloquent  = Auth::user();
+		$presenter = App::make('Orchestra\Foundation\Services\Html\AccountPresenter');
+		$form      = $presenter->passwordForm($eloquent);
 
 		Site::set('title', trans("orchestra/foundation::title.account.password"));
 

@@ -54,7 +54,9 @@ class AccountPresenterTest extends TestCase {
 					return 'foo';
 				});
 
-		$this->assertEquals('foo', AccountPresenter::profileForm($model, 'foo'));
+		$stub = new AccountPresenter;
+
+		$this->assertEquals('foo', $stub->profileForm($model, 'foo'));
 	}
 
 	/**
@@ -96,6 +98,8 @@ class AccountPresenterTest extends TestCase {
 					return 'foo';
 				});
 
-		$this->assertEquals('foo', AccountPresenter::passwordForm($model, 'foo'));
+		$stub = new AccountPresenter;
+		
+		$this->assertEquals('foo', $stub->passwordForm($model, 'foo'));
 	}
 }
