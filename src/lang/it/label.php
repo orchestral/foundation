@@ -2,6 +2,7 @@
 
 return array(
 	'add'    => 'Aggiungi',
+	'cancel' => 'Cancel',
 	'delete' => 'Elimina',
 	'edit'   => 'Modifica',
 	'next'   => 'Successivo',

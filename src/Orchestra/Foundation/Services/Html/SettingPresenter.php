@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Services\Html;
 
-use Illuminate\Support\Facades\HTML;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Form as F;
 use Orchestra\Support\Facades\Form;
 use Orchestra\Support\Facades\Table;
@@ -108,20 +108,8 @@ class SettingPresenter {
 
 			$fieldset->control('input:password', 'email_password', function ($control) use ($model)
 			{
-				$help = array(
-					HTML::create('span', str_repeat('*', strlen($model->email_smtp_password))),
-					'&nbsp;&nbsp;',
-					HTML::link('#', trans('orchestra/foundation::label.email.change_password'), array(
-						'id' => 'change_password_button',
-						'class' => 'btn btn-mini btn-warning',
-					)),
-					F::hidden('change_password', 'no'),
-				);
-
 				$control->label(trans('orchestra/foundation::label.email.password'));
-				$control->help(HTML::create('span', HTML::raw(implode('', $help)), array(
-					'id' => 'change_password_container',
-				)));
+				$control->help(View::make('orchestra/foundation::settings.email-password', compact('model')));
 			});
 			
 			$fieldset->control('input:text', 'email_encryption', function ($control)

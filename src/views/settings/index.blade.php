@@ -17,11 +17,16 @@
 
 <script>
 jQuery(function onSettingPageReady ($) { 'use strict';
-	var events, emailDriver, emailPassword;
+	var events, emailDriver, emailPassword, changeContainer, cancelContainer, changeButton, cancelButton, hiddenPassword;
 
-	events        = new Javie.Events;
-	emailDriver   = $('select[name="email_driver"]');
-	emailPassword = $('#email_password').hide();
+	hiddenPassword  = $('input[name="change_password"]');
+	changeButton    = $('#change_password_button');
+	cancelButton    = $('#cancel_password_button');
+	changeContainer = $('#change_password_container').show();
+	cancelContainer = $('#cancel_password_container').hide();
+	events          = new Javie.Events;
+	emailDriver     = $('select[name="email_driver"]');
+	emailPassword   = $('#email_password').hide();
 
 	// Listen to email.driver changed event. 
 	events.listen('setting.changed: email.driver', function listenToEmailDriverChange(e, self) {
@@ -51,12 +56,24 @@ jQuery(function onSettingPageReady ($) { 'use strict';
 		}
 	});
 
-	$('#change_password_button').on('click', function (e) {
+	changeButton.on('click', function (e) {
 		e.preventDefault();
 		
-		$('input[name="change_password"]').val('yes');
+		cancelContainer.show();
+		changeContainer.hide();
 		emailPassword.show();
-		$('#change_password_container').hide();
+		hiddenPassword.val('yes');
+
+		return false;
+	});
+
+	cancelButton.on('click', function (e) {
+		e.preventDefault();
+		
+		cancelContainer.hide();
+		changeContainer.show();
+		emailPassword.hide();
+		hiddenPassword.val('no');
 
 		return false;
 	});
