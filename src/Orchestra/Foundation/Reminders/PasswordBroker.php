@@ -126,6 +126,8 @@ class PasswordBroker extends Broker {
 		// so that it may be displayed for an user to click for password reset.
 		$view = $this->reminderView;
 		
+		// In order to pass a Closure as "use" we need to actually convert it into 
+		// Serializable Closure, otherwise Laravel would throw an exception.
 		if ($callback instanceof Closure) $callback = new SerializableClosure($callback);
 
 		$closure = function($m) use ($user, $callback)
