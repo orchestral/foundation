@@ -130,11 +130,11 @@ class PasswordBroker extends Broker {
 		// Serializable Closure, otherwise Laravel would throw an exception.
 		if ($callback instanceof Closure) $callback = new SerializableClosure($callback);
 
-		$closure = function($m) use ($user, $callback)
+		$closure = function($mail) use ($user, $callback, $token)
 		{
-			$m->to($user->getReminderEmail());
+			$mail->to($user->getReminderEmail());
 
-			if (is_callable($callback)) call_user_func($callback, $m, $user);
+			if (is_callable($callback)) call_user_func($callback, $mail, $user, $token);
 		};
 
 		return $this->mailer->push($view, compact('token', 'user'), $closure);

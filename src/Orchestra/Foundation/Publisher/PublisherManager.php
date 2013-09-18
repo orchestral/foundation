@@ -40,7 +40,7 @@ class PublisherManager extends Manager {
 		$queues   = $this->queued();
 		$fails    = array();
 
-		foreach ($queues as $key => $queue)
+		foreach ($queues as $queue)
 		{
 			try
 			{
