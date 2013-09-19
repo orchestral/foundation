@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Services\TestCase;
 use Orchestra\Support\Facades\App as Orchestra;
-
+use Orchestra\Support\Facades\Messages;
 
 class ForgotControllerTest extends TestCase {
 
@@ -117,10 +117,9 @@ class ForgotControllerTest extends TestCase {
 			'email' => 'email@orchestraplatform.com',
 		);
 
-		$user = m::mock('\Orchestra\Model\User');
-
-		Password::swap($password = m::mock('PasswordBroker'));
-		Orchestra::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
+		$password = m::mock('PasswordBroker');
+		$user     = m::mock('\Orchestra\Model\User');
+		
 		$user->shouldReceive('setAttribute')->once()->with('password', 'foo')->andReturn(null)
 			->shouldReceive('save')->once()->andReturn(null);
 		$password->shouldReceive('reset')->once()->with($input, m::type('Closure'))->andReturnUsing(
@@ -128,6 +127,10 @@ class ForgotControllerTest extends TestCase {
 			{
 				return $c($user, 'foo');
 			});
+
+		Password::swap($password);
+		Orchestra::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
+		Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
 
 		$this->call('POST', 'admin/forgot/reset/auniquetoken', $input);
 		$this->assertRedirectedTo('login');

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
+use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 
 class ForgotController extends AdminController {
@@ -103,6 +104,8 @@ class ForgotController extends AdminController {
 		{
 			$user->password = $password;
 			$user->save();
+
+			Messages::add('success', trans('orchestra/foundation::response.account.password.update'));
 
 			return Redirect::to(handles('orchestra::login'));
 		});
