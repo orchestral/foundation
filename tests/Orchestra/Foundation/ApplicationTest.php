@@ -34,24 +34,22 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Application::boot() method.
+	 * Installed setup.
 	 *
-	 * @test
 	 */
-	public function testBootMethod()
+	private function installableContainer()
 	{
 		$app = $this->app;
 		$app['env'] = 'production';
 		$app['orchestra.installed'] = false;
 		$app['orchestra.acl'] = $acl = m::mock('Acl');
 		$app['orchestra.memory'] = $memory = m::mock('Memory');
+		$app['orchestra.extension'] = $extension = m::mock('Extension');
 		$app['orchestra.widget'] = $widget = m::mock('Widget');
 		$app['translator'] = $translator = m::mock('Translator');
-		$app['url'] = $url = m::mock('Url');
 		$app['events'] = $event = m::mock('Event\Dispatcher');
 		$app['config'] = $config = m::mock('Config\Manager');
-
-		Config::swap($config);
+		$app['request'] = $request = m::mock('Request\Manager');
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
 			->shouldReceive('attach')->once()->with($memory)->andReturn($acl);
@@ -71,15 +69,27 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('fire')->once()->with('orchestra.started')->andReturn(null);
 		$config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin')
 			->shouldReceive('set')->once()->with('mail', 'memory.email')->andReturn(null);
-		$url->shouldReceive('to')->once()->with('admin')->andReturn('admin');
+		$request->shouldReceive('root')->andReturn('http://localhost')
+			->shouldReceive('secure')->andReturn(false);
 
+		return $app;
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Application::boot() method.
+	 *
+	 * @test
+	 */
+	public function testBootMethod()
+	{
+		$app  = $this->installableContainer();
 		$stub = new Application($app);
 		$stub->boot();
 
 		$this->assertTrue($app['orchestra.installed']);
-		$this->assertEquals($widget, $stub->menu());
-		$this->assertEquals($acl, $stub->acl());
-		$this->assertEquals($memory, $stub->memory());
+		$this->assertEquals($app['orchestra.widget'], $stub->menu());
+		$this->assertEquals($app['orchestra.acl'], $stub->acl());
+		$this->assertEquals($app['orchestra.memory'], $stub->memory());
 	}
 
 	/**
@@ -93,12 +103,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$app = $this->app;
 		$app['env'] = 'production';
 		$app['orchestra.installed'] = false;
-		$app['orchestra.app'] = $orchestra = m::mock('Orchestra');
 		$app['orchestra.acl'] = $acl = m::mock('Acl');
 		$app['orchestra.memory'] = $memory = m::mock('Memory');
 		$app['orchestra.widget'] = $widget = m::mock('Widget');
 		$app['config'] = $config = m::mock('Config\Manager');
-		$app['url'] = $url = m::mock('Url\Generator');
+		$app['request'] = $request = m::mock('Request\Manager');
 
 		$acl->shouldReceive('make')->once()->andReturn($acl)
 			->shouldReceive('attach')->never()->andReturn($acl);
@@ -111,11 +120,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('make')->once()->with('menu.app')->andReturn($widget)
 			->shouldReceive('add')->once()->with('install')->andReturn($widget)
 			->shouldReceive('title')->once()->with('Install')->andReturn($widget);
+		$request->shouldReceive('root')->andReturn('http://localhost')
+			->shouldReceive('secure')->andReturn(false);
 		$config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin')
 			->shouldReceive('set')->never()->with('mail', 'memory.email')->andReturn(null);
-		$url->shouldReceive('to')->once()->with('admin/install')->andReturn('admin/install');
-
-		$widget->shouldReceive('link')->with('admin/install');
+		$widget->shouldReceive('link')->with('http://localhost/admin/install')->once();
 
 		$stub = new Application($app);
 		$stub->boot();
@@ -154,57 +163,49 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test Orchestra\Foundation\Application::group() method.
+	 *
+	 * @test
+	 */
+	public function testGroupMethod()
+	{
+		$app  = $this->installableContainer();
+		$stub = new Application($app);
+		
+		$expected = array(
+			'before' => 'auth',
+			'prefix' => 'admin',
+			'domain' => 'localhost',
+		);
+
+		$this->assertEquals($expected, $stub->group('orchestra', 'admin', array('before' => 'auth')));
+	}
+
+	/**
 	 * Test Orchestra\Foundation\Application::handles() method.
 	 *
 	 * @test
 	 */
 	public function testHandlesMethod()
 	{
-		$app = $this->app;
-		$app['env'] = 'production';
-		$app['orchestra.installed'] = false;
-		$app['orchestra.app'] = $orchestra = m::mock('Orchestra');
-		$app['orchestra.acl'] = $acl = m::mock('Acl');
-		$app['orchestra.memory'] = $memory = m::mock('Memory');
-		$app['orchestra.widget'] = $widget = m::mock('Widget');
-		$app['orchestra.extension'] = $extension = m::mock('Extension');
-		$app['translator'] = $translator = m::mock('Translator');
-		$app['url'] = $url = m::mock('Url\Generator');
-		$app['events'] = $event = m::mock('Event\Dispatcher');
-		$app['config'] = $config = m::mock('Config\Manager');
+		$app = $this->installableContainer();
+		$extension = $app['orchestra.extension'];
+		$app['url'] = $url = m::mock('Url');
 
-		Config::swap($config);
+		$appRoute = m::mock('\Orchestra\Extension\RouteGenerator');
 
-		$acl->shouldReceive('make')->once()->andReturn($acl)
-			->shouldReceive('attach')->once()->with($memory)->andReturn($acl);
-		$memory->shouldReceive('make')->once()->with()->andReturn($memory)
-			->shouldReceive('make')->never()->with('runtime.orchestra')->andReturn($memory)
-			->shouldReceive('get')->once()->with('site.name')->andReturn('Orchestra')
-			->shouldReceive('put')->never()->with('site.name', 'Orchestra')->andReturn(null)
-			->shouldReceive('get')->once()->with('email')->andReturn('memory.email');
-		$widget->shouldReceive('make')->once()->with('menu.orchestra')->andReturn($widget)
-			->shouldReceive('make')->once()->with('menu.app')->andReturn($widget)
-			->shouldReceive('add')->andReturn($widget)
-			->shouldReceive('title')->andReturn($widget)
-			->shouldReceive('link')->andReturn(null);
-		$translator->shouldReceive('get')->andReturn('foo');
-		$event->shouldReceive('listen')->once()
-				->with('orchestra.ready: admin', 'Orchestra\Foundation\Services\Event\AdminMenuHandler')->andReturn(null)
-			->shouldReceive('fire')->once()->with('orchestra.started')->andReturn(null);
-		
-		$config->shouldReceive('get')->times(3)->with('orchestra/foundation::handles', '/')->andReturn('admin')
-			->shouldReceive('set')->once()->with('mail', 'memory.email')->andReturn(null);
-		$extension->shouldReceive('route')->twice()->with('app', '/')->andReturn('/');
+		$appRoute->shouldReceive('to')->once()->with('/')->andReturn('/')
+			->shouldReceive('to')->once()->with('info')->andReturn('info');
+		$extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
 		$url->shouldReceive('to')->once()->with('/')->andReturn('/')
-			->shouldReceive('to')->once()->with('info')->andReturn('info')
-			->shouldReceive('to')->once()->with('admin')->andReturn('admin')
-			->shouldReceive('to')->twice()->with('admin/installer')->andReturn('admin/installer');
-
+			->shouldReceive('to')->once()->with('info')->andReturn('info');
+		
 		$stub = new Application($app);
+		$stub->boot();
 
 		$this->assertEquals('/', $stub->handles('app::/'));
 		$this->assertEquals('info', $stub->handles('info'));
-		$this->assertEquals('admin/installer', $stub->handles('orchestra::installer'));
-		$this->assertEquals('admin/installer', $stub->handles('orchestra::installer/'));
+		$this->assertEquals('http://localhost/admin/installer', $stub->handles('orchestra::installer'));
+		$this->assertEquals('http://localhost/admin/installer', $stub->handles('orchestra::installer/'));
 	}
 }
