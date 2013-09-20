@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Publisher;
 
+use Closure;
 use RuntimeException;
 use Orchestra\Support\Ftp as FtpClient;
 use Orchestra\Support\Ftp\ServerException;
@@ -152,8 +153,45 @@ class Ftp implements UploaderInterface {
 	 */
 	public function upload($name, $recursively = false)
 	{
+		list($path, $basePath, $recursively, $folderExist) = $this->checkDestination($name, $recursively);		
+
+		try 
+		{
+			$this->changePermission($path, $recursively, 0777, function () 
+				use ($folderExist, $basePath, $name)
+			{
+				if ( ! $folderExist) 
+				{
+					$this->makeDirectory("{$basePath}{$name}/");
+					$this->permission("{$basePath}{$name}/", 0777);
+				}
+			});
+		}
+		catch (RuntimeException $e)
+		{
+			// We found an exception with FTP, but it would be hard to say 
+			// extension can't be activated, let's try activating the 
+			// extension and if it failed, we should actually catching 
+			// those exception instead.
+		}
+
+		$this->app['orchestra.extension']->activate($name);
+		
+		$this->changePermission($path, $recursively, 0755);
+		
+		return true;
+	}
+
+	/**
+	 * Check upload path.
+	 *
+	 * @param  string   $name           Extension name
+	 * @param  boolean  $recursively
+	 * @return array
+	 */
+	protected function checkDestination($name, $recursively = false)
+	{
 		$folderExist = true;
-		$recursively = false;
 
 		$public = $this->basePath($this->app['path.public']);
 
@@ -188,44 +226,30 @@ class Ftp implements UploaderInterface {
 			}
 		}
 
-		try 
-		{
-			if ($recursively)
-			{
-				$this->recursivePermission($path, 0777);
-			} 
-			else 
-			{
-				$this->permission($path, 0777);
+		return array($path, $basePath, $recursively, $folderExist);
+	}
 
-				if ( ! $folderExist) 
-				{
-					$this->makeDirectory("{$basePath}{$name}/");
-					$this->permission("{$basePath}{$name}/", 0777);
-				}
-			}
-		}
-		catch (RuntimeException $e)
-		{
-			// We found an exception with FTP, but it would be hard to say 
-			// extension can't be activated, let's try activating the 
-			// extension and if it failed, we should actually catching 
-			// those exception instead.
-		}
-
-		$this->app['orchestra.extension']->activate($name);
-		
-		// Revert chmod back to original state.
+	/**
+	 * Revert chmod back to original state.
+	 *
+	 * @param  string   $path
+	 * @param  boolean  $recursively
+	 * @param  integer  $mode
+	 * @param  \Closure $callback
+	 * @return void
+	 */
+	protected function changePermission($path, $recursively, $mode = 0755, Closure $callback = null)
+	{
 		if ($recursively)
 		{
-			$this->recursivePermission($path, 0755);
+			$this->recursivePermission($path, $mode);
 		}
 		else 
 		{
-			$this->permission($path, 0755);
+			$this->permission($path, $mode);
+
+			if (is_callable($callback)) call_user_func($callback);
 		}
-		
-		return true;
 	}
 
 	/**
