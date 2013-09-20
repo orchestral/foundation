@@ -89,7 +89,7 @@ class Ftp implements UploaderInterface {
 	 * @param  string   $path
 	 * @return boolean
 	 */
-	private function makeDirectory($path)
+	public function makeDirectory($path)
 	{
 		return $this->connection->makeDirectory($path);
 	}
