@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
+use Orchestra\Support\Facades\App;
 
-Route::group(array('prefix' => Config::get('orchestra/foundation::handles', 'orchestra')), function ()
+Route::group(App::group('orchestra/foundation', 'orchestra'), function ()
 {
 	Route::controller('account', 'Orchestra\Foundation\Routing\AccountController');
 	Route::controller('extensions', 'Orchestra\Foundation\Routing\ExtensionsController');

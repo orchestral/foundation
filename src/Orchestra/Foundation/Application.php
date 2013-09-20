@@ -2,6 +2,7 @@
 
 use Exception;
 use Illuminate\Support\NamespacedItemResolver;
+use Orchestra\Extension\RouteGenerator;
 
 class Application {
 
@@ -18,6 +19,13 @@ class Application {
 	 * @var array
 	 */
 	public $services = array();
+
+	/**
+	 * List of routes.
+	 *
+	 * @var array
+	 */
+	public $routes = array();
 
 	/**
 	 * Booted indicator.
@@ -157,8 +165,7 @@ class Application {
 		if (empty($package)) $package = "app";
 
 		// Get the path from route configuration, and append route.
-		$path = $this->route($package);
-		$path = trim("{$path}/{$route}", "/");
+		$path = $this->route($package)->to($route);
 		empty($path) and $path = '/';
 
 		return $path;
@@ -172,7 +179,27 @@ class Application {
 	 */
 	public function handles($path)
 	{
-		return $this->app['url']->to($this->locate($path));
+		$locate = $this->locate($path);
+
+		if (starts_with($locate, 'http')) return $locate;
+
+		return $this->app['url']->to($locate);
+	}
+
+	/**
+	 * Return route group dispatch for a package/app.
+	 *
+	 * @param  string   $name   Package name
+	 * @return string
+	 */
+	public function group($name, $default, $group = array())
+	{
+		$route = $this->route($name, $default);
+
+		return array_merge($group, array(
+			'prefix' => $route->prefix(),
+			'domain' => $route->domain(),
+		));
 	}
 
 	/**
@@ -187,14 +214,27 @@ class Application {
 		// Boot the application.
 		$this->boot();
 
+		if (isset($this->routes[$name])) return $this->routes[$name];
+
+		$route = null;
+
 		// Orchestra Platform routing is managed by `orchestra/foundation::handles`
 		// and can be manage using configuration. 
 		if ( ! in_array($name, array('orchestra', 'orchestra/foundation')))
 		{
-			return $this->app['orchestra.extension']->route($name, $default);
+			$route = $this->app['orchestra.extension']->route($name, $default);
+		}
+		else
+		{			
+			$name  = 'orchestra';
+			$route = new RouteGenerator(
+				$this->app['config']->get('orchestra/foundation::handles', $default),
+				$this->app['request']->root(),
+				$this->app['request']->secure()				
+			);
 		}
 
-		return $this->app['config']->get('orchestra/foundation::handles', $default);
+		return $this->routes[$name] = $route;
 	}
 
 	/**
