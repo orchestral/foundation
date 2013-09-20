@@ -199,7 +199,7 @@ class ExtensionsController extends AdminController {
 			// Check if folder is writable via the web instance, this would 
 			// avoid issue running Orchestra Platform with debug as true where 
 			// creating/copying the directory would throw an ErrorException.
-			if ( ! Extension::isWritableWithAsset($name))
+			if ( ! Extension::permission($name))
 			{
 				throw new FilePermissionException("[{$name}] is not writable.");
 			}

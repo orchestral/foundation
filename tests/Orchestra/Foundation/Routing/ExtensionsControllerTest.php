@@ -44,7 +44,7 @@ class ExtensionsControllerTest extends TestCase {
 	{
 		Extension::shouldReceive('started')->once()
 			->with('laravel/framework')->andReturn(false);
-		Extension::shouldReceive('isWritableWithAsset')->once()
+		Extension::shouldReceive('permission')->once()
 			->with('laravel/framework')->andReturn(true);
 		Extension::shouldReceive('activate')->once()
 			->with('laravel/framework')->andReturn(true);
@@ -187,7 +187,7 @@ class ExtensionsControllerTest extends TestCase {
 	{
 		Extension::shouldReceive('started')->once()
 			->with('laravel/framework')->andReturn(true);
-		Extension::shouldReceive('isWritableWithAsset')->once()
+		Extension::shouldReceive('permission')->once()
 			->with('laravel/framework')->andReturn(true);
 		Extension::shouldReceive('publish')->once()
 			->with('laravel/framework')->andReturn(true);
@@ -209,7 +209,7 @@ class ExtensionsControllerTest extends TestCase {
 	{
 		Extension::shouldReceive('started')->once()
 			->with('laravel/framework')->andReturn(true);
-		Extension::shouldReceive('isWritableWithAsset')->once()
+		Extension::shouldReceive('permission')->once()
 			->with('laravel/framework')->andReturn(false);
 		Publisher::shouldReceive('queue')->once()
 			->with('laravel/framework')->andReturn(null);
