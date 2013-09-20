@@ -101,7 +101,7 @@ class Ftp implements UploaderInterface {
 	 * @param  integer  $mode
 	 * @return boolean
 	 */
-	private function permission($path, $mode = 0755)
+	public function permission($path, $mode = 0755)
 	{
 		return $this->connection->permission($path, $mode);
 	}
@@ -114,7 +114,7 @@ class Ftp implements UploaderInterface {
 	 * @return boolean
 	 * @throws \RuntimeException
 	 */
-	private function recursivePermission($path, $mode = 0755)
+	public function recursivePermission($path, $mode = 0755)
 	{
 		$this->permission($path, $mode);
 
