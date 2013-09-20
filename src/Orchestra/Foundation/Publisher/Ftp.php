@@ -157,13 +157,16 @@ class Ftp implements UploaderInterface {
 
 		try 
 		{
+			$self = $this;
+			$basePathName = "{$basePath}{$name}/";
+
 			$this->changePermission($path, $recursively, 0777, function () 
-				use ($folderExist, $basePath, $name)
+				use ($self, $folderExist, $basePathName)
 			{
 				if ( ! $folderExist) 
 				{
-					$this->makeDirectory("{$basePath}{$name}/");
-					$this->permission("{$basePath}{$name}/", 0777);
+					$self->makeDirectory($basePathName);
+					$self->permission($basePathName, 0777);
 				}
 			});
 		}
