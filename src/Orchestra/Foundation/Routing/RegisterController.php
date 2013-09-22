@@ -131,16 +131,15 @@ class RegisterController extends AdminController {
 		// mail is send using queue.
 		$user = (object) $user->toArray();
 		
-		$memory   = App::memory();
-		$site     = $memory->get('site.name', 'Orchestra Platform');
-		$data     = compact('password', 'site', 'user');
-		$callback = function ($mail) use ($data, $user, $site)
+		$memory = App::memory();
+		$site   = $memory->get('site.name', 'Orchestra Platform');
+		$data   = compact('password', 'site', 'user');
+
+		$sent = Mail::push('orchestra/foundation::email.credential.register', $data, function($mail) use ($data, $user, $site)
 		{
 			$mail->subject(trans('orchestra/foundation::email.credential.register', compact('site')));
 			$mail->to($user->email, $user->fullname);
-		};
-
-		$sent = Mail::push('orchestra/foundation::email.credential.register', $data, $callback);
+		});
 
 		if (count($sent) > 0 or true === $memory->get('email.queue', false))
 		{

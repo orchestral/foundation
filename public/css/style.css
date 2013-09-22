@@ -76,7 +76,7 @@ section.container.main{clear:both;margin-top:40px;}section.container.main .theme
 .select2-container.select2-container-multi{min-width:200px;}.select2-container.select2-container-multi .select2-choices{min-width:200px;height:40px !important;}.select2-container.select2-container-multi .select2-choices .select2-search-choice{line-height:23px !important;}.select2-container.select2-container-multi .select2-choices .select2-search-choice .select2-search-choice-close{top:8px !important;}
 .select2-container.select2-container-multi .select2-choices .select2-search-field input{height:40px !important;max-height:40px;padding:0px 5px 5px;}
 @media (min-width:979px){.table th.th-action,.table td.th-action,.table th.th-actions,.table td.th-actions{width:100px;}}
-.user-search{background:#eeeff2;margin-bottom:5px;border:none;z-index:999;}.user-search .navbar-form .select2-container{margin-top:5px;}
+.user-search{background:#eeeff2;margin-bottom:5px;border:none;z-index:999;}.user-search .navbar-form .select2-container{margin-top:-2px;}
 form label.ui-state-active{background:transparent;}
 form .ui-slider .ui-slider-handle{z-index:1;}
 table.ui-datepicker-calendar td.ui-datepicker-unselectable.ui-state-disabled span.ui-state-default{display:block;padding:0 !important;border:0 none !important;width:30px;height:30px;line-height:30px;text-align:center;font-size:12px;text-decoration:none;font-weight:normal !important;}
