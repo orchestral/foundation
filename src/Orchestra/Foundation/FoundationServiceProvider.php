@@ -45,7 +45,11 @@ class FoundationServiceProvider extends ServiceProvider {
 		$loader->alias('Orchestra\Theme', 'Orchestra\Support\Facades\Theme');
 		$loader->alias('Orchestra\Widget', 'Orchestra\Support\Facades\Widget');
 
+		$this->app['orchestra.app']->boot();
+
 		include __DIR__."/../../start.php";
+
+		$this->app['events']->fire('orchestra.ready');
 	}
 
 	/**
