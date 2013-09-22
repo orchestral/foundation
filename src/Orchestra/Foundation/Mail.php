@@ -33,13 +33,6 @@ class Mail {
 	protected $memory = null;
 
 	/**
-	 * The Swift Mailer instance.
-	 *
-	 * @var Swift_Mailer
-	 */
-	protected $swift;
-
-	/**
 	 * Construct a new Mail instance.
 	 *
 	 * @param  \Illuminate\Foundation\Application   $app
@@ -75,7 +68,7 @@ class Mail {
 			$this->mailer->alwaysFrom($from['address'], $from['name']);
 		}
 		
-		$this->mailer->setSwiftMailer($this->swift = new Swift_Mailer($transport));
+		$this->mailer->setSwiftMailer(new Swift_Mailer($transport));
 
 		return $this->mailer;
 	}
