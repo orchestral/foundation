@@ -87,15 +87,6 @@ class Application {
 			$app['orchestra.installed'] = true;
 
 			$this->createAdminMenu();
-
-			// Ensure that e-mail information is passed to configuration 
-			// on every request. This would allow both Mail and 
-			// Orchestra\Mail to work with database configuration without 
-			// mode especially for Queue.
-			if ( ! is_null($email = $memory->get('email')))
-			{
-				$this->app['config']->set('mail', $email);
-			}
 		}
 		catch (Exception $e)
 		{

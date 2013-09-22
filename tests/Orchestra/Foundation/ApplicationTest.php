@@ -56,8 +56,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$memory->shouldReceive('make')->once()->andReturn($memory)
 			->shouldReceive('make')->never()->with('runtime.orchestra')->andReturn($memory)
 			->shouldReceive('get')->once()->with('site.name')->andReturn('Orchestra')
-			->shouldReceive('put')->never()->with('site.name', 'Orchestra')->andReturn(null)
-			->shouldReceive('get')->once()->with('email')->andReturn('memory.email');
+			->shouldReceive('put')->never()->with('site.name', 'Orchestra')->andReturn(null);
 		$widget->shouldReceive('make')->once()->with('menu.orchestra')->andReturn($widget)
 			->shouldReceive('make')->once()->with('menu.app')->andReturn($widget)
 			->shouldReceive('add')->andReturn($widget)
@@ -67,8 +66,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$event->shouldReceive('listen')->once()
 				->with('orchestra.ready: admin', 'Orchestra\Foundation\Services\Event\AdminMenuHandler')->andReturn(null)
 			->shouldReceive('fire')->once()->with('orchestra.started')->andReturn(null);
-		$config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin')
-			->shouldReceive('set')->once()->with('mail', 'memory.email')->andReturn(null);
+		$config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
 		$request->shouldReceive('root')->andReturn('http://localhost')
 			->shouldReceive('secure')->andReturn(false);
 
