@@ -7,6 +7,7 @@ use Illuminate\Auth\Reminders\ReminderRepositoryInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Auth\UserProviderInterface;
 use Illuminate\Support\SerializableClosure;
+use Illuminate\Support\Contracts\ArrayableInterface;
 use Orchestra\Foundation\Mail as Mailer;
 use Orchestra\Support\Messages;
 
@@ -136,6 +137,8 @@ class PasswordBroker extends Broker {
 
 			if (is_callable($callback)) call_user_func($callback, $mail, $user, $token);
 		};
+
+		if ($user instanceof ArrayableInterface) $user = $user->toArray();
 
 		return $this->mailer->push($view, compact('token', 'user'), $closure);
 	}
