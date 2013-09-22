@@ -1,6 +1,9 @@
 @extends('orchestra/foundation::layout.main')
 
-<?php use Illuminate\Support\Facades\Form; ?>
+<?php 
+
+use Illuminate\Support\Facades\Form;
+use Illuminate\Support\Facades\Input; ?>
 
 @section('content')
 
@@ -14,7 +17,7 @@
 				<div class="form-group<?php echo $errors->has('email') ? ' error' : ''; ?>">
 					<?php echo Form::label('email', trans("orchestra/foundation::label.users.email"), array('class' => 'three columns control-label')); ?>
 					<div class="nine columns">
-						<?php echo Form::input('text', 'email', '', array('required' => true, 'tabindex' => 1, 'class' => 'form-control')); ?>
+						<?php echo Form::input('text', 'email', Input::old('email'), array('required' => true, 'tabindex' => 1, 'class' => 'form-control')); ?>
 						<?php echo $errors->first('email', '<p class="help-block">:message</p>'); ?>
 					</div>
 				</div>
