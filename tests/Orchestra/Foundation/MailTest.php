@@ -7,10 +7,32 @@ use Illuminate\Support\SerializableClosure;
 class MailTest extends \PHPUnit_Framework_TestCase {
 
 	/**
+	 * Application instance.
+	 *
+	 * @var Illuminate\Foundation\Application
+	 */
+	private $app = null;
+
+	/**
+	 * Setup the test environment.
+	 */
+	public function setUp()
+	{
+		$this->app = array(
+			'orchestra.memory' => ($memory = m::mock('Memory')),
+			'mailer' => m::mock('Mailer'),
+		);
+
+		$memory->shouldReceive('makeOrFallback')->andReturn($memory)
+			->shouldReceive('get')->with('email')->andReturn(array('driver' => 'mail'));
+	}
+
+	/**
 	 * Teardown the test environment.
 	 */
 	public function tearDown()
 	{
+		unset($this->app);
 		m::close();
 	}
 
@@ -21,14 +43,13 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testPushMethodUsesSend()
 	{
-		$app = array(
-			'orchestra.memory' => ($memory = m::mock('Memory')),
-			'mailer' => $mailer = m::mock('Mailer'),
-		);
+		$app = $this->app;
+		$memory = $app['orchestra.memory'];
+		$mailer = $app['mailer'];
 
-		$memory->shouldReceive('makeOrFallback')->once()->andReturn($memory)
-			->shouldReceive('get')->once()->with('email.queue', false)->andReturn(false);
-		$mailer->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
+		$memory->shouldReceive('get')->once()->with('email.queue', false)->andReturn(false);
+		$mailer->shouldReceive('setSwiftMailer')->once()->andReturn(null)
+			->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
 
 		$stub = new Mail($app);
 		$this->assertTrue($stub->push('foo.bar', array('foo' => 'foobar'), ''));
@@ -41,10 +62,9 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testPushMethodUsesQueue()
 	{
-		$app = array(
-			'orchestra.memory' => $memory = m::mock('Memory'),
-			'queue' => $queue = m::mock('QueueListener'),
-		);
+		$app = $this->app;
+		$memory = $app['orchestra.memory'];
+		$app['queue'] = $queue = m::mock('QueueListener');
 
 		$with = array(
 			'view'     => 'foo.bar',
@@ -52,8 +72,7 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 			'callback' => function () { },
 		);
 
-		$memory->shouldReceive('makeOrFallback')->once()->andReturn($memory)
-			->shouldReceive('get')->once()->with('email.queue', false)->andReturn(true);
+		$memory->shouldReceive('get')->once()->with('email.queue', false)->andReturn(true);
 		$queue->shouldReceive('push')->once()
 			->with('orchestra.mail@handleQueuedMessage', m::type('Array'), m::any())->andReturn(true);
 
@@ -68,14 +87,110 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testSendMethod()
 	{
-		$app = array(
-			'mailer' => $mailer = m::mock('Mailer'),
-		);
+		$app = $this->app;
+		$mailer = $app['mailer'];
 
-		$mailer->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
+		$mailer->shouldReceive('setSwiftMailer')->once()->andReturn(null)
+			->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
 
 		$stub = new Mail($app);
 		$this->assertTrue($stub->send('foo.bar', array('foo' => 'foobar'), ''));
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Mail::send() method using mail.
+	 *
+	 * @test
+	 */
+	public function testSendMethodViaMail()
+	{
+		$app = array(
+			'orchestra.memory' => $memory = m::mock('Memory'),
+			'mailer' => $mailer = m::mock('Mailer'),
+		);
+
+		$memory->shouldReceive('makeOrFallback')->andReturn($memory)
+			->shouldReceive('get')->with('email')->andReturn(array('driver' => 'mail'));
+
+		$mailer->shouldReceive('setSwiftMailer')->once()->andReturn(null)
+			->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
+
+		$stub = new Mail($app);
+		$this->assertTrue($stub->send('foo.bar', array('foo' => 'foobar'), ''));
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Mail::send() method using sendmail.
+	 *
+	 * @test
+	 */
+	public function testSendMethodViaSendMail()
+	{
+		$app = array(
+			'orchestra.memory' => $memory = m::mock('Memory'),
+			'mailer' => $mailer = m::mock('Mailer'),
+		);
+
+		$memory->shouldReceive('makeOrFallback')->andReturn($memory)
+			->shouldReceive('get')->with('email')->andReturn(array(
+				'driver'   => 'sendmail', 
+				'sendmail' => '/bin/sendmail -t',
+			));
+
+		$mailer->shouldReceive('setSwiftMailer')->once()->andReturn(null)
+			->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
+
+		$stub = new Mail($app);
+		$this->assertTrue($stub->send('foo.bar', array('foo' => 'foobar'), ''));
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Mail::send() method using smtp.
+	 *
+	 * @test
+	 */
+	public function testSendMethodViaSmtp()
+	{
+		$app = array(
+			'orchestra.memory' => $memory = m::mock('Memory'),
+			'mailer' => $mailer = m::mock('Mailer'),
+		);
+
+		$memory->shouldReceive('makeOrFallback')->andReturn($memory)
+			->shouldReceive('get')->with('email')->andReturn(array(
+				'driver'     => 'smtp',
+				'host'       => 'smtp.mailgun.org',
+				'port'       => 587,
+				'encryption' => 'tls',
+				'username'   => 'hello@orchestraplatform.com',
+				'password'   => 123456,
+			));
+
+		$mailer->shouldReceive('setSwiftMailer')->once()->andReturn(null)
+			->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
+
+		$stub = new Mail($app);
+		$this->assertTrue($stub->send('foo.bar', array('foo' => 'foobar'), ''));
+	}
+
+	/**
+	 * Test Orchestra\Foundation\Mail::send() method using invalid driver 
+	 * throws exception.
+	 *
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testSendMethodViaInvalidDriverThrowsException()
+	{
+		$app = array(
+			'orchestra.memory' => $memory = m::mock('Memory'),
+			'mailer' => $mailer = m::mock('Mailer'),
+		);
+
+		$memory->shouldReceive('makeOrFallback')->andReturn($memory)
+			->shouldReceive('get')->with('email')->andReturn(array('driver' => 'foobar'));
+
+		$stub = new Mail($app);
+		$stub->send('foo.bar', array('foo' => 'foobar'), '');
 	}
 
 	/**
@@ -85,9 +200,8 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testQueueMethod()
 	{
-		$app = array(
-			'queue' => $queue = m::mock('QueueListener'),
-		);
+		$app = $this->app;
+		$app['queue'] = $queue = m::mock('QueueListener');
 
 		$with = array(
 			'view'     => 'foo.bar',
@@ -134,12 +248,14 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testHandleQueuedMessageMethod($view, $data, $callback)
 	{
-		$app = array('mailer' => $mailer = m::mock('Mailer'));
-		$job  = m::mock('Job');
+		$app = $this->app;
+		$mailer = $app['mailer'];
+		$job = m::mock('Job');
 		
 		$job->shouldReceive('delete')->once()->andReturn(null);
-		$mailer->shouldReceive('send')->once()
-			->with($view, $data, m::any())->andReturn(true);
+		$mailer->shouldReceive('setSwiftMailer')->once()->andReturn(null)
+			->shouldReceive('send')->once()
+				->with($view, $data, m::any())->andReturn(true);
 
 		$stub = new Mail($app);
 		$stub->handleQueuedMessage($job, compact('view', 'data', 'callback'));
