@@ -24,7 +24,11 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 		);
 
 		$memory->shouldReceive('makeOrFallback')->andReturn($memory)
-			->shouldReceive('get')->with('email')->andReturn(array('driver' => 'mail'));
+			->shouldReceive('get')->with('email')->andReturn(array('driver' => 'mail'))
+			->shouldReceive('get')->with('email.from')->andReturn(array(
+				'address' => 'hello@orchestraplatform.com',
+				'name'    => 'Orchestra Platform',
+			));
 	}
 
 	/**
@@ -49,6 +53,7 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 
 		$memory->shouldReceive('get')->once()->with('email.queue', false)->andReturn(false);
 		$mailer->shouldReceive('setSwiftMailer')->once()->andReturn(null)
+			->shouldReceive('alwaysFrom')->once()->with('hello@orchestraplatform.com', 'Orchestra Platform')
 			->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
 
 		$stub = new Mail($app);
@@ -91,6 +96,7 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 		$mailer = $app['mailer'];
 
 		$mailer->shouldReceive('setSwiftMailer')->once()->andReturn(null)
+			->shouldReceive('alwaysFrom')->once()->with('hello@orchestraplatform.com', 'Orchestra Platform')
 			->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
 
 		$stub = new Mail($app);
@@ -110,9 +116,14 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 		);
 
 		$memory->shouldReceive('makeOrFallback')->andReturn($memory)
-			->shouldReceive('get')->with('email')->andReturn(array('driver' => 'mail'));
+			->shouldReceive('get')->with('email')->andReturn(array('driver' => 'mail'))
+			->shouldReceive('get')->with('email.from')->andReturn(array(
+				'address' => 'hello@orchestraplatform.com',
+				'name'    => 'Orchestra Platform',
+			));
 
 		$mailer->shouldReceive('setSwiftMailer')->once()->andReturn(null)
+			->shouldReceive('alwaysFrom')->once()->with('hello@orchestraplatform.com', 'Orchestra Platform')
 			->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
 
 		$stub = new Mail($app);
@@ -135,9 +146,14 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 			->shouldReceive('get')->with('email')->andReturn(array(
 				'driver'   => 'sendmail', 
 				'sendmail' => '/bin/sendmail -t',
+			))
+			->shouldReceive('get')->with('email.from')->andReturn(array(
+				'address' => 'hello@orchestraplatform.com',
+				'name'    => 'Orchestra Platform',
 			));
 
 		$mailer->shouldReceive('setSwiftMailer')->once()->andReturn(null)
+			->shouldReceive('alwaysFrom')->once()->with('hello@orchestraplatform.com', 'Orchestra Platform')
 			->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
 
 		$stub = new Mail($app);
@@ -164,9 +180,14 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 				'encryption' => 'tls',
 				'username'   => 'hello@orchestraplatform.com',
 				'password'   => 123456,
+			))
+			->shouldReceive('get')->with('email.from')->andReturn(array(
+				'address' => 'hello@orchestraplatform.com',
+				'name'    => 'Orchestra Platform',
 			));
 
 		$mailer->shouldReceive('setSwiftMailer')->once()->andReturn(null)
+			->shouldReceive('alwaysFrom')->once()->with('hello@orchestraplatform.com', 'Orchestra Platform')
 			->shouldReceive('send')->once()->with('foo.bar', array('foo' => 'foobar'), '')->andReturn(true);
 
 		$stub = new Mail($app);
@@ -254,6 +275,7 @@ class MailTest extends \PHPUnit_Framework_TestCase {
 		
 		$job->shouldReceive('delete')->once()->andReturn(null);
 		$mailer->shouldReceive('setSwiftMailer')->once()->andReturn(null)
+			->shouldReceive('alwaysFrom')->once()->with('hello@orchestraplatform.com', 'Orchestra Platform')
 			->shouldReceive('send')->once()
 				->with($view, $data, m::any())->andReturn(true);
 

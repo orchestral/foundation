@@ -3,7 +3,7 @@
 use Closure;
 use InvalidArgumentException;
 use Illuminate\Support\SerializableClosure;
-use Illuminate\Support\Facades\Mail as M;
+use Illuminate\Mail\Mailer;
 use Swift_Mailer;
 use Swift_SmtpTransport as SmtpTransport;
 use Swift_MailTransport as MailTransport;
@@ -17,6 +17,13 @@ class Mail {
 	 * @var \Illuminate\Foundation\Application
 	 */
 	protected $app = null;
+
+	/**
+	 * Mailer instance.
+	 *
+	 * @var \Illuminate\Mail\Mailer
+	 */
+	protected $mailer = null;
 
 	/**
 	 * Memory instance.
@@ -49,14 +56,28 @@ class Mail {
 	 *
 	 * @return void
 	 */
-	protected function registerSwiftMailer()
+	protected function getMailer()
 	{
-		if ($this->swift instanceof Swift_Mailer) return $this->swift;
-		
-		$config    = $this->memory->get('email');
-		$transport = $this->registerSwiftTransport($config);
+		if ($this->mailer instanceof Mailer) return $this->mailer;
 
-		return $this->swift = new Swift_Mailer($transport);
+		$this->mailer = $this->app['mailer'];
+		$config       = $this->memory->get('email');
+		$transport    = $this->registerSwiftTransport($config);
+
+		// If a "from" address is set, we will set it on the mailer so that 
+		// all mail messages sent by the applications will utilize the same 
+		// "from" address on each one, which makes the developer's life a 
+		// lot more convenient.
+		$from = $this->memory->get('email.from');
+
+		if (is_array($from) and isset($from['address']))
+		{
+			$this->mailer->alwaysFrom($from['address'], $from['name']);
+		}
+		
+		$this->mailer->setSwiftMailer($this->swift = new Swift_Mailer($transport));
+
+		return $this->mailer;
 	}
 	
 	/**
@@ -90,10 +111,7 @@ class Mail {
 	 */
 	public function send($view, array $data, $callback)
 	{
-		$mailer = $this->app['mailer'];
-		$mailer->setSwiftMailer($this->registerSwiftMailer());
-
-		return $mailer->send($view, $data, $callback);
+		return $this->getMailer()->send($view, $data, $callback);
 	}
 
 	/**
