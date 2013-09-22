@@ -94,7 +94,7 @@ class Application {
 			// mode especially for Queue.
 			if ( ! is_null($email = $memory->get('email')))
 			{
-				$this->app['config']['mail'] = $email;
+				$this->app['config']->set('mail', $email);
 			}
 		}
 		catch (Exception $e)
