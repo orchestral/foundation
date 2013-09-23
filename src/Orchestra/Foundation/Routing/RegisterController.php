@@ -111,7 +111,7 @@ class RegisterController extends AdminController {
 				'error' => $e->getMessage(),
 			)));
 			
-			return Redirect::to(handles('orchestra::register'));
+			return Redirect::to(handles('orchestra::register'))->withInput();
 		}
 
 		return $this->sendEmail($user, $password);

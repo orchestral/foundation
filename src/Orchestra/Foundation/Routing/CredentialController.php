@@ -83,7 +83,7 @@ class CredentialController extends AdminController {
 
 		Messages::add('error', trans('orchestra/foundation::response.credential.invalid-combination'));
 
-		return Redirect::to(handles('orchestra::login'));
+		return Redirect::to(handles('orchestra::login'))->withInput();
 	}
 
 	/**
