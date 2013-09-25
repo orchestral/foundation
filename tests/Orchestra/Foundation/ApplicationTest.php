@@ -173,7 +173,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 		$expected = array(
 			'before' => 'auth',
 			'prefix' => 'admin',
-			'domain' => 'localhost',
+			'domain' => null,
 		);
 
 		$this->assertEquals($expected, $stub->group('orchestra', 'admin', array('before' => 'auth')));
