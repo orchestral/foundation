@@ -58,7 +58,7 @@ class AccountController extends AdminController {
 		$input = Input::all();
 		$user  = Auth::user();
 		
-		if ($user->id !== $input['id']) return App::abort(500);
+		if ((string) $user->id !== $input['id']) return App::abort(500);
 
 		$validation = App::make('Orchestra\Foundation\Services\Validation\UserAccount')
 						->with($input);
@@ -128,7 +128,7 @@ class AccountController extends AdminController {
 		$input = Input::all();
 		$user  = Auth::user();
 		
-		if ($user->id !== $input['id']) return App::abort(500);
+		if ((string) $user->id !== $input['id']) return App::abort(500);
 
 		$validation = App::make('Orchestra\Foundation\Services\Validation\UserAccount')
 						->on('changePassword')->with($input);
