@@ -49,7 +49,7 @@ class AccountControllerTest extends TestCase {
 	public function testPostIndexAction()
 	{
 		$input = array(
-			'id'       => 1,
+			'id'       => '1',
 			'email'    => 'email@orchestraplatform.com',
 			'fullname' => 'Administrator',
 		);
@@ -89,7 +89,7 @@ class AccountControllerTest extends TestCase {
 	public function testPostIndexActionGivenDatabaseError()
 	{
 		$input = array(
-			'id'       => 1,
+			'id'       => '1',
 			'email'    => 'email@orchestraplatform.com',
 			'fullname' => 'Administrator',
 		);
@@ -124,7 +124,7 @@ class AccountControllerTest extends TestCase {
 	public function testPostIndexActionGivenValidationFails()
 	{
 		$input = array(
-			'id'       => 1,
+			'id'       => '1',
 			'email'    => 'email@orchestraplatform.com',
 			'fullname' => 'Administrator',
 		);
@@ -175,7 +175,7 @@ class AccountControllerTest extends TestCase {
 	public function testPostPasswordAction()
 	{
 		$input = array(
-			'id'               => 1,
+			'id'               => '1',
 			'current_password' => '123456',
 			'new_password'     => 'qwerty',
 		);
@@ -219,7 +219,7 @@ class AccountControllerTest extends TestCase {
 	public function testPostPasswordActionGivenDatabaseError()
 	{
 		$input = array(
-			'id'               => 1,
+			'id'               => '1',
 			'current_password' => '123456',
 			'new_password'     => 'qwerty',
 		);
@@ -259,7 +259,7 @@ class AccountControllerTest extends TestCase {
 	public function testPostPasswordActionGivenHashError()
 	{
 		$input = array(
-			'id'               => 1,
+			'id'               => '1',
 			'current_password' => '123456',
 			'new_password'     => 'qwerty',
 		);
@@ -295,7 +295,7 @@ class AccountControllerTest extends TestCase {
 	public function testPostPasswordActionGivenValidationFails()
 	{
 		$input = array(
-			'id'               => 1,
+			'id'               => '1',
 			'current_password' => '123456',
 			'new_password'     => 'qwerty',
 		);
