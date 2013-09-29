@@ -91,11 +91,20 @@ class ServiceProviderTest extends TestCase {
 		$site       = new \Orchestra\Foundation\SiteServiceProvider($app);
 		$reminder   = new \Orchestra\Foundation\Reminders\ReminderServiceProvider($app);
 
-		$this->assertEquals(array('orchestra.app', 'orchestra.installed'), $foundation->provides());
-		$this->assertEquals(array(
-			'orchestra.mail', 'orchestra.publisher', 'orchestra.publisher.ftp', 
-			'orchestra.site', 'orchestra.role', 'orchestra.user',
-		), $site->provides());
-		$this->assertEquals(array('auth.reminder', 'auth.reminder.repository', 'command.auth.reminders'), $reminder->provides());
+		$foundationProvides = array(
+			'orchestra.app', 'orchestra.installed', 
+		);
+		$siteProvides = array(
+			'orchestra.mail', 'orchestra.publisher', 
+			'orchestra.publisher.ftp', 'orchestra.site', 
+			'orchestra.role', 'orchestra.user',
+		);
+		$authProvides = array(
+			'auth.reminder', 'auth.reminder.repository', 'command.auth.reminders',
+		);
+
+		$this->assertEquals($foundationProvides, $foundation->provides());
+		$this->assertEquals($siteProvides, $site->provides());
+		$this->assertEquals($authProvides, $reminder->provides());
 	}
 }

@@ -116,33 +116,51 @@ class UserMetaRepository extends Driver {
 	 */
 	public function finish() 
 	{
-		$model = $this->model;
-
 		foreach ($this->data as $key => $value)
 		{
-			$isNew = $this->isNewKey($key);
-
-			list($name, $userId) = explode('/user-', $key);
-
-			if ($this->check($key, $value) or empty($userId)) continue;
-
-			$userMeta = $model->newInstance()->search($name, $userId)->first();
-
-			if (is_null($value) or $value === ':to-be-deleted:')
-			{
-				! is_null($userMeta) and $userMeta->delete();
-				continue;
-			}
-			if (true === $isNew and is_null($userMeta))
-			{
-				$userMeta = $model->newInstance();
-
-				$userMeta->name    = $name;
-				$userMeta->user_id = $userId;
-			}
-			
-			$userMeta->value = $value;
-			$userMeta->save();
+			$this->save($key, $value);
 		}
+	}
+
+	/**
+	 * Save user meta to memory.
+	 * 
+	 * @param  mixed    $key
+	 * @param  mixed    $value
+	 * @return void
+	 */
+	protected function save($key, $value)
+	{
+		$model = $this->model;
+		$isNew = $this->isNewKey($key);
+
+		list($name, $userId) = explode('/user-', $key);
+
+		// We should be able to ignore this if user id is empty or checksum 
+		// return the same value (no change occured).
+		if ($this->check($key, $value) or empty($userId)) return ;
+
+		$meta = $model->newInstance()->search($name, $userId)->first();
+
+		// Deleting a configuration is determined by ':to-be-deleted:'. It 
+		// would be extremely weird if that is used for other purposed.
+		if (is_null($value) or $value === ':to-be-deleted:')
+		{
+			! is_null($meta) and $meta->delete();
+			return ;
+		}
+		
+		// If the content is a new configuration, let push it as a insert 
+		// instead of an update to Eloquent.
+		if (true === $isNew and is_null($meta))
+		{
+			$meta = $model->newInstance();
+
+			$meta->name    = $name;
+			$meta->user_id = $userId;
+		}
+		
+		$meta->value = $value;
+		$meta->save();
 	}
 }

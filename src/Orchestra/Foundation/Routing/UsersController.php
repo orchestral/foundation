@@ -42,7 +42,7 @@ class UsersController extends AdminController {
 
 		// Get Users (with roles) and limit it to only 30 results for
 		// pagination. Don't you just love it when pagination simply works.
-		$eloquent  = App::make('orchestra.user')->search($searchKeyword, $searchRoles)->paginate(30);
+		$eloquent  = App::make('orchestra.user')->search($searchKeyword, $searchRoles)->paginate();
 		$roles     = App::make('orchestra.role')->lists('name', 'id');
 		$presenter = App::make('Orchestra\Foundation\Services\Html\UserPresenter');
 

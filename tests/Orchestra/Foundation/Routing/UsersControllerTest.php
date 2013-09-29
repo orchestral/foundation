@@ -32,7 +32,7 @@ class UsersControllerTest extends TestCase {
 		$presenter = m::mock('UserPresenter');
 
 		$user->shouldReceive('search')->once()->with('', array())->andReturn($user)
-			->shouldReceive('paginate')->once()->with(30)->andReturn(array());
+			->shouldReceive('paginate')->once()->andReturn(array());
 		$role->shouldReceive('lists')->once()->with('name', 'id')->andReturn(array());
 		$presenter->shouldReceive('table')->once()->andReturn('list.users')
 			->shouldReceive('actions')->once()->with('list.users')->andReturn('list.users');
