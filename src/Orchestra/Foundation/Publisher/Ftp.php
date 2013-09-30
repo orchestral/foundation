@@ -107,12 +107,11 @@ class Ftp implements UploaderInterface {
 	}
 
 	/**
-	 * Check chmod for a file/directory recursively.
+	 * CHMOD a file/directory recursively.
 	 *
 	 * @param  string   $path
 	 * @param  integer  $mode
 	 * @return boolean
-	 * @throws \RuntimeException
 	 */
 	public function recursivePermission($path, $mode = 0755)
 	{
@@ -120,19 +119,7 @@ class Ftp implements UploaderInterface {
 
 		try
 		{
-			$lists = $this->connection->allFiles($path);
-
-			// this is to check if return value is just a single file, 
-			// avoiding infinite loop when we reach a file.
-			if ($lists === array($path)) return true;
-
-			foreach ($lists as $dir)
-			{
-				// Not a file or folder, ignore it.
-				if (substr($dir, -3) === '/..' or substr($dir, -2) === '/.') continue;
-				
-				$this->recursivePermission($dir, $mode);
-			}
+			return $this->recursiveFilePermission($path, $mode);
 		}
 		catch (RuntimeException $e)
 		{
@@ -142,6 +129,36 @@ class Ftp implements UploaderInterface {
 		return true;
 	}
 
+	/**
+	 * CHMOD both file and directory recursively.
+	 * 
+	 * @param  string   $path
+	 * @param  integer  $mode
+	 * @return boolean
+	 */
+	protected function recursiveFilePermission($path, $mode = 0755)
+	{
+		$lists = $this->connection->allFiles($path);
+
+		$ignored_path = function ($dir)
+		{
+			return (substr($dir, -3) === '/..' or substr($dir, -2) === '/.');
+		};
+
+		// this is to check if return value is just a single file, 
+		// avoiding infinite loop when we reach a file.
+		if ($lists === array($path)) return true;
+
+		foreach ($lists as $dir)
+		{
+			// Not a file or folder, ignore it.
+			if ($ignored_path($dir)) continue;
+			
+			$this->recursivePermission($dir, $mode);
+		}
+
+		return true;
+	}
 
 	/**
 	 * Upload the file.
