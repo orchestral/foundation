@@ -72,30 +72,32 @@ class AdminMenuHandler {
 				->link(App::handles('orchestra::settings'));
 		}
 
-		$this->resources();
+		$resources = Resources::all();
+
+		// Resources menu should only be appended if there is actually
+		// resources to be displayed.
+		if (empty($resources)) return ;
+
+		$this->resources($resources);
 	}
 
 	/**
 	 * Resources link.
 	 * 
+	 * @param  array    $resources
 	 * @return void
 	 */
-	protected function resources()
+	protected function resources($resources)
 	{
 		$menu       = $this->menu;
 		$translator = $this->translator;
 
-		$resources = Resources::all();
-		$boot      = function ($menu, $translator) 
+		$boot = function ($menu, $translator) 
 		{
 			$menu->add('resources', '>:extensions')
 				->title($translator->trans('orchestra/foundation::title.resources.list'))
 				->link(App::handles('orchestra::resources'));
 		};
-
-		// Resources menu should only be appended if there is actually
-		// resources to be displayed.
-		if (empty($resources)) return ;
 
 		foreach ($resources as $name => $option)
 		{
