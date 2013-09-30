@@ -148,17 +148,28 @@ class InstallController extends BaseController {
 			$database['password'] = str_repeat('*', $password);
 		}
 
+		$authentication = $this->isAuthenticationInstallable($auth);
+
+		return array($database, $auth, $authentication);
+	}
+
+	/**
+	 * Is authentication installable.
+	 * 
+	 * @param  array    $auth
+	 * @return boolean
+	 */
+	protected function isAuthenticationInstallable($auth)
+	{
 		// Orchestra Platform strictly require Eloquent based authentication 
 		// because our Role Based Access Role (RBAC) is utilizing on eloquent
 		// relationship to solve some of the requirement.
-		if ($auth['driver'] === 'eloquent')
-		{
-			if (class_exists($auth['model'])) $eloquent = App::make($auth['model']);
-			
-			if (isset($eloquent) 
-				and $eloquent instanceof \Orchestra\Model\User) $authentication = true;
-		}
+		if ( ! ($auth['driver'] === 'eloquent' and class_exists($auth['model']))) return false;
 
-		return array($database, $auth, $authentication);
+		$eloquent = App::make($auth['model']);
+		
+		if ( ! (isset($eloquent) and $eloquent instanceof User)) return false;
+
+		return true;
 	}
 }
