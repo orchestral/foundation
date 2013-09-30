@@ -53,31 +53,10 @@ class InstallController extends BaseController {
 	 */
 	public function getIndex()
 	{
-		$requirement    = $this->requirement;
-		$driver         = Config::get('database.default', 'mysql');
-		$database       = Config::get("database.connections.{$driver}", array());
-		$auth           = Config::get('auth');
-		$installable    = $requirement->check();
-		$authentication = false;
+		$requirement = $this->requirement;
+		$installable = $requirement->check();
 
-		// For security, we shouldn't expose database connection to anyone, 
-		// This snippet change the password value into *.
-		if (isset($database['password'])
-			and ($password = strlen($database['password'])))
-		{
-			$database['password'] = str_repeat('*', $password);
-		}
-
-		// Orchestra Platform strictly require Eloquent based authentication 
-		// because our Role Based Access Role (RBAC) is utilizing on eloquent
-		// relationship to solve some of the requirement.
-		if ($auth['driver'] === 'eloquent')
-		{
-			if (class_exists($auth['model'])) $eloquent = App::make($auth['model']);
-			
-			if (isset($eloquent) 
-				and $eloquent instanceof \Orchestra\Model\User) $authentication = true;
-		}
+		list($database, $auth, $authentication) = $this->getRunningConfiguration();
 
 		// If the auth status is false, installation shouldn't be possible.
 		(true === $authentication) or $installable = false;
@@ -147,5 +126,50 @@ class InstallController extends BaseController {
 	public function getDone()
 	{
 		return View::make('orchestra/foundation::install.done');
+	}
+
+	/**
+	 * Get running configuration.
+	 *
+	 * @return array
+	 */
+	protected function getRunningConfiguration()
+	{
+		$driver         = Config::get('database.default', 'mysql');
+		$database       = Config::get("database.connections.{$driver}", array());
+		$auth           = Config::get('auth');
+		$authentication = false;
+
+		// For security, we shouldn't expose database connection to anyone, 
+		// This snippet change the password value into *.
+		if (isset($database['password'])
+			and ($password = strlen($database['password'])))
+		{
+			$database['password'] = str_repeat('*', $password);
+		}
+
+		$authentication = $this->isAuthenticationInstallable($auth);
+
+		return array($database, $auth, $authentication);
+	}
+
+	/**
+	 * Is authentication installable.
+	 * 
+	 * @param  array    $auth
+	 * @return boolean
+	 */
+	protected function isAuthenticationInstallable($auth)
+	{
+		// Orchestra Platform strictly require Eloquent based authentication 
+		// because our Role Based Access Role (RBAC) is utilizing on eloquent
+		// relationship to solve some of the requirement.
+		if ( ! ($auth['driver'] === 'eloquent' and class_exists($auth['model']))) return false;
+
+		$eloquent = App::make($auth['model']);
+		
+		if ( ! (isset($eloquent) and $eloquent instanceof User)) return false;
+
+		return true;
 	}
 }
