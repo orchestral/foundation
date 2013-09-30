@@ -144,19 +144,7 @@ class AccountController extends AdminController {
 		{
 			$user->password = $input['new_password'];
 
-			try
-			{
-				DB::transaction(function () use ($user)
-				{
-					$user->save();
-				});
-
-				Messages::add('success', trans('orchestra/foundation::response.account.password.update'));
-			}
-			catch (Exception $e)
-			{
-				Messages::add('error', trans('orchestra/foundation::response.db-failed'));
-			}
+			$this->updatePassword($user);
 		}
 		else
 		{
@@ -164,6 +152,29 @@ class AccountController extends AdminController {
 		}
 
 		return Redirect::to(handles('orchestra::account/password'));
+	}
+
+	/**
+	 * Update password for the user.
+	 * 									
+	 * @param  \Orchestra\Model\User    $user
+	 * @return void
+	 */
+	protected function updatePassword($user)
+	{
+		try
+		{
+			DB::transaction(function () use ($user)
+			{
+				$user->save();
+			});
+
+			Messages::add('success', trans('orchestra/foundation::response.account.password.update'));
+		}
+		catch (Exception $e)
+		{
+			Messages::add('error', trans('orchestra/foundation::response.db-failed'));
+		}
 	}
 
 	/**
