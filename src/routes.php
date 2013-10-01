@@ -42,8 +42,8 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function ()
 	Route::get('register', 'Orchestra\Foundation\Routing\RegisterController@getIndex');
 	Route::post('register', 'Orchestra\Foundation\Routing\RegisterController@postIndex');
 	
-	Route::any('resources{index?}', 'Orchestra\Foundation\Routing\ResourcesController@index')->where('index', '/index');
-	Route::any('resources{any}', 'Orchestra\Foundation\Routing\ResourcesController@call')->where('any', '(.*)');
+	Route::any('resources/{any}', 'Orchestra\Foundation\Routing\ResourcesController@call')->where('any', '(.*)');
+	Route::any('resources', 'Orchestra\Foundation\Routing\ResourcesController@index');
 	
 	Route::resource('users', 'Orchestra\Foundation\Routing\UsersController', array('except' => array('show')));
 	Route::any('users/{id}/delete', 'Orchestra\Foundation\Routing\UsersController@delete');
