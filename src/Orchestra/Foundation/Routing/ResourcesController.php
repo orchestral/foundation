@@ -42,6 +42,8 @@ class ResourcesController extends AdminController {
 	 */
 	public function call($request)
 	{
+		if ($request === 'index') return $this->index();
+
 		$resources  = Resources::all();
 		$parameters = explode('/', trim($request, '/'));
 		$name       = array_shift($parameters);
