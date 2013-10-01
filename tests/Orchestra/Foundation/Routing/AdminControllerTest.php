@@ -25,30 +25,16 @@ class AdminControllerTest extends TestCase {
 			->shouldReceive('fire')->once()->with('orchestra.ready: admin')->andReturn(null)
 			->shouldReceive('fire')->once()->with('orchestra.done: admin')->andReturn(null);
 
+		StubAdminController::setFilterer($route = m::mock('Illuminate\Routing\RouteFiltererInterface'));
+
+		$route->shouldReceive('filter')->twice()
+			->with(m::type('String'), m::type('Closure'))->andReturnUsing(function ($name, $callback) 
+			{
+				$callback();
+				return $name;
+			});
+		
 		$stub = new StubAdminController;
-		$refl = new \ReflectionObject($stub);
-
-		$callbackFilters = $refl->getProperty('callbackFilters');
-		$filters         = $refl->getProperty('filters');
-
-		$callbackFilters->setAccessible(true);
-		$filters->setAccessible(true);
-
-		$stubCallbacks = $callbackFilters->getValue($stub);
-		$stubFilters   = $filters->getValue($stub);
-
-		$expectedFilters = array('orchestra.installable');
-
-		foreach ($stubCallbacks as $key => $callback)
-		{
-			$expectedFilters[] = $key;
-			call_user_func($callback);
-		}
-
-		foreach ($stubFilters as $filter)
-		{
-			$this->assertContains($filter->run, $expectedFilters);
-		}
 	}
 }
 
