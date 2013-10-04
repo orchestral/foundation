@@ -7,18 +7,21 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
+use Orchestra\Foundation\Services\Validation\Auth as AuthValidator;
 
 class ForgotController extends AdminController {
 
 	/**
 	 * Construct Forgot Password Controller with some pre-define
 	 * configuration
-	 *
-	 * @return void
+	 * 
+	 * @param \Orchestra\Foundation\Services\Validation\Auth    $validator
 	 */
-	public function __construct()
+	public function __construct(AuthValidator $validator)
 	{
 		parent::__construct();
+
+		$this->validator = $validator;
 
 		$this->beforeFilter('orchestra.guest');
 		$this->beforeFilter('orchestra.csrf', array('only' => array('postIndex')));
@@ -51,7 +54,7 @@ class ForgotController extends AdminController {
 	public function postIndex()
 	{
 		$input      = Input::all();
-		$validation = App::make('Orchestra\Foundation\Services\Validation\Auth')->with($input);
+		$validation = $this->validator->with($input);
 		
 		if ($validation->fails())
 		{
@@ -68,7 +71,7 @@ class ForgotController extends AdminController {
 		$site     = $memory->get('site.name', 'Orchestra Platform');
 		$callback = function($mail) use ($site)
 		{
-			$mail->subject(trans('orchestra/foundation::email.forgot.request', compact('site')));
+			$mail->subject(trans('orchestra/foundation::email.forgot.request', array('site' => $site)));
 		};
 
 		return Password::remind(array('email' => $input['email']), $callback);
@@ -95,10 +98,9 @@ class ForgotController extends AdminController {
 	 *
 	 * POST (:orchestra)/forgot/reset/(:hash)
 	 *
-	 * @param  string   $token
 	 * @return Response
 	 */
-	public function postReset($token)
+	public function postReset()
 	{
 		return Password::reset(array('email' => Input::get('email')), function($user, $password)
 		{

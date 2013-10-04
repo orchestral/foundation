@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Services\TestCase;
 use Orchestra\Support\Facades\App as Orchestra;
@@ -18,21 +19,35 @@ class SettingsControllerTest extends TestCase {
 	}
 
 	/**
+	 * Bind dependencies.
+	 *
+	 * @return array
+	 */
+	protected function bindDependencies()
+	{
+		$presenter = m::mock('\Orchestra\Foundation\Services\Html\SettingPresenter');
+		$validator = m::mock('\Orchestra\Foundation\Services\Validation\Setting');
+
+		App::instance('Orchestra\Foundation\Services\Html\SettingPresenter', $presenter);
+		App::instance('Orchestra\Foundation\Services\Validation\Setting', $validator);
+
+		return array($presenter, $validator);
+	}
+
+	/**
 	 * Test GET /admin/settings
 	 *
 	 * @test
 	 */
 	public function testGetIndexAction()
 	{
-		$memory    = m::mock('Memory');
-		$presenter = m::mock('SettingPresenter');
+		$memory = m::mock('Memory');
+		list($presenter,) = $this->bindDependencies();
 
 		$memory->shouldReceive('get')->times(12)->andReturn('');
 		$presenter->shouldReceive('form')->once()->andReturn('edit.settings');
 
 		Orchestra::shouldReceive('memory')->once()->andReturn($memory);
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Html\SettingPresenter')->andReturn($presenter);
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::settings.index', m::type('Array'))->andReturn('foo');
 
@@ -64,18 +79,16 @@ class SettingsControllerTest extends TestCase {
 			'email_queue'      => 'no',
 		);
 
-		$memory     = m::mock('Memory');
-		$validation = m::mock('SettingValidation');
+		$memory = m::mock('Memory');
+		list(, $validator) = $this->bindDependencies();
 
 		$memory->shouldReceive('put')->times(12)->andReturn(null)
 			->shouldReceive('get')->once()->with('email.password')->andReturn('foo');
-		$validation->shouldReceive('on')->once()->with('smtp')->andReturn($validation)
-			->shouldReceive('with')->once()->with($input)->andReturn($validation)
+		$validator->shouldReceive('on')->once()->with('smtp')->andReturn($validator)
+			->shouldReceive('with')->once()->with($input)->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(false);
 
 		Orchestra::shouldReceive('memory')->once()->andReturn($memory);
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\Setting')->andReturn($validation);
 		Orchestra::shouldReceive('handles')->once()->with('orchestra::settings')->andReturn('settings');
 		Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
 
@@ -107,14 +120,12 @@ class SettingsControllerTest extends TestCase {
 			'email_queue'      => 'no',
 		);
 
-		$validation = m::mock('SettingValidation');
+		list(, $validator) = $this->bindDependencies();
 
-		$validation->shouldReceive('on')->once()->with('smtp')->andReturn($validation)
-			->shouldReceive('with')->once()->with($input)->andReturn($validation)
+		$validator->shouldReceive('on')->once()->with('smtp')->andReturn($validator)
+			->shouldReceive('with')->once()->with($input)->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(true);
 
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\Setting')->andReturn($validation);
 		Orchestra::shouldReceive('handles')->once()->with('orchestra::settings')->andReturn('settings');
 
 		$this->call('POST', 'admin/settings', $input);

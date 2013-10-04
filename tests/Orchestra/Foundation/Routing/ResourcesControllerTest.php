@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Services\TestCase;
@@ -19,6 +20,20 @@ class ResourcesControllerTest extends TestCase {
 	}
 
 	/**
+	 * Bind dependencies.
+	 *
+	 * @return array
+	 */
+	protected function bindDependencies()
+	{
+		$presenter = m::mock('\Orchestra\Foundation\Services\Html\ResourcePresenter');
+
+		App::instance('Orchestra\Foundation\Services\Html\ResourcePresenter', $presenter);
+
+		return $presenter;
+	}
+
+	/**
 	 * Test GET /admin/resources
 	 *
 	 * @test
@@ -32,12 +47,10 @@ class ResourcesControllerTest extends TestCase {
 			)),
 		);
 
-		$presenter = m::mock('ResourcePresenter');
+		$presenter = $this->bindDependencies();
 		$presenter->shouldReceive('table')->once()->andReturn('list.resources');
 
 		Resources::shouldReceive('all')->once()->andReturn($resources);
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Html\ResourcePresenter')->andReturn($presenter);
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::resources.index', m::type('Array'))->andReturn('foo');
 

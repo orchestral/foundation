@@ -33,8 +33,9 @@ class DashboardController extends AdminController {
 	{
 		Site::set('title', trans("orchestra/foundation::title.home"));
 
-		return View::make('orchestra/foundation::dashboard.index')
-			->with('panes', Widget::make('pane.orchestra'));
+		return View::make('orchestra/foundation::dashboard.index', array(
+			'panes' => Widget::make('pane.orchestra'),
+		));
 	}
 
 	/**

@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Services\TestCase;
 use Orchestra\Support\Facades\App as Orchestra;
@@ -17,6 +18,22 @@ class ExtensionsControllerTest extends TestCase {
 	public function tearDown()
 	{
 		m::close();
+	}
+
+	/**
+	 * Bind dependencies.
+	 *
+	 * @return array
+	 */
+	protected function bindDependencies()
+	{
+		$presenter = m::mock('\Orchestra\Foundation\Services\Html\ExtensionPresenter');
+		$validator = m::mock('\Orchestra\Foundation\Services\Validation\Extension');
+
+		App::instance('Orchestra\Foundation\Services\Html\ExtensionPresenter', $presenter);
+		App::instance('Orchestra\Foundation\Services\Validation\Extension', $validator);
+
+		return array($presenter, $validator);
 	}
 
 	/**
@@ -84,8 +101,8 @@ class ExtensionsControllerTest extends TestCase {
 	 */
 	public function testGetConfigureAction()
 	{
-		$memory    = m::mock('Memory');
-		$presenter = m::mock('ExtensionPresenter');
+		$memory = m::mock('Memory');
+		list($presenter,) = $this->bindDependencies();
 
 		$memory->shouldReceive('get')->once()
 				->with('extensions.active.laravel/framework.config', array())->andReturn(array())
@@ -98,8 +115,6 @@ class ExtensionsControllerTest extends TestCase {
 
 		Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
 		Orchestra::shouldReceive('memory')->once()->andReturn($memory);
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Html\ExtensionPresenter')->andReturn($presenter);
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::extensions.configure', m::type('Array'))->andReturn('foo');
 
@@ -119,8 +134,8 @@ class ExtensionsControllerTest extends TestCase {
 			'_token'  => 'somesessiontoken', 
 		);
 
-		$memory     = m::mock('Memory');
-		$validation = m::mock('Validation');
+		$memory = m::mock('Memory');
+		list(, $validator) = $this->bindDependencies();
 
 		$memory->shouldReceive('get')->once()
 				->with('extension.active.laravel/framework.config', array())->andReturn(array())
@@ -129,12 +144,9 @@ class ExtensionsControllerTest extends TestCase {
 			->shouldReceive('put')->once()
 				->with('extension_laravel/framework', array('handles' => 'foo'))->andReturn(null);
 
-		$validation->shouldReceive('with')->once()
-				->with($input, array("orchestra.validate: extension.laravel/framework"))->andReturn($validation)
+		$validator->shouldReceive('with')->once()
+				->with($input, array("orchestra.validate: extension.laravel/framework"))->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(false);
-
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\Extension')->andReturn($validation);
 
 		Extension::shouldReceive('started')->once()
 			->with('laravel/framework')->andReturn(true);
@@ -160,14 +172,11 @@ class ExtensionsControllerTest extends TestCase {
 			'_token'  => 'somesessiontoken', 
 		);
 
-		$validation = m::mock('Validation');
+		list(, $validator) = $this->bindDependencies();
 
-		$validation->shouldReceive('with')->once()
-				->with($input, array("orchestra.validate: extension.laravel/framework"))->andReturn($validation)
+		$validator->shouldReceive('with')->once()
+				->with($input, array("orchestra.validate: extension.laravel/framework"))->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(true);
-
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\Extension')->andReturn($validation);
 
 		Extension::shouldReceive('started')->once()
 			->with('laravel/framework')->andReturn(true);
