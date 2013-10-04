@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Form; ?>
 					</div>
 				</div>
 
-				<div class="row">
+				<div class="form-group">
 					<?php echo Form::label('connection-type', trans('orchestra/foundation::label.extensions.publisher.connection-type'), array('class' => 'three columns control-label')); ?>
 					<div class="nine columns">
 						<?php echo Form::select('connection-type', array('ftp' => 'FTP', 'sftp' => 'SFTP'), Input::old('connection-type', 'ftp'), array('role' => 'switcher')); ?>
