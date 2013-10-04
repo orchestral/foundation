@@ -4,8 +4,21 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Resources;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Site;
+use Orchestra\Foundation\Services\Html\ResourcePresenter;
 
 class ResourcesController extends AdminController {
+
+	/**
+	 * Define the filters.
+	 *
+	 * @param  \Orchestra\Foundation\Services\Html\ResourcePresenter    $presenter
+	 */
+	public function __construct(ResourcePresenter $presenter)
+	{
+		parent::__construct();
+
+		$this->presenter = $presenter;
+	}
 
 	/**
 	 * Route to Resources List.
@@ -16,8 +29,7 @@ class ResourcesController extends AdminController {
 	{
 		$resources  = Resources::all();
 		$collection = array();
-		$presenter  = App::make('Orchestra\Foundation\Services\Html\ResourcePresenter');
-
+		
 		foreach ($resources as $name => $options)
 		{
 			if (false === value($options->visible)) continue;
@@ -25,12 +37,15 @@ class ResourcesController extends AdminController {
 			$collection[$name] = $options;
 		}
 
-		$table = $presenter->table($collection);
+		$table = $this->presenter->table($collection);
 
 		Site::set('title', trans('orchestra/foundation::title.resources.list'));
 		Site::set('description', trans('orchestra/foundation::title.resources.list-detail'));
 
-		return View::make('orchestra/foundation::resources.index', compact('table'));
+		return View::make('orchestra/foundation::resources.index', array(
+			'eloquent' => $collection,
+			'table'    => $table,
+		));
 	}
 
 	/**

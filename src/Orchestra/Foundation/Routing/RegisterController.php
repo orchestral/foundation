@@ -13,17 +13,23 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Support\Str;
 use Orchestra\Model\User;
+use Orchestra\Foundation\Services\Html\AccountPresenter;
+use Orchestra\Foundation\Services\Validation\UserAccount as UserValidator;
 
 class RegisterController extends AdminController {
 	
 	/**
 	 * Define the filters.
 	 *
-	 * @return void
+	 * @param  \Orchestra\Foundation\Services\Html\AccountPresenter     $presenter
+	 * @param  \Orchestra\Foundation\Services\Validation\UserAccount    $validator
 	 */
-	public function __construct()
+	public function __construct(AccountPresenter $presenter, UserValidator $validator)
 	{
 		parent::__construct();
+
+		$this->presenter = $presenter;
+		$this->validator = $validator;
 
 		// Registration controller should only be accessible if we allow 
 		// registration through the setting.
@@ -40,10 +46,9 @@ class RegisterController extends AdminController {
 	 */
 	public function getIndex()
 	{
-		$eloquent  = App::make('orchestra.user');
-		$title     = 'orchestra/foundation::title.register';
-		$presenter = App::make('Orchestra\Foundation\Services\Html\AccountPresenter');
-		$form      = $presenter->profileForm($eloquent, handles('orchestra::register'));
+		$eloquent = App::make('orchestra.user');
+		$title    = 'orchestra/foundation::title.register';
+		$form     = $this->presenter->profileForm($eloquent, handles('orchestra::register'));
 		
 		$form->extend(function ($form) use ($title)
 		{
@@ -69,8 +74,7 @@ class RegisterController extends AdminController {
 		$input    = Input::all();
 		$password = Str::random(5);
 		
-		$validation = App::make('Orchestra\Foundation\Services\Validation\UserAccount')
-						->on('register')->with($input);
+		$validation = $this->validator->on('register')->with($input);
 	
 		// Validate user registration, if any errors is found redirect it 
 		// back to registration page with the errors
@@ -129,15 +133,18 @@ class RegisterController extends AdminController {
 		// Converting the user to an object allow the data to be a generic 
 		// object. This allow the data to be transferred to JSON if the 
 		// mail is send using queue.
-		$user = (object) $user->toArray();
 		
 		$memory = App::memory();
 		$site   = $memory->get('site.name', 'Orchestra Platform');
-		$data   = compact('password', 'site', 'user');
+		$data   = array(
+			'password' => $password, 
+			'site'     => $site,
+			'user'     => (object) $user->toArray(),
+		);
 
 		$sent = Mail::push('orchestra/foundation::email.credential.register', $data, function($mail) use ($data, $user, $site)
 		{
-			$mail->subject(trans('orchestra/foundation::email.credential.register', compact('site')));
+			$mail->subject(trans('orchestra/foundation::email.credential.register', array('site' => $site)));
 			$mail->to($user->email, $user->fullname);
 		});
 

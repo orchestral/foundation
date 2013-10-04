@@ -11,18 +11,26 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
+use Orchestra\Foundation\Services\Html\AccountPresenter;
+use Orchestra\Foundation\Services\Validation\UserAccount as UserValidator;
 
 class AccountController extends AdminController {
 
 	/**
 	 * Construct Account Controller to allow user to update own profile.
 	 * Only authenticated user should be able to access this controller.
-	 *
-	 * @return void
+	 * 
+	 * Define the filters and inject dependencies.
+	 * 
+	 * @param  \Orchestra\Foundation\Services\Html\AccountPresenter     $presenter
+	 * @param  \Orchestra\Foundation\Services\Validation\UserAccount    $validator
 	 */
-	public function __construct()
+	public function __construct(AccountPresenter $presenter, UserValidator $validator)
 	{
 		parent::__construct();
+
+		$this->presenter = $presenter;
+		$this->validator = $validator;
 
 		$this->beforeFilter('orchestra.auth');
 	}
@@ -37,13 +45,15 @@ class AccountController extends AdminController {
 	public function getIndex()
 	{
 		$eloquent  = Auth::user();
-		$presenter = App::make('Orchestra\Foundation\Services\Html\AccountPresenter');
-		$form      = $presenter->profileForm($eloquent, handles('orchestra::account'));
+		$form      = $this->presenter->profileForm($eloquent, handles('orchestra::account'));
 
 		Event::fire('orchestra.form: user.account', array($eloquent, $form));
 		Site::set('title', trans("orchestra/foundation::title.account.profile"));
 
-		return View::make('orchestra/foundation::account.index', compact('eloquent', 'form'));
+		return View::make('orchestra/foundation::account.index', array(
+			'eloquent' => $eloquent, 
+			'form'     => $form,
+		));
 	}
 
 	/**
@@ -60,8 +70,7 @@ class AccountController extends AdminController {
 		
 		if ((string) $user->id !== $input['id']) return App::abort(500);
 
-		$validation = App::make('Orchestra\Foundation\Services\Validation\UserAccount')
-						->with($input);
+		$validation = $this->validator->with($input);
 
 		if ($validation->fails())
 		{
@@ -108,12 +117,14 @@ class AccountController extends AdminController {
 	public function getPassword()
 	{
 		$eloquent  = Auth::user();
-		$presenter = App::make('Orchestra\Foundation\Services\Html\AccountPresenter');
-		$form      = $presenter->passwordForm($eloquent);
+		$form      = $this->presenter->passwordForm($eloquent);
 
 		Site::set('title', trans("orchestra/foundation::title.account.password"));
 
-		return View::make('orchestra/foundation::account.password', compact('eloquent', 'form'));
+		return View::make('orchestra/foundation::account.password', array(
+			'eloquent' => $eloquent, 
+			'form'     => $form,
+		));
 	}
 
 	/**
@@ -130,8 +141,7 @@ class AccountController extends AdminController {
 		
 		if ((string) $user->id !== $input['id']) return App::abort(500);
 
-		$validation = App::make('Orchestra\Foundation\Services\Validation\UserAccount')
-						->on('changePassword')->with($input);
+		$validation = $this->validator->on('changePassword')->with($input);
 
 		if ($validation->fails())
 		{

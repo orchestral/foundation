@@ -8,6 +8,8 @@ use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
+use Orchestra\Foundation\Services\Html\SettingPresenter;
+use Orchestra\Foundation\Services\Validation\Setting as SettingValidator;
 
 class SettingsController extends AdminController {
 
@@ -15,11 +17,15 @@ class SettingsController extends AdminController {
 	 * Construct Settings Controller, only authenticated user should be able
 	 * to access this controller.
 	 *
-	 * @return void
+	 * @param  \Orchestra\Foundation\Services\Html\SettingPresenter     $presenter
+	 * @param  \Orchestra\Foundation\Services\Validation\Setting        $validator
 	 */
-	public function __construct()
+	public function __construct(SettingPresenter $presenter, SettingValidator $validator)
 	{
 		parent::__construct();
+
+		$this->presenter = $presenter;
+		$this->validator = $validator;
 
 		$this->beforeFilter('orchestra.auth');
 		$this->beforeFilter('orchestra.manage');
@@ -53,13 +59,15 @@ class SettingsController extends AdminController {
 			'email_queue'      => ($memory->get('email.queue', false) ? 'yes' : 'no'),
 		));
 
-		$presenter = App::make('Orchestra\Foundation\Services\Html\SettingPresenter');
-		$form      = $presenter->form($eloquent);
+		$form = $this->presenter->form($eloquent);
 
 		Event::fire('orchestra.form: settings', array($eloquent, $form));
 		Site::set('title', trans('orchestra/foundation::title.settings.list'));
 
-		return View::make('orchestra/foundation::settings.index', compact('eloquent', 'form'));
+		return View::make('orchestra/foundation::settings.index', array(
+			'eloquent' => $eloquent, 
+			'form'     => $form,
+		));
 	}
 
 	/**
@@ -74,8 +82,7 @@ class SettingsController extends AdminController {
 		$default = array('email_driver' => 'mail');
 		$input   = array_merge($default, Input::all());
 
-		$validation = App::make('Orchestra\Foundation\Services\Validation\Setting')
-						->on($input['email_driver'])->with($input);
+		$validation = $this->validator->on($input['email_driver'])->with($input);
 
 		if ($validation->fails())
 		{

@@ -23,8 +23,8 @@ class DashboardControllerTest extends TestCase {
 	public function testIndexAction()
 	{
 		View::shouldReceive('make')->once()
-			->with('orchestra/foundation::dashboard.index')->andReturn(m::self());
-		View::shouldReceive('with')->once()->with('panes', array())->andReturn('foo');
+			->with('orchestra/foundation::dashboard.index', array('panes' => array()))
+			->andReturn('foo');
 		Widget::shouldReceive('make')->once()->with('pane.orchestra')->andReturn(array());
 
 		$this->call('GET', 'admin');

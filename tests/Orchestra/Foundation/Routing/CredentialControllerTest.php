@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Services\TestCase;
@@ -16,6 +17,20 @@ class CredentialControllerTest extends TestCase {
 	public function tearDown()
 	{
 		m::close();
+	}
+
+	/**
+	 * Bind dependencies.
+	 *
+	 * @return array
+	 */
+	protected function bindDependencies()
+	{
+		$validator = m::mock('\Orchestra\Foundation\Services\Validation\Auth');
+
+		App::instance('Orchestra\Foundation\Services\Validation\Auth', $validator);
+
+		return $validator;
 	}
 
 	/**
@@ -44,25 +59,22 @@ class CredentialControllerTest extends TestCase {
 			'remember' => 'yes',
 		);
 
-		$user       = m::mock('Orchestra\Model\User');
-		$validation = m::mock('AuthValidator');
+		$user = m::mock('\Orchestra\Model\User');
+		$validator = $this->bindDependencies();
 
-		$validation->shouldReceive('on')->once()->with('login')->andReturn($validation)
-			->shouldReceive('with')->once()->with($input)->andReturn($validation)
+		$validator->shouldReceive('on')->once()->with('login')->andReturn($validator)
+			->shouldReceive('with')->once()->with($input)->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(false);
 
 		$user->shouldReceive('getAttribute')->once()->with('status')->andReturn(0)
 			->shouldReceive('setAttribute')->once()->with('status', 1)->andReturn(null)
 			->shouldReceive('save')->once()->andReturn(null);
 
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\Auth')->andReturn($validation);
 		Auth::shouldReceive('attempt')->once()->with(m::type('Array'), true)->andReturn(true);
 		Auth::shouldReceive('user')->once()->andReturn($user);
 		Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
 
-		Orchestra::shouldReceive('handles')->once()
-			->with('orchestra::/')->andReturn('/');
+		Orchestra::shouldReceive('handles')->once()->with('orchestra::/')->andReturn('/');
 
 		$this->call('POST', 'admin/login', $input);
 		$this->assertRedirectedTo('/');
@@ -81,14 +93,12 @@ class CredentialControllerTest extends TestCase {
 			'remember' => 'yes',
 		);
 
-		$validation = m::mock('AuthValidator');
+		$validator = $this->bindDependencies();
 
-		$validation->shouldReceive('on')->once()->with('login')->andReturn($validation)
-			->shouldReceive('with')->once()->with($input)->andReturn($validation)
+		$validator->shouldReceive('on')->once()->with('login')->andReturn($validator)
+			->shouldReceive('with')->once()->with($input)->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(false);
 
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\Auth')->andReturn($validation);
 		Auth::shouldReceive('attempt')->once()
 			->with(m::type('Array'), true)->andReturn(false);
 		Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
@@ -112,14 +122,12 @@ class CredentialControllerTest extends TestCase {
 			'remember' => 'yes',
 		);
 
-		$validation = m::mock('AuthValidator');
+		$validator = $this->bindDependencies();
 
-		$validation->shouldReceive('on')->once()->with('login')->andReturn($validation)
-			->shouldReceive('with')->once()->with($input)->andReturn($validation)
+		$validator->shouldReceive('on')->once()->with('login')->andReturn($validator)
+			->shouldReceive('with')->once()->with($input)->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(true);
 
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\Auth')->andReturn($validation);
 		Orchestra::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
 
 		$this->call('POST', 'admin/login', $input);
