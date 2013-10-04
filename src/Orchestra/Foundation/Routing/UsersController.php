@@ -12,17 +12,23 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Model\Role;
 use Orchestra\Model\User;
+use Orchestra\Foundation\Services\Html\UserPresenter;
+use Orchestra\Foundation\Services\Validation\User as UsersValidator;
 
 class UsersController extends AdminController {
 
 	/**
 	 * Define the filters.
-	 *
-	 * @return void
+	 * 
+	 * @param  \Orchestra\Foundation\Services\Html\UserPresenter    $presenter
+	 * @param  \Orchestra\Foundation\Services\Validation\User       $validator
 	 */
-	public function __construct()
+	public function __construct(UserPresenter $presenter, UsersValidator $validator)
 	{
 		parent::__construct();
+
+		$this->presenter = $presenter;
+		$this->validator = $validator;
 
 		$this->beforeFilter('orchestra.auth');
 		$this->beforeFilter('orchestra.manage:users');
@@ -42,24 +48,27 @@ class UsersController extends AdminController {
 
 		// Get Users (with roles) and limit it to only 30 results for
 		// pagination. Don't you just love it when pagination simply works.
-		$eloquent  = App::make('orchestra.user')->search($searchKeyword, $searchRoles)->paginate();
-		$roles     = App::make('orchestra.role')->lists('name', 'id');
-		$presenter = App::make('Orchestra\Foundation\Services\Html\UserPresenter');
+		$eloquent = App::make('orchestra.user')->search($searchKeyword, $searchRoles)->paginate();
+		$roles    = App::make('orchestra.role')->lists('name', 'id');
 
 		// Build users table HTML using a schema liked code structure.
-		$table = $presenter->table($eloquent);
+		$table = $this->presenter->table($eloquent);
 
 		Event::fire('orchestra.list: users', array($eloquent, $table));
 
 		// Once all event listening to `orchestra.list: users` is executed,
 		// we can add we can now add the final column, edit and delete 
 		// action for users.
-		$presenter->actions($table);
+		$this->presenter->actions($table);
 
 		Site::set('title', trans('orchestra/foundation::title.users.list'));
 
-		return View::make('orchestra/foundation::users.index', compact(
-			'eloquent', 'table', 'roles', 'searchKeyword', 'searchRoles'
+		return View::make('orchestra/foundation::users.index', array(
+			'eloquent'      => $eloquent,
+			'roles'         => $roles, 
+			'searchKeyword' => $searchKeyword,
+			'searchRoles'   => $searchRoles,
+			'table'         => $table, 
 		));
 	}
 
@@ -72,9 +81,8 @@ class UsersController extends AdminController {
 	 */
 	public function create()
 	{
-		$eloquent  = App::make('orchestra.user');
-		$presenter = App::make('Orchestra\Foundation\Services\Html\UserPresenter');
-		$form      = $presenter->form($eloquent, 'create');
+		$eloquent = App::make('orchestra.user');
+		$form     = $this->presenter->form($eloquent, 'create');
 
 		$this->fireEvent('form', array($eloquent, $form));
 		Site::set('title', trans('orchestra/foundation::title.users.create'));
@@ -91,9 +99,8 @@ class UsersController extends AdminController {
 	 */
 	public function edit($id)
 	{
-		$eloquent  = App::make('orchestra.user')->findOrFail($id);
-		$presenter = App::make('Orchestra\Foundation\Services\Html\UserPresenter');
-		$form      = $presenter->form($eloquent, 'update');
+		$eloquent = App::make('orchestra.user')->findOrFail($id);
+		$form     = $this->presenter->form($eloquent, 'update');
 
 		$this->fireEvent('form', array($eloquent, $form));
 		Site::set('title', trans('orchestra/foundation::title.users.update'));
@@ -111,8 +118,7 @@ class UsersController extends AdminController {
 	public function store() 
 	{
 		$input      = Input::all();
-		$validation = App::make('Orchestra\Foundation\Services\Validation\User')
-						->on('create')->with($input);
+		$validation = $this->validator->on('create')->with($input);
 
 		if ($validation->fails())
 		{
@@ -145,8 +151,7 @@ class UsersController extends AdminController {
 		// Check if provided id is the same as hidden id, just a pre-caution.
 		if ((int) $id !== (int) $input['id']) return App::abort(500);
 
-		$validation = App::make('Orchestra\Foundation\Services\Validation\User')
-						->on('update')->with($input);
+		$validation = $this->validator->on('update')->with($input);
 
 		if ($validation->fails())
 		{

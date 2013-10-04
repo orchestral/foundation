@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Services\TestCase;
@@ -15,6 +16,20 @@ class ForgotControllerTest extends TestCase {
 	public function tearDown()
 	{
 		m::close();
+	}
+
+	/**
+	 * Bind dependencies.
+	 *
+	 * @return array
+	 */
+	protected function bindDependencies()
+	{
+		$validator = m::mock('\Orchestra\Foundation\Services\Validation\Auth');
+
+		App::instance('Orchestra\Foundation\Services\Validation\Auth', $validator);
+
+		return $validator;
 	}
 
 	/**
@@ -42,15 +57,13 @@ class ForgotControllerTest extends TestCase {
 			'email' => 'email@orchestraplatform.com',
 		);
 
-		$validation = m::mock('AuthValidation');
-		$mailer     = m::mock('Mailer');
+		$validator = $this->bindDependencies();
+		$mailer = m::mock('Mailer');
 
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\Auth')->andReturn($validation);
 		Orchestra::shouldReceive('memory')->once()->andReturn($memory = m::mock('Memory'));
 		Password::swap($password = m::mock('PasswordBroker'));
 
-		$validation->shouldReceive('with')->once()->with(m::type('Array'))->andReturn($validation)
+		$validator->shouldReceive('with')->once()->with(m::type('Array'))->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(false);
 		$mailer->shouldReceive('subject')->once()->andReturn(null);
 		$password->shouldReceive('remind')->once()->andReturnUsing(
@@ -75,14 +88,12 @@ class ForgotControllerTest extends TestCase {
 			'email' => 'email@orchestraplatform.com',
 		);
 
-		$validation = m::mock('AuthValidation');
+		$validator = $this->bindDependencies();
 
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\Auth')->andReturn($validation);
 		Orchestra::shouldReceive('handles')->once()
 			->with('orchestra::forgot')->andReturn('forgot');
 
-		$validation->shouldReceive('with')->once()->with(m::type('Array'))->andReturn($validation)
+		$validator->shouldReceive('with')->once()->with(m::type('Array'))->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(true);
 
 		$this->call('POST', 'admin/forgot', $input);

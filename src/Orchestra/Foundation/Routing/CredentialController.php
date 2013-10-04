@@ -10,17 +10,20 @@ use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Model\User;
+use Orchestra\Foundation\Services\Validation\Auth as AuthValidator;
 
 class CredentialController extends AdminController {
 
 	/**
-	 * Define the filters.
-	 *
-	 * @return void
+	 * Define the filters and inject dependencies.
+	 * 															
+	 * @param \Orchestra\Foundation\Services\Validation\Auth    $validator
 	 */
-	public function __construct()
+	public function __construct(AuthValidator $validator)
 	{
 		parent::__construct();
+
+		$this->validator = $validator;
 
 		$this->beforeFilter('orchestra.guest', array(
 			'only' => array(
@@ -62,8 +65,7 @@ class CredentialController extends AdminController {
 	public function postLogin()
 	{
 		$input      = Input::all();
-		$validation = App::make('Orchestra\Foundation\Services\Validation\Auth')
-						->on('login')->with($input);
+		$validation = $this->validator->on('login')->with($input);
 
 		// Validate user login, if any errors is found redirect it back to
 		// login page with the errors.

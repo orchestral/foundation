@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,18 +22,33 @@ class AccountControllerTest extends TestCase {
 	}
 
 	/**
+	 * Bind dependencies.
+	 *
+	 * @return array
+	 */
+	protected function bindDependencies()
+	{
+		$presenter = m::mock('\Orchestra\Foundation\Services\Html\AccountPresenter');
+		$validator = m::mock('\Orchestra\Foundation\Services\Validation\UserAccount');
+
+		App::instance('Orchestra\Foundation\Services\Html\AccountPresenter', $presenter);
+		App::instance('Orchestra\Foundation\Services\Validation\UserAccount', $validator);
+
+		return array($presenter, $validator);
+	}
+
+	/**
 	 * Test GET /admin/account
 	 *
 	 * @test
 	 */
 	public function testGetIndexAction()
 	{
-		$presenter = m::mock('AccountPresenter');
+		list($presenter,) = $this->bindDependencies();
+
 		$presenter->shouldReceive('profileForm')->once()->andReturn('edit.account.form');
 
 		Auth::shouldReceive('user')->once()->andReturn('auth');
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Html\AccountPresenter')->andReturn($presenter);
 		Orchestra::shouldReceive('handles')->once()->with('orchestra::account')->andReturn('account');
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::account.index', m::type('Array'))->andReturn('foo');
@@ -54,10 +70,10 @@ class AccountControllerTest extends TestCase {
 			'fullname' => 'Administrator',
 		);
 
-		$user       = m::mock('\Orchestra\Model\User');
-		$validation = m::mock('UserAccount');
+		$user = m::mock('\Orchestra\Model\User');
+		list(, $validator) = $this->bindDependencies();
 
-		$validation->shouldReceive('with')->once()->with($input)->andReturn($validation)
+		$validator->shouldReceive('with')->once()->with($input)->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(false);
 
 		$user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id'])
@@ -66,8 +82,6 @@ class AccountControllerTest extends TestCase {
 			->shouldReceive('save')->once()->andReturn(null);
 
 		Auth::shouldReceive('user')->once()->andReturn($user);
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		Orchestra::shouldReceive('handles')->once()->with('orchestra::account')->andReturn('account');
 		DB::shouldReceive('transaction')->once()
 			->with(m::type('Closure'))->andReturnUsing(
@@ -94,10 +108,10 @@ class AccountControllerTest extends TestCase {
 			'fullname' => 'Administrator',
 		);
 
-		$user       = m::mock('\Orchestra\Model\User');
-		$validation = m::mock('UserAccount');
+		$user = m::mock('\Orchestra\Model\User');
+		list(, $validator) = $this->bindDependencies();
 
-		$validation->shouldReceive('with')->once()->with($input)->andReturn($validation)
+		$validator->shouldReceive('with')->once()->with($input)->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(false);
 
 		$user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id'])
@@ -106,8 +120,6 @@ class AccountControllerTest extends TestCase {
 			->shouldReceive('save')->never()->andReturn(null);
 
 		Auth::shouldReceive('user')->once()->andReturn($user);
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		Orchestra::shouldReceive('handles')->once()->with('orchestra::account')->andReturn('account');
 		DB::shouldReceive('transaction')->once()->with(m::type('Closure'))->andThrow('\Exception');
 		Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
@@ -129,17 +141,15 @@ class AccountControllerTest extends TestCase {
 			'fullname' => 'Administrator',
 		);
 
-		$user       = m::mock('\Orchestra\Model\User');
-		$validation = m::mock('UserAccount');
+		$user = m::mock('\Orchestra\Model\User');
+		list(, $validator) = $this->bindDependencies();
 
-		$validation->shouldReceive('with')->once()->with($input)->andReturn($validation)
+		$validator->shouldReceive('with')->once()->with($input)->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(true);
 
 		$user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id']);
 
 		Auth::shouldReceive('user')->once()->andReturn($user);
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		Orchestra::shouldReceive('handles')->once()->with('orchestra::account')->andReturn('account');
 
 		$this->call('POST', 'admin/account', $input);
@@ -154,12 +164,11 @@ class AccountControllerTest extends TestCase {
 	 */
 	public function testGetPasswordAction()
 	{
-		$presenter = m::mock('AccountPresenter');
+		list($presenter,) = $this->bindDependencies();
+
 		$presenter->shouldReceive('passwordForm')->once()->andReturn('edit.password.form');
 
 		Auth::shouldReceive('user')->once()->andReturn('auth');
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Html\AccountPresenter')->andReturn($presenter);
 		View::shouldReceive('make')->once()
 			->with('orchestra/foundation::account.password', m::type('Array'))->andReturn('foo');
 
@@ -180,11 +189,11 @@ class AccountControllerTest extends TestCase {
 			'new_password'     => 'qwerty',
 		);
 
-		$user       = m::mock('\Orchestra\Model\User');
-		$validation = m::mock('UserAccount');
+		$user = m::mock('\Orchestra\Model\User');
+		list(, $validator) = $this->bindDependencies();
 
-		$validation->shouldReceive('with')->once()->with($input)->andReturn($validation)
-			->shouldReceive('on')->once()->with('changePassword')->andReturn($validation)
+		$validator->shouldReceive('with')->once()->with($input)->andReturn($validator)
+			->shouldReceive('on')->once()->with('changePassword')->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(false);
 
 		$user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id'])
@@ -193,8 +202,6 @@ class AccountControllerTest extends TestCase {
 			->shouldReceive('save')->once()->andReturn(null);
 
 		Auth::shouldReceive('user')->once()->andReturn($user);
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		Hash::shouldReceive('check')->once()
 			->with($input['current_password'], 'hashedstring')->andReturn(true);
 		DB::shouldReceive('transaction')->once()
@@ -224,11 +231,11 @@ class AccountControllerTest extends TestCase {
 			'new_password'     => 'qwerty',
 		);
 
-		$user       = m::mock('\Orchestra\Model\User');
-		$validation = m::mock('UserAccount');
+		$user = m::mock('\Orchestra\Model\User');
+		list(, $validator) = $this->bindDependencies();
 
-		$validation->shouldReceive('with')->once()->with($input)->andReturn($validation)
-			->shouldReceive('on')->once()->with('changePassword')->andReturn($validation)
+		$validator->shouldReceive('with')->once()->with($input)->andReturn($validator)
+			->shouldReceive('on')->once()->with('changePassword')->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(false);
 
 		$user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id'])
@@ -237,8 +244,6 @@ class AccountControllerTest extends TestCase {
 			->shouldReceive('save')->never()->andReturn(null);
 
 		Auth::shouldReceive('user')->once()->andReturn($user);
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		Hash::shouldReceive('check')->once()
 			->with($input['current_password'], 'hashedstring')->andReturn(true);
 		DB::shouldReceive('transaction')->once()
@@ -264,19 +269,17 @@ class AccountControllerTest extends TestCase {
 			'new_password'     => 'qwerty',
 		);
 
-		$user       = m::mock('\Orchestra\Model\User');
-		$validation = m::mock('UserAccount');
-
-		$validation->shouldReceive('with')->once()->with($input)->andReturn($validation)
-			->shouldReceive('on')->once()->with('changePassword')->andReturn($validation)
+		$user = m::mock('\Orchestra\Model\User');
+		list(, $validator) = $this->bindDependencies();
+		
+		$validator->shouldReceive('with')->once()->with($input)->andReturn($validator)
+			->shouldReceive('on')->once()->with('changePassword')->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(false);
 
 		$user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id'])
 			->shouldReceive('getAttribute')->once()->with('password')->andReturn('hashedstring');
 
 		Auth::shouldReceive('user')->once()->andReturn($user);
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		Hash::shouldReceive('check')->once()
 			->with($input['current_password'], 'hashedstring')->andReturn(false);
 		Orchestra::shouldReceive('handles')->once()
@@ -300,18 +303,16 @@ class AccountControllerTest extends TestCase {
 			'new_password'     => 'qwerty',
 		);
 
-		$user       = m::mock('\Orchestra\Model\User');
-		$validation = m::mock('UserAccount');
+		$user = m::mock('\Orchestra\Model\User');
+		list(, $validator) = $this->bindDependencies();
 
-		$validation->shouldReceive('with')->once()->with($input)->andReturn($validation)
-			->shouldReceive('on')->once()->with('changePassword')->andReturn($validation)
+		$validator->shouldReceive('with')->once()->with($input)->andReturn($validator)
+			->shouldReceive('on')->once()->with('changePassword')->andReturn($validator)
 			->shouldReceive('fails')->once()->andReturn(true);
 
 		$user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id']);
 
 		Auth::shouldReceive('user')->once()->andReturn($user);
-		Orchestra::shouldReceive('make')->once()
-			->with('Orchestra\Foundation\Services\Validation\UserAccount')->andReturn($validation);
 		Orchestra::shouldReceive('handles')->once()
 			->with('orchestra::account/password')->andReturn('account/password');
 

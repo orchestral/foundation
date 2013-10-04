@@ -13,18 +13,24 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Publisher;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Extension\FilePermissionException;
+use Orchestra\Foundation\Services\Html\ExtensionPresenter;
+use Orchestra\Foundation\Services\Validation\Extension as ExtensionValidator;
 
 class ExtensionsController extends AdminController {
 
 	/**
 	 * Construct Extensions Controller, only authenticated user should be
 	 * able to access this controller.
-	 *
-	 * @return void
+	 * 
+	 * @param  \Orchestra\Foundation\Services\Html\ExtensionPresenter   $presenter
+	 * @param  \Orchestra\Foundation\Services\Validation\Extension      $validator
 	 */
-	public function __construct()
+	public function __construct(ExtensionPresenter $presenter, ExtensionValidator $validator)
 	{
 		parent::__construct();
+
+		$this->presenter = $presenter;
+		$this->validator = $validator;
 
 		$this->beforeFilter('orchestra.auth');
 		$this->beforeFilter('orchestra.manage');
@@ -39,11 +45,11 @@ class ExtensionsController extends AdminController {
 	 */
 	public function getIndex()
 	{
-		$extensions = Extension::detect();
+		$data['extensions'] = Extension::detect();
 
 		Site::set('title', trans("orchestra/foundation::title.extensions.list"));
 
-		return View::make('orchestra/foundation::extensions.index', compact('extensions'));
+		return View::make('orchestra/foundation::extensions.index', $data);
 	}
 
 	/**
@@ -107,11 +113,10 @@ class ExtensionsController extends AdminController {
 		$baseConfig    = (array) $memory->get("extension_{$name}", array());
 		$eloquent      = new Fluent(array_merge($activeConfig, $baseConfig));
 		$extensionName = $memory->get("extensions.available.{$name}.name", $name);
-		$presenter     = App::make('Orchestra\Foundation\Services\Html\ExtensionPresenter');
 
 		// Add basic form, allow extension to add custom configuration field
 		// to this form using events.
-		$form = $presenter->form($eloquent, $name);
+		$form = $this->presenter->form($eloquent, $name);
 
 		Event::fire("orchestra.form: extension.{$name}", array($eloquent, $form));
 		Site::set('title', $extensionName);
@@ -136,8 +141,7 @@ class ExtensionsController extends AdminController {
 		if ( ! Extension::started($name)) return App::abort(404);
 
 		$input      = Input::all();
-		$validation = App::make('Orchestra\Foundation\Services\Validation\Extension')
-			->with($input, array("orchestra.validate: extension.{$name}"));
+		$validation = $this->validator->with($input, array("orchestra.validate: extension.{$name}"));
 
 		if ($validation->fails())
 		{
