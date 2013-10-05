@@ -19,19 +19,26 @@ use Orchestra\Foundation\Services\Validation\Extension as ExtensionValidator;
 class ExtensionsController extends AdminController {
 
 	/**
-	 * Construct Extensions Controller, only authenticated user should be
-	 * able to access this controller.
+	 * Extensions Controller routing to manage available extensions.
 	 * 
 	 * @param  \Orchestra\Foundation\Services\Html\ExtensionPresenter   $presenter
 	 * @param  \Orchestra\Foundation\Services\Validation\Extension      $validator
 	 */
 	public function __construct(ExtensionPresenter $presenter, ExtensionValidator $validator)
 	{
-		parent::__construct();
-
 		$this->presenter = $presenter;
 		$this->validator = $validator;
 
+		parent::__construct();
+	}
+
+	/**
+	 * Setup controller filters.
+	 *
+	 * @return void
+	 */
+	protected function setupFilters()
+	{
 		$this->beforeFilter('orchestra.auth');
 		$this->beforeFilter('orchestra.manage');
 	}

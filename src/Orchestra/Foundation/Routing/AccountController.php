@@ -20,18 +20,24 @@ class AccountController extends AdminController {
 	 * Construct Account Controller to allow user to update own profile.
 	 * Only authenticated user should be able to access this controller.
 	 * 
-	 * Define the filters and inject dependencies.
-	 * 
 	 * @param  \Orchestra\Foundation\Services\Html\AccountPresenter     $presenter
 	 * @param  \Orchestra\Foundation\Services\Validation\UserAccount    $validator
 	 */
 	public function __construct(AccountPresenter $presenter, UserValidator $validator)
 	{
-		parent::__construct();
-
 		$this->presenter = $presenter;
 		$this->validator = $validator;
 
+		parent::__construct();
+	}
+
+	/**
+	 * Setup controller filters.
+	 *
+	 * @return void
+	 */
+	protected function setupFilters()
+	{
 		$this->beforeFilter('orchestra.auth');
 	}
 
