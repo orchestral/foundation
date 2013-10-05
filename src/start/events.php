@@ -14,4 +14,15 @@ use Orchestra\Model\Observer\RoleObserver;
 */
 
 Role::observe(new RoleObserver);
+
+/*
+|--------------------------------------------------------------------------
+| Set Default Roles
+|--------------------------------------------------------------------------
+|
+| Orchestra Platform should be able to determine admin and member roles 
+| dynamically.
+|
+*/
+
 Role::setDefaultRoles(Config::get('orchestra/foundation::roles'));
