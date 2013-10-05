@@ -1,10 +1,10 @@
-<?php namespace Orchestra\Foundation\Services\Event\TestCase;
+<?php namespace Orchestra\Foundation\Services\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Fluent;
 use Illuminate\Container\Container;
-use Orchestra\Foundation\Services\Event\AdminMenuHandler;
+use Orchestra\Foundation\Services\AdminMenuHandler;
 use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Resources;
 
@@ -28,7 +28,7 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Event\AdminMenuHandler::handle() 
+	 * Test Orchestra\Foundation\Services\AdminMenuHandler::handle() 
 	 * method.
 	 *
 	 * @test

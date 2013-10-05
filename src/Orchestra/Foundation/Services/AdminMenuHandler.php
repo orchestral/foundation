@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Services\Event;
+<?php namespace Orchestra\Foundation\Services;
 
 use Illuminate\Support\Facades\Auth;
 use Orchestra\Support\Facades\App;

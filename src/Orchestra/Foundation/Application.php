@@ -268,6 +268,6 @@ class Application {
 			->title($this->app['translator']->get('orchestra/foundation::title.home'))
 			->link($this->handles('orchestra::/'));
 
-		$this->app['events']->listen('orchestra.ready: admin', 'Orchestra\Foundation\Services\Event\AdminMenuHandler');
+		$this->app['events']->listen('orchestra.ready: admin', 'Orchestra\Foundation\Services\AdminMenuHandler');
 	}
 }
