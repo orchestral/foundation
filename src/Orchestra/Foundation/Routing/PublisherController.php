@@ -13,14 +13,12 @@ use Orchestra\Support\FTP\ServerException;
 class PublisherController extends AdminController {
 
 	/**
-	 * Define the filters.
+	 * Setup controller filters.
 	 *
 	 * @return void
 	 */
-	public function __construct()
-	{
-		parent::__construct();
-		
+	protected function setupFilters()
+	{	
 		$this->beforeFilter('orchestra.auth');
 	}
 

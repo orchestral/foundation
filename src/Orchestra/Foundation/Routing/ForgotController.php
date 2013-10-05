@@ -19,10 +19,18 @@ class ForgotController extends AdminController {
 	 */
 	public function __construct(AuthValidator $validator)
 	{
-		parent::__construct();
-
 		$this->validator = $validator;
 
+		parent::__construct();
+	}
+
+	/**
+	 * Setup controller filters.
+	 *
+	 * @return void
+	 */
+	protected function setupFilters()
+	{
 		$this->beforeFilter('orchestra.guest');
 		$this->beforeFilter('orchestra.csrf', array('only' => array('postIndex')));
 	}

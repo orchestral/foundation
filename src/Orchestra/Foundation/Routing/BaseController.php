@@ -20,6 +20,21 @@ abstract class BaseController extends Controller {
 	protected $validator;
 
 	/**
+	 * Base controller construct method.
+	 */
+	public function __construct()
+	{
+		$this->setupFilters();
+	}
+
+	/**
+	 * Setup controller filters.
+	 *
+	 * @return void
+	 */
+	protected abstract function setupFilters();
+
+	/**
 	 * Show missing pages.
 	 *
 	 * GET (:orchestra) return 404

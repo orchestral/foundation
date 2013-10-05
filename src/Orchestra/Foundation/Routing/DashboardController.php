@@ -8,14 +8,12 @@ use Orchestra\Support\Facades\Widget;
 class DashboardController extends AdminController {
 
 	/**
-	 * Define the filters.
+	 * Setup controller filters.
 	 *
 	 * @return void
 	 */
-	public function __construct()
+	protected function setupFilters()
 	{
-		parent::__construct();
-
 		// User has to be authenticated before using this controller.
 		$this->beforeFilter('orchestra.auth', array(
 			'only' => array('index'),

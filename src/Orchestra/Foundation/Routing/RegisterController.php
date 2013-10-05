@@ -19,20 +19,27 @@ use Orchestra\Foundation\Services\Validation\UserAccount as UserValidator;
 class RegisterController extends AdminController {
 	
 	/**
-	 * Define the filters.
+	 * Registration Controller routing. It should only be accessible if 
+	 * registration is allowed through the setting.
 	 *
 	 * @param  \Orchestra\Foundation\Services\Html\AccountPresenter     $presenter
 	 * @param  \Orchestra\Foundation\Services\Validation\UserAccount    $validator
 	 */
 	public function __construct(AccountPresenter $presenter, UserValidator $validator)
 	{
-		parent::__construct();
-
 		$this->presenter = $presenter;
 		$this->validator = $validator;
 
-		// Registration controller should only be accessible if we allow 
-		// registration through the setting.
+		parent::__construct();
+	}
+
+	/**
+	 * Setup controller filters.
+	 *
+	 * @return void
+	 */
+	protected function setupFilters()
+	{
 		$this->beforeFilter('orchestra.registrable');
 		$this->beforeFilter('orchestra.csrf', array('only' => array('postIndex')));
 	}

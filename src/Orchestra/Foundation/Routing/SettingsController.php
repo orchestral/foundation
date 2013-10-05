@@ -14,19 +14,26 @@ use Orchestra\Foundation\Services\Validation\Setting as SettingValidator;
 class SettingsController extends AdminController {
 
 	/**
-	 * Construct Settings Controller, only authenticated user should be able
-	 * to access this controller.
+	 * Settings configuration Controller for the application.
 	 *
 	 * @param  \Orchestra\Foundation\Services\Html\SettingPresenter     $presenter
 	 * @param  \Orchestra\Foundation\Services\Validation\Setting        $validator
 	 */
 	public function __construct(SettingPresenter $presenter, SettingValidator $validator)
 	{
-		parent::__construct();
-
 		$this->presenter = $presenter;
 		$this->validator = $validator;
 
+		parent::__construct();
+	}
+
+	/**
+	 * Setup controller filters.
+	 *
+	 * @return void
+	 */
+	protected function setupFilters()
+	{
 		$this->beforeFilter('orchestra.auth');
 		$this->beforeFilter('orchestra.manage');
 	}

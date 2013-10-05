@@ -9,15 +9,16 @@ use Orchestra\Foundation\Services\Html\ResourcePresenter;
 class ResourcesController extends AdminController {
 
 	/**
-	 * Define the filters.
+	 * Orchestra Platform resources routing is dynamically handle by this 
+	 * Controller.
 	 *
 	 * @param  \Orchestra\Foundation\Services\Html\ResourcePresenter    $presenter
 	 */
 	public function __construct(ResourcePresenter $presenter)
 	{
-		parent::__construct();
-
 		$this->presenter = $presenter;
+
+		parent::__construct();
 	}
 
 	/**
