@@ -26,9 +26,9 @@ class CredentialControllerTest extends TestCase {
 	 */
 	protected function bindDependencies()
 	{
-		$validator = m::mock('\Orchestra\Foundation\Services\Validation\Auth');
+		$validator = m::mock('\Orchestra\Foundation\Validation\Auth');
 
-		App::instance('Orchestra\Foundation\Services\Validation\Auth', $validator);
+		App::instance('Orchestra\Foundation\Validation\Auth', $validator);
 
 		return $validator;
 	}

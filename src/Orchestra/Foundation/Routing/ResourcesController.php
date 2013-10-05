@@ -4,15 +4,15 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Resources;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Foundation\Services\Html\ResourcePresenter;
+use Orchestra\Foundation\Html\ResourcePresenter;
 
 class ResourcesController extends AdminController {
 
 	/**
 	 * Orchestra Platform resources routing is dynamically handle by this 
 	 * Controller.
-	 *
-	 * @param  \Orchestra\Foundation\Services\Html\ResourcePresenter    $presenter
+	 * 
+	 * @param  \Orchestra\Foundation\Html\ResourcePresenter $presenter
 	 */
 	public function __construct(ResourcePresenter $presenter)
 	{

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Foundation\Services\Validation\Auth as AuthValidator;
+use Orchestra\Foundation\Validation\Auth as AuthValidator;
 
 class ForgotController extends AdminController {
 
@@ -15,7 +15,7 @@ class ForgotController extends AdminController {
 	 * Construct Forgot Password Controller with some pre-define
 	 * configuration
 	 * 
-	 * @param \Orchestra\Foundation\Services\Validation\Auth    $validator
+	 * @param \Orchestra\Foundation\Validation\Auth $validator
 	 */
 	public function __construct(AuthValidator $validator)
 	{
