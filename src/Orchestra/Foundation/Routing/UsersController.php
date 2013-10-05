@@ -18,18 +18,26 @@ use Orchestra\Foundation\Services\Validation\User as UsersValidator;
 class UsersController extends AdminController {
 
 	/**
-	 * Define the filters.
+	 * CRUD Controller for Users management using resource routing.
 	 * 
 	 * @param  \Orchestra\Foundation\Services\Html\UserPresenter    $presenter
 	 * @param  \Orchestra\Foundation\Services\Validation\User       $validator
 	 */
 	public function __construct(UserPresenter $presenter, UsersValidator $validator)
 	{
-		parent::__construct();
-
 		$this->presenter = $presenter;
 		$this->validator = $validator;
 
+		parent::__construct();
+	}
+
+	/**
+	 * Setup controller filters.
+	 *
+	 * @return void
+	 */
+	protected function setupFilters()
+	{
 		$this->beforeFilter('orchestra.auth');
 		$this->beforeFilter('orchestra.manage:users');
 	}

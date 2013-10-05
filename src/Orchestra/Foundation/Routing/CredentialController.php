@@ -15,16 +15,24 @@ use Orchestra\Foundation\Services\Validation\Auth as AuthValidator;
 class CredentialController extends AdminController {
 
 	/**
-	 * Define the filters and inject dependencies.
+	 * Authentication/credential Controller routing.
 	 * 															
 	 * @param \Orchestra\Foundation\Services\Validation\Auth    $validator
 	 */
 	public function __construct(AuthValidator $validator)
 	{
-		parent::__construct();
-
 		$this->validator = $validator;
 
+		parent::__construct();
+	}
+
+	/**
+	 * Setup controller filters.
+	 *
+	 * @return void
+	 */
+	protected function setupFilters()
+	{
 		$this->beforeFilter('orchestra.guest', array(
 			'only' => array(
 				'getLogin', 'postLogin', 

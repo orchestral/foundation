@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Event;
 abstract class AdminController extends BaseController {
 
 	/**
-	 * Define the filters.
+	 * Base construct method.
 	 */
 	public function __construct()
 	{
@@ -23,5 +23,14 @@ abstract class AdminController extends BaseController {
 		{
 			Event::fire('orchestra.done: admin');
 		});
+
+		parent::__construct();
 	}
+
+	/**
+	 * Setup controller filters.
+	 *
+	 * @return void
+	 */
+	protected function setupFilters() {}
 }

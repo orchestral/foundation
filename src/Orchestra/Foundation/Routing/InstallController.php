@@ -33,15 +33,25 @@ class InstallController extends BaseController {
 	 */
 	public function __construct(InstallerInterface $installer, RequirementInterface $requirement)
 	{
-		$this->beforeFilter('orchestra.installed', array(
-			'only' => array('getIndex', 'getCreate', 'postCreate'),
-		));
+		$this->installer   = $installer;
+		$this->requirement = $requirement;
 
 		Site::set('navigation::usernav', false);
 		Site::set('title', 'Installer');
 
-		$this->installer   = $installer;
-		$this->requirement = $requirement;
+		parent::__construct();
+	}
+
+	/**
+	 * Setup controller filters.
+	 *
+	 * @return void
+	 */
+	protected function setupFilters()
+	{
+		$this->beforeFilter('orchestra.installed', array(
+			'only' => array('getIndex', 'getCreate', 'postCreate'),
+		));
 	}
 	
 	/**
