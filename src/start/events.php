@@ -1,7 +1,7 @@
 <?php
 
 use Orchestra\Model\Role;
-use Orchestra\Foundation\Services\Event\RoleObserver;
+use Orchestra\Model\Observer\RoleObserver;
 
 /*
 |--------------------------------------------------------------------------

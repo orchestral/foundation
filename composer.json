@@ -13,8 +13,7 @@
 	],
 	"autoload": {
 		"psr-0": { 
-			"Orchestra\\Foundation" : "src/",
-			"Orchestra\\Model" : "src/"
+			"Orchestra\\Foundation" : "src/"
 		},
 		"files": [
 			"src/helpers.php"
@@ -29,6 +28,7 @@
 		"orchestra/facile": "2.0.*",
 		"orchestra/html": "2.0.*",
 		"orchestra/memory": "2.0.*",
+		"orchestra/model": "2.0.*",
 		"orchestra/resources": "2.0.*",
 		"orchestra/support": "2.0.*",
 		"orchestra/translation": "2.0.*",
