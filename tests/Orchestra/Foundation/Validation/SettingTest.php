@@ -1,9 +1,9 @@
-<?php namespace Orchestra\Foundation\Tests\Services\Validation;
+<?php namespace Orchestra\Foundation\Tests\Validation;
 
 use Mockery as m;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Container\Container;
-use Orchestra\Foundation\Services\Validation\Setting;
+use Orchestra\Foundation\Validation\Setting;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,7 +27,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Validation\Setting.
+	 * Test Orchestra\Foundation\Validation\Setting.
 	 *
 	 * @test
 	 */
@@ -62,7 +62,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Validation\Setting on stmp 
+	 * Test Orchestra\Foundation\Validation\Setting on stmp 
 	 * setting.
 	 *
 	 * @test
@@ -102,7 +102,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Validation\Setting on sendmail 
+	 * Test Orchestra\Foundation\Validation\Setting on sendmail 
 	 * setting.
 	 *
 	 * @test

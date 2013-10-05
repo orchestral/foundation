@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Services\Validation;
+<?php namespace Orchestra\Foundation\Validation;
 
 use Orchestra\Support\Validator;
 

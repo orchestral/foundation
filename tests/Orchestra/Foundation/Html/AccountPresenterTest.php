@@ -1,10 +1,10 @@
-<?php namespace Orchestra\Foundation\Services\Html\TestCase;
+<?php namespace Orchestra\Foundation\Html\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\Form;
 use Orchestra\Foundation\Services\TestCase;
-use Orchestra\Foundation\Services\Html\AccountPresenter;
+use Orchestra\Foundation\Html\AccountPresenter;
 
 class AccountPresenterTest extends TestCase {
 

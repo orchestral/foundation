@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Services\Html\TestCase;
+<?php namespace Orchestra\Foundation\Html\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Facades\HTML;
@@ -6,7 +6,7 @@ use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\Extension;
 use Orchestra\Support\Facades\Form;
 use Orchestra\Foundation\Services\TestCase;
-use Orchestra\Foundation\Services\Html\ExtensionPresenter;
+use Orchestra\Foundation\Html\ExtensionPresenter;
 
 class ExtensionPresenterTest extends TestCase {
 

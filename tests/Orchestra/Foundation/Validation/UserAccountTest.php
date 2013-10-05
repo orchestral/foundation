@@ -1,9 +1,9 @@
-<?php namespace Orchestra\Foundation\Tests\Services\Validation;
+<?php namespace Orchestra\Foundation\Tests\Validation;
 
 use Mockery as m;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Container\Container;
-use Orchestra\Foundation\Services\Validation\UserAccount;
+use Orchestra\Foundation\Validation\UserAccount;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,7 +27,7 @@ class UserAccountTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Validation\UserAccount.
+	 * Test Orchestra\Foundation\Validation\UserAccount.
 	 *
 	 * @test
 	 */
@@ -58,7 +58,7 @@ class UserAccountTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Validation\User on create setting.
+	 * Test Orchestra\Foundation\Validation\User on create setting.
 	 *
 	 * @test
 	 */
@@ -89,7 +89,7 @@ class UserAccountTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Validation\UserAccount on change 
+	 * Test Orchestra\Foundation\Validation\UserAccount on change 
 	 * password.
 	 *
 	 * @test

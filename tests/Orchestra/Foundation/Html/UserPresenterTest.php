@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Services\Html\TestCase;
+<?php namespace Orchestra\Foundation\Html\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Facades\Auth;
@@ -8,7 +8,7 @@ use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Form;
 use Orchestra\Support\Facades\Table;
 use Orchestra\Foundation\Services\TestCase;
-use Orchestra\Foundation\Services\Html\UserPresenter;
+use Orchestra\Foundation\Html\UserPresenter;
 
 class UserPresenterTest extends TestCase {
 

@@ -1,10 +1,10 @@
-<?php namespace Orchestra\Foundation\Services\Html\TestCase;
+<?php namespace Orchestra\Foundation\Html\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Services\TestCase;
-use Orchestra\Foundation\Services\Html\SettingPresenter;
+use Orchestra\Foundation\Html\SettingPresenter;
 
 class SettingPresenterTest extends TestCase {
 

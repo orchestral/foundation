@@ -10,14 +10,14 @@ use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Model\User;
-use Orchestra\Foundation\Services\Validation\Auth as AuthValidator;
+use Orchestra\Foundation\Validation\Auth as AuthValidator;
 
 class CredentialController extends AdminController {
 
 	/**
 	 * Authentication/credential Controller routing.
-	 * 															
-	 * @param \Orchestra\Foundation\Services\Validation\Auth    $validator
+	 * 							
+	 * @param \Orchestra\Foundation\Validation\Auth $validator
 	 */
 	public function __construct(AuthValidator $validator)
 	{

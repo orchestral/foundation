@@ -12,16 +12,16 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Model\Role;
 use Orchestra\Model\User;
-use Orchestra\Foundation\Services\Html\UserPresenter;
-use Orchestra\Foundation\Services\Validation\User as UsersValidator;
+use Orchestra\Foundation\Html\UserPresenter;
+use Orchestra\Foundation\Validation\User as UsersValidator;
 
 class UsersController extends AdminController {
 
 	/**
 	 * CRUD Controller for Users management using resource routing.
 	 * 
-	 * @param  \Orchestra\Foundation\Services\Html\UserPresenter    $presenter
-	 * @param  \Orchestra\Foundation\Services\Validation\User       $validator
+	 * @param  \Orchestra\Foundation\Html\UserPresenter $presenter
+	 * @param  \Orchestra\Foundation\Validation\User    $validator
 	 */
 	public function __construct(UserPresenter $presenter, UsersValidator $validator)
 	{

@@ -1,11 +1,11 @@
-<?php namespace Orchestra\Foundation\Services\Html\TestCase;
+<?php namespace Orchestra\Foundation\Html\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\Table;
 use Orchestra\Foundation\Services\TestCase;
-use Orchestra\Foundation\Services\Html\ResourcePresenter;
+use Orchestra\Foundation\Html\ResourcePresenter;
 
 class ResourcePresenterTest extends TestCase {
 
