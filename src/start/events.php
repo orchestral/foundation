@@ -14,3 +14,4 @@ use Orchestra\Model\Observer\RoleObserver;
 */
 
 Role::observe(new RoleObserver);
+Role::setDefaultRoles(Config::get('orchestra/foundation::roles'));
