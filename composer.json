@@ -39,12 +39,6 @@
 		"mockery/mockery": "0.8.0",
 		"orchestra/testbench": "2.1.*"
 	},
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/laravel/boris"
-		}
-	],
 	"extra": {
 		"branch-alias": {
 			"dev-master": "2.1-dev"
