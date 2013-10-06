@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Foundation\Html\AccountPresenter;
-use Orchestra\Foundation\Validation\UserAccount as UserValidator;
+use Orchestra\Foundation\Presenter\Account as AccountPresenter;
+use Orchestra\Foundation\Validation\Account as AccountValidator;
 
 class AccountController extends AdminController {
 
@@ -20,10 +20,10 @@ class AccountController extends AdminController {
 	 * Construct Account Controller to allow user to update own profile.
 	 * Only authenticated user should be able to access this controller.
 	 * 
-	 * @param  \Orchestra\Foundation\Html\AccountPresenter  $presenter
-	 * @param  \Orchestra\Foundation\Validation\UserAccount $validator
+	 * @param  \Orchestra\Foundation\Presenter\Account  $presenter
+	 * @param  \Orchestra\Foundation\Validation\Account $validator
 	 */
-	public function __construct(AccountPresenter $presenter, UserValidator $validator)
+	public function __construct(AccountPresenter $presenter, AccountValidator $validator)
 	{
 		$this->presenter = $presenter;
 		$this->validator = $validator;

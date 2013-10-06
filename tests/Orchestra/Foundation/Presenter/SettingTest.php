@@ -1,12 +1,12 @@
-<?php namespace Orchestra\Foundation\Html\TestCase;
+<?php namespace Orchestra\Foundation\Presenter\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Services\TestCase;
-use Orchestra\Foundation\Html\SettingPresenter;
+use Orchestra\Foundation\Presenter\Setting;
 
-class SettingPresenterTest extends TestCase {
+class SettingTest extends TestCase {
 
 	/**
 	 * Teardown the test environment.
@@ -17,7 +17,7 @@ class SettingPresenterTest extends TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Html\SettingPresenter::form() 
+	 * Test Orchestra\Foundation\Presenter\Setting::form() 
 	 * method.
 	 *
 	 * @test
@@ -83,7 +83,7 @@ class SettingPresenterTest extends TestCase {
 			->with('orchestra/foundation::settings.email-password', compact('model'))
 			->andReturn('email.password.help');
 
-		$stub = new SettingPresenter;
+		$stub = new Setting;
 
 		$this->assertEquals('foo', $stub->form($model));
 	}

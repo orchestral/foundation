@@ -1,14 +1,14 @@
-<?php namespace Orchestra\Foundation\Html\TestCase;
+<?php namespace Orchestra\Foundation\Presenter\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Fluent;
-use Orchestra\Support\Facades\Extension;
+use Orchestra\Support\Facades\Extension as E;
 use Orchestra\Support\Facades\Form;
 use Orchestra\Foundation\Services\TestCase;
-use Orchestra\Foundation\Html\ExtensionPresenter;
+use Orchestra\Foundation\Presenter\Extension;
 
-class ExtensionPresenterTest extends TestCase {
+class ExtensionTest extends TestCase {
 
 	/**
 	 * Teardown the test environment.
@@ -19,7 +19,7 @@ class ExtensionPresenterTest extends TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Html\ExtensionPresenter::form() 
+	 * Test Orchestra\Foundation\Presenter\Extension::form() 
 	 * method.
 	 *
 	 * @test
@@ -62,12 +62,12 @@ class ExtensionPresenterTest extends TestCase {
 					$c($form);
 					return 'foo';
 				});
-		Extension::shouldReceive('option')->once()
+		E::shouldReceive('option')->once()
 			->with('foo/bar', 'handles')->andReturn('foo');
 		HTML::shouldReceive('link')->once()
 			->with(handles("orchestra/foundation::extensions/update/foo.bar"), m::any(), m::any())->andReturn('foo');
 		
-		$stub = new ExtensionPresenter;
+		$stub = new Extension;
 
 		$this->assertEquals('foo', $stub->form($model, 'foo/bar'));
 	}

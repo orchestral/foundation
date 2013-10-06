@@ -1,10 +1,10 @@
-<?php namespace Orchestra\Foundation\Html;
+<?php namespace Orchestra\Foundation\Presenter;
 
 use Illuminate\Support\Facades\HTML;
 use Orchestra\Support\Facades\Form;
 use Orchestra\Support\Facades\Table;
 
-class AccountPresenter {
+class Account {
 
 	/**
 	 * Form view generator for User Account.

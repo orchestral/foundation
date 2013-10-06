@@ -27,11 +27,11 @@ class RegisterControllerTest extends TestCase {
 	 */
 	protected function bindDependencies()
 	{
-		$presenter = m::mock('\Orchestra\Foundation\Html\AccountPresenter');
-		$validator = m::mock('\Orchestra\Foundation\Validation\UserAccount');
+		$presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
+		$validator = m::mock('\Orchestra\Foundation\Validation\Account');
 
-		App::instance('Orchestra\Foundation\Html\AccountPresenter', $presenter);
-		App::instance('Orchestra\Foundation\Validation\UserAccount', $validator);
+		App::instance('Orchestra\Foundation\Presenter\Account', $presenter);
+		App::instance('Orchestra\Foundation\Validation\Account', $validator);
 
 		return array($presenter, $validator);
 	}

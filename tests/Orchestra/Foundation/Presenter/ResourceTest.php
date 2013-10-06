@@ -1,13 +1,13 @@
-<?php namespace Orchestra\Foundation\Html\TestCase;
+<?php namespace Orchestra\Foundation\Presenter\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\Table;
 use Orchestra\Foundation\Services\TestCase;
-use Orchestra\Foundation\Html\ResourcePresenter;
+use Orchestra\Foundation\Presenter\Resource;
 
-class ResourcePresenterTest extends TestCase {
+class ResourceTest extends TestCase {
 
 	/**
 	 * Teardown the test environment.
@@ -18,7 +18,7 @@ class ResourcePresenterTest extends TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Html\ResourcePresenter::table() 
+	 * Test Orchestra\Foundation\Presenter\Resource::table() 
 	 * method.
 	 *
 	 * @test
@@ -61,7 +61,7 @@ class ResourcePresenterTest extends TestCase {
 		HTML::shouldReceive('raw')->once()
 			->with('foo')->andReturn('Foobar');
 		
-		$stub = new ResourcePresenter;
+		$stub = new Resource;
 		
 		$this->assertEquals('foo', $stub->table($model));
 	}

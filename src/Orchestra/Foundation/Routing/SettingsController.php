@@ -8,7 +8,7 @@ use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Foundation\Html\SettingPresenter;
+use Orchestra\Foundation\Presenter\Setting as SettingPresenter;
 use Orchestra\Foundation\Validation\Setting as SettingValidator;
 
 class SettingsController extends AdminController {
@@ -16,8 +16,8 @@ class SettingsController extends AdminController {
 	/**
 	 * Settings configuration Controller for the application.
 	 * 
-	 * @param  \Orchestra\Foundation\Html\SettingPresenter  $presenter
-	 * @param  \Orchestra\Foundation\Validation\Setting     $validator
+	 * @param  \Orchestra\Foundation\Presenter\Setting  $presenter
+	 * @param  \Orchestra\Foundation\Validation\Setting $validator
 	 */
 	public function __construct(SettingPresenter $presenter, SettingValidator $validator)
 	{
