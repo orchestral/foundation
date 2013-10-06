@@ -2,7 +2,7 @@
 
 use Orchestra\Support\Validator;
 
-class UserAccount extends Validator {
+class Account extends Validator {
 	
 	/**
 	 * List of rules.

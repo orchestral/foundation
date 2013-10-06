@@ -13,8 +13,8 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Support\Str;
 use Orchestra\Model\User;
-use Orchestra\Foundation\Html\AccountPresenter;
-use Orchestra\Foundation\Validation\UserAccount as UserValidator;
+use Orchestra\Foundation\Presenter\Account as AccountPresenter;
+use Orchestra\Foundation\Validation\Account as AccountValidator;
 
 class RegisterController extends AdminController {
 	
@@ -22,10 +22,10 @@ class RegisterController extends AdminController {
 	 * Registration Controller routing. It should only be accessible if 
 	 * registration is allowed through the setting.
 	 * 
-	 * @param  \Orchestra\Foundation\Html\AccountPresenter  $presenter
-	 * @param  \Orchestra\Foundation\Validation\UserAccount $validator
+	 * @param  \Orchestra\Foundation\Presenter\Account  $presenter
+	 * @param  \Orchestra\Foundation\Validation\Account $validator
 	 */
-	public function __construct(AccountPresenter $presenter, UserValidator $validator)
+	public function __construct(AccountPresenter $presenter, AccountValidator $validator)
 	{
 		$this->presenter = $presenter;
 		$this->validator = $validator;

@@ -1,9 +1,9 @@
-<?php namespace Orchestra\Foundation\Html;
+<?php namespace Orchestra\Foundation\Presenter;
 
 use Illuminate\Support\Facades\HTML;
 use Orchestra\Support\Facades\Table;
 
-class ResourcePresenter {
+class Resource {
 
 	/**
 	 * Table View Generator for Orchestra\Resources.

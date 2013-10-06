@@ -26,9 +26,9 @@ class ResourcesControllerTest extends TestCase {
 	 */
 	protected function bindDependencies()
 	{
-		$presenter = m::mock('\Orchestra\Foundation\Html\ResourcePresenter');
+		$presenter = m::mock('\Orchestra\Foundation\Presenter\Resource');
 
-		App::instance('Orchestra\Foundation\Html\ResourcePresenter', $presenter);
+		App::instance('Orchestra\Foundation\Presenter\Resource', $presenter);
 
 		return $presenter;
 	}

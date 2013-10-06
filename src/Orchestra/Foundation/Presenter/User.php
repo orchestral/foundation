@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Html;
+<?php namespace Orchestra\Foundation\Presenter;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -8,7 +8,7 @@ use Orchestra\Support\Facades\Table;
 use Orchestra\Html\Table\TableBuilder;
 use Orchestra\Model\Role;
 
-class UserPresenter {
+class User {
 
 	/**
 	 * Table View Generator for Orchestra\Model\User.

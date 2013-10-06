@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Html\TestCase;
+<?php namespace Orchestra\Foundation\Presenter\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Facades\Auth;
@@ -8,9 +8,9 @@ use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Form;
 use Orchestra\Support\Facades\Table;
 use Orchestra\Foundation\Services\TestCase;
-use Orchestra\Foundation\Html\UserPresenter;
+use Orchestra\Foundation\Presenter\User;
 
-class UserPresenterTest extends TestCase {
+class UserTest extends TestCase {
 
 	/**
 	 * Teardown the test environment.
@@ -21,7 +21,7 @@ class UserPresenterTest extends TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Html\UserPresenter::table() method.
+	 * Test Orchestra\Foundation\Presenter\User::table() method.
 	 *
 	 * @test
 	 */
@@ -75,13 +75,13 @@ class UserPresenterTest extends TestCase {
 			->shouldReceive('create')->once()->with('span', 'raw-foo', m::any())->andReturn(null)
 			->shouldReceive('raw')->once()->with('administrator member')->andReturn('raw-foo');
 		
-		$stub = new UserPresenter;
+		$stub = new User;
 
 		$this->assertEquals('foo', $stub->table($model));
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Html\UserPresenter::actions() 
+	 * Test Orchestra\Foundation\Presenter\User::actions() 
 	 * method.
 	 *
 	 * @test
@@ -128,13 +128,13 @@ class UserPresenterTest extends TestCase {
 		Auth::shouldReceive('user')->once()
 			->andReturn((object) array('id' => 2));
 
-		$stub = new UserPresenter;
+		$stub = new User;
 
 		$this->assertEquals('foo', $stub->actions($builder));
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Html\UserPresenter::form() method.
+	 * Test Orchestra\Foundation\Presenter\User::form() method.
 	 *
 	 * @test
 	 */
@@ -199,7 +199,7 @@ class UserPresenterTest extends TestCase {
 		$app['orchestra.role'] = $roles = m::mock('Role');
 		$roles->shouldReceive('lists')->once()->with('name', 'id')->andReturn('roles');
 
-		$stub = new UserPresenter;
+		$stub = new User;
 		
 		$this->assertEquals('foo', $stub->form($model, 'update'));
 	}

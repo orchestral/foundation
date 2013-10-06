@@ -13,7 +13,7 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Publisher;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Extension\FilePermissionException;
-use Orchestra\Foundation\Html\ExtensionPresenter;
+use Orchestra\Foundation\Presenter\Extension as ExtensionPresenter;
 use Orchestra\Foundation\Validation\Extension as ExtensionValidator;
 
 class ExtensionsController extends AdminController {
@@ -21,8 +21,8 @@ class ExtensionsController extends AdminController {
 	/**
 	 * Extensions Controller routing to manage available extensions.
 	 * 
-	 * @param  \Orchestra\Foundation\Html\ExtensionPresenter    $presenter
-	 * @param  \Orchestra\Foundation\Validation\Extension       $validator
+	 * @param  \Orchestra\Foundation\Presenter\Extension    $presenter
+	 * @param  \Orchestra\Foundation\Validation\Extension   $validator
 	 */
 	public function __construct(ExtensionPresenter $presenter, ExtensionValidator $validator)
 	{

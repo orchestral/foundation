@@ -1,10 +1,10 @@
-<?php namespace Orchestra\Foundation\Html;
+<?php namespace Orchestra\Foundation\Presenter;
 
 use Illuminate\Support\Facades\HTML;
-use Orchestra\Support\Facades\Extension;
+use Orchestra\Support\Facades\Extension as E;
 use Orchestra\Support\Facades\Form;
 
-class ExtensionPresenter {
+class Extension {
 
 	/**
 	 * Form View Generator for Orchestra\Extension.
@@ -26,7 +26,7 @@ class ExtensionPresenter {
 				'method' => "POST",
 			));
 
-			$handles      = isset($model->handles) ? $model->handles : Extension::option($name, 'handles');
+			$handles      = isset($model->handles) ? $model->handles : E::option($name, 'handles');
 			$configurable = isset($model->configurable) ? $model->configurable : true;
 
 			$form->fieldset(function ($fieldset) use ($handles, $name, $configurable)

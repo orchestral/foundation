@@ -3,11 +3,11 @@
 use Mockery as m;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Container\Container;
-use Orchestra\Foundation\Validation\UserAccount;
+use Orchestra\Foundation\Validation\Account;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 
-class UserAccountTest extends \PHPUnit_Framework_TestCase {
+class AccountTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Setup the test environment.
@@ -27,7 +27,7 @@ class UserAccountTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Validation\UserAccount.
+	 * Test Orchestra\Foundation\Validation\Account.
 	 *
 	 * @test
 	 */
@@ -51,7 +51,7 @@ class UserAccountTest extends \PHPUnit_Framework_TestCase {
 		$events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturn(null);
 		Event::swap($events);
 
-		$stub       = new UserAccount;
+		$stub       = new Account;
 		$validation = $stub->with($input);
 
 		$this->assertTrue($validation);
@@ -82,14 +82,14 @@ class UserAccountTest extends \PHPUnit_Framework_TestCase {
 		$events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturn(null);
 		Event::swap($events);
 
-		$stub       = new UserAccount;
+		$stub       = new Account;
 		$validation = $stub->on('register')->with($input);
 
 		$this->assertTrue($validation);
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Validation\UserAccount on change 
+	 * Test Orchestra\Foundation\Validation\Account on change 
 	 * password.
 	 *
 	 * @test
@@ -112,7 +112,7 @@ class UserAccountTest extends \PHPUnit_Framework_TestCase {
 		$validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
 		Validator::swap($validator);
 
-		$stub       = new UserAccount;
+		$stub       = new Account;
 		$validation = $stub->on('changePassword')->with($input);
 
 		$this->assertTrue($validation);

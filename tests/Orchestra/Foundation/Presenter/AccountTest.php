@@ -1,12 +1,12 @@
-<?php namespace Orchestra\Foundation\Html\TestCase;
+<?php namespace Orchestra\Foundation\Presenter\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\Form;
 use Orchestra\Foundation\Services\TestCase;
-use Orchestra\Foundation\Html\AccountPresenter;
+use Orchestra\Foundation\Presenter\Account;
 
-class AccountPresenterTest extends TestCase {
+class AccountTest extends TestCase {
 
 	/**
 	 * Teardown the test environment.
@@ -17,7 +17,7 @@ class AccountPresenterTest extends TestCase {
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Html\AccountPresenter::profileForm() 
+	 * Test Orchestra\Foundation\Presenter\Account::profileForm() 
 	 * method.
 	 *
 	 * @test
@@ -54,13 +54,13 @@ class AccountPresenterTest extends TestCase {
 					return 'foo';
 				});
 
-		$stub = new AccountPresenter;
+		$stub = new Account;
 
 		$this->assertEquals('foo', $stub->profileForm($model, 'foo'));
 	}
 
 	/**
-	 * Test Orchestra\Foundation\Services\Html\AccountPresenter::passwordForm() 
+	 * Test Orchestra\Foundation\Presenter\Account::passwordForm() 
 	 * method.
 	 *
 	 * @test
@@ -98,7 +98,7 @@ class AccountPresenterTest extends TestCase {
 					return 'foo';
 				});
 
-		$stub = new AccountPresenter;
+		$stub = new Account;
 		
 		$this->assertEquals('foo', $stub->passwordForm($model, 'foo'));
 	}
