@@ -27,7 +27,9 @@ class FoundationServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('orchestra/foundation', 'orchestra/foundation');
+		$path = realpath(__DIR__.'/../../');
+		
+		$this->package('orchestra/foundation', 'orchestra/foundation', $path);
 
 		$loader = AliasLoader::getInstance();
 		$loader->alias('Orchestra\Asset', 'Orchestra\Support\Facades\Asset');
@@ -47,7 +49,7 @@ class FoundationServiceProvider extends ServiceProvider {
 
 		$this->app['orchestra.app']->boot();
 
-		include __DIR__."/../../start.php";
+		include "{$path}/start.php";
 
 		$this->app['events']->fire('orchestra.ready');
 	}
