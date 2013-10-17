@@ -6,17 +6,17 @@ jQuery(function startOrchestra ($) { 'use strict';
 	});
 
 	$('select[role="switcher"]').removeClass('form-control').each(function onEachSwitcher (i, item) {
-		var el = $(item);
+		var element = $(item);
 
-		el.toggleSwitch({
-			highlight: $(item).data("highlight"),
+		element.toggleSwitch({
+			highlight: element.data("highlight"),
 			width: 25,
-			change : function () {
-				events.fire('switcher.change', this);
+			change : function (e, target) {
+				events.fire('switcher.change', [element, e]);
 			}
 		})
 
-		el.css('display', 'none');
+		element.css('display', 'none');
 	})
 
 	$('select[role!="switcher"]').removeClass('form-control').select2();
