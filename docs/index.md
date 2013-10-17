@@ -8,5 +8,5 @@ Foundation Component
 Orchestra Platform is easily install using [Composer](http://getcomposer.org).
 
 ```bash
-composer create-project orchestra/platform website --prefer-dist
+composer create-project orchestra/platform website dev-develop --prefer-dist
 ```
