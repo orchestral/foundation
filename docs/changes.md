@@ -3,6 +3,10 @@ Foundation Change Log
 
 ## Version 2.0
 
+### v2.0.22@dev
+
+* Fixed `Javie.Events` usage on triggering switcher event.
+
 ### v2.0.21
 
 * Add `orchestra/foundation::layout.extra` layout view, to be used for registration, login and forgot password interface.
