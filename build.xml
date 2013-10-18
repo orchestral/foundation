@@ -28,6 +28,31 @@
         </exec>
     </target>
 
+    <target name="twbs" description="Copy Twitter Bootstrap Files">
+        <delete dir="${basedir}/public/vendor/bootstrap/css"/>
+        <delete dir="${basedir}/public/vendor/bootstrap/fonts"/>
+        <delete dir="${basedir}/public/vendor/bootstrap/js"/>
+
+        <mkdir dir="${basedir}/public/vendor/bootstrap/css"/>
+        <mkdir dir="${basedir}/public/vendor/bootstrap/fonts"/>
+        <mkdir dir="${basedir}/public/vendor/bootstrap/js"/>
+
+        <copy todir="${basedir}/public/vendor/bootstrap/css">
+            <fileset dir="${basedir}/vendor/twbs/bootstrap/dist/css">
+                <exclude name="bootstrap-theme.css"/>
+                <exclude name="bootstrap.css"/>
+            </fileset>
+        </copy>
+        <copy todir="${basedir}/public/vendor/bootstrap/fonts">
+            <fileset dir="${basedir}/vendor/twbs/bootstrap/dist/fonts"/>
+        </copy>
+        <copy todir="${basedir}/public/vendor/bootstrap/js">
+            <fileset dir="${basedir}/vendor/twbs/bootstrap/dist/js">
+                <exclude name="bootstrap.js"/>
+            </fileset>
+        </copy>
+    </target>
+
     <target name="lint" description="Perform syntax check of sourcecode files">
         <apply executable="php" failonerror="false">
         <arg value="-l" />
@@ -125,8 +150,11 @@
     </target>
 
     <target name="build"
-     depends="clean,composer-update,composer-dumpautoload,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpunit,phpcb,phpdoc"/>
-     
+     depends="clean,composer-update,composer-dumpautoload,twbs,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpunit,phpcb,phpdoc"/>
+
+    <target name="update"
+     depends="clean,composer-update,composer-dumpautoload,twbs"/>
+
     <target name="quick-build"
        depends="clean,composer-dumpautoload,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpunit,phpcb,phpdoc"/>
 </project>

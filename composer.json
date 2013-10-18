@@ -37,7 +37,8 @@
 	},
 	"require-dev": {
 		"mockery/mockery": "0.8.0",
-		"orchestra/testbench": "2.1.*"
+		"orchestra/testbench": "2.1.*",
+		"twbs/bootstrap": "3.0.*"
 	},
 	"extra": {
 		"branch-alias": {

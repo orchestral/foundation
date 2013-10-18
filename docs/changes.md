@@ -30,8 +30,14 @@ Replace call to `handles('orchestra/foundation::*')` to `handles('orchestra::*')
 * Allow Orchestra Platform route to make use of latest `Orchestra\Extension\RequestGenerator` feature allowing subdomain handling.
 * Predefined package path to avoid additional overhead to guest package path.
 * Only display resources in navigation menus if not hidden.
+* Manage Twitter Bootstrap using Composer.
 
 ## Version 2.0
+
+### v2.0.22@dev
+
+* Fixed `Javie.Events` usage on triggering switcher event.
+* Manage Twitter Bootstrap using Composer.
 
 ### v2.0.21
 
