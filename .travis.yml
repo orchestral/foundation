@@ -8,6 +8,7 @@ php:
 before_script:
   - composer self-update
   - composer require satooshi/php-coveralls:~0.6 --prefer-source --no-interaction --dev
+  - sudo apt-get install node-less
   - ant minify
 
 script: phpunit -c phpunit.xml --coverage-text
