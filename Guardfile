@@ -6,3 +6,17 @@ guard :phpunit, :all_on_start => false, :tests_path => 'tests/', :cli => '--colo
 	# Save app/models/User.php, and it will run app/tests/models/UserTest.php
 	watch(%r{^src/(.+)/(.+)\.php$}) { |m| "tests/#{m[1]}/#{m[2]}Test.php"}
 end
+
+guard 'shell' do
+	watch(%r{^public/css/(.+\.less)}) { |m| 
+		n m[0], "Changed" 
+		`ant minify-css`
+	}
+end
+
+guard 'shell' do
+	watch(%r{^public/js/script\.js}) { |m|
+		n m[0], "Changed"
+		`ant minify-js`
+	}
+end
