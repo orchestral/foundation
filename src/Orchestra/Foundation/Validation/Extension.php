@@ -2,4 +2,7 @@
 
 use Orchestra\Support\Validator;
 
-class Extension extends Validator {}
+class Extension extends Validator
+{
+    //
+}

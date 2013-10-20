@@ -6,87 +6,87 @@ use Orchestra\Foundation\Services\TestCase;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Publisher;
 
-class PublisherControllerTest extends TestCase {
+class PublisherControllerTest extends TestCase
+{
+    /**
+     * Teardown the test environment.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
 
-	/**
-	 * Teardown the test environment.
-	 */
-	public function tearDown()
-	{
-		m::close();
-	}
+    /**
+     * Test GET /admin/publisher
+     *
+     * @test
+     */
+    public function testGetIndexAction()
+    {
+        Publisher::shouldReceive('connected')->once()->andReturn(true);
+        Publisher::shouldReceive('execute')->once()->andReturn(true);
 
-	/**
-	 * Test GET /admin/publisher
-	 * 
-	 * @test
-	 */
-	public function testGetIndexAction()
-	{
-		Publisher::shouldReceive('connected')->once()->andReturn(true);
-		Publisher::shouldReceive('execute')->once()->andReturn(true);
+        $this->call('GET', 'admin/publisher');
+        $this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
+    }
 
-		$this->call('GET', 'admin/publisher');
-		$this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
-	}
+    /**
+     * Test GET /admin/publisher/ftp
+     *
+     * @test
+     */
+    public function testGetFtpAction()
+    {
+        View::shouldReceive('make')->once()->with('orchestra/foundation::publisher.ftp')->andReturn('foo');
 
-	/**
-	 * Test GET /admin/publisher/ftp
-	 * 
-	 * @test
-	 */
-	public function testGetFtpAction()
-	{
-		View::shouldReceive('make')->once()->with('orchestra/foundation::publisher.ftp')->andReturn('foo');
+        $this->call('GET', 'admin/publisher/ftp');
+        $this->assertResponseOk();
+    }
 
-		$this->call('GET', 'admin/publisher/ftp');
-		$this->assertResponseOk();
-	}
+    /**
+     * Test POST /admin/publisher/ftp
+     *
+     * @test
+     */
+    public function testPostFtpAction()
+    {
+        $input = array(
+            'host'     => 'localhost',
+            'username' => 'foo',
+            'password' => 'foobar',
+        );
 
-	/**
-	 * Test POST /admin/publisher/ftp
-	 * 
-	 * @test
-	 */
-	public function testPostFtpAction()
-	{
-		$input = array(
-			'host'     => 'localhost',
-			'username' => 'foo',
-			'password' => 'foobar',
-		);
+        Publisher::shouldReceive('connect')->once()->andReturn(true);
+        Publisher::shouldReceive('queued')->once()->andReturn(array('laravel/framework'));
+        Publisher::shouldReceive('connected')->once()->andReturn(true);
+        Publisher::shouldReceive('execute')->once()->andReturn(true);
 
-		Publisher::shouldReceive('connect')->once()->andReturn(true);
-		Publisher::shouldReceive('queued')->once()->andReturn(array('laravel/framework'));
-		Publisher::shouldReceive('connected')->once()->andReturn(true);
-		Publisher::shouldReceive('execute')->once()->andReturn(true);
-		
-		$input['connection-type'] = 'ftp';
+        $input['connection-type'] = 'ftp';
 
-		$this->call('POST', 'admin/publisher/ftp', $input);
-		$this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
-	}
+        $this->call('POST', 'admin/publisher/ftp', $input);
+        $this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
+    }
 
-	/**
-	 * Test POST /admin/publisher/ftp when FTP connect failed.
-	 * 
-	 * @test
-	 */
-	public function testPostFtpActionWhenFtpConnectFailed()
-	{
-		$input = array(
-			'host'     => 'localhost',
-			'username' => 'foo',
-			'password' => 'foobar',
-		);
+    /**
+     * Test POST /admin/publisher/ftp when FTP connect failed.
+     *
+     * @test
+     */
+    public function testPostFtpActionWhenFtpConnectFailed()
+    {
+        $input = array(
+            'host'     => 'localhost',
+            'username' => 'foo',
+            'password' => 'foobar',
+        );
 
-		Publisher::shouldReceive('connect')->once()->andThrow('\Orchestra\Support\FTP\ServerException');
-		Publisher::shouldReceive('queued')->once()->andReturn(array('laravel/framework'));
-		Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(true);
-		
-		$input['connection-type'] = 'ftp';
+        Publisher::shouldReceive('connect')->once()->andThrow('\Orchestra\Support\FTP\ServerException');
+        Publisher::shouldReceive('queued')->once()->andReturn(array('laravel/framework'));
+        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(true);
 
-		$this->call('POST', 'admin/publisher/ftp', $input);
-		$this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
-	}
+        $input['connection-type'] = 'ftp';
+
+        $this->call('POST', 'admin/publisher/ftp', $input);
+        $this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
+    }
 }

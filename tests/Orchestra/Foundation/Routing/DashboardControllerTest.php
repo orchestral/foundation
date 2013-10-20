@@ -5,40 +5,40 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Services\TestCase;
 use Orchestra\Support\Facades\Widget;
 
-class DashboardControllerTest extends TestCase {
+class DashboardControllerTest extends TestCase
+{
+    /**
+     * Teardown the test environment.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
 
-	/**
-	 * Teardown the test environment.
-	 */
-	public function tearDown()
-	{
-		m::close();
-	}
+    /**
+     * Test GET /admin
+     *
+     * @test
+     */
+    public function testIndexAction()
+    {
+        View::shouldReceive('make')->once()
+            ->with('orchestra/foundation::dashboard.index', array('panes' => array()))
+            ->andReturn('foo');
+        Widget::shouldReceive('make')->once()->with('pane.orchestra')->andReturn(array());
 
-	/**
-	 * Test GET /admin
-	 * 
-	 * @test
-	 */
-	public function testIndexAction()
-	{
-		View::shouldReceive('make')->once()
-			->with('orchestra/foundation::dashboard.index', array('panes' => array()))
-			->andReturn('foo');
-		Widget::shouldReceive('make')->once()->with('pane.orchestra')->andReturn(array());
+        $this->call('GET', 'admin');
+        $this->assertResponseOk();
+    }
 
-		$this->call('GET', 'admin');
-		$this->assertResponseOk();
-	}
-
-	/**
-	 * Test GET /admin/missing
-	 * 
-	 * @test
-	 */
-	public function testMissingAction()
-	{
-		$this->call('GET', 'admin/missing');
-		$this->assertResponseStatus(404);
-	}
+    /**
+     * Test GET /admin/missing
+     *
+     * @test
+     */
+    public function testMissingAction()
+    {
+        $this->call('GET', 'admin/missing');
+        $this->assertResponseStatus(404);
+    }
 }

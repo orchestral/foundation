@@ -2,35 +2,36 @@
 
 use Illuminate\Support\Facades\Event;
 
-abstract class AdminController extends BaseController {
+abstract class AdminController extends BaseController
+{
+    /**
+     * Base construct method.
+     */
+    public function __construct()
+    {
+        // Admin controllers should be accessible only after
+        // Orchestra Platform is installed.
+        $this->beforeFilter('orchestra.installable');
 
-	/**
-	 * Base construct method.
-	 */
-	public function __construct()
-	{
-		// Admin controllers should be accessible only after 
-		// Orchestra Platform is installed.
-		$this->beforeFilter('orchestra.installable');
-		
-		$this->beforeFilter(function ()
-		{
-			Event::fire('orchestra.started: admin');
-			Event::fire('orchestra.ready: admin');
-		});
+        $this->beforeFilter(function () {
+            Event::fire('orchestra.started: admin');
+            Event::fire('orchestra.ready: admin');
+        });
 
-		$this->afterFilter(function ()
-		{
-			Event::fire('orchestra.done: admin');
-		});
+        $this->afterFilter(function () {
+            Event::fire('orchestra.done: admin');
+        });
 
-		parent::__construct();
-	}
+        parent::__construct();
+    }
 
-	/**
-	 * Setup controller filters.
-	 *
-	 * @return void
-	 */
-	protected function setupFilters() {}
+    /**
+     * Setup controller filters.
+     *
+     * @return void
+     */
+    protected function setupFilters()
+    {
+        //
+    }
 }

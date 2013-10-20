@@ -15,21 +15,19 @@ use Orchestra\Support\Facades\Site;
 |
 */
 
-HTML::macro('title', function ()
-{
-	$siteTitle = $title = memorize('site.name');
-	$pageTitle = trim(Site::get('title', ''));
-	$format    = memorize('site.format.title', ':pageTitle &mdash; :siteTitle');
+HTML::macro('title', function () {
+    $siteTitle = $title = memorize('site.name');
+    $pageTitle = trim(Site::get('title', ''));
+    $format    = memorize('site.format.title', ':pageTitle &mdash; :siteTitle');
 
-	if ( ! empty($pageTitle)) 
-	{
-		$title = strtr($format, array(
-			":siteTitle" => $siteTitle,
-			":pageTitle" => $pageTitle,
-		));
-	}
+    if (! empty($pageTitle)) {
+        $title = strtr($format, array(
+            ":siteTitle" => $siteTitle,
+            ":pageTitle" => $pageTitle,
+        ));
+    }
 
-	return HTML::create('title', $title);
+    return HTML::create('title', $title);
 });
 
 /*
@@ -41,18 +39,16 @@ HTML::macro('title', function ()
 |
 */
 
-Blade::extend(function ($view)
-{
-	$placeholder = '$1<?php $__ps = Orchestra\Support\Facades\Widget::make("placeholder.".$2); '
-						.'foreach ($__ps as $__p) { echo value($__p->value ?:""); } ?>';
-	$decorator   = '$1<?php echo Orchestra\Support\Facades\Decorator::render($2); ?>';
-	
-	foreach (compact('placeholder', 'decorator') as $name => $replacement)
-	{
-		$view = preg_replace('/(\s*)@'.$name.'\s?\(\s*(.*)\)/', $replacement, $view);
-	}
+Blade::extend(function ($view) {
+    $placeholder = '$1<?php $__ps = Orchestra\Support\Facades\Widget::make("placeholder.".$2); '
+                        .'foreach ($__ps as $__p) { echo value($__p->value ?:""); } ?>';
+    $decorator   = '$1<?php echo Orchestra\Support\Facades\Decorator::render($2); ?>';
 
-	return $view;
+    foreach (compact('placeholder', 'decorator') as $name => $replacement) {
+        $view = preg_replace('/(\s*)@'.$name.'\s?\(\s*(.*)\)/', $replacement, $view);
+    }
+
+    return $view;
 });
 
 /*
@@ -61,7 +57,6 @@ Blade::extend(function ($view)
 |--------------------------------------------------------------------------
 */
 
-App::make('orchestra.decorator')->macro('navbar', function ($navbar)
-{
-	return View::make('orchestra/foundation::layout.widgets.navbar', compact('navbar'));
+App::make('orchestra.decorator')->macro('navbar', function ($navbar) {
+    return View::make('orchestra/foundation::layout.widgets.navbar', compact('navbar'));
 });

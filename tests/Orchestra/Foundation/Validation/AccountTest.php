@@ -7,114 +7,114 @@ use Orchestra\Foundation\Validation\Account;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 
-class AccountTest extends \PHPUnit_Framework_TestCase {
-	
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		Facade::clearResolvedInstances();
-		Facade::setFacadeApplication(new Container);
-	}
-	
-	/**
-	 * Teardown the test environment.
-	 */
-	public function tearDown()
-	{
-		m::close();
-	}
+class AccountTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        Facade::clearResolvedInstances();
+        Facade::setFacadeApplication(new Container);
+    }
 
-	/**
-	 * Test Orchestra\Foundation\Validation\Account.
-	 *
-	 * @test
-	 */
-	public function testValidation()
-	{
-		$input = array(
-			'email'    => 'admin@orchestraplatform.com',
-			'fullname' => 'Administrator',
-		);
+    /**
+     * Teardown the test environment.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
 
-		$rules = array(
-			'email'    => array('required', 'email'),
-			'fullname' => array('required'),
-		);
-		
-		$validator = m::mock('Validator\Environment');
-		$validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
-		Validator::swap($validator);
+    /**
+     * Test Orchestra\Foundation\Validation\Account.
+     *
+     * @test
+     */
+    public function testValidation()
+    {
+        $input = array(
+            'email'    => 'admin@orchestraplatform.com',
+            'fullname' => 'Administrator',
+        );
 
-		$events = m::mock('Event\Dispatcher');
-		$events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturn(null);
-		Event::swap($events);
+        $rules = array(
+            'email'    => array('required', 'email'),
+            'fullname' => array('required'),
+        );
 
-		$stub       = new Account;
-		$validation = $stub->with($input);
+        $validator = m::mock('Validator\Environment');
+        $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
+        Validator::swap($validator);
 
-		$this->assertTrue($validation);
-	}
+        $events = m::mock('Event\Dispatcher');
+        $events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturn(null);
+        Event::swap($events);
 
-	/**
-	 * Test Orchestra\Foundation\Validation\User on create setting.
-	 *
-	 * @test
-	 */
-	public function testValidationOnRegister()
-	{
-		$input = array(
-			'email'    => 'admin@orchestraplatform.com',
-			'fullname' => 'Administrator',
-		);
+        $stub       = new Account;
+        $validation = $stub->with($input);
 
-		$rules = array(
-			'email'    => array('required', 'email', 'unique:users,email'),
-			'fullname' => array('required'),
-		);
+        $this->assertTrue($validation);
+    }
 
-		$validator = m::mock('Validator\Environment');
-		$validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
-		Validator::swap($validator);
+    /**
+     * Test Orchestra\Foundation\Validation\User on create setting.
+     *
+     * @test
+     */
+    public function testValidationOnRegister()
+    {
+        $input = array(
+            'email'    => 'admin@orchestraplatform.com',
+            'fullname' => 'Administrator',
+        );
 
-		$events = m::mock('Event\Dispatcher');
-		$events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturn(null);
-		Event::swap($events);
+        $rules = array(
+            'email'    => array('required', 'email', 'unique:users,email'),
+            'fullname' => array('required'),
+        );
 
-		$stub       = new Account;
-		$validation = $stub->on('register')->with($input);
+        $validator = m::mock('Validator\Environment');
+        $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
+        Validator::swap($validator);
 
-		$this->assertTrue($validation);
-	}
+        $events = m::mock('Event\Dispatcher');
+        $events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturn(null);
+        Event::swap($events);
 
-	/**
-	 * Test Orchestra\Foundation\Validation\Account on change 
-	 * password.
-	 *
-	 * @test
-	 */
-	public function testValidationOnChangePassword()
-	{
-		$input = array(
-			'current_password' => '123456',
-			'new_password'     => 'qwerty',
-			'confirm_password' => 'qwerty',
-		);
+        $stub       = new Account;
+        $validation = $stub->on('register')->with($input);
 
-		$rules = array(
-			'current_password' => array('required'),
-			'new_password'     => array('required', 'different:current_password'),
-			'confirm_password' => array('same:new_password'),
-		);
+        $this->assertTrue($validation);
+    }
 
-		$validator = m::mock('Validator\Environment');
-		$validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
-		Validator::swap($validator);
+    /**
+     * Test Orchestra\Foundation\Validation\Account on change
+     * password.
+     *
+     * @test
+     */
+    public function testValidationOnChangePassword()
+    {
+        $input = array(
+            'current_password' => '123456',
+            'new_password'     => 'qwerty',
+            'confirm_password' => 'qwerty',
+        );
 
-		$stub       = new Account;
-		$validation = $stub->on('changePassword')->with($input);
+        $rules = array(
+            'current_password' => array('required'),
+            'new_password'     => array('required', 'different:current_password'),
+            'confirm_password' => array('same:new_password'),
+        );
 
-		$this->assertTrue($validation);
-	}
+        $validator = m::mock('Validator\Environment');
+        $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
+        Validator::swap($validator);
+
+        $stub       = new Account;
+        $validation = $stub->on('changePassword')->with($input);
+
+        $this->assertTrue($validation);
+    }
 }

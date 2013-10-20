@@ -16,166 +16,158 @@ use Orchestra\Model\User;
 use Orchestra\Foundation\Presenter\Account as AccountPresenter;
 use Orchestra\Foundation\Validation\Account as AccountValidator;
 
-class RegisterController extends AdminController {
-	
-	/**
-	 * Registration Controller routing. It should only be accessible if 
-	 * registration is allowed through the setting.
-	 * 
-	 * @param  \Orchestra\Foundation\Presenter\Account  $presenter
-	 * @param  \Orchestra\Foundation\Validation\Account $validator
-	 */
-	public function __construct(AccountPresenter $presenter, AccountValidator $validator)
-	{
-		$this->presenter = $presenter;
-		$this->validator = $validator;
+class RegisterController extends AdminController
+{
+    /**
+     * Registration Controller routing. It should only be accessible if
+     * registration is allowed through the setting.
+     *
+     * @param  \Orchestra\Foundation\Presenter\Account  $presenter
+     * @param  \Orchestra\Foundation\Validation\Account $validator
+     */
+    public function __construct(AccountPresenter $presenter, AccountValidator $validator)
+    {
+        $this->presenter = $presenter;
+        $this->validator = $validator;
 
-		parent::__construct();
-	}
+        parent::__construct();
+    }
 
-	/**
-	 * Setup controller filters.
-	 *
-	 * @return void
-	 */
-	protected function setupFilters()
-	{
-		$this->beforeFilter('orchestra.registrable');
-		$this->beforeFilter('orchestra.csrf', array('only' => array('postIndex')));
-	}
+    /**
+     * Setup controller filters.
+     *
+     * @return void
+     */
+    protected function setupFilters()
+    {
+        $this->beforeFilter('orchestra.registrable');
+        $this->beforeFilter('orchestra.csrf', array('only' => array('postIndex')));
+    }
 
-	/**
-	 * User Registration Page.
-	 *
-	 * GET (:orchestra)/register
-	 *
-	 * @return Response
-	 */
-	public function getIndex()
-	{
-		$eloquent = App::make('orchestra.user');
-		$title    = 'orchestra/foundation::title.register';
-		$form     = $this->presenter->profileForm($eloquent, handles('orchestra::register'));
-		
-		$form->extend(function ($form) use ($title)
-		{
-			$form->submit = $title;
-		});
+    /**
+     * User Registration Page.
+     *
+     * GET (:orchestra)/register
+     *
+     * @return Response
+     */
+    public function getIndex()
+    {
+        $eloquent = App::make('orchestra.user');
+        $title    = 'orchestra/foundation::title.register';
+        $form     = $this->presenter->profileForm($eloquent, handles('orchestra::register'));
 
-		Event::fire('orchestra.form: user.account', array($eloquent, $form));
-		
-		Site::set('title', trans($title));
-		
-		return View::make('orchestra/foundation::credential.register', compact('eloquent', 'form'));
-	}
+        $form->extend(function ($form) use ($title) {
+            $form->submit = $title;
+        });
 
-	/**
-	 * Create a new user.
-	 *
-	 * POST (:orchestra)/register
-	 *
-	 * @return Response
-	 */
-	public function postIndex()
-	{
-		$input    = Input::all();
-		$password = Str::random(5);
-		
-		$validation = $this->validator->on('register')->with($input);
-	
-		// Validate user registration, if any errors is found redirect it 
-		// back to registration page with the errors
-		if ($validation->fails())
-		{
-			return Redirect::to(handles('orchestra::register'))
-					->withInput()
-					->withErrors($validation);
-		}
+        Event::fire('orchestra.form: user.account', array($eloquent, $form));
 
-		$user = App::make('orchestra.user');
+        Site::set('title', trans($title));
 
-		$user->email    = $input['email'];
-		$user->fullname = $input['fullname'];
-		$user->password = $password;
+        return View::make('orchestra/foundation::credential.register', compact('eloquent', 'form'));
+    }
 
-		try
-		{
-			$this->fireEvent('creating', array($user));
-			$this->fireEvent('saving', array($user));
+    /**
+     * Create a new user.
+     *
+     * POST (:orchestra)/register
+     *
+     * @return Response
+     */
+    public function postIndex()
+    {
+        $input    = Input::all();
+        $password = Str::random(5);
 
-			DB::transaction(function () use ($user)
-			{
-				$user->save();
-				$user->roles()->sync(array(
-					Config::get('orchestra/foundation::roles.member', 2)
-				));
-			});
+        $validation = $this->validator->on('register')->with($input);
 
-			$this->fireEvent('created', array($user));
-			$this->fireEvent('saved', array($user));
+        // Validate user registration, if any errors is found redirect it
+        // back to registration page with the errors
+        if ($validation->fails()) {
+            return Redirect::to(handles('orchestra::register'))
+                    ->withInput()
+                    ->withErrors($validation);
+        }
 
-			Messages::add('success', trans("orchestra/foundation::response.users.create"));
-		}
-		catch (Exception $e)
-		{
-			Messages::add('error', trans('orchestra/foundation::response.db-failed', array(
-				'error' => $e->getMessage(),
-			)));
-			
-			return Redirect::to(handles('orchestra::register'))->withInput();
-		}
+        $user = App::make('orchestra.user');
 
-		return $this->sendEmail($user, $password);
-	}
-	/**
-	 * Send new registration e-mail to user.
-	 *
-	 * @param  User     $user
-	 * @param  string   $password
-	 * @param  Messages $msg
-	 * @return Response
-	 */
-	protected function sendEmail(User $user, $password)
-	{
-		// Converting the user to an object allow the data to be a generic 
-		// object. This allow the data to be transferred to JSON if the 
-		// mail is send using queue.
-		
-		$memory = App::memory();
-		$site   = $memory->get('site.name', 'Orchestra Platform');
-		$data   = array(
-			'password' => $password, 
-			'site'     => $site,
-			'user'     => (object) $user->toArray(),
-		);
+        $user->email    = $input['email'];
+        $user->fullname = $input['fullname'];
+        $user->password = $password;
 
-		$sent = Mail::push('orchestra/foundation::email.credential.register', $data, function($mail) use ($data, $user, $site)
-		{
-			$mail->subject(trans('orchestra/foundation::email.credential.register', array('site' => $site)));
-			$mail->to($user->email, $user->fullname);
-		});
+        try {
+            $this->fireEvent('creating', array($user));
+            $this->fireEvent('saving', array($user));
 
-		if (count($sent) > 0 or true === $memory->get('email.queue', false))
-		{
-			Messages::add('success', trans('orchestra/foundation::response.credential.register.email-send'));
-		}
-		else
-		{
-			Messages::add('error', trans('orchestra/foundation::response.credential.register.email-fail'));
-		}
-		
-		return Redirect::intended(handles('orchestra::login'));
-	}
+            DB::transaction(function () use ($user) {
+                $user->save();
+                $user->roles()->sync(array(
+                    Config::get('orchestra/foundation::roles.member', 2)
+                ));
+            });
 
-	/**
-	 * Fire Event related to eloquent process
-	 *
-	 * @param  string   $type
-	 * @param  array    $parameters
-	 * @return void
-	 */
-	protected function fireEvent($type, $parameters)
-	{
-		Event::fire("orchestra.{$type}: user.account", $parameters);
-	}
+            $this->fireEvent('created', array($user));
+            $this->fireEvent('saved', array($user));
+
+            Messages::add('success', trans("orchestra/foundation::response.users.create"));
+        } catch (Exception $e) {
+            Messages::add('error', trans('orchestra/foundation::response.db-failed', array(
+                'error' => $e->getMessage(),
+            )));
+
+            return Redirect::to(handles('orchestra::register'))->withInput();
+        }
+
+        return $this->sendEmail($user, $password);
+    }
+    /**
+     * Send new registration e-mail to user.
+     *
+     * @param  User     $user
+     * @param  string   $password
+     * @param  Messages $msg
+     * @return Response
+     */
+    protected function sendEmail(User $user, $password)
+    {
+        // Converting the user to an object allow the data to be a generic
+        // object. This allow the data to be transferred to JSON if the
+        // mail is send using queue.
+
+        $memory = App::memory();
+        $site   = $memory->get('site.name', 'Orchestra Platform');
+        $data   = array(
+            'password' => $password,
+            'site'     => $site,
+            'user'     => (object) $user->toArray(),
+        );
+
+        $callback = function ($mail) use ($data, $user, $site) {
+            $mail->subject(trans('orchestra/foundation::email.credential.register', array('site' => $site)));
+            $mail->to($user->email, $user->fullname);
+        };
+
+        $sent = Mail::push('orchestra/foundation::email.credential.register', $data, $callback);
+
+        if (count($sent) > 0 or true === $memory->get('email.queue', false)) {
+            Messages::add('success', trans('orchestra/foundation::response.credential.register.email-send'));
+        } else {
+            Messages::add('error', trans('orchestra/foundation::response.credential.register.email-fail'));
+        }
+
+        return Redirect::intended(handles('orchestra::login'));
+    }
+
+    /**
+     * Fire Event related to eloquent process
+     *
+     * @param  string   $type
+     * @param  array    $parameters
+     * @return void
+     */
+    protected function fireEvent($type, $parameters)
+    {
+        Event::fire("orchestra.{$type}: user.account", $parameters);
+    }
 }
