@@ -7,6 +7,7 @@ Foundation Change Log
 
 * Fixed `Javie.Events` usage on triggering switcher event.
 * Manage Twitter Bootstrap using Composer.
+* Implement [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) coding standard.
 
 ### v2.0.21
 
@@ -45,9 +46,9 @@ Foundation Change Log
 ### v2.0.18
 
 * Rework on `Orchestra\Foundation\Mail` to handle inconsistency using both `Mail::queue()` and `Mail::send()`, add new `Orchestra\Mail::push()` option to allow sending based on configuration.
-* Both `Orchestra\Mail::send()` and `Orchestra\Mail::queue()` work as you would using `Mail` equivalent. 
+* Both `Orchestra\Mail::send()` and `Orchestra\Mail::queue()` work as you would using `Mail` equivalent.
 * Refactor `Orchestra\Foundation\Reminders\PasswordBroker` to force send email directly even if queue is enabled. This is a limitation with `Illuminate\Support\SerializeClosure` that does support use () to include Closure.
-* Fixed messages when registration email is sent using queue, instead of showing failed to send. 
+* Fixed messages when registration email is sent using queue, instead of showing failed to send.
 * Improve user searching with new `Orchestra\Support\Str::searchable()` API.
 
 ### v2.0.17
