@@ -156,7 +156,7 @@ class UsersController extends AdminController
         $input = Input::all();
 
         // Check if provided id is the same as hidden id, just a pre-caution.
-        if ((int) $id !== (int) $input['id']) {
+        if ((string) $id !== $input['id']) {
             return App::abort(500);
         }
 
@@ -244,7 +244,7 @@ class UsersController extends AdminController
         $user = App::make('orchestra.user')->findOrFail($id);
 
         // Avoid self-deleting accident.
-        if ($user->id === Auth::user()->id) {
+        if ((string) $user->id === (string) Auth::user()->id) {
             return App::abort(404);
         }
 

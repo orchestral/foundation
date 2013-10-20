@@ -66,7 +66,12 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
             'visible' => true,
         ));
 
-        $resources->shouldReceive('all')->once()->andReturn(array('foo' => $foo));
+        $bar = new Fluent(array(
+            'name'    => 'Bar',
+            'visible' => false,
+        ));
+
+        $resources->shouldReceive('all')->once()->andReturn(array('foo' => $foo, 'bar' => $bar));
 
         $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.resources.list')->andReturn('resource');
         $app->shouldReceive('handles')->once()->with('orchestra::resources')->andReturn('resource');

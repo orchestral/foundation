@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Routing;
 
+use ReflectionException;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -171,16 +172,12 @@ class InstallController extends BaseController
         // Orchestra Platform strictly require Eloquent based authentication
         // because our Role Based Access Role (RBAC) is utilizing on eloquent
         // relationship to solve some of the requirement.
-        if (! ($auth['driver'] === 'eloquent' and class_exists($auth['model']))) {
+        try {
+            $eloquent = App::make($auth['model']);
+
+            return ($auth['driver'] === 'eloquent' and $eloquent instanceof User);
+        } catch (ReflectionException $e) {
             return false;
         }
-
-        $eloquent = App::make($auth['model']);
-
-        if (! (isset($eloquent) and $eloquent instanceof User)) {
-            return false;
-        }
-
-        return true;
     }
 }

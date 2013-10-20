@@ -224,4 +224,20 @@ class SiteTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new \DateTimeZone('UTC'), $stub->timezone);
         $this->assertEquals('2012-01-01 00:00:00', $stub->toDateTimeString());
     }
+
+    /**
+     * Test Orchestra\Foundation\Site::convertToDateTime() method when
+     * timezone is null.
+     *
+     * @test
+     */
+    public function testConvertToDateTimeMethodWhenTimezoneIsNull()
+    {
+        $stub = new Site($this->app);
+
+        $output = $stub->convertToDateTime('2012-01-01 08:00:00');
+
+        $this->assertInstanceOf('\Carbon\Carbon', $output);
+        $this->assertEquals('2012-01-01 08:00:00', $output->toDateTimeString());
+    }
 }

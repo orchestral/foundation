@@ -51,15 +51,14 @@ class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase
         $fooUser = m::mock('UserMeta');
         $fooNull = m::mock('UserMeta');
 
-        $fooUser->shouldReceive('first')->twice()->andReturn($eloquent);
+        $fooUser->shouldReceive('first')->once()->andReturn($eloquent);
         $fooNull->shouldReceive('first')->once()->andReturn(null);
 
         $config->shouldReceive('get')->with('orchestra/memory::user.meta', array())->once()->andReturn(array());
-        $eloquent->shouldReceive('newInstance')->times(4)->andReturn($eloquent)
-            ->shouldReceive('search')->with('foo', 1)->once()->andReturn($fooUser)
+        $eloquent->shouldReceive('newInstance')->times(3)->andReturn($eloquent)
             ->shouldReceive('search')->with('foo', 2)->once()->andReturn($fooUser)
             ->shouldReceive('search')->with('foobar', 1)->once()->andReturn($fooNull)
-            ->shouldReceive('save')->twice()->andReturn(true)
+            ->shouldReceive('save')->once()->andReturn(true)
             ->shouldReceive('delete')->once()->andReturn(true);
 
         $app->instance('Orchestra\Model\UserMeta', $eloquent);
@@ -74,14 +73,15 @@ class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase
         $model->setAccessible(true);
 
         $data->setValue($stub, array(
-            'foo/user-1'    => 'foobar',
+            'foo/user-1'    => '',
             'foobar/user-1' => 'foo',
             'foo/user-2'    => ':to-be-deleted:'
         ));
 
         $keyMap->setValue($stub, array(
             'foo/user-1' => array('id' => 5, 'value' => '', 'checksum' => md5('')),
-            'foo/user-2' => array('id' => 6, 'value' => '', 'checksum' => md5('')),
+            'foo/user-2' => array('id' => 6, 'value' => 'foobar', 'checksum' => md5('foobar')),
+            'foo/user-'  => array('id' => 7, 'value' => '', 'checksum' => md5('')),
         ));
 
         $stub->finish();

@@ -193,16 +193,16 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $appRoute = m::mock('\Orchestra\Extension\RouteGenerator');
 
         $appRoute->shouldReceive('to')->once()->with('/')->andReturn('/')
-            ->shouldReceive('to')->once()->with('info')->andReturn('info');
+            ->shouldReceive('to')->once()->with('info?foo=bar')->andReturn('info?foo=bar');
         $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
         $url->shouldReceive('to')->once()->with('/')->andReturn('/')
-            ->shouldReceive('to')->once()->with('info')->andReturn('info');
+            ->shouldReceive('to')->once()->with('info?foo=bar')->andReturn('info?foo=bar');
 
         $stub = new Application($app);
         $stub->boot();
 
         $this->assertEquals('/', $stub->handles('app::/'));
-        $this->assertEquals('info', $stub->handles('info'));
+        $this->assertEquals('info?foo=bar', $stub->handles('info?foo=bar'));
         $this->assertEquals('http://localhost/admin/installer', $stub->handles('orchestra::installer'));
         $this->assertEquals('http://localhost/admin/installer', $stub->handles('orchestra::installer/'));
     }

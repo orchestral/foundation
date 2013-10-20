@@ -67,7 +67,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
         $app['session'] = $this->getSessionMock();
 
         $client->shouldReceive('setUp')->once()->with(array('ftpconfig'))->andReturn(null)
-            ->shouldReceive('connect')->once()->andReturn(true)
+            ->shouldReceive('connect')->once()->andReturn(false)
             ->shouldReceive('connected')->once()->andReturn(true);
 
         $stub = new Ftp($app, $client);
@@ -77,6 +77,29 @@ class FtpTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('/domains/foo.bar/public', $stub->basePath('/home/foo/domains/foo.bar/public'));
         $this->assertEquals('/var/html/foo.bar/public', $stub->basePath('/var/html/foo.bar/public'));
+    }
+
+    /**
+     * Test constructing Orchestra\Foundation\Publisher\Ftp when connection
+     * is not set.
+     *
+     * @test
+     */
+    public function testConstructMethodWhenConnectionIsNotSet()
+    {
+        $app    = $this->app;
+        $client = $this->client;
+
+        $app['session'] = $this->getSessionMock();
+
+        $client->shouldReceive('setUp')->once()->with(array('ftpconfig'))->andReturn(null)
+            ->shouldReceive('connect')->once()->andReturn(false)
+            ->shouldReceive('connected')->once()->andReturn(false);
+
+        $stub = new Ftp($app, $client);
+
+        $this->assertEquals($client, $stub->getConnection());
+        $this->assertFalse($stub->connected());
     }
 
     /**
