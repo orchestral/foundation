@@ -1,19 +1,19 @@
 <?php namespace Orchestra\Foundation\Installation;
 
-interface InstallerInterface {
+interface InstallerInterface
+{
+    /**
+     * Migrate Orchestra Platform schema.
+     *
+     * @return boolean
+     */
+    public function migrate();
 
-	/**
-	 * Migrate Orchestra Platform schema.
-	 *
-	 * @return boolean
-	 */
-	public function migrate();
-	
-	/**
-	 * Create adminstrator account.
-	 *
-	 * @param  array    $input
-	 * @return boolean
-	 */
-	public function createAdmin($input, $multipleAdmin = true);
+    /**
+     * Create adminstrator account.
+     *
+     * @param  array    $input
+     * @return boolean
+     */
+    public function createAdmin($input, $multipleAdmin = true);
 }

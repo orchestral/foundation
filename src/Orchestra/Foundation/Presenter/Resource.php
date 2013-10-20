@@ -3,31 +3,28 @@
 use Illuminate\Support\Facades\HTML;
 use Orchestra\Support\Facades\Table;
 
-class Resource {
+class Resource
+{
+    /**
+     * Table View Generator for Orchestra\Resources.
+     *
+     * @param  array    $model
+     * @return \Orchestra\Html\Table\TableBuilder
+     */
+    public function table($model)
+    {
+        return Table::of('orchestra.resources: list', function ($table) use ($model) {
+            $table->with($model, false);
 
-	/**
-	 * Table View Generator for Orchestra\Resources.
-	 *
-	 * @param  array    $model
-	 * @return \Orchestra\Html\Table\TableBuilder
-	 */
-	public function table($model)
-	{
-		return Table::of('orchestra.resources: list', function ($table) use ($model)
-		{
-			$table->with($model, false);
-			
-			$table->layout('orchestra/foundation::components.table');
+            $table->layout('orchestra/foundation::components.table');
 
-			$table->column('name', function ($column)
-			{
-				$column->escape(false);
-				$column->value(function ($row)
-				{
-					$link = HTML::link(handles("orchestra::resources/{$row->id}"), e($row->name));
-					return HTML::create('strong', HTML::raw($link));
-				});
-			});
-		});
-	}
+            $table->column('name', function ($column) {
+                $column->escape(false);
+                $column->value(function ($row) {
+                    $link = HTML::link(handles("orchestra::resources/{$row->id}"), e($row->name));
+                    return HTML::create('strong', HTML::raw($link));
+                });
+            });
+        });
+    }
 }

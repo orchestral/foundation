@@ -9,240 +9,242 @@ use Swift_SmtpTransport as SmtpTransport;
 use Swift_MailTransport as MailTransport;
 use Swift_SendmailTransport as SendmailTransport;
 
-class Mail {
+class Mail
+{
+    /**
+     * Application instance.
+     *
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app = null;
 
-	/**
-	 * Application instance.
-	 *
-	 * @var \Illuminate\Foundation\Application
-	 */
-	protected $app = null;
+    /**
+     * Mailer instance.
+     *
+     * @var \Illuminate\Mail\Mailer
+     */
+    protected $mailer = null;
 
-	/**
-	 * Mailer instance.
-	 *
-	 * @var \Illuminate\Mail\Mailer
-	 */
-	protected $mailer = null;
+    /**
+     * Memory instance.
+     *
+     * @var \Orchestra\Memory\Drivers\Driver
+     */
+    protected $memory = null;
 
-	/**
-	 * Memory instance.
-	 *
-	 * @var \Orchestra\Memory\Drivers\Driver
-	 */
-	protected $memory = null;
+    /**
+     * Construct a new Mail instance.
+     *
+     * @param  \Illuminate\Foundation\Application   $app
+     * @return void
+     */
+    public function __construct($app)
+    {
+        $this->app    = $app;
+        $this->memory = $app['orchestra.memory']->makeOrFallback();
+    }
 
-	/**
-	 * Construct a new Mail instance.
-	 *
-	 * @param  \Illuminate\Foundation\Application   $app
-	 * @return void
-	 */
-	public function __construct($app)
-	{
-		$this->app    = $app;
-		$this->memory = $app['orchestra.memory']->makeOrFallback();
-	}
+    /**
+     * Register the Swift Mailer instance.
+     *
+     * @return void
+     */
+    protected function getMailer()
+    {
+        if ($this->mailer instanceof Mailer) {
+            return $this->mailer;
+        }
 
-	/**
-	 * Register the Swift Mailer instance.
-	 *
-	 * @return void
-	 */
-	protected function getMailer()
-	{
-		if ($this->mailer instanceof Mailer) return $this->mailer;
+        $this->mailer = $this->app['mailer'];
+        $config       = $this->memory->get('email');
+        $transport    = $this->registerSwiftTransport($config);
 
-		$this->mailer = $this->app['mailer'];
-		$config       = $this->memory->get('email');
-		$transport    = $this->registerSwiftTransport($config);
+        // If a "from" address is set, we will set it on the mailer so that
+        // all mail messages sent by the applications will utilize the same
+        // "from" address on each one, which makes the developer's life a
+        // lot more convenient.
+        $from = $this->memory->get('email.from');
 
-		// If a "from" address is set, we will set it on the mailer so that 
-		// all mail messages sent by the applications will utilize the same 
-		// "from" address on each one, which makes the developer's life a 
-		// lot more convenient.
-		$from = $this->memory->get('email.from');
+        if (is_array($from) and isset($from['address'])) {
+            $this->mailer->alwaysFrom($from['address'], $from['name']);
+        }
 
-		if (is_array($from) and isset($from['address']))
-		{
-			$this->mailer->alwaysFrom($from['address'], $from['name']);
-		}
-		
-		$this->mailer->setSwiftMailer(new Swift_Mailer($transport));
+        $this->mailer->setSwiftMailer(new Swift_Mailer($transport));
 
-		return $this->mailer;
-	}
-	
-	/**
-	 * Allow Orchestra Platform to either use send or queue based on 
-	 * settings.
-	 *
-	 * @param  string           $view
-	 * @param  array            $data
-	 * @param  Closure|string   $callback
-	 * @param  string           $queue
-	 * @return \Illuminate\Mail\Mailer
-	 */
-	public function push($view, array $data, $callback, $queue = null)
-	{
-		$method = 'queue';
-		$memory = $this->memory;
+        return $this->mailer;
+    }
 
-		if (false === $memory->get('email.queue', false)) $method = 'send';
+    /**
+     * Allow Orchestra Platform to either use send or queue based on
+     * settings.
+     *
+     * @param  string           $view
+     * @param  array            $data
+     * @param  Closure|string   $callback
+     * @param  string           $queue
+     * @return \Illuminate\Mail\Mailer
+     */
+    public function push($view, array $data, $callback, $queue = null)
+    {
+        $method = 'queue';
+        $memory = $this->memory;
 
-		return call_user_func(array($this, $method), $view, $data, $callback, $queue);
-	}
+        if (false === $memory->get('email.queue', false)) {
+            $method = 'send';
+        }
 
-	/**
-	 * Force Orchestra Platform to send email directly.
-	 *
-	 * @param  string           $view
-	 * @param  array            $data
-	 * @param  Closure|string   $callback
-	 * @param  string           $queue
-	 * @return \Illuminate\Mail\Mailer
-	 */
-	public function send($view, array $data, $callback)
-	{
-		return $this->getMailer()->send($view, $data, $callback);
-	}
+        return call_user_func(array($this, $method), $view, $data, $callback, $queue);
+    }
 
-	/**
-	 * Force Orchestra Platform to send email using queue.
-	 *
-	 * @param  string           $view
-	 * @param  array            $data
-	 * @param  Closure|string   $callback
-	 * @param  string           $queue
-	 * @return \Illuminate\Mail\Mailer
-	 */
-	public function queue($view, array $data, $callback, $queue = null)
-	{
-		$callback = $this->buildQueueCallable($callback);
-		
-		$with = array(
-			'view'     => $view,
-			'data'     => $data,
-			'callback' => $callback,
-		);
+    /**
+     * Force Orchestra Platform to send email directly.
+     *
+     * @param  string           $view
+     * @param  array            $data
+     * @param  Closure|string   $callback
+     * @param  string           $queue
+     * @return \Illuminate\Mail\Mailer
+     */
+    public function send($view, array $data, $callback)
+    {
+        return $this->getMailer()->send($view, $data, $callback);
+    }
 
-		return $this->app['queue']->push('orchestra.mail@handleQueuedMessage', $with, $queue);
-	}
+    /**
+     * Force Orchestra Platform to send email using queue.
+     *
+     * @param  string           $view
+     * @param  array            $data
+     * @param  Closure|string   $callback
+     * @param  string           $queue
+     * @return \Illuminate\Mail\Mailer
+     */
+    public function queue($view, array $data, $callback, $queue = null)
+    {
+        $callback = $this->buildQueueCallable($callback);
 
-	/**
-	 * Build the callable for a queued e-mail job.
-	 *
-	 * @param  mixed  $callback
-	 * @return mixed
-	 */
-	protected function buildQueueCallable($callback)
-	{
-		if ( ! $callback instanceof Closure) return $callback;
+        $with = array(
+            'view'     => $view,
+            'data'     => $data,
+            'callback' => $callback,
+        );
 
-		return serialize(new SerializableClosure($callback));
-	}
+        return $this->app['queue']->push('orchestra.mail@handleQueuedMessage', $with, $queue);
+    }
 
-	/**
-	 * Handle a queued e-mail message job.
-	 *
-	 * @param  \Illuminate\Queue\Jobs\Job  $job
-	 * @param  array  $data
-	 * @return void
-	 */
-	public function handleQueuedMessage($job, $data)
-	{
-		$this->send($data['view'], $data['data'], $this->getQueuedCallable($data));
+    /**
+     * Build the callable for a queued e-mail job.
+     *
+     * @param  mixed  $callback
+     * @return mixed
+     */
+    protected function buildQueueCallable($callback)
+    {
+        if (! $callback instanceof Closure) {
+            return $callback;
+        }
 
-		$job->delete();
-	}
+        return serialize(new SerializableClosure($callback));
+    }
 
-	/**
-	 * Get the true callable for a queued e-mail message.
-	 *
-	 * @param  array  $data
-	 * @return mixed
-	 */
-	protected function getQueuedCallable(array $data)
-	{
-		if (str_contains($data['callback'], 'SerializableClosure'))
-		{
-			return with(unserialize($data['callback']))->getClosure();
-		}
+    /**
+     * Handle a queued e-mail message job.
+     *
+     * @param  \Illuminate\Queue\Jobs\Job  $job
+     * @param  array  $data
+     * @return void
+     */
+    public function handleQueuedMessage($job, $data)
+    {
+        $this->send($data['view'], $data['data'], $this->getQueuedCallable($data));
 
-		return $data['callback'];
-	}
+        $job->delete();
+    }
 
-	/**
-	 * Register the Swift Transport instance.
-	 *
-	 * @param  array  $config
-	 * @return void
-	 */
-	protected function registerSwiftTransport($config)
-	{
-		switch ($config['driver'])
-		{
-			case 'smtp':
-				return $this->registerSmtpTransport($config);
+    /**
+     * Get the true callable for a queued e-mail message.
+     *
+     * @param  array  $data
+     * @return mixed
+     */
+    protected function getQueuedCallable(array $data)
+    {
+        if (str_contains($data['callback'], 'SerializableClosure')) {
+            return with(unserialize($data['callback']))->getClosure();
+        }
 
-			case 'sendmail':
-				return $this->registerSendmailTransport($config);
+        return $data['callback'];
+    }
 
-			case 'mail':
-				return $this->registerMailTransport($config);
+    /**
+     * Register the Swift Transport instance.
+     *
+     * @param  array  $config
+     * @return void
+     */
+    protected function registerSwiftTransport($config)
+    {
+        switch ($config['driver'])
+        {
+            case 'smtp':
+                return $this->registerSmtpTransport($config);
 
-			default:
-				throw new InvalidArgumentException('Invalid mail driver.');
-		}
-	}
+            case 'sendmail':
+                return $this->registerSendmailTransport($config);
 
-	/**
-	 * Register the SMTP Swift Transport instance.
-	 *
-	 * @param  array  $config
-	 * @return void
-	 */
-	protected function registerSmtpTransport($config)
-	{
-		$transport = SmtpTransport::newInstance($config['host'], $config['port']);
+            case 'mail':
+                return $this->registerMailTransport($config);
 
-		if (isset($config['encryption']))
-		{
-			$transport->setEncryption($config['encryption']);
-		}
+            default:
+                throw new InvalidArgumentException('Invalid mail driver.');
+        }
+    }
 
-		// Once we have the transport we will check for the presence of a username
-		// and password. If we have it we will set the credentials on the Swift
-		// transporter instance so that we'll properly authenticate delivery.
-		if (isset($config['username']))
-		{
-			$transport->setUsername($config['username']);
-			$transport->setPassword($config['password']);
-		}
+    /**
+     * Register the SMTP Swift Transport instance.
+     *
+     * @param  array  $config
+     * @return void
+     */
+    protected function registerSmtpTransport($config)
+    {
+        $transport = SmtpTransport::newInstance($config['host'], $config['port']);
 
-		return $transport;
-	}
+        if (isset($config['encryption'])) {
+            $transport->setEncryption($config['encryption']);
+        }
 
-	/**
-	 * Register the Sendmail Swift Transport instance.
-	 *
-	 * @param  array  $config
-	 * @return void
-	 */
-	protected function registerSendmailTransport($config)
-	{
-		return SendmailTransport::newInstance($config['sendmail']);
-	}
+        // Once we have the transport we will check for the presence of a username
+        // and password. If we have it we will set the credentials on the Swift
+        // transporter instance so that we'll properly authenticate delivery.
+        if (isset($config['username'])) {
+            $transport->setUsername($config['username']);
+            $transport->setPassword($config['password']);
+        }
 
-	/**
-	 * Register the Mail Swift Transport instance.
-	 *
-	 * @param  array  $config
-	 * @return void
-	 */
-	protected function registerMailTransport($config)
-	{
-		unset($config);
-		return MailTransport::newInstance();
-	}
+        return $transport;
+    }
+
+    /**
+     * Register the Sendmail Swift Transport instance.
+     *
+     * @param  array  $config
+     * @return void
+     */
+    protected function registerSendmailTransport($config)
+    {
+        return SendmailTransport::newInstance($config['sendmail']);
+    }
+
+    /**
+     * Register the Mail Swift Transport instance.
+     *
+     * @param  array  $config
+     * @return void
+     */
+    protected function registerMailTransport($config)
+    {
+        unset($config);
+        return MailTransport::newInstance();
+    }
 }

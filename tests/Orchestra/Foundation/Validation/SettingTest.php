@@ -7,135 +7,135 @@ use Orchestra\Foundation\Validation\Setting;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 
-class SettingTest extends \PHPUnit_Framework_TestCase {
-	
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		Facade::clearResolvedInstances();
-		Facade::setFacadeApplication(new Container);
-	}
-	
-	/**
-	 * Teardown the test environment.
-	 */
-	public function tearDown()
-	{
-		m::close();
-	}
+class SettingTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        Facade::clearResolvedInstances();
+        Facade::setFacadeApplication(new Container);
+    }
 
-	/**
-	 * Test Orchestra\Foundation\Validation\Setting.
-	 *
-	 * @test
-	 */
-	public function testValidation()
-	{
-		$input = array(
-			'site_name'     => 'Orchestra Platform',
-			'email_address' => 'admin@orchestraplatform.com',
-			'email_driver'  => 'mail',
-			'email_port'    => 25,
-		);
+    /**
+     * Teardown the test environment.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
 
-		$rules = array(
-			'site_name'     => array('required'),
-			'email_address' => array('required', 'email'),
-			'email_driver'  => array('required', 'in:mail,smtp,sendmail'),
-			'email_port'    => array('numeric'),
-		);
-		
-		$validator = m::mock('Validator\Environment');
-		$validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
-		Validator::swap($validator);
+    /**
+     * Test Orchestra\Foundation\Validation\Setting.
+     *
+     * @test
+     */
+    public function testValidation()
+    {
+        $input = array(
+            'site_name'     => 'Orchestra Platform',
+            'email_address' => 'admin@orchestraplatform.com',
+            'email_driver'  => 'mail',
+            'email_port'    => 25,
+        );
 
-		$events = m::mock('Event\Dispatcher');
-		$events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturn(null);
-		Event::swap($events);
+        $rules = array(
+            'site_name'     => array('required'),
+            'email_address' => array('required', 'email'),
+            'email_driver'  => array('required', 'in:mail,smtp,sendmail'),
+            'email_port'    => array('numeric'),
+        );
 
-		$stub       = new Setting;
-		$validation = $stub->with($input);
+        $validator = m::mock('Validator\Environment');
+        $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
+        Validator::swap($validator);
 
-		$this->assertTrue($validation);
-	}
+        $events = m::mock('Event\Dispatcher');
+        $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturn(null);
+        Event::swap($events);
 
-	/**
-	 * Test Orchestra\Foundation\Validation\Setting on stmp 
-	 * setting.
-	 *
-	 * @test
-	 */
-	public function testValidationOnSmtp()
-	{
-		$input = array(
-			'site_name'      => 'Orchestra Platform',
-			'email_address'  => 'admin@orchestraplatform.com',
-			'email_driver'   => 'mail',
-			'email_port'     => 25,
-			'email_username' => 'admin@orchestraplatform.com',
-			'email_password' => '123456',
-		);
+        $stub       = new Setting;
+        $validation = $stub->with($input);
 
-		$rules = array(
-			'site_name'      => array('required'),
-			'email_address'  => array('required', 'email'),
-			'email_driver'   => array('required', 'in:mail,smtp,sendmail'),
-			'email_port'     => array('numeric'),
-			'email_username' => array('required'),
-			'email_host'     => array('required'),
-		);
+        $this->assertTrue($validation);
+    }
 
-		$validator = m::mock('Validator\Environment');
-		$validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
-		Validator::swap($validator);
+    /**
+     * Test Orchestra\Foundation\Validation\Setting on stmp
+     * setting.
+     *
+     * @test
+     */
+    public function testValidationOnSmtp()
+    {
+        $input = array(
+            'site_name'      => 'Orchestra Platform',
+            'email_address'  => 'admin@orchestraplatform.com',
+            'email_driver'   => 'mail',
+            'email_port'     => 25,
+            'email_username' => 'admin@orchestraplatform.com',
+            'email_password' => '123456',
+        );
 
-		$events = m::mock('Event\Dispatcher');
-		$events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturn(null);
-		Event::swap($events);
+        $rules = array(
+            'site_name'      => array('required'),
+            'email_address'  => array('required', 'email'),
+            'email_driver'   => array('required', 'in:mail,smtp,sendmail'),
+            'email_port'     => array('numeric'),
+            'email_username' => array('required'),
+            'email_host'     => array('required'),
+        );
 
-		$stub       = new Setting;
-		$validation = $stub->on('smtp')->with($input);
+        $validator = m::mock('Validator\Environment');
+        $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
+        Validator::swap($validator);
 
-		$this->assertTrue($validation);
-	}
+        $events = m::mock('Event\Dispatcher');
+        $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturn(null);
+        Event::swap($events);
 
-	/**
-	 * Test Orchestra\Foundation\Validation\Setting on sendmail 
-	 * setting.
-	 *
-	 * @test
-	 */
-	public function testValidationOnSendmail()
-	{
-		$input = array(
-			'site_name'      => 'Orchestra Platform',
-			'email_address'  => 'admin@orchestraplatform.com',
-			'email_driver'   => 'sendmail',
-			'email_port'     => 25,
-			'email_sendmail' => '/usr/bin/sendmail -t',
-		);
+        $stub       = new Setting;
+        $validation = $stub->on('smtp')->with($input);
 
-		$rules = array(
-			'site_name'      => array('required'),
-			'email_address'  => array('required', 'email'),
-			'email_driver'   => array('required', 'in:mail,smtp,sendmail'),
-			'email_port'     => array('numeric'),
-			'email_sendmail' => array('required'),
-		);
+        $this->assertTrue($validation);
+    }
 
-		$validator = m::mock('Validator\Environment');
-		$validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
-		Validator::swap($validator);
+    /**
+     * Test Orchestra\Foundation\Validation\Setting on sendmail
+     * setting.
+     *
+     * @test
+     */
+    public function testValidationOnSendmail()
+    {
+        $input = array(
+            'site_name'      => 'Orchestra Platform',
+            'email_address'  => 'admin@orchestraplatform.com',
+            'email_driver'   => 'sendmail',
+            'email_port'     => 25,
+            'email_sendmail' => '/usr/bin/sendmail -t',
+        );
 
-		$events = m::mock('Event\Dispatcher');
-		$events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturn(null);
-		Event::swap($events);
+        $rules = array(
+            'site_name'      => array('required'),
+            'email_address'  => array('required', 'email'),
+            'email_driver'   => array('required', 'in:mail,smtp,sendmail'),
+            'email_port'     => array('numeric'),
+            'email_sendmail' => array('required'),
+        );
 
-		$stub       = new Setting;
-		$validation = $stub->on('sendmail')->with($input);
+        $validator = m::mock('Validator\Environment');
+        $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
+        Validator::swap($validator);
 
-		$this->assertTrue($validation);
-	}
+        $events = m::mock('Event\Dispatcher');
+        $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturn(null);
+        Event::swap($events);
+
+        $stub       = new Setting;
+        $validation = $stub->on('sendmail')->with($input);
+
+        $this->assertTrue($validation);
+    }
 }

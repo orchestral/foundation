@@ -3,158 +3,155 @@
 use Mockery as m;
 use Orchestra\Foundation\Services\UserMetaRepository;
 
-class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase {
+class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * Application instance.
+     *
+     * @var Illuminate\Foundation\Application
+     */
+    private $app = null;
 
-	/**
-	 * Application instance.
-	 *
-	 * @var Illuminate\Foundation\Application
-	 */
-	private $app = null;
+    /**
+     * UserMeta instance.
+     *
+     * @var Orchestra\Model\UserMeta
+     */
+    private $model = null;
 
-	/**
-	 * UserMeta instance.
-	 *
-	 * @var Orchestra\Model\UserMeta
-	 */
-	private $model = null;
+    /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        $this->app   = new \Illuminate\Container\Container;
+        $this->model = m::mock('UserMeta');
+    }
 
-	/**
-	 * Setup the test environment.
-	 */
-	public function setUp()
-	{
-		$this->app   = new \Illuminate\Container\Container;
-		$this->model = m::mock('UserMeta');
-	}
+    /**
+     * Teardown the test environment.
+     */
+    public function tearDown()
+    {
+        unset($this->app);
+        m::close();
+    }
 
-	/**
-	 * Teardown the test environment.
-	 */
-	public function tearDown()
-	{
-		unset($this->app);
-		m::close();
-	}
+    /**
+     * Test Orchestra\Foundation\Services\UserMetaRepository::initiate()
+     * method.
+     *
+     * @test
+     */
+    public function testInitiateMethod()
+    {
+        $app = $this->app;
+        $app['config'] = $config = m::mock('Config\Manager');
+        $eloquent = $this->model;
+        $fooUser = m::mock('UserMeta');
+        $fooNull = m::mock('UserMeta');
 
-	/**
-	 * Test Orchestra\Foundation\Services\UserMetaRepository::initiate() 
-	 * method.
-	 *
-	 * @test
-	 */
-	public function testInitiateMethod()
-	{
-		$app = $this->app;
-		$app['config'] = $config = m::mock('Config\Manager');
-		$eloquent = $this->model;
-		$fooUser = m::mock('UserMeta');
-		$fooNull = m::mock('UserMeta');
+        $fooUser->shouldReceive('first')->twice()->andReturn($eloquent);
+        $fooNull->shouldReceive('first')->once()->andReturn(null);
 
-		$fooUser->shouldReceive('first')->twice()->andReturn($eloquent);
-		$fooNull->shouldReceive('first')->once()->andReturn(null);
+        $config->shouldReceive('get')->with('orchestra/memory::user.meta', array())->once()->andReturn(array());
+        $eloquent->shouldReceive('newInstance')->times(4)->andReturn($eloquent)
+            ->shouldReceive('search')->with('foo', 1)->once()->andReturn($fooUser)
+            ->shouldReceive('search')->with('foo', 2)->once()->andReturn($fooUser)
+            ->shouldReceive('search')->with('foobar', 1)->once()->andReturn($fooNull)
+            ->shouldReceive('save')->twice()->andReturn(true)
+            ->shouldReceive('delete')->once()->andReturn(true);
 
-		$config->shouldReceive('get')->with('orchestra/memory::user.meta', array())->once()->andReturn(array());
-		$eloquent->shouldReceive('newInstance')->times(4)->andReturn($eloquent)
-			->shouldReceive('search')->with('foo', 1)->once()->andReturn($fooUser)
-			->shouldReceive('search')->with('foo', 2)->once()->andReturn($fooUser)
-			->shouldReceive('search')->with('foobar', 1)->once()->andReturn($fooNull)
-			->shouldReceive('save')->twice()->andReturn(true)
-			->shouldReceive('delete')->once()->andReturn(true);
+        $app->instance('Orchestra\Model\UserMeta', $eloquent);
 
-		$app->instance('Orchestra\Model\UserMeta', $eloquent);
-		
-		$stub   = new UserMetaRepository($app, 'meta');
-		$refl   = new \ReflectionObject($stub);
-		$data   = $refl->getProperty('data');
-		$keyMap = $refl->getProperty('keyMap');
-		$model  = $refl->getProperty('model');
-		$data->setAccessible(true);
-		$keyMap->setAccessible(true);
-		$model->setAccessible(true);
+        $stub   = new UserMetaRepository($app, 'meta');
+        $refl   = new \ReflectionObject($stub);
+        $data   = $refl->getProperty('data');
+        $keyMap = $refl->getProperty('keyMap');
+        $model  = $refl->getProperty('model');
+        $data->setAccessible(true);
+        $keyMap->setAccessible(true);
+        $model->setAccessible(true);
 
-		$data->setValue($stub, array(
-			'foo/user-1'    => 'foobar',
-			'foobar/user-1' => 'foo',
-			'foo/user-2'    => ':to-be-deleted:'
-		));
+        $data->setValue($stub, array(
+            'foo/user-1'    => 'foobar',
+            'foobar/user-1' => 'foo',
+            'foo/user-2'    => ':to-be-deleted:'
+        ));
 
-		$keyMap->setValue($stub, array(
-			'foo/user-1' => array('id' => 5, 'value' => '', 'checksum' => md5('')),
-			'foo/user-2' => array('id' => 6, 'value' => '', 'checksum' => md5('')),
-		));
-		
-		$stub->finish();
-	}
+        $keyMap->setValue($stub, array(
+            'foo/user-1' => array('id' => 5, 'value' => '', 'checksum' => md5('')),
+            'foo/user-2' => array('id' => 6, 'value' => '', 'checksum' => md5('')),
+        ));
 
-	/**
-	 * Test Orchestra\Foundation\Services\UserMetaRepository::get() method.
-	 *
-	 * @test
-	 */
-	public function testGetMethod()
-	{
-		$app = $this->app;
-		$app['config'] = $config = m::mock('Config\Manager');
-		$eloquent = $this->model;
+        $stub->finish();
+    }
 
-		$foo = (object) array(
-			'id'    => 1,
-			'value' => 'foobar',
-		);
+    /**
+     * Test Orchestra\Foundation\Services\UserMetaRepository::get() method.
+     *
+     * @test
+     */
+    public function testGetMethod()
+    {
+        $app = $this->app;
+        $app['config'] = $config = m::mock('Config\Manager');
+        $eloquent = $this->model;
 
-		$fooResult = m::mock('UserMeta');
-		$foobarResult = m::mock('UserMeta');
+        $foo = (object) array(
+            'id'    => 1,
+            'value' => 'foobar',
+        );
 
-		$fooResult->shouldReceive('first')->once()->andReturn($foo);
-		$foobarResult->shouldReceive('first')->once()->andReturn(null);
+        $fooResult = m::mock('UserMeta');
+        $foobarResult = m::mock('UserMeta');
 
-		$eloquent->shouldReceive('search')->with('foo', 1)->once()->andReturn($fooResult)
-			->shouldReceive('search')->with('foobar', 1)->once()->andReturn($foobarResult);
-		$config->shouldReceive('get')->with('orchestra/memory::user.meta', array())->once()->andReturn(array());
+        $fooResult->shouldReceive('first')->once()->andReturn($foo);
+        $foobarResult->shouldReceive('first')->once()->andReturn(null);
 
-		$app->bind('Orchestra\Model\UserMeta', function () use ($eloquent)
-		{
-			return $eloquent;
-		});
+        $eloquent->shouldReceive('search')->with('foo', 1)->once()->andReturn($fooResult)
+            ->shouldReceive('search')->with('foobar', 1)->once()->andReturn($foobarResult);
+        $config->shouldReceive('get')->with('orchestra/memory::user.meta', array())->once()->andReturn(array());
 
-		$stub = new UserMetaRepository($app, 'meta');
-		$this->assertEquals('foobar', $stub->get('foo.1'));
-		$this->assertEquals(null, $stub->get('foobar.1'));
-	}
+        $app->bind('Orchestra\Model\UserMeta', function () use ($eloquent) {
+            return $eloquent;
+        });
 
-	/**
-	 * Test Orchestra\Foundation\Services\UserMetaRepository::forget() 
-	 * method.
-	 *
-	 * @test
-	 */
-	public function testForgetMethod()
-	{
-		$app = $this->app;
-		$app['config'] = $config = m::mock('Config\Manager');
-		$eloquent = $this->model;
-		
-		$config->shouldReceive('get')->with('orchestra/memory::user.meta', array())->once()->andReturn(array());
+        $stub = new UserMetaRepository($app, 'meta');
+        $this->assertEquals('foobar', $stub->get('foo.1'));
+        $this->assertEquals(null, $stub->get('foobar.1'));
+    }
 
-		$app->bind('Orchestra\Model\UserMeta', function () use ($eloquent)
-		{
-			return $eloquent;
-		});
+    /**
+     * Test Orchestra\Foundation\Services\UserMetaRepository::forget()
+     * method.
+     *
+     * @test
+     */
+    public function testForgetMethod()
+    {
+        $app = $this->app;
+        $app['config'] = $config = m::mock('Config\Manager');
+        $eloquent = $this->model;
 
-		$stub  = new UserMetaRepository($app, 'meta');
-		$refl  = new \ReflectionObject($stub);
-		$data = $refl->getProperty('data');
-		$data->setAccessible(true);
+        $config->shouldReceive('get')->with('orchestra/memory::user.meta', array())->once()->andReturn(array());
 
-		$data->setValue($stub, array(
-			'foo/user-1'   => 'foobar',
-			'hello/user-1' => 'foobar',
-		));
+        $app->bind('Orchestra\Model\UserMeta', function () use ($eloquent) {
+            return $eloquent;
+        });
 
-		$this->assertEquals('foobar', $stub->get('foo.1'));
-		$stub->forget('foo.1');
-		$this->assertNull($stub->get('foo.1'));
-	}
-	
+        $stub  = new UserMetaRepository($app, 'meta');
+        $refl  = new \ReflectionObject($stub);
+        $data = $refl->getProperty('data');
+        $data->setAccessible(true);
+
+        $data->setValue($stub, array(
+            'foo/user-1'   => 'foobar',
+            'hello/user-1' => 'foobar',
+        ));
+
+        $this->assertEquals('foobar', $stub->get('foo.1'));
+        $stub->forget('foo.1');
+        $this->assertNull($stub->get('foo.1'));
+    }
 }
