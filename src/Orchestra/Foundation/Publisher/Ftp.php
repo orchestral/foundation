@@ -140,14 +140,12 @@ class Ftp implements UploaderInterface
 
         // this is to check if return value is just a single file,
         // avoiding infinite loop when we reach a file.
-        if ($lists === array($path)) {
-            return true;
-        }
-
-        foreach ($lists as $dir) {
-            // Not a file or folder, ignore it.
-            if (! $ignored_path($dir)) {
-                $this->recursivePermission($dir, $mode);
+        if ($lists !== array($path)) {
+            foreach ($lists as $dir) {
+                // Not a file or folder, ignore it.
+                if (! $ignored_path($dir)) {
+                    $this->recursivePermission($dir, $mode);
+                }
             }
         }
 
@@ -281,10 +279,6 @@ class Ftp implements UploaderInterface
      */
     public function connected()
     {
-        if (is_null($this->connection)) {
-            return false;
-        }
-
         return $this->connection->connected();
     }
 }

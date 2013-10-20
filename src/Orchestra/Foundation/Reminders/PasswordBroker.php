@@ -131,21 +131,15 @@ class PasswordBroker extends Broker
 
         // In order to pass a Closure as "use" we need to actually convert it into
         // Serializable Closure, otherwise Laravel would throw an exception.
-        if ($callback instanceof Closure) {
-            $callback = new SerializableClosure($callback);
-        }
+        $callback = ($callback instanceof Closure ? new SerializableClosure($callback) : $callback);
 
         $closure = function ($mail) use ($user, $callback, $token) {
             $mail->to($user->getReminderEmail());
 
-            if (is_callable($callback)) {
-                call_user_func($callback, $mail, $user, $token);
-            }
+            is_callable($callback) and call_user_func($callback, $mail, $user, $token);
         };
 
-        if ($user instanceof ArrayableInterface) {
-            $user = $user->toArray();
-        }
+        $user = ($user instanceof ArrayableInterface ? $user->toArray() : $user);
 
         return $this->mailer->push($view, compact('token', 'user'), $closure);
     }
