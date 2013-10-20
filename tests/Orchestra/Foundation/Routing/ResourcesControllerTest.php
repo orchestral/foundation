@@ -54,7 +54,7 @@ class ResourcesControllerTest extends TestCase
         View::shouldReceive('make')->once()
             ->with('orchestra/foundation::resources.index', m::type('Array'))->andReturn('foo');
 
-        $this->call('GET', 'admin/resources');
+        $this->call('GET', 'admin/resources/index');
         $this->assertResponseOk();
     }
 

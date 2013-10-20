@@ -59,19 +59,28 @@ class ExtensionsControllerTest extends TestCase
      */
     public function testGetActivateAction()
     {
-        Extension::shouldReceive('started')->once()
-            ->with('laravel/framework')->andReturn(false);
-        Extension::shouldReceive('permission')->once()
-            ->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('activate')->once()
-            ->with('laravel/framework')->andReturn(true);
-        Messages::shouldReceive('add')->once()
-            ->with('success', m::any())->andReturn(null);
-        Orchestra::shouldReceive('handles')->once()
-            ->with('orchestra::extensions')->andReturn('extensions');
+        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
+        Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(true);
+        Extension::shouldReceive('activate')->once()->with('laravel/framework')->andReturn(true);
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
+        Orchestra::shouldReceive('handles')->once()->with('orchestra::extensions')->andReturn('extensions');
 
         $this->call('GET', 'admin/extensions/activate/laravel.framework');
         $this->assertRedirectedTo('extensions');
+    }
+
+    /**
+     * Test GET /admin/extensions/activate/(:name) when extension is already
+     * started.
+     *
+     * @test
+     */
+    public function testGetActivateActionGivenStartedExtension()
+    {
+        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
+        Orchestra::shouldReceive('abort')->once()->with(404);
+
+        $this->call('GET', 'admin/extensions/activate/laravel.framework');
     }
 
     /**
@@ -81,17 +90,28 @@ class ExtensionsControllerTest extends TestCase
      */
     public function testGetDeactivateAction()
     {
-        Extension::shouldReceive('started')->once()
-            ->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('deactivate')->once()
-            ->with('laravel/framework')->andReturn(true);
-        Messages::shouldReceive('add')->once()
-            ->with('success', m::any())->andReturn(null);
-        Orchestra::shouldReceive('handles')->once()
-            ->with('orchestra::extensions')->andReturn('extensions');
+        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
+        Extension::shouldReceive('deactivate')->once()->with('laravel/framework')->andReturn(true);
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
+        Orchestra::shouldReceive('handles')->once()->with('orchestra::extensions')->andReturn('extensions');
 
         $this->call('GET', 'admin/extensions/deactivate/laravel.framework');
         $this->assertRedirectedTo('extensions');
+    }
+
+    /**
+     * Test GET /admin/extensions/activate/(:name) when extension is not
+     * started.
+     *
+     * @test
+     */
+    public function testGetDeactivateActionGivenNotStartedExtension()
+    {
+        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
+        Extension::shouldReceive('activated')->once()->with('laravel/framework')->andReturn(false);
+        Orchestra::shouldReceive('abort')->once()->with(404);
+
+        $this->call('GET', 'admin/extensions/deactivate/laravel.framework');
     }
 
     /**
@@ -123,6 +143,20 @@ class ExtensionsControllerTest extends TestCase
     }
 
     /**
+     * Test GET /admin/extensions/configure/(:name) when extension is already
+     * started.
+     *
+     * @test
+     */
+    public function testGetConfigureActionGivenStartedExtension()
+    {
+        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
+        Orchestra::shouldReceive('abort')->once()->with(404);
+
+        $this->call('GET', 'admin/extensions/configure/laravel.framework');
+    }
+
+    /**
      * Test POST /admin/extensions/configure/(:name)
      *
      * @test
@@ -148,16 +182,32 @@ class ExtensionsControllerTest extends TestCase
                 ->with($input, array("orchestra.validate: extension.laravel/framework"))->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(false);
 
-        Extension::shouldReceive('started')->once()
-            ->with('laravel/framework')->andReturn(true);
+        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Orchestra::shouldReceive('memory')->once()->andReturn($memory);
-        Orchestra::shouldReceive('handles')->once()
-            ->with('orchestra::extensions')->andReturn('extensions');
-        Messages::shouldReceive('add')->once()
-            ->with('success', m::any())->andReturn(null);
+        Orchestra::shouldReceive('handles')->once()->with('orchestra::extensions')->andReturn('extensions');
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
 
         $this->call('POST', 'admin/extensions/configure/laravel.framework', $input);
         $this->assertRedirectedTo('extensions');
+    }
+
+    /**
+     * Test POST /admin/extensions/configure/(:name) when extension is not
+     * started.
+     *
+     * @test
+     */
+    public function testPostConfigureActionGivenNotStartedExtension()
+    {
+        $input = array(
+            'handles' => 'foo',
+            '_token'  => 'somesessiontoken',
+        );
+
+        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
+        Orchestra::shouldReceive('abort')->once()->with(404);
+
+        $this->call('POST', 'admin/extensions/configure/laravel.framework', $input);
     }
 
     /**
@@ -178,8 +228,7 @@ class ExtensionsControllerTest extends TestCase
                 ->with($input, array("orchestra.validate: extension.laravel/framework"))->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(true);
 
-        Extension::shouldReceive('started')->once()
-            ->with('laravel/framework')->andReturn(true);
+        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Orchestra::shouldReceive('handles')->once()
             ->with('orchestra::extensions/configure/laravel.framework')->andReturn('extensions');
 
@@ -194,19 +243,28 @@ class ExtensionsControllerTest extends TestCase
      */
     public function testGetUpdateAction()
     {
-        Extension::shouldReceive('started')->once()
-            ->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('permission')->once()
-            ->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('publish')->once()
-            ->with('laravel/framework')->andReturn(true);
-        Messages::shouldReceive('add')->once()
-            ->with('success', m::any())->andReturn(null);
-        Orchestra::shouldReceive('handles')->once()
-            ->with('orchestra::extensions')->andReturn('extensions');
+        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
+        Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(true);
+        Extension::shouldReceive('publish')->once()->with('laravel/framework')->andReturn(true);
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
+        Orchestra::shouldReceive('handles')->once()->with('orchestra::extensions')->andReturn('extensions');
 
         $this->call('GET', 'admin/extensions/update/laravel.framework');
         $this->assertRedirectedTo('extensions');
+    }
+
+    /**
+     * Test GET /admin/extensions/update/(:name) when extension is not
+     * started.
+     *
+     * @test
+     */
+    public function testGetUpdateActionGivenNotStartedExtension()
+    {
+        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
+        Orchestra::shouldReceive('abort')->once()->with(404);
+
+        $this->call('GET', 'admin/extensions/update/laravel.framework');
     }
 
     /**
@@ -216,14 +274,10 @@ class ExtensionsControllerTest extends TestCase
      */
     public function testGetUpdateActionGivenActivationError()
     {
-        Extension::shouldReceive('started')->once()
-            ->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('permission')->once()
-            ->with('laravel/framework')->andReturn(false);
-        Publisher::shouldReceive('queue')->once()
-            ->with('laravel/framework')->andReturn(null);
-        Orchestra::shouldReceive('handles')->once()
-            ->with('orchestra::publisher')->andReturn('publisher');
+        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
+        Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(false);
+        Publisher::shouldReceive('queue')->once()->with('laravel/framework')->andReturn(null);
+        Orchestra::shouldReceive('handles')->once()->with('orchestra::publisher')->andReturn('publisher');
 
         $this->call('GET', 'admin/extensions/update/laravel.framework');
         $this->assertRedirectedTo('publisher');

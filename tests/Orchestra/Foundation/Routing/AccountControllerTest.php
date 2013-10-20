@@ -94,6 +94,28 @@ class AccountControllerTest extends TestCase
     }
 
     /**
+     * Test POST /admin/account with invalid user id.
+     *
+     * @test
+     */
+    public function testPostIndexActionGivenInvalidUserId()
+    {
+        $input = array(
+            'id'       => '1',
+            'email'    => 'email@orchestraplatform.com',
+            'fullname' => 'Administrator',
+        );
+
+        $user = m::mock('\Orchestra\Model\User');
+
+        $user->shouldReceive('getAttribute')->once()->with('id')->andReturn(2);
+        Auth::shouldReceive('user')->once()->andReturn($user);
+        Orchestra::shouldReceive('abort')->once()->with(500);
+
+        $this->call('POST', 'admin/account', $input);
+    }
+
+    /**
      * Test POST /admin/account with database error.
      *
      * @test
@@ -212,6 +234,28 @@ class AccountControllerTest extends TestCase
 
         $this->call('POST', 'admin/account/password', $input);
         $this->assertRedirectedTo('account/password');
+    }
+
+    /**
+     * Test POST /admin/account/password with invalid user id.
+     *
+     * @test
+     */
+    public function testPostPasswordActionGivenInvalidUserId()
+    {
+        $input = array(
+            'id'               => '1',
+            'current_password' => '123456',
+            'new_password'     => 'qwerty',
+        );
+
+        $user = m::mock('\Orchestra\Model\User');
+        $user->shouldReceive('getAttribute')->once()->with('id')->andReturn(2);
+
+        Auth::shouldReceive('user')->once()->andReturn($user);
+        Orchestra::shouldReceive('abort')->once()->with(500);
+
+        $this->call('POST', 'admin/account/password', $input);
     }
 
     /**

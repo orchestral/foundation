@@ -66,6 +66,53 @@ class InstallControllerTest extends TestCase
     }
 
     /**
+     * Test GET /admin/install when auth driver is not Eloquent.
+     *
+     * @test
+     */
+    public function testGetIndexActionWhenAuthDriverIsNotEloquent()
+    {
+        $dbConfig = array(
+            'driver'    => 'mysql',
+            'host'      => 'localhost',
+            'database'  => 'database',
+            'username'  => 'root',
+            'password'  => 'root',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+        );
+
+        $requirement = m::mock('\Orchestra\Foundation\Installation\RequirementInterface');
+        $requirement->shouldReceive('check')->once()->andReturn(true)
+            ->shouldReceive('getChecklist')->once()->andReturn(array(
+                'databaseConnection' => array(
+                    'is'       => true,
+                    'should'   => true,
+                    'explicit' => true,
+                    'data'     => array(),
+                ),
+            ));
+
+        App::bind('Orchestra\Foundation\Installation\RequirementInterface', function () use ($requirement) {
+            return $requirement;
+        });
+        Config::set('database.default', 'mysql');
+        Config::set('auth', array('driver' => 'eloquent', 'model' => 'UserNotAvailableForAuthModel'));
+        Config::set('database.connections.mysql', $dbConfig);
+
+        $this->call('GET', 'admin/install');
+        $this->assertResponseOk();
+        $this->assertViewHasAll(array(
+            'database',
+            'auth',
+            'authentication',
+            'installable',
+            'checklist'
+        ));
+    }
+
+    /**
      * Test GET /admin/install/prepare
      *
      * @test

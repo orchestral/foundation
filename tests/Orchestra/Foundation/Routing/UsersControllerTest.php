@@ -124,9 +124,6 @@ class UsersControllerTest extends TestCase
         list(, $validator) = $this->bindDependencies();
 
         $user = m::mock('\Orchestra\Model\User');
-        $auth = (object) array(
-            'id' => 'foobar',
-        );
 
         $user->shouldReceive('setAttribute')->once()->with('status', 0)->andReturn(null)
             ->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturn(null)
@@ -143,11 +140,9 @@ class UsersControllerTest extends TestCase
         Orchestra::shouldReceive('handles')->once()->with('orchestra::users')->andReturn('users');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
         DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(
-                function ($c)
-                {
-                    $c();
-                });
+            ->with(m::type('Closure'))->andReturnUsing(function ($c) {
+                $c();
+            });
 
         $this->call('POST', 'admin/users', $input);
         $this->assertRedirectedTo('users');
@@ -170,9 +165,6 @@ class UsersControllerTest extends TestCase
         list(, $validator) = $this->bindDependencies();
 
         $user = m::mock('\Orchestra\Model\User');
-        $auth = (object) array(
-            'id' => 'foobar',
-        );
 
         $user->shouldReceive('setAttribute')->once()->with('status', 0)->andReturn(null)
             ->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturn(null)
@@ -189,11 +181,9 @@ class UsersControllerTest extends TestCase
         Orchestra::shouldReceive('handles')->once()->with('orchestra::users')->andReturn('users');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
         DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(
-                function ($c)
-                {
-                    $c();
-                });
+            ->with(m::type('Closure'))->andReturnUsing(function ($c) {
+                $c();
+            });
 
         $this->call('POST', 'admin/users', $input);
         $this->assertRedirectedTo('users');
@@ -214,11 +204,6 @@ class UsersControllerTest extends TestCase
         );
 
         list(, $validator) = $this->bindDependencies();
-
-        $user = m::mock('\Orchestra\Model\User');
-        $auth = (object) array(
-            'id' => 'foobar',
-        );
 
         $validator->shouldReceive('on')->once()->with('create')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
@@ -250,9 +235,6 @@ class UsersControllerTest extends TestCase
 
         $builder = m::mock('UserModelBuilder');
         $user    = m::mock('\Orchestra\Model\User');
-        $auth    = (object) array(
-            'id' => 'foobar',
-        );
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
         $user->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturn(null)
@@ -269,14 +251,32 @@ class UsersControllerTest extends TestCase
         Orchestra::shouldReceive('handles')->once()->with('orchestra::users')->andReturn('users');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
         DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(
-                function ($c)
-                {
-                    $c();
-                });
+            ->with(m::type('Closure'))->andReturnUsing(function ($c) {
+                $c();
+            });
 
         $this->call('PUT', 'admin/users/foo', $input);
         $this->assertRedirectedTo('users');
+    }
+
+    /**
+     * Test PUT /admin/users/(:any) when invalid user id is given.
+     *
+     * @test
+     */
+    public function testPutUpdateActionGivenInvalidUserId()
+    {
+        $input = array(
+            'id'       => 'foo',
+            'email'    => 'email@orchestraplatform.com',
+            'fullname' => 'Administrator',
+            'password' => '123456',
+            'roles'    => array(1),
+        );
+
+        Orchestra::shouldReceive('abort')->once()->with(500);
+
+        $this->call('PUT', 'admin/users/foobar', $input);
     }
 
     /**
@@ -298,9 +298,6 @@ class UsersControllerTest extends TestCase
 
         $builder = m::mock('UserModelBuilder');
         $user    = m::mock('\Orchestra\Model\User');
-        $auth    = (object) array(
-            'id' => 'foobar',
-        );
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
         $user->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturn(null)
@@ -320,11 +317,9 @@ class UsersControllerTest extends TestCase
         Messages::shouldReceive('add')->once()
             ->with('error', m::any())->andReturn(null);
         DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(
-                function ($c)
-                {
-                    $c();
-                });
+            ->with(m::type('Closure'))->andReturnUsing(function ($c) {
+                $c();
+            });
 
         $this->call('PUT', 'admin/users/foo', $input);
         $this->assertRedirectedTo('users');
@@ -384,14 +379,36 @@ class UsersControllerTest extends TestCase
             ->with('success', m::any())->andReturn(null);
         Auth::shouldReceive('user')->once()->andReturn($auth);
         DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(
-                function ($c)
-                {
-                    $c();
-                });
+            ->with(m::type('Closure'))->andReturnUsing(function ($c) {
+                $c();
+            });
 
         $this->call('GET', 'admin/users/foo/delete');
         $this->assertRedirectedTo('users');
+    }
+
+    /**
+     * Test GET /admin/users/(:any)/delete when trying to delete own
+     * account.
+     *
+     * @test
+     */
+    public function testGetDeleteActionWhenDeletingOwnAccount()
+    {
+        $builder = m::mock('UserModelBuilder');
+        $user    = m::mock('\Orchestra\Model\User');
+        $auth    = (object) array(
+            'id' => 'foobar',
+        );
+
+        $builder->shouldReceive('findOrFail')->once()->with('foobar')->andReturn($user);
+        $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foobar');
+
+        Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
+        Orchestra::shouldReceive('abort')->once();
+        Auth::shouldReceive('user')->once()->andReturn($auth);
+
+        $this->call('GET', 'admin/users/foobar/delete');
     }
 
     /**
@@ -419,11 +436,9 @@ class UsersControllerTest extends TestCase
             ->with('error', m::any())->andReturn(null);
         Auth::shouldReceive('user')->once()->andReturn($auth);
         DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(
-                function ($c)
-                {
-                    $c();
-                });
+            ->with(m::type('Closure'))->andReturnUsing(function ($c) {
+                $c();
+            });
 
         $this->call('GET', 'admin/users/foo/delete');
         $this->assertRedirectedTo('users');
