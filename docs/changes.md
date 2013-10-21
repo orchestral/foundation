@@ -3,7 +3,7 @@ Foundation Change Log
 
 ## Version 2.0
 
-### v2.0.22@dev
+### v2.0.22
 
 * Fixed `Javie.Events` usage on triggering switcher event.
 * Manage Twitter Bootstrap using Composer.
