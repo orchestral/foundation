@@ -2,6 +2,7 @@
 
 use Mockery as m;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Services\TestCase;
@@ -136,6 +137,7 @@ class ForgotControllerTest extends TestCase
             });
 
         Password::swap($password);
+        Auth::shouldReceive('login')->once()->with($user)->andReturn(null);
         Orchestra::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
 

@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Routing;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Redirect;
@@ -111,6 +112,8 @@ class ForgotController extends AdminController
         return Password::reset(array('email' => Input::get('email')), function ($user, $password) {
             $user->password = $password;
             $user->save();
+
+            Auth::login($user);
 
             Messages::add('success', trans('orchestra/foundation::response.account.password.update'));
 
