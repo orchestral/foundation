@@ -1,9 +1,9 @@
 Orchestra Mail Class
 ==============
 
-`Orchestra\Mail` offer a slight improvement to `Illuminate\Mail\Mailer` where you can now choose to either send directly or use queue via configuration.
+`Orchestra\Mail` offer a slight improvement to `Illuminate\Mail\Mailer` where administrator can define the e-mail configuration from Settings page as well as preference to use `send` or `queue`.
 
-## Sending Directly
+## Force Direct Sending
 
 `Orchestra\Mail::send()` deliver what you would expect from `Mail::send()` using the E-mail configuration setup in the Settings Page.
 
@@ -13,7 +13,7 @@ Orchestra\Mail::send('email.update', $data, function ($m) use ($user) {
 });
 ```
 
-## Sending via Queue
+## Force Sending via Queue
 
 `Orchestra\Mail::queue()` deliver what you would expect from `Mail::queue()` using the E-mail configuration setup in the Settings Page.
 
