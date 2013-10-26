@@ -12,7 +12,7 @@
 		}
 	],
 	"autoload": {
-		"psr-0": { 
+		"psr-0": {
 			"Orchestra\\Foundation" : "src/"
 		},
 		"files": [
@@ -24,6 +24,7 @@
 		"laravel/framework": "4.0.*",
 		"orchestra/asset": "2.0.*",
 		"orchestra/auth": "2.0.*",
+		"orchestra/debug": "2.0.*",
 		"orchestra/extension": "2.0.*",
 		"orchestra/facile": "2.0.*",
 		"orchestra/html": "2.0.*",
