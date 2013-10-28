@@ -30,6 +30,7 @@
 		"orchestra/html": "2.1.*",
 		"orchestra/memory": "2.1.*",
 		"orchestra/model": "2.1.*",
+		"orchestra/optimize": "2.1.*",
 		"orchestra/resources": "2.1.*",
 		"orchestra/support": "2.1.*",
 		"orchestra/translation": "2.1.*",
@@ -40,7 +41,7 @@
 		"mockery/mockery": "0.8.0",
 		"orchestra/testbench": "2.1.*",
 		"twbs/bootstrap": "3.0.*",
-		"packagist/yuicompressor-bin": "dev-master"
+		"packagist/yuicompressor-bin": "2.4.8"
 	},
 	"extra": {
 		"branch-alias": {
