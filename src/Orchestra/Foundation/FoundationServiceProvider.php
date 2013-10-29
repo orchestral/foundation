@@ -17,17 +17,17 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app['orchestra.app'] = $this->app->share(function ($app) {
             return new Application($app);
         });
+
+        $this->registerAliases();
     }
 
     /**
-     * Bootstrap the application events.
+     * Register application aliases.
      *
      * @return void
      */
-    public function boot()
+    protected function registerAliases()
     {
-        $this->package('orchestra/foundation', 'orchestra/foundation');
-
         $loader = AliasLoader::getInstance();
         $loader->alias('Orchestra\Asset', 'Orchestra\Support\Facades\Asset');
         $loader->alias('Orchestra\Acl', 'Orchestra\Support\Facades\Acl');
@@ -44,10 +44,22 @@ class FoundationServiceProvider extends ServiceProvider
         $loader->alias('Orchestra\Table', 'Orchestra\Support\Facades\Table');
         $loader->alias('Orchestra\Theme', 'Orchestra\Support\Facades\Theme');
         $loader->alias('Orchestra\Widget', 'Orchestra\Support\Facades\Widget');
+    }
+
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $path = realpath(__DIR__.'/../../');
+
+        $this->package('orchestra/foundation', 'orchestra/foundation', $path);
 
         $this->app['orchestra.app']->boot();
 
-        include __DIR__."/../../start.php";
+        include "{$path}/start.php";
 
         $this->app['events']->fire('orchestra.ready');
     }
