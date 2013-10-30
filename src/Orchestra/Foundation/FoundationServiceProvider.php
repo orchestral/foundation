@@ -14,7 +14,7 @@ class FoundationServiceProvider extends ServiceProvider
     {
         $this->app['orchestra.installed'] = false;
 
-        $this->app['orchestra.app'] = $this->app->share(function ($app) {
+        $this->app->bindShared('orchestra.app', function ($app) {
             return new Application($app);
         });
 

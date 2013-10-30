@@ -37,7 +37,7 @@ class SiteServiceProvider extends ServiceProvider
      */
     protected function registerMailer()
     {
-        $this->app['orchestra.mail'] = $this->app->share(function ($app) {
+        $this->app->bindShared('orchestra.mail', function ($app) {
             return new Mail($app);
         });
     }
@@ -49,11 +49,11 @@ class SiteServiceProvider extends ServiceProvider
      */
     protected function registerPublisher()
     {
-        $this->app['orchestra.publisher.ftp'] = $this->app->share(function ($app) {
+        $this->app->bindShared('orchestra.publisher.ftp', function ($app) {
             return new FtpClient;
         });
 
-        $this->app['orchestra.publisher'] = $this->app->share(function ($app) {
+        $this->app->bindShared('orchestra.publisher', function ($app) {
             return new Publisher\PublisherManager($app);
         });
     }
@@ -65,7 +65,7 @@ class SiteServiceProvider extends ServiceProvider
      */
     protected function registerSite()
     {
-        $this->app['orchestra.site'] = $this->app->share(function ($app) {
+        $this->app->bindShared('orchestra.site', function ($app) {
             return new Site($app);
         });
     }
@@ -77,7 +77,7 @@ class SiteServiceProvider extends ServiceProvider
      */
     protected function registerRoleEloquent()
     {
-        $this->app['orchestra.role'] = $this->app->share(function () {
+        $this->app->bindShared('orchestra.role', function () {
             return new Role;
         });
     }
@@ -89,7 +89,7 @@ class SiteServiceProvider extends ServiceProvider
      */
     protected function registerUserEloquent()
     {
-        $this->app['orchestra.user'] = $this->app->share(function () {
+        $this->app->bindShared('orchestra.user', function () {
             return new User;
         });
     }
