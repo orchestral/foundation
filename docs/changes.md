@@ -31,7 +31,7 @@ Replace call to `handles('orchestra/foundation::*')` to `handles('orchestra::*')
 * Manage Twitter Bootstrap using Composer.
 * Update Twitter Bootstrap v3.0.1.
 * Add `orchestra/debug` and `orchestra/optimize`.
-* Consolidate all commands service provider in `Orchestra\Foundation\ConsoleServiceProvider`.
+* Consolidate all commands service provider in `Orchestra\Foundation\ConsoleSupportServiceProvider`.
 
 ## Version 2.0
 

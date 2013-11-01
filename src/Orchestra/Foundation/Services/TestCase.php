@@ -115,7 +115,7 @@ abstract class TestCase extends TestbenchTestCase
             'Orchestra\View\ViewServiceProvider',
             'Orchestra\Widget\WidgetServiceProvider',
 
-            'Orchestra\Foundation\ConsoleServiceProvider',
+            'Orchestra\Foundation\ConsoleSupportServiceProvider',
             'Orchestra\Foundation\FoundationServiceProvider',
         );
     }
