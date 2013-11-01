@@ -34,6 +34,11 @@ Replace call to `handles('orchestra/foundation::*')` to `handles('orchestra::*')
 
 ## Version 2.0
 
+### v2.0.23@dev
+
+* Update Twitter Bootstrap v3.0.1.
+* Add `orchestra/optimize`.
+
 ### v2.0.22
 
 * Fixed `Javie.Events` usage on triggering switcher event.
