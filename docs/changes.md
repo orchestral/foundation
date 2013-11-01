@@ -5,7 +5,6 @@ Foundation Change Log
 
 ### v2.1.0@dev
 
-* Allow Orchestra Platform Administrator Interface Menu event handler to be configurable.
 * Split `Orchestra\Foundation\Services\AdminMenuHandler@handle` to allow easier customization.
 * Replace deprecated call to `Orchestra\Extension::isActive()` and instead use `Orchestra\Extension::activated()`.
 * Implement `"orchestra.validate: extension.{name}"` and `Orchestra\Services\Validation\Extension`.
@@ -23,14 +22,16 @@ Foundation Change Log
 Replace call to `handles('orchestra/foundation::*')` to `handles('orchestra::*')`.
 * Add italian translation.
 * Convert prefered function to use `Orchestra\Auth\Acl\Fluent::attach()` instead of `Orchestra\Auth\Acl\Fluent::fill()`.
-* Add `orchestra/translation`.
 * Improve user searching with new `Orchestra\Support\Str::searchable()` API.
 * Refactor presenters to use app container to allow IoC overwrite from application.
 * Allow cancelling SMTP e-mail password after change password is clicked.
-* Allow Orchestra Platform route to make use of latest `Orchestra\Extension\RequestGenerator` feature allowing subdomain handling.
+* Allow Orchestra Platform route to make use of latest `Orchestra\Extension\RouteGenerator` feature allowing subdomain handling.
 * Predefined package path to avoid additional overhead to guest package path.
 * Only display resources in navigation menus if not hidden.
 * Manage Twitter Bootstrap using Composer.
+* Update Twitter Bootstrap v3.0.1.
+* Add `orchestra/debug` and `orchestra/optimize`.
+* Consolidate all commands service provider in `Orchestra\Foundation\ConsoleServiceProvider`.
 
 ## Version 2.0
 
