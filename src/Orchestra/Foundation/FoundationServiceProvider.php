@@ -29,6 +29,7 @@ class FoundationServiceProvider extends ServiceProvider
     protected function registerAliases()
     {
         $loader = AliasLoader::getInstance();
+
         $loader->alias('Orchestra\Asset', 'Orchestra\Support\Facades\Asset');
         $loader->alias('Orchestra\Acl', 'Orchestra\Support\Facades\Acl');
         $loader->alias('Orchestra\App', 'Orchestra\Support\Facades\App');
@@ -39,6 +40,7 @@ class FoundationServiceProvider extends ServiceProvider
         $loader->alias('Orchestra\Memory', 'Orchestra\Support\Facades\Memory');
         $loader->alias('Orchestra\Messages', 'Orchestra\Support\Facades\Messages');
         $loader->alias('Orchestra\Profiler', 'Orchestra\Debug\Facades\Profiler');
+        $loader->alias('Orchestra\Publisher', 'Orchestra\Support\Facades\Publisher');
         $loader->alias('Orchestra\Resources', 'Orchestra\Support\Facades\Resources');
         $loader->alias('Orchestra\Site', 'Orchestra\Support\Facades\Site');
         $loader->alias('Orchestra\Table', 'Orchestra\Support\Facades\Table');

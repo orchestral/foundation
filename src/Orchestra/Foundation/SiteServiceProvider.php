@@ -27,7 +27,6 @@ class SiteServiceProvider extends ServiceProvider
         $this->registerSite();
         $this->registerRoleEloquent();
         $this->registerUserEloquent();
-        $this->registerAliases();
     }
 
     /**
@@ -91,21 +90,6 @@ class SiteServiceProvider extends ServiceProvider
     {
         $this->app['orchestra.user'] = $this->app->share(function () {
             return new User;
-        });
-    }
-
-    /**
-     * Register aliases.
-     *
-     * @return void
-     */
-    protected function registerAliases()
-    {
-        $this->app->booting(function () {
-            $loader = AliasLoader::getInstance();
-            $loader->alias('Orchestra\Mail', 'Orchestra\Support\Facades\Mail');
-            $loader->alias('Orchestra\Publisher', 'Orchestra\Support\Facades\Publisher');
-            $loader->alias('Orchestra\Site', 'Orchestra\Support\Facades\Site');
         });
     }
 
