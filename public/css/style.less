@@ -192,8 +192,11 @@ section {
 				}
 
 				ul.dropdown-menu {
-					a:hover {
-						background: @op-active;
+					> li {
+						a:hover, a:focus {
+							background: @op-active;
+							color: @op-base-text-hover;
+						}
 					}
 				}
 			}
