@@ -1,10 +1,7 @@
 <?php namespace Orchestra\Foundation\Presenter;
 
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Form as F;
 use Orchestra\Support\Facades\Form;
-use Orchestra\Support\Facades\Table;
-use Orchestra\Html\Form\FormBuilder;
 
 class Setting
 {

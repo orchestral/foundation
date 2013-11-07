@@ -2,8 +2,6 @@
 
 use DateTime;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 
 class Site
 {

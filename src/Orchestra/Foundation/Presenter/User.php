@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\HTML;
 use Orchestra\Support\Facades\Form;
 use Orchestra\Support\Facades\Table;
 use Orchestra\Html\Table\TableBuilder;
-use Orchestra\Model\Role;
 
 class User
 {
