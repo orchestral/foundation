@@ -1,8 +1,6 @@
 <?php namespace Orchestra\Foundation\Presenter;
 
-use Illuminate\Support\Facades\HTML;
 use Orchestra\Support\Facades\Form;
-use Orchestra\Support\Facades\Table;
 
 class Account
 {
