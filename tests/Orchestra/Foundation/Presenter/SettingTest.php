@@ -75,7 +75,7 @@ class SettingTest extends TestCase
             });
 
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::settings._email-password', compact('model'))
+            ->with('orchestra/foundation::settings.email-password', compact('model'))
             ->andReturn('email.password.help');
 
         $stub = new Setting;

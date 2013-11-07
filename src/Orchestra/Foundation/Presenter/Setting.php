@@ -97,7 +97,7 @@ class Setting
 
             $fieldset->control('input:password', 'email_password', function ($control) use ($model) {
                 $control->label(trans('orchestra/foundation::label.email.password'));
-                $control->help(View::make('orchestra/foundation::settings._email-password', compact('model')));
+                $control->help(View::make('orchestra/foundation::settings.email-password', compact('model')));
             });
 
             $fieldset->control('input:text', 'email_encryption', function ($control) {
