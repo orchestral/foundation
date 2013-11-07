@@ -17,7 +17,7 @@ use Orchestra\Support\Facades\App;
 |
 */
 
-Route::filter('orchestra.auth', function ($route, $request, $value = null) {
+Route::filter('orchestra.auth', function () {
     if (Auth::guest()) {
         return Redirect::guest(handles('orchestra/foundation::login'));
     }
@@ -34,7 +34,7 @@ Route::filter('orchestra.auth', function ($route, $request, $value = null) {
 |
 */
 
-Route::filter('orchestra.guest', function ($route, $request, $value = null) {
+Route::filter('orchestra.guest', function () {
     if (! Auth::guest()) {
         return Redirect::to(handles('orchestra/foundation::/'));
     }
@@ -51,7 +51,7 @@ Route::filter('orchestra.guest', function ($route, $request, $value = null) {
 |
 */
 
-Route::filter('orchestra.csrf', function ($route, $request, $value = null) {
+Route::filter('orchestra.csrf', function () {
     // In most case the application already has one, however it might behave
     // differently or deleted by the user. To avoid un-expected behaviour
     // the same functionality is duplicated.
@@ -91,7 +91,7 @@ Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestr
 |
 */
 
-Route::filter('orchestra.registrable', function ($route, $request, $value = null) {
+Route::filter('orchestra.registrable', function () {
     if (! App::memory()->get('site.registrable', false)) {
         return App::abort(404);
     }
@@ -107,13 +107,13 @@ Route::filter('orchestra.registrable', function ($route, $request, $value = null
 |
 */
 
-Route::filter('orchestra.installable', function ($route, $request, $value = null) {
+Route::filter('orchestra.installable', function () {
     if (App::make('orchestra.installed') === false) {
         return Redirect::to(handles('orchestra/foundation::install'));
     }
 });
 
-Route::filter('orchestra.installed', function ($route, $request, $value = null) {
+Route::filter('orchestra.installed', function () {
     if (App::make('orchestra.installed') === true) {
         return Redirect::to(handles('orchestra/foundation::/'));
     }

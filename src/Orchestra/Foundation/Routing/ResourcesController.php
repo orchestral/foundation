@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Resources;
-use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Foundation\Presenter\Resource as ResourcePresenter;
 

@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Model\Role;
 use Orchestra\Model\User;
 use Orchestra\Foundation\Presenter\User as UserPresenter;
 use Orchestra\Foundation\Validation\User as UserValidator;
