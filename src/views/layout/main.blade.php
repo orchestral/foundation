@@ -6,9 +6,9 @@
 	<body>
 		@include('orchestra/foundation::layout._navigation')
 		<?php Orchestra\Support\Facades\Site::set('header::class', 'main-header'); ?>
-		@include('orchestra/foundation::layout.widgets.header')
+		@include('orchestra/foundation::components.header')
 		<section class="container main">
-			@include('orchestra/foundation::layout.widgets.messages')
+			@include('orchestra/foundation::components.messages')
 			@yield('content')
 		</section>
 		@include('orchestra/foundation::layout._footer')

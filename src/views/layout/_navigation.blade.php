@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\Auth;
@@ -10,8 +10,8 @@ $navbar = new Fluent(array(
 	'title'      => memorize('site.name', 'Orchestra'),
 	'url'        => handles('orchestra::/'),
 	'attributes' => array('class' => 'navbar-fixed-top navbar-inverse'),
-	'left'       => View::make('orchestra/foundation::layout.widgets.menu', array('menu' => App::menu('orchestra'))),
-	'right'      => View::make('orchestra/foundation::layout.widgets.usernav'),
+	'left'       => View::make('orchestra/foundation::components.menu', array('menu' => App::menu('orchestra'))),
+	'right'      => View::make('orchestra/foundation::components.usernav'),
 )); ?>
 
 @decorator('navbar', $navbar)
@@ -22,7 +22,7 @@ $navbar = new Fluent(array(
 jQuery(function ($) {
 	$('a[rel="user-menu"]').on('click', function (e) {
 		e.preventDefault();
-		
+
 		window.location.href = "<?php echo handles('orchestra::login'); ?>";
 
 		return false;

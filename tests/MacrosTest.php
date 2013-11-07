@@ -64,6 +64,6 @@ class MacrosTest extends TestCase
 
         $this->assertInstanceOf('\Orchestra\View\Decorator', $stub);
         $this->assertInstanceOf('\Illuminate\View\View', $view);
-        $this->assertEquals('orchestra/foundation::layout.widgets.navbar', $view->getName());
+        $this->assertEquals('orchestra/foundation::components.navbar', $view->getName());
     }
 }
