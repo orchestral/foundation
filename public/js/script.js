@@ -1,5 +1,5 @@
-jQuery(function startOrchestra ($) { 'use strict';
-	var events = new Javie.Events;
+jQuery(function startOrchestra($) { 'use strict';
+	var eventDispatcher = new Javie.EventDispatcher;
 
 	$('div.pagination > ul').each(function onEachPaginator (i, item) {
 		$(item).addClass('pagination').parent().removeClass('pagination');
@@ -12,7 +12,7 @@ jQuery(function startOrchestra ($) { 'use strict';
 			highlight: element.data("highlight"),
 			width: 25,
 			change : function (e, target) {
-				events.fire('switcher.change', [element, e]);
+				eventDispatcher.fire('switcher.change', [element, e]);
 			}
 		})
 
@@ -25,7 +25,7 @@ jQuery(function startOrchestra ($) { 'use strict';
 
 	$('input[type="date"]').datepicker({ dateFormat: "yy-mm-dd" });
 
-	$('div.btn-group[data-toggle-name]').each(function loopEachBtnGroup () {
+	$('div.btn-group[data-toggle-name]').each(function loopEachBtnGroup() {
 		var group, form, name, hidden, buttons;
 
 		group   = $(this);
@@ -34,7 +34,7 @@ jQuery(function startOrchestra ($) { 'use strict';
 		hidden  = $('input[name="' + name + '"]', form);
 		buttons = $('button', group);
 
-		buttons.each(function setStateOnEachButton () {
+		buttons.each(function setStateOnEachButton() {
 			var button, setActive;
 
 			button = $(this);

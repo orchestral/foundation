@@ -28,9 +28,9 @@ echo $asset->scripts(); ?>
 @placeholder("orchestra.layout: footer")
 
 <script>
-jQuery(function onPageReady ($) { 'use strict';
-	var events = new Javie.Events;
+jQuery(function onPageReady($) { 'use strict';
+	var eventDispatcher = new Javie.EventDispatcher;
 
-	events.fire("orchestra.ready: <?php echo Request::path(); ?>");
+	eventDispatcher.fire("orchestra.ready: <?php echo Request::path(); ?>");
 });
 </script>

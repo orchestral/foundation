@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\HTML;
 use Orchestra\Support\Facades\Asset; ?>
 
@@ -30,4 +31,8 @@ $asset->script('javie', 'packages/orchestra/foundation/js/javie.min.js', array('
 echo $asset->styles();
 echo $asset->scripts(); ?>
 
-@placeholder("orchestra.layout: header") 
+<script>
+Javie.ENV = "<?php echo App::environment(); ?>";
+</script>
+
+@placeholder("orchestra.layout: header")
