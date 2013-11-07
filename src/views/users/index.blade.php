@@ -7,7 +7,7 @@ Site::set('header::add-button', true); ?>
 @section('content')
 
 <div class="row">
-	@include('orchestra/foundation::users.search')
+	@include('orchestra/foundation::users._search')
 	<div class="twelve columns white rounded box">
 		<?php echo $table; ?>
 	</div>
