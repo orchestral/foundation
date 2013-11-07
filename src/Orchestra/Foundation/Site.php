@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation;
 
+use DateTime;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -152,7 +153,7 @@ class Site
     public function convertToDateTime($datetime, $timezone = null)
     {
         // Convert instanceof DateTime to Carbon
-        if ($datetime instanceof \DateTime) {
+        if ($datetime instanceof DateTime) {
             $datetime = Carbon::instance($datetime);
         }
 
