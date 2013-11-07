@@ -3,7 +3,6 @@
 use Closure;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Fluent;

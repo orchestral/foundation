@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Foundation\Services;
 
-use Illuminate\Support\Facades\Auth;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Resources;
 

@@ -2,7 +2,6 @@
 
 use Exception;
 use Illuminate\Support\Manager;
-use Orchestra\Support\Ftp as FtpClient;
 
 class PublisherManager extends Manager
 {

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
-use Orchestra\Support\Messages;
 use Orchestra\Foundation\Services\UserMetaRepository;
 
 App::make('orchestra.memory')->extend('user', function ($app, $name) {

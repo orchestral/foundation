@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Foundation\AliasLoader;
 use Orchestra\Support\Ftp as FtpClient;
 use Orchestra\Model\Role;
 use Orchestra\Model\User;
