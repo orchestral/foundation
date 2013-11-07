@@ -2,6 +2,7 @@
 
 use DateTime;
 use Carbon\Carbon;
+use Orchestra\Support\Relic;
 
 class Site extends Relic
 {
