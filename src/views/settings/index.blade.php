@@ -17,19 +17,19 @@
 
 <script>
 jQuery(function onSettingPageReady($) { 'use strict';
-	var eventDispatcher, emailDriver, emailPassword, changeContainer, cancelContainer, changeButton, cancelButton, hiddenPassword;
+	var dispatcher, emailDriver, emailPassword, changeContainer, cancelContainer, changeButton, cancelButton, hiddenPassword;
 
 	hiddenPassword  = $('input[name="change_password"]');
 	changeButton    = $('#change_password_button');
 	cancelButton    = $('#cancel_password_button');
 	changeContainer = $('#change_password_container').show();
 	cancelContainer = $('#cancel_password_container').hide();
-	eventDispatcher = new Javie.EventDispatcher;
+	dispatcher      = Javie.make('event');
 	emailDriver     = $('select[name="email_driver"]');
 	emailPassword   = $('#email_password').hide();
 
 	// Listen to email.driver changed event.
-	eventDispatcher.listen('setting.changed: email.driver', function listenToEmailDriverChange(e, self) {
+	dispatcher.listen('setting.changed: email.driver', function listenToEmailDriverChange(e, self) {
 		var value, smtp;
 
 		value = self.value ? self.value : '';
@@ -80,7 +80,7 @@ jQuery(function onSettingPageReady($) { 'use strict';
 
 	// bind onChange event to publish an event.
 	emailDriver.on('change', function onChangeEmailDriver(e) {
-		eventDispatcher.fire('setting.changed: email.driver', [e, this]);
+		dispatcher.fire('setting.changed: email.driver', [e, this]);
 	});
 
 	// lets trigger an onChange event.

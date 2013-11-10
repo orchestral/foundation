@@ -29,8 +29,8 @@ echo $asset->scripts(); ?>
 
 <script>
 jQuery(function onPageReady($) { 'use strict';
-	var eventDispatcher = new Javie.EventDispatcher;
+	var dispatcher = Javie.make('event');
 
-	eventDispatcher.fire("orchestra.ready: <?php echo Request::path(); ?>");
+	dispatcher.fire("orchestra.ready: <?php echo Request::path(); ?>");
 });
 </script>

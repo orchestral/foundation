@@ -1,5 +1,5 @@
 jQuery(function startOrchestra($) { 'use strict';
-	var eventDispatcher = new Javie.EventDispatcher;
+	var dispatcher = Javie.make('event');
 
 	$('div.pagination > ul').each(function onEachPaginator (i, item) {
 		$(item).addClass('pagination').parent().removeClass('pagination');
@@ -12,7 +12,7 @@ jQuery(function startOrchestra($) { 'use strict';
 			highlight: element.data("highlight"),
 			width: 25,
 			change : function (e, target) {
-				eventDispatcher.fire('switcher.change', [element, e]);
+				dispatcher.fire('switcher.change', [element, e]);
 			}
 		})
 
