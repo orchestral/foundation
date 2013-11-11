@@ -128,6 +128,28 @@ class SiteTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test Orchestra\Foundation\Site::toLocalTime() method given date as
+     * string.
+     *
+     * @test
+     * @group support
+     */
+    public function testToLocalTimeGivenDateAsString()
+    {
+        $app = $this->app;
+
+        $app['config'] = $config = m::mock('Config\Manager');
+        $app['auth']   = $auth = m::mock('Auth\Guard');
+
+        $config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
+        $auth->shouldReceive('guest')->once()->andReturn(true);
+
+        $stub = with(new Site($app))->toLocalTime('2012-01-01 00:00:00');
+
+        $this->assertEquals(new \DateTimeZone('UTC'), $stub->getTimezone());
+    }
+
+    /**
      * Test Orchestra\Foundation\Site::toLocalTime() method return proper
      * datetime when is guest.
      *
@@ -145,7 +167,6 @@ class SiteTest extends \PHPUnit_Framework_TestCase
         $auth->shouldReceive('guest')->once()->andReturn(true);
 
         $stub = with(new Site($app))->toLocalTime(new Carbon('2012-01-01 00:00:00'));
-
         $this->assertEquals(new \DateTimeZone('UTC'), $stub->getTimezone());
     }
 

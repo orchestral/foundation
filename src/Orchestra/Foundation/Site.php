@@ -36,9 +36,7 @@ class Site extends Relic
         $app         = $this->app;
         $appTimeZone = $app['config']->get('app.timezone', 'UTC');
 
-        if (! ($datetime instanceof DateTime)) {
-            $datetime = $this->convertToDateTime($datetime, $appTimeZone);
-        }
+        $datetime = $this->convertToDateTime($datetime, $appTimeZone);
 
         if ($app['auth']->guest()) {
             return $datetime;
