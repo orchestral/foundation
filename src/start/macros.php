@@ -48,6 +48,8 @@ Blade::extend(function ($view) {
         $view = preg_replace('/(\s*)@'.$name.'\s?\(\s*(.*)\)/', $replacement, $view);
     }
 
+    $view = preg_replace('/(\s*)(<\?\s)/', '$1<?php ', $view);
+
     return $view;
 });
 
