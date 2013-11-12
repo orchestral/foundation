@@ -8,7 +8,6 @@ if (! function_exists('orchestra')) {
      */
     function orchestra()
     {
-
         return app('orchestra.app');
     }
 }

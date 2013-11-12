@@ -45,6 +45,24 @@ class AdminMenuHandler
      */
     public function handle()
     {
+        $this->settings();
+
+        $resources = Resources::all();
+
+        // Resources menu should only be appended if there is actually
+        // resources to be displayed.
+        if (! empty($resources)) {
+            $this->resources($resources);
+        }
+    }
+
+    /**
+     * Setting links.
+     *
+     * @return void
+     */
+    protected function settings()
+    {
         $acl        = $this->acl;
         $menu       = $this->menu;
         $translator = $this->translator;
@@ -68,18 +86,10 @@ class AdminMenuHandler
                 ->title($translator->trans('orchestra/foundation::title.settings.list'))
                 ->link(App::handles('orchestra::settings'));
         }
-
-        $resources = Resources::all();
-
-        // Resources menu should only be appended if there is actually
-        // resources to be displayed.
-        if (! empty($resources)) {
-            $this->resources($resources);
-        }
     }
 
     /**
-     * Resources link.
+     * Resources links.
      *
      * @param  array    $resources
      * @return void
