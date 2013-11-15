@@ -22,7 +22,7 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
     Route::get('forgot', 'Orchestra\Foundation\Routing\ForgotController@getIndex');
     Route::post('forgot', 'Orchestra\Foundation\Routing\ForgotController@postIndex');
     Route::get('forgot/reset/{token}', 'Orchestra\Foundation\Routing\ForgotController@getReset');
-    Route::post('forgot/reset/{token}', 'Orchestra\Foundation\Routing\ForgotController@postReset');
+    Route::post('forgot/reset', 'Orchestra\Foundation\Routing\ForgotController@postReset');
 
     // Route to installation.
     Route::get('install', 'Orchestra\Foundation\Routing\InstallController@getIndex');

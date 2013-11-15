@@ -1,6 +1,6 @@
 @extends('orchestra/foundation::layout.extra')
 
-<?php 
+<?php
 
 use Illuminate\Support\Facades\Form;
 use Illuminate\Support\Facades\Input;
@@ -11,11 +11,11 @@ use Orchestra\Support\Facades\Site; ?>
 <div class="row">
 
 	<div class="six columns offset-by-three">
-		
-		<?php echo Form::open(array('url' => handles("orchestra::forgot/reset/{$token}"), 'method' => 'POST', 'class' => 'form-horizontal')); ?>
-			
+
+		<?php echo Form::open(array('url' => handles("orchestra::forgot/reset"), 'method' => 'POST', 'class' => 'form-horizontal')); ?>
+
 			<input type="hidden" name="token" value="<?php echo $token; ?>">
-			
+
 			<fieldset>
 
 				<div class="form-group<?php echo $errors->has('email') ? ' error' : ''; ?>">

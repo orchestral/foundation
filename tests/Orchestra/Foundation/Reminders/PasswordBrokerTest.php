@@ -29,25 +29,6 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Reminders\PasswordBroker::getMessageBag() method.
-     *
-     * @test
-     */
-    public function testGetMessageBagMethod()
-    {
-        $stub = new PasswordBroker(
-            $reminders = m::mock('\Illuminate\Auth\Reminders\ReminderRepositoryInterface'),
-            $user = m::mock('\Illuminate\Auth\UserProviderInterface'),
-            $redirector = m::mock('\Illuminate\Routing\Redirector'),
-            $mailer = m::mock('\Orchestra\Foundation\Mail'),
-            $view = 'foo'
-        );
-
-        $stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
-        $this->assertEquals($messages, $stub->getMessageBag());
-    }
-
-    /**
      * Test Orchestra\Foundation\Reminders\PasswordBroker::remind() method.
      *
      * @test
@@ -57,12 +38,9 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         $stub = new PasswordBroker(
             $reminders = m::mock('\Illuminate\Auth\Reminders\ReminderRepositoryInterface'),
             $user = m::mock('\Illuminate\Auth\UserProviderInterface'),
-            $redirector = m::mock('\Illuminate\Routing\Redirector'),
             $mailer = m::mock('\Orchestra\Foundation\Mail'),
             $view = 'foo'
         );
-
-        $stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
 
         $callback = function () {
             //
@@ -78,10 +56,8 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
                 ->andReturnUsing(function ($v, $d, $c) use ($mailer) {
                     $c($mailer);
                 });
-        $messages->shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
-        $redirector->shouldReceive('refresh')->once()->andReturn('foo');
 
-        $this->assertEquals('foo', $stub->remind(array('username' => 'user-foo')));
+        $this->assertEquals('reminders.sent', $stub->remind(array('username' => 'user-foo')));
     }
 
     /**
@@ -95,19 +71,14 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         $stub = new PasswordBroker(
             $reminders = m::mock('\Illuminate\Auth\Reminders\ReminderRepositoryInterface'),
             $user = m::mock('\Illuminate\Auth\UserProviderInterface'),
-            $redirector = m::mock('\Illuminate\Routing\Redirector'),
             $mailer = m::mock('\Orchestra\Foundation\Mail'),
             $view = 'foo'
         );
 
-        $stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
-
         $user->shouldReceive('retrieveByCredentials')->once()
             ->with(array('username' => 'user-foo'))->andReturn(null);
-        $messages->shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
-        $redirector->shouldReceive('refresh')->once()->andReturn('foo');
 
-        $this->assertEquals('foo', $stub->remind(array('username' => 'user-foo')));
+        $this->assertEquals('reminders.user', $stub->remind(array('username' => 'user-foo')));
     }
 
     /**
@@ -120,28 +91,28 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         $stub = new PasswordBroker(
             $reminders = m::mock('\Illuminate\Auth\Reminders\ReminderRepositoryInterface'),
             $user = m::mock('\Illuminate\Auth\UserProviderInterface'),
-            $redirector = m::mock('\Illuminate\Routing\Redirector'),
             $mailer = m::mock('\Orchestra\Foundation\Mail'),
             $view = 'foo'
         );
-
-        $stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
 
         $callback = function ($user, $pass) {
             return 'foo';
         };
 
-        $user->shouldReceive('retrieveByCredentials')->once()->with(array('username' => 'user-foo'))
-            ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
+        $credentials = array(
+            'username' => 'user-foo',
+            'password' => 'qwerty',
+            'password_confirmation' => 'qwerty',
+            'token' => 'someuniquetokenkey',
+        );
+
+        $user->shouldReceive('retrieveByCredentials')->once()
+                ->with(array_except($credentials, array('password_confirmation', 'token')))
+                ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
         $reminders->shouldReceive('exists')->once()->with($userReminderable, 'someuniquetokenkey')->andReturn(true)
             ->shouldReceive('delete')->once()->with('someuniquetokenkey')->andReturn(true);
-        $redirector->shouldReceive('getUrlGenerator')->andReturn($redirector)
-            ->shouldReceive('getRequest')->times(5)->andReturn($request = m::mock('RequestBag'));
-        $request->shouldReceive('input')->twice()->with('password')->andReturn('qwerty')
-            ->shouldReceive('input')->once()->with('password_confirmation')->andReturn('qwerty')
-            ->shouldReceive('input')->twice()->with('token')->andReturn('someuniquetokenkey');
 
-        $this->assertEquals('foo', $stub->reset(array('username' => 'user-foo'), $callback));
+        $this->assertEquals('reminders.reset', $stub->reset($credentials, $callback));
     }
 
     /**
@@ -155,22 +126,25 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         $stub = new PasswordBroker(
             $reminders = m::mock('\Illuminate\Auth\Reminders\ReminderRepositoryInterface'),
             $user = m::mock('\Illuminate\Auth\UserProviderInterface'),
-            $redirector = m::mock('\Illuminate\Routing\Redirector'),
             $mailer = m::mock('\Orchestra\Foundation\Mail'),
             $view = 'foo'
         );
-
-        $stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
 
         $callback = function ($user, $pass) {
             //
         };
 
-        $user->shouldReceive('retrieveByCredentials')->once()->with(array('username' => 'user-foo'))->andReturn(null);
-        $messages->shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
-        $redirector->shouldReceive('refresh')->once()->andReturn('foo');
+        $credentials = array(
+            'username' => 'user-foo',
+            'password' => 'qwerty',
+            'password_confirmation' => 'qwerty',
+            'token' => 'someuniquetokenkey',
+        );
 
-        $this->assertEquals('foo', $stub->reset(array('username' => 'user-foo'), $callback));
+        $user->shouldReceive('retrieveByCredentials')->once()
+            ->with(array_except($credentials, array('password_confirmation', 'token')))->andReturn(null);
+
+        $this->assertEquals('reminders.user', $stub->reset($credentials, $callback));
     }
 
     /**
@@ -184,27 +158,27 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         $stub = new PasswordBroker(
             $reminders = m::mock('\Illuminate\Auth\Reminders\ReminderRepositoryInterface'),
             $user = m::mock('\Illuminate\Auth\UserProviderInterface'),
-            $redirector = m::mock('\Illuminate\Routing\Redirector'),
             $mailer = m::mock('\Orchestra\Foundation\Mail'),
             $view = 'foo'
         );
-
-        $stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
 
         $callback = function ($user, $pass) {
             //
         };
 
-        $user->shouldReceive('retrieveByCredentials')->once()->with(array('username' => 'user-foo'))
-            ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
-        $messages->shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
-        $redirector->shouldReceive('getUrlGenerator')->andReturn($redirector)
-            ->shouldReceive('getRequest')->twice()->andReturn($request = m::mock('RequestBag'))
-            ->shouldReceive('refresh')->once()->andReturn('foo');
-        $request->shouldReceive('input')->once()->with('password')->andReturn('qwerty')
-            ->shouldReceive('input')->once()->with('password_confirmation')->andReturn('notqwerty');
+        $credentials = array(
+            'username' => 'user-foo',
+            'password' => 'qwerty',
+            'password_confirmation' => 'qwerty',
+            'token' => 'someuniquetokenkey',
+        );
 
-        $this->assertEquals('foo', $stub->reset(array('username' => 'user-foo'), $callback));
+        $user->shouldReceive('retrieveByCredentials')->once()
+                ->with(array_except($credentials, array('password_confirmation', 'token')))
+                ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
+        $reminders->shouldReceive('exists')->once()->with($userReminderable, 'someuniquetokenkey')->andReturn(false);
+
+        $this->assertEquals('reminders.token', $stub->reset($credentials, $callback));
     }
 
     /**
@@ -218,29 +192,27 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         $stub = new PasswordBroker(
             $reminders = m::mock('\Illuminate\Auth\Reminders\ReminderRepositoryInterface'),
             $user = m::mock('\Illuminate\Auth\UserProviderInterface'),
-            $redirector = m::mock('\Illuminate\Routing\Redirector'),
             $mailer = m::mock('\Orchestra\Foundation\Mail'),
             $view = 'foo'
         );
-
-        $stub->setMessageBag($messages = m::mock('\Orchestra\Support\Messages'));
 
         $callback = function ($user, $pass) {
             //
         };
 
-        $user->shouldReceive('retrieveByCredentials')->once()->with(array('username' => 'user-foo'))
-            ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
-        $reminders->shouldReceive('exists')->once()->with($userReminderable, 'someuniquetokenkey')->andReturn(false);
-        $messages->shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
-        $redirector->shouldReceive('getUrlGenerator')->andReturn($redirector)
-            ->shouldReceive('getRequest')->times(3)->andReturn($request = m::mock('RequestBag'))
-            ->shouldReceive('refresh')->once()->andReturn('foo');
-        $request->shouldReceive('input')->once()->with('password')->andReturn('qwerty')
-            ->shouldReceive('input')->once()->with('password_confirmation')->andReturn('qwerty')
-            ->shouldReceive('input')->once()->with('token')->andReturn('someuniquetokenkey');
+        $credentials = array(
+            'username' => 'user-foo',
+            'password' => 'qwerty',
+            'password_confirmation' => 'qwerty',
+            'token' => 'someuniquetokenkey',
+        );
 
-        $this->assertEquals('foo', $stub->reset(array('username' => 'user-foo'), $callback));
+        $user->shouldReceive('retrieveByCredentials')->once()
+                ->with(array_except($credentials, array('password_confirmation', 'token')))
+                ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
+        $reminders->shouldReceive('exists')->once()->with($userReminderable, 'someuniquetokenkey')->andReturn(false);
+
+        $this->assertEquals('reminders.token', $stub->reset($credentials, $callback));
     }
 
     /**
@@ -254,9 +226,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         $stub = new PasswordBroker(
             $reminders = m::mock('\Illuminate\Auth\Reminders\ReminderRepositoryInterface'),
             $user = m::mock('\Illuminate\Auth\UserProviderInterface'),
-            $redirector = m::mock('\Illuminate\Routing\Redirector'),
             $mailer = m::mock('\Orchestra\Foundation\Mail'),
-            $messages = m::mock('\Orchestra\Support\Messages'),
             $view = 'foo'
         );
 
