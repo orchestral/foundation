@@ -37,11 +37,6 @@ return array(
         'other-depends-on' => 'Extension :name was not deactivated because :dependencies depends on it',
     ),
 
-    'reminders' => array(
-        'email-fail' => 'Unable to send Reset Password e-mail',
-        'email-send' => 'Reset Password e-mail has been sent, please check your inbox',
-    ),
-
     'settings' => array(
         'update'        => 'Application settings has been updated',
         'system-update' => 'Orchestra Foundation has been updated',

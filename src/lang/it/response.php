@@ -38,11 +38,6 @@ return array(
         'other-depends-on' => "Non è stato possibile disattivare l'estensione :name perché :dependencies dipende da essa",
     ),
 
-    'reminders' => array(
-        'email-fail' => "Impossibile inviare l'e-mail per il reset della password",
-        'email-send' => "L'e-mail per resettare la password è stata inviata, controlla la tua posta in arrivo",
-    ),
-
     'settings' => array(
         'update'        => "Le impostazioni dell'applicazione sono state aggiornate",
         'system-update' => 'Orchestra Foundation è stata aggiornata',
