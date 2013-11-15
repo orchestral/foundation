@@ -2,12 +2,14 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
+use Orchestra\Foundation\Reminders\PasswordBroker;
 use Orchestra\Foundation\Validation\Auth as AuthValidator;
 
 class ForgotController extends AdminController
@@ -75,13 +77,23 @@ class ForgotController extends AdminController
                     ->withErrors($validation);
         }
 
-        $memory   = App::memory();
-        $site     = $memory->get('site.name', 'Orchestra Platform');
-        $callback = function ($mail) use ($site) {
-            $mail->subject(trans('orchestra/foundation::email.forgot.request', array('site' => $site)));
-        };
+        $memory = App::memory();
+        $site   = $memory->get('site.name', 'Orchestra Platform');
 
-        return Password::remind(array('email' => $input['email']), $callback);
+        $response = Password::remind(array('email' => $input['email']), function ($mail) use ($site) {
+            $mail->subject(trans('orchestra/foundation::email.forgot.request', array('site' => $site)));
+        });
+
+        switch ($response) {
+            case PasswordBroker::INVALID_USER:
+                Messages::add('error', trans($response));
+                break;
+            case PasswordBroker::REMINDER_SENT:
+                Messages::add('success', trans($response));
+                break;
+        }
+
+        return Redirect::to(handles('orchestra::forgot'));
     }
 
     /**
@@ -103,21 +115,33 @@ class ForgotController extends AdminController
     /**
      * Create a new password for the user.
      *
-     * POST (:orchestra)/forgot/reset/(:hash)
+     * POST (:orchestra)/forgot/reset
      *
      * @return Response
      */
     public function postReset()
     {
-        return Password::reset(array('email' => Input::get('email')), function ($user, $password) {
+        $credentials = Input::only('email', 'password', 'password_confirmation', 'token');
+
+        $response = Password::reset($credentials, function ($user, $password) {
+            // Save the new password and login the user.
             $user->password = $password;
             $user->save();
 
             Auth::login($user);
-
-            Messages::add('success', trans('orchestra/foundation::response.account.password.update'));
-
-            return Redirect::to(handles('orchestra::login'));
         });
+
+        switch ($response) {
+            case PasswordBroker::INVALID_PASSWORD:
+            case PasswordBroker::INVALID_TOKEN:
+            case PasswordBroker::INVALID_USER:
+                Messages::add('error', Lang::get($response));
+                return Redirect::to(handles('orchestra::forgot/reset/'.$credentials['token']));
+            case PasswordBroker::PASSWORD_RESET:
+                Messages::add('success', trans('orchestra/foundation::response.account.password.update'));
+                break;
+        }
+
+        return Redirect::to(handles('orchestra::/'));
     }
 }
