@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Foundation\Reminders\PasswordBroker;
 use Orchestra\Foundation\Validation\Auth as AuthValidator;
 
 class ForgotController extends AdminController
@@ -83,7 +82,7 @@ class ForgotController extends AdminController
             $mail->subject(trans('orchestra/foundation::email.forgot.request', array('site' => $site)));
         });
 
-        $status = ($response === PasswordBroker::REMINDER_SENT ? 'success' : 'error');
+        $status = ($response === Password::REMINDER_SENT ? 'success' : 'error');
 
         Messages::add($status, trans($response));
 
@@ -126,9 +125,9 @@ class ForgotController extends AdminController
         });
 
         $errors = array(
-            PasswordBroker::INVALID_PASSWORD,
-            PasswordBroker::INVALID_TOKEN,
-            PasswordBroker::INVALID_USER,
+            Password::INVALID_PASSWORD,
+            Password::INVALID_TOKEN,
+            Password::INVALID_USER,
         );
 
         if (in_array($response, $errors)) {

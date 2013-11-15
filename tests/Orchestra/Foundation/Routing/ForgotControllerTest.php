@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\View;
-use Orchestra\Foundation\Reminders\PasswordBroker;
 use Orchestra\Foundation\Services\TestCase;
 use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Messages;
@@ -76,7 +75,7 @@ class ForgotControllerTest extends TestCase
         $password->shouldReceive('remind')->once()->andReturnUsing(function ($d, $c) use ($mailer) {
             $c($mailer);
 
-            return PasswordBroker::REMINDER_SENT;
+            return Password::REMINDER_SENT;
         });
 
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
@@ -111,7 +110,7 @@ class ForgotControllerTest extends TestCase
 
         Password::swap($password);
 
-        $password->shouldReceive('remind')->once()->andReturn(PasswordBroker::INVALID_USER);
+        $password->shouldReceive('remind')->once()->andReturn(Password::INVALID_USER);
 
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
         Orchestra::shouldReceive('handles')->once()->with('orchestra::forgot')->andReturn('forgot');
@@ -191,7 +190,7 @@ class ForgotControllerTest extends TestCase
             ->andReturnUsing(function ($d, $c) use ($user) {
                 $c($user, '123456');
 
-                return PasswordBroker::PASSWORD_RESET;
+                return Password::PASSWORD_RESET;
             });
 
         Password::swap($password);
@@ -221,7 +220,7 @@ class ForgotControllerTest extends TestCase
         $password = m::mock('PasswordBroker');
 
         $password->shouldReceive('reset')->once()->with($input, m::type('Closure'))
-            ->andReturn(PasswordBroker::INVALID_PASSWORD);
+            ->andReturn(Password::INVALID_PASSWORD);
 
         Password::swap($password);
 
@@ -249,7 +248,7 @@ class ForgotControllerTest extends TestCase
         $password = m::mock('PasswordBroker');
 
         $password->shouldReceive('reset')->once()->with($input, m::type('Closure'))
-            ->andReturn(PasswordBroker::INVALID_TOKEN);
+            ->andReturn(Password::INVALID_TOKEN);
 
         Password::swap($password);
 
@@ -277,7 +276,7 @@ class ForgotControllerTest extends TestCase
         $password = m::mock('PasswordBroker');
 
         $password->shouldReceive('reset')->once()->with($input, m::type('Closure'))
-            ->andReturn(PasswordBroker::INVALID_USER);
+            ->andReturn(Password::INVALID_USER);
 
         Password::swap($password);
 
