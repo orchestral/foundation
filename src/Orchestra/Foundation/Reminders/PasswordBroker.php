@@ -68,6 +68,16 @@ class PasswordBroker extends Broker
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getUser(array $credentials)
+    {
+        $credentials = array_except($credentials, array('password_confirmation', 'token'));
+
+        return parent::getUser($credentials);
+    }
+
+    /**
      * Send the password reminder e-mail.
      *
      * @param  \Illuminate\Auth\Reminders\RemindableInterface  $user

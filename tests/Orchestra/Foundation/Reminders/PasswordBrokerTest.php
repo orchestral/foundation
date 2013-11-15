@@ -99,12 +99,20 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
             return 'foo';
         };
 
-        $user->shouldReceive('retrieveByCredentials')->once()->with(array('username' => 'user-foo'))
-            ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
+        $credentials = array(
+            'username' => 'user-foo',
+            'password' => 'qwerty',
+            'password_confirmation' => 'qwerty',
+            'token' => 'someuniquetokenkey',
+        );
+
+        $user->shouldReceive('retrieveByCredentials')->once()
+                ->with(array_except($credentials, array('password_confirmation', 'token')))
+                ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
         $reminders->shouldReceive('exists')->once()->with($userReminderable, 'someuniquetokenkey')->andReturn(true)
             ->shouldReceive('delete')->once()->with('someuniquetokenkey')->andReturn(true);
 
-        $this->assertEquals('foo', $stub->reset(array('username' => 'user-foo'), $callback));
+        $this->assertEquals('reminders.reset', $stub->reset($credentials, $callback));
     }
 
     /**
@@ -126,9 +134,17 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
             //
         };
 
-        $user->shouldReceive('retrieveByCredentials')->once()->with(array('username' => 'user-foo'))->andReturn(null);
+        $credentials = array(
+            'username' => 'user-foo',
+            'password' => 'qwerty',
+            'password_confirmation' => 'qwerty',
+            'token' => 'someuniquetokenkey',
+        );
 
-        $this->assertEquals('reminders.user', $stub->reset(array('username' => 'user-foo'), $callback));
+        $user->shouldReceive('retrieveByCredentials')->once()
+            ->with(array_except($credentials, array('password_confirmation', 'token')))->andReturn(null);
+
+        $this->assertEquals('reminders.user', $stub->reset($credentials, $callback));
     }
 
     /**
@@ -150,10 +166,19 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
             //
         };
 
-        $user->shouldReceive('retrieveByCredentials')->once()->with(array('username' => 'user-foo'))
-            ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
+        $credentials = array(
+            'username' => 'user-foo',
+            'password' => 'qwerty',
+            'password_confirmation' => 'qwerty',
+            'token' => 'someuniquetokenkey',
+        );
 
-        $this->assertEquals('foo', $stub->reset(array('username' => 'user-foo'), $callback));
+        $user->shouldReceive('retrieveByCredentials')->once()
+                ->with(array_except($credentials, array('password_confirmation', 'token')))
+                ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
+        $reminders->shouldReceive('exists')->once()->with($userReminderable, 'someuniquetokenkey')->andReturn(false);
+
+        $this->assertEquals('reminders.token', $stub->reset($credentials, $callback));
     }
 
     /**
@@ -175,11 +200,19 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
             //
         };
 
-        $user->shouldReceive('retrieveByCredentials')->once()->with(array('username' => 'user-foo'))
-            ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
+        $credentials = array(
+            'username' => 'user-foo',
+            'password' => 'qwerty',
+            'password_confirmation' => 'qwerty',
+            'token' => 'someuniquetokenkey',
+        );
+
+        $user->shouldReceive('retrieveByCredentials')->once()
+                ->with(array_except($credentials, array('password_confirmation', 'token')))
+                ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
         $reminders->shouldReceive('exists')->once()->with($userReminderable, 'someuniquetokenkey')->andReturn(false);
 
-        $this->assertEquals('foo', $stub->reset(array('username' => 'user-foo'), $callback));
+        $this->assertEquals('reminders.token', $stub->reset($credentials, $callback));
     }
 
     /**
