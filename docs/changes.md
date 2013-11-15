@@ -32,6 +32,7 @@ Replace call to `handles('orchestra/foundation::*')` to `handles('orchestra::*')
 * Update Twitter Bootstrap v3.0.1.
 * Add `orchestra/debug` and `orchestra/optimize`.
 * Consolidate all commands service provider in `Orchestra\Foundation\ConsoleSupportServiceProvider`.
+* Refactor `Orchestra\Foundation\Reminders\PasswordBroker` and `Orchestra\Foundation\Routing\ForgotController` based on Laravel 4.1 changes.
 
 ## Version 2.0
 
