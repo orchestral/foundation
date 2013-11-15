@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
@@ -84,14 +83,9 @@ class ForgotController extends AdminController
             $mail->subject(trans('orchestra/foundation::email.forgot.request', array('site' => $site)));
         });
 
-        switch ($response) {
-            case PasswordBroker::INVALID_USER:
-                Messages::add('error', trans($response));
-                break;
-            case PasswordBroker::REMINDER_SENT:
-                Messages::add('success', trans($response));
-                break;
-        }
+        $status = ($response === PasswordBroker::REMINDER_SENT ? 'success' : 'error');
+
+        Messages::add($status, trans($response));
 
         return Redirect::to(handles('orchestra::forgot'));
     }
@@ -131,16 +125,19 @@ class ForgotController extends AdminController
             Auth::login($user);
         });
 
-        switch ($response) {
-            case PasswordBroker::INVALID_PASSWORD:
-            case PasswordBroker::INVALID_TOKEN:
-            case PasswordBroker::INVALID_USER:
-                Messages::add('error', Lang::get($response));
-                return Redirect::to(handles('orchestra::forgot/reset/'.$credentials['token']));
-            case PasswordBroker::PASSWORD_RESET:
-                Messages::add('success', trans('orchestra/foundation::response.account.password.update'));
-                break;
+        $errors = array(
+            PasswordBroker::INVALID_PASSWORD,
+            PasswordBroker::INVALID_TOKEN,
+            PasswordBroker::INVALID_USER,
+        );
+
+        if (in_array($response, $errors)) {
+            Messages::add('error', trans($response));
+
+            return Redirect::to(handles('orchestra::forgot/reset/'.$credentials['token']));
         }
+
+        Messages::add('success', trans('orchestra/foundation::response.account.password.update'));
 
         return Redirect::to(handles('orchestra::/'));
     }
