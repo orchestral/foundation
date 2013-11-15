@@ -107,7 +107,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         );
 
         $user->shouldReceive('retrieveByCredentials')->once()
-                ->with(array_except($credentials, array('password_confirmation', 'token')))
+                ->with(array_except($credentials, array('token')))
                 ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
         $reminders->shouldReceive('exists')->once()->with($userReminderable, 'someuniquetokenkey')->andReturn(true)
             ->shouldReceive('delete')->once()->with('someuniquetokenkey')->andReturn(true);
@@ -142,7 +142,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         );
 
         $user->shouldReceive('retrieveByCredentials')->once()
-            ->with(array_except($credentials, array('password_confirmation', 'token')))->andReturn(null);
+            ->with(array_except($credentials, array('token')))->andReturn(null);
 
         $this->assertEquals('reminders.user', $stub->reset($credentials, $callback));
     }
@@ -174,7 +174,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         );
 
         $user->shouldReceive('retrieveByCredentials')->once()
-                ->with(array_except($credentials, array('password_confirmation', 'token')))
+                ->with(array_except($credentials, array('token')))
                 ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
         $reminders->shouldReceive('exists')->once()->with($userReminderable, 'someuniquetokenkey')->andReturn(false);
 
@@ -208,7 +208,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         );
 
         $user->shouldReceive('retrieveByCredentials')->once()
-                ->with(array_except($credentials, array('password_confirmation', 'token')))
+                ->with(array_except($credentials, array('token')))
                 ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
         $reminders->shouldReceive('exists')->once()->with($userReminderable, 'someuniquetokenkey')->andReturn(false);
 
