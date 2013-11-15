@@ -29,15 +29,12 @@ class ReminderServiceProvider extends \Illuminate\Auth\Reminders\ReminderService
             // The password broker uses the reminder repository to validate tokens and send
             // reminder e-mails, as well as validating that password reset process as an
             // aggregate service of sorts providing a convenient interface for resets.
-            $broker = new PasswordBroker(
+            return new PasswordBroker(
                 $reminders,
                 $users,
-                $app['redirect'],
                 $app['orchestra.mail'],
                 $view
             );
-
-            return $broker->setMessageBag($app['orchestra.messages']);
         });
     }
 
