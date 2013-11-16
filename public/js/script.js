@@ -1,4 +1,4 @@
-jQuery(function startOrchestra($) { 'use strict';
+jQuery(function startOrchestra($) {
 	var dispatcher = Javie.make('event');
 
 	$('div.pagination > ul').each(function onEachPaginator (i, item) {
@@ -19,7 +19,7 @@ jQuery(function startOrchestra($) { 'use strict';
 		element.css('display', 'none');
 	})
 
-	$('select[role!="switcher"]').removeClass('form-control').select2();
+	$('select[role!="switcher"]').select2().removeClass('form-control');
 
 	$('*[role="tooltip"]').tooltip();
 
