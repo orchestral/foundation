@@ -43,3 +43,28 @@ Event::listen('composing: *', function () {
         });
     }
 });
+
+/*
+|--------------------------------------------------------------------------
+| Inject Auth Roles Detection
+|--------------------------------------------------------------------------
+|
+| We need to ensure that Orchestra\Acl is compliance with our Eloquent Model,
+| This would overwrite the default configuration.
+|
+*/
+
+Event::listen('orchestra.auth: roles', function ($user, $roles) {
+    // When user is null, we should expect the roles is not available.
+    // Therefore, returning null would propagate any other event listeners
+    // (if any) to try resolve the roles.
+    if (is_null($user)) {
+        return ;
+    }
+
+    foreach ($user->roles()->get() as $role) {
+        array_push($roles, $role->name);
+    }
+
+    return $roles;
+});

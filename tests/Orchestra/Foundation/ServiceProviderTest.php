@@ -1,7 +1,9 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Orchestra\Foundation\Services\TestCase;
 
 class ServiceProviderTest extends TestCase
@@ -16,6 +18,8 @@ class ServiceProviderTest extends TestCase
 
     /**
      * Test instance of `orchestra.mail`.
+     *
+     * @test
      */
     public function testInstanceOfOrchestraMail()
     {
@@ -25,6 +29,8 @@ class ServiceProviderTest extends TestCase
 
     /**
      * Test instance of `orchestra.publisher`.
+     *
+     * @test
      */
     public function testInstanceOfOrchestraPublisher()
     {
@@ -67,7 +73,7 @@ class ServiceProviderTest extends TestCase
      */
     public function testInstanceOfAuthReminder()
     {
-        $app  = App::getFacadeApplication();
+        $app = App::getFacadeApplication();
         $app['auth.reminder.repository'] = m::mock('\Illuminate\Auth\Reminders\DatabaseReminderRepository');
         $app['auth'] = $user = m::mock('\Illuminate\Auth\UserProviderInterface');
 
@@ -76,6 +82,32 @@ class ServiceProviderTest extends TestCase
 
         $stub = App::make('auth.reminder');
         $this->assertInstanceOf('\Orchestra\Foundation\Reminders\PasswordBroker', $stub);
+    }
+
+    /**
+     * Test auth event listeners.
+     *
+     * @test
+     */
+    public function testAuthListeners()
+    {
+        $app = App::getFacadeApplication();
+
+        $this->assertEquals(array('Guest'), Auth::roles());
+
+        $roles = m::mock('Role');
+        $user = m::mock('\Illuminate\Auth\UserInterface');
+        $user->id = 1;
+
+        $user->shouldReceive('roles')->once()->andReturn($roles);
+        $roles->shouldReceive('get')->once()->andReturn(array(
+            new Fluent(array('id' => 1, 'name' => 'Administrator')),
+        ));
+
+        $this->assertEquals(
+            array('Administrator'),
+            $app['events']->until('orchestra.auth: roles', array($user, array()))
+        );
     }
 
     /**
