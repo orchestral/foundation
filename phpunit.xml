@@ -31,7 +31,7 @@
             <file>src/helpers.php</file>
 
             <exclude>
-                <file>src/Orchestra/Foundation/Services/ApplicationTestCase.php</file>
+                <file>src/Orchestra/Foundation/Testing/ApplicationTestCase.php</file>
             </exclude>
         </whitelist>
     </filter>
