@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Services;
+<?php namespace Orchestra\Foundation;
 
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Resources;

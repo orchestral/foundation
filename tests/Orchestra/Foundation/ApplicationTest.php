@@ -64,7 +64,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('link')->once()->andReturn(null);
         $translator->shouldReceive('get')->andReturn('foo');
         $event->shouldReceive('listen')->once()
-                ->with('orchestra.ready: admin', 'Orchestra\Foundation\Services\AdminMenuHandler')->andReturn(null)
+                ->with('orchestra.ready: admin', 'Orchestra\Foundation\AdminMenuHandler')->andReturn(null)
             ->shouldReceive('fire')->once()->with('orchestra.started')->andReturn(null);
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
         $request->shouldReceive('root')->andReturn('http://localhost')
