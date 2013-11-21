@@ -4,7 +4,7 @@ use Mockery as m;
 use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\Table;
-use Orchestra\Foundation\Services\TestCase;
+use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\Presenter\Resource;
 
 class ResourceTest extends TestCase

@@ -3,7 +3,7 @@
 use Mockery as m;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Fluent;
-use Orchestra\Foundation\Services\TestCase;
+use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\Presenter\Setting;
 
 class SettingTest extends TestCase

@@ -3,7 +3,7 @@
 use Mockery as m;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
-use Orchestra\Foundation\Services\TestCase;
+use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Extension;
 use Orchestra\Support\Facades\Form;

@@ -2,7 +2,7 @@
 
 use Mockery as m;
 use Illuminate\Support\Facades\Event;
-use Orchestra\Foundation\Services\TestCase;
+use Orchestra\Foundation\Testing\TestCase;
 
 class AdminControllerTest extends TestCase
 {

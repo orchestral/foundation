@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Services;
+<?php namespace Orchestra\Foundation\Testing;
 
 abstract class ApplicationTestCase extends TestCase
 {

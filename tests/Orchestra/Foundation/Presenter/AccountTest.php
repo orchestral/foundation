@@ -3,7 +3,7 @@
 use Mockery as m;
 use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\Form;
-use Orchestra\Foundation\Services\TestCase;
+use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\Presenter\Account;
 
 class AccountTest extends TestCase

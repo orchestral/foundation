@@ -7,7 +7,7 @@ use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Form;
 use Orchestra\Support\Facades\Table;
-use Orchestra\Foundation\Services\TestCase;
+use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\Presenter\User;
 
 class UserTest extends TestCase
