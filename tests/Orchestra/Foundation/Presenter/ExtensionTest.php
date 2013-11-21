@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\Extension as E;
 use Orchestra\Support\Facades\Form;
-use Orchestra\Foundation\Services\TestCase;
+use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\Presenter\Extension;
 
 class ExtensionTest extends TestCase

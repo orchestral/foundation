@@ -2,7 +2,7 @@
 
 use Mockery as m;
 use Illuminate\Support\Facades\HTML;
-use Orchestra\Foundation\Services\TestCase;
+use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Site;
 

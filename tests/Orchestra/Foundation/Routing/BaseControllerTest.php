@@ -3,7 +3,7 @@
 use Mockery as m;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\View;
-use Orchestra\Foundation\Services\TestCase;
+use Orchestra\Foundation\Testing\TestCase;
 
 class BaseControllerTest extends TestCase
 {

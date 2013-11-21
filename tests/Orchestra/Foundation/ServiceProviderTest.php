@@ -2,7 +2,7 @@
 
 use Mockery as m;
 use Illuminate\Support\Facades\App;
-use Orchestra\Foundation\Services\TestCase;
+use Orchestra\Foundation\Testing\TestCase;
 
 class ServiceProviderTest extends TestCase
 {
