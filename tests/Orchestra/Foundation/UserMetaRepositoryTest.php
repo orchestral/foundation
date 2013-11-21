@@ -1,7 +1,7 @@
-<?php namespace Orchestra\Foundation\Tests\Services;
+<?php namespace Orchestra\Foundation\Tests;
 
 use Mockery as m;
-use Orchestra\Foundation\Services\UserMetaRepository;
+use Orchestra\Foundation\UserMetaRepository;
 
 class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,7 +38,7 @@ class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Services\UserMetaRepository::initiate()
+     * Test Orchestra\Foundation\UserMetaRepository::initiate()
      * method.
      *
      * @test
@@ -88,7 +88,7 @@ class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Services\UserMetaRepository::get() method.
+     * Test Orchestra\Foundation\UserMetaRepository::get() method.
      *
      * @test
      */
@@ -123,7 +123,7 @@ class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Services\UserMetaRepository::forget()
+     * Test Orchestra\Foundation\UserMetaRepository::forget()
      * method.
      *
      * @test
