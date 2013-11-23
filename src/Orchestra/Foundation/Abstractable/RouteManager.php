@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Foundation\Abstractable;
 
-use Closure;
 use Illuminate\Support\NamespacedItemResolver;
 use Orchestra\Extension\RouteGenerator;
 
@@ -159,17 +158,18 @@ abstract class RouteManager
     /**
      * Run the callback when route is matched.
      *
-     * @param  string      $path
-     * @param  \Closure    $callback
+     * @param  string   $path
+     * @param  mixed    $listener
      * @return void
      */
-    public function when($path, Closure $callback)
+    public function when($path, $listener)
     {
-        $me = $this;
+        $me       = $this;
+        $listener = $this->app['events']->makeListener($listener);
 
-        $this->app->booted(function ($app) use ($callback, $me, $path) {
+        $this->app->booted(function ($app) use ($listener, $me, $path) {
             if ($me->is($path)) {
-                call_user_func($callback, $app);
+                call_user_func($listener);
             }
         });
     }

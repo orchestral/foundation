@@ -144,6 +144,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
         $app = $this->getApplicationMocks();
         $request = $app['request'];
         $app['config'] = $config = m::mock('Config\Manager');
+        $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher');
         $app['orchestra.extension'] = $extension = m::mock('Extension');
         $app['url'] = $url = m::mock('Url');
 
@@ -152,6 +153,10 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
         $appRoute->shouldReceive('is')->once()->with('/')->andReturn(true)
             ->shouldReceive('is')->once()->with('foo')->andReturn(false);
         $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
+        $events->shouldReceive('makeListener')->twice()->with(m::type('Closure'))
+                ->andReturnUsing(function($c) {
+                    return $c;
+                });
 
         $stub = new StubRouteManager($app);
 
