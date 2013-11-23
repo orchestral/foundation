@@ -167,9 +167,9 @@ abstract class RouteManager
     {
         $me = $this;
 
-        $this->app->booted(function () use ($callback, $me, $path) {
+        $this->app->booted(function ($app) use ($callback, $me, $path) {
             if ($me->is($path)) {
-                call_user_func($callback);
+                call_user_func($callback, $app);
             }
         });
     }
