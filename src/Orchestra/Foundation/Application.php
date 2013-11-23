@@ -131,9 +131,9 @@ class Application
      *  Return locate handles configuration for a package/app.
      *
      * @param  string   $name   Package name
-     * @return string
+     * @return array
      */
-    public function locate($name)
+    protected function locate($name)
     {
         $path  = '';
         $query = '';
@@ -160,11 +160,7 @@ class Application
             $package = "app";
         }
 
-        // Get the path from route configuration, and append route.
-        $path = $this->route($package)->to($route);
-        empty($path) and $path = '/';
-
-        return $path;
+        return array($package, $route);
     }
 
     /**
@@ -175,7 +171,11 @@ class Application
      */
     public function handles($path)
     {
-        $locate = $this->locate($path);
+        list($package, $route) = $this->locate($path);
+
+        // Get the path from route configuration, and append route.
+        $locate = $this->route($package)->to($route);
+        empty($locate) and $locate = '/';
 
         if (starts_with($locate, 'http')) {
             return $locate;
