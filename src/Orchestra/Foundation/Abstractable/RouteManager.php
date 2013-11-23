@@ -167,7 +167,7 @@ abstract class RouteManager
         $me       = $this;
         $listener = $this->app['events']->makeListener($listener);
 
-        $this->app->booted(function ($app) use ($listener, $me, $path) {
+        $this->app->booted(function () use ($listener, $me, $path) {
             if ($me->is($path)) {
                 call_user_func($listener);
             }
