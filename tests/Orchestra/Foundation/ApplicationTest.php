@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Facade;
 use Orchestra\Foundation\Application;
 
@@ -30,21 +29,20 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
+        unset($this->app);
         m::close();
     }
 
     /**
      * Installed setup.
-     *
      */
-    private function installableContainer()
+    private function getInstallableContainerMocks()
     {
         $app = $this->app;
         $app['env'] = 'production';
         $app['orchestra.installed'] = false;
         $app['orchestra.acl'] = $acl = m::mock('Acl');
         $app['orchestra.memory'] = $memory = m::mock('Memory');
-        $app['orchestra.extension'] = $extension = m::mock('Extension');
         $app['orchestra.widget'] = $widget = m::mock('Widget');
         $app['translator'] = $translator = m::mock('Translator');
         $app['events'] = $event = m::mock('Event\Dispatcher');
@@ -80,7 +78,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
      */
     public function testBootMethod()
     {
-        $app  = $this->installableContainer();
+        $app  = $this->getInstallableContainerMocks();
         $stub = new Application($app);
         $stub->boot();
 
@@ -88,6 +86,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($app['orchestra.widget'], $stub->menu());
         $this->assertEquals($app['orchestra.acl'], $stub->acl());
         $this->assertEquals($app['orchestra.memory'], $stub->memory());
+        $this->assertEquals($stub, $stub->boot());
     }
 
     /**
@@ -158,52 +157,5 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $stub = new Application($this->app);
         $this->assertInstanceOf('\Illuminate\Foundation\Application', $stub->illuminate());
         $this->assertInstanceOf('\Illuminate\Http\Request', $stub->make('request'));
-    }
-
-    /**
-     * Test Orchestra\Foundation\Application::group() method.
-     *
-     * @test
-     */
-    public function testGroupMethod()
-    {
-        $app  = $this->installableContainer();
-        $stub = new Application($app);
-
-        $expected = array(
-            'before' => 'auth',
-            'prefix' => 'admin',
-            'domain' => null,
-        );
-
-        $this->assertEquals($expected, $stub->group('orchestra', 'admin', array('before' => 'auth')));
-    }
-
-    /**
-     * Test Orchestra\Foundation\Application::handles() method.
-     *
-     * @test
-     */
-    public function testHandlesMethod()
-    {
-        $app = $this->installableContainer();
-        $extension = $app['orchestra.extension'];
-        $app['url'] = $url = m::mock('Url');
-
-        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator');
-
-        $appRoute->shouldReceive('to')->once()->with('/')->andReturn('/')
-            ->shouldReceive('to')->once()->with('info?foo=bar')->andReturn('info?foo=bar');
-        $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
-        $url->shouldReceive('to')->once()->with('/')->andReturn('/')
-            ->shouldReceive('to')->once()->with('info?foo=bar')->andReturn('info?foo=bar');
-
-        $stub = new Application($app);
-        $stub->boot();
-
-        $this->assertEquals('/', $stub->handles('app::/'));
-        $this->assertEquals('info?foo=bar', $stub->handles('info?foo=bar'));
-        $this->assertEquals('http://localhost/admin/installer', $stub->handles('orchestra::installer'));
-        $this->assertEquals('http://localhost/admin/installer', $stub->handles('orchestra::installer/'));
     }
 }
