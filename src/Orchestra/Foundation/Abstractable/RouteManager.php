@@ -77,6 +77,22 @@ abstract class RouteManager
     }
 
     /**
+     * Return route group dispatch for a package/app.
+     *
+     * @param  string   $name   Package name
+     * @return string
+     */
+    public function group($name, $default, $group = array())
+    {
+        $route = $this->route($name, $default);
+
+        return array_merge($group, array(
+            'prefix' => $route->prefix(),
+            'domain' => $route->domain(),
+        ));
+    }
+
+    /**
      *  Return handles URL for a package/app.
      *
      * @param  string   $name   Package name
@@ -91,22 +107,6 @@ abstract class RouteManager
         }
 
         return $this->app['url']->to($locate);
-    }
-
-    /**
-     * Return route group dispatch for a package/app.
-     *
-     * @param  string   $name   Package name
-     * @return string
-     */
-    public function group($name, $default, $group = array())
-    {
-        $route = $this->route($name, $default);
-
-        return array_merge($group, array(
-            'prefix' => $route->prefix(),
-            'domain' => $route->domain(),
-        ));
     }
 
     /**
