@@ -49,7 +49,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app['translator'] = $translator = m::mock('Translator');
         $app['events'] = $event = m::mock('Event\Dispatcher');
         $app['config'] = $config = m::mock('Config\Manager');
-        $app['request'] = $request = m::mock('Request\Manager');
+        $app['request'] = $request = m::mock('\Illuminate\Http\Request');
 
         $acl->shouldReceive('make')->once()->andReturn($acl)
             ->shouldReceive('attach')->once()->with($memory)->andReturn($acl);
@@ -105,7 +105,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.memory'] = $memory = m::mock('Memory');
         $app['orchestra.widget'] = $widget = m::mock('Widget');
         $app['config'] = $config = m::mock('Config\Manager');
-        $app['request'] = $request = m::mock('Request\Manager');
+        $app['request'] = $request = m::mock('\Illuminate\Http\Request');
 
         $acl->shouldReceive('make')->once()->andReturn($acl)
             ->shouldReceive('attach')->never()->andReturn($acl);

@@ -7,6 +7,7 @@ Foundation Change Log
 
 * Update Twitter Bootstrap v3.0.1.
 * Add `orchestra/optimize`.
+* Refactor call to `Orchestra\Extension\RouteGenerator` based on changes to orchestra/extension component.
 
 ### v2.0.22
 
