@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
+use Orchestra\Model\User;
 use Orchestra\Foundation\Presenter\Account as AccountPresenter;
 use Orchestra\Foundation\Validation\Account as AccountValidator;
 
@@ -171,7 +172,7 @@ class AccountController extends AdminController
      * @param  \Orchestra\Model\User    $user
      * @return void
      */
-    protected function updatePassword($user)
+    protected function updatePassword(User $user)
     {
         try {
             DB::transaction(function () use ($user) {
