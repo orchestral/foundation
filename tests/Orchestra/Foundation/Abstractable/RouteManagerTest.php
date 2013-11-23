@@ -18,6 +18,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->app = new \Illuminate\Foundation\Application;
+        $_SERVER['RouteManagerTest@callback'] = null;
 
         Facade::clearResolvedInstances();
         Facade::setFacadeApplication($this->app);
@@ -29,6 +30,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
     	unset($this->app);
+        unset($_SERVER['RouteManagerTest@callback']);
         m::close();
     }
 
@@ -102,7 +104,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('http://localhost/admin/installer', $stub->handles('orchestra::installer/'));
     }
 
-     /**
+    /**
      * Test Orchestra\Foundation\RouteManager::is() method.
      *
      * @test
@@ -119,7 +121,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
 
         $config->shouldReceive('get')->once()
             ->with('orchestra/foundation::handles', '/')->andReturn('admin');
-        $request->shouldReceive('path')->once()->andReturn('/');
+        $request->shouldReceive('path')->twice()->andReturn('/');
         $appRoute->shouldReceive('is')->once()->with('/')->andReturn(true)
             ->shouldReceive('is')->once()->with('info?foo=bar')->andReturn(true);
         $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
@@ -129,6 +131,49 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($stub->is('app::/'));
         $this->assertTrue($stub->is('info?foo=bar'));
         $this->assertTrue($stub->is('orchestra::/'));
+        $this->assertFalse($stub->is('orchestra::login'));
+    }
+
+    /**
+     * Test Orchestra\Foundation\RouteManager::when() method.
+     *
+     * @test
+     */
+    public function testWhenMethod()
+    {
+        $app = $this->getApplicationMocks();
+        $request = $app['request'];
+        $app['config'] = $config = m::mock('Config\Manager');
+        $app['orchestra.extension'] = $extension = m::mock('Extension');
+        $app['url'] = $url = m::mock('Url');
+
+        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator');
+
+        $appRoute->shouldReceive('is')->once()->with('/')->andReturn(true)
+            ->shouldReceive('is')->once()->with('foo')->andReturn(false);
+        $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
+
+        $callback =
+
+        $stub = new StubRouteManager($app);
+
+        $this->assertNull($_SERVER['RouteManagerTest@callback']);
+
+        $stub->when('app::/', function () {
+            $_SERVER['RouteManagerTest@callback'] = 'app::/';
+        });
+
+        $app->boot();
+
+        $this->assertEquals('app::/', $_SERVER['RouteManagerTest@callback']);
+
+        $stub->when('app::foo', function () {
+            $_SERVER['RouteManagerTest@callback'] = 'app::foo';
+        });
+
+        $app->boot();
+
+        $this->assertNotEquals('app::foo', $_SERVER['RouteManagerTest@callback']);
     }
 }
 

@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Abstractable;
 
+use Closure;
 use Illuminate\Support\NamespacedItemResolver;
 use Orchestra\Extension\RouteGenerator;
 
@@ -40,20 +41,20 @@ abstract class RouteManager
     /**
      *  Return locate handles configuration for a package/app.
      *
-     * @param  string   $name   Package name
+     * @param  string   $path
      * @return array
      */
-    public function locate($name)
+    public function locate($path)
     {
         $query = '';
 
         // split URI and query string, the route resolver should not worry
         // about provided query string.
-        if (strpos($name, '?') !== false) {
-            list($name, $query) = explode('?', $name, 2);
+        if (strpos($path, '?') !== false) {
+            list($path, $query) = explode('?', $path, 2);
         }
 
-        list($package, $route, $item) = with(new NamespacedItemResolver)->parseKey($name);
+        list($package, $route, $item) = with(new NamespacedItemResolver)->parseKey($path);
 
         ! empty($item) and $route = "{$route}.{$item}";
 
@@ -91,7 +92,7 @@ abstract class RouteManager
     /**
      *  Return handles URL for a package/app.
      *
-     * @param  string   $name   Package name
+     * @param  string   $path
      * @return string
      */
     public function handles($path)
@@ -112,7 +113,7 @@ abstract class RouteManager
     /**
      *  Return if handles URL match given string.
      *
-     * @param  string   $name   Package name
+     * @param  string   $path
      * @return boolean
      */
     public function is($path)
@@ -153,5 +154,23 @@ abstract class RouteManager
         }
 
         return $this->routes[$name] = $route;
+    }
+
+    /**
+     * Run the callback when route is matched.
+     *
+     * @param  string      $path
+     * @param  \Closure    $callback
+     * @return void
+     */
+    public function when($path, Closure $callback)
+    {
+        $me = $this;
+
+        $this->app->booted(function () use ($callback, $me, $path) {
+            if ($me->is($path)) {
+                call_user_func($callback);
+            }
+        });
     }
 }
