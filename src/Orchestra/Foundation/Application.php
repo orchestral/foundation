@@ -226,8 +226,7 @@ class Application
             $name  = 'orchestra';
             $route = new RouteGenerator(
                 $this->app['config']->get('orchestra/foundation::handles', $default),
-                $this->app['request']->root(),
-                $this->app['request']->secure()
+                $this->app['request']
             );
         }
 
