@@ -153,8 +153,6 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('is')->once()->with('foo')->andReturn(false);
         $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
 
-        $callback =
-
         $stub = new StubRouteManager($app);
 
         $this->assertNull($_SERVER['RouteManagerTest@callback']);
