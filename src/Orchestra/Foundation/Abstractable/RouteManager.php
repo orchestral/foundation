@@ -45,7 +45,6 @@ abstract class RouteManager
      */
     public function locate($name)
     {
-        $path  = '';
         $query = '';
 
         // split URI and query string, the route resolver should not worry
