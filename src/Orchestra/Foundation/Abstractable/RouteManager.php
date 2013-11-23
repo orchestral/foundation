@@ -110,7 +110,20 @@ abstract class RouteManager
     }
 
     /**
-     * Get extension handle.
+     *  Return if handles URL match given string.
+     *
+     * @param  string   $name   Package name
+     * @return boolean
+     */
+    public function is($path)
+    {
+        list($package, $route) = $this->locate($path);
+
+        return $this->route($package)->is($route);
+    }
+
+    /**
+     * Get extension route.
      *
      * @param  string   $name
      * @param  string   $default

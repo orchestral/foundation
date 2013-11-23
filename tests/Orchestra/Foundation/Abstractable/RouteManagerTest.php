@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Facade;
 
 class RouteManagerTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Application instance.
      *
@@ -101,6 +100,35 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('info?foo=bar', $stub->handles('info?foo=bar'));
         $this->assertEquals('http://localhost/admin/installer', $stub->handles('orchestra::installer'));
         $this->assertEquals('http://localhost/admin/installer', $stub->handles('orchestra::installer/'));
+    }
+
+     /**
+     * Test Orchestra\Foundation\RouteManager::is() method.
+     *
+     * @test
+     */
+    public function testIsMethod()
+    {
+        $app = $this->getApplicationMocks();
+        $request = $app['request'];
+        $app['config'] = $config = m::mock('Config\Manager');
+        $app['orchestra.extension'] = $extension = m::mock('Extension');
+        $app['url'] = $url = m::mock('Url');
+
+        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator');
+
+        $config->shouldReceive('get')->once()
+            ->with('orchestra/foundation::handles', '/')->andReturn('admin');
+        $request->shouldReceive('path')->once()->andReturn('/');
+        $appRoute->shouldReceive('is')->once()->with('/')->andReturn(true)
+            ->shouldReceive('is')->once()->with('info?foo=bar')->andReturn(true);
+        $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
+
+        $stub = new StubRouteManager($app);
+
+        $this->assertTrue($stub->is('app::/'));
+        $this->assertTrue($stub->is('info?foo=bar'));
+        $this->assertTrue($stub->is('orchestra::/'));
     }
 }
 
