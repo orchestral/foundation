@@ -65,9 +65,7 @@ abstract class RouteManager
         // If package is empty, we should consider that the route is using
         // app (or root path), it doesn't matter at this stage if app is
         // an extension or simply handling root path.
-        if (empty($package)) {
-            $package = "app";
-        }
+        empty($package) and $package = "app";
 
         // Get the path from route configuration, and append route.
         $path = $this->route($package)->to($route);
