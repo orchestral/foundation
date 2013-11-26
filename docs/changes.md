@@ -3,7 +3,7 @@ Foundation Change Log
 
 ## Version 2.0
 
-### v2.0.23@dev
+### v2.0.23
 
 * Automatically login the user after resetting the password.
 * Refactor call to `Orchestra\Extension\RouteGenerator` based on changes to orchestra/extension component.
