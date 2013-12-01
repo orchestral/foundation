@@ -1,23 +1,20 @@
 @extends('orchestra/foundation::layout.main')
 
 @section('content')
-
 <div class="row">
-
 	<div class="eight columns rounded box">
-		<?php echo $form; ?>
+		{{ $form }}
 	</div>
-
 	<div class="four columns">
 		@placeholder('orchestra.settings')
 		@placeholder('orchestra.helps')
 	</div>
-
 </div>
 
 <script>
 jQuery(function onSettingPageReady($) { 'use strict';
-	var dispatcher, emailDriver, emailPassword, changeContainer, cancelContainer, changeButton, cancelButton, hiddenPassword;
+	var dispatcher, emailDriver, emailPassword, changeContainer,
+		cancelContainer, changeButton, cancelButton, hiddenPassword;
 
 	hiddenPassword  = $('input[name="change_password"]');
 	changeButton    = $('#change_password_button');
@@ -87,5 +84,4 @@ jQuery(function onSettingPageReady($) { 'use strict';
 	emailDriver.trigger('change');
 });
 </script>
-
 @stop

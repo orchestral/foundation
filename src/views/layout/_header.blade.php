@@ -1,11 +1,11 @@
-<?php
+<?
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\HTML;
 use Orchestra\Support\Facades\Asset; ?>
 
 <meta charset="utf-8">
-<?php echo HTML::title(); ?>
+{{ HTML::title() }}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Orchestra Platform">
 <meta name="author" content="Orchestra Platform">
@@ -16,7 +16,7 @@ use Orchestra\Support\Facades\Asset; ?>
 <![endif]-->
 <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300,500" rel="stylesheet" type="text/css">
 
-<?php
+<?
 
 $asset = Asset::container('orchestra/foundation::header');
 
@@ -26,13 +26,13 @@ $asset->style('bootstrap', 'packages/orchestra/foundation/vendor/bootstrap/css/b
 $asset->style('orchestra', 'packages/orchestra/foundation/css/style.css', array('bootstrap', 'select2'));
 $asset->script('underscore', 'packages/orchestra/foundation/js/underscore.min.js');
 $asset->script('jquery', 'packages/orchestra/foundation/js/jquery.min.js');
-$asset->script('javie', 'packages/orchestra/foundation/js/javie.min.js', array('jquery', 'underscore'));
+$asset->script('javie', 'packages/orchestra/foundation/js/javie.min.js', array('jquery', 'underscore')); ?>
 
-echo $asset->styles();
-echo $asset->scripts(); ?>
+{{ $asset->styles() }}
+{{ $asset->scripts() }}
 
 <script>
-Javie.ENV = "<?php echo App::environment(); ?>";
+Javie.ENV = "{{ App::environment() }}";
 </script>
 
 @placeholder("orchestra.layout: header")
