@@ -11,7 +11,7 @@ $user = Auth::user(); ?>
 		<a href="#user-menu" rel="user-menu" class="dropdown-toggle" data-toggle="dropdown">
 			<i class="icon-user"></i>
 			&nbsp;
-			{{ $user->fullname or trans('orchestra/foundation::title.login')) }}
+			{{ $user->fullname or trans('orchestra/foundation::title.login') }}
 		</a>
 		@unless (is_null($user))
 		<ul class="dropdown-menu">
