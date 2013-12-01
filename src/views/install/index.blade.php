@@ -28,10 +28,10 @@ unset($checklist['databaseConnection']); ?>
 	</div>
 
 	<div id="installation" class="six columns form-horizontal">
-	
-		@include('orchestra/foundation::install.index.requirement')
-		@include('orchestra/foundation::install.index.database')
-		@include('orchestra/foundation::install.index.authentication')
+
+		@include('orchestra/foundation::install.index._requirement')
+		@include('orchestra/foundation::install.index._database')
+		@include('orchestra/foundation::install.index._authentication')
 
 	</div>
 
