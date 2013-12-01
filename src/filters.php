@@ -19,7 +19,7 @@ use Orchestra\Support\Facades\App;
 
 Route::filter('orchestra.auth', function () {
     if (Auth::guest()) {
-        return Redirect::guest(handles('orchestra/foundation::login'));
+        return Redirect::guest(handles('orchestra::login'));
     }
 });
 
@@ -36,7 +36,7 @@ Route::filter('orchestra.auth', function () {
 
 Route::filter('orchestra.guest', function () {
     if (! Auth::guest()) {
-        return Redirect::to(handles('orchestra/foundation::/'));
+        return Redirect::to(handles('orchestra::/'));
     }
 });
 
@@ -76,7 +76,7 @@ Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestr
     if (! App::acl()->can("manage-{$value}")) {
         $redirect = (Auth::guest() ? 'login' : '/');
 
-        return Redirect::to(handles("orchestra/foundation::{$redirect}"));
+        return Redirect::to(handles("orchestra::{$redirect}"));
     }
 });
 
@@ -109,12 +109,12 @@ Route::filter('orchestra.registrable', function () {
 
 Route::filter('orchestra.installable', function () {
     if (App::make('orchestra.installed') === false) {
-        return Redirect::to(handles('orchestra/foundation::install'));
+        return Redirect::to(handles('orchestra::install'));
     }
 });
 
 Route::filter('orchestra.installed', function () {
     if (App::make('orchestra.installed') === true) {
-        return Redirect::to(handles('orchestra/foundation::/'));
+        return Redirect::to(handles('orchestra::/'));
     }
 });
