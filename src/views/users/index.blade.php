@@ -1,17 +1,12 @@
 @extends('orchestra/foundation::layout.main')
 
-<?php use Orchestra\Support\Facades\Site;
-
-Site::set('header::add-button', true); ?>
+<? Orchestra\Support\Facades\Site::set('header::add-button', true); ?>
 
 @section('content')
-
 <div class="row">
 	@include('orchestra/foundation::users._search')
 	<div class="twelve columns white rounded box">
-		<?php echo $table; ?>
+		{{ $table }}
 	</div>
 </div>
-
-
 @stop

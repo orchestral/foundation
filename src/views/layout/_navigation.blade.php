@@ -1,4 +1,4 @@
-<?php
+<?
 
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +16,7 @@ $navbar = new Fluent(array(
 
 @decorator('navbar', $navbar)
 
-<?php if ( ! Auth::check()) : ?>
-
+@unless (Auth::check())
 <script>
 jQuery(function ($) {
 	$('a[rel="user-menu"]').on('click', function (e) {
@@ -29,7 +28,5 @@ jQuery(function ($) {
 	});
 });
 </script>
-
-<?php endif; ?>
-
+@endunless
 <br>
