@@ -24,9 +24,9 @@ $asset->style('select2', 'packages/orchestra/foundation/vendor/select2/select2.c
 $asset->style('jquery-ui', 'packages/orchestra/foundation/vendor/delta/theme/jquery-ui.css');
 $asset->style('bootstrap', 'packages/orchestra/foundation/vendor/bootstrap/css/bootstrap.min.css');
 $asset->style('orchestra', 'packages/orchestra/foundation/css/style.css', array('bootstrap', 'select2'));
-$asset->script('underscore', 'packages/orchestra/foundation/js/underscore.min.js');
-$asset->script('jquery', 'packages/orchestra/foundation/js/jquery.min.js');
-$asset->script('javie', 'packages/orchestra/foundation/js/javie.min.js', array('jquery', 'underscore')); ?>
+$asset->script('underscore', 'packages/orchestra/foundation/vendor/underscore.min.js');
+$asset->script('jquery', 'packages/orchestra/foundation/vendor/jquery/jquery.min.js');
+$asset->script('javie', 'packages/orchestra/foundation/vendor/javie/javie.min.js', array('jquery', 'underscore')); ?>
 
 {{ $asset->styles() }}
 {{ $asset->scripts() }}
