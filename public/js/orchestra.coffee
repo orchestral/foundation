@@ -13,8 +13,7 @@ setup_button_group = ($) ->
 	buttons.each((i, item) ->
 		button = $(item)
 		set_active = ->
-			if button.val() is hidden.val()
-				button.addClass('active')
+			button.addClass('active') if button.val() is hidden.val()
 			true
 		button.on('click', ->
 			buttons.removeClass('active')
