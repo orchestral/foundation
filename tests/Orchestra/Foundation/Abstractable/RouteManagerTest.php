@@ -130,7 +130,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($stub->is('app::/'));
         $this->assertTrue($stub->is('info?foo=bar'));
-        $this->assertTrue($stub->is('orchestra::/'));
+        $this->assertFalse($stub->is('orchestra::login'));
         $this->assertFalse($stub->is('orchestra::login'));
     }
 
