@@ -56,9 +56,9 @@ setup_switcher = ($) ->
 	true
 
 jQuery(($) ->
+	setup_switcher($)
 	setup_button_group($)
 	setup_helper($)
 	setup_pagination($)
-	setup_switcher($)
 	true
 )
