@@ -50,9 +50,7 @@
             <fileset dir="${basedir}/vendor/twbs/bootstrap/dist/fonts"/>
         </copy>
         <copy todir="${basedir}/public/vendor/bootstrap/js">
-            <fileset dir="${basedir}/vendor/twbs/bootstrap/dist/js">
-                <exclude name="bootstrap.js"/>
-            </fileset>
+            <fileset dir="${basedir}/vendor/twbs/bootstrap/dist/js"/>
         </copy>
     </target>
 
