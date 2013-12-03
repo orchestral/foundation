@@ -58,14 +58,14 @@
 
     <target name="minify-css" description="Minify the CSS">
         <exec executable="lessc">
-            <arg value="${basedir}/public/css/style.less"/>
-            <arg value="${basedir}/public/css/style.css"/>
+            <arg value="${basedir}/public/css/orchestra.less"/>
+            <arg value="${basedir}/public/css/orchestra.css"/>
             <arg value="--verbose"/>
             <arg value="-x"/>
         </exec>
     </target>
 
-     <target name="minify-js" description="Minify the CSS">
+     <target name="minify-js" description="Minify the JavaScript">
         <exec executable="java">
             <arg value="-jar"/>
             <arg value="${basedir}/vendor/packagist/yuicompressor-bin/bin/yuicompressor.jar"/>
@@ -75,8 +75,8 @@
             <arg value="--line-break"/>
             <arg value="150"/>
             <arg value="-o"/>
-            <arg value="${basedir}/public/js/script.min.js"/>
-            <arg value="${basedir}/public/js/script.js"/>
+            <arg value="${basedir}/public/js/orchestra.min.js"/>
+            <arg value="${basedir}/public/js/orchestra.js"/>
         </exec>
     </target>
 

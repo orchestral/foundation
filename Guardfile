@@ -8,14 +8,14 @@ guard :phpunit, :all_on_start => false, :tests_path => 'tests/', :cli => '--colo
 end
 
 guard 'shell' do
-	watch(%r{^public/css/(.+\.less)}) { |m| 
-		n m[0], "Changed" 
+	watch(%r{^public/css/(.+\.less)}) { |m|
+		n m[0], "Changed"
 		`ant minify-css`
 	}
 end
 
 guard 'shell' do
-	watch(%r{^public/js/script\.js}) { |m|
+	watch(%r{^public/js/(.+\.coffee)}) { |m|
 		n m[0], "Changed"
 		`ant minify-js`
 	}
