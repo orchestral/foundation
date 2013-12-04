@@ -1,19 +1,43 @@
 <?php namespace Orchestra\Foundation\Presenter\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\HTML;
+use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Fluent;
-use Orchestra\Support\Facades\Table;
-use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\Presenter\Resource;
 
-class ResourceTest extends TestCase
+class ResourceTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Application instance.
+     *
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
+
+    /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        $this->app = new Container;
+
+        $this->app['orchestra.app'] = m::mock('OrchestraApplication');
+        $this->app['translator'] = m::mock('Translator');
+
+        $this->app['orchestra.app']->shouldReceive('handles');
+        $this->app['translator']->shouldReceive('trans');
+
+        Facade::clearResolvedInstances();
+        Facade::setFacadeApplication($this->app);
+    }
+
     /**
      * Teardown the test environment.
      */
     public function tearDown()
     {
+        unset($this->app);
         m::close();
     }
 
@@ -25,13 +49,16 @@ class ResourceTest extends TestCase
      */
     public function testTableMethod()
     {
+        $app    = $this->app;
         $model  = new Fluent;
         $table  = m::mock('TableBuilder');
-        $column = m::mock('ColumnBuilder');
+        $column = m::mock('TableColumnBuilder');
         $value  = (object) array(
             'id'   => 'foo',
             'name' => 'Foobar'
         );
+
+        $stub = new Resource;
 
         $column->shouldReceive('escape')->once()->with(false)->andReturn(null)
             ->shouldReceive('value')->once()->with(m::type('Closure'))
@@ -45,19 +72,19 @@ class ResourceTest extends TestCase
                     $c($column);
                 });
 
-        Table::shouldReceive('of')->once()->with('orchestra.resources: list', m::type('Closure'))
-            ->andReturnUsing(function ($t, $c) use ($table) {
-                $c($table);
-                return 'foo';
-            });
-        HTML::shouldReceive('link')->once()
-            ->with(handles("orchestra/foundation::resources/foo"), e("Foobar"))->andReturn('foo');
-        HTML::shouldReceive('create')->once()
-            ->with('strong', 'Foobar')->andReturn('foo');
-        HTML::shouldReceive('raw')->once()
-            ->with('foo')->andReturn('Foobar');
+        $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Environment')->shouldDeferMissing();
+        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->shouldDeferMissing();
 
-        $stub = new Resource;
+        $app['orchestra.table']->shouldReceive('of')->once()
+                ->with('orchestra.resources: list', m::type('Closure'))
+                ->andReturnUsing(function ($t, $c) use ($table) {
+                    $c($table);
+                    return 'foo';
+                });
+        $app['html']->shouldReceive('create')->once()->with('strong', 'Foobar')->andReturn('foo')
+            ->shouldReceive('raw')->once()->with('foo')->andReturn('Foobar')
+            ->shouldReceive('link')->once()
+                ->with(handles("orchestra/foundation::resources/foo"), e("Foobar"))->andReturn('foo');
 
         $this->assertEquals('foo', $stub->table($model));
     }

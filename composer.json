@@ -37,7 +37,7 @@
 		"orchestra/widget": "2.1.*"
 	},
 	"require-dev": {
-		"mockery/mockery": "0.8.0",
+		"mockery/mockery": "0.8.*",
 		"orchestra/testbench": "2.1.*",
 		"twbs/bootstrap": "3.0.*@stable",
 		"packagist/yuicompressor-bin": "2.4.8"

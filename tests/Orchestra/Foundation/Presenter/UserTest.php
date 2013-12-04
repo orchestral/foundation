@@ -1,22 +1,46 @@
 <?php namespace Orchestra\Foundation\Presenter\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\HTML;
+use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Fluent;
-use Orchestra\Support\Facades\App as Orchestra;
-use Orchestra\Support\Facades\Form;
-use Orchestra\Support\Facades\Table;
-use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\Presenter\User;
+use Orchestra\Model\User as Eloquent;
 
-class UserTest extends TestCase
+class UserTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Application instance.
+     *
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
+
+    /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        $this->app = new Container;
+
+        $this->app['app'] = $this->app;
+        $this->app['orchestra.app'] = m::mock('OrchestraApplication')->shouldDeferMissing();
+        $this->app['translator'] = m::mock('Translator');
+
+        $this->app['orchestra.app']->shouldReceive('handles');
+        $this->app['translator']->shouldReceive('trans');
+
+        Facade::clearResolvedInstances();
+        Facade::setFacadeApplication($this->app);
+    }
+
     /**
      * Teardown the test environment.
      */
     public function tearDown()
     {
+        unset($this->app);
         m::close();
     }
 
@@ -27,16 +51,19 @@ class UserTest extends TestCase
      */
     public function testTableMethod()
     {
+        $app    = $this->app;
         $model  = new Fluent;
         $table  = m::mock('TableBuilder');
-        $column = m::mock('ColumnBuilder');
+        $column = m::mock('TableColumnBuilder');
         $value  = (object) array(
             'fullname' => 'Foo',
             'roles'    => array(
                 (object) array('id' => 1, 'name' => 'Administrator'),
-                (object) array('id' =>2, 'name' => 'Member'),
-            )
+                (object) array('id' => 2, 'name' => 'Member'),
+            ),
         );
+
+        $stub = new User;
 
         $column->shouldReceive('label')->twice()->andReturn(null)
             ->shouldReceive('escape')->once()->with(false)->andReturn(null)
@@ -55,12 +82,16 @@ class UserTest extends TestCase
                     $c($column);
                 });
 
-        Table::shouldReceive('of')->once()->with('orchestra.users', m::type('Closure'))
-            ->andReturnUsing(function ($t, $c) use ($table) {
-                $c($table);
-                return 'foo';
-            });
-        HTML::shouldReceive('create')->once()
+        $app['orchestra.table'] = m::mock('TableEnvironment');
+        $app['html'] = m::mock('HtmlBuilder');
+
+        $app['orchestra.table']->shouldReceive('of')->once()
+                ->with('orchestra.users', m::type('Closure'))
+                ->andReturnUsing(function ($t, $c) use ($table) {
+                    $c($table);
+                    return 'foo';
+                });
+        $app['html']->shouldReceive('create')->once()
                 ->with('span', 'Administrator', m::any())->andReturn('administrator')
             ->shouldReceive('create')->once()
                 ->with('span', 'Member', m::any())->andReturn('member')
@@ -69,8 +100,6 @@ class UserTest extends TestCase
             ->shouldReceive('create')->once()->with('br')->andReturn('')
             ->shouldReceive('create')->once()->with('span', 'raw-foo', m::any())->andReturn(null)
             ->shouldReceive('raw')->once()->with('administrator member')->andReturn('raw-foo');
-
-        $stub = new User;
 
         $this->assertEquals('foo', $stub->table($model));
     }
@@ -83,13 +112,16 @@ class UserTest extends TestCase
      */
     public function testActionsMethod()
     {
-        $builder = m::mock('\Orchestra\Html\Table\TableBuilder');
-        $table   = m::mock('TableGenerator');
-        $column  = m::mock('ColumnBuilder');
+        $app    = $this->app;
+        $table  = m::mock('\Orchestra\Html\Table\TableBuilder');
+        $grid   = m::mock('TableGridBuilder');
+        $column = m::mock('TableColumnBuilder');
         $value  = (object) array(
             'id'   => 1,
             'name' => 'Foo',
         );
+
+        $stub = new User;
 
         $column->shouldReceive('label')->once()->with('')->andReturn(null)
             ->shouldReceive('escape')->once()->with(false)->andReturn(null)
@@ -98,31 +130,32 @@ class UserTest extends TestCase
                 ->andReturnUsing(function ($c) use ($value) {
                     $c($value);
                 });
-        $table->shouldReceive('column')->once()->with('action', m::type('Closure'))
+        $grid->shouldReceive('column')->once()->with('action', m::type('Closure'))
             ->andReturnUsing(function ($n, $c) use ($column) {
                 $c($column);
             });
 
-        $builder->shouldReceive('extend')->once()->with(m::type('Closure'))
-            ->andReturnUsing(function ($c) use ($table) {
-                $c($table);
+        $table->shouldReceive('extend')->once()->with(m::type('Closure'))
+            ->andReturnUsing(function ($c) use ($grid) {
+                $c($grid);
                 return 'foo';
             });
 
-        HTML::shouldReceive('link')->once()
-            ->with(handles("orchestra/foundation::users/1/edit"), m::any(), m::type('Array'))->andReturn('edit');
-        HTML::shouldReceive('link')->once()
-            ->with(handles("orchestra/foundation::users/1/delete"), m::any(), m::type('Array'))->andReturn('delete');
-        HTML::shouldReceive('raw')->once()
-            ->with('editdelete')->andReturn('raw-edit');
-        HTML::shouldReceive('create')->once()
-            ->with('div', 'raw-edit', m::type('Array'))->andReturn('create-div');
-        Auth::shouldReceive('user')->once()
-            ->andReturn((object) array('id' => 2));
+        $app['auth'] = m::mock('\Illuminate\Auth\Guard')->shouldDeferMissing();
+        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->shouldDeferMissing();
 
-        $stub = new User;
+        $app['auth']->shouldReceive('user')->once()->andReturn((object) array('id' => 2));
+        $app['html']->shouldReceive('link')->once()
+                ->with(handles("orchestra/foundation::users/1/edit"), m::any(), m::type('Array'))
+                ->andReturn('edit')
+            ->shouldReceive('link')->once()
+                ->with(handles("orchestra/foundation::users/1/delete"), m::any(), m::type('Array'))
+                ->andReturn('delete')
+            ->shouldReceive('raw')->once()->with('editdelete')->andReturn('raw-edit')
+            ->shouldReceive('create')->once()
+                ->with('div', 'raw-edit', m::type('Array'))->andReturn('create-div');
 
-        $this->assertEquals('foo', $stub->actions($builder));
+        $this->assertEquals('foo', $stub->actions($table));
     }
 
     /**
@@ -132,16 +165,21 @@ class UserTest extends TestCase
      */
     public function testFormMethod()
     {
-        $model    = new Fluent(array('id' => 1));
+        $app      = $this->app;
+        $model    = m::mock('\Orchestra\Model\User');
         $form     = m::mock('FormBuilder');
-        $fieldset = m::mock('FieldsetBuilder');
-        $control  = m::mock('ControlBuilder');
+        $fieldset = m::mock('FormFieldsetBuilder');
+        $control  = m::mock('FormControlBuilder');
         $value    = (object) array(
-            'roles' => array(
-                (object) array('id' => 1, 'name' => 'Administrator'),
-                (object) array('id' => 2, 'name' => 'Member'),
-            ),
+            'roles' => new Collection(array(
+                new Fluent(array('id' => 1, 'name' => 'Administrator')),
+                new Fluent(array('id' => 2, 'name' => 'Member')),
+            )),
         );
+
+        $model->shouldReceive('hasGetMutator')->andReturn(false);
+
+        $stub = new User;
 
         $control->shouldReceive('label')->times(4)->andReturn(null)
             ->shouldReceive('options')->once()->with('roles')->andReturn(null)
@@ -162,27 +200,27 @@ class UserTest extends TestCase
                 ->andReturnUsing(function ($t, $n, $c) use ($control) {
                     $c($control);
                 });
-        $form->shouldReceive('with')->once()->andReturn(null)
-            ->shouldReceive('layout')->once()->with('orchestra/foundation::components.form')->andReturn(null)
-            ->shouldReceive('attributes')->once()
-                ->with(array('url' => handles('orchestra::users/1'), 'method' => 'PUT'))->andReturn(null)
+        $form->shouldReceive('resource')->once()
+                ->with($stub, 'orchestra/foundation::users', $model)->andReturn(null)
             ->shouldReceive('hidden')->once()->with('id')->andReturn(null)
             ->shouldReceive('fieldset')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);
                 });
-        Form::shouldReceive('of')->once()->with('orchestra.users', m::type('Closure'))
-            ->andReturnUsing(function ($n, $c) use ($form) {
-                $c($form);
-                return 'foo';
-            });
-        $app = Orchestra::getFacadeApplication();
 
-        $app['orchestra.role'] = $roles = m::mock('Role');
-        $roles->shouldReceive('lists')->once()->with('name', 'id')->andReturn('roles');
+        $app['orchestra.role'] = m::mock('\Orchestra\Model\Role')->shouldDeferMissing();
+        $app['orchestra.form'] = m::mock('FormEnvironment');
+        $app['orchestra.form.control'] = $control;
 
-        $stub = new User;
+        $app['orchestra.role']->shouldReceive('lists')->once()
+                ->with('name', 'id')->andReturn('roles');
+        $app['orchestra.form']->shouldReceive('of')->once()
+                ->with('orchestra.users', m::any())
+                ->andReturnUsing(function ($f, $c) use ($form) {
+                    $c($form);
+                    return 'foo';
+                });
 
-        $this->assertEquals('foo', $stub->form($model, 'update'));
+        $stub->form($model);
     }
 }

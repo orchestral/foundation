@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\HTML;
 use Orchestra\Support\Facades\Extension as E;
 use Orchestra\Support\Facades\Form;
 
-class Extension
+class Extension extends AbstractablePresenter
 {
     /**
      * Form View Generator for Orchestra\Extension.
@@ -13,17 +13,14 @@ class Extension
      * @param  string                       $name
      * @return \Orchestra\Html\Form\FormBuilder
      */
-    public function form($model, $name)
+    public function configure($model, $name)
     {
-        return Form::of("orchestra.extension: {$name}", function ($form) use ($model, $name) {
+        $me = $this;
+
+        return Form::of("orchestra.extension: {$name}", function ($form) use ($me, $model, $name) {
             $uid = str_replace('/', '.', $name);
 
-            $form->with($model);
-            $form->layout('orchestra/foundation::components.form');
-            $form->attributes(array(
-                'url'    => handles("orchestra::extensions/configure/{$uid}"),
-                'method' => "POST",
-            ));
+            $form->simple($me, "orchestra::extensions/configure/{$uid}", $model);
 
             $handles      = isset($model->handles) ? $model->handles : E::option($name, 'handles');
             $configurable = isset($model->configurable) ? $model->configurable : true;

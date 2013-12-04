@@ -2,7 +2,7 @@
 
 use Orchestra\Support\Facades\Form;
 
-class Account
+class Account extends AbstractablePresenter
 {
     /**
      * Form view generator for User Account.
@@ -11,16 +11,12 @@ class Account
      * @param  string                   $url
      * @return \Orchestra\Html\Form\FormBuilder
      */
-    public function profileForm($model, $url)
+    public function profile($model, $url)
     {
-        return Form::of('orchestra.account', function ($form) use ($model, $url) {
-            $form->with($model);
-            $form->layout('orchestra/foundation::components.form');
-            $form->attributes(array(
-                'url'    => $url,
-                'method' => 'POST',
-            ));
+        $me = $this;
 
+        return Form::of('orchestra.account', function ($form) use ($me, $model, $url) {
+            $form->simple($me, $url, $model);
             $form->hidden('id');
 
             $form->fieldset(function ($fieldset) {
@@ -41,16 +37,12 @@ class Account
      * @param  \Orchestra\Model\User    $model
      * @return \Orchestra\Html\Form\FormBuilder
      */
-    public function passwordForm($model)
+    public function password($model)
     {
-        return Form::of('orchestra.account: password', function ($form) use ($model) {
-            $form->with($model);
-            $form->layout('orchestra/foundation::components.form');
-            $form->attributes(array(
-                'url'    => handles('orchestra::account/password'),
-                'method' => 'POST',
-            ));
+        $me = $this;
 
+        return Form::of('orchestra.account: password', function ($form) use ($me, $model) {
+            $form->simple($me, 'orchestra::account/password', $model);
             $form->hidden('id');
 
             $form->fieldset(function ($fieldset) {

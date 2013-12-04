@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Form;
 
-class Setting
+class Setting extends AbstractablePresenter
 {
     /**
      * Form View Generator for Setting Page.
@@ -13,18 +13,13 @@ class Setting
      */
     public function form($model)
     {
-        $self = $this;
+        $me = $this;
 
-        return Form::of('orchestra.settings', function ($form) use ($self, $model) {
-            $form->with($model);
-            $form->layout('orchestra/foundation::components.form');
-            $form->attributes(array(
-                'url'    => handles('orchestra::settings'),
-                'method' => 'POST',
-            ));
+        return Form::of('orchestra.settings', function ($form) use ($me, $model) {
+            $form->simple($me, 'orchestra::setting', $model);
 
-            $self->applicationForm($form);
-            $self->mailerForm($form, $model);
+            $me->application($form);
+            $me->mailer($form, $model);
         });
     }
 
@@ -34,7 +29,7 @@ class Setting
      * @return \Orchestra\Html\Form\FormBuilder $form
      * @return void
      */
-    public function applicationForm($form)
+    public function application($form)
     {
         $form->fieldset(trans('orchestra/foundation::label.settings.application'), function ($fieldset) {
             $fieldset->control('input:text', 'site_name', function ($control) {
@@ -64,7 +59,7 @@ class Setting
      * @param  \Illuminate\Support\Fluent       $model
      * @return void
      */
-    public function mailerForm($form, $model)
+    public function mailer($form, $model)
     {
         $form->fieldset(trans('orchestra/foundation::label.settings.mail'), function ($fieldset) use ($model) {
             $fieldset->control('select', 'email_driver', function ($control) {
