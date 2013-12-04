@@ -124,7 +124,7 @@ class UsersController extends AdminController
      */
     public function destroy($id)
     {
-        return $this->presenter->destroy($this, $id);
+        return $this->processor->destroy($this, $id);
     }
 
     public function indexSucceed(array $data)

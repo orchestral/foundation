@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Orchestra\Foundation\Routing\BaseController;
@@ -40,7 +41,7 @@ class User extends AbstractableProcessor
         // action for users.
         $this->presenter->actions($table);
 
-        return $listener->index(
+        return $listener->indexSucceed(
             compact('eloquent', 'roles', 'searchKeyword', 'searchRoles', 'table')
         );
     }
@@ -73,13 +74,13 @@ class User extends AbstractableProcessor
             return $listener->storeValidationFailed($validation);
         }
 
+        $user = App::make('orchestra.user');
+
+        $user->status = Eloquent::UNVERIFIED;
+        $user->password = $input['password'];
+
         try {
-            $user = App::make('orchestra.user');
-
-            $user->status = Eloquent::UNVERIFIED;
-            $user->password = $input['password'];
-
-            $this->saving($listener, $user, $input, 'create');
+            $this->saving($user, $input, 'create');
         } catch (Exception $e) {
             return $listener->storeFailed(trans('orchestra/foundation::response.db-failed', array(
                 'error' => $e->getMessage(),
@@ -104,13 +105,13 @@ class User extends AbstractableProcessor
             return $listener->updateValidationFailed($validation, $id);
         }
 
+        $user = App::make('orchestra.user')->findOrFail($id);
+
+        if (! empty($input['password'])) {
+            $user->password = $input['password'];
+        }
+
         try {
-            $user = App::make('orchestra.user')->findOrFail($id);
-
-            if (! empty($input['password'])) {
-                $user->password = $input['password'];
-            }
-
             $this->saving($user, $input, 'update');
         }
         catch (Exception $e) {
@@ -126,7 +127,6 @@ class User extends AbstractableProcessor
 
     public function destroy($listener, $id)
     {
-
         $user = App::make('orchestra.user')->findOrFail($id);
 
         // Avoid self-deleting accident.
