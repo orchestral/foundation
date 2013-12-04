@@ -131,7 +131,7 @@ class ExtensionsControllerTest extends TestCase
             ->shouldReceive('get')->once()
                 ->with('extensions.available.laravel/framework.name', 'laravel/framework')
                 ->andReturn('Laravel Framework');
-        $presenter->shouldReceive('form')->once()->andReturn('edit.extension');
+        $presenter->shouldReceive('configure')->once()->andReturn('edit.extension');
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Orchestra::shouldReceive('memory')->once()->andReturn($memory);

@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\HTML;
 use Orchestra\Support\Facades\Table;
 
-class Resource
+class Resource extends AbstractablePresenter
 {
     /**
      * Table View Generator for Orchestra\Resources.

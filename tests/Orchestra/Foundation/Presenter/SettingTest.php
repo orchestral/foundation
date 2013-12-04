@@ -1,18 +1,43 @@
 <?php namespace Orchestra\Foundation\Presenter\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\View;
+use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Fluent;
-use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\Presenter\Setting;
 
-class SettingTest extends TestCase
+class SettingTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Application instance.
+     *
+     * @var \Illuminate\Foundation\Application
+     */
+    protected $app;
+
+    /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        $this->app = new Container;
+
+        $this->app['orchestra.app'] = m::mock('OrchestraApplication');
+        $this->app['translator'] = m::mock('Translator');
+
+        $this->app['orchestra.app']->shouldReceive('handles');
+        $this->app['translator']->shouldReceive('trans');
+
+        Facade::clearResolvedInstances();
+        Facade::setFacadeApplication($this->app);
+    }
+
     /**
      * Teardown the test environment.
      */
     public function tearDown()
     {
+        unset($this->app);
         m::close();
     }
 
@@ -24,38 +49,42 @@ class SettingTest extends TestCase
      */
     public function testFormMethod()
     {
+        $app   = $this->app;
         $model = new Fluent(array(
             'email_password' => 123456,
         ));
 
-        $form          = m::mock('FormBuilder');
-        $siteFieldset  = m::mock('SiteFieldsetBuilder');
-        $emailFieldset = m::mock('EmailFieldsetBuilder');
-        $siteControl   = m::mock('SiteControlBuilder');
-        $emailControl  = m::mock('EmailControlBuilder');
+        $form = m::mock('FormBuilder');
 
+        $siteFieldset = m::mock('SiteFormFieldsetBuilder');
+        $siteControl  = m::mock('SiteFormControlBuilder');
+
+        $emailFieldset = m::mock('EmailFormFieldsetBuilder');
+        $emailControl  = m::mock('EmailFormControlBuilder');
+
+        $stub = new Setting;
+
+        $siteFieldset->shouldReceive('control')->times(3)
+                ->with(m::any(), m::any(), m::type('Closure'))
+                ->andReturnUsing(function ($t, $n, $c) use ($siteControl) {
+                    $c($siteControl);
+                });
         $siteControl->shouldReceive('label')->times(3)->andReturn(null)
             ->shouldReceive('attributes')->twice()->andReturn(null)
             ->shouldReceive('options')->once()->andReturn(null);
 
+        $emailFieldset->shouldReceive('control')->times(9)
+                ->with(m::any(), m::any(), m::type('Closure'))
+                ->andReturnUsing(function ($t, $n, $c) use ($emailControl) {
+                    $c($emailControl);
+                });
         $emailControl->shouldReceive('label')->times(9)->andReturn(null)
             ->shouldReceive('attributes')->once()->andReturn(null)
             ->shouldReceive('options')->twice()->andReturn(null)
             ->shouldReceive('help')->once()->with('email.password.help');
 
-        $siteFieldset->shouldReceive('control')->times(3)->with(m::any(), m::any(), m::type('Closure'))
-            ->andReturnUsing(function ($t, $n, $c) use ($siteControl) {
-                $c($siteControl);
-            });
-        $emailFieldset->shouldReceive('control')->times(9)->with(m::any(), m::any(), m::type('Closure'))
-            ->andReturnUsing(function ($t, $n, $c) use ($emailControl) {
-                $c($emailControl);
-            });
-
-        $form->shouldReceive('with')->once()->with($model)->andReturn(null)
-            ->shouldReceive('layout')->once()->with('orchestra/foundation::components.form')->andReturn(null)
-            ->shouldReceive('attributes')->once()
-                ->with(array('url' => handles('orchestra::settings'), 'method' => 'POST'))->andReturn(null)
+        $form->shouldReceive('setup')->once()
+                ->with($stub, 'orchestra::setting', $model)->andReturn(null)
             ->shouldReceive('fieldset')->once()
                 ->with(trans('orchestra/foundation::label.settings.application'), m::type('Closure'))
                 ->andReturnUsing(function ($t, $c) use ($siteFieldset) {
@@ -67,18 +96,18 @@ class SettingTest extends TestCase
                     $c($emailFieldset);
                 });
 
-        \Orchestra\Support\Facades\Form::shouldReceive('of')->once()
-            ->with('orchestra.settings', m::type('Closure'))
-            ->andReturnUsing(function ($n, $c) use ($form) {
-                $c($form);
-                return 'foo';
-            });
+        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->shouldDeferMissing();
+        $app['view'] = m::mock('\Illuminate\View\Environment')->shouldDeferMissing();
 
-        View::shouldReceive('make')->once()
+        $app['orchestra.form']->shouldReceive('of')->once()
+                ->with('orchestra.settings', m::type('Closure'))
+                ->andReturnUsing(function ($n, $c) use ($form) {
+                    $c($form);
+                    return 'foo';
+                });
+        $app['view']->shouldReceive('make')->once()
             ->with('orchestra/foundation::settings.email-password', compact('model'))
             ->andReturn('email.password.help');
-
-        $stub = new Setting;
 
         $this->assertEquals('foo', $stub->form($model));
     }

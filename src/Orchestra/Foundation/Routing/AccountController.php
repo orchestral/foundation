@@ -52,7 +52,7 @@ class AccountController extends AdminController
     public function getIndex()
     {
         $eloquent  = Auth::user();
-        $form      = $this->presenter->profileForm($eloquent, handles('orchestra::account'));
+        $form      = $this->presenter->profile($eloquent, handles('orchestra::account'));
 
         Event::fire('orchestra.form: user.account', array($eloquent, $form));
         Site::set('title', trans("orchestra/foundation::title.account.profile"));
@@ -121,7 +121,7 @@ class AccountController extends AdminController
     public function getPassword()
     {
         $eloquent  = Auth::user();
-        $form      = $this->presenter->passwordForm($eloquent);
+        $form      = $this->presenter->password($eloquent);
 
         Site::set('title', trans("orchestra/foundation::title.account.password"));
 

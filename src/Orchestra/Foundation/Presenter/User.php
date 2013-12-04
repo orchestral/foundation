@@ -7,7 +7,7 @@ use Orchestra\Support\Facades\Form;
 use Orchestra\Support\Facades\Table;
 use Orchestra\Html\Table\TableBuilder;
 
-class User
+class User extends AbstractablePresenter
 {
     /**
      * Table View Generator for Orchestra\Model\User.
@@ -107,22 +107,12 @@ class User
      * @param  \Orchestra\Model\User    $model
      * @return \Orchestra\Html\Form\FormBuilder
      */
-    public function form($model, $type = 'create')
+    public function form($model)
     {
-        return Form::of('orchestra.users', function ($form) use ($model, $type) {
-            $url    = "orchestra/foundation::users";
-            $method = 'POST';
+        $me = $this;
 
-            if ($type === 'update') {
-                $url    = "orchestra/foundation::users/{$model->id}";
-                $method = 'PUT';
-            }
-
-            $url = handles($url);
-
-            $form->with($model);
-            $form->layout('orchestra/foundation::components.form');
-            $form->attributes(compact('url', 'method'));
+        return Form::of('orchestra.users', function ($form) use ($me, $model) {
+            $form->resource($me, 'orchestra/foundation::users', $model);
 
             $form->hidden('id');
 

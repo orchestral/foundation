@@ -127,7 +127,7 @@ class ExtensionsController extends AdminController
 
         // Add basic form, allow extension to add custom configuration field
         // to this form using events.
-        $form = $this->presenter->form($eloquent, $name);
+        $form = $this->presenter->configure($eloquent, $name);
 
         Event::fire("orchestra.form: extension.{$name}", array($eloquent, $form));
         Site::set('title', $extensionName);
