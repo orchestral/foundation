@@ -16,7 +16,7 @@ class Setting extends AbstractablePresenter
         $me = $this;
 
         return Form::of('orchestra.settings', function ($form) use ($me, $model) {
-            $form->simple($me, 'orchestra::setting', $model);
+            $form->setup($me, 'orchestra::setting', $model);
 
             $me->application($form);
             $me->mailer($form, $model);

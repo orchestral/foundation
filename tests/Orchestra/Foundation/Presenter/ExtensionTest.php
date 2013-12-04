@@ -68,7 +68,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
             ->andReturnUsing(function ($t, $n, $c) use ($control) {
                 $c($control);
             });
-        $form->shouldReceive('simple')->once()
+        $form->shouldReceive('setup')->once()
                 ->with($stub, 'orchestra::extensions/configure/foo.bar', $model)->andReturn(null)
             ->shouldReceive('fieldset')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($fieldset) {

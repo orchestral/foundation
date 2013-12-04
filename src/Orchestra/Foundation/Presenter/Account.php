@@ -16,7 +16,7 @@ class Account extends AbstractablePresenter
         $me = $this;
 
         return Form::of('orchestra.account', function ($form) use ($me, $model, $url) {
-            $form->simple($me, $url, $model);
+            $form->setup($me, $url, $model);
             $form->hidden('id');
 
             $form->fieldset(function ($fieldset) {
@@ -42,7 +42,7 @@ class Account extends AbstractablePresenter
         $me = $this;
 
         return Form::of('orchestra.account: password', function ($form) use ($me, $model) {
-            $form->simple($me, 'orchestra::account/password', $model);
+            $form->setup($me, 'orchestra::account/password', $model);
             $form->hidden('id');
 
             $form->fieldset(function ($fieldset) {
