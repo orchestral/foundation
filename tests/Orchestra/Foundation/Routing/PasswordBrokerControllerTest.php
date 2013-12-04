@@ -9,7 +9,7 @@ use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Messages;
 
-class ForgotControllerTest extends TestCase
+class PasswordBrokerControllerTest extends TestCase
 {
     /**
      * Teardown the test environment.

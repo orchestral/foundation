@@ -5,8 +5,8 @@ use Orchestra\Support\Facades\App;
 
 Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
     // Route to account/profile.
-    Route::get('account', 'Orchestra\Foundation\Routing\AccountController@getIndex');
-    Route::post('account', 'Orchestra\Foundation\Routing\AccountController@postIndex');
+    Route::get('account', 'Orchestra\Foundation\Routing\AccountController@getProfile');
+    Route::post('account', 'Orchestra\Foundation\Routing\AccountController@postProfile');
     Route::get('account/password', 'Orchestra\Foundation\Routing\AccountController@getPassword');
     Route::post('account/password', 'Orchestra\Foundation\Routing\AccountController@postPassword');
 
@@ -19,10 +19,10 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
     Route::get('extensions/update/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@getUpdate');
 
     // Route to reset password.
-    Route::get('forgot', 'Orchestra\Foundation\Routing\ForgotController@getIndex');
-    Route::post('forgot', 'Orchestra\Foundation\Routing\ForgotController@postIndex');
-    Route::get('forgot/reset/{token}', 'Orchestra\Foundation\Routing\ForgotController@getReset');
-    Route::post('forgot/reset', 'Orchestra\Foundation\Routing\ForgotController@postReset');
+    Route::get('forgot', 'Orchestra\Foundation\Routing\PasswordBrokerController@getIndex');
+    Route::post('forgot', 'Orchestra\Foundation\Routing\PasswordBrokerController@postIndex');
+    Route::get('forgot/reset/{token}', 'Orchestra\Foundation\Routing\PasswordBrokerController@getReset');
+    Route::post('forgot/reset', 'Orchestra\Foundation\Routing\PasswordBrokerController@postReset');
 
     // Route to installation.
     Route::get('install', 'Orchestra\Foundation\Routing\InstallController@getIndex');
@@ -47,7 +47,7 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
     // Route for settings
     Route::get('settings', 'Orchestra\Foundation\Routing\SettingsController@getIndex');
     Route::post('settings', 'Orchestra\Foundation\Routing\SettingsController@postIndex');
-    Route::get('settings/update', 'Orchestra\Foundation\Routing\SettingsController@getUpdate');
+    Route::get('settings/migrate', 'Orchestra\Foundation\Routing\SettingsController@getMigrate');
 
     // Route for credentials.
     Route::get('login', 'Orchestra\Foundation\Routing\CredentialController@getLogin');

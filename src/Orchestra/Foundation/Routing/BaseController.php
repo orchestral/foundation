@@ -6,18 +6,11 @@ use Illuminate\Support\Facades\Response;
 abstract class BaseController extends Controller
 {
     /**
-     * Presenter instance.
+     * Processor instance.
      *
      * @var object
      */
-    protected $presenter;
-
-    /**
-     * Validator instance.
-     *
-     * @var object
-     */
-    protected $validator;
+    protected $processor;
 
     /**
      * Base controller construct method.

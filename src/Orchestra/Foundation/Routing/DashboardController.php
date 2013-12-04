@@ -3,10 +3,22 @@
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Support\Facades\Widget;
+use Orchestra\Foundation\Processor\Dashboard as DashboardProcessor;
 
 class DashboardController extends AdminController
 {
+    /**
+     * Dashboard controller routing.
+     *
+     * @param \Orchestra\Foundation\Processor\Dashboard    $processor
+     */
+    public function __construct(DashboardProcessor $processor)
+    {
+        $this->processor = $processor;
+
+        parent::__construct();
+    }
+
     /**
      * Setup controller filters.
      *
@@ -31,9 +43,18 @@ class DashboardController extends AdminController
     {
         Site::set('title', trans("orchestra/foundation::title.home"));
 
-        return View::make('orchestra/foundation::dashboard.index', array(
-            'panes' => Widget::make('pane.orchestra'),
-        ));
+        return $this->processor->show($this);
+    }
+
+    /**
+     * Response with widget.
+     *
+     * @param  array  $data
+     * @return Response
+     */
+    public function dashboardSucceed(array $data)
+    {
+        return View::make('orchestra/foundation::dashboard.index', $data);
     }
 
     /**

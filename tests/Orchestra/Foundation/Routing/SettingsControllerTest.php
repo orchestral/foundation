@@ -134,11 +134,11 @@ class SettingsControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/settings/update
+     * Test GET /admin/settings/migrate
      *
      * @test
      */
-    public function testGetUpdateAction()
+    public function testGetMigrateAction()
     {
         $asset   = m::mock('AssetPublisher');
         $migrate = m::mock('MigratePublisher');
@@ -150,7 +150,7 @@ class SettingsControllerTest extends TestCase
         Orchestra::shouldReceive('make')->once()->with('orchestra.publisher.migrate')->andReturn($migrate);
         Orchestra::shouldReceive('handles')->once()->with('orchestra::settings')->andReturn('settings');
 
-        $this->call('GET', 'admin/settings/update');
+        $this->call('GET', 'admin/settings/migrate');
         $this->assertRedirectedTo('settings');
     }
 }

@@ -1,24 +1,22 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Model\User;
-use Orchestra\Foundation\Validation\Auth as AuthValidator;
+use Orchestra\Foundation\Processor\Credential as CredentialProcessor;
 
 class CredentialController extends AdminController
 {
     /**
-     * Authentication/credential Controller routing.
+     * Authentication/Credential controller routing.
      *
-     * @param \Orchestra\Foundation\Validation\Auth $validator
+     * @param \Orchestra\Foundation\Processor\Credential   $processor
      */
-    public function __construct(AuthValidator $validator)
+    public function __construct(CredentialProcessor $processor)
     {
-        $this->validator = $validator;
+        $this->processor = $processor;
 
         parent::__construct();
     }
@@ -47,7 +45,7 @@ class CredentialController extends AdminController
     }
 
     /**
-     * Login Page
+     * Login page.
      *
      * GET (:orchestra)/login
      *
@@ -61,7 +59,7 @@ class CredentialController extends AdminController
     }
 
     /**
-     * POST Login
+     * POST Login the user.
      *
      * POST (:orchestra)/login
      *
@@ -69,30 +67,11 @@ class CredentialController extends AdminController
      */
     public function postLogin()
     {
-        $input      = Input::all();
-        $validation = $this->validator->on('login')->with($input);
-
-        // Validate user login, if any errors is found redirect it back to
-        // login page with the errors.
-        if ($validation->fails()) {
-            return Redirect::to(handles('orchestra::login'))
-                    ->withInput()
-                    ->withErrors($validation);
-        }
-
-        if ($this->authenticate($input)) {
-            Messages::add('success', trans('orchestra/foundation::response.credential.logged-in'));
-
-            return Redirect::intended(handles('orchestra::/'));
-        }
-
-        Messages::add('error', trans('orchestra/foundation::response.credential.invalid-combination'));
-
-        return Redirect::to(handles('orchestra::login'))->withInput();
+        return $this->processor->login($this, Input::all());
     }
 
     /**
-     * Logout the user
+     * Logout the user.
      *
      * DELETE (:bundle)/login
      *
@@ -100,46 +79,56 @@ class CredentialController extends AdminController
      */
     public function deleteLogin()
     {
-        Auth::logout();
-        Messages::add('success', trans('orchestra/foundation::response.credential.logged-out'));
-
-        $intended = 'orchestra::login';
-
-        is_null($redirect = Input::get('redirect')) or $intended = $redirect;
-
-        return Redirect::intended(handles($intended));
+        return $this->processor->logout($this);
     }
 
     /**
-     * Authenticate the user.
+     * Response when validation on login failed.
      *
-     * @param  array    $input
-     * @return boolean
+     * @param  object  $validation
+     * @return Response
      */
-    protected function authenticate($input)
+    public function loginValidationFailed($validation)
     {
-        $data = array(
-            'email'    => $input['email'],
-            'password' => $input['password'],
-        );
+        return Redirect::to(handles('orchestra::login'))->withInput()->withErrors($validation);
+    }
 
-        $remember = (isset($input['remember']) and $input['remember'] === 'yes');
+    /**
+     * Response when login failed.
+     *
+     * @param  string  $message
+     * @return Response
+     */
+    public function loginFailed($message)
+    {
+        Messages::add('error', $message);
 
-        // We should now attempt to login the user using Auth class. If this
-        // failed simply return false.
-        if (! Auth::attempt($data, $remember)) {
-            return false;
-        }
+        return Redirect::to(handles('orchestra::login'))->withInput();
+    }
 
-        $user = Auth::user();
+    /**
+     * Response when login succeed.
+     *
+     * @param  string  $message
+     * @return Response
+     */
+    public function loginSucceed($message)
+    {
+        Messages::add('success', $message);
 
-        // Verify user account if has not been verified, other this should
-        // be ignored in most cases.
-        if ((int) $user->status === User::UNVERIFIED) {
-            $user->status = User::VERIFIED;
-            $user->save();
-        }
+        return Redirect::intended(handles('orchestra::/'));
+    }
 
-        return true;
+    /**
+     * Response when logout succeed.
+     *
+     * @param  string  $message
+     * @return Response
+     */
+    public function logoutSucceed($message)
+    {
+        Messages::add('success', $message);
+
+        return Redirect::intended(handles(Input::get('redirect', 'orchestra::login')));
     }
 }

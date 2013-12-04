@@ -1,19 +1,12 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Exception;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Model\User;
-use Orchestra\Foundation\Presenter\Account as AccountPresenter;
-use Orchestra\Foundation\Validation\Account as AccountValidator;
+use Orchestra\Foundation\Processor\Account as AccountProcessor;
 
 class AccountController extends AdminController
 {
@@ -21,13 +14,11 @@ class AccountController extends AdminController
      * Construct Account Controller to allow user to update own profile.
      * Only authenticated user should be able to access this controller.
      *
-     * @param  \Orchestra\Foundation\Presenter\Account  $presenter
-     * @param  \Orchestra\Foundation\Validation\Account $validator
+     * @param  \Orchestra\Foundation\Processor\Account $processor
      */
-    public function __construct(AccountPresenter $presenter, AccountValidator $validator)
+    public function __construct(AccountProcessor $processor)
     {
-        $this->presenter = $presenter;
-        $this->validator = $validator;
+        $this->processor = $processor;
 
         parent::__construct();
     }
@@ -43,76 +34,33 @@ class AccountController extends AdminController
     }
 
     /**
-     * Edit User Profile Page
+     * Edit user account/profile page.
      *
      * GET (:orchestra)/account
      *
      * @return Response
      */
-    public function getIndex()
+    public function getProfile()
     {
-        $eloquent  = Auth::user();
-        $form      = $this->presenter->profile($eloquent, handles('orchestra::account'));
-
-        Event::fire('orchestra.form: user.account', array($eloquent, $form));
         Site::set('title', trans("orchestra/foundation::title.account.profile"));
 
-        return View::make('orchestra/foundation::account.index', array(
-            'eloquent' => $eloquent,
-            'form'     => $form,
-        ));
+        return $this->processor->showProfile($this);
     }
 
     /**
-     * POST Edit User Profile
+     * POST Edit user account/profile.
      *
      * POST (:orchestra)/account
      *
      * @return Response
      */
-    public function postIndex()
+    public function postProfile()
     {
-        $input = Input::all();
-        $user  = Auth::user();
-
-        if ((string) $user->id !== $input['id']) {
-            return App::abort(500);
-        }
-
-        $validation = $this->validator->with($input);
-
-        if ($validation->fails()) {
-            return Redirect::to(handles('orchestra::account'))
-                    ->withInput()
-                    ->withErrors($validation);
-        }
-
-        $user->email    = $input['email'];
-        $user->fullname = $input['fullname'];
-
-        try {
-            $this->fireEvent('updating', array($user));
-            $this->fireEvent('saving', array($user));
-
-            DB::transaction(function () use ($user) {
-                $user->save();
-            });
-
-            $this->fireEvent('updated', array($user));
-            $this->fireEvent('saved', array($user));
-
-            Messages::add('success', trans('orchestra/foundation::response.account.profile.update'));
-        } catch (Exception $e) {
-            Messages::add('error', trans('orchestra/foundation::response.db-failed', array(
-                'error' => $e->getMessage(),
-            )));
-        }
-
-        return Redirect::to(handles('orchestra::account'));
+        return $this->processor->updateProfile($this, Input::all());
     }
 
     /**
-     * Edit Password Page
+     * Edit change password page.
      *
      * GET (:orchestra)/account/password
      *
@@ -120,19 +68,13 @@ class AccountController extends AdminController
      */
     public function getPassword()
     {
-        $eloquent  = Auth::user();
-        $form      = $this->presenter->password($eloquent);
-
         Site::set('title', trans("orchestra/foundation::title.account.password"));
 
-        return View::make('orchestra/foundation::account.password', array(
-            'eloquent' => $eloquent,
-            'form'     => $form,
-        ));
+        return $this->processor->showPassword($this);
     }
 
     /**
-     * POST Edit User Password
+     * POST Edit change password.
      *
      * POST (:orchestra)/account/password
      *
@@ -140,60 +82,114 @@ class AccountController extends AdminController
      */
     public function postPassword()
     {
-        $input = Input::all();
-        $user  = Auth::user();
+        return $this->processor->updatePassword($this, Input::all());
+    }
 
-        if ((string) $user->id !== $input['id']) {
-            return App::abort(500);
-        }
+    /**
+     * Response view account/profile page.
+     *
+     * @param  array   $data
+     * @return Response
+     */
+    public function showProfileSucceed(array $data)
+    {
+        return View::make('orchestra/foundation::account.index', $data);
+    }
 
-        $validation = $this->validator->on('changePassword')->with($input);
+    /**
+     * Response when validation on update profile failed.
+     *
+     * @param  object  $validation
+     * @return Response
+     */
+    public function updateProfileValidationFailed($validation)
+    {
+        return Redirect::to(handles('orchestra::account'))
+                ->withInput()
+                ->withErrors($validation);
+    }
 
-        if ($validation->fails()) {
-            return Redirect::to(handles('orchestra::account/password'))
-                    ->withInput()
-                    ->withErrors($validation);
-        }
+    /**
+     * Response when update profile failed.
+     *
+     * @param  string  $message
+     * @return Response
+     */
+    public function updateProfileFailed($message)
+    {
+        Messages::add('error', $message);
 
-        if (Hash::check($input['current_password'], $user->password)) {
-            $user->password = $input['new_password'];
+        return Redirect::to(handles('orchestra::account'));
+    }
 
-            $this->updatePassword($user);
-        } else {
-            Messages::add('error', trans('orchestra/foundation::response.account.password.invalid'));
-        }
+    /**
+     * Response when update profile succeed.
+     *
+     * @param  string  $message
+     * @return Response
+     */
+    public function updateProfileSucceed($message)
+    {
+        Messages::add('success', $message);
+
+        return Redirect::to(handles('orchestra::account'));
+    }
+
+    /**
+     * Response view change password page.
+     *
+     * @param  array   $data
+     * @return Response
+     */
+    public function showPasswordSucceed(array $data)
+    {
+        return View::make('orchestra/foundation::account.password', $data);
+    }
+
+    /**
+     * Response when validation on change password failed.
+     *
+     * @param  object  $validation
+     * @return Response
+     */
+    public function updatePasswordValidationFailed($validation)
+    {
+        return Redirect::to(handles('orchestra::account/password'))->withInput()->withErrors($validation);
+    }
+
+    /**
+     * Response when update password failed.
+     *
+     * @param  string  $message
+     * @return Response
+     */
+    public function updatePasswordFailed($message)
+    {
+        Messages::add('error', $message);
 
         return Redirect::to(handles('orchestra::account/password'));
     }
 
     /**
-     * Update password for the user.
+     * Response when update password succeed.
      *
-     * @param  \Orchestra\Model\User    $user
-     * @return void
+     * @param  string  $message
+     * @return Response
      */
-    protected function updatePassword(User $user)
+    public function updatePasswordSucceed($message)
     {
-        try {
-            DB::transaction(function () use ($user) {
-                $user->save();
-            });
+        Messages::add('success', $message);
 
-            Messages::add('success', trans('orchestra/foundation::response.account.password.update'));
-        } catch (Exception $e) {
-            Messages::add('error', trans('orchestra/foundation::response.db-failed'));
-        }
+        return Redirect::to(handles('orchestra::account/password'));
     }
 
     /**
-     * Fire Event related to eloquent process
+     * Response when user verification failed.
      *
-     * @param  string   $type
-     * @param  array    $parameters
-     * @return void
+     * @return Response
      */
-    private function fireEvent($type, $parameters)
+    public function userVerificationFailed()
     {
-        Event::fire("orchestra.{$type}: user.account", $parameters);
+        return App::abort(500);
     }
 }

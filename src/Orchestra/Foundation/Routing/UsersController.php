@@ -1,31 +1,24 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Exception;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
+use Orchestra\Foundation\Processor\User as UserProcessor;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Model\User;
-use Orchestra\Foundation\Presenter\User as UserPresenter;
-use Orchestra\Foundation\Validation\User as UserValidator;
 
 class UsersController extends AdminController
 {
     /**
      * CRUD Controller for Users management using resource routing.
      *
-     * @param  \Orchestra\Foundation\Presenter\User     $presenter
+     * @param  \Orchestra\Foundation\Processor\User    $processor
      * @param  \Orchestra\Foundation\Validation\User    $validator
      */
-    public function __construct(UserPresenter $presenter, UserValidator $validator)
+    public function __construct(UserProcessor $processor)
     {
-        $this->presenter = $presenter;
-        $this->validator = $validator;
+        $this->processor = $processor;
 
         parent::__construct();
     }
@@ -50,33 +43,9 @@ class UsersController extends AdminController
      */
     public function index()
     {
-        $searchKeyword = Input::get('q', '');
-        $searchRoles   = Input::get('roles', array());
-
-        // Get Users (with roles) and limit it to only 30 results for
-        // pagination. Don't you just love it when pagination simply works.
-        $eloquent = App::make('orchestra.user')->search($searchKeyword, $searchRoles)->paginate();
-        $roles    = App::make('orchestra.role')->lists('name', 'id');
-
-        // Build users table HTML using a schema liked code structure.
-        $table = $this->presenter->table($eloquent);
-
-        Event::fire('orchestra.list: users', array($eloquent, $table));
-
-        // Once all event listening to `orchestra.list: users` is executed,
-        // we can add we can now add the final column, edit and delete
-        // action for users.
-        $this->presenter->actions($table);
-
         Site::set('title', trans('orchestra/foundation::title.users.list'));
 
-        return View::make('orchestra/foundation::users.index', array(
-            'eloquent'      => $eloquent,
-            'roles'         => $roles,
-            'searchKeyword' => $searchKeyword,
-            'searchRoles'   => $searchRoles,
-            'table'         => $table,
-        ));
+        return $this->processor->index($this, Input::get('q', ''), Input::get('roles', array()));
     }
 
     /**
@@ -88,13 +57,9 @@ class UsersController extends AdminController
      */
     public function create()
     {
-        $eloquent = App::make('orchestra.user');
-        $form     = $this->presenter->form($eloquent, 'create');
-
-        $this->fireEvent('form', array($eloquent, $form));
         Site::set('title', trans('orchestra/foundation::title.users.create'));
 
-        return View::make('orchestra/foundation::users.edit', compact('eloquent', 'form'));
+        return $this->processor->create($this);
     }
 
     /**
@@ -106,13 +71,9 @@ class UsersController extends AdminController
      */
     public function edit($id)
     {
-        $eloquent = App::make('orchestra.user')->findOrFail($id);
-        $form     = $this->presenter->form($eloquent, 'update');
-
-        $this->fireEvent('form', array($eloquent, $form));
         Site::set('title', trans('orchestra/foundation::title.users.update'));
 
-        return View::make('orchestra/foundation::users.edit', compact('eloquent', 'form'));
+        return $this->processor->edit($this, $id);
     }
 
     /**
@@ -124,22 +85,7 @@ class UsersController extends AdminController
      */
     public function store()
     {
-        $input      = Input::all();
-        $validation = $this->validator->on('create')->with($input);
-
-        if ($validation->fails()) {
-            return Redirect::to(handles("orchestra::users/create"))
-                    ->withInput()
-                    ->withErrors($validation);
-        }
-
-        $user           = App::make('orchestra.user');
-        $user->status   = User::UNVERIFIED;
-        $user->password = $input['password'];
-
-        $this->saving($user, $input, 'create');
-
-        return Redirect::to(handles('orchestra::users'));
+        return $this->processor->store($this, Input::all());
     }
 
     /**
@@ -152,69 +98,7 @@ class UsersController extends AdminController
      */
     public function update($id)
     {
-        $input = Input::all();
-
-        // Check if provided id is the same as hidden id, just a pre-caution.
-        if ((string) $id !== $input['id']) {
-            return App::abort(500);
-        }
-
-        $validation = $this->validator->on('update')->with($input);
-
-        if ($validation->fails()) {
-            return Redirect::to(handles("orchestra::users/{$id}/edit"))
-                    ->withInput()
-                    ->withErrors($validation);
-        }
-
-        $user = App::make('orchestra.user')->findOrFail($id);
-
-        if (! empty($input['password'])) {
-            $user->password = $input['password'];
-        }
-
-        $this->saving($user, $input, 'update');
-
-        return Redirect::to(handles('orchestra::users'));
-    }
-
-    /**
-     * Save the user.
-     *
-     * @param  Orchestra\Model\User $user
-     * @param  array                $input
-     * @param  string               $type
-     * @return boolean
-     */
-    protected function saving(User $user, $input = array(), $type = 'create')
-    {
-        $beforeEvent = ($type === 'create' ? 'creating' : 'updating');
-        $afterEvent  = ($type === 'create' ? 'created' : 'updated');
-
-        $user->fullname = $input['fullname'];
-        $user->email    = $input['email'];
-
-        try {
-            $this->fireEvent($beforeEvent, array($user));
-            $this->fireEvent('saving', array($user));
-
-            DB::transaction(function () use ($user, $input) {
-                $user->save();
-                $user->roles()->sync($input['roles']);
-            });
-
-            $this->fireEvent($afterEvent, array($user));
-            $this->fireEvent('saved', array($user));
-
-            Messages::add('success', trans("orchestra/foundation::response.users.{$type}"));
-        } catch (Exception $e) {
-            Messages::add('error', trans('orchestra/foundation::response.db-failed', array(
-                'error' => $e->getMessage(),
-            )));
-            return false;
-        }
-
-        return true;
+        return $this->processor->update($this, $id, Input::all());
     }
 
     /**
@@ -240,42 +124,97 @@ class UsersController extends AdminController
      */
     public function destroy($id)
     {
-        $user = App::make('orchestra.user')->findOrFail($id);
+        return $this->presenter->destroy($this, $id);
+    }
 
-        // Avoid self-deleting accident.
-        if ((string) $user->id === (string) Auth::user()->id) {
-            return App::abort(404);
-        }
+    public function indexSucceed(array $data)
+    {
+        return View::make('orchestra/foundation::users.index', $data);
+    }
 
-        try {
-            $this->fireEvent('deleting', array($user));
+    public function createSucceed(array $data)
+    {
+        return View::make('orchestra/foundation::users.edit', $data);
+    }
 
-            DB::transaction(function () use ($user) {
-                $user->delete();
-            });
+    public function editSucceed(array $data)
+    {
+        return View::make('orchestra/foundation::users.edit', $data);
+    }
 
-            $this->fireEvent('deleted', array($user));
+    public function storeValidationFailed($validation)
+    {
+        return Redirect::to(handles("orchestra::users/create"))
+                ->withInput()
+                ->withErrors($validation);
+    }
 
-            Messages::add('success', trans('orchestra/foundation::response.users.delete'));
-        } catch (Exception $e) {
-            Messages::add('error', trans('orchestra/foundation::response.db-failed', array(
-                'error' => $e->getMessage(),
-            )));
-        }
+    public function storeFailed($message)
+    {
+        Messages::add('error', $message);
+
+        return Redirect::to(handles('orchestra::users'));
+    }
+
+    public function storeSucceed($message)
+    {
+        Messages::add('success', $message);
+
+        return Redirect::to(handles('orchestra::users'));
+    }
+
+    public function updateValidationFailed($validation, $id)
+    {
+        return Redirect::to(handles("orchestra::users/{$id}/edit"))
+                ->withInput()
+                ->withErrors($validation);
+    }
+
+    public function updateFailed($message)
+    {
+        Messages::add('error', $message);
+
+        return Redirect::to(handles('orchestra::users'));
+    }
+
+    public function updateSucceed($message)
+    {
+        Messages::add('success', $message);
+
+        return Redirect::to(handles('orchestra::users'));
+    }
+
+    public function destroyFailed($message)
+    {
+        Messages::add('error', $message);
+
+        return Redirect::to(handles('orchestra::users'));
+    }
+
+    public function destroySucceed($message)
+    {
+        Messages::add('success', $message);
 
         return Redirect::to(handles('orchestra::users'));
     }
 
     /**
-     * Fire Event related to eloquent process
+     * Response when user verification failed.
      *
-     * @param  string   $type
-     * @param  array    $parameters
-     * @return void
+     * @return Response
      */
-    private function fireEvent($type, $parameters)
+    public function selfDeletionFailed()
     {
-        Event::fire("orchestra.{$type}: users", $parameters);
-        Event::fire("orchestra.{$type}: user.account", $parameters);
+        return App::abort(404);
+    }
+
+    /**
+     * Response when user verification failed.
+     *
+     * @return Response
+     */
+    public function userVerificationFailed()
+    {
+        return App::abort(500);
     }
 }
