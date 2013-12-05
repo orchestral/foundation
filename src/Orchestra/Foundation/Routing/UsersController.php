@@ -1,10 +1,8 @@
 <?php namespace Orchestra\Foundation\Routing;
 
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Processor\User as UserProcessor;
-use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Site;
 
 class UsersController extends AdminController

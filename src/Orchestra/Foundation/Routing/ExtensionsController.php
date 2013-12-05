@@ -1,16 +1,11 @@
 <?php namespace Orchestra\Foundation\Routing;
 
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Fluent;
-use Orchestra\Support\Facades\Messages;
+use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Foundation\Processor\Extension as ExtensionProcessor;
-
-
-use Orchestra\Support\Facades\App;
-use Orchestra\Support\Facades\Extension;
 
 class ExtensionsController extends AdminController
 {

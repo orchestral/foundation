@@ -1,9 +1,7 @@
 <?php namespace Orchestra\Foundation\Routing;
 
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Foundation\Processor\Account as AccountProcessor;
 

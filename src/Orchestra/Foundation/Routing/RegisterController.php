@@ -41,7 +41,7 @@ class RegisterController extends AdminController
     protected function setupFilters()
     {
         $this->beforeFilter('orchestra.registrable');
-        $this->beforeFilter('orchestra.csrf', array('only' => array('postIndex')));
+        $this->beforeFilter('orchestra.csrf', array('only' => array('create')));
     }
 
     /**
@@ -75,7 +75,7 @@ class RegisterController extends AdminController
      *
      * @return Response
      */
-    public function store()
+    public function create()
     {
         $input    = Input::all();
         $password = Str::random(5);

@@ -29,7 +29,7 @@ class InstallerController extends BaseController
     protected function setupFilters()
     {
         $this->beforeFilter('orchestra.installed', array(
-            'only' => array('getIndex', 'getCreate', 'postCreate'),
+            'only' => array('index', 'create', 'store'),
         ));
     }
 

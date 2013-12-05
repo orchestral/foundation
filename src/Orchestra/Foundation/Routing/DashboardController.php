@@ -47,17 +47,6 @@ class DashboardController extends AdminController
     }
 
     /**
-     * Response with widget.
-     *
-     * @param  array  $data
-     * @return Response
-     */
-    public function dashboardSucceed(array $data)
-    {
-        return View::make('orchestra/foundation::dashboard.index', $data);
-    }
-
-    /**
      * Show missing pages.
      *
      * GET (:orchestra) return 404
@@ -67,5 +56,16 @@ class DashboardController extends AdminController
     public function missing()
     {
         return $this->missingMethod('missing', array());
+    }
+
+    /**
+     * Response with widget.
+     *
+     * @param  array  $data
+     * @return Response
+     */
+    public function dashboardSucceed(array $data)
+    {
+        return View::make('orchestra/foundation::dashboard.index', $data);
     }
 }

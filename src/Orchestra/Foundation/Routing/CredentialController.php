@@ -29,10 +29,10 @@ class CredentialController extends AdminController
     protected function setupFilters()
     {
         $this->beforeFilter('orchestra.guest', array(
-            'only' => array('index', 'create'),
+            'only' => array('index', 'login'),
         ));
 
-        $this->beforeFilter('orchestra.csrf', array('only' => array('postLogin')));
+        $this->beforeFilter('orchestra.csrf', array('only' => array('login')));
     }
 
     /**
