@@ -26,7 +26,7 @@ class Setting extends AbstractablePresenter
     /**
      * Form view generator for application configuration.
      *
-     * @return \Orchestra\Html\Form\FormBuilder $form
+     * @return \Orchestra\Html\Form\Grid $form
      * @return void
      */
     public function application($form)
@@ -55,8 +55,8 @@ class Setting extends AbstractablePresenter
     /**
      * Form view generator for email configuration.
      *
-     * @param  \Orchestra\Html\Form\FormBuilder $form
-     * @param  \Illuminate\Support\Fluent       $model
+     * @param  \Orchestra\Html\Form\Grid  $form
+     * @param  \Illuminate\Support\Fluent $model
      * @return void
      */
     public function mailer($form, $model)

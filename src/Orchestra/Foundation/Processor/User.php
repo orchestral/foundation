@@ -167,7 +167,7 @@ class User extends AbstractableProcessor
      * @param  string|integer                                  $id
      * @return mixed
      */
-    public function destroy($listener, $id)
+    public function destroy(BaseController $listener, $id)
     {
         $user = App::make('orchestra.user')->findOrFail($id);
 

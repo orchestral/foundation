@@ -85,7 +85,7 @@ class SettingsController extends AdminController
      */
     public function updateValidationFailed($validation)
     {
-        return $this->redirectWithErrors(handles('orchestra::settings') ,$validation);
+        return $this->redirectWithErrors(handles('orchestra::settings'), $validation);
     }
 
     /**
