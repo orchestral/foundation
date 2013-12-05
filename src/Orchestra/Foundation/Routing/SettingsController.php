@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Foundation\Processor\Setting as SettingProcessor;
 
@@ -100,9 +99,7 @@ class SettingsController extends AdminController
      */
     public function updateSucceed($message)
     {
-        Messages::add('success', $message);
-
-        return Redirect::to(handles('orchestra::settings'));
+        return $this->redirectWithMessage(handles('orchestra::settings'), $message);
     }
 
     /**
@@ -113,8 +110,6 @@ class SettingsController extends AdminController
      */
     public function migrateSucceed($message)
     {
-        Messages::add('success', $message);
-
-        return Redirect::to(handles('orchestra::settings'));
+        return $this->redirectWithMessage(handles('orchestra::settings'), $message);
     }
 }

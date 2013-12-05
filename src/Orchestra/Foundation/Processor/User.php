@@ -24,6 +24,14 @@ class User extends AbstractableProcessor
         $this->validator = $validator;
     }
 
+    /**
+     * View list users page.
+     *
+     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  string                                          $searchKeyword
+     * @param  array                                           $searchRoles
+     * @return mixed
+     */
     public function index(BaseController $listener, $searchKeyword = '', array $searchRoles = array())
     {
         // Get Users (with roles) and limit it to only 30 results for
@@ -46,6 +54,12 @@ class User extends AbstractableProcessor
         );
     }
 
+    /**
+     * View create user page.
+     *
+     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @return mixed
+     */
     public function create(BaseController $listener)
     {
         $eloquent = App::make('orchestra.user');
@@ -56,6 +70,13 @@ class User extends AbstractableProcessor
         return $listener->createSucceed(compact('eloquent', 'form'));
     }
 
+    /**
+     * View edit user page.
+     *
+     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  string|integer                                  $id
+     * @return mixed
+     */
     public function edit(BaseController $listener, $id)
     {
         $eloquent = App::make('orchestra.user')->findOrFail($id);
@@ -66,6 +87,13 @@ class User extends AbstractableProcessor
         return $listener->editSucceed(compact('eloquent', 'form'));
     }
 
+    /**
+     * Store a user.
+     *
+     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  array                                           $input
+     * @return mixed
+     */
     public function store(BaseController $listener, array $input)
     {
         $validation = $this->validator->on('create')->with($input);
@@ -92,6 +120,14 @@ class User extends AbstractableProcessor
         );
     }
 
+    /**
+     * Update a user.
+     *
+     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  string|integer                                  $id
+     * @param  array                                           $input
+     * @return mixed
+     */
     public function update(BaseController $listener, $id, array $input)
     {
         // Check if provided id is the same as hidden id, just a pre-caution.
@@ -125,6 +161,13 @@ class User extends AbstractableProcessor
         );
     }
 
+    /**
+     * Destroy a user.
+     *
+     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  string|integer                                  $id
+     * @return mixed
+     */
     public function destroy($listener, $id)
     {
         $user = App::make('orchestra.user')->findOrFail($id);

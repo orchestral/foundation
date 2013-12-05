@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\App;
-use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Foundation\Processor\Account as AccountProcessor;
 
@@ -117,9 +116,7 @@ class AccountController extends AdminController
      */
     public function updateProfileFailed($message)
     {
-        Messages::add('error', $message);
-
-        return Redirect::to(handles('orchestra::account'));
+        return $this->redirectWithMessage(handles('orchestra::account'), $message, 'error');
     }
 
     /**
@@ -130,9 +127,7 @@ class AccountController extends AdminController
      */
     public function updateProfileSucceed($message)
     {
-        Messages::add('success', $message);
-
-        return Redirect::to(handles('orchestra::account'));
+        return $this->redirectWithMessage(handles('orchestra::account'), $message);
     }
 
     /**
@@ -165,9 +160,7 @@ class AccountController extends AdminController
      */
     public function updatePasswordFailed($message)
     {
-        Messages::add('error', $message);
-
-        return Redirect::to(handles('orchestra::account/password'));
+        return $this->redirectWithMessage(handles('orchestra::account/password'), $message, 'error');
     }
 
     /**
@@ -178,9 +171,7 @@ class AccountController extends AdminController
      */
     public function updatePasswordSucceed($message)
     {
-        Messages::add('success', $message);
-
-        return Redirect::to(handles('orchestra::account/password'));
+        return $this->redirectWithMessage(handles('orchestra::account/password'), $message);
     }
 
     /**

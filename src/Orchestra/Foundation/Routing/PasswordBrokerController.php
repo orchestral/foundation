@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Foundation\Processor\PasswordBroker as PasswordBrokerProcessor;
 
@@ -117,9 +116,7 @@ class PasswordBrokerController extends AdminController
      */
     public function requestFailed($message)
     {
-        Messages::add('error', $message);
-
-        return Redirect::to(handles('orchestra::forgot'));
+        return $this->redirectWithMessage(handles('orchestra::forgot'), $message, 'error');
     }
 
     /**
@@ -130,9 +127,7 @@ class PasswordBrokerController extends AdminController
      */
     public function requestSucceed($message)
     {
-        Messages::add('success', $message);
-
-        return Redirect::to(handles('orchestra::forgot'));
+        return $this->redirectWithMessage(handles('orchestra::forgot'), $message);
     }
 
     /**
@@ -144,9 +139,8 @@ class PasswordBrokerController extends AdminController
     public function resetFailed($message)
     {
         $token = Input::get('token');
-        Messages::add('error', $message);
 
-        return Redirect::to(handles("orchestra::forgot/reset/{$token}"));
+        return $this->redirectWithMessage(handles("orchestra::forgot/reset/{$token}"), $message, 'error');
     }
 
     /**
@@ -157,8 +151,6 @@ class PasswordBrokerController extends AdminController
      */
     public function resetSucceed($message)
     {
-        Messages::add('success', $message);
-
-        return Redirect::to(handles('orchestra::/'));
+        return $this->redirectWithMessage(handles('orchestra::/'), $message);
     }
 }

@@ -2,15 +2,22 @@
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
+use Orchestra\Foundation\Processor\Publisher as PublisherProcessor;
 use Orchestra\Support\Facades\Messages;
-use Orchestra\Support\Facades\Publisher;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Support\FTP\ServerException;
 
 class PublisherController extends AdminController
 {
+    /**
+     * Publisher controller.
+     *
+     * @param  \Orchestra\Foundation\Processor\Publisher   $processor
+     */
+    public function __construct(PublisherProcessor $processor)
+    {
+        $this->processor = $processor;
+    }
     /**
      * Setup controller filters.
      *
@@ -28,13 +35,8 @@ class PublisherController extends AdminController
      */
     public function getIndex()
     {
-        if (Publisher::connected()) {
-            Publisher::execute();
-        }
-
-        return Redirect::to(handles('orchestra::publisher/ftp'));
+        return $this->processor->index($this);
     }
-
 
     /**
      * Show FTP configuration form or run the queue.
@@ -58,27 +60,32 @@ class PublisherController extends AdminController
      */
     public function postFtp()
     {
-        $input  = Input::only(array('host', 'user', 'password'));
-        $queues = Publisher::queued();
-
+        $input = Input::only(array('host', 'user', 'password'));
         $input['ssl'] = (Input::get('connection-type', 'sftp') === 'sftp');
 
-        // Make an attempt to connect to service first before
-        try {
-            Publisher::connect($input);
-        } catch (ServerException $e) {
-            Session::forget('orchestra.ftp');
-            Messages::add('error', $e->getMessage());
+        return $this->processor->publish($this, $input);
+    }
 
-            return Redirect::to(handles('orchestra::publisher/ftp'))->withInput();
-        }
+    /**
+     * Response when publishing failed.
+     *
+     * @param  string  $message
+     * @return Response
+     */
+    public function publishFailed($message)
+    {
+        Messages::add('error', $message);
 
-        Session::put('orchestra.ftp', $input);
+        return Redirect::to(handles('orchestra::publisher/ftp'))->withInput();
+    }
 
-        if (Publisher::connected() and ! empty($queues)) {
-            Publisher::execute();
-        }
-
+    /**
+     * Redirect back to publisher.
+     *
+     * @return Response
+     */
+    public function redirectToPublisher()
+    {
         return Redirect::to(handles('orchestra::publisher/ftp'));
     }
 }

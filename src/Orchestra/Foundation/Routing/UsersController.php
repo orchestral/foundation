@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Processor\User as UserProcessor;
 use Orchestra\Support\Facades\App;
-use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
 
 class UsersController extends AdminController
@@ -127,21 +126,45 @@ class UsersController extends AdminController
         return $this->processor->destroy($this, $id);
     }
 
+    /**
+     * Response when list users page succeed.
+     *
+     * @param  array  $data
+     * @return Response
+     */
     public function indexSucceed(array $data)
     {
         return View::make('orchestra/foundation::users.index', $data);
     }
 
+    /**
+     * Response when create user page succeed.
+     *
+     * @param  array  $data
+     * @return Response
+     */
     public function createSucceed(array $data)
     {
         return View::make('orchestra/foundation::users.edit', $data);
     }
 
+    /**
+     * Response when edit user page succeed.
+     *
+     * @param  array  $data
+     * @return Response
+     */
     public function editSucceed(array $data)
     {
         return View::make('orchestra/foundation::users.edit', $data);
     }
 
+    /**
+     * Response when storing user failed on validation.
+     *
+     * @param  object  $validation
+     * @return Response
+     */
     public function storeValidationFailed($validation)
     {
         return Redirect::to(handles("orchestra::users/create"))
@@ -149,20 +172,34 @@ class UsersController extends AdminController
                 ->withErrors($validation);
     }
 
+    /**
+     * Response when storing user failed.
+     *
+     * @param  string  $message
+     * @return Response
+     */
     public function storeFailed($message)
     {
-        Messages::add('error', $message);
-
-        return Redirect::to(handles('orchestra::users'));
+        return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
     }
 
+    /**
+     * Response when storing user succeed.
+     *
+     * @param  string  $message
+     * @return Response
+     */
     public function storeSucceed($message)
     {
-        Messages::add('success', $message);
-
-        return Redirect::to(handles('orchestra::users'));
+        return $this->redirectWithMessage(handles('orchestra::users'), $message);
     }
 
+    /**
+     * Response when update user failed on validation.
+     *
+     * @param  object  $validation
+     * @return Response
+     */
     public function updateValidationFailed($validation, $id)
     {
         return Redirect::to(handles("orchestra::users/{$id}/edit"))
@@ -170,32 +207,48 @@ class UsersController extends AdminController
                 ->withErrors($validation);
     }
 
+    /**
+     * Response when updating user failed.
+     *
+     * @param  string  $message
+     * @return Response
+     */
     public function updateFailed($message)
     {
-        Messages::add('error', $message);
-
-        return Redirect::to(handles('orchestra::users'));
+        return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
     }
 
+    /**
+     * Response when updating user succeed.
+     *
+     * @param  string  $message
+     * @return Response
+     */
     public function updateSucceed($message)
     {
-        Messages::add('success', $message);
-
-        return Redirect::to(handles('orchestra::users'));
+        return $this->redirectWithMessage(handles('orchestra::users'), $message);
     }
 
+    /**
+     * Response when destroying user failed.
+     *
+     * @param  string  $message
+     * @return Response
+     */
     public function destroyFailed($message)
     {
-        Messages::add('error', $message);
-
-        return Redirect::to(handles('orchestra::users'));
+        return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
     }
 
+    /**
+     * Response when destroying user succeed.
+     *
+     * @param  string  $message
+     * @return Response
+     */
     public function destroySucceed($message)
     {
-        Messages::add('success', $message);
-
-        return Redirect::to(handles('orchestra::users'));
+        return $this->redirectWithMessage(handles('orchestra::users'), $message);
     }
 
     /**

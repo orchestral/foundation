@@ -116,7 +116,7 @@ class Setting extends AbstractableProcessor
         App::make('orchestra.publisher.asset')->foundation();
         App::make('orchestra.publisher.migrate')->foundation();
 
-        return $listener->updateSucceed(
+        return $listener->migrateSucceed(
             trans('orchestra/foundation::response.settings.system-update')
         );
     }
