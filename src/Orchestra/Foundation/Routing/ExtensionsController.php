@@ -1,32 +1,27 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Closure;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Fluent;
+use Orchestra\Support\Facades\Messages;
+use Orchestra\Support\Facades\Site;
+use Orchestra\Foundation\Processor\Extension as ExtensionProcessor;
+
+
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Extension;
-use Orchestra\Support\Facades\Messages;
-use Orchestra\Support\Facades\Publisher;
-use Orchestra\Support\Facades\Site;
-use Orchestra\Extension\FilePermissionException;
-use Orchestra\Foundation\Presenter\Extension as ExtensionPresenter;
-use Orchestra\Foundation\Validation\Extension as ExtensionValidator;
 
 class ExtensionsController extends AdminController
 {
     /**
      * Extensions Controller routing to manage available extensions.
      *
-     * @param  \Orchestra\Foundation\Presenter\Extension    $presenter
-     * @param  \Orchestra\Foundation\Validation\Extension   $validator
+     * @param  \Orchestra\Foundation\Processor\Extension   $processor
      */
-    public function __construct(ExtensionPresenter $presenter, ExtensionValidator $validator)
+    public function __construct(ExtensionProcessor $processor)
     {
-        $this->presenter = $presenter;
-        $this->validator = $validator;
+        $this->processor = $processor;
 
         parent::__construct();
     }
@@ -49,13 +44,11 @@ class ExtensionsController extends AdminController
      *
      * @return Response
      */
-    public function getIndex()
+    public function index()
     {
-        $data['extensions'] = Extension::detect();
-
         Site::set('title', trans("orchestra/foundation::title.extensions.list"));
 
-        return View::make('orchestra/foundation::extensions.index', $data);
+        return $this->processor->index($this);
     }
 
     /**
@@ -63,21 +56,15 @@ class ExtensionsController extends AdminController
      *
      * GET (:orchestra)/extensions/activate/(:name)
      *
-     * @param  string   $name   name of the extension
+     * @param  string   $uid
      * @return Response
      */
-    public function getActivate($name)
+    public function activate($uid)
     {
-        $name = str_replace('.', '/', $name);
+        $name = str_replace('.', '/', $uid);
+        $extension = new Fluent(compact('name', 'uid'));
 
-        if (Extension::started($name)) {
-            return App::abort(404);
-        }
-
-        return $this->run($name, function ($name) {
-            Extension::activate($name);
-            Messages::add('success', trans('orchestra/foundation::response.extensions.activate', compact('name')));
-        });
+        return $this->processor->activate($this, $extension);
     }
 
     /**
@@ -85,21 +72,31 @@ class ExtensionsController extends AdminController
      *
      * GET (:orchestra)/extensions/deactivate/(:name)
      *
-     * @param  string   $name   name of the extension
+     * @param  string   $uid
      * @return Response
      */
-    public function getDeactivate($name)
+    public function deactivate($uid)
     {
-        $name = str_replace('.', '/', $name);
+        $name = str_replace('.', '/', $uid);
+        $extension = new Fluent(compact('name', 'uid'));
 
-        if (! Extension::started($name) and ! Extension::activated($name)) {
-            return App::abort(404);
-        }
+        return $this->processor->deactivate($this, $extension);
+    }
 
-        Extension::deactivate($name);
-        Messages::add('success', trans('orchestra/foundation::response.extensions.deactivate', compact('name')));
+    /**
+     * Update an extension, run migration and asset publish command.
+     *
+     * GET (:orchestra)/extensions/update/(:name)
+     *
+     * @param  string   $uid
+     * @return Response
+     */
+    public function migrate($uid)
+    {
+        $name = str_replace('.', '/', $uid);
+        $extension = new Fluent(compact('name', 'uid'));
 
-        return Redirect::to(handles('orchestra::extensions'));
+        return $this->processor->migrate($this, $extension);
     }
 
     /**
@@ -107,33 +104,18 @@ class ExtensionsController extends AdminController
      *
      * GET (:orchestra)/extensions/configure/(:name)
      *
-     * @param  string   $name name of the extension
+     * @param  string   $uid
      * @return Response
      */
-    public function getConfigure($name)
+    public function configure($uid)
     {
-        $name = str_replace('.', '/', $name);
+        $name = str_replace('.', '/', $uid);
+        $extension = new Fluent(compact('name', 'uid'));
 
-        if (! Extension::started($name)) {
-            return App::abort(404);
-        }
-
-        // Load configuration from memory.
-        $memory        = App::memory();
-        $activeConfig  = (array) $memory->get("extensions.active.{$name}.config", array());
-        $baseConfig    = (array) $memory->get("extension_{$name}", array());
-        $eloquent      = new Fluent(array_merge($activeConfig, $baseConfig));
-        $extensionName = $memory->get("extensions.available.{$name}.name", $name);
-
-        // Add basic form, allow extension to add custom configuration field
-        // to this form using events.
-        $form = $this->presenter->configure($eloquent, $name);
-
-        Event::fire("orchestra.form: extension.{$name}", array($eloquent, $form));
-        Site::set('title', $extensionName);
+        Site::set('title', App::memory()->get("extensions.available.{$name}.name", $name));
         Site::set('description', trans("orchestra/foundation::title.extensions.configure"));
 
-        return View::make('orchestra/foundation::extensions.configure', compact('eloquent', 'form'));
+        return $this->processor->configure($this, $extension);
     }
 
     /**
@@ -141,93 +123,81 @@ class ExtensionsController extends AdminController
      *
      * POST (:orchestra)/extensions/configure/(:name)
      *
-     * @param  string   $name   name of the extension
+     * @param  string   $uid
      * @return Response
      */
-    public function postConfigure($name)
+    public function update($uid)
     {
-        $uid  = $name;
-        $name = str_replace('.', '/', $name);
+        $name = str_replace('.', '/', $uid);
+        $extension = new Fluent(compact('name', 'uid'));
 
-        if (! Extension::started($name)) {
-            return App::abort(404);
-        }
-
-        $input      = Input::all();
-        $validation = $this->validator->with($input, array("orchestra.validate: extension.{$name}"));
-
-        if ($validation->fails()) {
-            return Redirect::to(handles("orchestra::extensions/configure/{$uid}"))
-                    ->withInput()
-                    ->withErrors($validation);
-        }
-
-        $memory = App::memory();
-        $config = (array) $memory->get("extension.active.{$name}.config", array());
-        $input  = new Fluent(array_merge($config, $input));
-
-        unset($input['_token']);
-
-        Event::fire("orchestra.saving: extension.{$name}", array( & $input));
-
-        $memory->put("extensions.active.{$name}.config", $input->getAttributes());
-        $memory->put("extension_{$name}", $input->getAttributes());
-
-        Event::fire("orchestra.saved: extension.{$name}", array($input));
-
-        Messages::add('success', trans("orchestra/foundation::response.extensions.configure", compact('name')));
-
-        return Redirect::to(handles('orchestra::extensions'));
+        return $this->processor->update($this, $extension, Input::all());
     }
 
     /**
-     * Update an extension, run migration and bundle publish command.
+     * Response for list of extensions page.
      *
-     * GET (:orchestra)/extensions/update/(:name)
-     *
-     * @param  string   $name   name of the extension
+     * @param  array  $data
      * @return Response
      */
-    public function getUpdate($name)
+    public function indexSucceed(array $data)
     {
-        $name = str_replace('.', '/', $name);
-
-        if (! Extension::started($name)) {
-            return App::abort(404);
-        }
-
-        return $this->run($name, function ($name) {
-            Extension::publish($name);
-            Messages::add('success', trans('orchestra/foundation::response.extensions.update', compact('name')));
-        });
+        return View::make('orchestra/foundation::extensions.index', $data);
     }
 
     /**
-     * Run installation or update for an extension.
+     * Response for extension configuration page.
      *
-     * @param  string   $name       name of the extension
-     * @param  Closure  $callback
+     * @param  array  $data
      * @return Response
      */
-    protected function run($name, Closure $callback)
+    public function configureSucceed(array $data)
     {
-        try {
-            // Check if folder is writable via the web instance, this would
-            // avoid issue running Orchestra Platform with debug as true where
-            // creating/copying the directory would throw an ErrorException.
-            if (! Extension::permission($name)) {
-                throw new FilePermissionException("[{$name}] is not writable.");
-            }
+        return View::make('orchestra/foundation::extensions.configure', $data);
+    }
 
-            call_user_func($callback, $name);
-        } catch (FilePermissionException $e) {
-            Publisher::queue($name);
+    /**
+     * Response when action to extension failed.
+     *
+     * @param  string|null $message
+     * @return Response
+     */
+    public function executionFailed($message = null)
+    {
+        return $this->redirectWithMessage(handles('orchestra::publisher'), $message);
+    }
 
-            // In events where extension can't be activated due to
-            // bundle:publish we need to put this under queue.
-            return Redirect::to(handles('orchestra::publisher'));
-        }
+    /**
+     * Response when action to extension succeed.
+     *
+     * @param  string|null $message
+     * @return Response
+     */
+    public function executionSucceed($message = null)
+    {
+        return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
+    }
 
-        return Redirect::to(handles('orchestra::extensions'));
+    /**
+     * Response when update extension configuration failed on validation.
+     *
+     * @param  mixed   $validation
+     * @param  string  $id
+     * @return Response
+     */
+    public function updateValidationFailed($validation, $id)
+    {
+        return $this->redirectWithErrors(handles("orchestra::extensions/configure/{$id}"), $validation);
+    }
+
+    /**
+     * Response when update extension configuration succeed.
+     *
+     * @param  string|null $message
+     * @return Response
+     */
+    public function updateSucceed($message = null)
+    {
+        return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
     }
 }

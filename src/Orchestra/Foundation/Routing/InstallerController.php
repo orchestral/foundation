@@ -40,7 +40,7 @@ class InstallerController extends BaseController
      *
      * @return View
      */
-    public function getIndex()
+    public function index()
     {
         return $this->processor->index($this);
     }
@@ -52,7 +52,7 @@ class InstallerController extends BaseController
      *
      * @return Redirect
      */
-    public function getPrepare()
+    public function prepare()
     {
         return $this->processor->prepare($this);
     }
@@ -64,7 +64,7 @@ class InstallerController extends BaseController
      *
      * @return View
      */
-    public function getCreate()
+    public function create()
     {
         return $this->processor->create($this);
     }
@@ -76,7 +76,7 @@ class InstallerController extends BaseController
      *
      * @return View
      */
-    public function postCreate()
+    public function store()
     {
         return $this->processor->store($this, Input::all());
     }
@@ -88,36 +88,70 @@ class InstallerController extends BaseController
      *
      * @return View
      */
-    public function getDone()
+    public function done()
     {
         return $this->processor->done($this);
     }
 
+    /**
+     * Response for installation welcome page.
+     *
+     * @param  array   $data
+     * @return Response
+     */
     public function indexSucceed(array $data)
     {
         return View::make('orchestra/foundation::install.index', $data);
     }
 
+
+    /**
+     * Response when installation is prepared.
+     *
+     * @return Response
+     */
     public function prepareSucceed()
     {
-        return Redirect::to(handles('orchestra::install/create'));
+        return $this->redirect(handles('orchestra::install/create'));
     }
 
+
+    /**
+     * Response view to input user information for installation.
+     *
+     * @param  array   $data
+     * @return Response
+     */
     public function createSucceed(array $data)
     {
         return View::make('orchestra/foundation::install.create', $data);
     }
 
+    /**
+     * Response when store installation config is failed.
+     *
+     * @return Response
+     */
     public function storeFailed()
     {
-        return Redirect::to(handles('orchestra::install/create'));
+        return $this->redirect(handles('orchestra::install/create'));
     }
 
+    /**
+     * Response when store installation config is succeed.
+     *
+     * @return Response
+     */
     public function storeSucceed()
     {
-        return Redirect::to(handles('orchestra::install/done'));
+        return $this->redirect(handles('orchestra::install/done'));
     }
 
+    /**
+     * Response when installation is done.
+     *
+     * @return Response
+     */
     public function doneSucceed()
     {
         return View::make('orchestra/foundation::install.done');

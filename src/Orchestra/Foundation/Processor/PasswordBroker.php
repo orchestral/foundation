@@ -24,7 +24,7 @@ class PasswordBroker extends AbstractableProcessor
      * @param  \Orchestra\Foundation\Routing\BaseController    $listener
      * @return mixed
      */
-    public function request(BaseController $listener, array $input)
+    public function create(BaseController $listener, array $input)
     {
         $validation = $this->validator->with($input);
 
@@ -40,10 +40,10 @@ class PasswordBroker extends AbstractableProcessor
         });
 
         if ($response !== Password::REMINDER_SENT) {
-            return $listener->requestFailed(trans($response));
+            return $listener->createFailed(trans($response));
         }
 
-        return $listener->requestSucceed(trans($response));
+        return $listener->createSucceed(trans($response));
     }
 
     /**

@@ -167,18 +167,16 @@ class UsersController extends AdminController
      */
     public function storeValidationFailed($validation)
     {
-        return Redirect::to(handles("orchestra::users/create"))
-                ->withInput()
-                ->withErrors($validation);
+        return $this->redirectWithErrors(handles("orchestra::users/create"), $validation);
     }
 
     /**
      * Response when storing user failed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function storeFailed($message)
+    public function storeFailed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
     }
@@ -186,10 +184,10 @@ class UsersController extends AdminController
     /**
      * Response when storing user succeed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function storeSucceed($message)
+    public function storeSucceed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::users'), $message);
     }
@@ -202,18 +200,16 @@ class UsersController extends AdminController
      */
     public function updateValidationFailed($validation, $id)
     {
-        return Redirect::to(handles("orchestra::users/{$id}/edit"))
-                ->withInput()
-                ->withErrors($validation);
+        return $this->redirectWithErrors(handles("orchestra::users/{$id}/edit"), $validation);
     }
 
     /**
      * Response when updating user failed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function updateFailed($message)
+    public function updateFailed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
     }
@@ -221,10 +217,10 @@ class UsersController extends AdminController
     /**
      * Response when updating user succeed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function updateSucceed($message)
+    public function updateSucceed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::users'), $message);
     }
@@ -232,10 +228,10 @@ class UsersController extends AdminController
     /**
      * Response when destroying user failed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function destroyFailed($message)
+    public function destroyFailed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
     }
@@ -243,10 +239,10 @@ class UsersController extends AdminController
     /**
      * Response when destroying user succeed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function destroySucceed($message)
+    public function destroySucceed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::users'), $message);
     }
@@ -258,7 +254,7 @@ class UsersController extends AdminController
      */
     public function selfDeletionFailed()
     {
-        return App::abort(404);
+        return $this->suspend(404);
     }
 
     /**
@@ -268,6 +264,6 @@ class UsersController extends AdminController
      */
     public function userVerificationFailed()
     {
-        return App::abort(500);
+        return $this->suspend(500);
     }
 }

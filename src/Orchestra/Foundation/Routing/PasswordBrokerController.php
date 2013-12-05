@@ -40,7 +40,7 @@ class PasswordBrokerController extends AdminController
      *
      * @return Response
      */
-    public function getIndex()
+    public function index()
     {
         Site::set('title', trans('orchestra/foundation::title.forgot-password'));
 
@@ -56,9 +56,9 @@ class PasswordBrokerController extends AdminController
      *
      * @return Response
      */
-    public function postIndex()
+    public function create()
     {
-        return $this->processor->request($this, Input::all());
+        return $this->processor->create($this, Input::all());
     }
 
     /**
@@ -70,7 +70,7 @@ class PasswordBrokerController extends AdminController
      * @param  string   $token
      * @return Response
      */
-    public function getReset($token)
+    public function show($token)
     {
         Site::set('title', trans('orchestra/foundation::title.reset-password'));
 
@@ -84,7 +84,7 @@ class PasswordBrokerController extends AdminController
      *
      * @return Response
      */
-    public function postReset()
+    public function reset()
     {
         $input = Input::only('email', 'password', 'password_confirmation', 'token');
 
@@ -111,10 +111,10 @@ class PasswordBrokerController extends AdminController
     /**
      * Response when request reset password failed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function requestFailed($message)
+    public function createFailed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::forgot'), $message, 'error');
     }
@@ -122,10 +122,10 @@ class PasswordBrokerController extends AdminController
     /**
      * Response when request reset password succeed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function requestSucceed($message)
+    public function createSucceed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::forgot'), $message);
     }
@@ -133,10 +133,10 @@ class PasswordBrokerController extends AdminController
     /**
      * Response when reset password failed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function resetFailed($message)
+    public function resetFailed($message = null)
     {
         $token = Input::get('token');
 
@@ -146,10 +146,10 @@ class PasswordBrokerController extends AdminController
     /**
      * Response when reset password succeed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function resetSucceed($message)
+    public function resetSucceed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::/'), $message);
     }

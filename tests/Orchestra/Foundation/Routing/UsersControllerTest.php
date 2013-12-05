@@ -274,7 +274,7 @@ class UsersControllerTest extends TestCase
             'roles'    => array(1),
         );
 
-        Orchestra::shouldReceive('abort')->once()->with(500);
+        App::shouldReceive('abort')->once()->with(500);
 
         $this->call('PUT', 'admin/users/foobar', $input);
     }
@@ -405,7 +405,7 @@ class UsersControllerTest extends TestCase
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foobar');
 
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
-        Orchestra::shouldReceive('abort')->once();
+        App::shouldReceive('abort')->once();
         Auth::shouldReceive('user')->once()->andReturn($auth);
 
         $this->call('GET', 'admin/users/foobar/delete');

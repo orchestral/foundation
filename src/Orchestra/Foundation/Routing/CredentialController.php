@@ -29,16 +29,7 @@ class CredentialController extends AdminController
     protected function setupFilters()
     {
         $this->beforeFilter('orchestra.guest', array(
-            'only' => array(
-                'getLogin', 'postLogin',
-                'getRegister', 'postRegister',
-            ),
-        ));
-
-        $this->beforeFilter('orchestra.registrable', array(
-            'only' => array(
-                'getRegister', 'postRegister',
-            ),
+            'only' => array('index', 'create'),
         ));
 
         $this->beforeFilter('orchestra.csrf', array('only' => array('postLogin')));
@@ -51,7 +42,7 @@ class CredentialController extends AdminController
      *
      * @return Response
      */
-    public function getLogin()
+    public function index()
     {
         Site::set('title', trans("orchestra/foundation::title.login"));
 
@@ -65,7 +56,7 @@ class CredentialController extends AdminController
      *
      * @return Response
      */
-    public function postLogin()
+    public function login()
     {
         return $this->processor->login($this, Input::all());
     }
@@ -77,7 +68,7 @@ class CredentialController extends AdminController
      *
      * @return Response
      */
-    public function deleteLogin()
+    public function logout()
     {
         return $this->processor->logout($this);
     }
@@ -90,29 +81,27 @@ class CredentialController extends AdminController
      */
     public function loginValidationFailed($validation)
     {
-        return Redirect::to(handles('orchestra::login'))->withInput()->withErrors($validation);
+        return $this->redirectWithErrors(handles('orchestra::login'), $validation);
     }
 
     /**
      * Response when login failed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function loginFailed($message)
+    public function loginFailed($message = null)
     {
-        Messages::add('error', $message);
-
-        return Redirect::to(handles('orchestra::login'))->withInput();
+        return $this->redirectWithMessage(handles('orchestra::login'), $message, 'error')->withInput();
     }
 
     /**
      * Response when login succeed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function loginSucceed($message)
+    public function loginSucceed($message = null)
     {
         Messages::add('success', $message);
 
@@ -122,10 +111,10 @@ class CredentialController extends AdminController
     /**
      * Response when logout succeed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function logoutSucceed($message)
+    public function logoutSucceed($message = null)
     {
         Messages::add('success', $message);
 

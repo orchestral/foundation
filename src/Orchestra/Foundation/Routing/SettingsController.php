@@ -32,13 +32,13 @@ class SettingsController extends AdminController
     }
 
     /**
-     * Show Settings Page
+     * Show Settings Page.
      *
      * GET (:orchestra)/settings
      *
      * @return Response
      */
-    public function getIndex()
+    public function show()
     {
         Site::set('title', trans('orchestra/foundation::title.settings.list'));
 
@@ -46,13 +46,13 @@ class SettingsController extends AdminController
     }
 
     /**
-     * Update Settings
+     * Update Settings.
      *
      * POST (:orchestra)/settings
      *
      * @return Response
      */
-    public function postIndex()
+    public function update()
     {
         return $this->processor->update($this, Input::all());
     }
@@ -62,7 +62,7 @@ class SettingsController extends AdminController
      *
      * @return Response
      */
-    public function getMigrate()
+    public function migrate()
     {
         return $this->processor->migrate($this);
     }
@@ -86,18 +86,16 @@ class SettingsController extends AdminController
      */
     public function updateValidationFailed($validation)
     {
-        return Redirect::to(handles('orchestra::settings'))
-                    ->withInput()
-                    ->withErrors($validation);
+        return $this->redirectWithErrors(handles('orchestra::settings') ,$validation);
     }
 
     /**
      * Response when update setting succeed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function updateSucceed($message)
+    public function updateSucceed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::settings'), $message);
     }
@@ -105,10 +103,10 @@ class SettingsController extends AdminController
     /**
      * Response when update Orchestra Platform components succeed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function migrateSucceed($message)
+    public function migrateSucceed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::settings'), $message);
     }

@@ -51,7 +51,7 @@ class RegisterController extends AdminController
      *
      * @return Response
      */
-    public function getIndex()
+    public function index()
     {
         $eloquent = App::make('orchestra.user');
         $title    = 'orchestra/foundation::title.register';
@@ -75,7 +75,7 @@ class RegisterController extends AdminController
      *
      * @return Response
      */
-    public function postIndex()
+    public function store()
     {
         $input    = Input::all();
         $password = Str::random(5);

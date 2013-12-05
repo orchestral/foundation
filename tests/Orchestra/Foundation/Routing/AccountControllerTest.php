@@ -110,7 +110,7 @@ class AccountControllerTest extends TestCase
 
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn(2);
         Auth::shouldReceive('user')->once()->andReturn($user);
-        Orchestra::shouldReceive('abort')->once()->with(500);
+        App::shouldReceive('abort')->once()->with(500);
 
         $this->call('POST', 'admin/account', $input);
     }
@@ -253,7 +253,7 @@ class AccountControllerTest extends TestCase
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn(2);
 
         Auth::shouldReceive('user')->once()->andReturn($user);
-        Orchestra::shouldReceive('abort')->once()->with(500);
+        App::shouldReceive('abort')->once()->with(500);
 
         $this->call('POST', 'admin/account/password', $input);
     }

@@ -39,7 +39,7 @@ class AccountController extends AdminController
      *
      * @return Response
      */
-    public function getProfile()
+    public function showProfile()
     {
         Site::set('title', trans("orchestra/foundation::title.account.profile"));
 
@@ -53,7 +53,7 @@ class AccountController extends AdminController
      *
      * @return Response
      */
-    public function postProfile()
+    public function updateProfile()
     {
         return $this->processor->updateProfile($this, Input::all());
     }
@@ -65,7 +65,7 @@ class AccountController extends AdminController
      *
      * @return Response
      */
-    public function getPassword()
+    public function showPassword()
     {
         Site::set('title', trans("orchestra/foundation::title.account.password"));
 
@@ -79,7 +79,7 @@ class AccountController extends AdminController
      *
      * @return Response
      */
-    public function postPassword()
+    public function updatePassword()
     {
         return $this->processor->updatePassword($this, Input::all());
     }
@@ -103,18 +103,16 @@ class AccountController extends AdminController
      */
     public function updateProfileValidationFailed($validation)
     {
-        return Redirect::to(handles('orchestra::account'))
-                ->withInput()
-                ->withErrors($validation);
+        return $this->redirectWithErrors(handles('orchestra::account'), $validation);
     }
 
     /**
      * Response when update profile failed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function updateProfileFailed($message)
+    public function updateProfileFailed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::account'), $message, 'error');
     }
@@ -122,10 +120,10 @@ class AccountController extends AdminController
     /**
      * Response when update profile succeed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function updateProfileSucceed($message)
+    public function updateProfileSucceed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::account'), $message);
     }
@@ -149,16 +147,16 @@ class AccountController extends AdminController
      */
     public function updatePasswordValidationFailed($validation)
     {
-        return Redirect::to(handles('orchestra::account/password'))->withInput()->withErrors($validation);
+        return $this->redirectWithErrors(handles('orchestra::account/password'), $validation);
     }
 
     /**
      * Response when update password failed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function updatePasswordFailed($message)
+    public function updatePasswordFailed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::account/password'), $message, 'error');
     }
@@ -166,21 +164,11 @@ class AccountController extends AdminController
     /**
      * Response when update password succeed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function updatePasswordSucceed($message)
+    public function updatePasswordSucceed($message = null)
     {
         return $this->redirectWithMessage(handles('orchestra::account/password'), $message);
-    }
-
-    /**
-     * Response when user verification failed.
-     *
-     * @return Response
-     */
-    public function userVerificationFailed()
-    {
-        return App::abort(500);
     }
 }

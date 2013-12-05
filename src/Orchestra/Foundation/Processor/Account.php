@@ -51,7 +51,7 @@ class Account extends AbstractableProcessor
         $user = Auth::user();
 
         if ((string) $user->id !== $input['id']) {
-            return $listener->userVerificationFailed();
+            return $listener->suspend(500);
         }
 
         $validation = $this->validator->with($input);
@@ -113,7 +113,7 @@ class Account extends AbstractableProcessor
         $user = Auth::user();
 
         if ((string) $user->id !== $input['id']) {
-            return $listener->userVerificationFailed();
+            return $listener->suspend(500);
         }
 
         $validation = $this->validator->on('changePassword')->with($input);

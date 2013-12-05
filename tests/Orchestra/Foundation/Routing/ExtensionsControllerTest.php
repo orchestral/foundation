@@ -78,7 +78,7 @@ class ExtensionsControllerTest extends TestCase
     public function testGetActivateActionGivenStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
-        Orchestra::shouldReceive('abort')->once()->with(404);
+        App::shouldReceive('abort')->once()->with(404);
 
         $this->call('GET', 'admin/extensions/activate/laravel.framework');
     }
@@ -109,7 +109,7 @@ class ExtensionsControllerTest extends TestCase
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
         Extension::shouldReceive('activated')->once()->with('laravel/framework')->andReturn(false);
-        Orchestra::shouldReceive('abort')->once()->with(404);
+        App::shouldReceive('abort')->once()->with(404);
 
         $this->call('GET', 'admin/extensions/deactivate/laravel.framework');
     }
@@ -134,7 +134,7 @@ class ExtensionsControllerTest extends TestCase
         $presenter->shouldReceive('configure')->once()->andReturn('edit.extension');
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
-        Orchestra::shouldReceive('memory')->once()->andReturn($memory);
+        Orchestra::shouldReceive('memory')->twice()->andReturn($memory);
         View::shouldReceive('make')->once()
             ->with('orchestra/foundation::extensions.configure', m::type('Array'))->andReturn('foo');
 
@@ -151,7 +151,7 @@ class ExtensionsControllerTest extends TestCase
     public function testGetConfigureActionGivenStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
-        Orchestra::shouldReceive('abort')->once()->with(404);
+        App::shouldReceive('abort')->once()->with(404);
 
         $this->call('GET', 'admin/extensions/configure/laravel.framework');
     }
@@ -205,7 +205,7 @@ class ExtensionsControllerTest extends TestCase
         );
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
-        Orchestra::shouldReceive('abort')->once()->with(404);
+        App::shouldReceive('abort')->once()->with(404);
 
         $this->call('POST', 'admin/extensions/configure/laravel.framework', $input);
     }
@@ -262,7 +262,7 @@ class ExtensionsControllerTest extends TestCase
     public function testGetUpdateActionGivenNotStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
-        Orchestra::shouldReceive('abort')->once()->with(404);
+        App::shouldReceive('abort')->once()->with(404);
 
         $this->call('GET', 'admin/extensions/update/laravel.framework');
     }

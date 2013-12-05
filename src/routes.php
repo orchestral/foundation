@@ -5,36 +5,36 @@ use Orchestra\Support\Facades\App;
 
 Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
     // Route to account/profile.
-    Route::get('account', 'Orchestra\Foundation\Routing\AccountController@getProfile');
-    Route::post('account', 'Orchestra\Foundation\Routing\AccountController@postProfile');
-    Route::get('account/password', 'Orchestra\Foundation\Routing\AccountController@getPassword');
-    Route::post('account/password', 'Orchestra\Foundation\Routing\AccountController@postPassword');
+    Route::get('account', 'Orchestra\Foundation\Routing\AccountController@showProfile');
+    Route::post('account', 'Orchestra\Foundation\Routing\AccountController@updateProfile');
+    Route::get('account/password', 'Orchestra\Foundation\Routing\AccountController@showPassword');
+    Route::post('account/password', 'Orchestra\Foundation\Routing\AccountController@updatePassword');
 
     // Route to extensions.
-    Route::get('extensions', 'Orchestra\Foundation\Routing\ExtensionsController@getIndex');
-    Route::get('extensions/activate/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@getActivate');
-    Route::get('extensions/configure/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@getConfigure');
-    Route::post('extensions/configure/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@postConfigure');
-    Route::get('extensions/deactivate/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@getDeactivate');
-    Route::get('extensions/update/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@getUpdate');
+    Route::get('extensions', 'Orchestra\Foundation\Routing\ExtensionsController@index');
+    Route::get('extensions/activate/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@activate');
+    Route::get('extensions/deactivate/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@deactivate');
+    Route::get('extensions/update/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@migrate');
+    Route::get('extensions/configure/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@configure');
+    Route::post('extensions/configure/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@update');
 
     // Route to reset password.
-    Route::get('forgot', 'Orchestra\Foundation\Routing\PasswordBrokerController@getIndex');
-    Route::post('forgot', 'Orchestra\Foundation\Routing\PasswordBrokerController@postIndex');
-    Route::get('forgot/reset/{token}', 'Orchestra\Foundation\Routing\PasswordBrokerController@getReset');
-    Route::post('forgot/reset', 'Orchestra\Foundation\Routing\PasswordBrokerController@postReset');
+    Route::get('forgot', 'Orchestra\Foundation\Routing\PasswordBrokerController@index');
+    Route::post('forgot', 'Orchestra\Foundation\Routing\PasswordBrokerController@create');
+    Route::get('forgot/reset/{token}', 'Orchestra\Foundation\Routing\PasswordBrokerController@show');
+    Route::post('forgot/reset', 'Orchestra\Foundation\Routing\PasswordBrokerController@reset');
 
     // Route to installation.
-    Route::get('install', 'Orchestra\Foundation\Routing\InstallerController@getIndex');
-    Route::get('install/create', 'Orchestra\Foundation\Routing\InstallerController@getCreate');
-    Route::post('install/create', 'Orchestra\Foundation\Routing\InstallerController@postCreate');
-    Route::get('install/done', 'Orchestra\Foundation\Routing\InstallerController@getDone');
-    Route::get('install/prepare', 'Orchestra\Foundation\Routing\InstallerController@getPrepare');
+    Route::get('install', 'Orchestra\Foundation\Routing\InstallerController@index');
+    Route::get('install/create', 'Orchestra\Foundation\Routing\InstallerController@create');
+    Route::post('install/create', 'Orchestra\Foundation\Routing\InstallerController@store');
+    Route::get('install/done', 'Orchestra\Foundation\Routing\InstallerController@done');
+    Route::get('install/prepare', 'Orchestra\Foundation\Routing\InstallerController@prepare');
 
     // Route to asset publishing.
-    Route::get('publisher', 'Orchestra\Foundation\Routing\PublisherController@getIndex');
-    Route::get('publisher/ftp', 'Orchestra\Foundation\Routing\PublisherController@getFtp');
-    Route::post('publisher/ftp', 'Orchestra\Foundation\Routing\PublisherController@postFtp');
+    Route::get('publisher', 'Orchestra\Foundation\Routing\PublisherController@index');
+    Route::get('publisher/ftp', 'Orchestra\Foundation\Routing\PublisherController@ftp');
+    Route::post('publisher/ftp', 'Orchestra\Foundation\Routing\PublisherController@publish');
 
     // Route to resources.
     Route::any('resources/{any}', 'Orchestra\Foundation\Routing\ResourcesController@call')->where('any', '(.*)');
@@ -45,16 +45,17 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
     Route::any('users/{id}/delete', 'Orchestra\Foundation\Routing\UsersController@delete');
 
     // Route for settings
-    Route::get('settings', 'Orchestra\Foundation\Routing\SettingsController@getIndex');
-    Route::post('settings', 'Orchestra\Foundation\Routing\SettingsController@postIndex');
-    Route::get('settings/migrate', 'Orchestra\Foundation\Routing\SettingsController@getMigrate');
+    Route::get('settings', 'Orchestra\Foundation\Routing\SettingsController@show');
+    Route::post('settings', 'Orchestra\Foundation\Routing\SettingsController@update');
+    Route::get('settings/migrate', 'Orchestra\Foundation\Routing\SettingsController@migrate');
 
     // Route for credentials.
-    Route::get('login', 'Orchestra\Foundation\Routing\CredentialController@getLogin');
-    Route::post('login', 'Orchestra\Foundation\Routing\CredentialController@postLogin');
-    Route::any('logout', 'Orchestra\Foundation\Routing\CredentialController@deleteLogin');
-    Route::get('register', 'Orchestra\Foundation\Routing\RegisterController@getIndex');
-    Route::post('register', 'Orchestra\Foundation\Routing\RegisterController@postIndex');
+    Route::get('login', 'Orchestra\Foundation\Routing\CredentialController@index');
+    Route::post('login', 'Orchestra\Foundation\Routing\CredentialController@login');
+    Route::any('logout', 'Orchestra\Foundation\Routing\CredentialController@logout');
+
+    Route::get('register', 'Orchestra\Foundation\Routing\RegisterController@index');
+    Route::post('register', 'Orchestra\Foundation\Routing\RegisterController@store');
 
     // Base routing.
     Route::any('/', array(

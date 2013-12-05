@@ -33,7 +33,7 @@ class PublisherController extends AdminController
      *
      * @return Response
      */
-    public function getIndex()
+    public function index()
     {
         return $this->processor->index($this);
     }
@@ -43,7 +43,7 @@ class PublisherController extends AdminController
      *
      * @return Response
      */
-    public function getFtp()
+    public function ftp()
     {
         Site::set('title', trans('orchestra/foundation::title.publisher.ftp'));
         Site::set('description', trans('orchestra/foundation::title.publisher.description'));
@@ -58,7 +58,7 @@ class PublisherController extends AdminController
      *
      * @return Response
      */
-    public function postFtp()
+    public function publish()
     {
         $input = Input::only(array('host', 'user', 'password'));
         $input['ssl'] = (Input::get('connection-type', 'sftp') === 'sftp');
@@ -69,14 +69,12 @@ class PublisherController extends AdminController
     /**
      * Response when publishing failed.
      *
-     * @param  string  $message
+     * @param  string|null $message
      * @return Response
      */
-    public function publishFailed($message)
+    public function publishFailed($message = null)
     {
-        Messages::add('error', $message);
-
-        return Redirect::to(handles('orchestra::publisher/ftp'))->withInput();
+        return $this->redirectWithMessage(handles('orchestra::publisher/ftp'), $message, 'error')->withInput();
     }
 
     /**
