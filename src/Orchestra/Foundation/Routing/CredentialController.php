@@ -33,13 +33,6 @@ class CredentialController extends AdminController
         $this->beforeFilter('orchestra.guest', array(
             'only' => array(
                 'getLogin', 'postLogin',
-                'getRegister', 'postRegister',
-            ),
-        ));
-
-        $this->beforeFilter('orchestra.registrable', array(
-            'only' => array(
-                'getRegister', 'postRegister',
             ),
         ));
 
