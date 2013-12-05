@@ -1,9 +1,8 @@
 <?php namespace Orchestra\Foundation\Routing;
 
 use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\Resources;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Foundation\Presenter\Resource as ResourcePresenter;
+use Orchestra\Foundation\Processor\Resource as ResourceProcessor;
 
 class ResourcesController extends AdminController
 {
@@ -11,11 +10,11 @@ class ResourcesController extends AdminController
      * Orchestra Platform resources routing is dynamically handle by this
      * Controller.
      *
-     * @param  \Orchestra\Foundation\Html\ResourcePresenter $presenter
+     * @param  \Orchestra\Foundation\Processor\Resource    $processor
      */
-    public function __construct(ResourcePresenter $presenter)
+    public function __construct(ResourceProcessor $processor)
     {
-        $this->presenter = $presenter;
+        $this->processor = $processor;
 
         parent::__construct();
     }
@@ -27,24 +26,10 @@ class ResourcesController extends AdminController
      */
     public function index()
     {
-        $resources  = Resources::all();
-        $collection = array();
-
-        foreach ($resources as $name => $options) {
-            if (false !== value($options->visible)) {
-                $collection[$name] = $options;
-            }
-        }
-
-        $table = $this->presenter->table($collection);
-
         Site::set('title', trans('orchestra/foundation::title.resources.list'));
         Site::set('description', trans('orchestra/foundation::title.resources.list-detail'));
 
-        return View::make('orchestra/foundation::resources.index', array(
-            'eloquent' => $collection,
-            'table'    => $table,
-        ));
+        return $this->processor->index($this);
     }
 
     /**
@@ -60,24 +45,28 @@ class ResourcesController extends AdminController
             return $this->index();
         }
 
-        $resources  = Resources::all();
-        $parameters = explode('/', trim($request, '/'));
-        $name       = array_shift($parameters);
-        $content    = Resources::call($name, $parameters);
+        return $this->processor->call($this, $request);
+    }
 
-        return Resources::response($content, function ($content) use ($resources, $name, $request) {
-            ( ! str_contains($name, '.')) ?
-                $namespace = $name : list($namespace,) = explode('.', $name, 2);
+    /**
+     * Response when index page succeed.
+     *
+     * @param  array  $data
+     * @return Response
+     */
+    public function indexSucceed(array $data)
+    {
+        return View::make('orchestra/foundation::resources.index', $data);
+    }
 
-            return View::make('orchestra/foundation::resources.page', array(
-                'content'   => $content,
-                'resources' => array(
-                    'list'      => $resources,
-                    'namespace' => $namespace,
-                    'name'      => $name,
-                    'request'   => $request,
-                ),
-            ));
-        });
+    /**
+     * Response when call resource page succeed.
+     *
+     * @param  array  $data
+     * @return Response
+     */
+    public function callSucceed(array $data)
+    {
+        return View::make('orchestra/foundation::resources.page', $data);
     }
 }

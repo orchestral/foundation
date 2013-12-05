@@ -149,8 +149,7 @@ class User extends AbstractableProcessor
 
         try {
             $this->saving($user, $input, 'update');
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return $listener->updateFailed(trans('orchestra/foundation::response.db-failed', array(
                 'error' => $e->getMessage(),
             )));
