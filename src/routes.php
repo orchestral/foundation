@@ -25,11 +25,11 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
     Route::post('forgot/reset', 'Orchestra\Foundation\Routing\PasswordBrokerController@postReset');
 
     // Route to installation.
-    Route::get('install', 'Orchestra\Foundation\Routing\InstallController@getIndex');
-    Route::get('install/create', 'Orchestra\Foundation\Routing\InstallController@getCreate');
-    Route::post('install/create', 'Orchestra\Foundation\Routing\InstallController@postCreate');
-    Route::get('install/done', 'Orchestra\Foundation\Routing\InstallController@getDone');
-    Route::get('install/prepare', 'Orchestra\Foundation\Routing\InstallController@getPrepare');
+    Route::get('install', 'Orchestra\Foundation\Routing\InstallerController@getIndex');
+    Route::get('install/create', 'Orchestra\Foundation\Routing\InstallerController@getCreate');
+    Route::post('install/create', 'Orchestra\Foundation\Routing\InstallerController@postCreate');
+    Route::get('install/done', 'Orchestra\Foundation\Routing\InstallerController@getDone');
+    Route::get('install/prepare', 'Orchestra\Foundation\Routing\InstallerController@getPrepare');
 
     // Route to asset publishing.
     Route::get('publisher', 'Orchestra\Foundation\Routing\PublisherController@getIndex');

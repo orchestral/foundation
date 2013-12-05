@@ -1,68 +1,41 @@
-<?php namespace Orchestra\Foundation\Routing;
+<?php namespace Orchestra\Foundation\Processor;
 
 use ReflectionException;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\App;
-use Orchestra\Support\Facades\Site;
+use Orchestra\Foundation\Routing\BaseController;
 use Orchestra\Foundation\Installation\InstallerInterface;
 use Orchestra\Foundation\Installation\RequirementInterface;
-use Orchestra\Model\User;
+use Orchestra\Support\Facades\App;
 
-class InstallController extends BaseController
+class Installer
 {
     /**
      * Installer instance.
      *
-     * @var Orchestra\Foundation\Installation\Installer
+     * @var \Orchestra\Foundation\Installation\Installer
      */
-    protected $installer = null;
+    protected $installer;
 
     /**
      * Requirement instance.
      *
-     * @var Orchestra\Foundation\Installation\Requirement
+     * @var \Orchestra\Foundation\Installation\Requirement
      */
-    protected $requirement = null;
+    protected $requirement;
 
     /**
-     * Construct InstallController
+     * Create a new processor instance.
      *
-     * @return void
+     * @param  \Orchestra\Foundation\Installation\Installer    $presenter
+     * @param  \Orchestra\Foundation\Installation\Requirement  $validator
      */
     public function __construct(InstallerInterface $installer, RequirementInterface $requirement)
     {
         $this->installer   = $installer;
         $this->requirement = $requirement;
-
-        Site::set('navigation::usernav', false);
-        Site::set('title', 'Installer');
-
-        parent::__construct();
     }
 
-    /**
-     * Setup controller filters.
-     *
-     * @return void
-     */
-    protected function setupFilters()
-    {
-        $this->beforeFilter('orchestra.installed', array(
-            'only' => array('getIndex', 'getCreate', 'postCreate'),
-        ));
-    }
-
-    /**
-     * Check installation requirement page.
-     *
-     * GET (:orchestra)/install
-     *
-     * @return View
-     */
-    public function getIndex()
+    public function index(BaseController $listener)
     {
         $requirement = $this->requirement;
         $installable = $requirement->check();
@@ -80,62 +53,35 @@ class InstallController extends BaseController
             'checklist'      => $requirement->getChecklist(),
         );
 
-        return View::make('orchestra/foundation::install.index', $data);
+        return $listener->indexSucceed($data);
     }
 
-    /**
-     * Migrate database schema for Orchestra Platform.
-     *
-     * GET (:orchestra)/install/prepare
-     *
-     * @return Redirect
-     */
-    public function getPrepare()
+    public function prepare(BaseController $listener)
     {
         $this->installer->migrate();
 
-        return Redirect::to(handles('orchestra::install/create'));
+        return $listener->prepareSucceed();
     }
 
-    /**
-     * Show create adminstrator page.
-     *
-     * GET (:orchestra)/install/create
-     *
-     * @return View
-     */
-    public function getCreate()
+    public function create(BaseController $listener)
     {
-        return View::make('orchestra/foundation::install.create')
-            ->with('siteName', 'Orchestra Platform');
+        return $listener->createSucceed(array(
+            'siteName' => 'Orchestra Platform',
+        ));
     }
 
-    /**
-     * Create an adminstrator.
-     *
-     * POST (:orchestra)/install/create
-     *
-     * @return View
-     */
-    public function postCreate()
+    public function store(BaseController $listener, array $input)
     {
-        if (! $this->installer->createAdmin(Input::all())) {
-            return Redirect::to(handles('orchestra::install/create'));
+        if (! $this->installer->createAdmin($input)) {
+            return $listener->storeFailed();
         }
 
-        return Redirect::to(handles('orchestra::install/done'));
+        return $listener->storeSucceed();
     }
 
-    /**
-     * End of installation.
-     *
-     * GET (:orchestra)/install/done
-     *
-     * @return View
-     */
-    public function getDone()
+    public function done(BaseController $listener)
     {
-        return View::make('orchestra/foundation::install.done');
+        return $listener->doneSucceed();
     }
 
     /**
