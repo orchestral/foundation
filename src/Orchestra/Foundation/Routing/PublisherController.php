@@ -16,6 +16,8 @@ class PublisherController extends AdminController
     public function __construct(PublisherProcessor $processor)
     {
         $this->processor = $processor;
+
+        parent::__construct();
     }
     /**
      * Setup controller filters.
