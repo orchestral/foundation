@@ -75,16 +75,10 @@ class Account extends AbstractableProcessor
             $this->fireEvent('saved', array($user));
 
         } catch (Exception $e) {
-            return $listener->updateProfileFailed(
-                trans('orchestra/foundation::response.db-failed', array(
-                    'error' => $e->getMessage(),
-                ))
-            );
+            return $listener->updateProfileFailed(array('error' => $e->getMessage()));
         }
 
-        return $listener->updateProfileSucceed(
-            trans('orchestra/foundation::response.account.profile.update')
-        );
+        return $listener->updateProfileSucceed();
     }
 
     /**
@@ -123,9 +117,7 @@ class Account extends AbstractableProcessor
         }
 
         if (! Hash::check($input['current_password'], $user->password)) {
-            return $listener->updatePasswordFailed(
-                trans('orchestra/foundation::response.account.password.invalid')
-            );
+            return $listener->verifyCurrentPasswordFailed();
         }
 
         $user->password = $input['new_password'];
@@ -134,15 +126,11 @@ class Account extends AbstractableProcessor
             DB::transaction(function () use ($user) {
                 $user->save();
             });
-
-            return $listener->updatePasswordSucceed(
-                trans('orchestra/foundation::response.account.password.update')
-            );
         } catch (Exception $e) {
-            return $listener->updatePasswordFailed(
-                trans('orchestra/foundation::response.db-failed')
-            );
+            return $listener->updatePasswordFailed(array('error' => $e->getMessage()));
         }
+
+        return $listener->updatePasswordSucceed();
     }
 
     /**

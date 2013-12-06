@@ -10,7 +10,7 @@ use Orchestra\Support\Facades\Form;
 use Orchestra\Support\Facades\Mail;
 use Orchestra\Support\Facades\Messages;
 
-class RegisterControllerTest extends TestCase
+class RegistrationControllerTest extends TestCase
 {
     /**
      * Teardown the test environment.
@@ -94,7 +94,8 @@ class RegisterControllerTest extends TestCase
             ->shouldReceive('toArray')->once()->andReturn($input)
             ->shouldReceive('getAttribute')->once()->with('email')->andReturn($input['email'])
             ->shouldReceive('getAttribute')->once()->with('fullname')->andReturn($input['fullname']);
-        $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('foo');
+        $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('foo')
+            ->shouldReceive('get')->once()->with('email.queue', false)->andReturn(false);
         $mailer->shouldReceive('subject')->once()->andReturn(null)
             ->shouldReceive('to')->once()->andReturn(null);
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
@@ -113,8 +114,7 @@ class RegisterControllerTest extends TestCase
                     $c($mailer);
                     return array('email@orchestraplatform.com');
                 });
-        Messages::shouldReceive('add')->twice()
-            ->with('success', m::any())->andReturn(null);
+        Messages::shouldReceive('add')->twice()->with('success', m::any())->andReturn(null);
 
         $this->call('POST', 'admin/register', $input);
         $this->assertRedirectedTo('login');
@@ -171,6 +171,7 @@ class RegisterControllerTest extends TestCase
                     $c($mailer);
                     return array();
                 });
+
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
 

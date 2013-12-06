@@ -110,14 +110,10 @@ class User extends AbstractableProcessor
         try {
             $this->saving($user, $input, 'create');
         } catch (Exception $e) {
-            return $listener->storeFailed(trans('orchestra/foundation::response.db-failed', array(
-                'error' => $e->getMessage(),
-            )));
+            return $listener->storeFailed(array('error' => $e->getMessage()));
         }
 
-        return $listener->storeSucceed(
-            trans("orchestra/foundation::response.users.create")
-        );
+        return $listener->storeSucceed();
     }
 
     /**
@@ -143,21 +139,15 @@ class User extends AbstractableProcessor
 
         $user = App::make('orchestra.user')->findOrFail($id);
 
-        if (! empty($input['password'])) {
-            $user->password = $input['password'];
-        }
+        ! empty($input['password']) and $user->password = $input['password'];
 
         try {
             $this->saving($user, $input, 'update');
         } catch (Exception $e) {
-            return $listener->updateFailed(trans('orchestra/foundation::response.db-failed', array(
-                'error' => $e->getMessage(),
-            )));
+            return $listener->updateFailed(array('error' => $e->getMessage()));
         }
 
-        return $listener->updateSucceed(
-            trans("orchestra/foundation::response.users.update")
-        );
+        return $listener->updateSucceed();
     }
 
     /**
@@ -185,14 +175,10 @@ class User extends AbstractableProcessor
 
             $this->fireEvent('deleted', array($user));
         } catch (Exception $e) {
-            return $listener->destroyFailed(trans('orchestra/foundation::response.db-failed', array(
-                'error' => $e->getMessage(),
-            )));
+            return $listener->destroyFailed(array('error' => $e->getMessage()));
         }
 
-        return $listener->destroySucceed(
-            trans('orchestra/foundation::response.users.delete')
-        );
+        return $listener->destroySucceed();
     }
 
     /**

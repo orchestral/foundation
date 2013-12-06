@@ -40,10 +40,10 @@ class PasswordBroker extends AbstractableProcessor
         });
 
         if ($response !== Password::REMINDER_SENT) {
-            return $listener->createFailed(trans($response));
+            return $listener->createFailed($response);
         }
 
-        return $listener->createSucceed(trans($response));
+        return $listener->createSucceed($response);
     }
 
     /**
@@ -69,11 +69,9 @@ class PasswordBroker extends AbstractableProcessor
         );
 
         if (in_array($response, $errors)) {
-            return $listener->resetFailed(trans($response));
+            return $listener->resetFailed($response);
         }
 
-        return $listener->resetSucceed(
-            trans('orchestra/foundation::response.account.password.update')
-        );
+        return $listener->resetSucceed($response);
     }
 }

@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Routing;
 
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Site;
 use Orchestra\Foundation\Processor\PasswordBroker as PasswordBrokerProcessor;
@@ -109,34 +108,39 @@ class PasswordBrokerController extends AdminController
     /**
      * Response when request reset password failed.
      *
-     * @param  string|null $message
+     * @param  string  $response
      * @return Response
      */
-    public function createFailed($message = null)
+    public function createFailed($response)
     {
+        $message = trans($response);
+
         return $this->redirectWithMessage(handles('orchestra::forgot'), $message, 'error');
     }
 
     /**
      * Response when request reset password succeed.
      *
-     * @param  string|null $message
+     * @param  string  $response
      * @return Response
      */
-    public function createSucceed($message = null)
+    public function createSucceed($response)
     {
+        $message = trans($response);
+
         return $this->redirectWithMessage(handles('orchestra::forgot'), $message);
     }
 
     /**
      * Response when reset password failed.
      *
-     * @param  string|null $message
+     * @param  string  $response
      * @return Response
      */
-    public function resetFailed($message = null)
+    public function resetFailed($response)
     {
-        $token = Input::get('token');
+        $message = trans($response);
+        $token   = Input::get('token');
 
         return $this->redirectWithMessage(handles("orchestra::forgot/reset/{$token}"), $message, 'error');
     }
@@ -144,11 +148,13 @@ class PasswordBrokerController extends AdminController
     /**
      * Response when reset password succeed.
      *
-     * @param  string|null $message
+     * @param  string  $response
      * @return Response
      */
-    public function resetSucceed($message = null)
+    public function resetSucceed()
     {
+        $message = trans('orchestra/foundation::response.account.password.update');
+
         return $this->redirectWithMessage(handles('orchestra::/'), $message);
     }
 }

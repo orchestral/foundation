@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Foundation\Testing\TestCase;
 
-class InstallControllerTest extends TestCase
+class InstallerControllerTest extends TestCase
 {
     /**
      * Teardown the test environment.

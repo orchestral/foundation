@@ -87,23 +87,23 @@ class CredentialController extends AdminController
     /**
      * Response when login failed.
      *
-     * @param  string|null $message
      * @return Response
      */
-    public function loginFailed($message = null)
+    public function loginFailed()
     {
+        $message = trans('orchestra/foundation::response.credential.invalid-combination');
+
         return $this->redirectWithMessage(handles('orchestra::login'), $message, 'error')->withInput();
     }
 
     /**
      * Response when login succeed.
      *
-     * @param  string|null $message
      * @return Response
      */
-    public function loginSucceed($message = null)
+    public function loginSucceed()
     {
-        Messages::add('success', $message);
+        Messages::add('success', trans('orchestra/foundation::response.credential.logged-in'));
 
         return Redirect::intended(handles('orchestra::/'));
     }
@@ -111,12 +111,11 @@ class CredentialController extends AdminController
     /**
      * Response when logout succeed.
      *
-     * @param  string|null $message
      * @return Response
      */
-    public function logoutSucceed($message = null)
+    public function logoutSucceed()
     {
-        Messages::add('success', $message);
+        Messages::add('success', trans('orchestra/foundation::response.credential.logged-out'));
 
         return Redirect::intended(handles(Input::get('redirect', 'orchestra::login')));
     }

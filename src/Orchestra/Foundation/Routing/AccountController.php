@@ -39,8 +39,6 @@ class AccountController extends AdminController
      */
     public function showProfile()
     {
-        Site::set('title', trans("orchestra/foundation::title.account.profile"));
-
         return $this->processor->showProfile($this);
     }
 
@@ -65,8 +63,6 @@ class AccountController extends AdminController
      */
     public function showPassword()
     {
-        Site::set('title', trans("orchestra/foundation::title.account.password"));
-
         return $this->processor->showPassword($this);
     }
 
@@ -90,6 +86,8 @@ class AccountController extends AdminController
      */
     public function showProfileSucceed(array $data)
     {
+        Site::set('title', trans("orchestra/foundation::title.account.profile"));
+
         return View::make('orchestra/foundation::account.index', $data);
     }
 
@@ -110,19 +108,22 @@ class AccountController extends AdminController
      * @param  string|null $message
      * @return Response
      */
-    public function updateProfileFailed($message = null)
+    public function updateProfileFailed(array $error)
     {
+        $message = trans('orchestra/foundation::response.db-failed', $error);
+
         return $this->redirectWithMessage(handles('orchestra::account'), $message, 'error');
     }
 
     /**
      * Response when update profile succeed.
      *
-     * @param  string|null $message
      * @return Response
      */
-    public function updateProfileSucceed($message = null)
+    public function updateProfileSucceed()
     {
+        $message = trans('orchestra/foundation::response.account.profile.update');
+
         return $this->redirectWithMessage(handles('orchestra::account'), $message);
     }
 
@@ -134,6 +135,8 @@ class AccountController extends AdminController
      */
     public function showPasswordSucceed(array $data)
     {
+        Site::set('title', trans("orchestra/foundation::title.account.password"));
+
         return View::make('orchestra/foundation::account.password', $data);
     }
 
@@ -149,24 +152,37 @@ class AccountController extends AdminController
     }
 
     /**
+     * Response when verify current password failed.
+     */
+    public function verifyCurrentPasswordFailed()
+    {
+        $message = trans('orchestra/foundation::response.account.password.invalid');
+
+        return $this->redirectWithMessage(handles('orchestra::account/password'), $message, 'error');
+    }
+
+    /**
      * Response when update password failed.
      *
-     * @param  string|null $message
+     * @param  array   $error
      * @return Response
      */
-    public function updatePasswordFailed($message = null)
+    public function updatePasswordFailed(array $error)
     {
+        $message = trans('orchestra/foundation::response.db-failed', $error);
+
         return $this->redirectWithMessage(handles('orchestra::account/password'), $message, 'error');
     }
 
     /**
      * Response when update password succeed.
      *
-     * @param  string|null $message
      * @return Response
      */
-    public function updatePasswordSucceed($message = null)
+    public function updatePasswordSucceed()
     {
+        $message = trans('orchestra/foundation::response.account.password.update');
+
         return $this->redirectWithMessage(handles('orchestra::account/password'), $message);
     }
 }

@@ -40,8 +40,6 @@ class UsersController extends AdminController
      */
     public function index()
     {
-        Site::set('title', trans('orchestra/foundation::title.users.list'));
-
         return $this->processor->index($this, Input::get('q', ''), Input::get('roles', array()));
     }
 
@@ -54,8 +52,6 @@ class UsersController extends AdminController
      */
     public function create()
     {
-        Site::set('title', trans('orchestra/foundation::title.users.create'));
-
         return $this->processor->create($this);
     }
 
@@ -68,8 +64,6 @@ class UsersController extends AdminController
      */
     public function edit($id)
     {
-        Site::set('title', trans('orchestra/foundation::title.users.update'));
-
         return $this->processor->edit($this, $id);
     }
 
@@ -132,6 +126,8 @@ class UsersController extends AdminController
      */
     public function indexSucceed(array $data)
     {
+        Site::set('title', trans('orchestra/foundation::title.users.list'));
+
         return View::make('orchestra/foundation::users.index', $data);
     }
 
@@ -154,6 +150,8 @@ class UsersController extends AdminController
      */
     public function editSucceed(array $data)
     {
+        Site::set('title', trans('orchestra/foundation::title.users.update'));
+
         return View::make('orchestra/foundation::users.edit', $data);
     }
 
@@ -171,22 +169,24 @@ class UsersController extends AdminController
     /**
      * Response when storing user failed.
      *
-     * @param  string|null $message
+     * @param  array    $error
      * @return Response
      */
-    public function storeFailed($message = null)
+    public function storeFailed(array $error)
     {
+        $message = trans('orchestra/foundation::response.db-failed', $error);
         return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
     }
 
     /**
      * Response when storing user succeed.
      *
-     * @param  string|null $message
      * @return Response
      */
-    public function storeSucceed($message = null)
+    public function storeSucceed()
     {
+        $message = trans("orchestra/foundation::response.users.create");
+
         return $this->redirectWithMessage(handles('orchestra::users'), $message);
     }
 
@@ -204,44 +204,50 @@ class UsersController extends AdminController
     /**
      * Response when updating user failed.
      *
-     * @param  string|null $message
+     * @param  array   $error
      * @return Response
      */
-    public function updateFailed($message = null)
+    public function updateFailed(array $error)
     {
+        $message = trans('orchestra/foundation::response.db-failed', $error);
+
         return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
     }
 
     /**
      * Response when updating user succeed.
      *
-     * @param  string|null $message
      * @return Response
      */
-    public function updateSucceed($message = null)
+    public function updateSucceed()
     {
+        $message = trans("orchestra/foundation::response.users.update");
+
         return $this->redirectWithMessage(handles('orchestra::users'), $message);
     }
 
     /**
      * Response when destroying user failed.
      *
-     * @param  string|null $message
+     * @param  array   $error
      * @return Response
      */
-    public function destroyFailed($message = null)
+    public function destroyFailed(array $error)
     {
+        $message = trans('orchestra/foundation::response.db-failed', $error);
+
         return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
     }
 
     /**
      * Response when destroying user succeed.
      *
-     * @param  string|null $message
      * @return Response
      */
-    public function destroySucceed($message = null)
+    public function destroySucceed()
     {
+        $message = trans('orchestra/foundation::response.users.delete');
+
         return $this->redirectWithMessage(handles('orchestra::users'), $message);
     }
 

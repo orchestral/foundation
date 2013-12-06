@@ -35,14 +35,10 @@ class Credential extends AbstractableProcessor
         }
 
         if (! $this->authenticate($input)) {
-            return $listener->loginFailed(
-                trans('orchestra/foundation::response.credential.invalid-combination')
-            );
+            return $listener->loginFailed();
         }
 
-        return $listener->loginSucceed(
-            trans('orchestra/foundation::response.credential.logged-in')
-        );
+        return $listener->loginSucceed();
     }
 
     /**
@@ -55,9 +51,7 @@ class Credential extends AbstractableProcessor
     {
         Auth::logout();
 
-        return $listener->logoutSucceed(
-            trans('orchestra/foundation::response.credential.logged-out')
-        );
+        return $listener->logoutSucceed();
     }
 
     /**

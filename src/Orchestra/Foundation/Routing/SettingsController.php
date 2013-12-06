@@ -39,8 +39,6 @@ class SettingsController extends AdminController
      */
     public function show()
     {
-        Site::set('title', trans('orchestra/foundation::title.settings.list'));
-
         return $this->processor->show($this);
     }
 
@@ -74,6 +72,8 @@ class SettingsController extends AdminController
      */
     public function showSucceed(array $data)
     {
+        Site::set('title', trans('orchestra/foundation::title.settings.list'));
+
         return View::make('orchestra/foundation::settings.index', $data);
     }
 
@@ -91,22 +91,24 @@ class SettingsController extends AdminController
     /**
      * Response when update setting succeed.
      *
-     * @param  string|null $message
      * @return Response
      */
-    public function updateSucceed($message = null)
+    public function updateSucceed()
     {
+        $message = trans('orchestra/foundation::response.settings.update');
+
         return $this->redirectWithMessage(handles('orchestra::settings'), $message);
     }
 
     /**
      * Response when update Orchestra Platform components succeed.
      *
-     * @param  string|null $message
      * @return Response
      */
-    public function migrateSucceed($message = null)
+    public function migrateSucceed()
     {
+        $message = trans('orchestra/foundation::response.settings.system-update');
+
         return $this->redirectWithMessage(handles('orchestra::settings'), $message);
     }
 }

@@ -33,7 +33,7 @@ return array(
         'activate'         => "L'estensione :name è stata attivata",
         'deactivate'       => "L'estensione :name è stata disattivata",
         'configure'        => "La configurazione dell'estensione :name è stata aggiornata",
-        'update'           => "L'estensione :name è stata aggiornata",
+        'migrate'          => "L'estensione :name è stata aggiornata",
         'depends-on'       => "Non è stato possibile attivare 'estensione :name perché dipende da :dependencies",
         'other-depends-on' => "Non è stato possibile disattivare l'estensione :name perché :dependencies dipende da essa",
     ),

@@ -26,9 +26,6 @@ class ResourcesController extends AdminController
      */
     public function index()
     {
-        Site::set('title', trans('orchestra/foundation::title.resources.list'));
-        Site::set('description', trans('orchestra/foundation::title.resources.list-detail'));
-
         return $this->processor->index($this);
     }
 
@@ -56,6 +53,9 @@ class ResourcesController extends AdminController
      */
     public function indexSucceed(array $data)
     {
+        Site::set('title', trans('orchestra/foundation::title.resources.list'));
+        Site::set('description', trans('orchestra/foundation::title.resources.list-detail'));
+
         return View::make('orchestra/foundation::resources.index', $data);
     }
 

@@ -54,8 +54,8 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
     Route::post('login', 'Orchestra\Foundation\Routing\CredentialController@login');
     Route::any('logout', 'Orchestra\Foundation\Routing\CredentialController@logout');
 
-    Route::get('register', 'Orchestra\Foundation\Routing\RegisterController@index');
-    Route::post('register', 'Orchestra\Foundation\Routing\RegisterController@create');
+    Route::get('register', 'Orchestra\Foundation\Routing\RegistrationController@index');
+    Route::post('register', 'Orchestra\Foundation\Routing\RegistrationController@create');
 
     // Base routing.
     Route::any('/', array(

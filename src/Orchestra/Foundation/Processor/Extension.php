@@ -53,7 +53,7 @@ class Extension extends AbstractableProcessor
 
         $type = 'activate';
 
-        return $this->execute($listener, $type, $extension->name, function ($name) {
+        return $this->execute($listener, $type, $extension, function ($name) {
             E::activate($name);
         });
     }
@@ -73,9 +73,7 @@ class Extension extends AbstractableProcessor
 
         E::deactivate($extension->name);
 
-        return $listener->executionSucceed(
-            trans('orchestra/foundation::response.extensions.deactivate', compact('name'))
-        );
+        return $listener->deactivateSucceed($extension);
     }
 
     /**
@@ -91,9 +89,9 @@ class Extension extends AbstractableProcessor
             return $listener->suspend(404);
         }
 
-        $type = 'update';
+        $type = 'migrate';
 
-        return $this->execute($listener, $type, $extension->name, function ($name) {
+        return $this->execute($listener, $type, $extension, function ($name) {
             E::publish($name);
         });
     }
@@ -125,7 +123,7 @@ class Extension extends AbstractableProcessor
 
         Event::fire("orchestra.form: extension.{$extension->name}", array($eloquent, $form));
 
-        return $listener->configureSucceed(compact('eloquent', 'form'));
+        return $listener->configureSucceed(compact('eloquent', 'form', 'extension'));
     }
 
     /**
@@ -172,32 +170,30 @@ class Extension extends AbstractableProcessor
      *
      * @param  \Orchestra\Foundation\Routing\BaseController    $listener
      * @param  string                                          $type
-     * @param  string                                          $name
+     * @param  \Illuminate\Support\Fluent                      $extension
      * @param  Closure                                         $callback
      * @return mixed
      */
-    protected function execute(BaseController $listener, $type, $name, Closure $callback)
+    protected function execute(BaseController $listener, $type, Fluent $extension, Closure $callback)
     {
         try {
             // Check if folder is writable via the web instance, this would
             // avoid issue running Orchestra Platform with debug as true where
             // creating/copying the directory would throw an ErrorException.
-            if (! E::permission($name)) {
-                throw new FilePermissionException("[{$name}] is not writable.");
+            if (! E::permission($extension->name)) {
+                throw new FilePermissionException("[{$extension->name}] is not writable.");
             }
 
-            call_user_func($callback, $name);
+            call_user_func($callback, $extension->name);
         } catch (FilePermissionException $e) {
             // In events where extension can't be activated due to extension
             // publish failed to push the asset to proper path. We need to
             // put this under a publisher queue.
-            Publisher::queue($name);
+            Publisher::queue($extension->name);
 
-            return $listener->executionFailed();
+            return call_user_func(array($listener, "{$type}Failed"), $extension);
         }
 
-        return $listener->executionSucceed(
-            trans("orchestra/foundation::response.extensions.{$type}", compact('name'))
-        );
+        return call_user_func(array($listener, "{$type}Succeed"), $extension);
     }
 }

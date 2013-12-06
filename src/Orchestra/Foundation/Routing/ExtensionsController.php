@@ -41,8 +41,6 @@ class ExtensionsController extends AdminController
      */
     public function index()
     {
-        Site::set('title', trans("orchestra/foundation::title.extensions.list"));
-
         return $this->processor->index($this);
     }
 
@@ -56,8 +54,7 @@ class ExtensionsController extends AdminController
      */
     public function activate($uid)
     {
-        $name = str_replace('.', '/', $uid);
-        $extension = new Fluent(compact('name', 'uid'));
+        $extension = $this->getExtension($uid);
 
         return $this->processor->activate($this, $extension);
     }
@@ -72,8 +69,7 @@ class ExtensionsController extends AdminController
      */
     public function deactivate($uid)
     {
-        $name = str_replace('.', '/', $uid);
-        $extension = new Fluent(compact('name', 'uid'));
+        $extension = $this->getExtension($uid);
 
         return $this->processor->deactivate($this, $extension);
     }
@@ -88,8 +84,7 @@ class ExtensionsController extends AdminController
      */
     public function migrate($uid)
     {
-        $name = str_replace('.', '/', $uid);
-        $extension = new Fluent(compact('name', 'uid'));
+        $extension = $this->getExtension($uid);
 
         return $this->processor->migrate($this, $extension);
     }
@@ -104,11 +99,7 @@ class ExtensionsController extends AdminController
      */
     public function configure($uid)
     {
-        $name = str_replace('.', '/', $uid);
-        $extension = new Fluent(compact('name', 'uid'));
-
-        Site::set('title', App::memory()->get("extensions.available.{$name}.name", $name));
-        Site::set('description', trans("orchestra/foundation::title.extensions.configure"));
+        $extension = $this->getExtension($uid);
 
         return $this->processor->configure($this, $extension);
     }
@@ -123,10 +114,22 @@ class ExtensionsController extends AdminController
      */
     public function update($uid)
     {
-        $name = str_replace('.', '/', $uid);
-        $extension = new Fluent(compact('name', 'uid'));
+        $extension = $this->getExtension($uid);
 
         return $this->processor->update($this, $extension, Input::all());
+    }
+
+    /**
+     * Get extension information.
+     *
+     * @param  string  $uid
+     * @return \Illuminate\Support\Fluent
+     */
+    protected function getExtension($uid)
+    {
+        $name = str_replace('.', '/', $uid);
+
+        return new Fluent(compact('name', 'uid'));
     }
 
     /**
@@ -137,6 +140,8 @@ class ExtensionsController extends AdminController
      */
     public function indexSucceed(array $data)
     {
+        Site::set('title', trans("orchestra/foundation::title.extensions.list"));
+
         return View::make('orchestra/foundation::extensions.index', $data);
     }
 
@@ -148,28 +153,72 @@ class ExtensionsController extends AdminController
      */
     public function configureSucceed(array $data)
     {
+        $name = $data['extension']->name;
+
+        Site::set('title', App::memory()->get("extensions.available.{$name}.name", $name));
+        Site::set('description', trans("orchestra/foundation::title.extensions.configure"));
+
         return View::make('orchestra/foundation::extensions.configure', $data);
     }
 
     /**
-     * Response when action to extension failed.
+     * Response when activate an extension failed.
      *
-     * @param  string|null $message
+     * @param  \Illuminate\Support\Fluent  $extension
      * @return Response
      */
-    public function executionFailed($message = null)
+    public function activateFailed(Fluent $extension)
     {
-        return $this->redirectWithMessage(handles('orchestra::publisher'), $message);
+        return $this->redirect(handles('orchestra::publisher'));
     }
 
     /**
-     * Response when action to extension succeed.
+     * Response when activate an extension succeed.
      *
-     * @param  string|null $message
+     * @param  \Illuminate\Support\Fluent  $extension
      * @return Response
      */
-    public function executionSucceed($message = null)
+    public function activateSucceed(Fluent $extension)
     {
+        $message = trans('orchestra/foundation::response.extensions.activate', $extension->getAttributes());
+
+        return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
+    }
+
+    /**
+     * Response when migrate an extension failed.
+     *
+     * @param  \Illuminate\Support\Fluent  $extension
+     * @return Response
+     */
+    public function migrateFailed(Fluent $extension)
+    {
+        return $this->redirect(handles('orchestra::publisher'));
+    }
+
+    /**
+     * Response when migrate an extension succeed.
+     *
+     * @param  \Illuminate\Support\Fluent  $extension
+     * @return Response
+     */
+    public function migrateSucceed(Fluent $extension)
+    {
+        $message = trans('orchestra/foundation::response.extensions.migrate', $extension->getAttributes());
+
+        return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
+    }
+
+    /**
+     * Response when deactivate an extension succeed.
+     *
+     * @param  \Illuminate\Support\Fluent  $extension
+     * @return Response
+     */
+    public function deactivateSucceed(Fluent $extension)
+    {
+        $message = trans('orchestra/foundation::response.extensions.deactivate', $extension->getAttributes());
+
         return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
     }
 

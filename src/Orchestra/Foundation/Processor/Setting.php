@@ -100,9 +100,7 @@ class Setting extends AbstractableProcessor
 
         Event::fire('orchestra.saved: settings', array($memory, $input));
 
-        return $listener->updateSucceed(
-            trans('orchestra/foundation::response.settings.update')
-        );
+        return $listener->updateSucceed();
     }
 
     /**
@@ -116,8 +114,6 @@ class Setting extends AbstractableProcessor
         App::make('orchestra.publisher.asset')->foundation();
         App::make('orchestra.publisher.migrate')->foundation();
 
-        return $listener->migrateSucceed(
-            trans('orchestra/foundation::response.settings.system-update')
-        );
+        return $listener->migrateSucceed();
     }
 }

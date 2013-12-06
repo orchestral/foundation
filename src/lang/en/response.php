@@ -32,7 +32,7 @@ return array(
         'activate'         => 'Extension :name activated',
         'deactivate'       => 'Extension :name deactivated',
         'configure'        => 'Configuration for Extension :name has been updated',
-        'update'           => 'Extension :name has been updated',
+        'migrate'          => 'Extension :name has been updated',
         'depends-on'       => 'Extension :name was not activated because depends on :dependencies',
         'other-depends-on' => 'Extension :name was not deactivated because :dependencies depends on it',
     ),

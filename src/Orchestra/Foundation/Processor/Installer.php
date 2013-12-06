@@ -35,6 +35,12 @@ class Installer
         $this->requirement = $requirement;
     }
 
+    /**
+     * Start an installation and check for requirement.
+     *
+     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @return mixed
+     */
     public function index(BaseController $listener)
     {
         $requirement = $this->requirement;
@@ -56,6 +62,12 @@ class Installer
         return $listener->indexSucceed($data);
     }
 
+    /**
+     * Run migration and prepare the database.
+     *
+     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @return mixed
+     */
     public function prepare(BaseController $listener)
     {
         $this->installer->migrate();
@@ -63,6 +75,12 @@ class Installer
         return $listener->prepareSucceed();
     }
 
+    /**
+     * Display initial user and site configuration page.
+     *
+     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @return mixed
+     */
     public function create(BaseController $listener)
     {
         return $listener->createSucceed(array(
@@ -70,6 +88,13 @@ class Installer
         ));
     }
 
+    /**
+     * Store/save administator information and site configuration
+     *
+     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  array                                           $input
+     * @return mixed
+     */
     public function store(BaseController $listener, array $input)
     {
         if (! $this->installer->createAdmin($input)) {
@@ -79,6 +104,12 @@ class Installer
         return $listener->storeSucceed();
     }
 
+    /**
+     * Complete the installation.
+     *
+     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @return mixed
+     */
     public function done(BaseController $listener)
     {
         return $listener->doneSucceed();
