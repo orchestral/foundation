@@ -237,11 +237,13 @@ class ExtensionsController extends AdminController
     /**
      * Response when update extension configuration succeed.
      *
-     * @param  string|null $message
+     * @param  \Illuminate\Support\Fluent  $extension
      * @return Response
      */
-    public function updateSucceed($message = null)
+    public function updateSucceed(Fluent $extension)
     {
+        $message = trans("orchestra/foundation::response.extensions.configure", $extension->getAttributes());
+
         return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
     }
 }

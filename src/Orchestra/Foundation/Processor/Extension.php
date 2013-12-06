@@ -159,10 +159,7 @@ class Extension extends AbstractableProcessor
 
         Event::fire("orchestra.saved: extension.{$extension->name}", array($input));
 
-        return $listener->updateSucceed(
-            trans("orchestra/foundation::response.extensions.configure", compact('name')),
-            $extension
-        );
+        return $listener->updateSucceed($extension);
     }
 
     /**
