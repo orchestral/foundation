@@ -84,7 +84,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('help')->once()->with('email.password.help');
 
         $form->shouldReceive('setup')->once()
-                ->with($stub, 'orchestra::setting', $model)->andReturn(null)
+                ->with($stub, 'orchestra::settings', $model)->andReturn(null)
             ->shouldReceive('fieldset')->once()
                 ->with(trans('orchestra/foundation::label.settings.application'), m::type('Closure'))
                 ->andReturnUsing(function ($t, $c) use ($siteFieldset) {

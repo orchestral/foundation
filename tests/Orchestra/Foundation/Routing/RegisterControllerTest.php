@@ -53,7 +53,7 @@ class RegisterControllerTest extends TestCase
                 {
                     $c($form);
                 });
-        $presenter->shouldReceive('profileForm')->once()->andReturn($form);
+        $presenter->shouldReceive('profile')->once()->andReturn($form);
 
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Orchestra::shouldReceive('handles')->once()->with('orchestra::register')->andReturn('register');

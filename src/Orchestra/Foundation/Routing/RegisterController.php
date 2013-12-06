@@ -55,7 +55,7 @@ class RegisterController extends AdminController
     {
         $eloquent = App::make('orchestra.user');
         $title    = 'orchestra/foundation::title.register';
-        $form     = $this->presenter->profileForm($eloquent, handles('orchestra::register'));
+        $form     = $this->presenter->profile($eloquent, handles('orchestra::register'));
 
         $form->extend(function ($form) use ($title) {
             $form->submit = $title;
