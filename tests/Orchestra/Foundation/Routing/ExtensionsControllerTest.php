@@ -84,6 +84,22 @@ class ExtensionsControllerTest extends TestCase
     }
 
     /**
+     * Test GET /admin/extensions/activate/(:name) with migration error.
+     *
+     * @test
+     */
+    public function testGetActivateActionGivenMgrationError()
+    {
+        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
+        Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(false);
+        Publisher::shouldReceive('queue')->once()->with('laravel/framework')->andReturn(null);
+        Orchestra::shouldReceive('handles')->once()->with('orchestra::publisher')->andReturn('publisher');
+
+        $this->call('GET', 'admin/extensions/activate/laravel.framework');
+        $this->assertRedirectedTo('publisher');
+    }
+
+    /**
      * Test GET /admin/extensions/activate/(:name)
      *
      * @test
@@ -268,11 +284,11 @@ class ExtensionsControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/extensions/update/(:name) with activation error.
+     * Test GET /admin/extensions/update/(:name) with migration error.
      *
      * @test
      */
-    public function testGetUpdateActionGivenActivationError()
+    public function testGetUpdateActionGivenMgrationError()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(false);
