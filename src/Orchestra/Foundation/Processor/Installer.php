@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Config;
 use Orchestra\Foundation\Routing\BaseController;
 use Orchestra\Foundation\Installation\InstallerInterface;
 use Orchestra\Foundation\Installation\RequirementInterface;
+use Orchestra\Model\User;
 use Orchestra\Support\Facades\App;
 
 class Installer
