@@ -159,12 +159,11 @@ class PasswordBrokerControllerTest extends TestCase
      /**
      * Test GET /admin/forgot/reset given token is not null.
      *
-     * @test
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function testGetResetActionGivenTokenIsNull()
     {
         $this->call('GET', 'admin/forgot/reset');
-        $this->assertResponseStatus(404);
     }
 
     /**
