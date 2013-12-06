@@ -103,9 +103,7 @@ class PasswordBrokerController extends AdminController
         // to tell it the the user. This might not be important but a
         // good practice to make sure all form use the same e-mail
         // address validation
-        return Redirect::to(handles('orchestra::forgot'))
-                ->withInput()
-                ->withErrors($validation);
+        return $this->redirectWithErrors(handles('orchestra::forgot'), $validation);
     }
 
     /**
