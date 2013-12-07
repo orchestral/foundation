@@ -29,11 +29,12 @@ Replace call to `handles('orchestra/foundation::*')` to `handles('orchestra::*')
 * Allow Orchestra Platform route to make use of latest `Orchestra\Extension\RouteGenerator` feature allowing subdomain handling.
 * Predefined package path to avoid additional overhead to guest package path.
 * Only display resources in navigation menus if not hidden.
-* Manage Twitter Bootstrap using Composer.
-* Update Twitter Bootstrap v3.0.1.
 * Add `orchestra/debug` and `orchestra/optimize`.
 * Consolidate all commands service provider in `Orchestra\Foundation\ConsoleSupportServiceProvider`.
 * Refactor `Orchestra\Foundation\Reminders\PasswordBroker` and `Orchestra\Foundation\Routing\ForgotController` based on Laravel 4.1 changes.
+* Refactor routing as passive controllers and move all CRUD action to `Orchestra\Foundation\Processor` namespace.
+* Update assets:
+  - Twitter Bootstrap v3.0.3.
 
 ## Version 2.0 {#v2-0}
 
