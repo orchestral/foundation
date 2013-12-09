@@ -40,13 +40,18 @@ HTML::macro('title', function () {
 */
 
 Blade::extend(function ($view) {
+    $decorator = '$1<?php echo Orchestra\Support\Facades\Decorator::render($2); ?>';
     $placeholder = '$1<?php $__ps = Orchestra\Support\Facades\Widget::make("placeholder.".$2); '
                         .'foreach ($__ps as $__p) { echo value($__p->value ?:""); } ?>';
-    $decorator   = '$1<?php echo Orchestra\Support\Facades\Decorator::render($2); ?>';
 
-    foreach (compact('placeholder', 'decorator') as $name => $replacement) {
+    foreach (compact('decorator', 'placeholder', 'secure') as $name => $replacement) {
         $view = preg_replace('/(\s*)@'.$name.'\s?\(\s*(.*)\)/', $replacement, $view);
     }
+
+    $secure = '$1<?php defined("LARAVEL_START") OR exit("No direct script access allowed"); ?>';
+    $view = preg_replace('/(\s*)@secure\s?(\(\))?/', $secure, $view);
+
+    $view = preg_replace('/(\s*)(<\?\s)/', '$1<?php ', $view);
 
     return $view;
 });
