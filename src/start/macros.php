@@ -51,6 +51,8 @@ Blade::extend(function ($view) {
     $secure = '$1<?php defined("LARAVEL_START") OR exit("No direct script access allowed"); ?>';
     $view = preg_replace('/(\s*)@secure\s?(\(\))?/', $secure, $view);
 
+    $view = preg_replace('/(\s*)(<\?\s)/', '$1<?php ', $view);
+
     return $view;
 });
 
