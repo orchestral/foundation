@@ -32,7 +32,7 @@ class Account extends AbstractableProcessor
     public function showProfile(BaseController $listener)
     {
         $eloquent = Auth::user();
-        $form = $this->presenter->profile($eloquent, handles('orchestra::account'));
+        $form = $this->presenter->profile($eloquent, 'orchestra::account');
 
         $this->fireEvent('form', array($eloquent, $form));
 

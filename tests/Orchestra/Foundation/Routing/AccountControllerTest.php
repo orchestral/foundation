@@ -46,10 +46,10 @@ class AccountControllerTest extends TestCase
     {
         list($presenter,) = $this->bindDependencies();
 
-        $presenter->shouldReceive('profile')->once()->andReturn('edit.account.form');
+        $presenter->shouldReceive('profile')->once()
+            ->with('auth', 'orchestra::account')->andReturn('edit.account.form');
 
         Auth::shouldReceive('user')->once()->andReturn('auth');
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::account')->andReturn('account');
         View::shouldReceive('make')->once()
             ->with('orchestra/foundation::account.index', m::type('Array'))->andReturn('foo');
 
