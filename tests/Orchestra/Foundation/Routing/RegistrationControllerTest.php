@@ -48,13 +48,12 @@ class RegistrationControllerTest extends TestCase
 
         list($presenter,) = $this->bindDependencies();
 
-        $form->shouldReceive('extend')->once()->with(m::type('Closure'))->andReturnUsing(
-                function ($c) use ($form)
-                {
-                    $c($form);
-                });
+        $form->shouldReceive('extend')->once()->with(m::type('Closure'))
+            ->andReturnUsing(function ($c) use ($form) {
+                $c($form);
+            });
         $presenter->shouldReceive('profile')->once()
-                ->with($user, 'orchestra::register')->andReturn($form);
+            ->with($user, 'orchestra::register')->andReturn($form);
 
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         View::shouldReceive('make')->once()
@@ -101,19 +100,16 @@ class RegistrationControllerTest extends TestCase
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Orchestra::shouldReceive('memory')->once()->andReturn($memory);
         Orchestra::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
-        DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(
-                function ($c)
-                {
-                    $c();
-                });
+        DB::shouldReceive('transaction')->once()->with(m::type('Closure'))
+            ->andReturnUsing(function ($c) {
+                $c();
+            });
         Mail::shouldReceive('push')->once()
             ->with('orchestra/foundation::email.credential.register', m::type('Array'), m::type('Closure'))
-            ->andReturnUsing(function ($v, $d, $c) use ($mailer)
-                {
-                    $c($mailer);
-                    return array('email@orchestraplatform.com');
-                });
+            ->andReturnUsing(function ($v, $d, $c) use ($mailer) {
+                $c($mailer);
+                return array('email@orchestraplatform.com');
+            });
         Messages::shouldReceive('add')->twice()->with('success', m::any())->andReturn(null);
 
         $this->call('POST', 'admin/register', $input);
@@ -158,19 +154,16 @@ class RegistrationControllerTest extends TestCase
         Orchestra::shouldReceive('memory')->once()->andReturn($memory);
         Orchestra::shouldReceive('handles')->once()
             ->with('orchestra::login')->andReturn('login');
-        DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(
-                function ($c)
-                {
-                    $c();
-                });
+        DB::shouldReceive('transaction')->once()->with(m::type('Closure'))
+            ->andReturnUsing(function ($c) {
+                $c();
+            });
         Mail::shouldReceive('push')->once()
             ->with('orchestra/foundation::email.credential.register', m::type('Array'), m::type('Closure'))
-            ->andReturnUsing(function ($v, $d, $c) use ($mailer)
-                {
-                    $c($mailer);
-                    return array();
-                });
+            ->andReturnUsing(function ($v, $d, $c) use ($mailer) {
+                $c($mailer);
+                return array();
+            });
 
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
