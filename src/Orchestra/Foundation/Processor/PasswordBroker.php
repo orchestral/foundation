@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
-use Orchestra\Foundation\Routing\BaseController;
 use Orchestra\Foundation\Validation\Auth as AuthValidator;
 use Orchestra\Support\Facades\App;
 
@@ -21,10 +20,10 @@ class PasswordBroker extends AbstractableProcessor
     /**
      * Request to reset password.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function create(BaseController $listener, array $input)
+    public function create($listener, array $input)
     {
         $validation = $this->validator->with($input);
 
@@ -49,10 +48,10 @@ class PasswordBroker extends AbstractableProcessor
     /**
      * Reset the password.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function reset(BaseController $listener, array $input)
+    public function reset($listener, array $input)
     {
         $response = Password::reset($input, function ($user, $password) {
             // Save the new password and login the user.
