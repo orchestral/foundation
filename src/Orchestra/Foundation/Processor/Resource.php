@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Orchestra\Support\Facades\Resources;
-use Orchestra\Foundation\Routing\BaseController;
 use Orchestra\Foundation\Presenter\Resource as ResourcePresenter;
 
 class Resource extends AbstractableProcessor
@@ -19,10 +18,10 @@ class Resource extends AbstractableProcessor
     /**
      * View list resources page.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function index(BaseController $listener)
+    public function index($listener)
     {
         $resources  = Resources::all();
         $collection = array();
@@ -41,11 +40,11 @@ class Resource extends AbstractableProcessor
     /**
      * View call a resource page.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  string                                          $request
+     * @param  object  $listener
+     * @param  string  $request
      * @return mixed
      */
-    public function call(BaseController $listener, $request)
+    public function call($listener, $request)
     {
         $resources  = Resources::all();
         $parameters = explode('/', trim($request, '/'));

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Fluent;
-use Orchestra\Foundation\Routing\BaseController;
 use Orchestra\Foundation\Presenter\Setting as SettingPresenter;
 use Orchestra\Foundation\Validation\Setting as SettingValidator;
 use Orchestra\Support\Facades\App;
@@ -24,10 +23,10 @@ class Setting extends AbstractableProcessor
     /**
      * View setting page.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function show(BaseController $listener)
+    public function show($listener)
     {
         // Orchestra settings are stored using Orchestra\Memory, we need to
         // fetch it and convert it to Fluent (to mimick Eloquent properties).
@@ -58,11 +57,11 @@ class Setting extends AbstractableProcessor
     /**
      * Update setting.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  array                                           $input
+     * @param  object  $listener
+     * @param  array   $input
      * @return mixed
      */
-    public function update(BaseController $listener, array $input)
+    public function update($listener, array $input)
     {
         $default = array('email_driver' => 'mail');
         $input = array_merge($default, $input);
@@ -106,10 +105,10 @@ class Setting extends AbstractableProcessor
     /**
      * Migrate Orchestra Platform components.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function migrate(BaseController $listener)
+    public function migrate($listener)
     {
         App::make('orchestra.publisher.asset')->foundation();
         App::make('orchestra.publisher.migrate')->foundation();

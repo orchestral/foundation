@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Illuminate\Support\Facades\Session;
-use Orchestra\Foundation\Routing\BaseController;
 use Orchestra\Support\Facades\Publisher as P;
 use Orchestra\Support\FTP\ServerException;
 
@@ -10,10 +9,10 @@ class Publisher extends AbstractableProcessor
     /**
      * Run publishing if possible.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function index(BaseController $listener)
+    public function index($listener)
     {
         P::connected() and P::execute();
 
@@ -23,11 +22,11 @@ class Publisher extends AbstractableProcessor
     /**
      * Publish process.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  array                                           $input
+     * @param  object  $listener
+     * @param  array   $input
      * @return mixed
      */
-    public function publish(BaseController $listener, array $input)
+    public function publish($listener, array $input)
     {
         $queues = P::queued();
 

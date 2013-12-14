@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
-use Orchestra\Foundation\Routing\BaseController;
 use Orchestra\Foundation\Presenter\Account as AccountPresenter;
 use Orchestra\Foundation\Validation\Account as AccountValidator;
 
@@ -26,10 +25,10 @@ class Account extends AbstractableProcessor
     /**
      * Get account/profile information.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function showProfile(BaseController $listener)
+    public function showProfile($listener)
     {
         $eloquent = Auth::user();
         $form = $this->presenter->profile($eloquent, 'orchestra::account');
@@ -42,11 +41,11 @@ class Account extends AbstractableProcessor
     /**
      * Update profile information.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  array                                           $input
+     * @param  object  $listener
+     * @param  array   $input
      * @return mixed
      */
-    public function updateProfile(BaseController $listener, array $input)
+    public function updateProfile($listener, array $input)
     {
         $user = Auth::user();
 
@@ -84,10 +83,10 @@ class Account extends AbstractableProcessor
     /**
      * Get password information.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function showPassword(BaseController $listener)
+    public function showPassword($listener)
     {
         $eloquent = Auth::user();
         $form = $this->presenter->password($eloquent);
@@ -98,11 +97,11 @@ class Account extends AbstractableProcessor
     /**
      * Update password information.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  array                                           $input
+     * @param  object  $listener
+     * @param  array   $input
      * @return mixed
      */
-    public function updatePassword(BaseController $listener, array $input)
+    public function updatePassword($listener, array $input)
     {
         $user = Auth::user();
 
@@ -136,8 +135,8 @@ class Account extends AbstractableProcessor
     /**
      * Fire Event related to eloquent process
      *
-     * @param  string   $type
-     * @param  array    $parameters
+     * @param  string  $type
+     * @param  array   $parameters
      * @return void
      */
     private function fireEvent($type, array $parameters = array())

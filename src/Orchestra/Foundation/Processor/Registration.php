@@ -4,7 +4,6 @@ use Exception;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
-use Orchestra\Foundation\Routing\BaseController;
 use Orchestra\Foundation\Presenter\Account as AccountPresenter;
 use Orchestra\Foundation\Validation\Account as AccountValidator;
 use Orchestra\Model\User;
@@ -29,10 +28,10 @@ class Registration extends AbstractableProcessor
     /**
      * View registration page.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function index(BaseController $listener)
+    public function index($listener)
     {
         $eloquent = App::make('orchestra.user');
 
@@ -51,11 +50,11 @@ class Registration extends AbstractableProcessor
     /**
      * Create a new user.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  array                                           $input
+     * @param  object  $listener
+     * @param  array   $input
      * @return mixed
      */
-    public function create(BaseController $listener, array $input)
+    public function create($listener, array $input)
     {
         $password = Str::random(5);
 
@@ -96,12 +95,12 @@ class Registration extends AbstractableProcessor
     /**
      * Send new registration e-mail to user.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  \Orchestra\Model\User                           $user
-     * @param  string                                          $password
+     * @param  object                  $listener
+     * @param  \Orchestra\Model\User   $user
+     * @param  string                  $password
      * @return mixed
      */
-    protected function sendEmail(BaseController $listener, User $user, $password)
+    protected function sendEmail($listener, User $user, $password)
     {
         // Converting the user to an object allow the data to be a generic
         // object. This allow the data to be transferred to JSON if the
@@ -132,8 +131,8 @@ class Registration extends AbstractableProcessor
     /**
      * Fire Event related to eloquent process
      *
-     * @param  string   $type
-     * @param  array    $parameters
+     * @param  string  $type
+     * @param  array   $parameters
      * @return void
      */
     protected function fireEvent($type, array $parameters = array())

@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Illuminate\Support\Facades\Auth;
-use Orchestra\Foundation\Routing\BaseController;
 use Orchestra\Foundation\Validation\Auth as AuthValidator;
 use Orchestra\Model\User;
 
@@ -20,11 +19,11 @@ class Credential extends AbstractableProcessor
     /**
      * Login a user.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  array                                           $input
+     * @param  object  $listener
+     * @param  array   $input
      * @return mixed
      */
-    public function login(BaseController $listener, array $input)
+    public function login($listener, array $input)
     {
         $validation = $this->validator->on('login')->with($input);
 
@@ -44,10 +43,10 @@ class Credential extends AbstractableProcessor
     /**
      * Logout a user.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function logout(BaseController $listener)
+    public function logout($listener)
     {
         Auth::logout();
 

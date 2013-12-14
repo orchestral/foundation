@@ -4,7 +4,6 @@ use Closure;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Fluent;
 use Orchestra\Extension\FilePermissionException;
-use Orchestra\Foundation\Routing\BaseController;
 use Orchestra\Foundation\Presenter\Extension as ExtensionPresenter;
 use Orchestra\Foundation\Validation\Extension as ExtensionValidator;
 use Orchestra\Support\Facades\App;
@@ -28,10 +27,10 @@ class Extension extends AbstractableProcessor
     /**
      * View all extension page.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function index(BaseController $listener)
+    public function index($listener)
     {
         $data['extensions'] = E::detect();
 
@@ -41,11 +40,11 @@ class Extension extends AbstractableProcessor
     /**
      * Activate an extension.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  \Illuminate\Support\Fluent                      $extension
+     * @param  object                      $listener
+     * @param  \Illuminate\Support\Fluent  $extension
      * @return mixed
      */
-    public function activate(BaseController $listener, Fluent $extension)
+    public function activate($listener, Fluent $extension)
     {
         if (E::started($extension->name)) {
             return $listener->suspend(404);
@@ -61,11 +60,11 @@ class Extension extends AbstractableProcessor
     /**
      * Deactivate an extension.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  \Illuminate\Support\Fluent                      $extension
+     * @param  object                       $listener
+     * @param  \Illuminate\Support\Fluent   $extension
      * @return mixed
      */
-    public function deactivate(BaseController $listener, Fluent $extension)
+    public function deactivate($listener, Fluent $extension)
     {
         if (! E::started($extension->name) and ! E::activated($extension->name)) {
             return $listener->suspend(404);
@@ -79,11 +78,11 @@ class Extension extends AbstractableProcessor
     /**
      * Update/migrate an extension.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  \Illuminate\Support\Fluent                      $extension
+     * @param  object                      $listener
+     * @param  \Illuminate\Support\Fluent  $extension
      * @return mixed
      */
-    public function migrate(BaseController $listener, Fluent $extension)
+    public function migrate($listener, Fluent $extension)
     {
         if (! E::started($extension->name)) {
             return $listener->suspend(404);
@@ -99,11 +98,11 @@ class Extension extends AbstractableProcessor
     /**
      * View edit extension configuration page.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  \Illuminate\Support\Fluent                      $extension
+     * @param  object                      $listener
+     * @param  \Illuminate\Support\Fluent  $extension
      * @return mixed
      */
-    public function configure(BaseController $listener, Fluent $extension)
+    public function configure($listener, Fluent $extension)
     {
         if (! E::started($extension->name)) {
             return $listener->suspend(404);
@@ -129,12 +128,12 @@ class Extension extends AbstractableProcessor
     /**
      * Update an extension configuration.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  \Illuminate\Support\Fluent                      $extension
-     * @param  array                                           $input
+     * @param  object                      $listener
+     * @param  \Illuminate\Support\Fluent  $extension
+     * @param  array                       $input
      * @return mixed
      */
-    public function update(BaseController $listener, Fluent $extension, array $input)
+    public function update($listener, Fluent $extension, array $input)
     {
         if (! E::started($extension->name)) {
             return $listener->suspend(404);
@@ -165,13 +164,13 @@ class Extension extends AbstractableProcessor
     /**
      * Execute installation or update for an extension.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  string                                          $type
-     * @param  \Illuminate\Support\Fluent                      $extension
-     * @param  Closure                                         $callback
+     * @param  object                      $listener
+     * @param  string                      $type
+     * @param  \Illuminate\Support\Fluent  $extension
+     * @param  \Closure                    $callback
      * @return mixed
      */
-    protected function execute(BaseController $listener, $type, Fluent $extension, Closure $callback)
+    protected function execute($listener, $type, Fluent $extension, Closure $callback)
     {
         try {
             // Check if folder is writable via the web instance, this would

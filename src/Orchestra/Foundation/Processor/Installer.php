@@ -2,7 +2,6 @@
 
 use ReflectionException;
 use Illuminate\Support\Facades\Config;
-use Orchestra\Foundation\Routing\BaseController;
 use Orchestra\Foundation\Installation\InstallerInterface;
 use Orchestra\Foundation\Installation\RequirementInterface;
 use Orchestra\Model\User;
@@ -39,10 +38,10 @@ class Installer
     /**
      * Start an installation and check for requirement.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function index(BaseController $listener)
+    public function index($listener)
     {
         $requirement = $this->requirement;
         $installable = $requirement->check();
@@ -66,10 +65,10 @@ class Installer
     /**
      * Run migration and prepare the database.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function prepare(BaseController $listener)
+    public function prepare($listener)
     {
         $this->installer->migrate();
 
@@ -79,10 +78,10 @@ class Installer
     /**
      * Display initial user and site configuration page.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function create(BaseController $listener)
+    public function create($listener)
     {
         return $listener->createSucceed(array(
             'siteName' => 'Orchestra Platform',
@@ -92,11 +91,11 @@ class Installer
     /**
      * Store/save administator information and site configuration
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  array                                           $input
+     * @param  object  $listener
+     * @param  array   $input
      * @return mixed
      */
-    public function store(BaseController $listener, array $input)
+    public function store($listener, array $input)
     {
         if (! $this->installer->createAdmin($input)) {
             return $listener->storeFailed();
@@ -108,10 +107,10 @@ class Installer
     /**
      * Complete the installation.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function done(BaseController $listener)
+    public function done($listener)
     {
         return $listener->doneSucceed();
     }

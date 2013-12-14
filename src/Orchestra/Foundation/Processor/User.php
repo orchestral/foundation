@@ -4,7 +4,6 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
-use Orchestra\Foundation\Routing\BaseController;
 use Orchestra\Foundation\Presenter\User as UserPresenter;
 use Orchestra\Foundation\Validation\User as UserValidator;
 use Orchestra\Model\User as Eloquent;
@@ -27,12 +26,12 @@ class User extends AbstractableProcessor
     /**
      * View list users page.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  string                                          $searchKeyword
-     * @param  array                                           $searchRoles
+     * @param  object  $listener
+     * @param  string  $searchKeyword
+     * @param  array   $searchRoles
      * @return mixed
      */
-    public function index(BaseController $listener, $searchKeyword = '', array $searchRoles = array())
+    public function index($listener, $searchKeyword = '', array $searchRoles = array())
     {
         // Get Users (with roles) and limit it to only 30 results for
         // pagination. Don't you just love it when pagination simply works.
@@ -57,10 +56,10 @@ class User extends AbstractableProcessor
     /**
      * View create user page.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
+     * @param  object  $listener
      * @return mixed
      */
-    public function create(BaseController $listener)
+    public function create($listener)
     {
         $eloquent = App::make('orchestra.user');
         $form = $this->presenter->form($eloquent, 'create');
@@ -73,11 +72,11 @@ class User extends AbstractableProcessor
     /**
      * View edit user page.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  string|integer                                  $id
+     * @param  object          $listener
+     * @param  string|integer  $id
      * @return mixed
      */
-    public function edit(BaseController $listener, $id)
+    public function edit($listener, $id)
     {
         $eloquent = App::make('orchestra.user')->findOrFail($id);
         $form = $this->presenter->form($eloquent, 'update');
@@ -90,11 +89,11 @@ class User extends AbstractableProcessor
     /**
      * Store a user.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  array                                           $input
+     * @param  object  $listener
+     * @param  array   $input
      * @return mixed
      */
-    public function store(BaseController $listener, array $input)
+    public function store($listener, array $input)
     {
         $validation = $this->validator->on('create')->with($input);
 
@@ -119,12 +118,12 @@ class User extends AbstractableProcessor
     /**
      * Update a user.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  string|integer                                  $id
-     * @param  array                                           $input
+     * @param  object          $listener
+     * @param  string|integer  $id
+     * @param  array           $input
      * @return mixed
      */
-    public function update(BaseController $listener, $id, array $input)
+    public function update($listener, $id, array $input)
     {
         // Check if provided id is the same as hidden id, just a pre-caution.
         if ((string) $id !== $input['id']) {
@@ -153,11 +152,11 @@ class User extends AbstractableProcessor
     /**
      * Destroy a user.
      *
-     * @param  \Orchestra\Foundation\Routing\BaseController    $listener
-     * @param  string|integer                                  $id
+     * @param  object          $listener
+     * @param  string|integer  $id
      * @return mixed
      */
-    public function destroy(BaseController $listener, $id)
+    public function destroy($listener, $id)
     {
         $user = App::make('orchestra.user')->findOrFail($id);
 
@@ -184,9 +183,9 @@ class User extends AbstractableProcessor
     /**
      * Save the user.
      *
-     * @param  Orchestra\Model\User $user
-     * @param  array                $input
-     * @param  string               $type
+     * @param  Orchestra\Model\User    $user
+     * @param  array                   $input
+     * @param  string                  $type
      * @return boolean
      */
     protected function saving(Eloquent $user, $input = array(), $type = 'create')
@@ -214,8 +213,8 @@ class User extends AbstractableProcessor
     /**
      * Fire Event related to eloquent process.
      *
-     * @param  string   $type
-     * @param  array    $parameters
+     * @param  string  $type
+     * @param  array   $parameters
      * @return void
      */
     protected function fireEvent($type, array $parameters = array())
