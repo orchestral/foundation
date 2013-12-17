@@ -7,9 +7,9 @@ title: Foundation Change Log
 
 ### v2.0.24@dev {#v2-0-24}
 
-* Add `@secure()` Blade helper for themes.
 * Remove invalid/irrelevant filters.
-* Update Twitter Bootstrap v3.0.3.
+* Update assets:
+  - Twitter Bootstrap v3.0.3
 
 ### v2.0.23 {#v2-0-23}
 
@@ -17,9 +17,11 @@ title: Foundation Change Log
 * Refactor call to `Orchestra\Extension\RouteGenerator` based on changes to orchestra/extension component.
 * Completely remove `Orchestra\Foundation\Services` namespace.
 * Move welcome message to `orchestra/foundation::dashboard._welcome` partial.
-* Add `orchestra/optimize`.
-* Add `orchestra/debug`.
-* Update Twitter Bootstrap v3.0.2.
+* Add components:
+  - `orchestra/optimize`
+  - `orchestra/debug`
+* Update assets:
+  - Twitter Bootstrap v3.0.2
 
 ### v2.0.22 {#v2-0-22}
 
