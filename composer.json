@@ -30,11 +30,13 @@
 		"orchestra/html": "2.1.*",
 		"orchestra/memory": "2.1.*",
 		"orchestra/model": "2.1.*",
+		"orchestra/notifier": "2.1.*",
 		"orchestra/optimize": "2.1.*",
 		"orchestra/resources": "2.1.*",
 		"orchestra/support": "2.1.*",
 		"orchestra/translation": "2.1.*",
 		"orchestra/view": "2.1.*",
+		"orchestra/warden": "2.1.*",
 		"orchestra/widget": "2.1.*"
 	},
 	"require-dev": {
