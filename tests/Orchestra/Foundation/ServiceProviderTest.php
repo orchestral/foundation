@@ -17,17 +17,6 @@ class ServiceProviderTest extends TestCase
     }
 
     /**
-     * Test instance of `orchestra.mail`.
-     *
-     * @test
-     */
-    public function testInstanceOfOrchestraMail()
-    {
-        $stub = App::make('orchestra.mail');
-        $this->assertInstanceOf('\Orchestra\Foundation\Mail', $stub);
-    }
-
-    /**
      * Test instance of `orchestra.publisher`.
      *
      * @test
@@ -127,7 +116,7 @@ class ServiceProviderTest extends TestCase
             'orchestra.app', 'orchestra.installed',
         );
         $siteProvides = array(
-            'orchestra.mail', 'orchestra.publisher',
+            'orchestra.publisher',
             'orchestra.publisher.ftp', 'orchestra.site',
             'orchestra.role', 'orchestra.user',
         );

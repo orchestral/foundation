@@ -21,23 +21,10 @@ class SiteServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerMailer();
         $this->registerPublisher();
         $this->registerSite();
         $this->registerRoleEloquent();
         $this->registerUserEloquent();
-    }
-
-    /**
-     * Register the service provider for mail.
-     *
-     * @return void
-     */
-    protected function registerMailer()
-    {
-        $this->app->bindShared('orchestra.mail', function ($app) {
-            return new Mail($app);
-        });
     }
 
     /**
@@ -100,7 +87,7 @@ class SiteServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'orchestra.mail', 'orchestra.publisher', 'orchestra.publisher.ftp',
+            'orchestra.publisher', 'orchestra.publisher.ftp',
             'orchestra.site', 'orchestra.role', 'orchestra.user',
         );
     }

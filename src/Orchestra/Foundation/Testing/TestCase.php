@@ -107,6 +107,7 @@ abstract class TestCase extends TestbenchTestCase
             'Orchestra\Html\HtmlServiceProvider',
             'Orchestra\Memory\MemoryServiceProvider',
             'Orchestra\Support\MessagesServiceProvider',
+            'Orchestra\Notifier\NotifierServiceProvider',
             'Orchestra\Optimize\OptimizeServiceProvider',
             'Orchestra\Extension\PublisherServiceProvider',
             'Orchestra\Foundation\Reminders\ReminderServiceProvider',
