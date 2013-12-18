@@ -7,7 +7,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Auth\UserProviderInterface;
 use Illuminate\Support\SerializableClosure;
 use Illuminate\Support\Contracts\ArrayableInterface;
-use Orchestra\Foundation\Mail as Mailer;
+use Orchestra\Notifier\Mailer;
 
 class PasswordBroker extends Broker
 {
@@ -23,7 +23,7 @@ class PasswordBroker extends Broker
      *
      * @param  \Illuminate\Auth\Reminders\ReminderRepositoryInterface  $reminders
      * @param  \Illuminate\Auth\UserProviderInterface  $users
-     * @param  \Orchestra\Foundation\Mail  $mailer
+     * @param  \Orchestra\Notifier\Mailer  $mailer
      * @param  string  $reminderView
      * @return void
      */

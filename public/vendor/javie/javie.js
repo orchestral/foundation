@@ -746,7 +746,7 @@
       if (segment.length === 1) {
         uri = segment[0];
       } else {
-        if (_.indexOf(request_method, segment[0]) === true) {
+        if (_.indexOf(request_method, segment[0]) !== -1) {
           type = segment[0];
         }
         uri = segment[1];

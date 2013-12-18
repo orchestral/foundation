@@ -8,12 +8,10 @@ title: Foundation Change Log
 ### v2.1.0@dev {#v2-1-0}
 
 * Split `Orchestra\Foundation\Services\AdminMenuHandler@handle` to allow easier customization.
-* Replace deprecated call to `Orchestra\Extension::isActive()` and instead use `Orchestra\Extension::activated()`.
 * Implement `"orchestra.validate: extension.{name}"` and `Orchestra\Services\Validation\Extension`.
 * Add `@placeholder("orchestra.resources: {name}")`.
 * Add data-id attributes to edit and delete link on users page.
 * Allow guest user to access resources if ACL permit.
-* All classes are mapped using PSR-0.
 * Allow `Orchestra\Foundation\Services\UserMetaRepository` to look for data from eloquent before resolving to default.
 * Rename `Orchestra\Foundation\Site::localtime()` to `Orchestra\Foundation\Site::toLocalTime()`.
 * Add `Orchestra\Foundation\Site::fromLocalTime()` to convert time from local to what set in `"app.timezone"` config.
@@ -30,20 +28,23 @@ Replace call to `handles('orchestra/foundation::*')` to `handles('orchestra::*')
 * Allow Orchestra Platform route to make use of latest `Orchestra\Extension\RouteGenerator` feature allowing subdomain handling.
 * Predefined package path to avoid additional overhead to guest package path.
 * Only display resources in navigation menus if not hidden.
-* Add `orchestra/debug` and `orchestra/optimize`.
 * Consolidate all commands service provider in `Orchestra\Foundation\ConsoleSupportServiceProvider`.
 * Refactor `Orchestra\Foundation\Reminders\PasswordBroker` and `Orchestra\Foundation\Routing\ForgotController` based on Laravel 4.1 changes.
 * Refactor routing as passive controllers and move all CRUD action to `Orchestra\Foundation\Processor` namespace.
+* Add components:
+  - `orchestra/debug` for profiling your Orchestra Platform application.
+  - `orchestra/optimize` to run autoloading optimization.
 * Update assets:
-  - Twitter Bootstrap v3.0.3.
+  - Twitter Bootstrap v3.0.3
+  - Javie JavaScript Library v1.1.1
 
 ## Version 2.0 {#v2-0}
 
 ### v2.0.24@dev {#v2-0-24}
 
-* Add `@secure()` Blade helper for themes.
 * Remove invalid/irrelevant filters.
-* Update Twitter Bootstrap v3.0.3.
+* Update assets:
+  - Twitter Bootstrap v3.0.3
 
 ### v2.0.23 {#v2-0-23}
 
@@ -51,9 +52,11 @@ Replace call to `handles('orchestra/foundation::*')` to `handles('orchestra::*')
 * Refactor call to `Orchestra\Extension\RouteGenerator` based on changes to orchestra/extension component.
 * Completely remove `Orchestra\Foundation\Services` namespace.
 * Move welcome message to `orchestra/foundation::dashboard._welcome` partial.
-* Add `orchestra/optimize`.
-* Add `orchestra/debug`.
-* Update Twitter Bootstrap v3.0.2.
+* Add components:
+  - `orchestra/optimize`
+  - `orchestra/debug`
+* Update assets:
+  - Twitter Bootstrap v3.0.2
 
 ### v2.0.22 {#v2-0-22}
 
