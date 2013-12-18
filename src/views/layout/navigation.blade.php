@@ -16,8 +16,8 @@ use Orchestra\Support\Facades\App; ?>
 			</a>
 		</div>
 		<div class="collapse navbar-collapse main-responsive-collapse">
-			@include('orchestra/foundation::components.menu', array('menu' => App::menu('orchestra')))
-			@include('orchestra/foundation::components.usernav')
+			@include('orchestra/foundation::layout.widgets.menu', array('menu' => App::menu('orchestra')))
+			@include('orchestra/foundation::layout.widgets.usernav')
 		</div>
 	</div>
 </header>
