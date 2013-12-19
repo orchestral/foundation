@@ -55,7 +55,7 @@ class DashboardController extends AdminController
      */
     public function missing()
     {
-        return $this->missingMethod('missing', array());
+        return $this->missingMethod(func_get_args());
     }
 
     /**

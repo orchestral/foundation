@@ -45,7 +45,7 @@ class BaseControllerTest extends TestCase
         $this->assertFalse($_SERVER['StubBaseController@setupFilters']);
 
         $stub = new StubBaseController;
-        $response = $stub->missingMethod('missing', array());
+        $response = $stub->missingMethod(array());
 
         $this->assertTrue($_SERVER['StubBaseController@setupFilters']);
 
