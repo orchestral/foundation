@@ -1,8 +1,10 @@
 <?php namespace Orchestra\Foundation;
 
-use Orchestra\Memory\Drivers\Driver;
+use Illuminate\Container\Container;
+use Orchestra\Memory\Abstractable\Handler;
+use Orchestra\Memory\MemoryHandlerInterface;
 
-class UserMetaRepository extends Driver
+class UserMetaRepository extends Handler implements MemoryHandlerInterface
 {
     /**
      * Storage name.
@@ -12,65 +14,42 @@ class UserMetaRepository extends Driver
     protected $storage = 'user';
 
     /**
-     * Model name.
+     * Setup a new memory handler.
      *
-     * @var \Orchestra\Model\UserMeta
+     * @param  string                           $name
+     * @param  array                            $config
+     * @param  \Illuminate\Container\Container  $repository
      */
-    protected $model = null;
+    public function __construct($name, array $config, Container $repository)
+    {
+        $this->repository = $repository;
+
+        parent::__construct($name, $config);
+    }
 
     /**
      * Initiate the instance.
      *
-     * @return void
+     * @return array
      */
     public function initiate()
     {
-        $this->model = $this->app->make('Orchestra\Model\UserMeta');
-    }
-
-    /**
-     * Get value of a key
-     *
-     * @param  string   $key        A string of key to search.
-     * @param  mixed    $default    Default value if key doesn't exist.
-     * @return mixed
-     */
-    public function get($key = null, $default = null)
-    {
-        $key   = str_replace('.', '/user-', $key);
-        $value = array_get($this->data, $key);
-
-        // We need to consider if the value pending to be deleted,
-        // in this case return the default.
-        if ($value === ':to-be-deleted:') {
-            return $default;
-        }
-
-        // If the result is available from data, simply return it so we
-        // don't have to fetch the same result again from the database.
-        if (! is_null($value)) {
-            return $value;
-        }
-
-        return $this->retrieveFromEloquent($key, $default);
+        return array();
     }
 
     /**
      * Get value from database.
      *
      * @param  string   $key
-     * @param  mixed    $default
      * @return mixed
      */
-    protected function retrieveFromEloquent($key, $default = null)
+    public function retrieve($key)
     {
         list($name, $userId) = explode('/user-', $key);
 
-        $userMeta = $this->model->search($name, $userId)->first();
+        $userMeta = $this->getModel()->search($name, $userId)->first();
 
         if (! is_null($userMeta)) {
-            $this->put($key, $userMeta->value);
-
             $this->addKey($key, array(
                 'id'    => $userMeta->id,
                 'value' => $userMeta->value,
@@ -79,49 +58,22 @@ class UserMetaRepository extends Driver
             return $userMeta->value;
         }
 
-        $this->put($key, null);
-
-        return value($default);
-    }
-
-    /**
-     * Set a value from a key.
-     *
-     * @param  string   $key        A string of key to add the value.
-     * @param  mixed    $value      The value.
-     * @return mixed
-     */
-    public function put($key, $value = '')
-    {
-        $key   = str_replace('.', '/user-', $key);
-        $value = value($value);
-        array_set($this->data, $key, $value);
-
-        return $value;
-    }
-
-    /**
-     * Delete value of a key.
-     *
-     * @param  string   $key        A string of key to delete.
-     * @return boolean
-     */
-    public function forget($key = null)
-    {
-        $key = str_replace('.', '/user-', $key);
-        return array_set($this->data, $key, ':to-be-deleted:');
+        return null;
     }
 
     /**
      * Add a finish event.
      *
-     * @return void
+     * @param  array   $items
+     * @return boolean
      */
-    public function finish()
+    public function finish(array $items = array())
     {
-        foreach ($this->data as $key => $value) {
+        foreach ($items as $key => $value) {
             $this->save($key, $value);
         }
+
+        return true;
     }
 
     /**
@@ -133,7 +85,6 @@ class UserMetaRepository extends Driver
      */
     protected function save($key, $value)
     {
-        $model = $this->model;
         $isNew = $this->isNewKey($key);
 
         list($name, $userId) = explode('/user-', $key);
@@ -144,7 +95,7 @@ class UserMetaRepository extends Driver
             return ;
         }
 
-        $meta = $model->newInstance()->search($name, $userId)->first();
+        $meta = $this->getModel()->search($name, $userId)->first();
 
         // Deleting a configuration is determined by ':to-be-deleted:'. It
         // would be extremely weird if that is used for other purposed.
@@ -156,7 +107,7 @@ class UserMetaRepository extends Driver
         // If the content is a new configuration, let push it as a insert
         // instead of an update to Eloquent.
         if (true === $isNew and is_null($meta)) {
-            $meta = $model->newInstance();
+            $meta = $this->getModel();
 
             $meta->name    = $name;
             $meta->user_id = $userId;
@@ -164,5 +115,15 @@ class UserMetaRepository extends Driver
 
         $meta->value = $value;
         $meta->save();
+    }
+
+    /**
+     * Get model instance.
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function getModel()
+    {
+        return $this->repository->make('Orchestra\Model\UserMeta')->newInstance();
     }
 }
