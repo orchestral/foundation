@@ -23,16 +23,16 @@ class Resource extends AbstractableProcessor
      */
     public function index($listener)
     {
-        $resources  = Resources::all();
-        $collection = array();
+        $resources = Resources::all();
+        $eloquent  = array();
 
         foreach ($resources as $name => $options) {
             if (false !== value($options->visible)) {
-                $collection[$name] = $options;
+                $eloquent[$name] = $options;
             }
         }
 
-        $table = $this->presenter->table($collection);
+        $table = $this->presenter->table($eloquent);
 
         return $listener->indexSucceed(array('eloquent' => $eloquent, 'table' => $table));
     }
