@@ -129,7 +129,7 @@ class ExtensionsController extends AdminController
     {
         $name = str_replace('.', '/', $uid);
 
-        return new Fluent(compact('name', 'uid'));
+        return new Fluent(array('name' => $name, 'uid' => $uid));
     }
 
     /**

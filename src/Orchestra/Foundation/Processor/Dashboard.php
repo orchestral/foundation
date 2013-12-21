@@ -14,6 +14,6 @@ class Dashboard extends AbstractableProcessor
     {
         $panes = Widget::make('pane.orchestra');
 
-        return $listener->dashboardSucceed(compact('panes'));
+        return $listener->dashboardSucceed(array('panes' => $panes));
     }
 }

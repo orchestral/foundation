@@ -35,7 +35,7 @@ class Account extends AbstractableProcessor
 
         $this->fireEvent('form', array($eloquent, $form));
 
-        return $listener->showProfileSucceed(compact('eloquent', 'form'));
+        return $listener->showProfileSucceed(array('eloquent' => $eloquent, 'form' => $form));
     }
 
     /**
@@ -91,7 +91,7 @@ class Account extends AbstractableProcessor
         $eloquent = Auth::user();
         $form = $this->presenter->password($eloquent);
 
-        return $listener->showPasswordSucceed(compact('eloquent', 'form'));
+        return $listener->showPasswordSucceed(array('eloquent' => $eloquent, 'form' => $form));
     }
 
     /**

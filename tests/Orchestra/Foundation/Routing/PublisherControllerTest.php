@@ -80,7 +80,7 @@ class PublisherControllerTest extends TestCase
             'password' => 'foobar',
         );
 
-        Publisher::shouldReceive('connect')->once()->andThrow('\Orchestra\Support\FTP\ServerException');
+        Publisher::shouldReceive('connect')->once()->andThrow('\Orchestra\Support\Ftp\ServerException');
         Publisher::shouldReceive('queued')->once()->andReturn(array('laravel/framework'));
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(true);
 

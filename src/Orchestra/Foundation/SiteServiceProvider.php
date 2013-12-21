@@ -34,7 +34,7 @@ class SiteServiceProvider extends ServiceProvider
      */
     protected function registerPublisher()
     {
-        $this->app->bindShared('orchestra.publisher.ftp', function ($app) {
+        $this->app->bindShared('orchestra.publisher.ftp', function () {
             return new FtpClient;
         });
 
