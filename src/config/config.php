@@ -6,6 +6,12 @@ return array(
     |----------------------------------------------------------------------
     | Set handles for Orchestra Platform
     |----------------------------------------------------------------------
+    |
+    | By default we would assign "admin" as the default URI, which mean you
+    | can access it from http://localhost/admin. However you can also set
+    | the default to "//admin.acme.com/" and Orchestra Platform would now
+    | handle to the subdomain instead.
+    |
     */
 
     'handles' => 'admin',

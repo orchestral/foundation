@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Session;
 use Orchestra\Support\Facades\Publisher as P;
-use Orchestra\Support\FTP\ServerException;
+use Orchestra\Support\Ftp\ServerException;
 
 class Publisher extends AbstractableProcessor
 {
