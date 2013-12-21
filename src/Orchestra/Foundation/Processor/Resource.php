@@ -34,7 +34,7 @@ class Resource extends AbstractableProcessor
 
         $table = $this->presenter->table($collection);
 
-        return $listener->indexSucceed(compact('eloquent', 'table'));
+        return $listener->indexSucceed(array('eloquent' => $eloquent, 'table' => $table));
     }
 
     /**

@@ -48,9 +48,13 @@ class User extends AbstractableProcessor
         // action for users.
         $this->presenter->actions($table);
 
-        return $listener->indexSucceed(
-            compact('eloquent', 'roles', 'searchKeyword', 'searchRoles', 'table')
+        $data = array(
+            'eloquent' => $eloquent,
+            'roles'    => $roles,
+            'table'    => $table,
         );
+
+        return $listener->indexSucceed($data);
     }
 
     /**
