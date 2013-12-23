@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Abstractable;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\NamespacedItemResolver;
 use Orchestra\Extension\RouteGenerator;
 
@@ -25,7 +26,7 @@ abstract class RouteManager
      * @param  \Illuminate\Foundation\Application   $app
      * @return void
      */
-    public function __construct($app)
+    public function __construct(Application $app)
     {
         $this->app = $app;
     }
