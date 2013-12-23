@@ -5,7 +5,7 @@
  *
  * @package Javie
  * @require underscore, console, jQuery/Zepto
- * @version 1.1.0-dev
+ * @version 1.1.2
  * @author  Mior Muhammad Zaki <https://github.com/crynobone>
  * @license MIT License
  * ========================================================================
@@ -693,8 +693,13 @@
     function Request() {}
 
     json_parse = function(data) {
+      var e;
       if (_.isString(data) === true) {
-        data = api.parseJSON(data);
+        try {
+          data = api.parseJSON(data);
+        } catch (_error) {
+          e = _error;
+        }
       }
       return data;
     };
