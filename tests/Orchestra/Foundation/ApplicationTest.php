@@ -34,9 +34,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Installed setup.
+     * Get installable mocks setup
+     *
+     * @return \Mockery
      */
-    private function getInstallableContainerMocks()
+    private function getInstallableContainerSetup()
     {
         $app = $this->app;
         $app['env'] = 'production';
@@ -72,30 +74,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Application::boot() method.
+     * Get un-installable mocks setup
      *
-     * @test
+     * @return \Mockery
      */
-    public function testBootMethod()
-    {
-        $app  = $this->getInstallableContainerMocks();
-        $stub = new Application($app);
-        $stub->boot();
-
-        $this->assertTrue($app['orchestra.installed']);
-        $this->assertEquals($app['orchestra.widget'], $stub->menu());
-        $this->assertEquals($app['orchestra.acl'], $stub->acl());
-        $this->assertEquals($app['orchestra.memory'], $stub->memory());
-        $this->assertEquals($stub, $stub->boot());
-    }
-
-    /**
-     * Test Orchestra\Foundation\Application::boot() method when database
-     * is not installed yet.
-     *
-     * @test
-     */
-    public function testBootMethodWhenDatabaseIsNotInstalled()
+    private function getUnInstallableContainerSetup()
     {
         $app = $this->app;
         $app['env'] = 'production';
@@ -122,6 +105,37 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin')
             ->shouldReceive('set')->never()->with('mail', 'memory.email')->andReturn(null);
         $widget->shouldReceive('link')->with('http://localhost/admin/install')->once();
+
+        return $app;
+    }
+
+    /**
+     * Test Orchestra\Foundation\Application::boot() method.
+     *
+     * @test
+     */
+    public function testBootMethod()
+    {
+        $app  = $this->getInstallableContainerSetup();
+        $stub = new Application($app);
+        $stub->boot();
+
+        $this->assertTrue($app['orchestra.installed']);
+        $this->assertEquals($app['orchestra.widget'], $stub->menu());
+        $this->assertEquals($app['orchestra.acl'], $stub->acl());
+        $this->assertEquals($app['orchestra.memory'], $stub->memory());
+        $this->assertEquals($stub, $stub->boot());
+    }
+
+    /**
+     * Test Orchestra\Foundation\Application::boot() method when database
+     * is not installed yet.
+     *
+     * @test
+     */
+    public function testBootMethodWhenDatabaseIsNotInstalled()
+    {
+        $app = $this->getUnInstallableContainerSetup();
 
         $stub = new Application($app);
         $stub->boot();
