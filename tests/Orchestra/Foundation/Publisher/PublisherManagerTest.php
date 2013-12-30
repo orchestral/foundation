@@ -35,21 +35,6 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get Memory mock.
-     *
-     * @private
-     * @return Mockery
-     */
-    private function getMemoryMock()
-    {
-        $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
-
-        $memory->shouldReceive('make')->once()->andReturn($memory);
-
-        return $memory;
-    }
-
-    /**
      * Test Orchestra\Foundation\Publisher\PublisherManager::getDefaultDriver()
      * method.
      *
@@ -60,8 +45,12 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
 
         $app['session'] = $session = m::mock('\Illuminate\Session\Store[get]');
-        $app['orchestra.memory'] = $memory = $this->getMemoryMock();
         $app['orchestra.publisher.ftp'] = $client = m::mock('\Orchestra\Support\Ftp');
+        $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->shouldDeferMissing();
+
+        $memory = m::mock('\Orchestra\Memory\Provider[get]');
+
+        $app['orchestra.app']->shouldReceive('memory')->once()->andReturn($memory);
 
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp');
         $session->shouldReceive('get')->once()->with('orchestra.ftp', array())->andReturn(array('foo'));
@@ -85,19 +74,19 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
 
         $app['session'] = $session = m::mock('\Illuminate\Session\Store[get]');
-        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
         $app['orchestra.messages'] = $messages = m::mock('\Orchestra\Support\Messages[add]');
         $app['path.public'] = $path = '/var/foo/public';
         $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem[isDirectory]');
         $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment[activate]');
         $app['orchestra.publisher.ftp'] = $client = m::mock('\Orchestra\Support\Ftp');
         $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator[trans]');
+        $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->shouldDeferMissing();
 
-        $memoryProvider = m::mock('\Orchestra\Memory\Provider[get,put]');
+        $memory = m::mock('\Orchestra\Memory\Provider[get,put]');
 
-        $memory->shouldReceive('make')->times(4)->andReturn($memoryProvider);
+        $app['orchestra.app']->shouldReceive('memory')->once()->andReturn($memory);
 
-        $memoryProvider->shouldReceive('get')->once()->with('orchestra.publisher.queue', array())->andReturn(array('a', 'b'))
+        $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', array())->andReturn(array('a', 'b'))
             ->shouldReceive('get')->times(2)->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp')
             ->shouldReceive('put')->once()->with('orchestra.publisher.queue', array('b'))->andReturnNull();
         $session->shouldReceive('get')->once()->with('orchestra.ftp', array())->andReturn(array('manager-foo'));
@@ -128,11 +117,16 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
     public function testQueueMethod()
     {
         $app = $this->app;
-        $app['orchestra.memory'] = $memory = m::mock('Memory');
+        $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->shouldDeferMissing();
 
-        $memory->shouldReceive('make')->twice()->andReturn($memory)
-            ->shouldReceive('get')->once()->with('orchestra.publisher.queue', array())->andReturn(array('foo', 'foobar'))
-            ->shouldReceive('put')->once()->with('orchestra.publisher.queue', m::any())->andReturnNull();
+        $memory = m::mock('\Orchestra\Memory\Provider[get,put]');
+
+        $app['orchestra.app']->shouldReceive('memory')->once()->andReturn($memory);
+
+        $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', array())
+                ->andReturn(array('foo', 'foobar'))
+            ->shouldReceive('put')->once()->with('orchestra.publisher.queue', m::any())
+                ->andReturnNull();
 
         $stub = new PublisherManager($app);
         $this->assertTrue($stub->queue(array('foo', 'bar')));
@@ -146,7 +140,11 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
     public function testQueuedMethod()
     {
         $app = $this->app;
-        $app['orchestra.memory'] = $memory = $this->getMemoryMock();
+        $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->shouldDeferMissing();
+
+        $memory = m::mock('\Orchestra\Memory\Provider[get]');
+
+        $app['orchestra.app']->shouldReceive('memory')->once()->andReturn($memory);
 
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', array())->andReturn('foo');
 
