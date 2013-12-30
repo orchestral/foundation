@@ -22,8 +22,8 @@ class SettingTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new Container;
 
-        $this->app['orchestra.app'] = m::mock('OrchestraApplication');
-        $this->app['translator'] = m::mock('Translator');
+        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Application[handles]');
+        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator[trans]');
 
         $this->app['orchestra.app']->shouldReceive('handles');
         $this->app['translator']->shouldReceive('trans');
@@ -54,13 +54,13 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_password' => 123456,
         ));
 
-        $form = m::mock('FormBuilder');
+        $grid = m::mock('\Orchestra\Html\Form\Grid')->shouldDeferMissing();
 
-        $siteFieldset = m::mock('SiteFormFieldsetBuilder');
-        $siteControl  = m::mock('SiteFormControlBuilder');
+        $siteFieldset = m::mock('\Orchestra\Html\Form\Fieldset')->shouldDeferMissing();
+        $siteControl  = m::mock('\Orchestra\Html\Form\Control')->shouldDeferMissing();
 
-        $emailFieldset = m::mock('EmailFormFieldsetBuilder');
-        $emailControl  = m::mock('EmailFormControlBuilder');
+        $emailFieldset = m::mock('\Orchestra\Html\Form\Fieldset')->shouldDeferMissing();
+        $emailControl  = m::mock('\Orchestra\Html\Form\Control')->shouldDeferMissing();
 
         $stub = new Setting;
 
@@ -69,22 +69,22 @@ class SettingTest extends \PHPUnit_Framework_TestCase
                 ->andReturnUsing(function ($t, $n, $c) use ($siteControl) {
                     $c($siteControl);
                 });
-        $siteControl->shouldReceive('label')->times(3)->andReturn(null)
-            ->shouldReceive('attributes')->twice()->andReturn(null)
-            ->shouldReceive('options')->once()->andReturn(null);
+        $siteControl->shouldReceive('label')->times(3)->andReturnNull()
+            ->shouldReceive('attributes')->twice()->andReturnNull()
+            ->shouldReceive('options')->once()->andReturnNull();
 
         $emailFieldset->shouldReceive('control')->times(9)
                 ->with(m::any(), m::any(), m::type('Closure'))
                 ->andReturnUsing(function ($t, $n, $c) use ($emailControl) {
                     $c($emailControl);
                 });
-        $emailControl->shouldReceive('label')->times(9)->andReturn(null)
-            ->shouldReceive('attributes')->once()->andReturn(null)
-            ->shouldReceive('options')->twice()->andReturn(null)
+        $emailControl->shouldReceive('label')->times(9)->andReturnNull()
+            ->shouldReceive('attributes')->once()->andReturnNull()
+            ->shouldReceive('options')->twice()->andReturnNull()
             ->shouldReceive('help')->once()->with('email.password.help');
 
-        $form->shouldReceive('setup')->once()
-                ->with($stub, 'orchestra::settings', $model)->andReturn(null)
+        $grid->shouldReceive('setup')->once()
+                ->with($stub, 'orchestra::settings', $model)->andReturnNull()
             ->shouldReceive('fieldset')->once()
                 ->with(trans('orchestra/foundation::label.settings.application'), m::type('Closure'))
                 ->andReturnUsing(function ($t, $c) use ($siteFieldset) {
@@ -101,8 +101,8 @@ class SettingTest extends \PHPUnit_Framework_TestCase
 
         $app['orchestra.form']->shouldReceive('of')->once()
                 ->with('orchestra.settings', m::type('Closure'))
-                ->andReturnUsing(function ($n, $c) use ($form) {
-                    $c($form);
+                ->andReturnUsing(function ($n, $c) use ($grid) {
+                    $c($grid);
                     return 'foo';
                 });
         $app['view']->shouldReceive('make')->once()

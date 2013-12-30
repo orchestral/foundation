@@ -6,6 +6,23 @@ use Illuminate\Support\Manager;
 class PublisherManager extends Manager
 {
     /**
+     * Memory Provider instance.
+     *
+     * @var \Orchestra\Memory\Provider
+     */
+    protected $memory;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($app)
+    {
+        parent::__construct($app);
+
+        $this->memory = $app['orchestra.app']->memory();
+    }
+
+    /**
      * Create an instance of the Ftp driver.
      *
      * @return \Orchestra\Foundation\Publisher\Ftp
@@ -22,9 +39,7 @@ class PublisherManager extends Manager
      */
     protected function getDefaultDriver()
     {
-        $memory = $this->app['orchestra.memory']->make();
-
-        return $memory->get('orchestra.publisher.driver', 'ftp');
+        return $this->memory->get('orchestra.publisher.driver', 'ftp');
     }
 
     /**
@@ -34,7 +49,6 @@ class PublisherManager extends Manager
      */
     public function execute()
     {
-        $memory   = $this->app['orchestra.memory'];
         $messages = $this->app['orchestra.messages'];
         $queues   = $this->queued();
         $fails    = array();
@@ -53,7 +67,7 @@ class PublisherManager extends Manager
             }
         }
 
-        $memory->put('orchestra.publisher.queue', $fails);
+        $this->memory->put('orchestra.publisher.queue', $fails);
 
         return true;
     }
@@ -66,9 +80,8 @@ class PublisherManager extends Manager
      */
     public function queue($queue)
     {
-        $memory = $this->app['orchestra.memory']->make();
-        $queue  = array_unique(array_merge($this->queued(), (array) $queue));
-        $memory->put('orchestra.publisher.queue', $queue);
+        $queue = array_unique(array_merge($this->queued(), (array) $queue));
+        $this->memory->put('orchestra.publisher.queue', $queue);
 
         return true;
     }
@@ -80,7 +93,6 @@ class PublisherManager extends Manager
      */
     public function queued()
     {
-        $memory = $this->app['orchestra.memory']->make();
-        return $memory->get('orchestra.publisher.queue', array());
+        return $this->memory->get('orchestra.publisher.queue', array());
     }
 }

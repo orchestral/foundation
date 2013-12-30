@@ -67,12 +67,12 @@ class CredentialControllerTest extends TestCase
             ->shouldReceive('fails')->once()->andReturn(false);
 
         $user->shouldReceive('getAttribute')->once()->with('status')->andReturn(0)
-            ->shouldReceive('setAttribute')->once()->with('status', 1)->andReturn(null)
-            ->shouldReceive('save')->once()->andReturn(null);
+            ->shouldReceive('setAttribute')->once()->with('status', 1)->andReturnNull()
+            ->shouldReceive('save')->once()->andReturnNull();
 
         Auth::shouldReceive('attempt')->once()->with(m::type('Array'), true)->andReturn(true);
         Auth::shouldReceive('user')->once()->andReturn($user);
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
 
         Orchestra::shouldReceive('handles')->once()->with('orchestra::/')->andReturn('/');
 
@@ -101,7 +101,7 @@ class CredentialControllerTest extends TestCase
 
         Auth::shouldReceive('attempt')->once()
             ->with(m::type('Array'), true)->andReturn(false);
-        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
+        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
         Orchestra::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
 
@@ -142,7 +142,7 @@ class CredentialControllerTest extends TestCase
      */
     public function testDeleteLoginAction()
     {
-        Auth::shouldReceive('logout')->once()->andReturn(null);
+        Auth::shouldReceive('logout')->once()->andReturnNull();
         Orchestra::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
 
         $this->call('GET', 'admin/logout');
@@ -156,7 +156,7 @@ class CredentialControllerTest extends TestCase
      */
     public function testDeleteLoginActionWithRedirection()
     {
-        Auth::shouldReceive('logout')->once()->andReturn(null);
+        Auth::shouldReceive('logout')->once()->andReturnNull();
         Orchestra::shouldReceive('handles')->once()->with('home')->andReturn('home');
 
         $this->call('GET', 'admin/logout', array('redirect' => 'home'));

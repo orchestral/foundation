@@ -47,12 +47,12 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_port'    => array('numeric'),
         );
 
-        $validator = m::mock('Validator\Environment');
+        $validator = m::mock('\Illuminate\Validation\Factory[make]');
         $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
         Validator::swap($validator);
 
-        $events = m::mock('Event\Dispatcher');
-        $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturn(null);
+        $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
+        $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
         Event::swap($events);
 
         $stub       = new Setting;
@@ -87,12 +87,12 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_host'     => array('required'),
         );
 
-        $validator = m::mock('Validator\Environment');
+        $validator = m::mock('\Illuminate\Validation\Factory[make]');
         $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
         Validator::swap($validator);
 
-        $events = m::mock('Event\Dispatcher');
-        $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturn(null);
+        $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
+        $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
         Event::swap($events);
 
         $stub       = new Setting;
@@ -125,12 +125,12 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_sendmail' => array('required'),
         );
 
-        $validator = m::mock('Validator\Environment');
+        $validator = m::mock('\Illuminate\Validation\Factory[make]');
         $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
         Validator::swap($validator);
 
-        $events = m::mock('Event\Dispatcher');
-        $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturn(null);
+        $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
+        $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
         Event::swap($events);
 
         $stub       = new Setting;

@@ -32,7 +32,7 @@ class ReminderServiceProvider extends \Illuminate\Auth\Reminders\ReminderService
             return new PasswordBroker(
                 $reminders,
                 $users,
-                $app['orchestra.mail'],
+                $app['orchestra.notifier']->driver(),
                 $view
             );
         });

@@ -29,7 +29,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-    	unset($this->app);
+        unset($this->app);
         unset($_SERVER['RouteManagerTest@callback']);
         m::close();
     }
@@ -57,10 +57,10 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     public function testGroupMethod()
     {
         $app  = $this->getApplicationMocks();
-        $app['config'] = $config = m::mock('Config\Manager');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
 
         $config->shouldReceive('get')->once()
-        	->with('orchestra/foundation::handles', 'admin')->andReturn('admin');
+            ->with('orchestra/foundation::handles', 'admin')->andReturn('admin');
 
         $stub = new StubRouteManager($app);
 
@@ -81,14 +81,14 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     public function testHandlesMethod()
     {
         $app = $this->getApplicationMocks();
-        $app['config'] = $config = m::mock('Config\Manager');
-        $app['orchestra.extension'] = $extension = m::mock('Extension');
-        $app['url'] = $url = m::mock('Url');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment[route]');
+        $app['url'] = $url = m::mock('\Illuminate\Routing\UrlGenerator[to]');
 
-        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator');
+        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator[to]');
 
         $config->shouldReceive('get')->once()
-        	->with('orchestra/foundation::handles', '/')->andReturn('admin');
+            ->with('orchestra/foundation::handles', '/')->andReturn('admin');
 
         $appRoute->shouldReceive('to')->once()->with('/')->andReturn('/')
             ->shouldReceive('to')->once()->with('info?foo=bar')->andReturn('info?foo=bar');
@@ -113,11 +113,11 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getApplicationMocks();
         $request = $app['request'];
-        $app['config'] = $config = m::mock('Config\Manager');
-        $app['orchestra.extension'] = $extension = m::mock('Extension');
-        $app['url'] = $url = m::mock('Url');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment[route]');
+        $app['url'] = $url = m::mock('\Illuminate\Routing\UrlGenerator[to]');
 
-        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator');
+        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator[is]');
 
         $config->shouldReceive('get')->once()
             ->with('orchestra/foundation::handles', '/')->andReturn('admin');
@@ -143,10 +143,10 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getApplicationMocks();
         $request = $app['request'];
-        $app['config'] = $config = m::mock('Config\Manager');
-        $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher');
-        $app['orchestra.extension'] = $extension = m::mock('Extension');
-        $app['url'] = $url = m::mock('Url');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
+        $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher[makeListener]');
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment[route]');
+        $app['url'] = $url = m::mock('\Illuminate\Routing\UrlGenerator[to]');
 
         $appRoute = m::mock('\Orchestra\Extension\RouteGenerator');
 
@@ -154,7 +154,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('is')->once()->with('foo')->andReturn(false);
         $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
         $events->shouldReceive('makeListener')->twice()->with(m::type('Closure'))
-                ->andReturnUsing(function($c) {
+                ->andReturnUsing(function ($c) {
                     return $c;
                 });
 

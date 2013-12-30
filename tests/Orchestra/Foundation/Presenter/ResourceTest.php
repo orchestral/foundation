@@ -22,8 +22,8 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new Container;
 
-        $this->app['orchestra.app'] = m::mock('OrchestraApplication');
-        $this->app['translator'] = m::mock('Translator');
+        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Application[handles]');
+        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator[trans]');
 
         $this->app['orchestra.app']->shouldReceive('handles');
         $this->app['translator']->shouldReceive('trans');
@@ -51,8 +51,8 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     {
         $app    = $this->app;
         $model  = new Fluent;
-        $table  = m::mock('TableBuilder');
-        $column = m::mock('TableColumnBuilder');
+        $grid   = m::mock('\Orchestra\Html\Table\Grid')->shouldDeferMissing();
+        $column = m::mock('\Orchestra\Html\Table\Column')->shouldDeferMissing();
         $value  = (object) array(
             'id'   => 'foo',
             'name' => 'Foobar'
@@ -60,25 +60,25 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
 
         $stub = new Resource;
 
-        $column->shouldReceive('escape')->once()->with(false)->andReturn(null)
+        $column->shouldReceive('escape')->once()->with(false)->andReturnNull()
             ->shouldReceive('value')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($value) {
                     $c($value);
                 });
-        $table->shouldReceive('with')->once()->with($model, false)->andReturn(null)
-            ->shouldReceive('layout')->once()->with('orchestra/foundation::components.table')->andReturn(null)
+        $grid->shouldReceive('with')->once()->with($model, false)->andReturnNull()
+            ->shouldReceive('layout')->once()->with('orchestra/foundation::components.table')->andReturnNull()
             ->shouldReceive('column')->once()->with('name', m::type('Closure'))
                 ->andReturnUsing(function ($n, $c) use ($column) {
                     $c($column);
                 });
 
         $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Environment')->shouldDeferMissing();
-        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->shouldDeferMissing();
+        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,raw,link]');
 
         $app['orchestra.table']->shouldReceive('of')->once()
                 ->with('orchestra.resources: list', m::type('Closure'))
-                ->andReturnUsing(function ($t, $c) use ($table) {
-                    $c($table);
+                ->andReturnUsing(function ($t, $c) use ($grid) {
+                    $c($grid);
                     return 'foo';
                 });
         $app['html']->shouldReceive('create')->once()->with('strong', 'Foobar')->andReturn('foo')

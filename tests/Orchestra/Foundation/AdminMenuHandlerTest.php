@@ -35,31 +35,37 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandleMethod()
     {
-        Orchestra::swap($app = m::mock('Orchestra'));
-        Resources::swap($resources = m::mock('Resources'));
+        $app = m::mock('\Orchestra\Foundation\Application');
+        $acl = m::mock('\Orchestra\Auth\Acl\Container');
+        $menu = m::mock('\Orchestra\Widget\MenuWidgetHandler');
+        $resources = m::mock('\Orchestra\Resources\Container');
+        $translator = m::mock('\Illuminate\Translation\Translator');
 
-        $app->shouldReceive('acl')->once()->andReturn($acl = m::mock('Acl'))
-            ->shouldReceive('menu')->once()->andReturn($menu = m::mock('Menu'))
-            ->shouldReceive('make')->once()->with('translator')->andReturn($translator = m::mock('Translator'));
+        Orchestra::swap($app);
+        Resources::swap($resources);
+
+        $app->shouldReceive('acl')->once()->andReturn($acl)
+            ->shouldReceive('menu')->once()->andReturn($menu)
+            ->shouldReceive('make')->once()->with('translator')->andReturn($translator);
 
         $acl->shouldReceive('can')->once()->with('manage-users')->andReturn(true);
         $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.users.list')->andReturn('user');
         $app->shouldReceive('handles')->once()->with('orchestra::users')->andReturn('user');
         $menu->shouldReceive('add')->once()->with('users')->andReturn($menu)
             ->shouldReceive('title')->once()->with('user')->andReturn($menu)
-            ->shouldReceive('link')->once()->with('user')->andReturn(null);
+            ->shouldReceive('link')->once()->with('user')->andReturnNull();
 
         $acl->shouldReceive('can')->once()->with('manage-orchestra')->andReturn(true);
         $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.extensions.list')->andReturn('extension');
         $app->shouldReceive('handles')->once()->with('orchestra::extensions')->andReturn('extension');
         $menu->shouldReceive('add')->once()->with('extensions', '>:home')->andReturn($menu)
             ->shouldReceive('title')->once()->with('extension')->andReturn($menu)
-            ->shouldReceive('link')->once()->with('extension')->andReturn(null);
+            ->shouldReceive('link')->once()->with('extension')->andReturnNull();
         $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.settings.list')->andReturn('setting');
         $app->shouldReceive('handles')->once()->with('orchestra::settings')->andReturn('setting');
         $menu->shouldReceive('add')->once()->with('settings')->andReturn($menu)
             ->shouldReceive('title')->once()->with('setting')->andReturn($menu)
-            ->shouldReceive('link')->once()->with('setting')->andReturn(null);
+            ->shouldReceive('link')->once()->with('setting')->andReturnNull();
 
         $foo = new Fluent(array(
             'name'    => 'Foo',
@@ -77,12 +83,12 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $app->shouldReceive('handles')->once()->with('orchestra::resources')->andReturn('resource');
         $menu->shouldReceive('add')->once()->with('resources', '>:extensions')->andReturn($menu)
             ->shouldReceive('title')->once()->with('resource')->andReturn($menu)
-            ->shouldReceive('link')->once()->with('resource')->andReturn(null);
+            ->shouldReceive('link')->once()->with('resource')->andReturnNull();
 
         $app->shouldReceive('handles')->once()->with('orchestra::resources/foo')->andReturn('foo-resource');
         $menu->shouldReceive('add')->once()->with('foo', '^:resources')->andReturn($menu)
             ->shouldReceive('title')->once()->with('Foo')->andReturn($menu)
-            ->shouldReceive('link')->once()->with('foo-resource')->andReturn(null);
+            ->shouldReceive('link')->once()->with('foo-resource')->andReturnNull();
 
         $stub = new AdminMenuHandler;
         $stub->handle();

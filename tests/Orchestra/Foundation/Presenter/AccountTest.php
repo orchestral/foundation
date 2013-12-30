@@ -22,8 +22,8 @@ class AccountTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new Container;
 
-        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Application')->shouldDeferMissing();
-        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->shouldDeferMissing();
+        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Application[handles]');
+        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator[trans]');
 
         $this->app['orchestra.app']->shouldReceive('handles');
         $this->app['translator']->shouldReceive('trans');
@@ -51,20 +51,20 @@ class AccountTest extends \PHPUnit_Framework_TestCase
     {
         $app      = $this->app;
         $model    = new Fluent;
-        $form     = m::mock('FormBuilder');
-        $fieldset = m::mock('FormFieldsetBuilder');
-        $control  = m::mock('FormControlBuilder');
+        $grid     = m::mock('\Orchestra\Html\Form\Grid')->shouldDeferMissing();
+        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->shouldDeferMissing();
+        $control  = m::mock('\Orchestra\Html\Form\Control')->shouldDeferMissing();
 
         $stub = new Account;
 
-        $control->shouldReceive('label')->twice()->andReturn(null);
+        $control->shouldReceive('label')->twice()->andReturnNull();
         $fieldset->shouldReceive('control')->twice()
                 ->with('input:text', m::any(), m::type('Closure'))
                 ->andReturnUsing(function ($t, $n, $c) use ($control) {
                     $c($control);
                 });
-        $form->shouldReceive('setup')->once()->with($stub, 'foo', $model)->andReturn(null)
-            ->shouldReceive('hidden')->once()->with('id')->andReturn(null)
+        $grid->shouldReceive('setup')->once()->with($stub, 'foo', $model)->andReturnNull()
+            ->shouldReceive('hidden')->once()->with('id')->andReturnNull()
             ->shouldReceive('fieldset')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);
@@ -74,8 +74,8 @@ class AccountTest extends \PHPUnit_Framework_TestCase
 
         $app['orchestra.form']->shouldReceive('of')->once()
                 ->with('orchestra.account', m::type('Closure'))
-                ->andReturnUsing(function ($f, $c) use ($form) {
-                    $c($form);
+                ->andReturnUsing(function ($f, $c) use ($grid) {
+                    $c($grid);
                     return 'foo';
                 });
 
@@ -92,21 +92,21 @@ class AccountTest extends \PHPUnit_Framework_TestCase
     {
         $app      = $this->app;
         $model    = new Fluent;
-        $form     = m::mock('FormBuilder');
-        $fieldset = m::mock('FieldsetBuilder');
-        $control  = m::mock('ControlBuilder');
+        $grid     = m::mock('\Orchestra\Html\Form\Grid')->shouldDeferMissing();
+        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->shouldDeferMissing();
+        $control  = m::mock('\Orchestra\Html\Form\Control')->shouldDeferMissing();
 
         $stub = new Account;
 
-        $control->shouldReceive('label')->times(3)->andReturn(null);
+        $control->shouldReceive('label')->times(3)->andReturnNull();
         $fieldset->shouldReceive('control')->times(3)
                 ->with('input:password', m::any(), m::type('Closure'))
                 ->andReturnUsing(function ($t, $n, $c) use ($control) {
                     $c($control);
                 });
-        $form->shouldReceive('setup')->once()
-                ->with($stub, 'orchestra::account/password', $model)->andReturn(null)
-            ->shouldReceive('hidden')->once()->with('id')->andReturn(null)
+        $grid->shouldReceive('setup')->once()
+                ->with($stub, 'orchestra::account/password', $model)->andReturnNull()
+            ->shouldReceive('hidden')->once()->with('id')->andReturnNull()
             ->shouldReceive('fieldset')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);
@@ -116,8 +116,8 @@ class AccountTest extends \PHPUnit_Framework_TestCase
 
         $app['orchestra.form']->shouldReceive('of')->once()
                 ->with('orchestra.account: password', m::type('Closure'))
-                ->andReturnUsing(function ($f, $c) use ($form) {
-                    $c($form);
+                ->andReturnUsing(function ($f, $c) use ($grid) {
+                    $c($grid);
                     return 'foo';
                 });
 

@@ -41,7 +41,7 @@ class SettingsControllerTest extends TestCase
      */
     public function testGetIndexAction()
     {
-        $memory = m::mock('Memory');
+        $memory = m::mock('\Orchestra\Memory\Provider[get]');
         list($presenter,) = $this->bindDependencies();
 
         $memory->shouldReceive('get')->times(12)->andReturn('');
@@ -79,10 +79,10 @@ class SettingsControllerTest extends TestCase
             'email_queue'      => 'no',
         );
 
-        $memory = m::mock('Memory');
+        $memory = m::mock('\Orchestra\Memory\Provider[get,put]');
         list(, $validator) = $this->bindDependencies();
 
-        $memory->shouldReceive('put')->times(12)->andReturn(null)
+        $memory->shouldReceive('put')->times(12)->andReturnNull()
             ->shouldReceive('get')->once()->with('email.password')->andReturn('foo');
         $validator->shouldReceive('on')->once()->with('smtp')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
@@ -90,7 +90,7 @@ class SettingsControllerTest extends TestCase
 
         Orchestra::shouldReceive('memory')->once()->andReturn($memory);
         Orchestra::shouldReceive('handles')->once()->with('orchestra::settings')->andReturn('settings');
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/settings', $input);
         $this->assertRedirectedTo('settings');
@@ -140,11 +140,11 @@ class SettingsControllerTest extends TestCase
      */
     public function testGetMigrateAction()
     {
-        $asset   = m::mock('AssetPublisher');
-        $migrate = m::mock('MigratePublisher');
+        $asset   = m::mock('\Orchestra\Extension\Publisher\AssetManager[foundation]');
+        $migrate = m::mock('\Orchestra\Extension\Publisher\MigrateManager[foundation]');
 
-        $asset->shouldReceive('foundation')->once()->andReturn(null);
-        $migrate->shouldReceive('foundation')->once()->andReturn(null);
+        $asset->shouldReceive('foundation')->once()->andReturnNull();
+        $migrate->shouldReceive('foundation')->once()->andReturnNull();
 
         Orchestra::shouldReceive('make')->once()->with('orchestra.publisher.asset')->andReturn($asset);
         Orchestra::shouldReceive('make')->once()->with('orchestra.publisher.migrate')->andReturn($migrate);

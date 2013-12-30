@@ -5,9 +5,8 @@ use Illuminate\Auth\Reminders\PasswordBroker as Broker;
 use Illuminate\Auth\Reminders\ReminderRepositoryInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Auth\UserProviderInterface;
-use Illuminate\Support\SerializableClosure;
 use Illuminate\Support\Contracts\ArrayableInterface;
-use Orchestra\Notifier\Mailer;
+use Orchestra\Notifier\NotifierInterface;
 
 class PasswordBroker extends Broker
 {
@@ -22,15 +21,15 @@ class PasswordBroker extends Broker
      * Create a new password broker instance.
      *
      * @param  \Illuminate\Auth\Reminders\ReminderRepositoryInterface  $reminders
-     * @param  \Illuminate\Auth\UserProviderInterface  $users
-     * @param  \Orchestra\Notifier\Mailer  $mailer
-     * @param  string  $reminderView
+     * @param  \Illuminate\Auth\UserProviderInterface                  $users
+     * @param  \Orchestra\Notifier\NotifierInterface                   $mailer
+     * @param  string                                                  $reminderView
      * @return void
      */
     public function __construct(
         ReminderRepositoryInterface $reminders,
         UserProviderInterface $users,
-        Mailer $mailer,
+        NotifierInterface $mailer,
         $reminderView
     ) {
         $this->users = $users;
@@ -71,8 +70,8 @@ class PasswordBroker extends Broker
      * Send the password reminder e-mail.
      *
      * @param  \Illuminate\Auth\Reminders\RemindableInterface  $user
-     * @param  string   $token
-     * @param  Closure  $callback
+     * @param  string                                          $token
+     * @param  Closure                                         $callback
      * @return void
      */
     public function sendReminder(RemindableInterface $user, $token, Closure $callback = null)
@@ -80,20 +79,11 @@ class PasswordBroker extends Broker
         // We will use the reminder view that was given to the broker to display the
         // password reminder e-mail. We'll pass a "token" variable into the views
         // so that it may be displayed for an user to click for password reset.
-        $view = $this->reminderView;
+        $data = array(
+            'user'  => ($user instanceof ArrayableInterface ? $user->toArray() : $user),
+            'token' => $token,
+        );
 
-        // In order to pass a Closure as "use" we need to actually convert it into
-        // Serializable Closure, otherwise Laravel would throw an exception.
-        $callback = ($callback instanceof Closure ? new SerializableClosure($callback) : $callback);
-
-        $closure = function ($mail) use ($user, $callback, $token) {
-            $mail->to($user->getReminderEmail());
-
-            is_callable($callback) and call_user_func($callback, $mail, $user, $token);
-        };
-
-        $user = ($user instanceof ArrayableInterface ? $user->toArray() : $user);
-
-        return $this->mailer->push($view, compact('token', 'user'), $closure);
+        return $this->mailer->send($user, null, $this->reminderView, $data, $callback);
     }
 }
