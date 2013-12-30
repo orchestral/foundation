@@ -42,7 +42,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
             $view = 'foo'
         );
 
-        $userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface, \Orchestra\Notifier\UserProviderInterface');
+        $userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface, \Orchestra\Notifier\RecipientInterface');
 
         $callback = function () {
             //
@@ -110,7 +110,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
 
         $user->shouldReceive('retrieveByCredentials')->once()
                 ->with(array_except($credentials, array('token')))
-                ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface,Orchestra\Notifier\UserProviderInterface'));
+                ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface, \Orchestra\Notifier\RecipientInterface'));
         $reminders->shouldReceive('exists')->once()->with($userReminderable, 'someuniquetokenkey')->andReturn(true)
             ->shouldReceive('delete')->once()->with('someuniquetokenkey')->andReturn(true);
 
@@ -177,7 +177,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
 
         $user->shouldReceive('retrieveByCredentials')->once()
                 ->with(array_except($credentials, array('token')))
-                ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface,Orchestra\Notifier\UserProviderInterface'));
+                ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface, \Orchestra\Notifier\RecipientInterface'));
         $reminders->shouldReceive('exists')->once()->with($userReminderable, 'someuniquetokenkey')->andReturn(false);
 
         $this->assertEquals('reminders.token', $stub->reset($credentials, $callback));
@@ -211,7 +211,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
 
         $user->shouldReceive('retrieveByCredentials')->once()
                 ->with(array_except($credentials, array('token')))
-                ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface,Orchestra\Notifier\UserProviderInterface'));
+                ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface, \Orchestra\Notifier\RecipientInterface'));
         $reminders->shouldReceive('exists')->once()->with($userReminderable, 'someuniquetokenkey')->andReturn(false);
 
         $this->assertEquals('reminders.token', $stub->reset($credentials, $callback));
