@@ -39,6 +39,7 @@ class FoundationServiceProvider extends ServiceProvider
         $loader->alias('Orchestra\Mail', 'Orchestra\Support\Facades\Mail');
         $loader->alias('Orchestra\Memory', 'Orchestra\Support\Facades\Memory');
         $loader->alias('Orchestra\Messages', 'Orchestra\Support\Facades\Messages');
+        $loader->alias('Orchestra\Notifier', 'Orchestra\Support\Facades\Notifier');
         $loader->alias('Orchestra\Profiler', 'Orchestra\Support\Facades\Profiler');
         $loader->alias('Orchestra\Publisher', 'Orchestra\Support\Facades\Publisher');
         $loader->alias('Orchestra\Resources', 'Orchestra\Support\Facades\Resources');

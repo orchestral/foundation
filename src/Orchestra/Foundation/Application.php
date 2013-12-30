@@ -36,7 +36,7 @@ class Application extends Abstractable\RouteManager
         $app    = $this->app;
         $memory = null;
 
-        $this->setup($app);
+        $this->setup();
 
         try {
             // Initiate Memory class from App, this to allow advanced user
