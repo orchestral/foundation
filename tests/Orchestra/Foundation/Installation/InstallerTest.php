@@ -21,7 +21,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new Container;
         $this->app['path'] = '/var/app';
-        $this->app['translator'] = $translator = m::mock('Translator');
+        $this->app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator[trans]');
 
         $translator->shouldReceive('trans')->andReturn('foo');
 
@@ -46,9 +46,10 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
      */
     private function getFilesMock()
     {
-        $files = m::mock('Filesystem');
+        $files = m::mock('\Illuminate\Filesystem\Filesystem[exists,requireOnce]');
+
         $files->shouldReceive('exists')->once()->with('/var/app/orchestra/installer.php')->andReturn(true)
-            ->shouldReceive('requireOnce')->once()->with('/var/app/orchestra/installer.php')->andReturn(null);
+            ->shouldReceive('requireOnce')->once()->with('/var/app/orchestra/installer.php')->andReturnNull();
 
         return $files;
     }
@@ -94,11 +95,11 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $app['files'] = $this->getFilesMock();
-        $app['orchestra.publisher.migrate'] = $migrate = m::mock('Migrate');
-        $app['events'] = $events = m::mock('Event\Dispatcher');
+        $app['orchestra.publisher.migrate'] = $migrate = m::mock('\Orchestra\Extension\Publisher\MigrateManager[foundation]');
+        $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
 
-        $migrate->shouldReceive('foundation')->once()->andReturn(null);
-        $events->shouldReceive('fire')->once()->with('orchestra.install.schema')->andReturn(null);
+        $migrate->shouldReceive('foundation')->once()->andReturnNull();
+        $events->shouldReceive('fire')->once()->with('orchestra.install.schema')->andReturnNull();
 
         $stub = new Installer($app);
         $this->assertTrue($stub->migrate());
@@ -112,17 +113,18 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $app['files'] = $this->getFilesMock();
-        $app['validator'] = $validator = m::mock('Validator\Environment');
+        $app['validator'] = $validator = m::mock('\Illuminate\Validation\Validator[fails]');
         $app['orchestra.role'] = $role = m::mock('Role');
         $app['orchestra.user'] = $user = m::mock('User');
-        $app['orchestra.messages'] = $messages = m::mock('Messages\Dispatcher');
-        $app['events'] = $events = m::mock('Event\Dispatcher');
-        $app['orchestra.memory'] = $memory = m::mock('Memory');
-        $app['config'] = $config = m::mock('Config\Manager');
+        $app['orchestra.messages'] = $messages = m::mock('\Orchestra\Support\Messages[add]');
+        $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
+        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
         $app['orchestra.acl'] = $acl = m::mock('Acl');
 
-        $aclFluent = m::mock('Acl\Fluent');
-        $aclFluent->shouldReceive('attach')->twice()->andReturn(null);
+        $memoryProvider = m::mock('\Orchestra\Memory\Provider[put]');
+        $aclFluent = m::mock('\Orchestra\Auth\Acl\Fluent');
+        $aclFluent->shouldReceive('attach')->twice()->andReturnNull();
 
         $input = $this->getUserInput();
         $rules = $this->getValidationRules();
@@ -130,30 +132,32 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
         $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(false);
         $user->shouldReceive('newQuery')->once()->andReturn($user)
-            ->shouldReceive('all')->once()->andReturn(null)
+            ->shouldReceive('all')->once()->andReturnNull()
             ->shouldReceive('newInstance')->once()->andReturn($user)
-            ->shouldReceive('fill')->once()->andReturn(null)
-            ->shouldReceive('save')->once()->andReturn(null)
+            ->shouldReceive('fill')->once()->andReturnNull()
+            ->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles')->once()->andReturn($user)
-            ->shouldReceive('sync')->once()->with(array(1))->andReturn(null);
+            ->shouldReceive('sync')->once()->with(array(1))->andReturnNull();
         $role->shouldReceive('newQuery')->once()->andReturn($role)
             ->shouldReceive('lists')->once()->with('name', 'id')->andReturn(array('admin', 'member'));
-        $events->shouldReceive('fire')->once()->with('orchestra.install: user', array($user, $input))->andReturn(null)
-            ->shouldReceive('fire')->once()->with('orchestra.install: acl', array($acl))->andReturn(null);
-        $memory->shouldReceive('make')->once()->andReturn($memory)
-            ->shouldReceive('put')->once()->with('site.name', $input['site_name'])->andReturn(null)
-            ->shouldReceive('put')->once()->with('site.theme', array('frontend' => 'default', 'backend' => 'default'))->andReturn(null)
-            ->shouldReceive('put')->once()->with('email', 'email-config')->andReturn(null)
-            ->shouldReceive('put')->once()->with('email.from', array('name' => $input['site_name'], 'address' => $input['email']))->andReturn(null);
+        $events->shouldReceive('fire')->once()->with('orchestra.install: user', array($user, $input))->andReturnNull()
+            ->shouldReceive('fire')->once()->with('orchestra.install: acl', array($acl))->andReturnNull();
+        $memory->shouldReceive('make')->once()->andReturn($memoryProvider);
+        $memoryProvider->shouldReceive('put')->once()->with('site.name', $input['site_name'])->andReturnNull()
+            ->shouldReceive('put')->once()->with('site.theme', array('frontend' => 'default', 'backend' => 'default'))
+                ->andReturnNull()
+            ->shouldReceive('put')->once()->with('email', 'email-config')->andReturnNull()
+            ->shouldReceive('put')->once()->with('email.from', array('name' => $input['site_name'], 'address' => $input['email']))
+                ->andReturnNull();
         $config->shouldReceive('get')->once()->with('orchestra/foundation::roles.admin', 1)->andReturn(1)
             ->shouldReceive('get')->once()->with('mail')->andReturn('email-config');
         $acl->shouldReceive('make')->once()->with('orchestra')->andReturn($acl)
             ->shouldReceive('actions')->once()->andReturn($aclFluent)
             ->shouldReceive('roles')->once()->andReturn($aclFluent)
-            ->shouldReceive('allow')->once()->andReturn(null)
-            ->shouldReceive('attach')->once()->with($memory)->andReturn(null);
+            ->shouldReceive('allow')->once()->andReturnNull()
+            ->shouldReceive('attach')->once()->with($memoryProvider)->andReturnNull();
 
-        $messages->shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
+        $messages->shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
 
         $stub = new Installer($app);
         $this->assertTrue($stub->createAdmin($input, false));
@@ -169,17 +173,16 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $app['files'] = $this->getFilesMock();
-        $app['validator'] = $validator = m::mock('Validator\Environment');
+        $app['validator'] = $validator = m::mock('\Illuminate\Validation\Validator[passes,messages]');
         $app['session'] = $session = m::mock('Session\Store');
 
         $input = $this->getUserInput();
         $rules = $this->getValidationRules();
 
         $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturn(true)
+            ->shouldReceive('passes')->once()->andReturn(false)
             ->shouldReceive('messages')->once()->andReturn('foo-errors');
-        $session->shouldReceive('flash')->once()->with('errors', 'foo-errors')->andReturn(null);
-
+        $session->shouldReceive('flash')->once()->with('errors', 'foo-errors')->andReturnNull();
 
         $stub = new Installer($app);
         $this->assertFalse($stub->createAdmin($input));
@@ -195,9 +198,9 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $app['files'] = $this->getFilesMock();
-        $app['validator'] = $validator = m::mock('Validator\Environment');
+        $app['validator'] = $validator = m::mock('\Illuminate\Validation\Validator[fails]');
         $app['orchestra.user'] = $user = m::mock('User');
-        $app['orchestra.messages'] = $messages = m::mock('Messages');
+        $app['orchestra.messages'] = $messages = m::mock('\Orchestra\Support\Messages[add]');
 
         $input = $this->getUserInput();
         $rules = $this->getValidationRules();
@@ -206,7 +209,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('fails')->once()->andReturn(false);
         $user->shouldReceive('newQuery')->once()->andReturn($user)
             ->shouldReceive('all')->once()->andReturn(array('not so empty'));
-        $messages->shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
+        $messages->shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
         $stub = new Installer($app);
         $this->assertFalse($stub->createAdmin($input, false));

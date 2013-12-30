@@ -19,11 +19,11 @@ class AdminControllerTest extends TestCase
      */
     public function testFilters()
     {
-        Event::swap($event = m::mock('\Illuminate\Events\Dispatcher'));
+        Event::swap($event = m::mock('\Illuminate\Events\Dispatcher[fire]'));
 
-        $event->shouldReceive('fire')->once()->with('orchestra.started: admin')->andReturn(null)
-            ->shouldReceive('fire')->once()->with('orchestra.ready: admin')->andReturn(null)
-            ->shouldReceive('fire')->once()->with('orchestra.done: admin')->andReturn(null);
+        $event->shouldReceive('fire')->once()->with('orchestra.started: admin')->andReturnNull()
+            ->shouldReceive('fire')->once()->with('orchestra.ready: admin')->andReturnNull()
+            ->shouldReceive('fire')->once()->with('orchestra.done: admin')->andReturnNull();
 
         StubAdminController::setFilterer($route = m::mock('Illuminate\Routing\RouteFiltererInterface'));
 

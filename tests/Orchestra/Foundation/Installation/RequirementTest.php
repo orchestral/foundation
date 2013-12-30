@@ -126,8 +126,8 @@ class RequirementTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $app['path.storage'] = '/foo/storage/';
-        $app['html'] = $html = m::mock('HtmlBuilder');
-        $app['files'] = $file = m::mock('Filesystem');
+        $app['html'] = $html = m::mock('\Orchestra\Html\HtmlBuilder[create]');
+        $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem[isWritable]');
 
         $html->shouldReceive('create')
             ->with('code', 'storage', array('title' => '/foo/storage/'))->once()->andReturn('');
@@ -151,12 +151,11 @@ class RequirementTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $app['path.public'] = '/foo/public/';
-        $app['html'] = $html = m::mock('HtmlBuilder');
-        $app['files'] = $file = m::mock('Filesystem');
+        $app['html'] = $html = m::mock('\Orchestra\Html\HtmlBuilder[create]');
+        $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem[isWritable]');
 
-        $html->shouldReceive('create')
-            ->with('code', 'public/packages', m::any())
-            ->once()->andReturn('');
+        $html->shouldReceive('create')->once()
+            ->with('code', 'public/packages', m::any())->andReturn('');
         $file->shouldReceive('isWritable')->with('/foo/public/packages/')->once()->andReturn(true);
 
         $stub = new Requirement($app);

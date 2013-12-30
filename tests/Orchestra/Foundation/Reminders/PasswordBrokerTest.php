@@ -13,7 +13,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $app = new Container;
-        $app['translator'] = $translator = m::mock('Translator');
+        $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator[trans]');
         $translator->shouldReceive('trans')->andReturn('foo');
 
         Facade::clearResolvedInstances();
@@ -49,9 +49,9 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         $user->shouldReceive('retrieveByCredentials')->once()
             ->with(array('username' => 'user-foo'))
             ->andReturn($userReminderable = m::mock('\Illuminate\Auth\Reminders\RemindableInterface'));
-        $reminders->shouldReceive('create')->once()->with($userReminderable)->andReturn(null);
+        $reminders->shouldReceive('create')->once()->with($userReminderable)->andReturnNull();
         $userReminderable->shouldReceive('getReminderEmail')->once()->andReturn('foo@reminderable.com');
-        $mailer->shouldReceive('to')->once()->with('foo@reminderable.com')->andReturn(null)
+        $mailer->shouldReceive('to')->once()->with('foo@reminderable.com')->andReturnNull()
             ->shouldReceive('push')->once()->with('foo', m::any(), m::type('Closure'))
                 ->andReturnUsing(function ($v, $d, $c) use ($mailer) {
                     $c($mailer);
@@ -76,7 +76,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         );
 
         $user->shouldReceive('retrieveByCredentials')->once()
-            ->with(array('username' => 'user-foo'))->andReturn(null);
+            ->with(array('username' => 'user-foo'))->andReturnNull();
 
         $this->assertEquals('reminders.user', $stub->remind(array('username' => 'user-foo')));
     }
@@ -142,7 +142,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
         );
 
         $user->shouldReceive('retrieveByCredentials')->once()
-            ->with(array_except($credentials, array('token')))->andReturn(null);
+            ->with(array_except($credentials, array('token')))->andReturnNull();
 
         $this->assertEquals('reminders.user', $stub->reset($credentials, $callback));
     }

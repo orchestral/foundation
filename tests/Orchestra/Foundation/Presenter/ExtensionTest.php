@@ -22,8 +22,8 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new Container;
 
-        $this->app['orchestra.app'] = m::mock('OrchestraApplication');
-        $this->app['translator'] = m::mock('Translator');
+        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Application[handles]');
+        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator[trans]');
 
         $this->app['orchestra.app']->shouldReceive('handles');
         $this->app['translator']->shouldReceive('trans');
@@ -51,14 +51,14 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $app      = $this->app;
         $model    = new Fluent;
-        $form     = m::mock('FormBuilder');
-        $fieldset = m::mock('FormFieldsetBuilder');
-        $control  = m::mock('FormControlBuilder');
+        $grid     = m::mock('\Orchestra\Html\Form\Grid')->shouldDeferMissing();
+        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->shouldDeferMissing();
+        $control  = m::mock('\Orchestra\Html\Form\Control')->shouldDeferMissing();
 
         $stub = new Extension;
 
-        $control->shouldReceive('label')->twice()->andReturn(null)
-            ->shouldReceive('value')->once()->andReturn(null)
+        $control->shouldReceive('label')->twice()->andReturnNull()
+            ->shouldReceive('value')->once()->andReturnNull()
             ->shouldReceive('field')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) {
                     $c();
@@ -68,22 +68,22 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
             ->andReturnUsing(function ($t, $n, $c) use ($control) {
                 $c($control);
             });
-        $form->shouldReceive('setup')->once()
-                ->with($stub, 'orchestra::extensions/configure/foo.bar', $model)->andReturn(null)
+        $grid->shouldReceive('setup')->once()
+                ->with($stub, 'orchestra::extensions/configure/foo.bar', $model)->andReturnNull()
             ->shouldReceive('fieldset')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);
                 });
 
-        $app['orchestra.extension'] = m::mock('\Orchestra\Extension\Environment')->shouldDeferMissing();
+        $app['orchestra.extension'] = m::mock('\Orchestra\Extension\Environment[option]');
         $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->shouldDeferMissing();
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[link]');
 
         $app['orchestra.extension']->shouldReceive('option')->once()->with('foo/bar', 'handles')->andReturn('foo');
         $app['orchestra.form']->shouldReceive('of')->once()
                 ->with('orchestra.extension: foo/bar', m::type('Closure'))
-                ->andReturnUsing(function ($t, $c) use ($form) {
-                    $c($form);
+                ->andReturnUsing(function ($t, $c) use ($grid) {
+                    $c($grid);
                     return 'foo';
                 });
         $app['html']->shouldReceive('link')->once()

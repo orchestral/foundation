@@ -35,7 +35,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $input = array('email' => 'admin@orchestraplatform.com', 'password' => '123');
         $rules = array('email' => array('required', 'email'));
 
-        $validator = m::mock('Validator\Environment');
+        $validator = m::mock('\Illuminate\Validation\Factory[make]');
         $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
         Validator::swap($validator);
 
@@ -55,7 +55,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $input = array('email' => 'admin@orchestraplatform.com', 'password' => '123');
         $rules = array('email' => array('required', 'email'), 'password' => array('required'));
 
-        $validator = m::mock('Validator\Environment');
+        $validator = m::mock('\Illuminate\Validation\Factory[make]');
         $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
         Validator::swap($validator);
 

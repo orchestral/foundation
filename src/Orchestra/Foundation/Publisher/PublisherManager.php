@@ -34,7 +34,7 @@ class PublisherManager extends Manager
      */
     public function execute()
     {
-        $memory   = $this->app['orchestra.memory'];
+        $memory   = $this->app['orchestra.memory']->makeOrFallback();
         $messages = $this->app['orchestra.messages'];
         $queues   = $this->queued();
         $fails    = array();

@@ -96,9 +96,12 @@ class UserMetaRepositoryTest extends \PHPUnit_Framework_TestCase
         $app->instance('Orchestra\Model\UserMeta', $eloquent = m::mock('UserMeta'));
 
         $eloquent->shouldReceive('newInstance')->times(4)->andReturn($eloquent)
-            ->shouldReceive('search')->once()->with('foo', 1)->andReturn($fooQuery = m::mock('Model\Query'))
-            ->shouldReceive('search')->once()->with('foobar', 1)->andReturn($foobarQuery = m::mock('Model\Query'))
-            ->shouldReceive('search')->once()->with('foo', 2)->andReturn($foobarQuery)
+            ->shouldReceive('search')->once()->with('foo', 1)
+                ->andReturn($fooQuery = m::mock('\Illuminate\Database\Eloquent\Builder[first]'))
+            ->shouldReceive('search')->once()->with('foobar', 1)
+                ->andReturn($foobarQuery = m::mock('\Illuminate\Database\Eloquent\Builder[first]'))
+            ->shouldReceive('search')->once()->with('foo', 2)
+                ->andReturn($foobarQuery)
             ->shouldReceive('save')->once()->andReturnNull();
 
         $fooQuery->shouldReceive('first')->andReturn($value);

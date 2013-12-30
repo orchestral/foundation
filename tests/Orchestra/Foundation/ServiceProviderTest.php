@@ -86,7 +86,7 @@ class ServiceProviderTest extends TestCase
 
         $this->assertEquals(array('Guest'), Auth::roles());
 
-        $roles = m::mock('Role');
+        $roles = m::mock('\Orchestra\Model\Role');
         $user = m::mock('\Illuminate\Auth\UserInterface');
         $user->id = 1;
 

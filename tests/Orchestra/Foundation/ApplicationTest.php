@@ -43,13 +43,13 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
         $app['env'] = 'production';
         $app['orchestra.installed'] = false;
-        $app['orchestra.acl'] = $acl = m::mock('Acl');
-        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager');
-        $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager');
+        $app['orchestra.acl'] = $acl = m::mock('\Orchestra\Auth\Acl\Container');
+        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
+        $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager[setDefaultDriver]');
         $app['orchestra.widget'] = $widget = m::mock('\Orchestra\Widget\MenuWidgetHandler');
-        $app['translator'] = $translator = m::mock('Translator');
-        $app['events'] = $event = m::mock('Event\Dispatcher');
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository');
+        $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator');
+        $app['events'] = $event = m::mock('\Illuminate\Events\Dispatcher[listen,fire]');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get,set]');
         $app['request'] = $request = m::mock('\Illuminate\Http\Request');
 
         $memoryProvider = m::mock('\Orchestra\Memory\Provider');
@@ -88,11 +88,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
         $app['env'] = 'production';
         $app['orchestra.installed'] = false;
-        $app['orchestra.acl'] = $acl = m::mock('Acl');
-        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager');
-        $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager');
+        $app['orchestra.acl'] = $acl = m::mock('\Orchestra\Auth\Acl\Container');
+        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
+        $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager[setDefaultDriver]');
         $app['orchestra.widget'] = $widget = m::mock('\Orchestra\Widget\MenuWidgetHandler');
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get,set]');
         $app['request'] = $request = m::mock('\Illuminate\Http\Request');
 
         $memoryProvider = m::mock('\Orchestra\Memory\Provider');

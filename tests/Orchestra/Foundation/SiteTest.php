@@ -138,8 +138,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $app['config'] = $config = m::mock('Config\Manager');
-        $app['auth']   = $auth = m::mock('Auth\Guard');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
+        $app['auth']   = $auth = m::mock('\Illuminate\Auth\Guard[guest]');
 
         $config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
         $auth->shouldReceive('guest')->once()->andReturn(true);
@@ -160,8 +160,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $app['config'] = $config = m::mock('Config\Manager');
-        $app['auth']   = $auth = m::mock('Auth\Guard');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
+        $app['auth']   = $auth = m::mock('\Illuminate\Auth\Guard[guest]');
 
         $config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
         $auth->shouldReceive('guest')->once()->andReturn(true);
@@ -181,15 +181,17 @@ class SiteTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $app['config'] = $config = m::mock('Config\Manager');
-        $app['auth'] = $auth = m::mock('Auth\Guard');
-        $app['orchestra.memory'] = $memory = m::mock('Memory');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
+        $app['auth'] = $auth = m::mock('\Illuminate\Auth\Guard[guest,user]');
+        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
+
+        $memoryProvider = m::mock('\Orchestra\Memory\Provider[get]');
 
         $config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
         $auth->shouldReceive('guest')->once()->andReturn(false)
             ->shouldReceive('user')->once()->andReturn((object) array('id' => 1));
-        $memory->shouldReceive('make')->once()->with('user')->andReturn($memory)
-            ->shouldReceive('get')->once()->with('timezone.1', 'UTC')->andReturn('Asia/Kuala_Lumpur');
+        $memory->shouldReceive('make')->once()->with('user')->andReturn($memoryProvider);
+        $memoryProvider->shouldReceive('get')->once()->with('timezone.1', 'UTC')->andReturn('Asia/Kuala_Lumpur');
 
         $stub = with(new Site($app))->toLocalTime(new Carbon('2012-01-01 00:00:00'));
 
@@ -208,8 +210,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $app['config'] = $config = m::mock('Config\Manager');
-        $app['auth']   = $auth = m::mock('Auth\Guard');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
+        $app['auth']   = $auth = m::mock('\Illuminate\Auth\Guard[guest]');
 
         $config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
         $auth->shouldReceive('guest')->once()->andReturn(true);
@@ -230,15 +232,17 @@ class SiteTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $app['config'] = $config = m::mock('Config\Manager');
-        $app['auth'] = $auth = m::mock('Auth\Guard');
-        $app['orchestra.memory'] = $memory = m::mock('Memory');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
+        $app['auth'] = $auth = m::mock('\Illuminate\Auth\Guard[guest,user]');
+        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
+
+        $memoryProvider = m::mock('\Orchestra\Memory\Provider[get]');
 
         $config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
         $auth->shouldReceive('guest')->once()->andReturn(false)
             ->shouldReceive('user')->once()->andReturn((object) array('id' => 1));
-        $memory->shouldReceive('make')->once()->with('user')->andReturn($memory)
-            ->shouldReceive('get')->once()->with('timezone.1', 'UTC')->andReturn('Asia/Kuala_Lumpur');
+        $memory->shouldReceive('make')->once()->with('user')->andReturn($memoryProvider);
+        $memoryProvider->shouldReceive('get')->once()->with('timezone.1', 'UTC')->andReturn('Asia/Kuala_Lumpur');
 
         $stub = with(new Site($app))->fromLocalTime('2012-01-01 08:00:00');
 

@@ -43,15 +43,15 @@ class InstallerControllerTest extends TestCase
                     'data'     => array(),
                 ),
             ));
-        $user = m::mock('UserModel', '\Orchestra\Model\User');
-        App::bind('UserModel', function () use ($user) {
+        $user = m::mock('UserEloquent', '\Orchestra\Model\User');
+        App::bind('UserEloquent', function () use ($user) {
             return $user;
         });
         App::bind('Orchestra\Foundation\Installation\RequirementInterface', function () use ($requirement) {
             return $requirement;
         });
         Config::set('database.default', 'mysql');
-        Config::set('auth', array('driver' => 'eloquent', 'model' => 'UserModel'));
+        Config::set('auth', array('driver' => 'eloquent', 'model' => 'UserEloquent'));
         Config::set('database.connections.mysql', $dbConfig);
 
         $this->call('GET', 'admin/install');
@@ -120,7 +120,7 @@ class InstallerControllerTest extends TestCase
     public function testGetPrepareAction()
     {
         $installer = m::mock('\Orchestra\Foundation\Installation\InstallerInterface');
-        $installer->shouldReceive('migrate')->once()->andReturn(null);
+        $installer->shouldReceive('migrate')->once()->andReturnNull();
 
         App::bind('Orchestra\Foundation\Installation\InstallerInterface', function () use ($installer) {
             return $installer;

@@ -91,7 +91,7 @@ class UsersControllerTest extends TestCase
      */
     public function testGetEditAction()
     {
-        $builder = m::mock('UserModelBuilder');
+        $builder = m::mock('\Illuminate\Database\Eloquent\Builder[findOrFail]');
         $user    = m::mock('\Orchestra\Model\User');
 
         list($presenter, ) = $this->bindDependencies();
@@ -125,20 +125,20 @@ class UsersControllerTest extends TestCase
 
         $user = m::mock('\Orchestra\Model\User');
 
-        $user->shouldReceive('setAttribute')->once()->with('status', 0)->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturn(null)
-            ->shouldReceive('save')->once()->andReturn(null)
+        $user->shouldReceive('setAttribute')->once()->with('status', 0)->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
+            ->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles')->once()->andReturn($user)
-            ->shouldReceive('sync')->once()->with($input['roles'])->andReturn(null);
+            ->shouldReceive('sync')->once()->with($input['roles'])->andReturnNull();
         $validator->shouldReceive('on')->once()->with('create')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturn(null);
+            ->shouldReceive('fails')->once()->andReturnNull();
 
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Orchestra::shouldReceive('handles')->once()->with('orchestra::users')->andReturn('users');
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
                 $c();
@@ -166,20 +166,20 @@ class UsersControllerTest extends TestCase
 
         $user = m::mock('\Orchestra\Model\User');
 
-        $user->shouldReceive('setAttribute')->once()->with('status', 0)->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturn(null)
-            ->shouldReceive('save')->once()->andReturn(null)
+        $user->shouldReceive('setAttribute')->once()->with('status', 0)->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
+            ->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles')->once()->andReturn($user)
             ->shouldReceive('sync')->once()->with($input['roles'])->andThrow('\Exception');
         $validator->shouldReceive('on')->once()->with('create')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturn(null);
+            ->shouldReceive('fails')->once()->andReturnNull();
 
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Orchestra::shouldReceive('handles')->once()->with('orchestra::users')->andReturn('users');
-        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
+        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
                 $c();
@@ -233,23 +233,23 @@ class UsersControllerTest extends TestCase
 
         list(, $validator) = $this->bindDependencies();
 
-        $builder = m::mock('UserModelBuilder');
+        $builder = m::mock('\Illuminate\Database\Eloquent\Builder[findOrFail]');
         $user    = m::mock('\Orchestra\Model\User');
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
-        $user->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturn(null)
-            ->shouldReceive('save')->once()->andReturn(null)
+        $user->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
+            ->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles')->once()->andReturn($user)
-            ->shouldReceive('sync')->once()->with($input['roles'])->andReturn(null);
+            ->shouldReceive('sync')->once()->with($input['roles'])->andReturnNull();
         $validator->shouldReceive('on')->once()->with('update')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturn(null);
+            ->shouldReceive('fails')->once()->andReturnNull();
 
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
         Orchestra::shouldReceive('handles')->once()->with('orchestra::users')->andReturn('users');
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
                 $c();
@@ -296,26 +296,26 @@ class UsersControllerTest extends TestCase
 
         list(, $validator) = $this->bindDependencies();
 
-        $builder = m::mock('UserModelBuilder');
+        $builder = m::mock('\Illuminate\Database\Eloquent\Builder[findOrFail]');
         $user    = m::mock('\Orchestra\Model\User');
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
-        $user->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturn(null)
-            ->shouldReceive('save')->once()->andReturn(null)
+        $user->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
+            ->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles')->once()->andReturn($user)
             ->shouldReceive('sync')->once()->with($input['roles'])->andThrow('\Exception');
         $validator->shouldReceive('on')->once()->with('update')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturn(null);
+            ->shouldReceive('fails')->once()->andReturnNull();
 
         Orchestra::shouldReceive('make')->once()
             ->with('orchestra.user')->andReturn($builder);
         Orchestra::shouldReceive('handles')->once()
             ->with('orchestra::users')->andReturn('users');
         Messages::shouldReceive('add')->once()
-            ->with('error', m::any())->andReturn(null);
+            ->with('error', m::any())->andReturnNull();
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
                 $c();
@@ -361,7 +361,7 @@ class UsersControllerTest extends TestCase
      */
     public function testGetDeleteAction()
     {
-        $builder = m::mock('UserModelBuilder');
+        $builder = m::mock('\Illuminate\Database\Eloquent\Builder[findOrFail]');
         $user    = m::mock('\Orchestra\Model\User');
         $auth    = (object) array(
             'id' => 'foobar',
@@ -369,14 +369,14 @@ class UsersControllerTest extends TestCase
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foo')
-            ->shouldReceive('delete')->once()->andReturn(null);
+            ->shouldReceive('delete')->once()->andReturnNull();
 
         Orchestra::shouldReceive('make')->once()
             ->with('orchestra.user')->andReturn($builder);
         Orchestra::shouldReceive('handles')->once()
             ->with('orchestra::users')->andReturn('users');
         Messages::shouldReceive('add')->once()
-            ->with('success', m::any())->andReturn(null);
+            ->with('success', m::any())->andReturnNull();
         Auth::shouldReceive('user')->once()->andReturn($auth);
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
@@ -395,7 +395,7 @@ class UsersControllerTest extends TestCase
      */
     public function testGetDeleteActionWhenDeletingOwnAccount()
     {
-        $builder = m::mock('UserModelBuilder');
+        $builder = m::mock('\Illuminate\Database\Eloquent\Builder[findOrFail]');
         $user    = m::mock('\Orchestra\Model\User');
         $auth    = (object) array(
             'id' => 'foobar',
@@ -418,7 +418,7 @@ class UsersControllerTest extends TestCase
      */
     public function testGetDeleteActionGivenDatabaseError()
     {
-        $builder = m::mock('UserModelBuilder');
+        $builder = m::mock('\Illuminate\Database\Eloquent\Builder[findOrFail]');
         $user    = m::mock('\Orchestra\Model\User');
         $auth    = (object) array(
             'id' => 'foobar',
@@ -433,7 +433,7 @@ class UsersControllerTest extends TestCase
         Orchestra::shouldReceive('handles')->once()
             ->with('orchestra::users')->andReturn('users');
         Messages::shouldReceive('add')->once()
-            ->with('error', m::any())->andReturn(null);
+            ->with('error', m::any())->andReturnNull();
         Auth::shouldReceive('user')->once()->andReturn($auth);
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
