@@ -36,10 +36,7 @@ class Application extends Abstractable\RouteManager
         $app    = $this->app;
         $memory = null;
 
-        // Make Menu instance for backend and frontend appliction
-        $this->services['orchestra.menu'] = $app['orchestra.widget']->make('menu.orchestra');
-        $this->services['app.menu']       = $app['orchestra.widget']->make('menu.app');
-        $this->services['orchestra.acl']  = $app['orchestra.acl']->make('orchestra');
+        $this->setup();
 
         try {
             // Initiate Memory class from App, this to allow advanced user
@@ -79,6 +76,22 @@ class Application extends Abstractable\RouteManager
         $app['events']->fire('orchestra.started');
 
         return $this;
+    }
+
+    /**
+     * Setup application services.
+     *
+     * @return void
+     */
+    protected function setup()
+    {
+        // Make Menu instance for backend and frontend appliction
+        $this->services['orchestra.menu'] = $this->app['orchestra.widget']->make('menu.orchestra');
+        $this->services['app.menu']       = $this->app['orchestra.widget']->make('menu.app');
+        $this->services['orchestra.acl']  = $this->app['orchestra.acl']->make('orchestra');
+
+        // Setup default drivers.
+        $this->app['orchestra.notifier']->setDefaultDriver('orchestra');
     }
 
     /**

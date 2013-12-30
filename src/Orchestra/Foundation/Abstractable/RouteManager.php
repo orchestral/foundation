@@ -11,7 +11,7 @@ abstract class RouteManager
      *
      * @var \Illuminate\Foundation\Application
      */
-    protected $app = null;
+    protected $app;
 
     /**
      * List of routes.

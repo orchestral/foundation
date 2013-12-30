@@ -24,11 +24,12 @@ class MacrosTest extends TestCase
     public function testHtmlTitleMacro()
     {
         App::shouldReceive('memory')->twice()
-            ->andReturn($memory = m::mock('Memory'));
+            ->andReturn($memory = m::mock('\Orchestra\Memory\Provider[get]'));
 
         $memory->shouldReceive('get')->once()->with('site.name', '')->andReturn('Foo')
-            ->shouldReceive('get')->once()->with('site.format.title', ':pageTitle &mdash; :siteTitle')
-            ->andReturn(':pageTitle &mdash; :siteTitle');
+            ->shouldReceive('get')->once()
+                ->with('site.format.title', ':pageTitle &mdash; :siteTitle')
+                ->andReturn(':pageTitle &mdash; :siteTitle');
 
         $this->assertEquals('<title>Foo</title>', HTML::title());
     }
@@ -41,7 +42,7 @@ class MacrosTest extends TestCase
     public function testHtmlTitleMacroWithPageTitle()
     {
         App::shouldReceive('memory')->twice()
-            ->andReturn($memory = m::mock('Memory'));
+            ->andReturn($memory = m::mock('\Orchestra\Memory\Provider[get]'));
         Site::shouldReceive('get')->once()
             ->with('title', '')->andReturn('Foobar');
 
