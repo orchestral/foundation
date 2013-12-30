@@ -7,7 +7,6 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Auth\UserProviderInterface;
 use Illuminate\Support\Contracts\ArrayableInterface;
 use Orchestra\Notifier\NotifierInterface;
-use Orchestra\Notifier\UserProviderInterface as UserNotifierInterface;
 
 class PasswordBroker extends Broker
 {
