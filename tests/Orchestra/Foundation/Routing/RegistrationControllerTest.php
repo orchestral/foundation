@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Form;
-use Orchestra\Support\Facades\Mail;
+use Orchestra\Support\Facades\Notifier;
 use Orchestra\Support\Facades\Messages;
 
 class RegistrationControllerTest extends TestCase
@@ -43,7 +43,7 @@ class RegistrationControllerTest extends TestCase
      */
     public function testGetIndexAction()
     {
-        $form = m::mock('FormGrid');
+        $form = m::mock('\Orchestra\Html\Form\FormBuilder[extend]');
         $user = m::mock('\Orchestra\Model\User');
 
         list($presenter,) = $this->bindDependencies();
@@ -76,27 +76,21 @@ class RegistrationControllerTest extends TestCase
         );
 
         $user   = m::mock('\Orchestra\Model\User');
-        $memory = m::mock('Memory\Manager');
-        $mailer = m::mock('Mailer');
+        $memory = m::mock('\Orchestra\Memory\Provider[get]');
 
         list(, $validator) = $this->bindDependencies();
 
         $validator->shouldReceive('on')->once()->with('register')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(false);
-        $user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('password', m::any())->andReturn(null)
-            ->shouldReceive('save')->once()->andReturn(null)
+        $user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('password', m::any())->andReturnNull()
+            ->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles')->once()->andReturn($user)
-            ->shouldReceive('sync')->once()->with(m::any())->andReturn(null)
-            ->shouldReceive('toArray')->once()->andReturn($input)
-            ->shouldReceive('getAttribute')->once()->with('email')->andReturn($input['email'])
-            ->shouldReceive('getAttribute')->once()->with('fullname')->andReturn($input['fullname']);
-        $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('foo')
-            ->shouldReceive('get')->once()->with('email.queue', false)->andReturn(false);
-        $mailer->shouldReceive('subject')->once()->andReturn(null)
-            ->shouldReceive('to')->once()->andReturn(null);
+            ->shouldReceive('sync')->once()->with(m::any())->andReturnNull()
+            ->shouldReceive('toArray')->once()->andReturn($input);
+        $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('foo');
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Orchestra::shouldReceive('memory')->once()->andReturn($memory);
         Orchestra::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
@@ -104,13 +98,10 @@ class RegistrationControllerTest extends TestCase
             ->andReturnUsing(function ($c) {
                 $c();
             });
-        Mail::shouldReceive('push')->once()
-            ->with('orchestra/foundation::email.credential.register', m::type('Array'), m::type('Closure'))
-            ->andReturnUsing(function ($v, $d, $c) use ($mailer) {
-                $c($mailer);
-                return array('email@orchestraplatform.com');
-            });
-        Messages::shouldReceive('add')->twice()->with('success', m::any())->andReturn(null);
+        Notifier::shouldReceive('send')->once()
+            ->with($user, m::type('String'), 'orchestra/foundation::email.credential.register', m::type('Array'))
+            ->andReturn(true);
+        Messages::shouldReceive('add')->twice()->with('success', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/register', $input);
         $this->assertRedirectedTo('login');
@@ -129,27 +120,21 @@ class RegistrationControllerTest extends TestCase
         );
 
         $user   = m::mock('\Orchestra\Model\User');
-        $memory = m::mock('Memory\Manager');
-        $mailer = m::mock('Mailer');
+        $memory = m::mock('\Orchestra\Memory\Provider[get]');
 
         list(, $validator) = $this->bindDependencies();
 
         $validator->shouldReceive('on')->once()->with('register')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(false);
-        $user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('password', m::any())->andReturn(null)
-            ->shouldReceive('save')->once()->andReturn(null)
+        $user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('password', m::any())->andReturnNull()
+            ->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles')->once()->andReturn($user)
-            ->shouldReceive('sync')->once()->with(m::any())->andReturn(null)
-            ->shouldReceive('toArray')->once()->andReturn($input)
-            ->shouldReceive('getAttribute')->once()->with('email')->andReturn($input['email'])
-            ->shouldReceive('getAttribute')->once()->with('fullname')->andReturn($input['fullname']);
-        $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('foo')
-            ->shouldReceive('get')->once()->with('email.queue', false)->andReturn(false);
-        $mailer->shouldReceive('subject')->once()->andReturn(null)
-            ->shouldReceive('to')->once()->andReturn(null);
+            ->shouldReceive('sync')->once()->with(m::any())->andReturnNull()
+            ->shouldReceive('toArray')->once()->andReturn($input);
+        $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('foo');
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Orchestra::shouldReceive('memory')->once()->andReturn($memory);
         Orchestra::shouldReceive('handles')->once()
@@ -158,15 +143,12 @@ class RegistrationControllerTest extends TestCase
             ->andReturnUsing(function ($c) {
                 $c();
             });
-        Mail::shouldReceive('push')->once()
-            ->with('orchestra/foundation::email.credential.register', m::type('Array'), m::type('Closure'))
-            ->andReturnUsing(function ($v, $d, $c) use ($mailer) {
-                $c($mailer);
-                return array();
-            });
+        Notifier::shouldReceive('send')->once()
+            ->with($user, m::type('String'), 'orchestra/foundation::email.credential.register', m::type('Array'))
+            ->andReturn(false);
 
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturn(null);
-        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
+        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/register', $input);
         $this->assertRedirectedTo('login');
@@ -190,14 +172,14 @@ class RegistrationControllerTest extends TestCase
         $validator->shouldReceive('on')->once()->with('register')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(false);
-        $user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturn(null)
-            ->shouldReceive('setAttribute')->once()->with('password', m::any())->andReturn(null);
+        $user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
+            ->shouldReceive('setAttribute')->once()->with('password', m::any())->andReturnNull();
 
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Orchestra::shouldReceive('handles')->once()->with('orchestra::register')->andReturn('register');
         DB::shouldReceive('transaction')->once()->with(m::type('Closure'))->andThrow('\Exception');
-        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(null);
+        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/register', $input);
         $this->assertRedirectedTo('register');

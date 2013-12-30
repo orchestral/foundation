@@ -8,7 +8,7 @@ use Orchestra\Foundation\Presenter\Account as AccountPresenter;
 use Orchestra\Foundation\Validation\Account as AccountValidator;
 use Orchestra\Model\User;
 use Orchestra\Support\Facades\App;
-use Orchestra\Support\Facades\Mail;
+use Orchestra\Support\Facades\Notifier;
 use Orchestra\Support\Str;
 
 class Registration extends AbstractableProcessor
@@ -108,20 +108,18 @@ class Registration extends AbstractableProcessor
 
         $memory = App::memory();
         $site   = $memory->get('site.name', 'Orchestra Platform');
-        $data   = array(
+
+        $subject = trans('orchestra/foundation::email.credential.register', array('site' => $site));
+        $view = 'orchestra/foundation::email.credential.register';
+        $data = array(
             'password' => $password,
             'site'     => $site,
             'user'     => (object) $user->toArray(),
         );
 
-        $callback = function ($mail) use ($data, $user, $site) {
-            $mail->subject(trans('orchestra/foundation::email.credential.register', array('site' => $site)));
-            $mail->to($user->email, $user->fullname);
-        };
+        $sent = Notifier::send($user, $subject, $view, $data);
 
-        $sent = Mail::push('orchestra/foundation::email.credential.register', $data, $callback);
-
-        if (false === $memory->get('email.queue', false) and count($sent) < 1) {
+        if (! $sent) {
             return $listener->createSucceedWithoutNotification();
         }
 
