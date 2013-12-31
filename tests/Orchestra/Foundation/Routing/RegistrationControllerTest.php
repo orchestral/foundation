@@ -99,7 +99,7 @@ class RegistrationControllerTest extends TestCase
                 $c();
             });
         Notifier::shouldReceive('send')->once()
-            ->with($user, m::type('String'), 'orchestra/foundation::email.credential.register', m::type('Array'))
+            ->with($user, m::any())
             ->andReturn(true);
         Messages::shouldReceive('add')->twice()->with('success', m::any())->andReturnNull();
 
@@ -144,7 +144,7 @@ class RegistrationControllerTest extends TestCase
                 $c();
             });
         Notifier::shouldReceive('send')->once()
-            ->with($user, m::type('String'), 'orchestra/foundation::email.credential.register', m::type('Array'))
+            ->with($user, m::any())
             ->andReturn(false);
 
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
