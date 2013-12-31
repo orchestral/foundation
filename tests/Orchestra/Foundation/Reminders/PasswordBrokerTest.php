@@ -53,8 +53,8 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
             ->andReturn($userReminderable);
         $reminders->shouldReceive('create')->once()->with($userReminderable)->andReturnNull();
         $mailer->shouldReceive('send')->once()
-                ->with($userReminderable, null, 'foo', m::any(), m::type('Closure'))
-                ->andReturnUsing(function ($u, $s, $v, $d, $c) use ($mailer) {
+                ->with($userReminderable, m::any(), m::type('Closure'))
+                ->andReturnUsing(function ($u, $f, $c) use ($mailer) {
                     $c($mailer);
                     return true;
                 });

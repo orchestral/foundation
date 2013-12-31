@@ -1,9 +1,11 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Exception;
+use Illuminate\Support\Contracts\ArrayableInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Presenter\Account as AccountPresenter;
 use Orchestra\Foundation\Validation\Account as AccountValidator;
 use Orchestra\Model\User;
@@ -109,15 +111,19 @@ class Registration extends AbstractableProcessor
         $memory = App::memory();
         $site   = $memory->get('site.name', 'Orchestra Platform');
 
-        $subject = trans('orchestra/foundation::email.credential.register', array('site' => $site));
-        $view = 'orchestra/foundation::email.credential.register';
         $data = array(
             'password' => $password,
             'site'     => $site,
-            'user'     => (object) $user->toArray(),
+            'user'     => ($user instanceof ArrayableInterface ? $user->toArray() : $user),
         );
 
-        $sent = Notifier::send($user, $subject, $view, $data);
+        $message = new Fluent(array(
+            'subject' => trans('orchestra/foundation::email.credential.register', array('site' => $site)),
+            'view'    => 'orchestra/foundation::email.credential.register',
+            'data'    => $data,
+        ));
+
+        $sent = Notifier::send($user, $message);
 
         if (! $sent) {
             return $listener->createSucceedWithoutNotification();
