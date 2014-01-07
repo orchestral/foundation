@@ -4,7 +4,6 @@ use Exception;
 
 class Application extends Abstractable\RouteManager
 {
-
     /**
      * List of services.
      *
