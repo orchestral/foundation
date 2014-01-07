@@ -46,7 +46,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
 
         $validator = m::mock('\Illuminate\Validation\Factory[make]');
-        $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
+        $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
         Validator::swap($validator);
 
         $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
@@ -82,7 +82,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
 
         $validator = m::mock('\Illuminate\Validation\Factory[make]');
-        $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
+        $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
         Validator::swap($validator);
 
         $events = m::mock('\Illuminate\Events\Dispatcher[fire]');

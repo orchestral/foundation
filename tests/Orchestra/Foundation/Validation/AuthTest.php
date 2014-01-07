@@ -36,7 +36,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $rules = array('email' => array('required', 'email'));
 
         $validator = m::mock('\Illuminate\Validation\Factory[make]');
-        $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
+        $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
         Validator::swap($validator);
 
         $stub       = new Auth;
@@ -56,7 +56,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $rules = array('email' => array('required', 'email'), 'password' => array('required'));
 
         $validator = m::mock('\Illuminate\Validation\Factory[make]');
-        $validator->shouldReceive('make')->once()->with($input, $rules)->andReturn(true);
+        $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
         Validator::swap($validator);
 
         $stub       = new Auth;
