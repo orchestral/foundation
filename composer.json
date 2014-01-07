@@ -36,7 +36,6 @@
 		"orchestra/support": "2.2.*",
 		"orchestra/translation": "2.2.*",
 		"orchestra/view": "2.2.*",
-		"orchestra/warden": "2.2.*",
 		"orchestra/widget": "2.2.*"
 	},
 	"require-dev": {
