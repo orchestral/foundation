@@ -51,7 +51,9 @@ class SiteServiceProvider extends ServiceProvider
     protected function registerSite()
     {
         $this->app->bindShared('orchestra.site', function ($app) {
-            return new Site($app);
+            $user = $app['orchestra.memory']->make('user');
+
+            return new Site($app['auth'], $app['config'], $user);
         });
     }
 

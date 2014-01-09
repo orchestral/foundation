@@ -86,13 +86,13 @@ class ServiceProviderTest extends TestCase
 
         $this->assertEquals(array('Guest'), Auth::roles());
 
-        $roles = m::mock('\Orchestra\Model\Role');
+        $roles = m::mock('\Orchestra\Model\Role[lists]');
         $user = m::mock('\Illuminate\Auth\UserInterface');
         $user->id = 1;
 
         $user->shouldReceive('roles')->once()->andReturn($roles);
-        $roles->shouldReceive('get')->once()->andReturn(array(
-            new Fluent(array('id' => 1, 'name' => 'Administrator')),
+        $roles->shouldReceive('lists')->once()->andReturn(array(
+            'Administrator',
         ));
 
         $this->assertEquals(
