@@ -9,7 +9,7 @@ class Requirement implements RequirementInterface
      *
      * @var \Illuminate\Foundation\Application
      */
-    protected $app = null;
+    protected $app;
 
     /**
      * Installation checklist for Orchestra Platform.

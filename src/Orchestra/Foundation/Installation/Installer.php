@@ -10,7 +10,7 @@ class Installer implements InstallerInterface
      *
      * @var \Illuminate\Foundation\Application
      */
-    protected $app = null;
+    protected $app;
 
     /**
      * Construct a new instance.

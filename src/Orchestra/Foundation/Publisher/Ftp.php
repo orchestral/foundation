@@ -12,14 +12,14 @@ class Ftp implements UploaderInterface
      *
      * @var \Illuminate\Foundation\Application
      */
-    protected $app = null;
+    protected $app;
 
     /**
      * FTP Connection instance.
      *
      * @var \Orchestra\Support\FTP
      */
-    protected $connection = null;
+    protected $connection;
 
     /**
      * Construct a new FTP instance.

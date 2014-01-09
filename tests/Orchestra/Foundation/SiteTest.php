@@ -8,18 +8,10 @@ use Orchestra\Foundation\Site;
 class SiteTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Application instance.
-     *
-     * @var Illuminate\Foundation\Application
-     */
-    private $app = null;
-
-    /**
      * Setup the test environment.
      */
     public function setUp()
     {
-        $this->app = new Container;
         date_default_timezone_set('UTC');
     }
 
@@ -28,7 +20,6 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        unset($this->app);
         m::close();
     }
 
@@ -40,7 +31,11 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMethod()
     {
-        $stub = new Site($this->app);
+        $config = m::mock('\Illuminate\Config\Repository[get]');
+        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $memory = m::mock('\Orchestra\Memory\Provider');
+
+        $stub = new Site($auth, $config, $memory);
 
         $refl = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
@@ -62,7 +57,11 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetMethod()
     {
-        $stub = new Site($this->app);
+        $config = m::mock('\Illuminate\Config\Repository[get]');
+        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $memory = m::mock('\Orchestra\Memory\Provider');
+
+        $stub = new Site($auth, $config, $memory);
         $stub->set('title', 'Foo');
         $stub->set('foo.bar', 'Foobar');
 
@@ -78,7 +77,11 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testHasMethod()
     {
-        $stub = new Site($this->app);
+        $config = m::mock('\Illuminate\Config\Repository[get]');
+        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $memory = m::mock('\Orchestra\Memory\Provider');
+
+        $stub = new Site($auth, $config, $memory);
 
         $refl = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
@@ -102,7 +105,11 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testForgetMethod()
     {
-        $stub = new Site($this->app);
+        $config = m::mock('\Illuminate\Config\Repository[get]');
+        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $memory = m::mock('\Orchestra\Memory\Provider');
+
+        $stub = new Site($auth, $config, $memory);
 
         $refl = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
@@ -136,15 +143,14 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testToLocalTimeGivenDateAsString()
     {
-        $app = $this->app;
-
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
-        $app['auth']   = $auth = m::mock('\Illuminate\Auth\Guard[guest]');
+        $config = m::mock('\Illuminate\Config\Repository[get]');
+        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $memory = m::mock('\Orchestra\Memory\Provider');
 
         $config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
         $auth->shouldReceive('guest')->once()->andReturn(true);
 
-        $stub = with(new Site($app))->toLocalTime('2012-01-01 00:00:00');
+        $stub = with(new Site($auth, $config, $memory))->toLocalTime('2012-01-01 00:00:00');
 
         $this->assertEquals(new \DateTimeZone('UTC'), $stub->getTimezone());
     }
@@ -158,15 +164,14 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testToLocalTimeReturnProperDateTimeWhenIsGuest()
     {
-        $app = $this->app;
-
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
-        $app['auth']   = $auth = m::mock('\Illuminate\Auth\Guard[guest]');
+        $config = m::mock('\Illuminate\Config\Repository[get]');
+        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $memory = m::mock('\Orchestra\Memory\Provider');
 
         $config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
         $auth->shouldReceive('guest')->once()->andReturn(true);
 
-        $stub = with(new Site($app))->toLocalTime(new Carbon('2012-01-01 00:00:00'));
+        $stub = with(new Site($auth, $config, $memory))->toLocalTime(new Carbon('2012-01-01 00:00:00'));
         $this->assertEquals(new \DateTimeZone('UTC'), $stub->getTimezone());
     }
 
@@ -179,21 +184,16 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testToLocalTimeReturnProperDateTimeWhenIsUser()
     {
-        $app = $this->app;
-
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
-        $app['auth'] = $auth = m::mock('\Illuminate\Auth\Guard[guest,user]');
-        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
-
-        $memoryProvider = m::mock('\Orchestra\Memory\Provider[get]');
+        $config = m::mock('\Illuminate\Config\Repository[get]');
+        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $memory = m::mock('\Orchestra\Memory\Provider');
 
         $config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
         $auth->shouldReceive('guest')->once()->andReturn(false)
             ->shouldReceive('user')->once()->andReturn((object) array('id' => 1));
-        $memory->shouldReceive('make')->once()->with('user')->andReturn($memoryProvider);
-        $memoryProvider->shouldReceive('get')->once()->with('timezone.1', 'UTC')->andReturn('Asia/Kuala_Lumpur');
+        $memory->shouldReceive('get')->once()->with('timezone.1', 'UTC')->andReturn('Asia/Kuala_Lumpur');
 
-        $stub = with(new Site($app))->toLocalTime(new Carbon('2012-01-01 00:00:00'));
+        $stub = with(new Site($auth, $config, $memory))->toLocalTime(new Carbon('2012-01-01 00:00:00'));
 
         $this->assertEquals(new \DateTimeZone('Asia/Kuala_Lumpur'), $stub->timezone);
         $this->assertEquals('2012-01-01 08:00:00', $stub->toDateTimeString());
@@ -208,15 +208,14 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testFromLocalTimeReturnProperDateTimeWhenIsGuest()
     {
-        $app = $this->app;
-
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
-        $app['auth']   = $auth = m::mock('\Illuminate\Auth\Guard[guest]');
+        $config = m::mock('\Illuminate\Config\Repository[get]');
+        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $memory = m::mock('\Orchestra\Memory\Provider');
 
         $config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
         $auth->shouldReceive('guest')->once()->andReturn(true);
 
-        $stub = with(new Site($app))->fromLocalTime('2012-01-01 00:00:00');
+        $stub = with(new Site($auth, $config, $memory))->fromLocalTime('2012-01-01 00:00:00');
 
         $this->assertEquals(new \DateTimeZone('UTC'), $stub->timezone);
     }
@@ -230,21 +229,16 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testFromLocalTimeReturnProperDateTimeWhenIsUser()
     {
-        $app = $this->app;
-
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
-        $app['auth'] = $auth = m::mock('\Illuminate\Auth\Guard[guest,user]');
-        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
-
-        $memoryProvider = m::mock('\Orchestra\Memory\Provider[get]');
+        $config = m::mock('\Illuminate\Config\Repository[get]');
+        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $memory = m::mock('\Orchestra\Memory\Provider');
 
         $config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
         $auth->shouldReceive('guest')->once()->andReturn(false)
             ->shouldReceive('user')->once()->andReturn((object) array('id' => 1));
-        $memory->shouldReceive('make')->once()->with('user')->andReturn($memoryProvider);
-        $memoryProvider->shouldReceive('get')->once()->with('timezone.1', 'UTC')->andReturn('Asia/Kuala_Lumpur');
+        $memory->shouldReceive('get')->once()->with('timezone.1', 'UTC')->andReturn('Asia/Kuala_Lumpur');
 
-        $stub = with(new Site($app))->fromLocalTime('2012-01-01 08:00:00');
+        $stub = with(new Site($auth, $config, $memory))->fromLocalTime('2012-01-01 08:00:00');
 
         $this->assertEquals(new \DateTimeZone('UTC'), $stub->timezone);
         $this->assertEquals('2012-01-01 00:00:00', $stub->toDateTimeString());
@@ -258,7 +252,11 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testConvertToDateTimeMethodWhenTimezoneIsNull()
     {
-        $stub = new Site($this->app);
+        $config = m::mock('\Illuminate\Config\Repository[get]');
+        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $memory = m::mock('\Orchestra\Memory\Provider');
+
+        $stub = new Site($auth, $config, $memory);
 
         $output = $stub->convertToDateTime('2012-01-01 08:00:00');
 

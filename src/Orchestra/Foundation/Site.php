@@ -2,26 +2,46 @@
 
 use DateTime;
 use Carbon\Carbon;
+use Illuminate\Config\Repository;
+use Illuminate\Auth\AuthManager;
+use Orchestra\Memory\Provider;
 use Orchestra\Support\Relic;
 
 class Site extends Relic
 {
     /**
-     * Application instance.
+     * Guard instance.
      *
-     * @var \Illuminate\Foundation\Application
+     * @var \Illuminate\Auth\Guard
      */
-    protected $app = null;
+    protected $auth;
+
+    /**
+     * Config instance.
+     *
+     * @var \Illuminate\Config\Repository
+     */
+    protected $config;
+
+    /**
+     * Memory instance.
+     *
+     * @var \Orchestra\Memory\Provider
+     */
+    protected $memory;
 
     /**
      * Construct a new instance.
      *
-     * @param  \Illuminate\Foundation\Application   $app
-     * @return void
+     * @param  \Illuminate\Auth\AuthManager    $auth
+     * @param  \Illuminate\Config\Repository   $config
+     * @param  \Orchestra\Memory\Provider      $memory
      */
-    public function __construct($app)
+    public function __construct(AuthManager $auth, Repository $config, Provider $memory)
     {
-        $this->app = $app;
+        $this->auth   = $auth;
+        $this->config = $config;
+        $this->memory = $memory;
     }
 
     /**
@@ -33,18 +53,16 @@ class Site extends Relic
      */
     public function toLocalTime($datetime)
     {
-        $app         = $this->app;
-        $appTimeZone = $app['config']->get('app.timezone', 'UTC');
+        $appTimeZone = $this->config->get('app.timezone', 'UTC');
 
         $datetime = $this->convertToDateTime($datetime, $appTimeZone);
 
-        if ($app['auth']->guest()) {
+        if ($this->auth->guest()) {
             return $datetime;
         }
 
-        $userId       = $app['auth']->user()->id;
-        $userMeta     = $app['orchestra.memory']->make('user');
-        $userTimeZone = $userMeta->get("timezone.{$userId}", $appTimeZone);
+        $userId       = $this->auth->user()->id;
+        $userTimeZone = $this->memory->get("timezone.{$userId}", $appTimeZone);
 
         $datetime->timezone = $userTimeZone;
 
@@ -60,16 +78,14 @@ class Site extends Relic
      */
     public function fromLocalTime($datetime)
     {
-        $app          = $this->app;
-        $appTimeZone  = $app['config']->get('app.timezone', 'UTC');
+        $appTimeZone = $this->config->get('app.timezone', 'UTC');
 
-        if ($app['auth']->guest()) {
+        if ($this->auth->guest()) {
             return $this->convertToDateTime($datetime, $appTimeZone);
         }
 
-        $userId       = $app['auth']->user()->id;
-        $userMeta     = $app['orchestra.memory']->make('user');
-        $userTimeZone = $userMeta->get("timezone.{$userId}", $appTimeZone);
+        $userId       = $this->auth->user()->id;
+        $userTimeZone = $this->memory->get("timezone.{$userId}", $appTimeZone);
         $datetime     = $this->convertToDateTime($datetime, $userTimeZone);
 
         $datetime->timezone = $appTimeZone;
