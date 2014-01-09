@@ -39,7 +39,7 @@ class ServiceProviderTest extends TestCase
     {
         $stub = App::make('orchestra.memory')->driver('user');
 
-        $this->assertInstanceOf('\Orchestra\Foundation\UserMetaProvider', $stub);
+        $this->assertInstanceOf('\Orchestra\Mode\Memory\UserMetaProvider', $stub);
         $this->assertInstanceOf('\Orchestra\Memory\Provider', $stub);
     }
 
