@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
+use Orchestra\Foundation\Installation\Installer;
+use Orchestra\Foundation\Installation\Requirement;
 use Orchestra\Model\Memory\UserMetaProvider;
 use Orchestra\Model\Memory\UserMetaRepository;
 
@@ -22,11 +24,11 @@ App::make('orchestra.memory')->extend('user', function ($app, $name) {
 */
 
 App::bind('Orchestra\Foundation\Installation\InstallerInterface', function () {
-    return new Orchestra\Foundation\Installation\Installer(App::make('app'));
+    return new Installer(App::make('app'));
 });
 
 App::bind('Orchestra\Foundation\Installation\RequirementInterface', function () {
-    return new Orchestra\Foundation\Installation\Requirement(App::make('app'));
+    return new Requirement(App::make('app'));
 });
 
 /*
@@ -65,8 +67,8 @@ Event::listen('orchestra.auth: roles', function ($user, $roles) {
         return ;
     }
 
-    foreach ($user->roles()->get() as $role) {
-        array_push($roles, $role->name);
+    foreach ($user->roles()->lists('name') as $name) {
+        array_push($roles, $name);
     }
 
     return $roles;
