@@ -10,9 +10,9 @@ use Orchestra\Support\Relic;
 class Site extends Relic
 {
     /**
-     * Guard instance.
+     * Auth manager instance.
      *
-     * @var \Illuminate\Auth\Guard
+     * @var \Illuminate\Auth\AuthManager
      */
     protected $auth;
 
