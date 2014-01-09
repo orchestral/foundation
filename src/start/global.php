@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
-use Orchestra\Foundation\UserMetaProvider;
-use Orchestra\Foundation\UserMetaRepository;
+use Orchestra\Model\Memory\UserMetaProvider;
+use Orchestra\Model\Memory\UserMetaRepository;
 
 App::make('orchestra.memory')->extend('user', function ($app, $name) {
     $handler = new UserMetaRepository($name, array(), $app);
