@@ -31,9 +31,11 @@ Replace call to `handles('orchestra/foundation::*')` to `handles('orchestra::*')
 * Consolidate all commands service provider in `Orchestra\Foundation\ConsoleSupportServiceProvider`.
 * Refactor `Orchestra\Foundation\Reminders\PasswordBroker` and `Orchestra\Foundation\Routing\ForgotController` based on Laravel 4.1 changes.
 * Refactor routing as passive controllers and move all CRUD action to `Orchestra\Foundation\Processor` namespace.
+* Move `Orchestra\Foundation\UserMetaRepository` and `Orchestra\Foundation\UserMetaProvider` to orchestra/model.
 * Add components:
   - `orchestra/debug` for profiling your Orchestra Platform application.
   - `orchestra/optimize` to run autoloading optimization.
+  - `orchestra/notifier` to send e-mail notification per user.
 * Update assets:
   - Twitter Bootstrap v3.0.3
   - Javie JavaScript Library v1.1.1

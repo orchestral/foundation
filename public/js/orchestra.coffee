@@ -27,7 +27,7 @@ setup_button_group = ($) ->
 
 setup_helper = ($) ->
 	$('input[type="date"]').datepicker({ dateFormat: "yy-mm-dd" })
-	$('select[role!="switcher"]').select2().removeClass('form-control')
+	$('select.form-control[role!="switcher"]').select2().removeClass('form-control')
 	$('*[role="tooltip"]').tooltip()
 	true
 
