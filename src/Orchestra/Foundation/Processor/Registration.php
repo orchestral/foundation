@@ -119,7 +119,7 @@ class Registration extends AbstractableProcessor
 
         $message = new Fluent(array(
             'subject' => trans('orchestra/foundation::email.credential.register', array('site' => $site)),
-            'view'    => 'orchestra/foundation::email.credential.register',
+            'view'    => 'emails.auth.register',
             'data'    => $data,
         ));
 
