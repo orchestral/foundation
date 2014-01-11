@@ -44,4 +44,22 @@ class ConsoleSupportServiceProvider extends ServiceProvider
             $this->instances[] = $this->app->register($provider);
         }
     }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        $provides = array();
+
+        foreach ($this->providers as $provider) {
+            $instance = $this->app->resolveProviderClass($provider);
+
+            $provides = array_merge($provides, $instance->provides());
+        }
+
+        return $provides;
+    }
 }

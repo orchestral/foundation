@@ -5,6 +5,11 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
+### v2.1.1 {#v2-1-1}
+
+* Fixes missing select2 on search user filter.
+* Provides actual service locator for `Orchestra\Foundation\ConsoleSupportServiceProvider`.
+
 ### v2.1.0 {#v2-1-0}
 
 * Split `Orchestra\Foundation\Services\AdminMenuHandler@handle` to allow easier customization.
