@@ -145,8 +145,8 @@ class ServiceProviderTest extends TestCase
             'orchestra.optimize',
         );
 
-        $this->assertFalse($foundation->isDeferred());
         $this->assertEquals($foundationProvides, $foundation->provides());
+        $this->assertFalse($foundation->isDeferred());
 
         $this->assertEquals($siteProvides, $site->provides());
         $this->assertTrue($site->isDeferred());
