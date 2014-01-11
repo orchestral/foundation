@@ -5,7 +5,7 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
-### v2.1.0@dev {#v2-1-0}
+### v2.1.0 {#v2-1-0}
 
 * Split `Orchestra\Foundation\Services\AdminMenuHandler@handle` to allow easier customization.
 * Implement `"orchestra.validate: extension.{name}"` and `Orchestra\Services\Validation\Extension`.
