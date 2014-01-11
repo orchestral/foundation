@@ -40,7 +40,7 @@
     $('input[type="date"]').datepicker({
       dateFormat: "yy-mm-dd"
     });
-    $('select.form-control[role!="switcher"]').select2().removeClass('form-control');
+    $('select.form-control[role!="switcher"], .navbar-form > select[role!="switcher"]').select2().removeClass('form-control');
     $('*[role="tooltip"]').tooltip();
     return true;
   };
