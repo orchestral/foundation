@@ -113,21 +113,48 @@ class ServiceProviderTest extends TestCase
         $foundation = new \Orchestra\Foundation\FoundationServiceProvider($app);
         $site       = new \Orchestra\Foundation\SiteServiceProvider($app);
         $reminder   = new \Orchestra\Foundation\Reminders\ReminderServiceProvider($app);
+        $console    = new \Orchestra\Foundation\ConsoleSupportServiceProvider($app);
 
         $foundationProvides = array(
-            'orchestra.app', 'orchestra.installed',
+            'orchestra.app',
+            'orchestra.installed',
         );
         $siteProvides = array(
             'orchestra.publisher',
-            'orchestra.publisher.ftp', 'orchestra.site',
-            'orchestra.role', 'orchestra.user',
+            'orchestra.publisher.ftp',
+            'orchestra.site',
+            'orchestra.role',
+            'orchestra.user',
         );
-        $authProvides = array(
-            'auth.reminder', 'auth.reminder.repository', 'command.auth.reminders',
+        $reminderProvides = array(
+            'auth.reminder',
+            'auth.reminder.repository',
+            'command.auth.reminders',
+        );
+        $consoleProvides = array(
+            'orchestra.commands.auth',
+            'command.debug',
+            'orchestra.commands.extension.activate',
+            'orchestra.commands.extension.deactivate',
+            'orchestra.commands.extension.detect',
+            'orchestra.commands.extension.migrate',
+            'orchestra.commands.extension.publish',
+            'orchestra.commands.extension.reset',
+            'orchestra.commands.memory',
+            'orchestra.commands.optimize',
+            'orchestra.optimize',
         );
 
         $this->assertEquals($foundationProvides, $foundation->provides());
+        $this->assertFalse($foundation->isDeferred());
+
         $this->assertEquals($siteProvides, $site->provides());
-        $this->assertEquals($authProvides, $reminder->provides());
+        $this->assertTrue($site->isDeferred());
+
+        $this->assertEquals($reminderProvides, $reminder->provides());
+        $this->assertTrue($reminder->isDeferred());
+
+        $this->assertEquals($consoleProvides, $console->provides());
+        $this->assertTrue($console->isDeferred());
     }
 }
