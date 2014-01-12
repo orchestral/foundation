@@ -43,7 +43,7 @@ Replace call to `handles('orchestra/foundation::*')` to `handles('orchestra::*')
   - `orchestra/notifier` to send e-mail notification per user.
 * Update assets:
   - Twitter Bootstrap v3.0.3
-  - Javie JavaScript Library v1.1.1
+  - Javie JavaScript Library v1.1.2
 
 ## Version 2.0 {#v2-0}
 
