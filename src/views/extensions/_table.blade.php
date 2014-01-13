@@ -53,7 +53,7 @@ use Orchestra\Support\Facades\Extension; ?>
 
 				<span class="meta">
 					<?php echo trans('orchestra/foundation::label.extensions.version', array('version' => $extension->version )); ?> |
-					<?php echo trans('orchestra/foundation::label.extensions.author', array('author' => sprintf('<a href="%s">%s</a>', $extension->url ?: '#', $extension->author))); ?>
+					<?php echo trans('orchestra/foundation::label.extensions.author', array('author' => sprintf('<a href="%s" target="_blank">%s</a>', $extension->url ?: '#', $extension->author))); ?>
 				</span>
 			</td>
 		</tr>
