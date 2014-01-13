@@ -88,6 +88,7 @@ class FoundationServiceProvider extends ServiceProvider
             'orchestra.mail'             => 'Orchestra\Notifier\Mailer',
             'orchestra.memory'           => 'Orchestra\Memory\MemoryManager',
             'orchestra.messages'         => 'Orchestra\Support\Messages',
+            'orchestra.notifier'         => 'Orchestra\Notifier\NotifierManager',
             'orchestra.profiler'         => 'Orchestra\Debug\Profiler',
             'orchestra.publisher'        => 'Orchestra\Foundation\Publisher\PublisherManager',
             'orchestra.resources'        => 'Orchestra\Resources\Environment',
