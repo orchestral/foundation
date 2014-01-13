@@ -5,6 +5,11 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
+### v2.1.2@dev {#v2-1-2}
+
+* Open hyperlink to extension author's URL on a new window/tab.
+* Allow all type-hinting to resolve to available service locator in Orchestra Platform.
+
 ### v2.1.1 {#v2-1-1}
 
 * Fixes missing select2 on search user filter.
