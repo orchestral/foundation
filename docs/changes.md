@@ -9,6 +9,7 @@ title: Foundation Change Log
 
 * Open hyperlink to extension author's URL on a new window/tab.
 * Allow all type-hinting to resolve to available service locator in Orchestra Platform.
+* Improve DI on `Orchestra\Foundation\AdminMenuHandler`.
 
 ### v2.1.1 {#v2-1-1}
 
