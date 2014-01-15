@@ -43,7 +43,9 @@ class AdminMenuHandler
     /**
      * Construct a new handler.
      *
-     * @param  \Orchestra\Foundation\Application $app
+     * @param  \Orchestra\Foundation\Application   $app
+     * @param  \Orchestra\Resources\Environment    $resouces
+     * @param  \Illuminate\Translation\Translator  $translator
      */
     public function __construct(Application $app, Resources $resources, Translator $translator)
     {
