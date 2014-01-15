@@ -56,6 +56,8 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerCoreContainerAliases();
+
         $path = realpath(__DIR__.'/../../');
 
         $this->package('orchestra/foundation', 'orchestra/foundation', $path);
@@ -65,6 +67,40 @@ class FoundationServiceProvider extends ServiceProvider
         include "{$path}/start.php";
 
         $this->app['events']->fire('orchestra.ready');
+    }
+
+    /**
+     * Register the core class aliases in the container.
+     *
+     * @return void
+     */
+    protected function registerCoreContainerAliases()
+    {
+        $aliases = array(
+            'orchestra.acl'              => 'Orchestra\Auth\Acl\Environment',
+            'orchestra.app'              => 'Orchestra\Foundation\Application',
+            'orchestra.asset'            => 'Orchestra\Asset\Environment',
+            'orchestra.decorator'        => 'Orchestra\View\Decorator',
+            'orchestra.extension.config' => 'Orchestra\Extension\ConfigManager',
+            'orchestra.extension.finder' => 'Orchestra\Extension\Finder',
+            'orchestra.extension'        => 'Orchestra\Extension\Environment',
+            'orchestra.form'             => 'Orchestra\Html\Form\Environment',
+            'orchestra.mail'             => 'Orchestra\Notifier\Mailer',
+            'orchestra.memory'           => 'Orchestra\Memory\MemoryManager',
+            'orchestra.messages'         => 'Orchestra\Support\Messages',
+            'orchestra.notifier'         => 'Orchestra\Notifier\NotifierManager',
+            'orchestra.profiler'         => 'Orchestra\Debug\Profiler',
+            'orchestra.publisher'        => 'Orchestra\Foundation\Publisher\PublisherManager',
+            'orchestra.resources'        => 'Orchestra\Resources\Environment',
+            'orchestra.site'             => 'Orchestra\Foundation\Site',
+            'orchestra.table'            => 'Orchestra\Html\Table\Environment',
+            'orchestra.theme'            => 'Orchestra\View\Theme\ThemeManager',
+            'orchestra.widget'           => 'Orchestra\Widget\WidgetManager',
+        );
+
+        foreach ($aliases as $key => $alias) {
+            $this->app->alias($key, $alias);
+        }
     }
 
     /**

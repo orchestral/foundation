@@ -1,10 +1,17 @@
 <?php namespace Orchestra\Foundation;
 
-use Orchestra\Support\Facades\App;
-use Orchestra\Support\Facades\Resources;
+use Illuminate\Translation\Translator;
+use Orchestra\Resources\Environment as Resources;
 
 class AdminMenuHandler
 {
+    /**
+     * Application instance.
+     *
+     * @var \Orchestra\Foundation\Application
+     */
+    protected $app;
+
     /**
      * ACL instance.
      *
@@ -15,9 +22,16 @@ class AdminMenuHandler
     /**
      * Menu instance.
      *
-     * @var \Orchestra\Widget\Drivers\Menu
+     * @var \Orchestra\Widget\MenuWidgetHandler
      */
     protected $menu;
+
+    /**
+     * Resources instance.
+     *
+     * @var \Orchestra\Resources\Environment
+     */
+    protected $resources;
 
     /**
      * Translator instance.
@@ -29,13 +43,17 @@ class AdminMenuHandler
     /**
      * Construct a new handler.
      *
-     * @return void
+     * @param  \Orchestra\Foundation\Application   $app
+     * @param  \Orchestra\Resources\Environment    $resouces
+     * @param  \Illuminate\Translation\Translator  $translator
      */
-    public function __construct()
+    public function __construct(Application $app, Resources $resources, Translator $translator)
     {
-        $this->menu       = App::menu();
-        $this->acl        = App::acl();
-        $this->translator = App::make('translator');
+        $this->app = $app;
+        $this->menu = $app->menu();
+        $this->acl = $app->acl();
+        $this->resources = $resources;
+        $this->translator = $translator;
     }
 
     /**
@@ -47,12 +65,12 @@ class AdminMenuHandler
     {
         $this->settings();
 
-        $resources = Resources::all();
+        $repository = $this->resources->all();
 
         // Resources menu should only be appended if there is actually
         // resources to be displayed.
-        if (! empty($resources)) {
-            $this->resources($resources);
+        if (! empty($repository)) {
+            $this->resources($repository);
         }
     }
 
@@ -63,28 +81,24 @@ class AdminMenuHandler
      */
     protected function settings()
     {
-        $acl        = $this->acl;
-        $menu       = $this->menu;
-        $translator = $this->translator;
-
         // Add menu when logged-user user has authorization to
         // `manage users`
-        if ($acl->can('manage-users')) {
-            $menu->add('users')
-                ->title($translator->trans('orchestra/foundation::title.users.list'))
-                ->link(App::handles('orchestra::users'));
+        if ($this->acl->can('manage-users')) {
+            $this->menu->add('users')
+                ->title($this->translator->trans('orchestra/foundation::title.users.list'))
+                ->link($this->app->handles('orchestra::users'));
         }
 
         // Add menu when logged-in user has authorization to
         // `manage orchestra`
-        if ($acl->can('manage-orchestra')) {
-            $menu->add('extensions', '>:home')
-                ->title($translator->trans('orchestra/foundation::title.extensions.list'))
-                ->link(App::handles('orchestra::extensions'));
+        if ($this->acl->can('manage-orchestra')) {
+            $this->menu->add('extensions', '>:home')
+                ->title($this->translator->trans('orchestra/foundation::title.extensions.list'))
+                ->link($this->app->handles('orchestra::extensions'));
 
-            $menu->add('settings')
-                ->title($translator->trans('orchestra/foundation::title.settings.list'))
-                ->link(App::handles('orchestra::settings'));
+            $this->menu->add('settings')
+                ->title($this->translator->trans('orchestra/foundation::title.settings.list'))
+                ->link($this->app->handles('orchestra::settings'));
         }
     }
 
@@ -96,13 +110,10 @@ class AdminMenuHandler
      */
     protected function resources($resources)
     {
-        $menu       = $this->menu;
-        $translator = $this->translator;
-
-        $boot = function ($menu, $translator) {
+        $boot = function ($app, $menu, $translator) {
             $menu->add('resources', '>:extensions')
                 ->title($translator->trans('orchestra/foundation::title.resources.list'))
-                ->link(App::handles('orchestra::resources'));
+                ->link($app->handles('orchestra::resources'));
         };
 
         foreach ($resources as $name => $option) {
@@ -111,13 +122,13 @@ class AdminMenuHandler
             }
 
             if (! is_null($boot)) {
-                $boot($menu, $translator);
+                $boot($this->app, $this->menu, $this->translator);
                 $boot = null;
             }
 
-            $menu->add($name, '^:resources')
+            $this->menu->add($name, '^:resources')
                 ->title($option->name)
-                ->link(App::handles("orchestra::resources/{$name}"));
+                ->link($this->app->handles("orchestra::resources/{$name}"));
         }
     }
 }
