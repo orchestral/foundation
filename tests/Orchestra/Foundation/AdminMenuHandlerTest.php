@@ -30,7 +30,7 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $acl = m::mock('\Orchestra\Auth\Acl\Container');
         $menu = m::mock('\Orchestra\Widget\MenuWidgetHandler');
         $resources = m::mock('\Orchestra\Resources\Environment[all]');
-        $translator = m::mock('\Illuminate\Translation\Translator');
+        $translator = m::mock('\Illuminate\Translation\Translator[trans]');
 
         $app->shouldReceive('acl')->once()->andReturn($acl)
             ->shouldReceive('menu')->once()->andReturn($menu);

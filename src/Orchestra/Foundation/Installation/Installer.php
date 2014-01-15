@@ -121,13 +121,13 @@ class Installer implements InstallerInterface
         // the basic roles is create using Fluent Query Builder we need
         // to manually insert the roles.
         $acl = $this->app['orchestra.acl']->make('orchestra');
+
+        $acl->attach($memory);
         $acl->actions()->attach($actions);
         $acl->roles()->attach(array_values($roles));
         $acl->allow($roles[$admin], $actions);
 
         $this->app['events']->fire('orchestra.install: acl', array($acl));
-
-        $acl->attach($memory);
     }
 
     /**
