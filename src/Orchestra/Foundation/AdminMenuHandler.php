@@ -27,6 +27,13 @@ class AdminMenuHandler
     protected $menu;
 
     /**
+     * Resources instance.
+     *
+     * @var \Orchestra\Resources\Environment
+     */
+    protected $resources;
+
+    /**
      * Translator instance.
      *
      * @var \Illuminate\Translation\Translator
@@ -37,13 +44,15 @@ class AdminMenuHandler
      * Construct a new handler.
      *
      * @param  \Orchestra\Foundation\Application   $app
+     * @param  \Orchestra\Resources\Environment    $resources
      * @param  \Illuminate\Translation\Translator  $translator
      */
-    public function __construct(Application $app, Translator $translator)
+    public function __construct(Application $app, Resources $resources, Translator $translator)
     {
         $this->app = $app;
         $this->menu = $app->menu();
         $this->acl = $app->acl();
+        $this->resources = $resources;
         $this->translator = $translator;
     }
 
@@ -56,7 +65,7 @@ class AdminMenuHandler
     {
         $this->settings();
 
-        $repository = $this->app->make('orchestra.resources')->all();
+        $repository = $this->resources->all();
 
         // Resources menu should only be appended if there is actually
         // resources to be displayed.

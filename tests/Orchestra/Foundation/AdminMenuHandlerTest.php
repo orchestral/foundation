@@ -33,8 +33,7 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $translator = m::mock('\Illuminate\Translation\Translator[trans]');
 
         $app->shouldReceive('acl')->once()->andReturn($acl)
-            ->shouldReceive('menu')->once()->andReturn($menu)
-            ->shouldReceive('make')->once()->with('orchestra.resources')->andReturn($resources);
+            ->shouldReceive('menu')->once()->andReturn($menu);
 
         $acl->shouldReceive('can')->once()->with('manage-users')->andReturn(true);
         $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.users.list')->andReturn('user');
@@ -79,7 +78,7 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('title')->once()->with('Foo')->andReturn($menu)
             ->shouldReceive('link')->once()->with('foo-resource')->andReturnNull();
 
-        $stub = new AdminMenuHandler($app, $translator);
+        $stub = new AdminMenuHandler($app, $resources, $translator);
         $stub->handle();
     }
 }
