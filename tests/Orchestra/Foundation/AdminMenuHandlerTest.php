@@ -30,10 +30,11 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $acl = m::mock('\Orchestra\Auth\Acl\Container');
         $menu = m::mock('\Orchestra\Widget\MenuWidgetHandler');
         $resources = m::mock('\Orchestra\Resources\Environment[all]');
-        $translator = m::mock('\Illuminate\Translation\Translator');
+        $translator = m::mock('\Illuminate\Translation\Translator[trans]');
 
         $app->shouldReceive('acl')->once()->andReturn($acl)
-            ->shouldReceive('menu')->once()->andReturn($menu);
+            ->shouldReceive('menu')->once()->andReturn($menu)
+            ->shouldReceive('make')->once()->with('orchestra.resources')->andReturn($resources);
 
         $acl->shouldReceive('can')->once()->with('manage-users')->andReturn(true);
         $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.users.list')->andReturn('user');
@@ -78,7 +79,7 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('title')->once()->with('Foo')->andReturn($menu)
             ->shouldReceive('link')->once()->with('foo-resource')->andReturnNull();
 
-        $stub = new AdminMenuHandler($app, $resources, $translator);
+        $stub = new AdminMenuHandler($app, $translator);
         $stub->handle();
     }
 }
