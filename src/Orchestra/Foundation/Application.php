@@ -72,6 +72,11 @@ class Application extends Abstractable\RouteManager
         }
 
         $this->services['orchestra.memory'] = $memory;
+
+        // Setup notifier and mailer.
+        $this->app['orchestra.notifier']->setDefaultDriver('orchestra');
+        $this->app['orchestra.mail']->attach($memory);
+
         $app['events']->fire('orchestra.started');
 
         return $this;
@@ -88,9 +93,6 @@ class Application extends Abstractable\RouteManager
         $this->services['orchestra.menu'] = $this->app['orchestra.widget']->make('menu.orchestra');
         $this->services['app.menu']       = $this->app['orchestra.widget']->make('menu.app');
         $this->services['orchestra.acl']  = $this->app['orchestra.acl']->make('orchestra');
-
-        // Setup default drivers.
-        $this->app['orchestra.notifier']->setDefaultDriver('orchestra');
     }
 
     /**
