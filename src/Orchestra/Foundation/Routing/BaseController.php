@@ -53,7 +53,7 @@ abstract class BaseController extends Controller
      */
     public function redirectWithMessage($to, $message = null, $type = 'success')
     {
-        ! is_null($message) and Messages::add($type, $message);
+        ! is_null($message) && Messages::add($type, $message);
 
         return $this->redirect($to);
     }

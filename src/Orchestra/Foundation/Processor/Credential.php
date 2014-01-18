@@ -66,7 +66,7 @@ class Credential extends AbstractableProcessor
             'password' => $input['password'],
         );
 
-        $remember = (isset($input['remember']) and $input['remember'] === 'yes');
+        $remember = (isset($input['remember']) && $input['remember'] === 'yes');
 
         // We should now attempt to login the user using Auth class. If this
         // failed simply return false.

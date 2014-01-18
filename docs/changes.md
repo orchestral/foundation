@@ -11,6 +11,7 @@ title: Foundation Change Log
 * Allow all type-hinting to resolve to available service locator in Orchestra Platform.
 * Improve DI on `Orchestra\Foundation\AdminMenuHandler`.
 * Eagerly attach `orchestra/memory` during installation.
+* Multiple refactor.
 
 ### v2.1.1 {#v2-1-1}
 

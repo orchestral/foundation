@@ -20,7 +20,7 @@
 			@endforeach
 		</tr>
 		@endforeach
-		@if (! count($rows) and $empty)
+		@if (! count($rows) && $empty)
 		<tr class="norecords">
 			<td colspan="{{ count($columns) }}">{{ $empty }}</td>
 		</tr>

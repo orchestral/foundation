@@ -84,6 +84,7 @@ class FoundationServiceProvider extends ServiceProvider
             'orchestra.extension.config' => 'Orchestra\Extension\ConfigManager',
             'orchestra.extension.finder' => 'Orchestra\Extension\Finder',
             'orchestra.extension'        => 'Orchestra\Extension\Environment',
+            'orchestra.facile'           => 'Orchestra\Facile\Environment',
             'orchestra.form'             => 'Orchestra\Html\Form\Environment',
             'orchestra.mail'             => 'Orchestra\Notifier\Mailer',
             'orchestra.memory'           => 'Orchestra\Memory\MemoryManager',

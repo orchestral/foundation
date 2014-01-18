@@ -48,7 +48,7 @@ class Requirement implements RequirementInterface
         $this->checklist['writableAsset']      = $this->checkWritableAsset();
 
         foreach ($this->checklist as $requirement) {
-            if ($requirement['is'] !== $requirement['should'] and true === $requirement['explicit']) {
+            if ($requirement['is'] !== $requirement['should'] && true === $requirement['explicit']) {
                 $this->installable = false;
             }
         }

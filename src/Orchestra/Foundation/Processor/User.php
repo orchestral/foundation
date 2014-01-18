@@ -142,7 +142,7 @@ class User extends AbstractableProcessor
 
         $user = App::make('orchestra.user')->findOrFail($id);
 
-        ! empty($input['password']) and $user->password = $input['password'];
+        ! empty($input['password']) && $user->password = $input['password'];
 
         try {
             $this->saving($user, $input, 'update');

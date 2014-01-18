@@ -27,7 +27,7 @@ class Extension extends AbstractablePresenter
 
             $form->fieldset(function ($fieldset) use ($handles, $name, $configurable) {
                 // We should only cater for custom URL handles for a route.
-                if (! is_null($handles) and $configurable !== false) {
+                if (! is_null($handles) && $configurable !== false) {
                     $fieldset->control('input:text', 'handles', function ($control) use ($handles) {
                         $control->label(trans('orchestra/foundation::label.extensions.handles'));
                         $control->value($handles);

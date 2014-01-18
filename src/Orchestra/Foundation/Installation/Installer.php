@@ -67,7 +67,7 @@ class Installer implements InstallerInterface
         }
 
         try {
-            ! $multipleAdmin and $this->hasNoExistingUser();
+            ! $multipleAdmin && $this->hasNoExistingUser();
 
             $this->runApplicationSetup($input);
 

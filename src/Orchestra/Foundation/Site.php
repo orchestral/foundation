@@ -115,7 +115,7 @@ class Site extends Relic
             return new Carbon($datetime, $timezone);
         }
 
-        ! is_null($timezone) and $datetime->timezone = $timezone;
+        ! is_null($timezone) && $datetime->timezone = $timezone;
 
         return $datetime;
     }

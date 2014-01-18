@@ -129,7 +129,7 @@ class Installer
 
         // For security, we shouldn't expose database connection to anyone,
         // This snippet change the password value into *.
-        if (isset($database['password']) and ($password = strlen($database['password']))) {
+        if (isset($database['password']) && ($password = strlen($database['password']))) {
             $database['password'] = str_repeat('*', $password);
         }
 
@@ -152,7 +152,7 @@ class Installer
         try {
             $eloquent = App::make($auth['model']);
 
-            return ($auth['driver'] === 'eloquent' and $eloquent instanceof User);
+            return ($auth['driver'] === 'eloquent' && $eloquent instanceof User);
         } catch (ReflectionException $e) {
             return false;
         }

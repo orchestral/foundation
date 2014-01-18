@@ -44,6 +44,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app['env'] = 'production';
         $app['orchestra.installed'] = false;
         $app['orchestra.acl'] = $acl = m::mock('\Orchestra\Auth\Acl\Container');
+        $app['orchestra.mail'] = $mailer = m::mock('\Orchestra\Notifier\Mailer[attach]');
         $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
         $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager[setDefaultDriver]');
         $app['orchestra.widget'] = $widget = m::mock('\Orchestra\Widget\MenuWidgetHandler');
@@ -59,6 +60,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
         $acl->shouldReceive('make')->once()->andReturn($acl)
             ->shouldReceive('attach')->once()->with($memoryProvider)->andReturn($acl);
+        $mailer->shouldReceive('attach')->once()->with($memoryProvider)->andReturnNull();
         $memory->shouldReceive('make')->once()->andReturn($memoryProvider)
             ->shouldReceive('make')->never()->with('runtime.orchestra')->andReturn($memoryProvider);
         $notifier->shouldReceive('setDefaultDriver')->once()->with('orchestra')->andReturnNull();
@@ -70,7 +72,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $translator->shouldReceive('get')->andReturn('foo');
         $event->shouldReceive('listen')->once()
                 ->with('orchestra.ready: admin', 'Orchestra\Foundation\AdminMenuHandler')->andReturnNull()
-            ->shouldReceive('fire')->once()->with('orchestra.started')->andReturnNull();
+            ->shouldReceive('fire')->once()->with('orchestra.started', array($memoryProvider))->andReturnNull();
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
         $request->shouldReceive('root')->andReturn('http://localhost')
             ->shouldReceive('secure')->andReturn(false);
@@ -89,6 +91,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app['env'] = 'production';
         $app['orchestra.installed'] = false;
         $app['orchestra.acl'] = $acl = m::mock('\Orchestra\Auth\Acl\Container');
+        $app['orchestra.mail'] = $mailer = m::mock('\Orchestra\Notifier\Mailer[attach]');
         $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
         $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager[setDefaultDriver]');
         $app['orchestra.widget'] = $widget = m::mock('\Orchestra\Widget\MenuWidgetHandler');
@@ -103,6 +106,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
         $acl->shouldReceive('make')->once()->andReturn($acl)
             ->shouldReceive('attach')->never()->andReturn($acl);
+        $mailer->shouldReceive('attach')->once()->with($memoryProvider)->andReturnNull();
         $memory->shouldReceive('make')->once()->andReturn($memoryProvider)
             ->shouldReceive('make')->once()->with('runtime.orchestra')->andReturn($memoryProvider);
         $notifier->shouldReceive('setDefaultDriver')->once()->with('orchestra')->andReturnNull();
