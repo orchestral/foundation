@@ -56,17 +56,17 @@ abstract class RouteManager
 
         list($package, $route, $item) = with(new NamespacedItemResolver)->parseKey($path);
 
-        ! empty($item) and $route = "{$route}.{$item}";
+        ! empty($item) && $route = "{$route}.{$item}";
 
         // Prepare route valid, since we already extract package from route
         // we can re append query string to route value.
-        empty($route) and $route = '';
-        empty($query) or $route = "{$route}?{$query}";
+        empty($route) && $route = '';
+        empty($query) || $route = "{$route}?{$query}";
 
         // If package is empty, we should consider that the route is using
         // app (or root path), it doesn't matter at this stage if app is
         // an extension or simply handling root path.
-        empty($package) and $package = "app";
+        empty($package) && $package = "app";
 
         return array($package, $route);
     }
@@ -99,7 +99,7 @@ abstract class RouteManager
 
         // Get the path from route configuration, and append route.
         $locate = $this->route($package)->to($route);
-        empty($locate) and $locate = '/';
+        empty($locate) && $locate = '/';
 
         if (starts_with($locate, 'http')) {
             return $locate;

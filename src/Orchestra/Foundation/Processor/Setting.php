@@ -85,7 +85,7 @@ class Setting extends AbstractableProcessor
             'name'    => $input['site_name'],
         ));
 
-        if ((empty($input['email_password']) and $input['change_password'] === 'no')) {
+        if ((empty($input['email_password']) && $input['change_password'] === 'no')) {
             $input['email_password'] = $memory->get('email.password');
         }
 

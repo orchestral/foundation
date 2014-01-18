@@ -14,7 +14,7 @@ class Publisher extends AbstractableProcessor
      */
     public function index($listener)
     {
-        P::connected() and P::execute();
+        P::connected() && P::execute();
 
         return $listener->redirectToPublisher();
     }
@@ -41,7 +41,7 @@ class Publisher extends AbstractableProcessor
 
         Session::put('orchestra.ftp', $input);
 
-        if (P::connected() and ! empty($queues)) {
+        if (P::connected() && ! empty($queues)) {
             P::execute();
         }
 

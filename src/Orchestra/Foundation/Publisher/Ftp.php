@@ -135,7 +135,7 @@ class Ftp implements UploaderInterface
         $lists = $this->connection->allFiles($path);
 
         $ignored_path = function ($dir) {
-            return (substr($dir, -3) === '/..' or substr($dir, -2) === '/.');
+            return (substr($dir, -3) === '/..' || substr($dir, -2) === '/.');
         };
 
         // this is to check if return value is just a single file,
@@ -221,7 +221,7 @@ class Ftp implements UploaderInterface
         // Alternatively if vendor has been created before, we need to
         // change the permission on the vendor folder instead of
         // public/packages.
-        if (! $recursively and str_contains($name, '/')) {
+        if (! $recursively && str_contains($name, '/')) {
             list($vendor,) = explode('/', $name);
 
             if ($this->app['files']->isDirectory($folder = "{$basePath}{$vendor}/")) {

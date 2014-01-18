@@ -66,7 +66,7 @@ class Extension extends AbstractableProcessor
      */
     public function deactivate($listener, Fluent $extension)
     {
-        if (! E::started($extension->name) and ! E::activated($extension->name)) {
+        if (! E::started($extension->name) && ! E::activated($extension->name)) {
             return $listener->suspend(404);
         }
 
