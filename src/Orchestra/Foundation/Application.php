@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
 use Exception;
+use Orchestra\Memory\Provider;
 
 class Application extends Abstractable\RouteManager
 {
@@ -72,12 +73,7 @@ class Application extends Abstractable\RouteManager
         }
 
         $this->services['orchestra.memory'] = $memory;
-
-        // Setup notifier and mailer.
-        $this->app['orchestra.notifier']->setDefaultDriver('orchestra');
-        $this->app['orchestra.mail']->attach($memory);
-
-        $app['events']->fire('orchestra.started');
+        $this->prepare($memory);
 
         return $this;
     }
@@ -93,6 +89,20 @@ class Application extends Abstractable\RouteManager
         $this->services['orchestra.menu'] = $this->app['orchestra.widget']->make('menu.orchestra');
         $this->services['app.menu']       = $this->app['orchestra.widget']->make('menu.app');
         $this->services['orchestra.acl']  = $this->app['orchestra.acl']->make('orchestra');
+    }
+
+    /**
+     * Prepare application.
+     *
+     * @param  \Orchestra\Memory\Provider   $memory
+     * @return void
+     */
+    protected function prepare(Provider $memory)
+    {
+        $this->app['orchestra.notifier']->setDefaultDriver('orchestra');
+        $this->app['orchestra.mail']->attach($memory);
+
+        $this->app['events']->fire('orchestra.started', array($memory));
     }
 
     /**
