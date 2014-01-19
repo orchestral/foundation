@@ -49,7 +49,7 @@ class Installer
         list($database, $auth, $authentication) = $this->getRunningConfiguration();
 
         // If the auth status is false, installation shouldn't be possible.
-        (true === $authentication) or $installable = false;
+        (true === $authentication) || $installable = false;
 
         $data = array(
             'database'       => $database,
