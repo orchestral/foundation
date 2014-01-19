@@ -72,7 +72,6 @@ class Application extends Abstractable\RouteManager
             $app['orchestra.installed'] = false;
         }
 
-        $this->services['orchestra.memory'] = $memory;
         $this->prepare($memory);
 
         return $this;
@@ -99,6 +98,7 @@ class Application extends Abstractable\RouteManager
      */
     protected function prepare(Provider $memory)
     {
+        $this->services['orchestra.memory'] = $memory;
         $this->app['orchestra.notifier']->setDefaultDriver('orchestra');
         $this->app['orchestra.mail']->attach($memory);
 
