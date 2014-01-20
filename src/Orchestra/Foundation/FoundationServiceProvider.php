@@ -19,6 +19,8 @@ class FoundationServiceProvider extends ServiceProvider
         });
 
         $this->registerAliases();
+        $this->registerCoreContainerAliases();
+        $this->registerEvents();
     }
 
     /**
@@ -47,31 +49,6 @@ class FoundationServiceProvider extends ServiceProvider
         $loader->alias('Orchestra\Table', 'Orchestra\Support\Facades\Table');
         $loader->alias('Orchestra\Theme', 'Orchestra\Support\Facades\Theme');
         $loader->alias('Orchestra\Widget', 'Orchestra\Support\Facades\Widget');
-    }
-
-    /**
-     * Bootstrap the application events.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        $app = $this->app;
-        $this->registerCoreContainerAliases();
-
-        $path = realpath(__DIR__.'/../../');
-
-        $this->package('orchestra/foundation', 'orchestra/foundation', $path);
-
-        $app['orchestra.app']->boot();
-
-        include "{$path}/start.php";
-
-        $app['events']->fire('orchestra.ready');
-
-        $app->after(function () use ($app) {
-            $app['events']->fire('orchestra.done');
-        });
     }
 
     /**
@@ -107,6 +84,38 @@ class FoundationServiceProvider extends ServiceProvider
         foreach ($aliases as $key => $alias) {
             $this->app->alias($key, $alias);
         }
+    }
+
+    /**
+     * Register additional events for application.
+     *
+     * @return void
+     */
+    protected function registerEvents()
+    {
+        $app = $this->app;
+
+        $app->after(function () use ($app) {
+            $app['events']->fire('orchestra.done');
+        });
+    }
+
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $path = realpath(__DIR__.'/../../');
+
+        $this->package('orchestra/foundation', 'orchestra/foundation', $path);
+
+        $this->app['orchestra.app']->boot();
+
+        include "{$path}/start.php";
+
+        $this->app['events']->fire('orchestra.ready');
     }
 
     /**

@@ -157,4 +157,20 @@ class ServiceProviderTest extends TestCase
         $this->assertEquals($consoleProvides, $console->provides());
         $this->assertTrue($console->isDeferred());
     }
+
+    public function testRegisterEventsOnAfter()
+    {
+        $app = m::mock('\Illuminate\Foundation\Application[after]');
+        $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
+
+        $events->shouldReceive('fire')->once()->with('orchestra.done')->andReturnNull();
+
+        $app->shouldReceive('after')->once()->with(m::type('Closure'))
+            ->andReturnUsing(function ($c) {
+                $c();
+            });
+
+        $foundation = new \Orchestra\Foundation\FoundationServiceProvider($app);
+        $foundation->register();
+    }
 }
