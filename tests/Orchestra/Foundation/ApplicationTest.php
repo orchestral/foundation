@@ -48,10 +48,10 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
         $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager[setDefaultDriver]');
         $app['orchestra.widget'] = $widget = m::mock('\Orchestra\Widget\MenuWidgetHandler');
-        $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator');
-        $app['events'] = $event = m::mock('\Illuminate\Events\Dispatcher[listen,fire]');
         $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get,set]');
+        $app['events'] = $event = m::mock('\Illuminate\Events\Dispatcher[listen,fire]');
         $app['request'] = $request = m::mock('\Illuminate\Http\Request');
+        $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator');
 
         $memoryProvider = m::mock('\Orchestra\Memory\Provider');
 
@@ -96,6 +96,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager[setDefaultDriver]');
         $app['orchestra.widget'] = $widget = m::mock('\Orchestra\Widget\MenuWidgetHandler');
         $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get,set]');
+        $app['events'] = $event = m::mock('\Illuminate\Events\Dispatcher[listen,fire]');
         $app['request'] = $request = m::mock('\Illuminate\Http\Request');
 
         $memoryProvider = m::mock('\Orchestra\Memory\Provider');
@@ -118,6 +119,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('secure')->andReturn(false);
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin')
             ->shouldReceive('set')->never()->with('mail', 'memory.email')->andReturnNull();
+        $event->shouldReceive('fire')->once()->with('orchestra.started', array($memoryProvider))->andReturnNull();
         $widget->shouldReceive('link')->with('http://localhost/admin/install')->once();
 
         return $app;
@@ -182,7 +184,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
      */
     public function testIlluminateMethod()
     {
-        $stub = new Application($this->app);
+        $app = $this->app;
+        $app['request'] = $request = m::mock('\Illuminate\Http\Request');
+
+        $stub = new Application($app);
+
         $this->assertInstanceOf('\Illuminate\Foundation\Application', $stub->illuminate());
         $this->assertInstanceOf('\Illuminate\Http\Request', $stub->make('request'));
     }

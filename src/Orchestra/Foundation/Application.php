@@ -33,76 +33,36 @@ class Application extends Abstractable\RouteManager
         // Set the indicator that Application has been booted.
         $this->booted = true;
 
-        $app    = $this->app;
-        $memory = null;
-
-        $this->setup();
-
-        try {
-            // Initiate Memory class from App, this to allow advanced user
-            // to use other implementation if there is a need for it.
-            $memory = $app['orchestra.memory']->make();
-
-            if (is_null($memory->get('site.name'))) {
-                throw new Exception('Installation is not completed');
-            }
-
-            // In event where we reach this point, we can consider no
-            // exception has occur, we should be able to compile acl and
-            // menu configuration
-            $this->services['orchestra.acl']->attach($memory);
-
-            // In any event where Memory failed to load, we should set
-            // Installation status to false routing for installation is
-            // enabled.
-            $app['orchestra.installed'] = true;
-
-            $this->createAdminMenu();
-        } catch (Exception $e) {
-            // In any case where Exception is catched, we can be assure that
-            // Installation is not done/completed, in this case we should
-            // use runtime/in-memory setup
-            $memory = $app['orchestra.memory']->make('runtime.orchestra');
-            $memory->put('site.name', 'Orchestra Platform');
-
-            $this->services['orchestra.menu']->add('install')
-                ->title('Install')
-                ->link($this->handles('orchestra::install'));
-
-            $app['orchestra.installed'] = false;
-        }
-
-        $this->prepare($memory);
+        $this->bootApplication();
 
         return $this;
     }
 
     /**
-     * Setup application services.
+     * Create Administration Menu for Orchestra Platform.
      *
      * @return void
      */
-    protected function setup()
+    protected function createAdminMenu()
     {
-        // Make Menu instance for backend and frontend appliction
-        $this->services['orchestra.menu'] = $this->app['orchestra.widget']->make('menu.orchestra');
-        $this->services['app.menu']       = $this->app['orchestra.widget']->make('menu.app');
-        $this->services['orchestra.acl']  = $this->app['orchestra.acl']->make('orchestra');
+        $menu    = $this->services['orchestra.menu'];
+        $handler = 'Orchestra\Foundation\AdminMenuHandler';
+
+        $menu->add('home')
+            ->title($this->app['translator']->get('orchestra/foundation::title.home'))
+            ->link($this->handles('orchestra::/'));
+
+        $this->app['events']->listen('orchestra.ready: admin', $handler);
     }
 
     /**
-     * Prepare application.
+     * Get Application instance.
      *
-     * @param  \Orchestra\Memory\Provider   $memory
-     * @return void
+     * @return \Illuminate\Foundation\Application
      */
-    protected function prepare(Provider $memory)
+    public function illuminate()
     {
-        $this->services['orchestra.memory'] = $memory;
-        $this->app['orchestra.notifier']->setDefaultDriver('orchestra');
-        $this->app['orchestra.mail']->attach($memory);
-
-        $this->app['events']->fire('orchestra.started', array($memory));
+        return $this->app;
     }
 
     /**
@@ -116,13 +76,103 @@ class Application extends Abstractable\RouteManager
     }
 
     /**
-     * Get Application instance.
+     * Boot application.
      *
-     * @return \Illuminate\Foundation\Application
+     * @param  \Orchestra\Memory\Provider   $memory
+     * @return void
      */
-    public function illuminate()
+    protected function bootApplication()
     {
-        return $this->app;
+        $this->registerBaseServices();
+        $app = $this->app;
+
+        try {
+            $memory = $this->bootInstalledApplication();
+        } catch (Exception $e) {
+            $memory = $this->bootNewApplication();
+        }
+
+        $this->services['orchestra.memory'] = $memory;
+
+        $this->registerComponents($memory);
+
+        $app['events']->fire('orchestra.started', array($memory));
+    }
+
+    /**
+     * Run booting on installed application.
+     *
+     * @return \Orchestra\Memory\Provider
+     */
+    protected function bootInstalledApplication()
+    {
+        // Initiate Memory class from App, this to allow advanced user
+        // to use other implementation if there is a need for it.
+        $memory = $this->app['orchestra.memory']->make();
+
+        if (is_null($memory->get('site.name'))) {
+            throw new Exception('Installation is not completed');
+        }
+
+        // In event where we reach this point, we can consider no
+        // exception has occur, we should be able to compile acl and
+        // menu configuration
+        $this->services['orchestra.acl']->attach($memory);
+
+        // In any event where Memory failed to load, we should set
+        // Installation status to false routing for installation is
+        // enabled.
+        $this->app['orchestra.installed'] = true;
+
+        $this->createAdminMenu();
+
+        return $memory;
+    }
+
+    /**
+     * Run booting on new application.
+     *
+     * @return \Orchestra\Memory\Provider
+     */
+    protected function bootNewApplication()
+    {
+        // In any case where Exception is catched, we can be assure that
+        // Installation is not done/completed, in this case we should
+        // use runtime/in-memory setup
+        $memory = $this->app['orchestra.memory']->make('runtime.orchestra');
+        $memory->put('site.name', 'Orchestra Platform');
+
+        $this->services['orchestra.menu']->add('install')
+            ->title('Install')
+            ->link($this->handles('orchestra::install'));
+
+        $this->app['orchestra.installed'] = false;
+
+        return $memory;
+    }
+
+    /**
+     * Register base application services.
+     *
+     * @return void
+     */
+    protected function registerBaseServices()
+    {
+        $this->services['orchestra.menu'] = $this->app['orchestra.widget']->make('menu.orchestra');
+        $this->services['app.menu']       = $this->app['orchestra.widget']->make('menu.app');
+        $this->services['orchestra.acl']  = $this->app['orchestra.acl']->make('orchestra');
+    }
+
+    /**
+     * Register base application components.
+     *
+     * @param  \Orchestra\Memory\Provider  $memory
+     * @return void
+     */
+    protected function registerComponents(Provider $memory)
+    {
+        $this->app['orchestra.notifier']->setDefaultDriver('orchestra');
+        $this->app['orchestra.mail']->attach($memory);
     }
 
     /**
@@ -146,22 +196,5 @@ class Application extends Abstractable\RouteManager
         $method = "{$action}.{$method}";
 
         return (isset($this->services[$method]) ? $this->services[$method] : null);
-    }
-
-    /**
-     * Create Administration Menu for Orchestra Platform.
-     *
-     * @return void
-     */
-    protected function createAdminMenu()
-    {
-        $menu    = $this->services['orchestra.menu'];
-        $handler = 'Orchestra\Foundation\AdminMenuHandler';
-
-        $menu->add('home')
-            ->title($this->app['translator']->get('orchestra/foundation::title.home'))
-            ->link($this->handles('orchestra::/'));
-
-        $this->app['events']->listen('orchestra.ready: admin', $handler);
     }
 }
