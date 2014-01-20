@@ -84,7 +84,6 @@ class Application extends Abstractable\RouteManager
     protected function bootApplication()
     {
         $this->registerBaseServices();
-        $app = $this->app;
 
         try {
             $memory = $this->bootInstalledApplication();
@@ -96,7 +95,7 @@ class Application extends Abstractable\RouteManager
 
         $this->registerComponents($memory);
 
-        $app['events']->fire('orchestra.started', array($memory));
+        $this->app['events']->fire('orchestra.started', array($memory));
     }
 
     /**

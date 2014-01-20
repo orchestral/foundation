@@ -56,17 +56,22 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $app = $this->app;
         $this->registerCoreContainerAliases();
 
         $path = realpath(__DIR__.'/../../');
 
         $this->package('orchestra/foundation', 'orchestra/foundation', $path);
 
-        $this->app['orchestra.app']->boot();
+        $app['orchestra.app']->boot();
 
         include "{$path}/start.php";
 
-        $this->app['events']->fire('orchestra.ready');
+        $app['events']->fire('orchestra.ready');
+
+        $app->after(function () use ($app) {
+            $app['events']->fire('orchestra.done');
+        });
     }
 
     /**
