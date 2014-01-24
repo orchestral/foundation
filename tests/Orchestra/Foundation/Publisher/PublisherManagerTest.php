@@ -77,7 +77,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.messages'] = $messages = m::mock('\Orchestra\Support\Messages[add]');
         $app['path.public'] = $path = '/var/foo/public';
         $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem[isDirectory]');
-        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment[activate]');
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory[activate]');
         $app['orchestra.publisher.ftp'] = $client = m::mock('\Orchestra\Support\Ftp');
         $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator[trans]');
         $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->shouldDeferMissing();

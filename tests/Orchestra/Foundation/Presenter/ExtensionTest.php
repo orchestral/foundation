@@ -75,7 +75,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
                     $c($fieldset);
                 });
 
-        $app['orchestra.extension'] = m::mock('\Orchestra\Extension\Environment[option]');
+        $app['orchestra.extension'] = m::mock('\Orchestra\Extension\Factory[option]');
         $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->shouldDeferMissing();
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[link]');
 

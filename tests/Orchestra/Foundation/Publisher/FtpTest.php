@@ -135,7 +135,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
         $app['session'] = $this->getSessionMock();
         $app['path.public'] = $path = '/var/foo/public';
         $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem[isDirectory]');
-        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment[activate]');
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory[activate]');
 
         $client->shouldReceive('setUp')->once()->with(array('ftpconfig'))->andReturnNull()
             ->shouldReceive('connect')->once()->andReturn(true)
@@ -169,7 +169,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
         $app['session'] = $this->getSessionMock();
         $app['path.public'] = $path = '/var/foo/public';
         $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem[isDirectory]');
-        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment[activate]');
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory[activate]');
 
         $client->shouldReceive('setUp')->once()->with(array('ftpconfig'))->andReturnNull()
             ->shouldReceive('connect')->once()->andReturn(true)

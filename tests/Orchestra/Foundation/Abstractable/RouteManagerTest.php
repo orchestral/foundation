@@ -82,7 +82,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getApplicationMocks();
         $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
-        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment[route]');
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory[route]');
         $app['url'] = $url = m::mock('\Illuminate\Routing\UrlGenerator[to]');
 
         $appRoute = m::mock('\Orchestra\Extension\RouteGenerator[to]');
@@ -114,7 +114,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
         $app = $this->getApplicationMocks();
         $request = $app['request'];
         $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
-        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment[route]');
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory[route]');
         $app['url'] = $url = m::mock('\Illuminate\Routing\UrlGenerator[to]');
 
         $appRoute = m::mock('\Orchestra\Extension\RouteGenerator[is]');
@@ -145,7 +145,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
         $request = $app['request'];
         $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
         $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher[makeListener]');
-        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment[route]');
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory[route]');
         $app['url'] = $url = m::mock('\Illuminate\Routing\UrlGenerator[to]');
 
         $appRoute = m::mock('\Orchestra\Extension\RouteGenerator');
