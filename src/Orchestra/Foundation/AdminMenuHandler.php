@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
 use Illuminate\Translation\Translator;
-use Orchestra\Resources\Environment as Resources;
+use Orchestra\Resources\Factory as Resources;
 
 class AdminMenuHandler
 {
@@ -29,7 +29,7 @@ class AdminMenuHandler
     /**
      * Resources instance.
      *
-     * @var \Orchestra\Resources\Environment
+     * @var \Orchestra\Resources\Factory
      */
     protected $resources;
 
@@ -44,7 +44,7 @@ class AdminMenuHandler
      * Construct a new handler.
      *
      * @param  \Orchestra\Foundation\Application   $app
-     * @param  \Orchestra\Resources\Environment    $resources
+     * @param  \Orchestra\Resources\Factory        $resources
      * @param  \Illuminate\Translation\Translator  $translator
      */
     public function __construct(Application $app, Resources $resources, Translator $translator)
