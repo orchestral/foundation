@@ -52,7 +52,7 @@
 
 		<div class="form-group">
 			<label class="three columns control-label"><?php echo trans('orchestra/foundation::install.connection.status'); ?></label>
-			
+
 			<div class="nine columns">
 				<?php if (true === $databaseConnection['is']) : ?>
 				<button class="btn btn-success disabled input-xlarge">
@@ -62,7 +62,11 @@
 				<button class="btn btn-danger disabled input-xlarge">
 					<?php echo trans('orchestra/foundation::install.connection.fail'); ?>
 				</button>
-					<?php echo $databaseConnection['data']; ?>
+				<?php if (! empty($databaseConnection['data']['error'])) : ?>
+				<div class="alert alert-danger">
+					<?php echo $databaseConnection['data']['error']; ?>
+				</div>
+				<?php endif; ?>
 				<?php endif; ?>
 			</div>
 		</div>
