@@ -69,6 +69,7 @@ class Requirement implements RequirementInterface
             $this->app['db']->connection()->getPdo();
         } catch (PDOException $e) {
             $schema['is'] = false;
+	    $schema['data'] = $e->getMessage();
         }
 
         return array_merge($this->getChecklistSchema(), $schema);
