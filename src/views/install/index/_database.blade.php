@@ -62,9 +62,9 @@
 				<button class="btn btn-danger disabled input-xlarge">
 					<?php echo trans('orchestra/foundation::install.connection.fail'); ?>
 				</button>
-				<?php if (! empty($databaseConnection['data']['error'])) : ?>
+				<?php if (isset($databaseConnection['data']['error'])) : ?>
 				<div class="alert alert-danger">
-					<?php echo $databaseConnection['data']['error']; ?>
+					<strong>Error:</strong> <?php echo $databaseConnection['data']['error']; ?>
 				</div>
 				<?php endif; ?>
 				<?php endif; ?>

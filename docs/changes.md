@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
+### v2.1.3@dev {#v2-1-3}
+
+* Show database connection issues (if any) during installation process.
+
 ### v2.1.2 {#v2-1-2}
 
 * Open hyperlink to extension author's URL on a new window/tab.
