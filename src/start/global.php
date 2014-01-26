@@ -67,9 +67,5 @@ Event::listen('orchestra.auth: roles', function ($user, $roles) {
         return ;
     }
 
-    foreach ($user->roles()->lists('name') as $name) {
-        array_push($roles, $name);
-    }
-
-    return $roles;
+    return $user->getRoles();
 });

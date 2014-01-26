@@ -8,6 +8,7 @@ title: Foundation Change Log
 ### v2.1.3@dev {#v2-1-3}
 
 * Show database connection issues (if any) during installation process.
+* Simplify roles detection using `Orchestra\Model\User::getRoles()`.
 
 ### v2.1.2 {#v2-1-2}
 
