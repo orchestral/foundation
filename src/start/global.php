@@ -67,5 +67,5 @@ Event::listen('orchestra.auth: roles', function ($user, $roles) {
         return ;
     }
 
-    return $user->getRoles();
+    return $roles = $user->getRoles();
 });
