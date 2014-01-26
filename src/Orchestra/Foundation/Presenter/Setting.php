@@ -13,13 +13,11 @@ class Setting extends AbstractablePresenter
      */
     public function form($model)
     {
-        $me = $this;
+        return Form::of('orchestra.settings', function ($form) use ($model) {
+            $form->setup($this, 'orchestra::settings', $model);
 
-        return Form::of('orchestra.settings', function ($form) use ($me, $model) {
-            $form->setup($me, 'orchestra::settings', $model);
-
-            $me->application($form);
-            $me->mailer($form, $model);
+            $this->application($form);
+            $this->mailer($form, $model);
         });
     }
 
@@ -29,7 +27,7 @@ class Setting extends AbstractablePresenter
      * @return \Orchestra\Html\Form\Grid $form
      * @return void
      */
-    public function application($form)
+    protected function application($form)
     {
         $form->fieldset(trans('orchestra/foundation::label.settings.application'), function ($fieldset) {
             $fieldset->control('input:text', 'site_name', function ($control) {
@@ -59,7 +57,7 @@ class Setting extends AbstractablePresenter
      * @param  \Illuminate\Support\Fluent $model
      * @return void
      */
-    public function mailer($form, $model)
+    protected function mailer($form, $model)
     {
         $form->fieldset(trans('orchestra/foundation::label.settings.mail'), function ($fieldset) use ($model) {
             $fieldset->control('select', 'email_driver', function ($control) {

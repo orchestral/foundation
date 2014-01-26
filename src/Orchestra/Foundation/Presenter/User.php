@@ -109,10 +109,8 @@ class User extends AbstractablePresenter
      */
     public function form($model)
     {
-        $me = $this;
-
-        return Form::of('orchestra.users', function ($form) use ($me, $model) {
-            $form->resource($me, 'orchestra/foundation::users', $model);
+        return Form::of('orchestra.users', function ($form) use ($model) {
+            $form->resource($this, 'orchestra/foundation::users', $model);
 
             $form->hidden('id');
 

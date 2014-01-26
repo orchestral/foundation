@@ -13,10 +13,8 @@ class Account extends AbstractablePresenter
      */
     public function profile($model, $url)
     {
-        $me = $this;
-
-        return Form::of('orchestra.account', function ($form) use ($me, $model, $url) {
-            $form->setup($me, $url, $model);
+        return Form::of('orchestra.account', function ($form) use ($model, $url) {
+            $form->setup($this, $url, $model);
             $form->hidden('id');
 
             $form->fieldset(function ($fieldset) {
@@ -39,10 +37,8 @@ class Account extends AbstractablePresenter
      */
     public function password($model)
     {
-        $me = $this;
-
-        return Form::of('orchestra.account: password', function ($form) use ($me, $model) {
-            $form->setup($me, 'orchestra::account/password', $model);
+        return Form::of('orchestra.account: password', function ($form) use ($model) {
+            $form->setup($this, 'orchestra::account/password', $model);
             $form->hidden('id');
 
             $form->fieldset(function ($fieldset) {

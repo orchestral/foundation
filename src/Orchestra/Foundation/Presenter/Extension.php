@@ -15,12 +15,10 @@ class Extension extends AbstractablePresenter
      */
     public function configure($model, $name)
     {
-        $me = $this;
-
-        return Form::of("orchestra.extension: {$name}", function ($form) use ($me, $model, $name) {
+        return Form::of("orchestra.extension: {$name}", function ($form) use ($model, $name) {
             $uid = str_replace('/', '.', $name);
 
-            $form->setup($me, "orchestra::extensions/configure/{$uid}", $model);
+            $form->setup($this, "orchestra::extensions/configure/{$uid}", $model);
 
             $handles      = isset($model->handles) ? $model->handles : E::option($name, 'handles');
             $configurable = isset($model->configurable) ? $model->configurable : true;
