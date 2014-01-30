@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="twelve columns rounded box">
+	<div class="twelve columns">
 		<h3>{{ trans('orchestra/foundation::install.system.title') }}</h3>
 
 		<p>{{ trans('orchestra/foundation::install.system.description') }}</p>

@@ -1,7 +1,7 @@
 <? use Illuminate\Support\Facades\HTML; ?>
 
 <div class="row">
-	<div class="twelve columns rounded box">
+	<div class="twelve columns">
 		<h3>{{ trans('orchestra/foundation::install.auth.title') }}</h3>
 
 		<p>

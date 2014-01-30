@@ -23,7 +23,7 @@ unset($checklist['databaseConnection']); ?>
 			<div class="progress-bar progress-bar-success" style="width: 0%"></div>
 		</div>
 	</div>
-	<div id="installation" class="six columns form-horizontal">
+	<div id="installation" class="six columns box form-horizontal">
 		@include('orchestra/foundation::install.index._requirement')
 		@include('orchestra/foundation::install.index._database')
 		@include('orchestra/foundation::install.index._authentication')
