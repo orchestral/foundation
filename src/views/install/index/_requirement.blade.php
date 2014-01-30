@@ -1,47 +1,47 @@
 <div class="row">
-	<div class="twelve columns rounded box">
-		<h3><?php echo trans('orchestra/foundation::install.system.title'); ?></h3>
+	<div class="twelve columns">
+		<h3>{{ trans('orchestra/foundation::install.system.title') }}</h3>
 
-		<p><?php echo trans('orchestra/foundation::install.system.description'); ?></p>
+		<p>{{ trans('orchestra/foundation::install.system.description') }}</p>
 
 		<table class="table table-bordered table-striped requirements">
 			<thead>
 				<tr>
-					<th><?php echo trans('orchestra/foundation::install.system.requirement'); ?></th>
-					<th><?php echo trans('orchestra/foundation::install.system.status'); ?></th>
+					<th>{{ trans('orchestra/foundation::install.system.requirement') }}</th>
+					<th>{{ trans('orchestra/foundation::install.system.status') }}</th>
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach ($checklist as $name => $requirement) : ?>
+				@foreach ($checklist as $name => $requirement)
 				<tr>
 					<td>
-						<?php echo trans("orchestra/foundation::install.system.{$name}.name", $requirement['data']); ?>
-						<?php if ( ! ($requirement['is'] === $requirement['should'])) : ?>
-						<div class="alert<?php echo true === $requirement['explicit'] ? ' alert-error ' : ''; ?>">
-							<strong><?php echo trans("orchestra/foundation::install.solution"); ?>:</strong>
-							<?php echo trans("orchestra/foundation::install.system.{$name}.solution", $requirement['data']); ?>
+						{{ trans("orchestra/foundation::install.system.{$name}.name", $requirement['data']) }}
+						@if (! ($requirement['is'] === $requirement['should']))
+						<div class="alert{{ true === $requirement['explicit'] ? ' alert-error ' : '' }}">
+							<strong>{{ trans("orchestra/foundation::install.solution") }}:</strong>
+							{{ trans("orchestra/foundation::install.system.{$name}.solution", $requirement['data']) }}
 						</div>
-						<?php endif; ?>
+						@endif
 					</td>
 					<td>
-						<?php if ($requirement['is'] === $requirement['should']) : ?>
+						@if ($requirement['is'] === $requirement['should'])
 							<button class="btn btn-success btn-block disabled">
-								<?php echo trans('orchestra/foundation::install.status.work'); ?>
+								{{ trans('orchestra/foundation::install.status.work') }}
 							</button>
-						<?php else : 
-							if (true === $requirement['explicit']) : ?>
+						@else
+							@if (true === $requirement['explicit'])
 								<button class="btn btn-danger btn-block disabled">
-									<?php echo trans('orchestra/foundation::install.status.not'); ?>
+									{{ trans('orchestra/foundation::install.status.not') }}
 								</button>
-							<?php else : ?>
+							@else
 								<button class="btn btn-warning btn-block disabled">
-									<?php echo trans('orchestra/foundation::install.status.still'); ?>
+									{{ trans('orchestra/foundation::install.status.still') }}
 								</button>
-							<?php endif;
-						endif; ?>
+							@endif
+						@endif
 					</td>
 				</tr>
-				<?php endforeach; ?>
+				@endforeach
 			</tbody>
 		</table>
 	</div>

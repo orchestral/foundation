@@ -18,7 +18,7 @@
 			<div class="progress-bar progress-bar-success" style="width: 50%"></div>
 		</div>
 	</div>
-	<div class="six columns rounded box">
+	<div id="installation" class="six columns box">
 		@include('orchestra/foundation::install.create._form')
 	</div>
 </div>

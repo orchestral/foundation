@@ -20,7 +20,7 @@
 		</div>
 	</div>
 
-	<div class="six columns rounded box">
+	<div id="installation" class="six columns box">
 		<h3>{{ trans('orchestra/foundation::install.steps.done') }}</h3>
 	</div>
 </div>
