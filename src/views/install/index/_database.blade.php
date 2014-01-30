@@ -1,73 +1,73 @@
 <div class="row">
 	<div class="twelve columns rounded box">
-		<h3><?php echo trans('orchestra/foundation::install.database.title'); ?></h3>
+		<h3>{{ trans('orchestra/foundation::install.database.title') }}</h3>
 
 		<p>
-			<?php echo trans('orchestra/foundation::install.verify', array(
+			{{ trans('orchestra/foundation::install.verify', array(
 				'filename' => '<code title="'.app_path().'config/database.php'.'">app/config/database.php</code>'
-			)); ?>
+			)) }}
 		</p>
 
 		<div class="form-group">
-			<label class="three columns control-label"><?php echo trans('orchestra/foundation::install.database.type'); ?></label>
+			<label class="three columns control-label">{{ trans('orchestra/foundation::install.database.type') }}</label>
 			<div class="nine columns">
-				<input disabled class="form-control" type="text" value="<?php echo $database['driver']; ?>">
+				<input disabled class="form-control" type="text" value="{{ $database['driver'] }}">
 			</div>
 		</div>
 
-		<?php if (isset($database['host'])) : ?>
+		@if (isset($database['host']))
 		<div class="form-group">
-			<label class="three columns control-label"><?php echo trans('orchestra/foundation::install.database.host'); ?></label>
+			<label class="three columns control-label">{{ trans('orchestra/foundation::install.database.host') }}</label>
 			<div class="nine columns">
-				<input disabled class="form-control" type="text" value="<?php echo $database['host']; ?>">
+				<input disabled class="form-control" type="text" value="{{ $database['host'] }}">
 			</div>
 		</div>
-		<?php endif; ?>
+		@endif
 
 		<div class="form-group">
-			<label class="three columns control-label"><?php echo trans('orchestra/foundation::install.database.name'); ?></label>
+			<label class="three columns control-label">{{ trans('orchestra/foundation::install.database.name') }}</label>
 			<div class="nine columns">
-				<input disabled class="form-control" type="text" value="<?php echo $database['database']; ?>">
+				<input disabled class="form-control" type="text" value="{{ $database['database'] }}">
 			</div>
 		</div>
 
-		<?php if (isset($database['username'])) : ?>
+		@if (isset($database['username']))
 		<div class="form-group">
-			<label class="three columns control-label"><?php echo trans('orchestra/foundation::install.database.username'); ?></label>
+			<label class="three columns control-label">{{ trans('orchestra/foundation::install.database.username') }}</label>
 			<div class="nine columns">
-				<input disabled class="form-control" type="text" value="<?php echo $database['username']; ?>">
+				<input disabled class="form-control" type="text" value="{{ $database['username'] }}">
 			</div>
 		</div>
-		<?php endif;
+		@endif
 
-		if (isset($database['password'])) : ?>
+		@if (isset($database['password']))
 		<div class="form-group">
-			<label class="three columns control-label"><?php echo trans('orchestra/foundation::install.database.password'); ?></label>
+			<label class="three columns control-label">{{ trans('orchestra/foundation::install.database.password') }}</label>
 			<div class="nine columns">
-				<input disabled class="form-control" type="text" value="<?php echo $database['password']; ?>">
-				<p class="help-block"><?php echo trans('orchestra/foundation::install.hide-password'); ?></p>
+				<input disabled class="form-control" type="text" value="{{ $database['password'] }}">
+				<p class="help-block">{{ trans('orchestra/foundation::install.hide-password') }}</p>
 			</div>
 		</div>
-		<?php endif; ?>
+		@endif
 
 		<div class="form-group">
-			<label class="three columns control-label"><?php echo trans('orchestra/foundation::install.connection.status'); ?></label>
+			<label class="three columns control-label">{{ trans('orchestra/foundation::install.connection.status') }}</label>
 
 			<div class="nine columns">
-				<?php if (true === $databaseConnection['is']) : ?>
+				@if (true === $databaseConnection['is'])
 				<button class="btn btn-success disabled input-xlarge">
-					<?php echo trans('orchestra/foundation::install.connection.success'); ?>
+					{{ trans('orchestra/foundation::install.connection.success') }}
 				</button>
-				<?php else : ?>
+				@else
 				<button class="btn btn-danger disabled input-xlarge">
-					<?php echo trans('orchestra/foundation::install.connection.fail'); ?>
+					{{ trans('orchestra/foundation::install.connection.fail') }}
 				</button>
-				<?php if (isset($databaseConnection['data']['error'])) : ?>
+				@if (isset($databaseConnection['data']['error']))
 				<div class="alert alert-danger">
-					<strong>Error:</strong> <?php echo $databaseConnection['data']['error']; ?>
+					<strong>Error:</strong> {{ $databaseConnection['data']['error'] }}
 				</div>
-				<?php endif; ?>
-				<?php endif; ?>
+				@endif
+				@endif
 			</div>
 		</div>
 	</div>
