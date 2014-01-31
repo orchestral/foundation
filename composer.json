@@ -41,7 +41,7 @@
 	"require-dev": {
 		"mockery/mockery": "0.8.*",
 		"orchestra/testbench": "2.2.*",
-		"twbs/bootstrap": "3.0.*@stable",
+		"twbs/bootstrap": "~3@stable",
 		"packagist/yuicompressor-bin": "2.4.8"
 	},
 	"extra": {

@@ -16,6 +16,7 @@ title: Foundation Change Log
 
 * Show database connection issues (if any) during installation process.
 * Simplify roles detection using `Orchestra\Model\User::getRoles()`.
+* Update to Twitter Bootstrap v3.1.0.
 
 ### v2.1.2 {#v2-1-2}
 
