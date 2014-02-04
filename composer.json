@@ -40,9 +40,9 @@
 	},
 	"require-dev": {
 		"mockery/mockery": "0.8.*",
+		"phpunit/phpunit": "3.8.*",
 		"orchestra/testbench": "2.2.*",
-		"twbs/bootstrap": "~3@stable",
-		"packagist/yuicompressor-bin": "2.4.8"
+		"twbs/bootstrap": "~3@stable"
 	},
 	"extra": {
 		"branch-alias": {

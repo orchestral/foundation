@@ -54,30 +54,6 @@
         </copy>
     </target>
 
-    <target name="minify-css" description="Minify the CSS">
-        <exec executable="lessc">
-            <arg value="${basedir}/public/css/orchestra.less"/>
-            <arg value="${basedir}/public/css/orchestra.css"/>
-            <arg value="--verbose"/>
-            <arg value="-x"/>
-        </exec>
-    </target>
-
-     <target name="minify-js" description="Minify the JavaScript">
-        <exec executable="java">
-            <arg value="-jar"/>
-            <arg value="${basedir}/vendor/packagist/yuicompressor-bin/bin/yuicompressor.jar"/>
-            <arg value="--charset"/>
-            <arg value="utf-8"/>
-            <arg value="--preserve-semi"/>
-            <arg value="--line-break"/>
-            <arg value="150"/>
-            <arg value="-o"/>
-            <arg value="${basedir}/public/js/orchestra.min.js"/>
-            <arg value="${basedir}/public/js/orchestra.js"/>
-        </exec>
-    </target>
-
     <target name="lint" description="Perform syntax check of sourcecode files">
         <apply executable="php" failonerror="false">
         <arg value="-l" />
@@ -176,8 +152,7 @@
     </target>
 
     <target name="build" depends="update,generate"/>
-    <target name="minify" depends="minify-css,minify-js"/>
     <target name="generate" depends="clean,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpunit,phpcb"/>
-    <target name="update" depends="composer-update,composer-dumpautoload,twbs,minify"/>
+    <target name="update" depends="composer-update,composer-dumpautoload,twbs"/>
     <target name="quick-build" depends="composer-dumpautoload,generate"/>
 </project>
