@@ -5,12 +5,6 @@ use Orchestra\Memory\Provider;
 
 class Application extends Abstractable\RouteManager
 {
-    /**
-     * List of services.
-     *
-     * @var array
-     */
-    public $services = array();
 
     /**
      * Booted indicator.
@@ -18,6 +12,20 @@ class Application extends Abstractable\RouteManager
      * @var boolean
      */
     protected $booted = false;
+
+    /**
+     * Passtru method for Illuminate\Foundation\Application.
+     *
+     * @var array
+     */
+    protected $passtru = array('abort', 'bound', 'make');
+
+    /**
+     * List of services.
+     *
+     * @var array
+     */
+    public $services = array();
 
     /**
      * Start the application.
@@ -183,11 +191,9 @@ class Application extends Abstractable\RouteManager
      */
     public function __call($method, $parameters)
     {
-        $passtru = array('make', 'abort');
-
         // Allow Orchestra\Foundation\Application to called method available
         // in Illuminate\Foundation\Application without any issue.
-        if (in_array($method, $passtru)) {
+        if (in_array($method, $this->passtru)) {
             return call_user_func_array(array($this->app, $method), $parameters);
         }
 

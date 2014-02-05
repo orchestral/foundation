@@ -92,9 +92,11 @@ class AdminMenuHandler
         // Add menu when logged-in user has authorization to
         // `manage orchestra`
         if ($this->acl->can('manage-orchestra')) {
-            $this->menu->add('extensions', '>:home')
-                ->title($this->translator->trans('orchestra/foundation::title.extensions.list'))
-                ->link($this->app->handles('orchestra::extensions'));
+            if ($this->app->bound('orchestra.extension')) {
+                $this->menu->add('extensions', '>:home')
+                    ->title($this->translator->trans('orchestra/foundation::title.extensions.list'))
+                    ->link($this->app->handles('orchestra::extensions'));
+            }
 
             $this->menu->add('settings')
                 ->title($this->translator->trans('orchestra/foundation::title.settings.list'))
