@@ -26,18 +26,15 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandleMethod()
     {
-        $app = m::mock('\Orchestra\Foundation\Application[acl,boot,handles,illuminate,menu]');
+        $app = m::mock('\Orchestra\Foundation\Application[acl,boot,bound,handles,menu]');
         $acl = m::mock('\Orchestra\Auth\Acl\Container');
-        $container = m::mock('\Illuminate\Container\Container');
         $menu = m::mock('\Orchestra\Widget\MenuWidgetHandler');
         $resources = m::mock('\Orchestra\Resources\Environment[all]');
         $translator = m::mock('\Illuminate\Translation\Translator[trans]');
 
         $app->shouldReceive('acl')->once()->andReturn($acl)
             ->shouldReceive('menu')->once()->andReturn($menu)
-            ->shouldReceive('illuminate')->once()->andReturn($container);
-
-        $container->shouldReceive('bound')->once()->with('orchestra.extension')->andReturn(true);
+            ->shouldReceive('bound')->once()->with('orchestra.extension')->andReturn(true);
 
         $acl->shouldReceive('can')->once()->with('manage-users')->andReturn(true);
         $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.users.list')->andReturn('user');

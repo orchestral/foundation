@@ -11,7 +11,7 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
     Route::post('account/password', 'Orchestra\Foundation\Routing\AccountController@updatePassword');
 
     // Route to extensions.
-    if (App::illuminate()->bound('orchestra.extension')) {
+    if (App::bound('orchestra.extension')) {
         Route::get('extensions', 'Orchestra\Foundation\Routing\ExtensionsController@index');
         Route::get('extensions/activate/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@activate');
         Route::get('extensions/deactivate/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@deactivate');
