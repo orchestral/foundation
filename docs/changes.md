@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
+### v2.1.4@dev {#v2-1-4}
+
+* Allow Extension to be optional.
+
 ### v2.1.3 {#v2-1-3}
 
 * Show database connection issues (if any) during installation process.

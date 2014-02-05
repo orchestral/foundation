@@ -13,6 +13,13 @@ class AdminMenuHandler
     protected $app;
 
     /**
+     * Container instance.
+     *
+     * @var \Illuminate\Container\Container
+     */
+    protected $container;
+
+    /**
      * ACL instance.
      *
      * @var \Orchestra\Auth\Acl\Container
@@ -50,6 +57,7 @@ class AdminMenuHandler
     public function __construct(Application $app, Resources $resources, Translator $translator)
     {
         $this->app = $app;
+        $this->container = $app->illuminate();
         $this->menu = $app->menu();
         $this->acl = $app->acl();
         $this->resources = $resources;
@@ -92,9 +100,11 @@ class AdminMenuHandler
         // Add menu when logged-in user has authorization to
         // `manage orchestra`
         if ($this->acl->can('manage-orchestra')) {
-            $this->menu->add('extensions', '>:home')
-                ->title($this->translator->trans('orchestra/foundation::title.extensions.list'))
-                ->link($this->app->handles('orchestra::extensions'));
+            if ($this->container->bound('orchestra.extension')) {
+                $this->menu->add('extensions', '>:home')
+                    ->title($this->translator->trans('orchestra/foundation::title.extensions.list'))
+                    ->link($this->app->handles('orchestra::extensions'));
+            }
 
             $this->menu->add('settings')
                 ->title($this->translator->trans('orchestra/foundation::title.settings.list'))

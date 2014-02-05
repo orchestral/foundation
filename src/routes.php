@@ -11,12 +11,14 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
     Route::post('account/password', 'Orchestra\Foundation\Routing\AccountController@updatePassword');
 
     // Route to extensions.
-    Route::get('extensions', 'Orchestra\Foundation\Routing\ExtensionsController@index');
-    Route::get('extensions/activate/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@activate');
-    Route::get('extensions/deactivate/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@deactivate');
-    Route::get('extensions/update/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@migrate');
-    Route::get('extensions/configure/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@configure');
-    Route::post('extensions/configure/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@update');
+    if (App::illuminate()->bound('orchestra.extension')) {
+        Route::get('extensions', 'Orchestra\Foundation\Routing\ExtensionsController@index');
+        Route::get('extensions/activate/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@activate');
+        Route::get('extensions/deactivate/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@deactivate');
+        Route::get('extensions/update/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@migrate');
+        Route::get('extensions/configure/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@configure');
+        Route::post('extensions/configure/{name}', 'Orchestra\Foundation\Routing\ExtensionsController@update');
+    }
 
     // Route to reset password.
     Route::get('forgot', 'Orchestra\Foundation\Routing\PasswordBrokerController@index');
