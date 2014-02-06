@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/orchestral/foundation.png?label=ready)](https://waffle.io/orchestral/foundation)
 Orchestra Platform Foundation Component
 ==============
 
