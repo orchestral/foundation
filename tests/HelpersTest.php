@@ -19,7 +19,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->app = new \Illuminate\Foundation\Application;
-        $this->app['translator'] = $trans = m::mock('\Illuminate\Translation\Translator[trans]');
+        $this->app['translator'] = $trans = m::mock('\Illuminate\Translation\Translator')->makePartial();
         $this->app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application');
 
         Facade::clearResolvedInstances();
@@ -53,8 +53,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function testMemorizeMethod()
     {
-        $orchestra = m::mock('\Orchestra\Foundation\Application[memory]');
-        $memory    = m::mock('\Orchestra\Memory\Provider[get]');
+        $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
+        $memory    = m::mock('\Orchestra\Memory\Provider')->makePartial();
 
         App::swap($orchestra);
 
@@ -71,7 +71,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandlesMethod()
     {
-        $orchestra = m::mock('\Orchestra\Foundation\Application[handles]');
+        $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
 
         App::swap($orchestra);
 
@@ -87,7 +87,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function testResourcesMethod()
     {
-        $orchestra = m::mock('\Orchestra\Foundation\Application[handles]');
+        $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
 
         App::swap($orchestra);
 

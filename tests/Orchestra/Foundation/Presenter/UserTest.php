@@ -25,8 +25,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->app = new Container;
 
         $this->app['app'] = $this->app;
-        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Application[handles]');
-        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator[trans]');
+        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Application')->makePartial();
+        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $this->app['orchestra.app']->shouldReceive('handles');
         $this->app['translator']->shouldReceive('trans');
@@ -53,8 +53,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $app    = $this->app;
         $model  = new Fluent;
-        $grid   = m::mock('\Orchestra\Html\Table\Grid')->shouldDeferMissing();
-        $column = m::mock('\Orchestra\Html\Table\Column')->shouldDeferMissing();
+        $grid   = m::mock('\Orchestra\Html\Table\Grid')->makePartial();
+        $column = m::mock('\Orchestra\Html\Table\Column')->makePartial();
         $value  = (object) array(
             'fullname' => 'Foo',
             'roles'    => array(
@@ -82,7 +82,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
                     $c($column);
                 });
 
-        $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Environment')->shouldDeferMissing();
+        $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Environment')->makePartial();
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,raw]');
 
         $app['orchestra.table']->shouldReceive('of')->once()
@@ -113,9 +113,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testActionsMethod()
     {
         $app    = $this->app;
-        $table  = m::mock('\Orchestra\Html\Table\TableBuilder')->shouldDeferMissing();
-        $grid   = m::mock('\Orchestra\Html\Table\Grid')->shouldDeferMissing();
-        $column = m::mock('\Orchestra\Html\Table\Column')->shouldDeferMissing();
+        $table  = m::mock('\Orchestra\Html\Table\TableBuilder')->makePartial();
+        $grid   = m::mock('\Orchestra\Html\Table\Grid')->makePartial();
+        $column = m::mock('\Orchestra\Html\Table\Column')->makePartial();
         $value  = (object) array(
             'id'   => 1,
             'name' => 'Foo',
@@ -141,8 +141,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 return 'foo';
             });
 
-        $app['auth'] = m::mock('\Illuminate\Auth\Guard[user]');
-        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,link,raw]');
+        $app['auth'] = m::mock('\Illuminate\Auth\Guard')->makePartial();
+        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
 
         $app['auth']->shouldReceive('user')->once()->andReturn((object) array('id' => 2));
         $app['html']->shouldReceive('link')->once()
@@ -167,9 +167,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $app      = $this->app;
         $model    = m::mock('\Orchestra\Model\User');
-        $grid     = m::mock('\Orchestra\Html\Form\Grid')->shouldDeferMissing();
-        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->shouldDeferMissing();
-        $control  = m::mock('\Orchestra\Html\Form\Control')->shouldDeferMissing();
+        $grid     = m::mock('\Orchestra\Html\Form\Grid')->makePartial();
+        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->makePartial();
+        $control  = m::mock('\Orchestra\Html\Form\Control')->makePartial();
         $value    = (object) array(
             'roles' => new Collection(array(
                 new Fluent(array('id' => 1, 'name' => 'Administrator')),
@@ -208,8 +208,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
                     $c($fieldset);
                 });
 
-        $app['orchestra.role'] = m::mock('\Orchestra\Model\Role')->shouldDeferMissing();
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->shouldDeferMissing();
+        $app['orchestra.role'] = m::mock('\Orchestra\Model\Role')->makePartial();
+        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->makePartial();
         $app['orchestra.form.control'] = $control;
 
         $app['orchestra.role']->shouldReceive('lists')->once()

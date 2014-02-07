@@ -31,8 +31,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMethod()
     {
-        $config = m::mock('\Illuminate\Config\Repository[get]');
-        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
         $stub = new Site($auth, $config, $memory);
@@ -57,8 +57,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetMethod()
     {
-        $config = m::mock('\Illuminate\Config\Repository[get]');
-        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
         $stub = new Site($auth, $config, $memory);
@@ -77,8 +77,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testHasMethod()
     {
-        $config = m::mock('\Illuminate\Config\Repository[get]');
-        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
         $stub = new Site($auth, $config, $memory);
@@ -105,8 +105,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testForgetMethod()
     {
-        $config = m::mock('\Illuminate\Config\Repository[get]');
-        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
         $stub = new Site($auth, $config, $memory);
@@ -143,8 +143,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testToLocalTimeGivenDateAsString()
     {
-        $config = m::mock('\Illuminate\Config\Repository[get]');
-        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
         $config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
@@ -164,8 +164,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testToLocalTimeReturnProperDateTimeWhenIsGuest()
     {
-        $config = m::mock('\Illuminate\Config\Repository[get]');
-        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
         $config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
@@ -184,8 +184,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testToLocalTimeReturnProperDateTimeWhenIsUser()
     {
-        $config = m::mock('\Illuminate\Config\Repository[get]');
-        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
         $config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
@@ -208,8 +208,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testFromLocalTimeReturnProperDateTimeWhenIsGuest()
     {
-        $config = m::mock('\Illuminate\Config\Repository[get]');
-        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
         $config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
@@ -229,8 +229,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testFromLocalTimeReturnProperDateTimeWhenIsUser()
     {
-        $config = m::mock('\Illuminate\Config\Repository[get]');
-        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
         $config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
@@ -252,8 +252,8 @@ class SiteTest extends \PHPUnit_Framework_TestCase
      */
     public function testConvertToDateTimeMethodWhenTimezoneIsNull()
     {
-        $config = m::mock('\Illuminate\Config\Repository[get]');
-        $auth = m::mock('\Illuminate\Auth\AuthManager[guest,user]');
+        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
         $stub = new Site($auth, $config, $memory);

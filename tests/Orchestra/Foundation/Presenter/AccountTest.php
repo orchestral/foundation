@@ -22,8 +22,8 @@ class AccountTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new Container;
 
-        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Application[handles]');
-        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator[trans]');
+        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Application')->makePartial();
+        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $this->app['orchestra.app']->shouldReceive('handles');
         $this->app['translator']->shouldReceive('trans');
@@ -51,9 +51,9 @@ class AccountTest extends \PHPUnit_Framework_TestCase
     {
         $app      = $this->app;
         $model    = new Fluent;
-        $grid     = m::mock('\Orchestra\Html\Form\Grid')->shouldDeferMissing();
-        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->shouldDeferMissing();
-        $control  = m::mock('\Orchestra\Html\Form\Control')->shouldDeferMissing();
+        $grid     = m::mock('\Orchestra\Html\Form\Grid')->makePartial();
+        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->makePartial();
+        $control  = m::mock('\Orchestra\Html\Form\Control')->makePartial();
 
         $stub = new Account;
 
@@ -70,7 +70,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
                     $c($fieldset);
                 });
 
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->shouldDeferMissing();
+        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->makePartial();
 
         $app['orchestra.form']->shouldReceive('of')->once()
                 ->with('orchestra.account', m::type('Closure'))
@@ -92,9 +92,9 @@ class AccountTest extends \PHPUnit_Framework_TestCase
     {
         $app      = $this->app;
         $model    = new Fluent;
-        $grid     = m::mock('\Orchestra\Html\Form\Grid')->shouldDeferMissing();
-        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->shouldDeferMissing();
-        $control  = m::mock('\Orchestra\Html\Form\Control')->shouldDeferMissing();
+        $grid     = m::mock('\Orchestra\Html\Form\Grid')->makePartial();
+        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->makePartial();
+        $control  = m::mock('\Orchestra\Html\Form\Control')->makePartial();
 
         $stub = new Account;
 
@@ -112,7 +112,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
                     $c($fieldset);
                 });
 
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->shouldDeferMissing();
+        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->makePartial();
 
         $app['orchestra.form']->shouldReceive('of')->once()
                 ->with('orchestra.account: password', m::type('Closure'))

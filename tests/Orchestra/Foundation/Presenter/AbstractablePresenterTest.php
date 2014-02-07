@@ -34,7 +34,7 @@ class AbstractablePresenterTest extends \PHPUnit_Framework_TestCase
         $app = new Container;
         Facade::setFacadeApplication($app);
 
-        $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application[handles]');
+        $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
 
         $orchestra->shouldReceive('handles')->with(m::type('String'))
                 ->andReturnUsing(function ($s) {
@@ -53,7 +53,7 @@ class AbstractablePresenterTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetupFormMethod()
     {
-        $form = m::mock('\Orchestra\Html\Form\Grid')->shouldDeferMissing();
+        $form = m::mock('\Orchestra\Html\Form\Grid')->makePartial();
 
         $form->shouldReceive('layout')->once()
             ->with('orchestra/foundation::components.form')->andReturnNull();

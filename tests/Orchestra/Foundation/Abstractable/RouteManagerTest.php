@@ -57,7 +57,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     public function testGroupMethod()
     {
         $app  = $this->getApplicationMocks();
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository')->makePartial();
 
         $config->shouldReceive('get')->once()
             ->with('orchestra/foundation::handles', 'admin')->andReturn('admin');
@@ -81,11 +81,11 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     public function testHandlesMethod()
     {
         $app = $this->getApplicationMocks();
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
-        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory[route]');
-        $app['url'] = $url = m::mock('\Illuminate\Routing\UrlGenerator[to]');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory')->makePartial();
+        $app['url'] = $url = m::mock('\Illuminate\Routing\UrlGenerator')->makePartial();
 
-        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator[to]');
+        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator')->makePartial();
 
         $config->shouldReceive('get')->once()
             ->with('orchestra/foundation::handles', '/')->andReturn('admin');
@@ -113,11 +113,11 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getApplicationMocks();
         $request = $app['request'];
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
-        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory[route]');
-        $app['url'] = $url = m::mock('\Illuminate\Routing\UrlGenerator[to]');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory')->makePartial();
+        $app['url'] = $url = m::mock('\Illuminate\Routing\UrlGenerator')->makePartial();
 
-        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator[is]');
+        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator')->makePartial();
 
         $config->shouldReceive('get')->once()
             ->with('orchestra/foundation::handles', '/')->andReturn('admin');
@@ -143,10 +143,10 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getApplicationMocks();
         $request = $app['request'];
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
-        $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher[makeListener]');
-        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory[route]');
-        $app['url'] = $url = m::mock('\Illuminate\Routing\UrlGenerator[to]');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory')->makePartial();
+        $app['url'] = $url = m::mock('\Illuminate\Routing\UrlGenerator')->makePartial();
 
         $appRoute = m::mock('\Orchestra\Extension\RouteGenerator');
 

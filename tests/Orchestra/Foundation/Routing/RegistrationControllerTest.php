@@ -43,7 +43,7 @@ class RegistrationControllerTest extends TestCase
      */
     public function testGetIndexAction()
     {
-        $form = m::mock('\Orchestra\Html\Form\FormBuilder[extend]');
+        $form = m::mock('\Orchestra\Html\Form\FormBuilder')->makePartial();
         $user = m::mock('\Orchestra\Model\User');
 
         list($presenter,) = $this->bindDependencies();
@@ -76,7 +76,7 @@ class RegistrationControllerTest extends TestCase
         );
 
         $user   = m::mock('\Orchestra\Model\User');
-        $memory = m::mock('\Orchestra\Memory\Provider[get]');
+        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
 
         list(, $validator) = $this->bindDependencies();
 
@@ -120,7 +120,7 @@ class RegistrationControllerTest extends TestCase
         );
 
         $user   = m::mock('\Orchestra\Model\User');
-        $memory = m::mock('\Orchestra\Memory\Provider[get]');
+        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
 
         list(, $validator) = $this->bindDependencies();
 

@@ -43,11 +43,11 @@ class AccountTest extends \PHPUnit_Framework_TestCase
             'fullname' => array('required'),
         );
 
-        $validator = m::mock('\Illuminate\Validation\Factory[make]');
+        $validator = m::mock('\Illuminate\Validation\Factory')->makePartial();
         $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
         Validator::swap($validator);
 
-        $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
+        $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturnNull();
         Event::swap($events);
 
@@ -74,11 +74,11 @@ class AccountTest extends \PHPUnit_Framework_TestCase
             'fullname' => array('required'),
         );
 
-        $validator = m::mock('\Illuminate\Validation\Factory[make]');
+        $validator = m::mock('\Illuminate\Validation\Factory')->makePartial();
         $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
         Validator::swap($validator);
 
-        $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
+        $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturnNull();
         Event::swap($events);
 
@@ -108,7 +108,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
             'confirm_password' => array('same:new_password'),
         );
 
-        $validator = m::mock('\Illuminate\Validation\Factory[make]');
+        $validator = m::mock('\Illuminate\Validation\Factory')->makePartial();
         $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
         Validator::swap($validator);
 
