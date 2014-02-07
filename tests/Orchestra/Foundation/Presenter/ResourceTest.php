@@ -22,8 +22,8 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new Container;
 
-        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Application[handles]');
-        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator[trans]');
+        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Application')->makePartial();
+        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $this->app['orchestra.app']->shouldReceive('handles');
         $this->app['translator']->shouldReceive('trans');
@@ -51,8 +51,8 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     {
         $app    = $this->app;
         $model  = new Fluent;
-        $grid   = m::mock('\Orchestra\Html\Table\Grid')->shouldDeferMissing();
-        $column = m::mock('\Orchestra\Html\Table\Column')->shouldDeferMissing();
+        $grid   = m::mock('\Orchestra\Html\Table\Grid')->makePartial();
+        $column = m::mock('\Orchestra\Html\Table\Column')->makePartial();
         $value  = (object) array(
             'id'   => 'foo',
             'name' => 'Foobar'
@@ -72,8 +72,8 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
                     $c($column);
                 });
 
-        $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Environment')->shouldDeferMissing();
-        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,raw,link]');
+        $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Environment')->makePartial();
+        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
 
         $app['orchestra.table']->shouldReceive('of')->once()
                 ->with('orchestra.resources: list', m::type('Closure'))

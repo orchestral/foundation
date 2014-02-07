@@ -91,7 +91,7 @@ class UsersControllerTest extends TestCase
      */
     public function testGetEditAction()
     {
-        $builder = m::mock('\Illuminate\Database\Eloquent\Builder[findOrFail]');
+        $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
         $user    = m::mock('\Orchestra\Model\User');
 
         list($presenter, ) = $this->bindDependencies();
@@ -233,7 +233,7 @@ class UsersControllerTest extends TestCase
 
         list(, $validator) = $this->bindDependencies();
 
-        $builder = m::mock('\Illuminate\Database\Eloquent\Builder[findOrFail]');
+        $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
         $user    = m::mock('\Orchestra\Model\User');
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
@@ -296,7 +296,7 @@ class UsersControllerTest extends TestCase
 
         list(, $validator) = $this->bindDependencies();
 
-        $builder = m::mock('\Illuminate\Database\Eloquent\Builder[findOrFail]');
+        $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
         $user    = m::mock('\Orchestra\Model\User');
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
@@ -361,7 +361,7 @@ class UsersControllerTest extends TestCase
      */
     public function testGetDeleteAction()
     {
-        $builder = m::mock('\Illuminate\Database\Eloquent\Builder[findOrFail]');
+        $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
         $user    = m::mock('\Orchestra\Model\User');
         $auth    = (object) array(
             'id' => 'foobar',
@@ -395,7 +395,7 @@ class UsersControllerTest extends TestCase
      */
     public function testGetDeleteActionWhenDeletingOwnAccount()
     {
-        $builder = m::mock('\Illuminate\Database\Eloquent\Builder[findOrFail]');
+        $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
         $user    = m::mock('\Orchestra\Model\User');
         $auth    = (object) array(
             'id' => 'foobar',
@@ -418,7 +418,7 @@ class UsersControllerTest extends TestCase
      */
     public function testGetDeleteActionGivenDatabaseError()
     {
-        $builder = m::mock('\Illuminate\Database\Eloquent\Builder[findOrFail]');
+        $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
         $user    = m::mock('\Orchestra\Model\User');
         $auth    = (object) array(
             'id' => 'foobar',

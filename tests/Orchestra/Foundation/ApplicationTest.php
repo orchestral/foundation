@@ -44,12 +44,12 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app['env'] = 'production';
         $app['orchestra.installed'] = false;
         $app['orchestra.acl'] = $acl = m::mock('\Orchestra\Auth\Acl\Container');
-        $app['orchestra.mail'] = $mailer = m::mock('\Orchestra\Notifier\Mailer[attach]');
-        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
-        $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager[setDefaultDriver]');
+        $app['orchestra.mail'] = $mailer = m::mock('\Orchestra\Notifier\Mailer')->makePartial();
+        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager')->makePartial();
+        $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager')->makePartial();
         $app['orchestra.widget'] = $widget = m::mock('\Orchestra\Widget\MenuWidgetHandler');
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get,set]');
-        $app['events'] = $event = m::mock('\Illuminate\Events\Dispatcher[listen,fire]');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $app['events'] = $event = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $app['request'] = $request = m::mock('\Illuminate\Http\Request');
         $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator');
 
@@ -89,12 +89,12 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app['env'] = 'production';
         $app['orchestra.installed'] = false;
         $app['orchestra.acl'] = $acl = m::mock('\Orchestra\Auth\Acl\Container');
-        $app['orchestra.mail'] = $mailer = m::mock('\Orchestra\Notifier\Mailer[attach]');
-        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
-        $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager[setDefaultDriver]');
+        $app['orchestra.mail'] = $mailer = m::mock('\Orchestra\Notifier\Mailer')->makePartial();
+        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager')->makePartial();
+        $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager')->makePartial();
         $app['orchestra.widget'] = $widget = m::mock('\Orchestra\Widget\MenuWidgetHandler');
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get,set]');
-        $app['events'] = $event = m::mock('\Illuminate\Events\Dispatcher[listen,fire]');
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $app['events'] = $event = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $app['request'] = $request = m::mock('\Illuminate\Http\Request');
 
         $memoryProvider = m::mock('\Orchestra\Memory\Provider');

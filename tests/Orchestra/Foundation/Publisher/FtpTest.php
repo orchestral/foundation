@@ -47,7 +47,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
      */
     private function getSessionMock()
     {
-        $session = m::mock('\Illuminate\Session\Store')->shouldDeferMissing();
+        $session = m::mock('\Illuminate\Session\Store')->makePartial();
 
         $session->shouldReceive('get')->once()
             ->with('orchestra.ftp', array())->andReturn(array('ftpconfig'));
@@ -134,8 +134,8 @@ class FtpTest extends \PHPUnit_Framework_TestCase
 
         $app['session'] = $this->getSessionMock();
         $app['path.public'] = $path = '/var/foo/public';
-        $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem[isDirectory]');
-        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment[activate]');
+        $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem')->makePartial();
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment')->makePartial();
 
         $client->shouldReceive('setUp')->once()->with(array('ftpconfig'))->andReturnNull()
             ->shouldReceive('connect')->once()->andReturn(true)
@@ -168,8 +168,8 @@ class FtpTest extends \PHPUnit_Framework_TestCase
 
         $app['session'] = $this->getSessionMock();
         $app['path.public'] = $path = '/var/foo/public';
-        $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem[isDirectory]');
-        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment[activate]');
+        $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem')->makePartial();
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment')->makePartial();
 
         $client->shouldReceive('setUp')->once()->with(array('ftpconfig'))->andReturnNull()
             ->shouldReceive('connect')->once()->andReturn(true)

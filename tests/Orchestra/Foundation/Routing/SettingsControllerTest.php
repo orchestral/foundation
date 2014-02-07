@@ -41,7 +41,7 @@ class SettingsControllerTest extends TestCase
      */
     public function testGetIndexAction()
     {
-        $memory = m::mock('\Orchestra\Memory\Provider[get]');
+        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
         list($presenter,) = $this->bindDependencies();
 
         $memory->shouldReceive('get')->times(12)->andReturn('');
@@ -79,7 +79,7 @@ class SettingsControllerTest extends TestCase
             'email_queue'      => 'no',
         );
 
-        $memory = m::mock('\Orchestra\Memory\Provider[get,put]');
+        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
         list(, $validator) = $this->bindDependencies();
 
         $memory->shouldReceive('put')->times(12)->andReturnNull()
@@ -140,8 +140,8 @@ class SettingsControllerTest extends TestCase
      */
     public function testGetMigrateAction()
     {
-        $asset   = m::mock('\Orchestra\Extension\Publisher\AssetManager[foundation]');
-        $migrate = m::mock('\Orchestra\Extension\Publisher\MigrateManager[foundation]');
+        $asset   = m::mock('\Orchestra\Extension\Publisher\AssetManager')->makePartial();
+        $migrate = m::mock('\Orchestra\Extension\Publisher\MigrateManager')->makePartial();
 
         $asset->shouldReceive('foundation')->once()->andReturnNull();
         $migrate->shouldReceive('foundation')->once()->andReturnNull();

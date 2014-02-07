@@ -21,7 +21,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new Container;
         $this->app['path'] = '/var/app';
-        $this->app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator[trans]');
+        $this->app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $translator->shouldReceive('trans')->andReturn('foo');
 
@@ -46,7 +46,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
      */
     private function getFilesMock()
     {
-        $files = m::mock('\Illuminate\Filesystem\Filesystem[exists,requireOnce]');
+        $files = m::mock('\Illuminate\Filesystem\Filesystem')->makePartial();
 
         $files->shouldReceive('exists')->once()->with('/var/app/orchestra/installer.php')->andReturn(true)
             ->shouldReceive('requireOnce')->once()->with('/var/app/orchestra/installer.php')->andReturnNull();
@@ -95,8 +95,8 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $app['files'] = $this->getFilesMock();
-        $app['orchestra.publisher.migrate'] = $migrate = m::mock('\Orchestra\Extension\Publisher\MigrateManager[foundation]');
-        $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
+        $app['orchestra.publisher.migrate'] = $migrate = m::mock('\Orchestra\Extension\Publisher\MigrateManager')->makePartial();
+        $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
 
         $migrate->shouldReceive('foundation')->once()->andReturnNull();
         $events->shouldReceive('fire')->once()->with('orchestra.install.schema')->andReturnNull();
@@ -113,16 +113,16 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $app['files'] = $this->getFilesMock();
-        $app['validator'] = $validator = m::mock('\Illuminate\Validation\Validator[fails]');
+        $app['validator'] = $validator = m::mock('\Illuminate\Validation\Validator')->makePartial();
         $app['orchestra.role'] = $role = m::mock('Role');
         $app['orchestra.user'] = $user = m::mock('User');
-        $app['orchestra.messages'] = $messages = m::mock('\Orchestra\Support\Messages[add]');
-        $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
-        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager[make]');
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository[get]');
+        $app['orchestra.messages'] = $messages = m::mock('\Orchestra\Support\Messages')->makePartial();
+        $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
+        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager')->makePartial();
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository')->makePartial();
         $app['orchestra.acl'] = $acl = m::mock('Acl');
 
-        $memoryProvider = m::mock('\Orchestra\Memory\Provider[put]');
+        $memoryProvider = m::mock('\Orchestra\Memory\Provider')->makePartial();
         $aclFluent = m::mock('\Orchestra\Auth\Acl\Fluent');
         $aclFluent->shouldReceive('attach')->twice()->andReturnNull();
 
@@ -173,7 +173,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $app['files'] = $this->getFilesMock();
-        $app['validator'] = $validator = m::mock('\Illuminate\Validation\Validator[passes,messages]');
+        $app['validator'] = $validator = m::mock('\Illuminate\Validation\Validator')->makePartial();
         $app['session'] = $session = m::mock('Session\Store');
 
         $input = $this->getUserInput();
@@ -198,9 +198,9 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $app['files'] = $this->getFilesMock();
-        $app['validator'] = $validator = m::mock('\Illuminate\Validation\Validator[fails]');
+        $app['validator'] = $validator = m::mock('\Illuminate\Validation\Validator')->makePartial();
         $app['orchestra.user'] = $user = m::mock('User');
-        $app['orchestra.messages'] = $messages = m::mock('\Orchestra\Support\Messages[add]');
+        $app['orchestra.messages'] = $messages = m::mock('\Orchestra\Support\Messages')->makePartial();
 
         $input = $this->getUserInput();
         $rules = $this->getValidationRules();

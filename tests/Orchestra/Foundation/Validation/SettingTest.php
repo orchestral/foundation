@@ -47,11 +47,11 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_port'    => array('numeric'),
         );
 
-        $validator = m::mock('\Illuminate\Validation\Factory[make]');
+        $validator = m::mock('\Illuminate\Validation\Factory')->makePartial();
         $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
         Validator::swap($validator);
 
-        $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
+        $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
         Event::swap($events);
 
@@ -87,11 +87,11 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_host'     => array('required'),
         );
 
-        $validator = m::mock('\Illuminate\Validation\Factory[make]');
+        $validator = m::mock('\Illuminate\Validation\Factory')->makePartial();
         $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
         Validator::swap($validator);
 
-        $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
+        $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
         Event::swap($events);
 
@@ -125,11 +125,11 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_sendmail' => array('required'),
         );
 
-        $validator = m::mock('\Illuminate\Validation\Factory[make]');
+        $validator = m::mock('\Illuminate\Validation\Factory')->makePartial();
         $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
         Validator::swap($validator);
 
-        $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
+        $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
         Event::swap($events);
 

@@ -59,7 +59,7 @@ class PasswordBrokerControllerTest extends TestCase
 
         $validator = $this->bindDependencies();
         $mailer    = m::mock('\Orchestra\Notifier\Mailer');
-        $memory    = m::mock('\Orchestra\Memory\Provider[get]');
+        $memory    = m::mock('\Orchestra\Memory\Provider')->makePartial();
         $password  = m::mock('\Orchestra\Foundation\Reminders\PasswordBroker');
 
         $validator->shouldReceive('with')->once()->with(m::type('Array'))->andReturn($validator)
@@ -99,7 +99,7 @@ class PasswordBrokerControllerTest extends TestCase
 
         $validator = $this->bindDependencies();
         $mailer    = m::mock('\Orchestra\Notifier\Mailer');
-        $memory    = m::mock('\Orchestra\Memory\Provider[get]');
+        $memory    = m::mock('\Orchestra\Memory\Provider')->makePartial();
         $password  = m::mock('\Orchestra\Foundation\Reminders\PasswordBroker');
 
         $validator->shouldReceive('with')->once()->with(m::type('Array'))->andReturn($validator)

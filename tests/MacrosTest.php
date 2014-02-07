@@ -24,7 +24,7 @@ class MacrosTest extends TestCase
     public function testHtmlTitleMacro()
     {
         App::shouldReceive('memory')->twice()
-            ->andReturn($memory = m::mock('\Orchestra\Memory\Provider[get]'));
+            ->andReturn($memory = m::mock('\Orchestra\Memory\Provider')->makePartial());
 
         $memory->shouldReceive('get')->once()->with('site.name', '')->andReturn('Foo')
             ->shouldReceive('get')->once()
@@ -42,7 +42,7 @@ class MacrosTest extends TestCase
     public function testHtmlTitleMacroWithPageTitle()
     {
         App::shouldReceive('memory')->twice()
-            ->andReturn($memory = m::mock('\Orchestra\Memory\Provider[get]'));
+            ->andReturn($memory = m::mock('\Orchestra\Memory\Provider')->makePartial());
         Site::shouldReceive('get')->once()
             ->with('title', '')->andReturn('Foobar');
 

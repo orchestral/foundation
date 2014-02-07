@@ -13,7 +13,7 @@ class PasswordBrokerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $app = new Container;
-        $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator[trans]');
+        $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator')->makePartial();
         $translator->shouldReceive('trans')->andReturn('foo');
 
         Facade::clearResolvedInstances();

@@ -22,8 +22,8 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new Container;
 
-        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Application[handles]');
-        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator[trans]');
+        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Application')->makePartial();
+        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $this->app['orchestra.app']->shouldReceive('handles');
         $this->app['translator']->shouldReceive('trans');
@@ -51,9 +51,9 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $app      = $this->app;
         $model    = new Fluent;
-        $grid     = m::mock('\Orchestra\Html\Form\Grid')->shouldDeferMissing();
-        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->shouldDeferMissing();
-        $control  = m::mock('\Orchestra\Html\Form\Control')->shouldDeferMissing();
+        $grid     = m::mock('\Orchestra\Html\Form\Grid')->makePartial();
+        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->makePartial();
+        $control  = m::mock('\Orchestra\Html\Form\Control')->makePartial();
 
         $stub = new Extension;
 
@@ -75,8 +75,8 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
                     $c($fieldset);
                 });
 
-        $app['orchestra.extension'] = m::mock('\Orchestra\Extension\Environment[option]');
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->shouldDeferMissing();
+        $app['orchestra.extension'] = m::mock('\Orchestra\Extension\Environment')->makePartial();
+        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->makePartial();
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[link]');
 
         $app['orchestra.extension']->shouldReceive('option')->once()->with('foo/bar', 'handles')->andReturn('foo');
