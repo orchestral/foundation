@@ -39,5 +39,8 @@ class AdminControllerTest extends TestCase
 
 class StubAdminController extends \Orchestra\Foundation\Routing\AdminController
 {
-    //
+    protected function setupFilters()
+    {
+        //
+    }
 }
