@@ -24,14 +24,4 @@ abstract class AdminController extends BaseController
 
         parent::__construct();
     }
-
-    /**
-     * Setup controller filters.
-     *
-     * @return void
-     */
-    protected function setupFilters()
-    {
-        //
-    }
 }

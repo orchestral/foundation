@@ -20,6 +20,16 @@ class ResourcesController extends AdminController
     }
 
     /**
+     * Setup controller filters.
+     *
+     * @return void
+     */
+    protected function setupFilters()
+    {
+        //
+    }
+
+    /**
      * Route to Resources List.
      *
      * @return Response
