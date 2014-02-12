@@ -15,6 +15,7 @@ title: Foundation Change Log
 ### v2.1.4@dev {#v2-1-4}
 
 * Allow Extension to be optional.
+* Only implement abstract method `Orchestra\Foundation\Routing\BaseController::setupFilters()` on implementations.
 
 ### v2.1.3 {#v2-1-3}
 
