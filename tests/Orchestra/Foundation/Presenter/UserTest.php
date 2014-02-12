@@ -126,6 +126,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $column->shouldReceive('label')->once()->with('')->andReturnNull()
             ->shouldReceive('escape')->once()->with(false)->andReturnNull()
             ->shouldReceive('headers')->once()->with(m::type('Array'))->andReturnNull()
+            ->shouldReceive('attributes')->once()->with(m::type('Closure'))
+                ->andReturnUsing(function ($c) use ($value) {
+                    return $c($value);
+                })
             ->shouldReceive('value')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($value) {
                     $c($value);
