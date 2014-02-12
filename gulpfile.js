@@ -1,7 +1,7 @@
 var gulp = require('gulp'),
     gutil = require('gulp-util'),
     coffee = require('gulp-coffee'),
-    csso = require('gulp-csso'),
+    csso = require('gulp-minify-css'),
     less = require('gulp-less'),
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify');
