@@ -68,7 +68,7 @@ class User extends AbstractablePresenter
                 $column->escape(false);
                 $column->headers(array('class' => 'th-action'));
                 $column->attributes(function($row) {
-                    return ['class' => 'th-action'];
+                    return array('class' => 'th-action');
                 });
                 $column->value(function ($row) {
                     $btn = array();
