@@ -36,6 +36,7 @@ gulp.task('uglify', function () {
         .pipe(gulp.dest('public/js'))
 });
 
+// Add file watch
 gulp.task('watch', function () {
     gulp.watch('public/css/orchestra.less', ['css']);
     gulp.watch('public/css/orchestra.coffee', ['js']);
@@ -44,3 +45,6 @@ gulp.task('watch', function () {
 
 // Default task.
 gulp.task('default', ['css', 'js', 'uglify', 'watch']);
+
+// Run default without watch.
+gulp.task('run', ['css', 'js', 'uglify']);

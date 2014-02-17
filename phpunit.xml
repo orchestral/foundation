@@ -31,6 +31,8 @@
             <file>src/helpers.php</file>
 
             <exclude>
+                <directory>tests/</directory>
+                <directory>vendor/</directory>
                 <file>src/Orchestra/Foundation/Testing/ApplicationTestCase.php</file>
             </exclude>
         </whitelist>

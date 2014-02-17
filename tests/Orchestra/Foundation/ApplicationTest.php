@@ -18,10 +18,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app = new \Illuminate\Foundation\Application;
+        $request = m::mock('\Illuminate\Http\Request');
+        $app = new \Illuminate\Foundation\Application($request);
 
         Facade::clearResolvedInstances();
-        Facade::setFacadeApplication($this->app);
+        Facade::setFacadeApplication($this->app = $app);
     }
 
     /**
@@ -136,6 +137,8 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($app['orchestra.acl'], $stub->acl());
         $this->assertNotEquals($app['orchestra.memory'], $stub->memory());
         $this->assertEquals($stub, $stub->boot());
+        $this->assertTrue($app['orchestra.installed']);
+        $this->assertTrue($stub->installed());
     }
 
     /**
@@ -152,24 +155,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $stub->boot();
 
         $this->assertFalse($app['orchestra.installed']);
-    }
-
-    /**
-     * Test Orchestra\Foundation\Application::installed() method.
-     *
-     * @test
-     */
-    public function testInstalledMethod()
-    {
-        $this->app['orchestra.installed'] = false;
-
-        $stub = new Application($this->app);
-
         $this->assertFalse($stub->installed());
-
-        $this->app['orchestra.installed'] = true;
-
-        $this->assertTrue($stub->installed());
     }
 
     /**
@@ -179,10 +165,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
      */
     public function testIlluminateMethod()
     {
-        $app = $this->app;
-        $app['request'] = $request = m::mock('\Illuminate\Http\Request');
-
-        $stub = new Application($app);
+        $stub = new Application($this->app);
 
         $this->assertInstanceOf('\Illuminate\Foundation\Application', $stub->illuminate());
         $this->assertInstanceOf('\Illuminate\Http\Request', $stub->make('request'));

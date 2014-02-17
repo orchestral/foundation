@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Config;
 use Orchestra\Model\Role;
 use Orchestra\Model\Observer\Role as RoleObserver;
 
