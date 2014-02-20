@@ -44,7 +44,7 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
 
     // Route to users.
     Route::resource('users', 'Orchestra\Foundation\Routing\UsersController', array('except' => array('show')));
-    Route::any('users/{user}/delete', array('Orchestra\Foundation\Routing\UsersController@delete');
+    Route::any('users/{user}/delete', 'Orchestra\Foundation\Routing\UsersController@delete');
 
     // Route for settings
     Route::get('settings', 'Orchestra\Foundation\Routing\SettingsController@show');
