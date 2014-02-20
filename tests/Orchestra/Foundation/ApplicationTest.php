@@ -18,8 +18,16 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $request = m::mock('\Illuminate\Http\Request');
-        $app = new \Illuminate\Foundation\Application($request);
+        $app = new \Illuminate\Foundation\Application(m::mock('\Illuminate\Http\Request')->makePartial());
+
+        $app['orchestra.acl'] = m::mock('\Orchestra\Auth\Acl\Container')->makePartial();
+        $app['orchestra.mail'] = m::mock('\Orchestra\Notifier\Mailer')->makePartial();
+        $app['orchestra.memory'] = m::mock('\Orchestra\Memory\MemoryManager')->makePartial();
+        $app['orchestra.notifier'] = m::mock('\Orchestra\Notifier\NotifierManager')->makePartial();
+        $app['orchestra.widget'] = m::mock('\Orchestra\Widget\MenuWidgetHandler')->makePartial();
+        $app['config'] = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $app['events'] = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
+        $app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         Facade::clearResolvedInstances();
         Facade::setFacadeApplication($this->app = $app);
@@ -44,15 +52,15 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
         $app['env'] = 'production';
         $app['orchestra.installed'] = false;
-        $app['orchestra.acl'] = $acl = m::mock('\Orchestra\Auth\Acl\Container');
-        $app['orchestra.mail'] = $mailer = m::mock('\Orchestra\Notifier\Mailer')->makePartial();
-        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager')->makePartial();
-        $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager')->makePartial();
-        $app['orchestra.widget'] = $widget = m::mock('\Orchestra\Widget\MenuWidgetHandler');
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository')->makePartial();
-        $app['events'] = $event = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
-        $app['request'] = $request = m::mock('\Illuminate\Http\Request');
-        $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator');
+        $acl = $app['orchestra.acl'];
+        $config = $app['config'];
+        $event = $app['events'];
+        $mailer = $app['orchestra.mail'];
+        $memory = $app['orchestra.memory'];
+        $notifier = $app['orchestra.notifier'];
+        $request = $app['request'];
+        $translator = $app['translator'];
+        $widget = $app['orchestra.widget'];
 
         $memoryProvider = m::mock('\Orchestra\Memory\Provider');
 
@@ -65,9 +73,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $notifier->shouldReceive('setDefaultDriver')->once()->with('orchestra')->andReturnNull();
         $widget->shouldReceive('make')->once()->with('menu.orchestra')->andReturn($widget)
             ->shouldReceive('make')->once()->with('menu.app')->andReturn($widget)
-            ->shouldReceive('add')->andReturn($widget)
-            ->shouldReceive('title')->once()->andReturn($widget)
-            ->shouldReceive('link')->once()->andReturnNull();
+            ->shouldReceive('add->title->link')->once()->andReturnNull();
         $translator->shouldReceive('get')->andReturn('foo');
         $event->shouldReceive('listen')->once()
                 ->with('orchestra.ready: admin', 'Orchestra\Foundation\AdminMenuHandler')->andReturnNull()
@@ -89,14 +95,14 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
         $app['env'] = 'production';
         $app['orchestra.installed'] = false;
-        $app['orchestra.acl'] = $acl = m::mock('\Orchestra\Auth\Acl\Container');
-        $app['orchestra.mail'] = $mailer = m::mock('\Orchestra\Notifier\Mailer')->makePartial();
-        $app['orchestra.memory'] = $memory = m::mock('\Orchestra\Memory\MemoryManager')->makePartial();
-        $app['orchestra.notifier'] = $notifier = m::mock('\Orchestra\Notifier\NotifierManager')->makePartial();
-        $app['orchestra.widget'] = $widget = m::mock('\Orchestra\Widget\MenuWidgetHandler');
-        $app['config'] = $config = m::mock('\Illuminate\Config\Repository')->makePartial();
-        $app['events'] = $event = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
-        $app['request'] = $request = m::mock('\Illuminate\Http\Request');
+        $acl = $app['orchestra.acl'];
+        $config = $app['config'];
+        $event = $app['events'];
+        $mailer = $app['orchestra.mail'];
+        $memory = $app['orchestra.memory'];
+        $notifier = $app['orchestra.notifier'];
+        $request = $app['request'];
+        $widget = $app['orchestra.widget'];
 
         $memoryProvider = m::mock('\Orchestra\Memory\Provider');
 
@@ -110,13 +116,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $notifier->shouldReceive('setDefaultDriver')->once()->with('orchestra')->andReturnNull();
         $widget->shouldReceive('make')->once()->with('menu.orchestra')->andReturn($widget)
             ->shouldReceive('make')->once()->with('menu.app')->andReturn($widget)
-            ->shouldReceive('add')->once()->with('install')->andReturn($widget)
-            ->shouldReceive('title')->once()->with('Install')->andReturn($widget);
+            ->shouldReceive('add->title->link')->once()->with('http://localhost/admin/install')->andReturn($widget);
         $request->shouldReceive('root')->andReturn('http://localhost')
             ->shouldReceive('secure')->andReturn(false);
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
         $event->shouldReceive('fire')->once()->with('orchestra.started', array($memoryProvider))->andReturnNull();
-        $widget->shouldReceive('link')->with('http://localhost/admin/install')->once();
 
         return $app;
     }
