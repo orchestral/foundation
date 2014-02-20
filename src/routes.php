@@ -24,6 +24,7 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
     Route::get('forgot', 'Orchestra\Foundation\Routing\PasswordBrokerController@index');
     Route::post('forgot', 'Orchestra\Foundation\Routing\PasswordBrokerController@create');
     Route::get('forgot/reset/{token}', 'Orchestra\Foundation\Routing\PasswordBrokerController@show');
+    Route::post('forgot/reset/{token}', 'Orchestra\Foundation\Routing\PasswordBrokerController@reset');
     Route::post('forgot/reset', 'Orchestra\Foundation\Routing\PasswordBrokerController@reset');
 
     // Route to installation.
@@ -44,7 +45,7 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
 
     // Route to users.
     Route::resource('users', 'Orchestra\Foundation\Routing\UsersController', array('except' => array('show')));
-    Route::any('users/{id}/delete', 'Orchestra\Foundation\Routing\UsersController@delete');
+    Route::any('users/{user}/delete', 'Orchestra\Foundation\Routing\UsersController@delete');
 
     // Route for settings
     Route::get('settings', 'Orchestra\Foundation\Routing\SettingsController@show');
@@ -61,6 +62,7 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
 
     // Base routing.
     Route::any('/', array(
+        'as'     => 'orchestra.dashboard',
         'before' => 'orchestra.installable',
         'uses'   => 'Orchestra\Foundation\Routing\DashboardController@index'
     ));
