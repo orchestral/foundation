@@ -8,7 +8,6 @@ title: Foundation Change Log
 ### v2.1.4@dev {#v2-1-4}
 
 * Allow Extension to be optional.
-* Only implement abstract method `Orchestra\Foundation\Routing\BaseController::setupFilters()` on implementations.
 * Increased the CSS width of `th.actions` for properly handling label in different language.
 * Update to Twitter Bootstrap v3.1.1.
 
