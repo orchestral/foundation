@@ -24,6 +24,7 @@ Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
     Route::get('forgot', 'Orchestra\Foundation\Routing\PasswordBrokerController@index');
     Route::post('forgot', 'Orchestra\Foundation\Routing\PasswordBrokerController@create');
     Route::get('forgot/reset/{token}', 'Orchestra\Foundation\Routing\PasswordBrokerController@show');
+    Route::post('forgot/reset/{token}', 'Orchestra\Foundation\Routing\PasswordBrokerController@reset');
     Route::post('forgot/reset', 'Orchestra\Foundation\Routing\PasswordBrokerController@reset');
 
     // Route to installation.
