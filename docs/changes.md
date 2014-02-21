@@ -13,11 +13,13 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
-### v2.1.4@dev {#v2-1-4}
+### v2.1.4 {#v2-1-4}
 
 * Allow Extension to be optional.
 * Increased the CSS width of `th.actions` for properly handling label in different language.
 * Update to Twitter Bootstrap v3.1.1.
+* Add backward compatibility to `v2.0` password reset routing (allow `v2.0` based theme to work on `v2.1`).
+* Minor tweaks to routing to improve consistency.
 
 ### v2.1.3 {#v2-1-3}
 
