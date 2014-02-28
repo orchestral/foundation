@@ -5,7 +5,6 @@ use Orchestra\Memory\Provider;
 
 class Application extends Abstractable\RouteManager
 {
-
     /**
      * Booted indicator.
      *
@@ -34,14 +33,12 @@ class Application extends Abstractable\RouteManager
      */
     public function boot()
     {
-        if ($this->booted) {
-            return $this;
+        if (! $this->booted) {
+            // Mark the application as booted and boot the application.
+            $this->booted = true;
+
+            $this->bootApplication();
         }
-
-        // Set the indicator that Application has been booted.
-        $this->booted = true;
-
-        $this->bootApplication();
 
         return $this;
     }
@@ -86,7 +83,6 @@ class Application extends Abstractable\RouteManager
     /**
      * Boot application.
      *
-     * @param  \Orchestra\Memory\Provider   $memory
      * @return void
      */
     protected function bootApplication()
