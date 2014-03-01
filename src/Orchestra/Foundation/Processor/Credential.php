@@ -79,7 +79,7 @@ class Credential extends AbstractableProcessor
         // Verify user account if has not been verified, other this should
         // be ignored in most cases.
         if ((int) $user->status === User::UNVERIFIED) {
-            $user->status = User::VERIFIED;
+            $user->activate();
             $user->save();
         }
 

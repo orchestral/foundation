@@ -67,7 +67,7 @@ class CredentialControllerTest extends TestCase
             ->shouldReceive('fails')->once()->andReturn(false);
 
         $user->shouldReceive('getAttribute')->once()->with('status')->andReturn(0)
-            ->shouldReceive('setAttribute')->once()->with('status', 1)->andReturnNull()
+            ->shouldReceive('activate')->once()->andReturnNull()
             ->shouldReceive('save')->once()->andReturnNull();
 
         Auth::shouldReceive('attempt')->once()->with(m::type('Array'), true)->andReturn(true);
