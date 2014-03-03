@@ -107,7 +107,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $path = realpath(__DIR__.'/../../');
+        $path = realpath(__DIR__.'/../');
 
         $this->package('orchestra/foundation', 'orchestra/foundation', $path);
 

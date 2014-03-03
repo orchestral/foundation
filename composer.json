@@ -12,8 +12,8 @@
 		}
 	],
 	"autoload": {
-		"psr-0": {
-			"Orchestra\\Foundation" : "src/"
+		"psr-4": {
+			"Orchestra\\Foundation\\" : "src/Foundation/"
 		},
 		"files": [
 			"src/helpers.php"
