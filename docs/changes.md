@@ -13,6 +13,10 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
+### v2.1.5 {#v2-1-5}
+
+* Implement [PSR-4](https://github.com/php-fig/fig-standards/blob/master/proposed/psr-4-autoloader/psr-4-autoloader.md) autoloading structure.
+
 ### v2.1.4 {#v2-1-4}
 
 * Allow Extension to be optional.
