@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
+### v2.1.6@dev {#v2-1-6}
+
+* Fixes test case involving exception return when URL matched a different verb.
+
 ### v2.1.5 {#v2-1-5}
 
 * Implement [PSR-4](https://github.com/php-fig/fig-standards/blob/master/proposed/psr-4-autoloader/psr-4-autoloader.md) autoloading structure.
