@@ -44,7 +44,7 @@ class SettingsControllerTest extends TestCase
         $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
         list($presenter,) = $this->bindDependencies();
 
-        $memory->shouldReceive('get')->times(12)->andReturn('');
+        $memory->shouldReceive('get')->times(14)->andReturn('');
         $presenter->shouldReceive('form')->once()->andReturn('edit.settings');
 
         Orchestra::shouldReceive('memory')->once()->andReturn($memory);
@@ -82,7 +82,7 @@ class SettingsControllerTest extends TestCase
         $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
         list(, $validator) = $this->bindDependencies();
 
-        $memory->shouldReceive('put')->times(12)->andReturnNull()
+        $memory->shouldReceive('put')->times(14)->andReturnNull()
             ->shouldReceive('get')->once()->with('email.password')->andReturn('foo');
         $validator->shouldReceive('on')->once()->with('smtp')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
