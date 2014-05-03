@@ -45,6 +45,8 @@ class Setting extends AbstractableProcessor
             'email_encryption' => $memory->get('email.encryption', ''),
             'email_sendmail'   => $memory->get('email.sendmail', ''),
             'email_queue'      => ($memory->get('email.queue', false) ? 'yes' : 'no'),
+            'email_secret'     => $memory->get('email.secret', ''),
+            'email_domain'     => $memory->get('email.domain', ''),
         ));
 
         $form = $this->presenter->form($eloquent);
@@ -96,6 +98,8 @@ class Setting extends AbstractableProcessor
         $memory->put('email.encryption', $input['email_encryption']);
         $memory->put('email.sendmail', $input['email_sendmail']);
         $memory->put('email.queue', ($input['email_queue'] === 'yes'));
+        $memory->put('email.secret', $input['email_secret']);
+        $memory->put('email.domain', $input['email_domain']);
 
         Event::fire('orchestra.saved: settings', array($memory, $input));
 

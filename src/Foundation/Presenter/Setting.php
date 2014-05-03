@@ -65,7 +65,9 @@ class Setting extends AbstractablePresenter
                 $control->options(array(
                     'mail'     => 'Mail',
                     'smtp'     => 'SMTP',
-                    'sendmail' => 'Sendmail'
+                    'sendmail' => 'Sendmail',
+                    'mailgun'  => 'Mailgun',
+                    'mandrill' => 'Mandrill',
                 ));
             });
 
@@ -92,6 +94,14 @@ class Setting extends AbstractablePresenter
 
             $fieldset->control('input:text', 'email_encryption', function ($control) {
                 $control->label(trans('orchestra/foundation::label.email.encryption'));
+            });
+
+            $fieldset->control('input:text', 'email_secret', function ($control) {
+                $control->label(trans('orchestra/foundation::label.email.secret'));
+            });
+
+            $fieldset->control('input:text', 'email_domain', function ($control) {
+                $control->label(trans('orchestra/foundation::label.email.domain'));
             });
 
             $fieldset->control('input:text', 'email_sendmail', function ($control) {

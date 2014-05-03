@@ -32,6 +32,8 @@ return array(
         'change_password' => 'Change Password',
         'command'         => 'Sendmail Command',
         'queue'           => 'Mail via Queue',
+        'domain'          => 'Domain',
+        'secret'          => 'Secret Key',
     ),
 
     'extensions' => array(

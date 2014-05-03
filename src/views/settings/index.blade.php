@@ -47,6 +47,13 @@ jQuery(function onSettingPageReady($) { 'use strict';
 				$('input[name^="email_address"]').parent().parent().show();
 				$('input[name^="email_sendmail"]').parent().parent().show();
 				break;
+			case 'mailgun':
+				$('input[name^="email_secret"]').parent().parent().show();
+				$('input[name^="email_domain"]').parent().parent().show();
+				break;
+			case 'mandrill':
+				$('input[name^="email_secret"]').parent().parent().show();
+				break;
 			default :
 				$('input[name^="email_address"]').parent().parent().show();
 				break;

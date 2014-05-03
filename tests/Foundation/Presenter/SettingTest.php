@@ -73,12 +73,12 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('attributes')->twice()->andReturnNull()
             ->shouldReceive('options')->once()->andReturnNull();
 
-        $emailFieldset->shouldReceive('control')->times(9)
+        $emailFieldset->shouldReceive('control')->times(11)
                 ->with(m::any(), m::any(), m::type('Closure'))
                 ->andReturnUsing(function ($t, $n, $c) use ($emailControl) {
                     $c($emailControl);
                 });
-        $emailControl->shouldReceive('label')->times(9)->andReturnNull()
+        $emailControl->shouldReceive('label')->times(11)->andReturnNull()
             ->shouldReceive('attributes')->once()->andReturnNull()
             ->shouldReceive('options')->twice()->andReturnNull()
             ->shouldReceive('help')->once()->with('email.password.help');

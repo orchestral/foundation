@@ -32,6 +32,8 @@ return array(
         'change_password' => 'Cambia password',
         'command'         => 'Comando sendmail',
         'queue'           => 'Speidsci via Queue',
+        'domain'          => 'Domain',
+        'secret'          => 'Secret Key',
     ),
 
     'extensions' => array(

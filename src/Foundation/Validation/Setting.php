@@ -12,7 +12,7 @@ class Setting extends Validator
     protected $rules = array(
         'site_name'     => array('required'),
         'email_address' => array('required', 'email'),
-        'email_driver'  => array('required', 'in:mail,smtp,sendmail'),
+        'email_driver'  => array('required', 'in:mail,smtp,sendmail,mailgun,mandrill'),
         'email_port'    => array('numeric'),
     );
 
@@ -44,5 +44,26 @@ class Setting extends Validator
     protected function onSendmail()
     {
         $this->rules['email_sendmail'] = array('required');
+    }
+
+    /**
+     * On update email using mailgun driver scenario.
+     *
+     * @return void
+     */
+    protected function onMailgun()
+    {
+        $this->rules['email_secret'] = array('required');
+        $this->rules['email_domain'] = array('required');
+    }
+
+    /**
+     * On update email using mandrill driver scenario.
+     *
+     * @return void
+     */
+    protected function onMandrill()
+    {
+        $this->rules['email_secret'] = array('required');
     }
 }
