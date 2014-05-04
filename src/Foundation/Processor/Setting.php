@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Processor;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Presenter\Setting as SettingPresenter;
@@ -65,25 +66,23 @@ class Setting extends AbstractableProcessor
      */
     public function update($listener, array $input)
     {
-        $default = array('email_driver' => 'mail');
-        $input = array_merge($default, $input);
+        $input  = new Fluent($input);
+        $driver = $this->resolveMailConfig($input['email_driver'], 'mail.driver');
 
-        $validation = $this->validator->on($input['email_driver'])->with($input);
+        $validation = $this->validator->on($driver)->with($input->toArray());
 
         if ($validation->fails()) {
             return $listener->updateValidationFailed($validation);
         }
-
-        $input  = new Fluent($input);
         $memory = App::memory();
 
         $memory->put('site.name', $input['site_name']);
         $memory->put('site.description', $input['site_description']);
         $memory->put('site.registrable', ($input['site_registrable'] === 'yes'));
-        $memory->put('email.driver', $input['email_driver']);
+        $memory->put('email.driver', $driver);
 
         $memory->put('email.from', array(
-            'address' => $input['email_address'],
+            'address' => $this->resolveMailConfig($input['email_address'], 'mail.from.address'),
             'name'    => $input['site_name'],
         ));
 
@@ -91,15 +90,15 @@ class Setting extends AbstractableProcessor
             $input['email_password'] = $memory->get('email.password');
         }
 
-        $memory->put('email.host', $input['email_host']);
-        $memory->put('email.port', $input['email_port']);
-        $memory->put('email.username', $input['email_username']);
-        $memory->put('email.password', $input['email_password']);
-        $memory->put('email.encryption', $input['email_encryption']);
-        $memory->put('email.sendmail', $input['email_sendmail']);
+        $memory->put('email.host', $this->resolveMailConfig($input['email_host'], 'mail.host'));
+        $memory->put('email.port', $this->resolveMailConfig($input['email_port'], 'mail.port'));
+        $memory->put('email.username', $this->resolveMailConfig($input['email_username'], 'mail.username'));
+        $memory->put('email.password', $this->resolveMailConfig($input['email_password'], 'mail.password'));
+        $memory->put('email.encryption', $this->resolveMailConfig($input['email_encryption'], 'mail.encryption'));
+        $memory->put('email.sendmail', $this->resolveMailConfig($input['email_sendmail'], 'mail.sendmail'));
         $memory->put('email.queue', ($input['email_queue'] === 'yes'));
-        $memory->put('email.secret', $input['email_secret']);
-        $memory->put('email.domain', $input['email_domain']);
+        $memory->put('email.secret', $this->resolveMailConfig($input['email_secret'], "services.{$driver}.secret"));
+        $memory->put('email.domain', $this->resolveMailConfig($input['email_domain'], "services.{$driver}.domain"));
 
         Event::fire('orchestra.saved: settings', array($memory, $input));
 
@@ -118,5 +117,21 @@ class Setting extends AbstractableProcessor
         App::make('orchestra.publisher.migrate')->foundation();
 
         return $listener->migrateSucceed();
+    }
+
+    /**
+     * Resolve mail configuration.
+     *
+     * @param  mixed   $input
+     * @param  string  $alternative
+     * @return mixed
+     */
+    private function resolveMailConfig($input, $alternative)
+    {
+        if (empty($input)) {
+            $input = Config::get($alternative);
+        }
+
+        return $input;
     }
 }
