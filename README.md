@@ -12,4 +12,4 @@ This repository contains the core code of the Orchestra Platform. If you want to
 ## Resources
 
 * [Documentation](http://orchestraplatform.com/docs/latest)
-* [Change Log](http://orchestraplatform.com/docs/latest/components/foundation/changes#v2-1)
+* [Change Log](http://orchestraplatform.com/docs/latest/components/foundation/changes#v2-2)
