@@ -31,6 +31,18 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      */
+    public function testInstance()
+    {
+        $stub = new Setting;
+
+        $this->assertInstanceOf('\Orchestra\Support\Validator', $stub);
+    }
+
+    /**
+     * Test Orchestra\Foundation\Validation\Setting validation.
+     *
+     * @test
+     */
     public function testValidation()
     {
         $input = array(

@@ -31,6 +31,18 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      */
+    public function testInstance()
+    {
+        $stub = new Account;
+
+        $this->assertInstanceOf('\Orchestra\Support\Validator', $stub);
+    }
+
+    /**
+     * Test Orchestra\Foundation\Validation\Account validation.
+     *
+     * @test
+     */
     public function testValidation()
     {
         $input = array(

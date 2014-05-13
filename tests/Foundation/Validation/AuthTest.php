@@ -30,6 +30,18 @@ class AuthTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      */
+    public function testInstance()
+    {
+        $stub = new Auth;
+
+        $this->assertInstanceOf('\Orchestra\Support\Validator', $stub);
+    }
+
+    /**
+     * Test Orchestra\Foundation\Validation\Auth validation.
+     *
+     * @test
+     */
     public function testValidation()
     {
         $input = array('email' => 'admin@orchestraplatform.com', 'password' => '123');
