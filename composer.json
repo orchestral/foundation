@@ -39,8 +39,7 @@
 		"orchestra/widget": "2.1.*"
 	},
 	"require-dev": {
-		"mockery/mockery": "0.9.*@stable",
-		"phpunit/phpunit": "4.*@stable",
+		"mockery/mockery": "0.9.*",
 		"orchestra/testbench": "2.1.*",
 		"twbs/bootstrap": "~3@stable"
 	},
