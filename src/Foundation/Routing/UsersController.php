@@ -40,7 +40,7 @@ class UsersController extends AdminController
      */
     public function index()
     {
-        return $this->processor->index($this, Input::get('q', ''), Input::get('roles', array()));
+        return $this->processor->index($this, Input::all());
     }
 
     /**
