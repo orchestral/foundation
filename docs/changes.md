@@ -8,6 +8,7 @@ title: Foundation Change Log
 ### v2.1.6@dev {#v2-1-6}
 
 * Fixes test case involving exception return when URL matched a different verb.
+* Add breaking backward compatibility by changing the parameter on `Orchestra\Foundation\Processor\User::index()` to allow better customizations.
 
 ### v2.1.5 {#v2-1-5}
 

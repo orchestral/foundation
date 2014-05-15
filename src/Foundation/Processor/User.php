@@ -189,7 +189,7 @@ class User extends AbstractableProcessor
     /**
      * Save the user.
      *
-     * @param  Orchestra\Model\User    $user
+     * @param  \Orchestra\Model\User   $user
      * @param  array                   $input
      * @param  string                  $type
      * @return boolean
