@@ -27,12 +27,14 @@ class User extends AbstractableProcessor
      * View list users page.
      *
      * @param  object  $listener
-     * @param  string  $searchKeyword
-     * @param  array   $searchRoles
+     * @param  string  $input
      * @return mixed
      */
-    public function index($listener, $searchKeyword = '', array $searchRoles = array())
+    public function index($listener, array $input = array())
     {
+        $searchKeyword = array_get($input, 'q', '');
+        $searchRoles = array_get($input, 'roles', array());
+
         // Get Users (with roles) and limit it to only 30 results for
         // pagination. Don't you just love it when pagination simply works.
         $eloquent = App::make('orchestra.user')->search($searchKeyword, $searchRoles)->paginate();
