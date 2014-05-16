@@ -40,7 +40,7 @@
 	},
 	"require-dev": {
 		"mockery/mockery": "0.9.*",
-		"orchestra/testbench": "2.2.*",
+		"orchestra/testbench": "2.3.*",
 		"twbs/bootstrap": "~3@stable"
 	},
 	"extra": {
