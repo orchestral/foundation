@@ -31,6 +31,18 @@ class UserTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      */
+    public function testInstance()
+    {
+        $stub = new User;
+
+        $this->assertInstanceOf('\Orchestra\Support\Validator', $stub);
+    }
+
+    /**
+     * Test Orchestra\Foundation\Validation\User validation.
+     *
+     * @test
+     */
     public function testValidation()
     {
         $input = array(
