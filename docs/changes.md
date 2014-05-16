@@ -10,6 +10,14 @@ title: Foundation Change Log
 * Bump minimum version to PHP v5.4.0.
 * Rename Environment to Factory.
 * Only implement abstract method `Orchestra\Foundation\Routing\BaseController::setupFilters()` on implementations.
+* Allow Extension to be optional.
+* Increased the CSS width of `th.actions` for properly handling label in different language.
+* Update to Twitter Bootstrap v3.1.1.
+* Open hyperlink to extension author's URL on a new window/tab.
+* Allow all type-hinting to resolve to available service locator in Orchestra Platform.
+* Improve DI on `Orchestra\Foundation\AdminMenuHandler`.
+* Eagerly attach `orchestra/memory` during installation.
+* Provides actual service locator for `Orchestra\Foundation\ConsoleSupportServiceProvider`.
 
 ## Version 2.1 {#v2-1}
 
