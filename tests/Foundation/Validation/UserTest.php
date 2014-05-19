@@ -57,9 +57,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'roles'    => array('required'),
         );
 
-        $validator = m::mock('\Illuminate\Validation\Factory')->makePartial();
-        $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
-        Validator::swap($validator);
+        $factory = m::mock('\Illuminate\Validation\Factory')->makePartial();
+        $validator = m::mock('\Illuminate\Validation\Validator');
+        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        Validator::swap($factory);
 
         $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: users', m::any())->andReturnNull()
@@ -69,7 +70,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $stub       = new User;
         $validation = $stub->with($input);
 
-        $this->assertTrue($validation);
+        $this->assertEquals($validator, $validation);
     }
 
     /**
@@ -93,9 +94,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
             'password' => array('required'),
         );
 
-        $validator = m::mock('\Illuminate\Validation\Factory')->makePartial();
-        $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
-        Validator::swap($validator);
+        $factory = m::mock('\Illuminate\Validation\Factory')->makePartial();
+        $validator = m::mock('\Illuminate\Validation\Validator');
+        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        Validator::swap($factory);
 
         $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: users', m::any())->andReturnNull()
@@ -105,6 +107,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $stub       = new User;
         $validation = $stub->on('create')->with($input);
 
-        $this->assertTrue($validation);
+        $this->assertEquals($validator, $validation);
     }
 }
