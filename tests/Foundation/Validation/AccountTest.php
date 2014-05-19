@@ -55,9 +55,10 @@ class AccountTest extends \PHPUnit_Framework_TestCase
             'fullname' => array('required'),
         );
 
-        $validator = m::mock('\Illuminate\Validation\Factory')->makePartial();
-        $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
-        Validator::swap($validator);
+        $factory = m::mock('\Illuminate\Validation\Factory')->makePartial();
+        $validator = m::mock('\Illuminate\Validation\Validator');
+        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        Validator::swap($factory);
 
         $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturnNull();
@@ -66,7 +67,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $stub       = new Account;
         $validation = $stub->with($input);
 
-        $this->assertTrue($validation);
+        $this->assertEquals($validator, $validation);
     }
 
     /**
@@ -86,9 +87,10 @@ class AccountTest extends \PHPUnit_Framework_TestCase
             'fullname' => array('required'),
         );
 
-        $validator = m::mock('\Illuminate\Validation\Factory')->makePartial();
-        $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
-        Validator::swap($validator);
+        $factory = m::mock('\Illuminate\Validation\Factory')->makePartial();
+        $validator = m::mock('\Illuminate\Validation\Validator');
+        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        Validator::swap($factory);
 
         $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturnNull();
@@ -97,7 +99,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $stub       = new Account;
         $validation = $stub->on('register')->with($input);
 
-        $this->assertTrue($validation);
+        $this->assertEquals($validator, $validation);
     }
 
     /**
@@ -120,13 +122,14 @@ class AccountTest extends \PHPUnit_Framework_TestCase
             'confirm_password' => array('same:new_password'),
         );
 
-        $validator = m::mock('\Illuminate\Validation\Factory')->makePartial();
-        $validator->shouldReceive('make')->once()->with($input, $rules, array())->andReturn(true);
-        Validator::swap($validator);
+        $factory = m::mock('\Illuminate\Validation\Factory')->makePartial();
+        $validator = m::mock('\Illuminate\Validation\Validator');
+        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        Validator::swap($factory);
 
         $stub       = new Account;
         $validation = $stub->on('changePassword')->with($input);
 
-        $this->assertTrue($validation);
+        $this->assertEquals($validator, $validation);
     }
 }
