@@ -75,8 +75,9 @@ class RegistrationControllerTest extends TestCase
             'fullname' => 'Administrator',
         );
 
-        $user   = m::mock('\Orchestra\Model\User');
-        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
+        $user    = m::mock('\Orchestra\Model\User');
+        $memory  = m::mock('\Orchestra\Memory\Provider')->makePartial();
+        $receipt = m::mock('\Orchestra\Notifier\Receipt');
 
         list(, $validator) = $this->bindDependencies();
 
@@ -91,6 +92,8 @@ class RegistrationControllerTest extends TestCase
             ->shouldReceive('sync')->once()->with(m::any())->andReturnNull()
             ->shouldReceive('toArray')->once()->andReturn($input);
         $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('foo');
+        $receipt->shouldReceive('failed')->once()->andReturn(false);
+
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Orchestra::shouldReceive('memory')->once()->andReturn($memory);
         Orchestra::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
@@ -100,7 +103,7 @@ class RegistrationControllerTest extends TestCase
             });
         Notifier::shouldReceive('send')->once()
             ->with($user, m::any())
-            ->andReturn(true);
+            ->andReturn($receipt);
         Messages::shouldReceive('add')->twice()->with('success', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/register', $input);
@@ -119,8 +122,9 @@ class RegistrationControllerTest extends TestCase
             'fullname' => 'Administrator',
         );
 
-        $user   = m::mock('\Orchestra\Model\User');
-        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
+        $user    = m::mock('\Orchestra\Model\User');
+        $memory  = m::mock('\Orchestra\Memory\Provider')->makePartial();
+        $receipt = m::mock('\Orchestra\Notifier\Receipt');
 
         list(, $validator) = $this->bindDependencies();
 
@@ -135,6 +139,8 @@ class RegistrationControllerTest extends TestCase
             ->shouldReceive('sync')->once()->with(m::any())->andReturnNull()
             ->shouldReceive('toArray')->once()->andReturn($input);
         $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('foo');
+        $receipt->shouldReceive('failed')->once()->andReturn(true);
+
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Orchestra::shouldReceive('memory')->once()->andReturn($memory);
         Orchestra::shouldReceive('handles')->once()
@@ -145,7 +151,7 @@ class RegistrationControllerTest extends TestCase
             });
         Notifier::shouldReceive('send')->once()
             ->with($user, m::any())
-            ->andReturn(false);
+            ->andReturn($receipt);
 
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();

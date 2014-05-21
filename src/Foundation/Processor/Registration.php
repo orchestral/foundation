@@ -123,9 +123,9 @@ class Registration extends AbstractableProcessor
             'data'    => $data,
         ));
 
-        $sent = Notifier::send($user, $message);
+        $receipt = Notifier::send($user, $message);
 
-        if (! $sent) {
+        if ($receipt->failed()) {
             return $listener->createSucceedWithoutNotification();
         }
 
