@@ -73,7 +73,7 @@ class PasswordBroker extends Broker
      * @param  \Illuminate\Auth\Reminders\RemindableInterface  $user
      * @param  string                                          $token
      * @param  Closure                                         $callback
-     * @return void
+     * @return \Orchestra\Notifier\Receipt
      */
     public function sendReminder(RemindableInterface $user, $token, Closure $callback = null)
     {
