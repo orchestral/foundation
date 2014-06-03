@@ -33,3 +33,5 @@ jQuery(function onPageReady($) { 'use strict';
 	dispatcher.fire("orchestra.ready: <?php echo Request::path(); ?>");
 });
 </script>
+
+@stack('orchestra.footer')
