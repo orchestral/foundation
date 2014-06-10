@@ -14,5 +14,6 @@
 /build.xml                      export-ignore
 /package.json                   export-ignore
 /phpunit.xml                    export-ignore
+/public/.gitignore              export-ignore
 /LICENSE.md                     export-ignore
 /README.md                      export-ignore
