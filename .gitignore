@@ -1,7 +1,10 @@
 # Composer
-composer.lock
-vendor/*
+/composer.lock
+/vendor/*
 
 # Node.js
-node_modules/*
-npm-debug.log
+/node_modules/*
+/npm-debug.log
+
+# Bower
+/public/components/*
