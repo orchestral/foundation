@@ -23,6 +23,7 @@ use Orchestra\Support\Facades\App; ?>
 </header>
 
 @unless (Auth::check())
+@push('orchestra.footer')
 <script>
 jQuery(function ($) {
 	$('a[rel="user-menu"]').on('click', function (e) {
@@ -34,5 +35,6 @@ jQuery(function ($) {
 	});
 });
 </script>
+@endpush
 @endunless
 <br>

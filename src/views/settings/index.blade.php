@@ -10,7 +10,9 @@
 		@placeholder('orchestra.helps')
 	</div>
 </div>
+@stop
 
+@push('orchestra.footer')
 <script>
 jQuery(function onSettingPageReady($) { 'use strict';
 	var dispatcher, emailDriver, emailPassword, changeContainer,
@@ -91,4 +93,4 @@ jQuery(function onSettingPageReady($) { 'use strict';
 	emailDriver.trigger('change');
 });
 </script>
-@stop
+@endpush

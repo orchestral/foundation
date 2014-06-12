@@ -10,12 +10,14 @@
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ $item->title }}</a>
 				<ul class="dropdown-menu">
+					@unless ($item->link == '#' && ! empty($item->link))
 					<li>
 						<a href="{{ $item->link }}">
 							{{ $item->title }}
 						</a>
 					</li>
 					<li class="divider"></li>
+					@endunless
 					@foreach ($item->childs as $child)
 						<? $grands = $child->childs; ?>
 						<li class="{{ ( ! empty($grands) ? "dropdown-submenu" : "normal" ) }}">
