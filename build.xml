@@ -151,8 +151,35 @@
         </exec>
     </target>
 
-    <target name="build" depends="update,generate"/>
+    <target name="chmod-component-dir" description="Chmod the Component">
+        <exec executable="find">
+            <arg value="${basedir}/public/components"/>
+            <arg value="-type"/>
+            <arg value="d"/>
+            <arg value="-exec"/>
+            <arg value="chmod"/>
+            <arg value="775"/>
+            <arg value="{}"/>
+            <arg value=";"/>
+        </exec>
+    </target>
+
+    <target name="chmod-component-file" description="Chmod the Component">
+        <exec executable="find">
+            <arg value="${basedir}/public/components"/>
+            <arg value="-type"/>
+            <arg value="f"/>
+            <arg value="-exec"/>
+            <arg value="chmod"/>
+            <arg value="664"/>
+            <arg value="{}"/>
+            <arg value=";"/>
+        </exec>
+    </target>
+
+    <target name="build" depends="update,chmod,generate"/>
+    <target name="chmod" depends="chmod-component-dir,chmod-component-file"/>
     <target name="generate" depends="clean,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpunit,phpcb"/>
     <target name="update" depends="composer-update,composer-dumpautoload,twbs"/>
-    <target name="quick-build" depends="composer-dumpautoload,generate"/>
+    <target name="quick-build" depends="composer-dumpautoload,chmod,generate"/>
 </project>
