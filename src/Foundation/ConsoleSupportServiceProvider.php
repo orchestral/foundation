@@ -15,6 +15,7 @@ class ConsoleSupportServiceProvider extends ServiceProvider
         'Orchestra\Extension\CommandServiceProvider',
         'Orchestra\Memory\CommandServiceProvider',
         'Orchestra\Optimize\OptimizeServiceProvider',
+        'Orchestra\View\CommandServiceProvider',
     );
 
     /**
