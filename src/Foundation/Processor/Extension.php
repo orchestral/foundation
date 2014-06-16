@@ -3,9 +3,9 @@
 use Closure;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Fluent;
-use Orchestra\Extension\FilePermissionException;
 use Orchestra\Foundation\Presenter\Extension as ExtensionPresenter;
 use Orchestra\Foundation\Validation\Extension as ExtensionValidator;
+use Orchestra\Publisher\FilePermissionException;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Extension as E;
 use Orchestra\Support\Facades\Publisher;
