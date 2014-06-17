@@ -18,6 +18,9 @@ title: Foundation Change Log
 * Improve DI on `Orchestra\Foundation\AdminMenuHandler`.
 * Eagerly attach `orchestra/memory` during installation.
 * Provides actual service locator for `Orchestra\Foundation\ConsoleSupportServiceProvider`.
+* Manage some asset packages using bower.
+* Change code to support new `orchestra/publisher` component.
+* Add support for `orchestra/view` command.
 
 ## Version 2.1 {#v2-1}
 
