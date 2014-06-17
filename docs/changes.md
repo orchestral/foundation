@@ -5,6 +5,12 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
+### v2.1.7 {#v2-1-7}
+
+* Manage some asset packages using bower.
+* Change code to support new `orchestra/publisher` component.
+* Add support for `orchestra/view` command.
+
 ### v2.1.6 {#v2-1-6}
 
 * Fixes test case involving exception return when URL matched a different verb.
