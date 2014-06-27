@@ -18,7 +18,9 @@ foreach ($fieldsets as $fieldset) { ?>
 			<?php echo Form::label($control->name, $control->label, array('class' => 'three columns control-label')); ?>
 			
 			<div class="nine columns">
-				<?php echo call_user_func($control->field, $row, $control, array()); ?>
+				<div>
+					<?php echo call_user_func($control->field, $row, $control, array()); ?>
+				</div>
 				<?php if( $control->inlineHelp ) : ?><span class="help-inline"><?php echo $control->inlineHelp; ?></span><?php endif; ?>
 				<?php if( $control->help ) : ?><p class="help-block"><?php echo $control->help; ?></p><?php endif; ?>
 				<?php echo $errors->first($control->name, $format); ?>
