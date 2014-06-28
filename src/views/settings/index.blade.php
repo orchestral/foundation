@@ -39,7 +39,7 @@ jQuery(function onSettingPageReady($) { 'use strict';
 		switch (value) {
 			case 'smtp' :
 				$.each(smtp, function(index, name) {
-					$('input[name="'+name+'"]').parent().parent().show();
+					$('input[name="'+name+'"]').parent().parent().parent().show();
 				});
 
 				break;
@@ -48,7 +48,7 @@ jQuery(function onSettingPageReady($) { 'use strict';
 				$('input[name^="email_sendmail"]').parent().parent().show();
 				break;
 			default :
-				$('input[name^="email_address"]').parent().parent().show();
+				$('input[name^="email_address"]').parent().parent().parent().show();
 				break;
 		}
 	});
