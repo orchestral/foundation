@@ -24,6 +24,11 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
+### v2.1.8@dev {#v2-1-8}
+
+* Fixed error with inline help `<span>`, helper `<span>` and errors for `select[role="switcher"]` HTML.
+* Update to Twitter Bootstrap v3.2.0.
+
 ### v2.1.7 {#v2-1-7}
 
 * Manage some asset packages using bower.
