@@ -19,7 +19,9 @@
 			{{ Form::label($control->name, $control->label, array('class' => 'three columns control-label')) }}
 
 			<div class="nine columns">
+                <div>
 				{{ $control->getField($row, $control, array()) }}
+                </div>
 				@if ($control->inlineHelp)
 				<span class="help-inline">{{ $control->inlineHelp }}</span>
 				@endif
