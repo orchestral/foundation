@@ -5,6 +5,11 @@ title: Foundation Change Log
 
 ## Version 2.2 {#v2-2}
 
+### v2.2.1@dev {#v2-2-1}
+
+* Fixed error with inline help `<span>`, helper `<span>` and errors for `select[role="switcher"]` HTML.
+* Update to Twitter Bootstrap v3.2.0.
+
 ### v2.2.0 {#v2-2-0}
 
 * Bump minimum version to PHP v5.4.0.
