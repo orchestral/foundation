@@ -8,6 +8,7 @@ title: Foundation Change Log
 ### v2.2.1@dev {#v2-2-1}
 
 * Fixed error with inline help `<span>`, helper `<span>` and errors for `select[role="switcher"]` HTML.
+* Utilize `orchestra/notifier` new `Orchestra\Notifier\Message` class.
 * Update to Twitter Bootstrap v3.2.0.
 
 ### v2.2.0 {#v2-2-0}
