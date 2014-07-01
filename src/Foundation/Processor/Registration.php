@@ -5,10 +5,10 @@ use Illuminate\Support\Contracts\ArrayableInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Presenter\Account as AccountPresenter;
 use Orchestra\Foundation\Validation\Account as AccountValidator;
 use Orchestra\Model\User;
+use Orchestra\Notifier\Message;
 use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Notifier;
 use Orchestra\Support\Str;
@@ -117,7 +117,7 @@ class Registration extends AbstractableProcessor
             'user'     => ($user instanceof ArrayableInterface ? $user->toArray() : $user),
         );
 
-        $message = new Fluent(array(
+        $message = new Message(array(
             'subject' => trans('orchestra/foundation::email.credential.register', array('site' => $site)),
             'view'    => 'emails.auth.register',
             'data'    => $data,

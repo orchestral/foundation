@@ -6,7 +6,7 @@ use Illuminate\Auth\Reminders\ReminderRepositoryInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Auth\UserProviderInterface;
 use Illuminate\Support\Contracts\ArrayableInterface;
-use Illuminate\Support\Fluent;
+use Orchestra\Notifier\Message;
 use Orchestra\Notifier\NotifierInterface;
 
 class PasswordBroker extends Broker
@@ -85,7 +85,7 @@ class PasswordBroker extends Broker
             'token' => $token,
         );
 
-        $message = new Fluent(array('view' => $this->reminderView, 'data' => $data));
+        $message = new Message(array('view' => $this->reminderView, 'data' => $data));
 
         return $this->mailer->send($user, $message, $callback);
     }

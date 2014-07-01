@@ -34,30 +34,30 @@ jQuery(function onSettingPageReady($) { 'use strict';
 		value = self.value ? self.value : '';
 		smtp  = ['email_host', 'email_port', 'email_address', 'email_username', 'email_password', 'email_encryption'];
 
-		$('input[name^="email_"]').parent().parent().hide();
+		$('input[name^="email_"]').parent().parent().parent().hide();
 
-		$('input[name="email_queue"]').parent().parent().hide();
+		$('input[name="email_queue"]').parent().parent().parent().hide();
 
 		switch (value) {
 			case 'smtp' :
 				$.each(smtp, function(index, name) {
-					$('input[name="'+name+'"]').parent().parent().show();
+					$('input[name="'+name+'"]').parent().parent().parent().show();
 				});
 
 				break;
 			case 'sendmail' :
-				$('input[name^="email_address"]').parent().parent().show();
-				$('input[name^="email_sendmail"]').parent().parent().show();
+				$('input[name^="email_address"]').parent().parent().parent().show();
+				$('input[name^="email_sendmail"]').parent().parent().parent().show();
 				break;
 			case 'mailgun':
-				$('input[name^="email_secret"]').parent().parent().show();
-				$('input[name^="email_domain"]').parent().parent().show();
+				$('input[name^="email_secret"]').parent().parent().parent().show();
+				$('input[name^="email_domain"]').parent().parent().parent().show();
 				break;
 			case 'mandrill':
-				$('input[name^="email_secret"]').parent().parent().show();
+				$('input[name^="email_secret"]').parent().parent().parent().show();
 				break;
 			default :
-				$('input[name^="email_address"]').parent().parent().show();
+				$('input[name^="email_address"]').parent().parent().parent().show();
 				break;
 		}
 	});
