@@ -85,7 +85,7 @@ class PasswordBroker extends Broker
             'token' => $token,
         );
 
-        $message = new Message(array('view' => $this->reminderView, 'data' => $data));
+        $message = Message::create($this->reminderView, $data);
 
         return $this->mailer->send($user, $message, $callback);
     }

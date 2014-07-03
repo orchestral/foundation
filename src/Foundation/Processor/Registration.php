@@ -117,11 +117,9 @@ class Registration extends AbstractableProcessor
             'user'     => ($user instanceof ArrayableInterface ? $user->toArray() : $user),
         );
 
-        $message = new Message(array(
-            'subject' => trans('orchestra/foundation::email.credential.register', array('site' => $site)),
-            'view'    => 'emails.auth.register',
-            'data'    => $data,
-        ));
+        $subject = trans('orchestra/foundation::email.credential.register', array('site' => $site));
+        $view    = 'emails.auth.register';
+        $message = Message::create($view, $data, $subject);
 
         $receipt = Notifier::send($user, $message);
 
