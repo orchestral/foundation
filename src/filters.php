@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,7 @@ use Orchestra\Support\Facades\App;
 
 Route::filter('orchestra.auth', function () {
     if (Auth::guest()) {
-        return Redirect::guest(handles('orchestra::login'));
+        return Redirect::guest(handles(Config::get('orchestra/foundation::routes.guest')));
     }
 });
 
@@ -36,7 +37,7 @@ Route::filter('orchestra.auth', function () {
 
 Route::filter('orchestra.guest', function () {
     if (! Auth::guest()) {
-        return Redirect::to(handles('orchestra::/'));
+        return Redirect::to(handles(Config::get('orchestra/foundation::routes.user')));
     }
 });
 
@@ -74,9 +75,10 @@ Route::filter('orchestra.csrf', function () {
 
 Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestra') {
     if (! App::acl()->can("manage-{$value}")) {
-        $redirect = (Auth::guest() ? 'login' : '/');
+        $type     = (Auth::guest() ? 'guest' : 'user');
+        $redirect = Config::get("orchestra/foundation::routes.{$type}");
 
-        return Redirect::to(handles("orchestra::{$redirect}"));
+        return Redirect::to(handles($redirect));
     }
 });
 
@@ -115,6 +117,9 @@ Route::filter('orchestra.installable', function () {
 
 Route::filter('orchestra.installed', function () {
     if (App::make('orchestra.installed') === true) {
-        return Redirect::to(handles('orchestra::/'));
+        $type     = (Auth::guest() ? 'guest' : 'user');
+        $redirect = Config::get("orchestra/foundation::routes.{$type}");
+
+        return Redirect::to(handles($redirect));
     }
 });
