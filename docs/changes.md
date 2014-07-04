@@ -36,7 +36,7 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
-### v2.1.9@dev {#v2-1-9}
+### v2.1.9 {#v2-1-9}
 
 * Allow `Orchestra\Foundation\Application::group()` to mimic `Route::group()` functionality.
 * Allow default routes to be configurable.
