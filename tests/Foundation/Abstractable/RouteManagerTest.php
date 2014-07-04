@@ -8,7 +8,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * Application instance.
      *
-     * @var Illuminate\Foundation\Application
+     * @var \Illuminate\Foundation\Application
      */
     private $app = null;
 
@@ -71,6 +71,63 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals($expected, $stub->group('orchestra', 'admin', array('before' => 'auth')));
+    }
+
+    /**
+     * Test Orchestra\Foundation\RouteManager::group() method
+     * with closure.
+     *
+     * @test
+     */
+    public function testGroupMethodWithClosure()
+    {
+        $app  = $this->getApplicationMocks();
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $app['router'] = $router = m::mock('\Illuminate\Routing\Router');
+
+        $group = array(
+            'before' => 'auth',
+            'prefix' => 'admin',
+            'domain' => null,
+        );
+
+        $callback = function () { };
+
+        $config->shouldReceive('get')->once()
+            ->with('orchestra/foundation::handles', 'admin')->andReturn('admin');
+        $router->shouldReceive('group')->once()->with($group, $callback)->andReturnNull();
+
+        $stub = new StubRouteManager($app);
+
+        $this->assertEquals($group, $stub->group('orchestra', 'admin', array('before' => 'auth'), $callback));
+    }
+
+    /**
+     * Test Orchestra\Foundation\RouteManager::group() method
+     * with closure and not array.
+     *
+     * @test
+     */
+    public function testGroupMethodWithClosureAndNotArray()
+    {
+        $app  = $this->getApplicationMocks();
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $app['router'] = $router = m::mock('\Illuminate\Routing\Router');
+
+        $group = array(
+            'prefix' => 'admin',
+            'domain' => null,
+        );
+
+        $callback = function () { };
+
+        $config->shouldReceive('get')->once()
+            ->with('orchestra/foundation::handles', 'admin')->andReturn('admin');
+        $router->shouldReceive('group')->once()->with($group, $callback)->andReturnNull();
+
+        $stub = new StubRouteManager($app);
+
+        $this->assertEquals($group, $stub->group('orchestra', 'admin', $callback));
     }
 
     /**

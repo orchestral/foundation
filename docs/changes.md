@@ -8,6 +8,8 @@ title: Foundation Change Log
 ### v2.2.2@dev {#v2-2-2}
 
 * Utilize `orchestra/notifier` new `Orchestra\Notifier\Message::create()` helper method.
+* Allow `Orchestra\Foundation\Application::group()` to mimic `Route::group()` functionality.
+* Allow default routes to be configurable.
 
 ### v2.2.1 {#v2-2-1}
 
@@ -33,6 +35,11 @@ title: Foundation Change Log
 * Add support for `orchestra/view` command.
 
 ## Version 2.1 {#v2-1}
+
+### v2.1.9@dev {#v2-1-9}
+
+* Allow `Orchestra\Foundation\Application::group()` to mimic `Route::group()` functionality.
+* Allow default routes to be configurable.
 
 ### v2.1.8 {#v2-1-8}
 
