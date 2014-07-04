@@ -77,24 +77,29 @@ abstract class RouteManager
      *
      * @param  string           $name
      * @param  string           $default
-     * @param  array            $group
+     * @param  array            $attributes
      * @param  \Closure|null    $callback
      * @return array
      */
-    public function group($name, $default, $group = array(), Closure $callback = null)
+    public function group($name, $default, $attributes = array(), Closure $callback = null)
     {
         $route = $this->route($name, $default);
 
-        $group = array_merge($group, array(
+        if ($attributes instanceof Closure) {
+            $callback   = $attributes;
+            $attributes = array();
+        }
+
+        $attributes = array_merge($attributes, array(
             'prefix' => $route->prefix(),
             'domain' => $route->domain(),
         ));
 
         if (is_callable($callback)) {
-            $this->app['router']->group($group, $callback);
+            $this->app['router']->group($attributes, $callback);
         }
 
-        return $group;
+        return $attributes;
     }
 
     /**
