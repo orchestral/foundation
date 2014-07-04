@@ -8,6 +8,8 @@ title: Foundation Change Log
 ### v2.2.2@dev {#v2-2-2}
 
 * Utilize `orchestra/notifier` new `Orchestra\Notifier\Message::create()` helper method.
+* Allow `Orchestra\Foundation\Application::group()` to mimic `Route::group()` functionality.
+* Allow default routes to be configurable.
 
 ### v2.2.1 {#v2-2-1}
 
