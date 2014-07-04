@@ -79,7 +79,7 @@ abstract class RouteManager
      * @param  string           $default
      * @param  array            $group
      * @param  \Closure|null    $callback
-     * @return string
+     * @return array
      */
     public function group($name, $default, $group = array(), Closure $callback = null)
     {
