@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
+### v2.1.10@dev {#v2-1-10}
+
+* Fixed event names on registration.
+
 ### v2.1.9 {#v2-1-9}
 
 * Allow `Orchestra\Foundation\Application::group()` to mimic `Route::group()` functionality.
