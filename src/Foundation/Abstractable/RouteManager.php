@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Abstractable;
 
+use Closure;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\NamespacedItemResolver;
 use Orchestra\Extension\RouteGenerator;
@@ -74,17 +75,26 @@ abstract class RouteManager
     /**
      * Return route group dispatch for a package/app.
      *
-     * @param  string   $name   Package name
-     * @return string
+     * @param  string           $name
+     * @param  string           $default
+     * @param  array            $group
+     * @param  \Closure|null    $callback
+     * @return array
      */
-    public function group($name, $default, $group = array())
+    public function group($name, $default, $group = array(), Closure $callback = null)
     {
         $route = $this->route($name, $default);
 
-        return array_merge($group, array(
+        $group = array_merge($group, array(
             'prefix' => $route->prefix(),
             'domain' => $route->domain(),
         ));
+
+        if (is_callable($callback)) {
+            $this->app['router']->group($group, $callback);
+        }
+
+        return $group;
     }
 
     /**
