@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 2.2 {#v2-2}
 
+### v2.2.3@dev {#v2.2.3}
+
+* Fixed event names on registration.
+
 ### v2.2.2 {#v2-2-2}
 
 * Utilize `orchestra/notifier` new `Orchestra\Notifier\Message::create()` helper method.
@@ -35,6 +39,10 @@ title: Foundation Change Log
 * Add support for `orchestra/view` command.
 
 ## Version 2.1 {#v2-1}
+
+### v2.1.10@dev {#v2-1-10}
+
+* Fixed event names on registration.
 
 ### v2.1.9 {#v2-1-9}
 
