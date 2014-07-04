@@ -8,6 +8,7 @@ title: Foundation Change Log
 ### v2.2.3@dev {#v2.2.3}
 
 * Fixed event names on registration.
+* Add new `orchestra.validate: user.registration` event.
 
 ### v2.2.2 {#v2-2-2}
 
@@ -43,6 +44,7 @@ title: Foundation Change Log
 ### v2.1.10@dev {#v2-1-10}
 
 * Fixed event names on registration.
+* Add new `orchestra.validate: user.registration` event.
 
 ### v2.1.9 {#v2-1-9}
 
