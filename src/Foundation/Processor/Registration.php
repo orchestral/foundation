@@ -85,8 +85,8 @@ class Registration extends AbstractableProcessor
                 ));
             });
 
-            $this->fireEvent('creating', array($user));
-            $this->fireEvent('saving', array($user));
+            $this->fireEvent('created', array($user));
+            $this->fireEvent('saved', array($user));
         } catch (Exception $e) {
             return $listener->createFailed(array('error' => $e->getMessage()));
         }
