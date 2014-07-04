@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
+### v2.1.9@dev {#v2-1-9}
+
+* Allow `Orchestra\Foundation\Application::group()` to mimick `Route::group()` functionality.
+
 ### v2.1.8 {#v2-1-8}
 
 * Fixed error with inline help `<span>`, helper `<span>` and errors for `select[role="switcher"]` HTML.
