@@ -23,7 +23,7 @@
 				@if ($control->inlineHelp)
 				<span class="help-inline">{{ $control->inlineHelp }}</span>
 				@endif
-				@if ($control->help)
+				@if ($control->help && !$errors->first($control->name, $format))
 				<p class="help-block">{{ $control->help }}</p>
 				@endif
 				{{ $errors->first($control->name, $format) }}
