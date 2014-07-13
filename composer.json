@@ -2,8 +2,8 @@
 	"name": "orchestra/foundation",
 	"description": "Orchestra Platform 2 Foundation Component",
 	"homepage": "http://orchestraplatform.com/docs/latest/",
-	"keywords": ["orchestra-platform", "orchestral", "laravel"],
 	"license": "MIT",
+	"keywords": ["orchestra-platform", "orchestral", "laravel", "administrator", "admin", "user-management"],
 	"authors": [
 		{
 			"name": "Mior Muhammad Zaki",
