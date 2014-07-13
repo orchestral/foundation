@@ -5,7 +5,7 @@ title: Foundation Change Log
 
 ## Version 2.2 {#v2-2}
 
-### v2.2.3@dev {#v2.2.3}
+### v2.2.3 {#v2.2.3}
 
 * Fixed event names on registration.
 * Add new `orchestra.validate: user.registration` event.
