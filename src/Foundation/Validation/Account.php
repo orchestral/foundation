@@ -31,6 +31,7 @@ class Account extends Validator
     protected function onRegister()
     {
         $this->rules['email'] = array('required', 'email', 'unique:users,email');
+        $this->events[] = 'orchestra.validate: user.account.register';
         $this->events[] = 'orchestra.validate: user.registration';
     }
 

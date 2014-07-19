@@ -5,7 +5,11 @@ title: Foundation Change Log
 
 ## Version 2.2 {#v2-2}
 
-### v2.2.3 {#v2.2.3}
+### v2.2.4@dev {#v2-2-4}
+
+* Deprecate `orchestra.validate: user.registration` event and replace it with `orchestra.validate: user.account.register` event.
+
+### v2.2.3 {#v2-2-3}
 
 * Fixed event names on registration.
 * Add new `orchestra.validate: user.registration` event.
@@ -40,6 +44,10 @@ title: Foundation Change Log
 * Add support for `orchestra/view` command.
 
 ## Version 2.1 {#v2-1}
+
+### v2.1.11@dev {#v2-1-11}
+
+* Deprecate `orchestra.validate: user.registration` event and replace it with `orchestra.validate: user.account.register` event.
 
 ### v2.1.10 {#v2-1-10}
 
