@@ -101,7 +101,7 @@
       if (this.environment != null) {
         env = this.environment;
       }
-      if (this.environment === environment || _.isNull(environment)) {
+      if (env === environment || _.isNull(environment)) {
         return this.run(callback);
       }
     };
