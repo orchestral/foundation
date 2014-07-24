@@ -142,32 +142,22 @@ abstract class RouteManager
      *
      * @param  string   $name
      * @param  string   $default
-     * @return string
+     * @return \Orchestra\Extension\RouteGenerator
      */
     public function route($name, $default = '/')
     {
         // Boot the application.
         $this->boot();
 
-        if (isset($this->routes[$name])) {
-            return $this->routes[$name];
+        if (in_array($name, array('orchestra', 'orchestra/foundation'))) {
+            $name = 'orchestra';
         }
 
-        $route = null;
-
-        // Orchestra Platform routing is managed by `orchestra/foundation::handles`
-        // and can be manage using configuration.
-        if (! in_array($name, array('orchestra', 'orchestra/foundation'))) {
-            $route = $this->app['orchestra.extension']->route($name, $default);
-        } else {
-            $name  = 'orchestra';
-            $route = new RouteGenerator(
-                $this->app['config']->get('orchestra/foundation::handles', $default),
-                $this->app['request']
-            );
+        if (! isset($this->routes[$name])) {
+            $this->routes[$name] = $this->generateRouteByName($name, $default);
         }
 
-        return $this->routes[$name] = $route;
+        return $this->routes[$name];
     }
 
     /**
@@ -187,5 +177,26 @@ abstract class RouteManager
                 call_user_func($listener);
             }
         });
+    }
+
+    /**
+     * Generte route by name.
+     *
+     * @param  string   $name
+     * @param  string   $default
+     * @return \Orchestra\Extension\RouteGenerator
+     */
+    protected function generateRouteByName($name, $default)
+    {
+        // Orchestra Platform routing is managed by `orchestra/foundation::handles`
+        // and can be manage using configuration.
+        if (in_array($name, array('orchestra'))) {
+            return new RouteGenerator(
+                $this->app['config']->get('orchestra/foundation::handles', $default),
+                $this->app['request']
+            );
+        }
+
+        return $this->app['orchestra.extension']->route($name, $default);
     }
 }
