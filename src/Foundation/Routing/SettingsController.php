@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\Site;
 use Orchestra\Foundation\Processor\Setting as SettingProcessor;
+use Orchestra\Support\Facades\Site;
 
 class SettingsController extends AdminController
 {

@@ -10,6 +10,8 @@ class InstallerController extends BaseController
 {
     /**
      * Construct Installer controller.
+     *
+     * @param  \Orchestra\Foundation\Processor\Installer    $processor
      */
     public function __construct(InstallerProcessor $processor)
     {

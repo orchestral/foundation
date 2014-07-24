@@ -64,7 +64,7 @@ Event::listen('orchestra.auth: roles', function ($user, $roles) {
     // Therefore, returning null would propagate any other event listeners
     // (if any) to try resolve the roles.
     if (is_null($user)) {
-        return ;
+        return null;
     }
 
     return $roles = $user->getRoles();

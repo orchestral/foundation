@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\Site;
 use Orchestra\Foundation\Processor\Account as AccountProcessor;
+use Orchestra\Support\Facades\Site;
 
 class AccountController extends AdminController
 {

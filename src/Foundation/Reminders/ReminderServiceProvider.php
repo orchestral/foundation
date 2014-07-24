@@ -24,6 +24,8 @@ class ReminderServiceProvider extends \Illuminate\Auth\Reminders\ReminderService
 
             $users = $app['auth']->driver()->getProvider();
 
+            $notifier = $app['orchestra.notifier']->driver();
+
             $view = $app['config']['auth.reminder.email'];
 
             // The password broker uses the reminder repository to validate tokens and send
@@ -32,7 +34,7 @@ class ReminderServiceProvider extends \Illuminate\Auth\Reminders\ReminderService
             return new PasswordBroker(
                 $reminders,
                 $users,
-                $app['orchestra.notifier']->driver(),
+                $notifier,
                 $view
             );
         });
