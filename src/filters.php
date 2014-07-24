@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
@@ -58,7 +59,7 @@ Route::filter('orchestra.csrf', function () {
     // the same functionality is duplicated.
 
     if (Session::token() != Input::get('_token')) {
-        throw new Illuminate\Session\TokenMismatchException;
+        throw new TokenMismatchException;
     }
 });
 

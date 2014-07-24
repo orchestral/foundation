@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\HTML;
+use Orchestra\Html\Table\TableBuilder;
 use Orchestra\Support\Facades\Form;
 use Orchestra\Support\Facades\Table;
-use Orchestra\Html\Table\TableBuilder;
 
 class User extends AbstractablePresenter
 {

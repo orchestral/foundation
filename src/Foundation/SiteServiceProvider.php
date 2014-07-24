@@ -1,9 +1,10 @@
 <?php namespace Orchestra\Foundation;
 
 use Illuminate\Support\ServiceProvider;
-use Orchestra\Support\Ftp as FtpClient;
+use Orchestra\Foundation\Publisher\PublisherManager;
 use Orchestra\Model\Role;
 use Orchestra\Model\User;
+use Orchestra\Support\Ftp as FtpClient;
 
 class SiteServiceProvider extends ServiceProvider
 {
@@ -39,7 +40,7 @@ class SiteServiceProvider extends ServiceProvider
         });
 
         $this->app->bindShared('orchestra.publisher', function ($app) {
-            return new Publisher\PublisherManager($app);
+            return new PublisherManager($app);
         });
     }
 
