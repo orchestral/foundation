@@ -1,9 +1,10 @@
 <?php namespace Orchestra\Foundation;
 
 use Exception;
+use Orchestra\Foundation\Abstractable\RouteManager;
 use Orchestra\Memory\Provider;
 
-class Application extends Abstractable\RouteManager
+class Application extends RouteManager
 {
     /**
      * Booted indicator.
