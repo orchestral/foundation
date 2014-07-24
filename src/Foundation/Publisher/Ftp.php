@@ -4,6 +4,7 @@ use Closure;
 use RuntimeException;
 use Orchestra\Support\Ftp as FtpClient;
 use Orchestra\Support\Ftp\ServerException;
+use Orchestra\Support\Str;
 
 class Ftp implements UploaderInterface
 {
@@ -221,7 +222,7 @@ class Ftp implements UploaderInterface
         // Alternatively if vendor has been created before, we need to
         // change the permission on the vendor folder instead of
         // public/packages.
-        if (! $recursively && str_contains($name, '/')) {
+        if (! $recursively && Str::contains($name, '/')) {
             list($vendor,) = explode('/', $name);
 
             if ($this->app['files']->isDirectory($folder = "{$basePath}{$vendor}/")) {

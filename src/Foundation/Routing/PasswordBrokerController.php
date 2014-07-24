@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\Site;
 use Orchestra\Foundation\Processor\PasswordBroker as PasswordBrokerProcessor;
+use Orchestra\Support\Facades\Site;
 
 class PasswordBrokerController extends AdminController
 {

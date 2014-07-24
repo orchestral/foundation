@@ -196,6 +196,6 @@ class Application extends Abstractable\RouteManager
         $action = (count($parameters) < 1 ? "orchestra" : array_shift($parameters));
         $method = "{$action}.{$method}";
 
-        return (isset($this->services[$method]) ? $this->services[$method] : null);
+        return array_get($this->services, $method);
     }
 }

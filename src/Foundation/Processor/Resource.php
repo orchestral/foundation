@@ -1,14 +1,14 @@
 <?php namespace Orchestra\Foundation\Processor;
 
-use Orchestra\Support\Facades\Resources;
 use Orchestra\Foundation\Presenter\Resource as ResourcePresenter;
+use Orchestra\Support\Facades\Resources;
 
 class Resource extends AbstractableProcessor
 {
     /**
      * Create a new processor instance.
      *
-     * @param  \Orchestra\Foundation\Html\ResourcePresenter $presenter
+     * @param  \Orchestra\Foundation\Presenter\Resource $presenter
      */
     public function __construct(ResourcePresenter $presenter)
     {

@@ -1,5 +1,7 @@
 <?php
 
+use Orchestra\Support\Facades\App;
+
 if (! function_exists('orchestra')) {
     /**
      * Return orchestra.app instance.
@@ -23,7 +25,7 @@ if (! function_exists('memorize')) {
      */
     function memorize($key, $default = null)
     {
-        return Orchestra\Support\Facades\App::memory()->get($key, $default);
+        return App::memory()->get($key, $default);
     }
 }
 
@@ -36,7 +38,7 @@ if (! function_exists('handles')) {
      */
     function handles($name)
     {
-        return Orchestra\Support\Facades\App::handles($name);
+        return App::handles($name);
     }
 }
 
@@ -50,6 +52,7 @@ if (! function_exists('resources')) {
     function resources($name)
     {
         $name = ltrim($name, '/');
-        return Orchestra\Support\Facades\App::handles("orchestra/foundation::resources/{$name}");
+
+        return App::handles("orchestra/foundation::resources/{$name}");
     }
 }

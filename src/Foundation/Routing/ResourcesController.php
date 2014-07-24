@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\Routing;
 
 use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\Site;
 use Orchestra\Foundation\Processor\Resource as ResourceProcessor;
+use Orchestra\Support\Facades\Site;
 
 class ResourcesController extends AdminController
 {

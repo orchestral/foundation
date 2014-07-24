@@ -4,6 +4,7 @@ use Closure;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\NamespacedItemResolver;
 use Orchestra\Extension\RouteGenerator;
+use Orchestra\Support\Str;
 
 abstract class RouteManager
 {
@@ -116,7 +117,7 @@ abstract class RouteManager
         $locate = $this->route($package)->to($route);
         empty($locate) && $locate = '/';
 
-        if (starts_with($locate, 'http')) {
+        if (Str::startsWith($locate, 'http')) {
             return $locate;
         }
 
