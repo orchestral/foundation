@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\View;
+use Orchestra\Foundation\Processor\Credential as CredentialProcessor;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Site;
-use Orchestra\Foundation\Processor\Credential as CredentialProcessor;
 
 class CredentialController extends AdminController
 {

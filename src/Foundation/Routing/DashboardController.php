@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\Site;
 use Orchestra\Foundation\Processor\Dashboard as DashboardProcessor;
+use Orchestra\Support\Facades\Site;
 
 class DashboardController extends AdminController
 {

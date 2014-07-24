@@ -11,7 +11,6 @@ class UsersController extends AdminController
      * CRUD Controller for Users management using resource routing.
      *
      * @param  \Orchestra\Foundation\Processor\User    $processor
-     * @param  \Orchestra\Foundation\Validation\User    $validator
      */
     public function __construct(UserProcessor $processor)
     {
