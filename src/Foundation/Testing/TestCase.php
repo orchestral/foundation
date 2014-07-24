@@ -49,7 +49,6 @@ abstract class TestCase extends TestbenchTestCase
             'SSH'             => 'Illuminate\Support\Facades\SSH',
             'Str'             => 'Orchestra\Support\Str',
             'Theme'           => 'Orchestra\Support\Facades\Theme',
-            'SSH'             => 'Illuminate\Support\Facades\SSH',
             'URL'             => 'Illuminate\Support\Facades\URL',
             'Validator'       => 'Illuminate\Support\Facades\Validator',
             'View'            => 'Illuminate\Support\Facades\View',
