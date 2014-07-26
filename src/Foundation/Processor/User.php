@@ -37,7 +37,7 @@ class User extends AbstractableProcessor
 
         // Get Users (with roles) and limit it to only 30 results for
         // pagination. Don't you just love it when pagination simply works.
-        $eloquent = App::make('orchestra.user')->search($searchKeyword, $searchRoles)->paginate();
+        $eloquent = App::make('orchestra.user')->search($searchKeyword, $searchRoles);
         $roles = App::make('orchestra.role')->lists('name', 'id');
 
         // Build users table HTML using a schema liked code structure.
