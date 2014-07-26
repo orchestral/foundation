@@ -52,7 +52,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testTableMethod()
     {
         $app    = $this->app;
-        $model  = new Fluent;
+        $model  = m::mock('\Orchestra\Model\User');
         $grid   = m::mock('\Orchestra\Html\Table\Grid')->makePartial();
         $column = m::mock('\Orchestra\Html\Table\Column')->makePartial();
         $value  = (object) array(
@@ -82,7 +82,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
                     $c($column);
                 });
 
-        $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Environment')->makePartial();
+        $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Factory')->makePartial();
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,raw]');
 
         $app['orchestra.table']->shouldReceive('of')->once()
@@ -213,7 +213,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 });
 
         $app['orchestra.role'] = m::mock('\Orchestra\Model\Role')->makePartial();
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->makePartial();
+        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Factory')->makePartial();
         $app['orchestra.form.control'] = $control;
 
         $app['orchestra.role']->shouldReceive('lists')->once()

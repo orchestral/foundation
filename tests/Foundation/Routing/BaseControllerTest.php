@@ -34,7 +34,7 @@ class BaseControllerTest extends TestCase
     public function testMissingMethodAction()
     {
         $app = array(
-            'view' => $view = m::mock('\Illuminate\View\Environment'),
+            'view' => $view = m::mock('\Illuminate\View\Factory'),
         );
 
         $view->shouldReceive('make')->once()

@@ -72,7 +72,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
                     $c($column);
                 });
 
-        $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Environment')->makePartial();
+        $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Factory')->makePartial();
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
 
         $app['orchestra.table']->shouldReceive('of')->once()

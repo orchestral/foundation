@@ -70,7 +70,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
                     $c($fieldset);
                 });
 
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->makePartial();
+        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Factory')->makePartial();
 
         $app['orchestra.form']->shouldReceive('of')->once()
                 ->with('orchestra.account', m::type('Closure'))
@@ -112,7 +112,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
                     $c($fieldset);
                 });
 
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->makePartial();
+        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Factory')->makePartial();
 
         $app['orchestra.form']->shouldReceive('of')->once()
                 ->with('orchestra.account: password', m::type('Closure'))
