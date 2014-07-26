@@ -71,7 +71,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 ->andReturnUsing(function ($c) use ($value) {
                     $c($value);
                 });
-        $grid->shouldReceive('with')->once()->with($model, true)->andReturnNull()
+        $grid->shouldReceive('with')->once()->with($model)->andReturnNull()
+            ->shouldReceive('sortable')->once()->andReturnNull()
             ->shouldReceive('layout')->once()->with('orchestra/foundation::components.table')->andReturnNull()
             ->shouldReceive('column')->once()->with('fullname', m::type('Closure'))
                 ->andReturnUsing(function ($n, $c) use ($column) {
