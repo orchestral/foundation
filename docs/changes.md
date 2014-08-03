@@ -5,7 +5,7 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
-### v2.1.11@dev {#v2-1-11}
+### v2.1.11 {#v2-1-11}
 
 * Deprecate `orchestra.validate: user.registration` event and replace it with `orchestra.validate: user.account.register` event.
 * Update Javie v1.1.6.
