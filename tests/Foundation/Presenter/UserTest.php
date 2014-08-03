@@ -52,7 +52,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testTableMethod()
     {
         $app    = $this->app;
-        $model  = new Fluent;
+        $model  = m::mock('\Orchestra\Model\User');
         $grid   = m::mock('\Orchestra\Html\Table\Grid')->makePartial();
         $column = m::mock('\Orchestra\Html\Table\Column')->makePartial();
         $value  = (object) array(
@@ -71,7 +71,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 ->andReturnUsing(function ($c) use ($value) {
                     $c($value);
                 });
-        $grid->shouldReceive('with')->once()->with($model, true)->andReturnNull()
+        $grid->shouldReceive('with')->once()->with($model)->andReturnNull()
+            ->shouldReceive('sortable')->once()->andReturnNull()
             ->shouldReceive('layout')->once()->with('orchestra/foundation::components.table')->andReturnNull()
             ->shouldReceive('column')->once()->with('fullname', m::type('Closure'))
                 ->andReturnUsing(function ($n, $c) use ($column) {
@@ -82,7 +83,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
                     $c($column);
                 });
 
-        $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Environment')->makePartial();
+        $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Factory')->makePartial();
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,raw]');
 
         $app['orchestra.table']->shouldReceive('of')->once()
@@ -213,7 +214,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 });
 
         $app['orchestra.role'] = m::mock('\Orchestra\Model\Role')->makePartial();
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->makePartial();
+        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Factory')->makePartial();
         $app['orchestra.form.control'] = $control;
 
         $app['orchestra.role']->shouldReceive('lists')->once()

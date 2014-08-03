@@ -19,7 +19,8 @@ class User extends AbstractablePresenter
     {
         return Table::of('orchestra.users', function ($table) use ($model) {
             // attach Model and set pagination option to true
-            $table->with($model, true);
+            $table->with($model);
+            $table->sortable();
 
             $table->layout('orchestra/foundation::components.table');
 

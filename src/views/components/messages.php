@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 $message = Orchestra\Support\Facades\Messages::retrieve();
 
-if ($message instanceof Orchestra\Support\Messages) :
+if ($message instanceof Orchestra\Messages\MessageBag) :
 	foreach (array('error', 'info', 'success') as $key) :
 		if ($message->has($key)) :
 			$message->setFormat(

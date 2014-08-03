@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
 use Exception;
+use Illuminate\Support\Arr;
 use Orchestra\Foundation\Abstractable\RouteManager;
 use Orchestra\Memory\Provider;
 
@@ -197,6 +198,6 @@ class Application extends RouteManager
         $action = (count($parameters) < 1 ? "orchestra" : array_shift($parameters));
         $method = "{$action}.{$method}";
 
-        return array_get($this->services, $method);
+        return Arr::get($this->services, $method);
     }
 }

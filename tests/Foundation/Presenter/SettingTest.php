@@ -96,8 +96,8 @@ class SettingTest extends \PHPUnit_Framework_TestCase
                     $c($emailFieldset);
                 });
 
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Environment')->makePartial();
-        $app['view'] = m::mock('\Illuminate\View\Environment')->makePartial();
+        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Factory')->makePartial();
+        $app['view'] = m::mock('\Illuminate\View\Factory')->makePartial();
 
         $app['orchestra.form']->shouldReceive('of')->once()
                 ->with('orchestra.settings', m::type('Closure'))

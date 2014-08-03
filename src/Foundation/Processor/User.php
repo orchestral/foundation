@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
@@ -32,12 +33,12 @@ class User extends AbstractableProcessor
      */
     public function index($listener, array $input = array())
     {
-        $searchKeyword = array_get($input, 'q', '');
-        $searchRoles = array_get($input, 'roles', array());
+        $searchKeyword = Arr::get($input, 'q', '');
+        $searchRoles = Arr::get($input, 'roles', array());
 
         // Get Users (with roles) and limit it to only 30 results for
         // pagination. Don't you just love it when pagination simply works.
-        $eloquent = App::make('orchestra.user')->search($searchKeyword, $searchRoles)->paginate();
+        $eloquent = App::make('orchestra.user')->search($searchKeyword, $searchRoles);
         $roles = App::make('orchestra.role')->lists('name', 'id');
 
         // Build users table HTML using a schema liked code structure.
