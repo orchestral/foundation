@@ -5,9 +5,11 @@ title: Foundation Change Log
 
 ## Version 2.2 {#v2-2}
 
-### v2.2.4@dev {#v2-2-4}
+### v2.2.4 {#v2-2-4}
 
 * Deprecate `orchestra.validate: user.registration` event and replace it with `orchestra.validate: user.account.register` event.
+* Include `orchestra/messages` as requirement and add breaking change to type-hint `Orchestra\Messages\MessageBag` instead of `Orchestra\Support\Messages`.
+* Utilize `Illuminate\Support\Arr`.
 * Update Javie v1.1.6.
 
 ### v2.2.3 {#v2-2-3}
