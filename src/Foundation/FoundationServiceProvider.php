@@ -70,7 +70,7 @@ class FoundationServiceProvider extends ServiceProvider
             'orchestra.form'             => 'Orchestra\Html\Form\Factory',
             'orchestra.mail'             => 'Orchestra\Notifier\Mailer',
             'orchestra.memory'           => 'Orchestra\Memory\MemoryManager',
-            'orchestra.messages'         => 'Orchestra\Support\Messages',
+            'orchestra.messages'         => 'Orchestra\Messages\MessageBag',
             'orchestra.notifier'         => 'Orchestra\Notifier\NotifierManager',
             'orchestra.profiler'         => 'Orchestra\Debug\Profiler',
             'orchestra.publisher'        => 'Orchestra\Foundation\Publisher\PublisherManager',
