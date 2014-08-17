@@ -1,4 +1,4 @@
-<?
+<?php
 
 use Illuminate\Support\Facades\URL;
 use Orchestra\Support\Facades\Site;
@@ -24,4 +24,4 @@ $description = Site::get('description'); ?>
 	</div>
 </div>
 
-<? Site::set('header::class', 'page-header'); ?>
+<?php Site::set('header::class', 'page-header'); ?>

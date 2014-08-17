@@ -1,6 +1,6 @@
 @extends('orchestra/foundation::layout.main')
 
-<?
+<?php
 
 use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\View; ?>
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\View; ?>
 <div class="row">
 	@if (count($panes) > 0)
 
-	<? $panes->add('mini-profile', '<')->title('Mini Profile')
+	<?php $panes->add('mini-profile', '<')->title('Mini Profile')
 		->attributes(array('class' => 'three columns widget'))
 		->content(View::make('orchestra/foundation::components.miniprofile')); ?>
 

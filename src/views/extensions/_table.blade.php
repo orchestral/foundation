@@ -16,11 +16,11 @@ use Orchestra\Support\Facades\Extension; ?>
 		</tr>
 		@else
 		@foreach ($extensions as $name => $extension)
-			<? $extension = new Fluent($extension); ?>
+			<?php $extension = new Fluent($extension); ?>
 		<tr>
 			<td>
 				<strong>
-					<?
+					<?php
 					$active  = Extension::activated($name);
 					$started = Extension::started($name);
 					$uid     = str_replace('/', '.', $name); ?>

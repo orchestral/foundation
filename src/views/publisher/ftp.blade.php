@@ -1,6 +1,6 @@
 @extends('orchestra/foundation::layout.main')
 
-<?
+<?php
 
 use Illuminate\Support\Facades\Form;
 
