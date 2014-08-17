@@ -1,4 +1,4 @@
-<?
+<?php
 
 use Illuminate\Support\Facades\Form;
 use Illuminate\Support\Facades\Input; ?>

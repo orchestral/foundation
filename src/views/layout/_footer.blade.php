@@ -1,4 +1,4 @@
-<?
+<?php
 
 use Illuminate\Support\Facades\Request;
 use Orchestra\Support\Facades\Asset; ?>
@@ -11,7 +11,7 @@ use Orchestra\Support\Facades\Asset; ?>
 	</div>
 </footer>
 
-<?
+<?php
 
 $asset = Asset::container('orchestra/foundation::footer');
 

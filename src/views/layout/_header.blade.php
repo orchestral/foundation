@@ -1,4 +1,4 @@
-<?
+<?php
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\HTML;
@@ -16,7 +16,7 @@ use Orchestra\Support\Facades\Asset; ?>
 <![endif]-->
 <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300,500" rel="stylesheet" type="text/css">
 
-<?
+<?php
 
 $asset = Asset::container('orchestra/foundation::header');
 

@@ -1,4 +1,4 @@
-<? $attributes['table'] = HTML::decorate($attributes['table'], array('class' => 'table table-striped')); ?>
+<?php $attributes['table'] = HTML::decorate($attributes['table'], array('class' => 'table table-striped')); ?>
 
 <table{{ HTML::attributes($attributes['table']) }}>
 	<thead>
