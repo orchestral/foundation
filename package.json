@@ -8,5 +8,8 @@
     "gulp-rename": "~0.2.2",
     "gulp-uglify": "~0.2.0",
     "gulp-util": "~2.2.14"
+  },
+  "dependencies": {
+    "bower-installer": "^0.8.4"
   }
 }

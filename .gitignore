@@ -1,7 +1,8 @@
 # Composer
-composer.lock
-vendor/*
+/composer.lock
+/vendor/*
 
 # Node.js
-node_modules/*
-npm-debug.log
+/components/*
+/node_modules/*
+/npm-debug.log
