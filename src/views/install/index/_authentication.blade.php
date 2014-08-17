@@ -1,4 +1,6 @@
-<? use Illuminate\Support\Facades\HTML; ?>
+<?php
+
+use Illuminate\Support\Facades\HTML; ?>
 
 <div class="row">
 	<div class="twelve columns">

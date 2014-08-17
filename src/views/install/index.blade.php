@@ -1,6 +1,6 @@
 @extends('orchestra/foundation::layout.main')
 
-<?
+<?php
 
 $databaseConnection = $checklist['databaseConnection'];
 unset($checklist['databaseConnection']); ?>

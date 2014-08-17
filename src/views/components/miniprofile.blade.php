@@ -1,4 +1,4 @@
-<? $user = Illuminate\Support\Facades\Auth::user(); ?>
+<?php $user = Illuminate\Support\Facades\Auth::user(); ?>
 
 <div class="dark-blue rounded-top box">
 	<div class="box-padding pull-center">

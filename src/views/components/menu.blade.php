@@ -17,12 +17,12 @@
 					</li>
 					<li class="divider"></li>
 					@foreach ($item->childs as $child)
-						<? $grands = $child->childs; ?>
+						<?php $grands = $child->childs; ?>
 						<li class="{{ ( ! empty($grands) ? "dropdown-submenu" : "normal" ) }}">
 							<a href="{{ $child->link }}">
 								{{ $child->title }}
 							</a>
-							@if ( ! empty($child->childs))
+							@if (! empty($child->childs))
 							<ul class="dropdown-menu">
 								@foreach ($child->childs as $grand)
 								<li>
