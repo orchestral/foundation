@@ -12,5 +12,27 @@
     "jquery": "~1.10.2",
     "underscore": "~1.6.0",
     "select2": "~3.4.8"
+  },
+  "install" : {
+    "path": "public/components",
+    "sources": {
+      "javie": [
+        "components/javie/javie.js",
+        "components/javie/javie.min.js"
+      ],
+      "jquery": [
+        "components/jquery/jquery.js",
+        "components/jquery/jquery.min.js",
+        "components/jquery/jquery.min.map"
+      ],
+      "select2": [
+        "components/select2/select2.js",
+        "components/select2/select2.min.js",
+        "components/select2/select2-spinner.gif",
+        "components/select2/select2.css",
+        "components/select2/select2.png",
+        "components/select2/select2x2.png"
+      ]
+    }
   }
 }
