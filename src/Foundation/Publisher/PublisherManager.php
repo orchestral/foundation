@@ -45,7 +45,7 @@ class PublisherManager extends Manager
     /**
      * Execute the queue.
      *
-     * @return boolean
+     * @return bool
      */
     public function execute()
     {
@@ -76,7 +76,7 @@ class PublisherManager extends Manager
      * Add a process to be queue.
      *
      * @param  string   $queue
-     * @return boolean
+     * @return bool
      */
     public function queue($queue)
     {
