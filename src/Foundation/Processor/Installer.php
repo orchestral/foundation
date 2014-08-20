@@ -26,8 +26,8 @@ class Installer
     /**
      * Create a new processor instance.
      *
-     * @param  \Orchestra\Foundation\Installation\Installer    $presenter
-     * @param  \Orchestra\Foundation\Installation\Requirement  $validator
+     * @param  \Orchestra\Foundation\Installation\InstallerInterface    $installer
+     * @param  \Orchestra\Foundation\Installation\RequirementInterface  $requirement
      */
     public function __construct(InstallerInterface $installer, RequirementInterface $requirement)
     {
@@ -142,7 +142,7 @@ class Installer
      * Is authentication installable.
      *
      * @param  array    $auth
-     * @return boolean
+     * @return bool
      */
     protected function isAuthenticationInstallable($auth)
     {

@@ -75,7 +75,7 @@ class Application extends RouteManager
     /**
      * Get installation status.
      *
-     * @return boolean
+     * @return bool
      */
     public function installed()
     {

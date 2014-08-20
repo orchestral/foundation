@@ -5,15 +5,16 @@ interface InstallerInterface
     /**
      * Migrate Orchestra Platform schema.
      *
-     * @return boolean
+     * @return bool
      */
     public function migrate();
 
     /**
-     * Create adminstrator account.
+     * Create administrator account.
      *
      * @param  array    $input
-     * @return boolean
+     * @param  bool     $multipleAdmin
+     * @return bool
      */
     public function createAdmin($input, $multipleAdmin = true);
 }

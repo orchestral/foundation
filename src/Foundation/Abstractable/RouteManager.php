@@ -128,7 +128,7 @@ abstract class RouteManager
      *  Return if handles URL match given string.
      *
      * @param  string   $path
-     * @return boolean
+     * @return bool
      */
     public function is($path)
     {

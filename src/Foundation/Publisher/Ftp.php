@@ -72,7 +72,7 @@ class Ftp implements UploaderInterface
      * Connect to the service.
      *
      * @param  array    $config
-     * @return boolean
+     * @return bool
      */
     public function connect($config = array())
     {
@@ -85,7 +85,7 @@ class Ftp implements UploaderInterface
      * Make a directory.
      *
      * @param  string   $path
-     * @return boolean
+     * @return bool
      */
     public function makeDirectory($path)
     {
@@ -97,7 +97,7 @@ class Ftp implements UploaderInterface
      *
      * @param  string   $path
      * @param  integer  $mode
-     * @return boolean
+     * @return bool
      */
     public function permission($path, $mode = 0755)
     {
@@ -109,7 +109,7 @@ class Ftp implements UploaderInterface
      *
      * @param  string   $path
      * @param  integer  $mode
-     * @return boolean
+     * @return bool
      */
     public function recursivePermission($path, $mode = 0755)
     {
@@ -129,7 +129,7 @@ class Ftp implements UploaderInterface
      *
      * @param  string   $path
      * @param  integer  $mode
-     * @return boolean
+     * @return bool
      */
     protected function recursiveFilePermission($path, $mode = 0755)
     {
@@ -158,7 +158,7 @@ class Ftp implements UploaderInterface
      *
      * @param  string   $name           Extension name
      * @param  boolean  $recursively
-     * @return boolean
+     * @return bool
      * @throws \RuntimeException
      */
     public function upload($name, $recursively = false)
@@ -276,7 +276,7 @@ class Ftp implements UploaderInterface
     /**
      * Verify that FTP driver is connected to a service.
      *
-     * @return boolean
+     * @return bool
      */
     public function connected()
     {

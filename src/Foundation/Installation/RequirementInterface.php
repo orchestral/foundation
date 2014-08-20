@@ -5,7 +5,7 @@ interface RequirementInterface
     /**
      * Check all requirement.
      *
-     * @return boolean
+     * @return bool
      */
     public function check();
 
@@ -19,7 +19,7 @@ interface RequirementInterface
     /**
      * Get installable status.
      *
-     * @return boolean
+     * @return bool
      */
     public function isInstallable();
 }
