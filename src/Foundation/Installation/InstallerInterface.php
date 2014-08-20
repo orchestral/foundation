@@ -3,6 +3,13 @@
 interface InstallerInterface
 {
     /**
+     * Boot installer files.
+     *
+     * @return void
+     */
+    public function bootInstallerFiles();
+
+    /**
      * Migrate Orchestra Platform schema.
      *
      * @return bool

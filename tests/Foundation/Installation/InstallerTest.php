@@ -20,7 +20,6 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->app = new Container;
-        $this->app['path'] = '/var/app';
         $this->app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $translator->shouldReceive('trans')->andReturn('foo');
@@ -36,22 +35,6 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     {
         unset($this->app);
         m::close();
-    }
-
-    /**
-     * Get files mock.
-     *
-     * @access private
-     * @return File
-     */
-    private function getFilesMock()
-    {
-        $files = m::mock('\Illuminate\Filesystem\Filesystem')->makePartial();
-
-        $files->shouldReceive('exists')->once()->with('/var/app/orchestra/installer.php')->andReturn(true)
-            ->shouldReceive('requireOnce')->once()->with('/var/app/orchestra/installer.php')->andReturnNull();
-
-        return $files;
     }
 
     /**
@@ -87,6 +70,25 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test Orchestra\Foundation\Installation\Installer::bootInstallerFiles() method.
+     *
+     * @test
+     */
+    public function testBootInstallerFilesMethod()
+    {
+        $app = $this->app;
+        $this->app['path'] = '/var/laravel/app';
+        $this->app['path.base'] = '/var/laravel';
+        $app['files'] = $files = m::mock('\Illuminate\Filesystem\Filesystem')->makePartial();
+
+        $files->shouldReceive('exists')->once()->with('/var/laravel/app/orchestra/installer.php')->andReturn(true)
+            ->shouldReceive('requireOnce')->once()->with('/var/laravel/app/orchestra/installer.php')->andReturnNull();
+
+        $stub = new Installer($app);
+        $this->assertNull($stub->bootInstallerFiles());
+    }
+
+    /**
      * Test Orchestra\Foundation\Installation\Installer::migrate() method.
      *
      * @test
@@ -94,7 +96,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     public function testMigrateMethod()
     {
         $app = $this->app;
-        $app['files'] = $this->getFilesMock();
+        $app['files'] = m::mock('\Illuminate\Filesystem\Filesystem');
         $app['orchestra.publisher.migrate'] = $migrate = m::mock('\Orchestra\Extension\Publisher\MigrateManager')->makePartial();
         $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
 
@@ -112,7 +114,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     public function testCreateAdminMethod()
     {
         $app = $this->app;
-        $app['files'] = $this->getFilesMock();
+        $app['files'] = m::mock('\Illuminate\Filesystem\Filesystem');
         $app['validator'] = $validator = m::mock('\Illuminate\Validation\Validator')->makePartial();
         $app['orchestra.role'] = $role = m::mock('Role');
         $app['orchestra.user'] = $user = m::mock('User');
@@ -172,7 +174,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     public function testCreateAdminMethodWithValidationErrors()
     {
         $app = $this->app;
-        $app['files'] = $this->getFilesMock();
+        $app['files'] = m::mock('\Illuminate\Filesystem\Filesystem');
         $app['validator'] = $validator = m::mock('\Illuminate\Validation\Validator')->makePartial();
         $app['session'] = $session = m::mock('Session\Store');
 
@@ -197,7 +199,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     public function testCreateAdminMethodThrowsException()
     {
         $app = $this->app;
-        $app['files'] = $this->getFilesMock();
+        $app['files'] = m::mock('\Illuminate\Filesystem\Filesystem');
         $app['validator'] = $validator = m::mock('\Illuminate\Validation\Validator')->makePartial();
         $app['orchestra.user'] = $user = m::mock('User');
         $app['orchestra.messages'] = $messages = m::mock('\Orchestra\Support\Messages')->makePartial();
