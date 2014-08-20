@@ -192,7 +192,7 @@ class User extends AbstractableProcessor
      * @param  \Orchestra\Model\User   $user
      * @param  array                   $input
      * @param  string                  $type
-     * @return boolean
+     * @return bool
      */
     protected function saving(Eloquent $user, $input = array(), $type = 'create')
     {

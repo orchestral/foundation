@@ -39,7 +39,7 @@ class Requirement implements RequirementInterface
     /**
      * Check all requirement.
      *
-     * @return boolean
+     * @return bool
      */
     public function check()
     {
@@ -131,7 +131,7 @@ class Requirement implements RequirementInterface
      * Check if path is writable.
      *
      * @param  string   $path
-     * @return boolean
+     * @return bool
      */
     protected function checkPathIsWritable($path)
     {
@@ -151,7 +151,7 @@ class Requirement implements RequirementInterface
     /**
      * Get installable status.
      *
-     * @return boolean
+     * @return bool
      */
     public function isInstallable()
     {

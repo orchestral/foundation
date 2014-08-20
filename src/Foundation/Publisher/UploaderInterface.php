@@ -29,14 +29,14 @@ interface UploaderInterface
      * Upload the file.
      *
      * @param  string   $name   Extension name
-     * @return boolean
+     * @return bool
      */
     public function upload($name);
 
     /**
      * Verify that the driver is connected to a service.
      *
-     * @return boolean
+     * @return bool
      */
     public function connected();
 }

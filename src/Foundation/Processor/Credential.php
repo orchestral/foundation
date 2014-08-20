@@ -57,7 +57,7 @@ class Credential extends AbstractableProcessor
      * Authenticate the user.
      *
      * @param  array    $input
-     * @return boolean
+     * @return bool
      */
     protected function authenticate($input)
     {
