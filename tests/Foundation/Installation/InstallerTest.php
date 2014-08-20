@@ -86,7 +86,6 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('exists')->once()->with('/var/laravel/app/orchestra/installer.php')->andReturn(true)
             ->shouldReceive('requireOnce')->once()->with('/var/laravel/app/orchestra/installer.php')->andReturnNull();
 
-
         $stub = new Installer($app);
         $this->assertNull($stub->bootInstallerFiles());
     }
