@@ -33,6 +33,8 @@ class Installer
     {
         $this->installer   = $installer;
         $this->requirement = $requirement;
+
+        $this->installer->bootInstallerFiles();
     }
 
     /**

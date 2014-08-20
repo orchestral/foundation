@@ -20,10 +20,23 @@ class Installer implements InstallerInterface
     public function __construct($app)
     {
         $this->app = $app;
-        $file = rtrim($this->app['path'], '/').'/orchestra/installer.php';
+    }
 
-        if ($this->app['files']->exists($file)) {
-            $this->app['files']->requireOnce($file);
+    /**
+     * Boot installer files.
+     *
+     * @return void
+     */
+    public function bootInstallerFiles()
+    {
+        $paths = array('path.base', 'path');
+
+        foreach ($paths as $path) {
+            $file = rtrim($this->app[$path], '/').'/orchestra/installer.php';
+
+            if ($this->app['files']->exists($file)) {
+                $this->app['files']->requireOnce($file);
+            }
         }
     }
 

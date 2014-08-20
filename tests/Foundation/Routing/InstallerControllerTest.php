@@ -83,6 +83,13 @@ class InstallerControllerTest extends TestCase
             'prefix'    => '',
         );
 
+        $installer = m::mock('\Orchestra\Foundation\Installation\InstallerInterface');
+        $installer->shouldReceive('bootInstallerFiles')->once()->andReturnNull();
+
+        App::bind('Orchestra\Foundation\Installation\InstallerInterface', function () use ($installer) {
+            return $installer;
+        });
+
         $requirement = m::mock('\Orchestra\Foundation\Installation\RequirementInterface');
         $requirement->shouldReceive('check')->once()->andReturn(true)
             ->shouldReceive('getChecklist')->once()->andReturn(array(
@@ -97,6 +104,7 @@ class InstallerControllerTest extends TestCase
         App::bind('Orchestra\Foundation\Installation\RequirementInterface', function () use ($requirement) {
             return $requirement;
         });
+
         Config::set('database.default', 'mysql');
         Config::set('auth', array('driver' => 'eloquent', 'model' => 'UserNotAvailableForAuthModel'));
         Config::set('database.connections.mysql', $dbConfig);
@@ -120,7 +128,8 @@ class InstallerControllerTest extends TestCase
     public function testGetPrepareAction()
     {
         $installer = m::mock('\Orchestra\Foundation\Installation\InstallerInterface');
-        $installer->shouldReceive('migrate')->once()->andReturnNull();
+        $installer->shouldReceive('bootInstallerFiles')->once()->andReturnNull()
+            ->shouldReceive('migrate')->once()->andReturnNull();
 
         App::bind('Orchestra\Foundation\Installation\InstallerInterface', function () use ($installer) {
             return $installer;
@@ -151,7 +160,9 @@ class InstallerControllerTest extends TestCase
     {
         $input = array();
         $installer = m::mock('\Orchestra\Foundation\Installation\InstallerInterface');
-        $installer->shouldReceive('createAdmin')->once()->with($input)->andReturn(true);
+        $installer->shouldReceive('bootInstallerFiles')->once()->andReturnNull()
+            ->shouldReceive('createAdmin')->once()->with($input)->andReturn(true);
+
         App::bind('Orchestra\Foundation\Installation\InstallerInterface', function () use ($installer) {
             return $installer;
         });
@@ -169,7 +180,9 @@ class InstallerControllerTest extends TestCase
     {
         $input = array();
         $installer = m::mock('\Orchestra\Foundation\Installation\InstallerInterface');
-        $installer->shouldReceive('createAdmin')->once()->with($input)->andReturn(false);
+        $installer->shouldReceive('bootInstallerFiles')->once()->andReturnNull()
+            ->shouldReceive('createAdmin')->once()->with($input)->andReturn(false);
+
         App::bind('Orchestra\Foundation\Installation\InstallerInterface', function () use ($installer) {
             return $installer;
         });
