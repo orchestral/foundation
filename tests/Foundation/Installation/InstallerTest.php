@@ -78,11 +78,11 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $this->app['path'] = '/var/laravel/app';
-        $this->app['path.base'] = '/var/laravel';
+        $this->app['path.database'] = '/var/laravel/database';
         $app['files'] = $files = m::mock('\Illuminate\Filesystem\Filesystem')->makePartial();
 
-        $files->shouldReceive('exists')->once()->with('/var/laravel/orchestra/installer.php')->andReturn(true)
-            ->shouldReceive('requireOnce')->once()->with('/var/laravel/orchestra/installer.php')->andReturnNull()
+        $files->shouldReceive('exists')->once()->with('/var/laravel/database/orchestra/installer.php')->andReturn(true)
+            ->shouldReceive('requireOnce')->once()->with('/var/laravel/database/orchestra/installer.php')->andReturnNull()
             ->shouldReceive('exists')->once()->with('/var/laravel/app/orchestra/installer.php')->andReturn(true)
             ->shouldReceive('requireOnce')->once()->with('/var/laravel/app/orchestra/installer.php')->andReturnNull();
 

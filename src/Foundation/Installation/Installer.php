@@ -29,7 +29,7 @@ class Installer implements InstallerInterface
      */
     public function bootInstallerFiles()
     {
-        $paths = array('path.base', 'path');
+        $paths = array('path.database', 'path');
 
         foreach ($paths as $path) {
             $file = rtrim($this->app[$path], '/').'/orchestra/installer.php';
