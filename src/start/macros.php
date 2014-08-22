@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\HTML;
 use Illuminate\Support\Facades\View;
+use Orchestra\Support\Facades\HTML;
 use Orchestra\Support\Facades\Site;
 
 /*

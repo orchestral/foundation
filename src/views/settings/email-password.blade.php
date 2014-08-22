@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Form; ?>
+use Orchestra\Support\Facades\Form; ?>
 
 <div id="cancel_password_container">
 	<a href="#" id="cancel_password_button" class="btn btn-mini btn-info">
