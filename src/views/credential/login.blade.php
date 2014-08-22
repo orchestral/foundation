@@ -2,8 +2,8 @@
 
 <?php
 
-use Illuminate\Support\Facades\Form;
-use Illuminate\Support\Facades\Input; ?>
+use Illuminate\Support\Facades\Input;
+use Orchestra\Support\Facades\Form; ?>
 
 @section('content')
 <div class="row">

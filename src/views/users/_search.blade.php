@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Form;
-use Illuminate\Support\Facades\Input; ?>
+use Illuminate\Support\Facades\Input;
+use Orchestra\Support\Facades\Form; ?>
 
 <div class="navbar user-search">
 	<form class="navbar-form">

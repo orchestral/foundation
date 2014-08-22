@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\HTML;
+use Orchestra\Support\Facades\HTML;
 
 $attributes = HTML::decorate($navbar->attributes ?: array(), array('class' => 'navbar', 'role' => 'navigation')); ?>
 

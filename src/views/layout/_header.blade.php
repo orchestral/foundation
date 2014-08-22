@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\HTML;
-use Orchestra\Support\Facades\Asset; ?>
+use Orchestra\Support\Facades\Asset;
+use Orchestra\Support\Facades\HTML; ?>
 
 <meta charset="utf-8">
 {{ HTML::title() }}

@@ -2,7 +2,7 @@
 
 <?php
 
-use Illuminate\Support\Facades\Form;
+use Orchestra\Support\Facades\Form;
 
 $label = array('class' => 'three columns control-label'); ?>
 

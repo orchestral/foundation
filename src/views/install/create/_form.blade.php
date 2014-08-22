@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Form; ?>
+use Orchestra\Support\Facades\Form; ?>
 
 {{ Form::open(array('url' => handles('orchestra::install/create'), 'method' => 'POST', 'class' => 'form-horizontal')) }}
 

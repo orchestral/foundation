@@ -2,8 +2,8 @@
 
 <?php
 
-use Illuminate\Support\Facades\Form;
 use Illuminate\Support\Facades\Input;
+use Orchestra\Support\Facades\Form;
 use Orchestra\Support\Facades\Site; ?>
 
 @section('content')

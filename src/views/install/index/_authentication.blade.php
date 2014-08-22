@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\HTML; ?>
+use Orchestra\Support\Facades\HTML; ?>
 
 <div class="row">
 	<div class="twelve columns">

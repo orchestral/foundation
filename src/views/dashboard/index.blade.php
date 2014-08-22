@@ -2,8 +2,8 @@
 
 <?php
 
-use Illuminate\Support\Facades\HTML;
-use Illuminate\Support\Facades\View; ?>
+use Illuminate\Support\Facades\View;
+use Orchestra\Support\Facades\HTML; ?>
 
 @section('content')
 
