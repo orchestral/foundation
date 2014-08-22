@@ -1,9 +1,9 @@
 <?php namespace Orchestra\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\HTML;
 use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Support\Facades\App;
+use Orchestra\Support\Facades\HTML;
 use Orchestra\Support\Facades\Site;
 
 class MacrosTest extends TestCase
