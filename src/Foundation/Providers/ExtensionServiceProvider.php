@@ -2,41 +2,47 @@
 
 use Illuminate\Support\ServiceProvider;
 
-class ExtensionServiceProvider extends ServiceProvider {
+class ExtensionServiceProvider extends ServiceProvider
+{
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var boolean
+     */
+    protected $defer = true;
 
     /**
      * Available orchestra extensions
-     * 
+     *
      * @var array
      */
     protected $extensions = [];
 
     /**
-     * Bootstrap the application events.
+     * Register the service provider
      *
      * @return void
      */
-    public function boot()
+    public function register()
     {
         $extension = $this->app['orchestra.extension'];
 
         foreach ($this->extensions as $name => $path) {
             if (is_numeric($name)) {
-                $extension->finder()->addPath(base_path().'/'.$path);
+                $extension->finder()->addPath($path);
             } else {
-                $extension->register($name, base_path().'/'.$path);
+                $extension->register($name, $path);
             }
         }
     }
 
     /**
-     * Register the service provider
-     * 
-     * @return void
+     * Get the events that trigger this service provider to register.
+     *
+     * @return array
      */
-    public function register()
+    public function when()
     {
-        //
+        return ['orchestra.extension: detecting'];
     }
-
 }
