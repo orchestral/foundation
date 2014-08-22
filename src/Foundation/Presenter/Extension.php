@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Presenter;
 
-use Illuminate\Support\Facades\HTML;
 use Orchestra\Support\Facades\Extension as E;
+use Orchestra\Support\Facades\HTML;
 use Orchestra\Support\Facades\Form;
 
 class Extension extends AbstractablePresenter
