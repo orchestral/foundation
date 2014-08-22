@@ -25,13 +25,23 @@ class ExtensionServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $extension = $this->app['orchestra.extension'];
+        //
+    }
+
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $finder = $this->app['orchestra.extension.finder'];
 
         foreach ($this->extensions as $name => $path) {
             if (is_numeric($name)) {
-                $extension->finder()->addPath($path);
+                $finder->addPath($path);
             } else {
-                $extension->register($name, $path);
+                $finder->registerExtension($name, $path);
             }
         }
     }
