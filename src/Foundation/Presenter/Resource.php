@@ -18,13 +18,12 @@ class Resource extends AbstractablePresenter
 
             $table->layout('orchestra/foundation::components.table');
 
-            $table->column('name', function ($column) {
-                $column->escape(false);
-                $column->value(function ($row) {
+            $table->column('name')
+                ->escape(false)
+                ->value(function ($row) {
                     $link = HTML::link(handles("orchestra::resources/{$row->id}"), e($row->name));
                     return HTML::create('strong', HTML::raw($link));
                 });
-            });
         });
     }
 }

@@ -60,17 +60,14 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
 
         $stub = new Resource;
 
-        $column->shouldReceive('escape')->once()->with(false)->andReturnNull()
+        $column->shouldReceive('escape')->once()->with(false)->andReturnSelf()
             ->shouldReceive('value')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($value) {
                     $c($value);
                 });
         $grid->shouldReceive('with')->once()->with($model, false)->andReturnNull()
             ->shouldReceive('layout')->once()->with('orchestra/foundation::components.table')->andReturnNull()
-            ->shouldReceive('column')->once()->with('name', m::type('Closure'))
-                ->andReturnUsing(function ($n, $c) use ($column) {
-                    $c($column);
-                });
+            ->shouldReceive('column')->once()->with('name')->andReturn($column);
 
         $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Factory')->makePartial();
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();

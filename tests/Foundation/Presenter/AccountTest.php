@@ -57,12 +57,8 @@ class AccountTest extends \PHPUnit_Framework_TestCase
 
         $stub = new Account;
 
-        $control->shouldReceive('label')->twice()->andReturnNull();
-        $fieldset->shouldReceive('control')->twice()
-                ->with('input:text', m::any(), m::type('Closure'))
-                ->andReturnUsing(function ($t, $n, $c) use ($control) {
-                    $c($control);
-                });
+        $control->shouldReceive('label')->twice()->andReturnSelf();
+        $fieldset->shouldReceive('control')->twice()->with('input:text', m::any())->andReturn($control);
         $grid->shouldReceive('setup')->once()->with($stub, 'foo', $model)->andReturnNull()
             ->shouldReceive('hidden')->once()->with('id')->andReturnNull()
             ->shouldReceive('fieldset')->once()->with(m::type('Closure'))
@@ -98,14 +94,9 @@ class AccountTest extends \PHPUnit_Framework_TestCase
 
         $stub = new Account;
 
-        $control->shouldReceive('label')->times(3)->andReturnNull();
-        $fieldset->shouldReceive('control')->times(3)
-                ->with('input:password', m::any(), m::type('Closure'))
-                ->andReturnUsing(function ($t, $n, $c) use ($control) {
-                    $c($control);
-                });
-        $grid->shouldReceive('setup')->once()
-                ->with($stub, 'orchestra::account/password', $model)->andReturnNull()
+        $control->shouldReceive('label')->times(3)->andReturnSelf();
+        $fieldset->shouldReceive('control')->times(3)->with('input:password', m::any())->andReturn($control);
+        $grid->shouldReceive('setup')->once()->with($stub, 'orchestra::account/password', $model)->andReturnNull()
             ->shouldReceive('hidden')->once()->with('id')->andReturnNull()
             ->shouldReceive('fieldset')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($fieldset) {
