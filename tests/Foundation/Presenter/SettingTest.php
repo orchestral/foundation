@@ -64,23 +64,16 @@ class SettingTest extends \PHPUnit_Framework_TestCase
 
         $stub = new Setting;
 
-        $siteFieldset->shouldReceive('control')->times(3)
-                ->with(m::any(), m::any(), m::type('Closure'))
-                ->andReturnUsing(function ($t, $n, $c) use ($siteControl) {
-                    $c($siteControl);
-                });
-        $siteControl->shouldReceive('label')->times(3)->andReturnNull()
-            ->shouldReceive('attributes')->twice()->andReturnNull()
-            ->shouldReceive('options')->once()->andReturnNull();
+        $siteFieldset->shouldReceive('control')->times(3)->andReturn($siteControl);
+        $siteControl->shouldReceive('label')->times(3)->andReturnSelf()
+            ->shouldReceive('attributes')->twice()->andReturnSelf()
+            ->shouldReceive('options')->once()->andReturnSelf();
 
         $emailFieldset->shouldReceive('control')->times(11)
-                ->with(m::any(), m::any(), m::type('Closure'))
-                ->andReturnUsing(function ($t, $n, $c) use ($emailControl) {
-                    $c($emailControl);
-                });
-        $emailControl->shouldReceive('label')->times(11)->andReturnNull()
-            ->shouldReceive('attributes')->once()->andReturnNull()
-            ->shouldReceive('options')->twice()->andReturnNull()
+                ->with(m::any(), m::any())->andReturn($emailControl);
+        $emailControl->shouldReceive('label')->times(11)->andReturnSelf()
+            ->shouldReceive('attributes')->once()->andReturnSelf()
+            ->shouldReceive('options')->twice()->andReturnSelf()
             ->shouldReceive('help')->once()->with('email.password.help');
 
         $grid->shouldReceive('setup')->once()

@@ -57,19 +57,14 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
 
         $stub = new Extension;
 
-        $control->shouldReceive('label')->twice()->andReturnNull()
-            ->shouldReceive('value')->once()->andReturnNull()
+        $control->shouldReceive('label')->twice()->andReturnSelf()
+            ->shouldReceive('value')->once()->andReturnSelf()
             ->shouldReceive('field')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) {
                     $c();
                 });
-        $fieldset->shouldReceive('control')->twice()
-            ->with('input:text', m::any(), m::type('Closure'))
-            ->andReturnUsing(function ($t, $n, $c) use ($control) {
-                $c($control);
-            });
-        $grid->shouldReceive('setup')->once()
-                ->with($stub, 'orchestra::extensions/configure/foo.bar', $model)->andReturnNull()
+        $fieldset->shouldReceive('control')->twice()->with('input:text', m::any())->andReturn($control);
+        $grid->shouldReceive('setup')->once()->with($stub, 'orchestra::extensions/configure/foo.bar', $model)->andReturnNull()
             ->shouldReceive('fieldset')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);

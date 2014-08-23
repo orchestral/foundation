@@ -26,16 +26,14 @@ class Extension extends AbstractablePresenter
             $form->fieldset(function ($fieldset) use ($handles, $name, $configurable) {
                 // We should only cater for custom URL handles for a route.
                 if (! is_null($handles) && $configurable !== false) {
-                    $fieldset->control('input:text', 'handles', function ($control) use ($handles) {
-                        $control->label(trans('orchestra/foundation::label.extensions.handles'));
-                        $control->value($handles);
-                    });
+                    $fieldset->control('input:text', 'handles')
+                        ->label(trans('orchestra/foundation::label.extensions.handles'))
+                        ->value($handles);
                 }
 
-                $fieldset->control('input:text', 'migrate', function ($control) use ($handles, $name) {
-                    $control->label(trans('orchestra/foundation::label.extensions.update'));
-
-                    $control->field(function () use ($name) {
+                $fieldset->control('input:text', 'migrate')
+                    ->label(trans('orchestra/foundation::label.extensions.update'))
+                    ->field(function () use ($name) {
                         $uid = str_replace('/', '.', $name);
                         return HTML::link(
                             handles("orchestra::extensions/update/{$uid}"),
@@ -43,7 +41,6 @@ class Extension extends AbstractablePresenter
                             array('class' => 'btn btn-info')
                         );
                     });
-                });
             });
         });
     }

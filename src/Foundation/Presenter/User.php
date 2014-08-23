@@ -25,10 +25,10 @@ class User extends AbstractablePresenter
             $table->layout('orchestra/foundation::components.table');
 
             // Add columns
-            $table->column('fullname', function ($column) {
-                $column->label(trans('orchestra/foundation::label.users.fullname'));
-                $column->escape(false);
-                $column->value(function ($row) {
+            $table->column('fullname')
+                ->label(trans('orchestra/foundation::label.users.fullname'))
+                ->escape(false)
+                ->value(function ($row) {
                     $roles = $row->roles;
                     $value = array();
 
@@ -47,11 +47,9 @@ class User extends AbstractablePresenter
                         )),
                     ));
                 });
-            });
 
-            $table->column('email', function ($column) {
-                $column->label(trans('orchestra/foundation::label.users.email'));
-            });
+            $table->column('email')
+                ->label(trans('orchestra/foundation::label.users.email'));
         });
     }
 
@@ -64,14 +62,14 @@ class User extends AbstractablePresenter
     public function actions(TableBuilder $table)
     {
         return $table->extend(function ($table) {
-            $table->column('action', function ($column) {
-                $column->label('');
-                $column->escape(false);
-                $column->headers(array('class' => 'th-action'));
-                $column->attributes(function ($row) {
+            $table->column('action')
+                ->label('')
+                ->escape(false)
+                ->headers(array('class' => 'th-action'))
+                ->attributes(function ($row) {
                     return array('class' => 'th-action');
-                });
-                $column->value(function ($row) {
+                })
+                ->value(function ($row) {
                     $btn = array();
                     $btn[] = HTML::link(
                         handles("orchestra::users/{$row->id}/edit"),
@@ -101,7 +99,6 @@ class User extends AbstractablePresenter
                         array('class' => 'btn-group')
                     );
                 });
-            });
         });
     }
 
@@ -119,34 +116,33 @@ class User extends AbstractablePresenter
             $form->hidden('id');
 
             $form->fieldset(function ($fieldset) {
-                $fieldset->control('input:text', 'email', function ($control) {
-                    $control->label(trans('orchestra/foundation::label.users.email'));
-                });
+                $fieldset->control('input:text', 'email')
+                    ->label(trans('orchestra/foundation::label.users.email'));
 
-                $fieldset->control('input:text', 'fullname', function ($control) {
-                    $control->label(trans('orchestra/foundation::label.users.fullname'));
-                });
+                $fieldset->control('input:text', 'fullname')
+                    ->label(trans('orchestra/foundation::label.users.fullname'));
 
-                $fieldset->control('input:password', 'password', function ($control) {
-                    $control->label(trans('orchestra/foundation::label.users.password'));
-                });
+                $fieldset->control('input:password', 'password')
+                    ->label(trans('orchestra/foundation::label.users.password'));
 
-                $fieldset->control('select', 'roles[]', function ($control) {
-                    $roles = App::make('orchestra.role');
+                $fieldset->control('select', 'roles[]')
+                    ->label(trans('orchestra/foundation::label.users.roles'))
+                    ->attributes(array('multiple' => true))
+                    ->options(function () {
+                        $roles = App::make('orchestra.role');
 
-                    $control->label(trans('orchestra/foundation::label.users.roles'));
-                    $control->options($roles->lists('name', 'id'));
-                    $control->attributes(array('multiple' => true));
-                    $control->value(function ($row) {
+                        return $roles->lists('name', 'id');
+                    })
+                    ->value(function ($row) {
                         // get all the user roles from objects
                         $roles = array();
 
                         foreach ($row->roles as $row) {
                             $roles[] = $row->id;
                         }
+
                         return $roles;
                     });
-                });
             });
         });
     }

@@ -18,13 +18,11 @@ class Account extends AbstractablePresenter
             $form->hidden('id');
 
             $form->fieldset(function ($fieldset) {
-                $fieldset->control('input:text', 'email', function ($control) {
-                    $control->label(trans('orchestra/foundation::label.users.email'));
-                });
+                $fieldset->control('input:text', 'email')
+                    ->label(trans('orchestra/foundation::label.users.email'));
 
-                $fieldset->control('input:text', 'fullname', function ($control) {
-                    $control->label(trans('orchestra/foundation::label.users.fullname'));
-                });
+                $fieldset->control('input:text', 'fullname')
+                    ->label(trans('orchestra/foundation::label.users.fullname'));
             });
         });
     }
@@ -42,17 +40,14 @@ class Account extends AbstractablePresenter
             $form->hidden('id');
 
             $form->fieldset(function ($fieldset) {
-                $fieldset->control('input:password', 'current_password', function ($control) {
-                    $control->label(trans('orchestra/foundation::label.account.current_password'));
-                });
+                $fieldset->control('input:password', 'current_password')
+                    ->label(trans('orchestra/foundation::label.account.current_password'));
 
-                $fieldset->control('input:password', 'new_password', function ($control) {
-                    $control->label(trans('orchestra/foundation::label.account.new_password'));
-                });
+                $fieldset->control('input:password', 'new_password')
+                    ->label(trans('orchestra/foundation::label.account.new_password'));
 
-                $fieldset->control('input:password', 'confirm_password', function ($control) {
-                    $control->label(trans('orchestra/foundation::label.account.confirm_password'));
-                });
+                $fieldset->control('input:password', 'confirm_password')
+                    ->label(trans('orchestra/foundation::label.account.confirm_password'));
             });
         });
     }

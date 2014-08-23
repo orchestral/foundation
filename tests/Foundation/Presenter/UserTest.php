@@ -65,23 +65,18 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $stub = new User;
 
-        $column->shouldReceive('label')->twice()->andReturnNull()
-            ->shouldReceive('escape')->once()->with(false)->andReturnNull()
+        $column->shouldReceive('label')->twice()->andReturnSelf()
+            ->shouldReceive('escape')->once()->with(false)->andReturnSelf()
             ->shouldReceive('value')->once()->with(m::type('Closure'))
-                ->andReturnUsing(function ($c) use ($value) {
+                ->andReturnUsing(function ($c) use ($column, $value) {
                     $c($value);
+                    return $column;
                 });
         $grid->shouldReceive('with')->once()->with($model)->andReturnNull()
             ->shouldReceive('sortable')->once()->andReturnNull()
             ->shouldReceive('layout')->once()->with('orchestra/foundation::components.table')->andReturnNull()
-            ->shouldReceive('column')->once()->with('fullname', m::type('Closure'))
-                ->andReturnUsing(function ($n, $c) use ($column) {
-                    $c($column);
-                })
-            ->shouldReceive('column')->once()->with('email', m::type('Closure'))
-                ->andReturnUsing(function ($n, $c) use ($column) {
-                    $c($column);
-                });
+            ->shouldReceive('column')->once()->with('fullname')->andReturn($column)
+            ->shouldReceive('column')->once()->with('email')->andReturn($column);
 
         $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Factory')->makePartial();
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,raw]');
@@ -124,21 +119,20 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $stub = new User;
 
-        $column->shouldReceive('label')->once()->with('')->andReturnNull()
-            ->shouldReceive('escape')->once()->with(false)->andReturnNull()
-            ->shouldReceive('headers')->once()->with(m::type('Array'))->andReturnNull()
+        $column->shouldReceive('label')->once()->with('')->andReturnSelf()
+            ->shouldReceive('escape')->once()->with(false)->andReturnSelf()
+            ->shouldReceive('headers')->once()->with(m::type('Array'))->andReturnSelf()
             ->shouldReceive('attributes')->once()->with(m::type('Closure'))
-                ->andReturnUsing(function ($c) use ($value) {
-                    return $c($value);
+                ->andReturnUsing(function ($c) use ($column, $value) {
+                    $c($value);
+                    return $column;
                 })
             ->shouldReceive('value')->once()->with(m::type('Closure'))
-                ->andReturnUsing(function ($c) use ($value) {
+                ->andReturnUsing(function ($c) use ($column, $value) {
                     $c($value);
+                    return $column;
                 });
-        $grid->shouldReceive('column')->once()->with('action', m::type('Closure'))
-            ->andReturnUsing(function ($n, $c) use ($column) {
-                $c($column);
-            });
+        $grid->shouldReceive('column')->once()->with('action')->andReturn($column);
 
         $table->shouldReceive('extend')->once()->with(m::type('Closure'))
             ->andReturnUsing(function ($c) use ($grid) {
@@ -186,25 +180,20 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $stub = new User;
 
-        $control->shouldReceive('label')->times(4)->andReturnNull()
-            ->shouldReceive('options')->once()->with('roles')->andReturnNull()
-            ->shouldReceive('attributes')->once()->with(m::type('Array'))->andReturnNull()
+        $control->shouldReceive('label')->times(4)->andReturnSelf()
+            ->shouldReceive('options')->once()->with(m::type('Closure'))
+                ->andReturnUsing(function ($c) use ($control) {
+                    $c();
+                    return $control;
+                })
+            ->shouldReceive('attributes')->once()->with(m::type('Array'))->andReturnSelf()
             ->shouldReceive('value')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($value) {
                     $c($value);
                 });
-        $fieldset->shouldReceive('control')->twice()->with('input:text', m::any(), m::type('Closure'))
-                ->andReturnUsing(function ($t, $n, $c) use ($control) {
-                    $c($control);
-                })
-            ->shouldReceive('control')->once()->with('input:password', 'password', m::type('Closure'))
-                ->andReturnUsing(function ($t, $n, $c) use ($control) {
-                    $c($control);
-                })
-            ->shouldReceive('control')->once()->with('select', 'roles[]', m::type('Closure'))
-                ->andReturnUsing(function ($t, $n, $c) use ($control) {
-                    $c($control);
-                });
+        $fieldset->shouldReceive('control')->twice()->with('input:text', m::any())->andReturn($control)
+            ->shouldReceive('control')->once()->with('input:password', 'password')->andReturn($control)
+            ->shouldReceive('control')->once()->with('select', 'roles[]')->andReturn($control);
         $grid->shouldReceive('resource')->once()
                 ->with($stub, 'orchestra/foundation::users', $model)->andReturnNull()
             ->shouldReceive('hidden')->once()->with('id')->andReturnNull()

@@ -30,23 +30,20 @@ class Setting extends AbstractablePresenter
     protected function application($form)
     {
         $form->fieldset(trans('orchestra/foundation::label.settings.application'), function ($fieldset) {
-            $fieldset->control('input:text', 'site_name', function ($control) {
-                $control->label(trans('orchestra/foundation::label.name'));
-            });
+            $fieldset->control('input:text', 'site_name')
+                ->label(trans('orchestra/foundation::label.name'));
 
-            $fieldset->control('textarea', 'site_description', function ($control) {
-                $control->label(trans('orchestra/foundation::label.description'));
-                $control->attributes(array('rows' => 3));
-            });
+            $fieldset->control('textarea', 'site_description')
+                ->label(trans('orchestra/foundation::label.description'))
+                ->attributes(array('rows' => 3));
 
-            $fieldset->control('select', 'site_registrable', function ($control) {
-                $control->label(trans('orchestra/foundation::label.settings.user-registration'));
-                $control->attributes(array('role' => 'switcher'));
-                $control->options(array(
+            $fieldset->control('select', 'site_registrable')
+                ->label(trans('orchestra/foundation::label.settings.user-registration'))
+                ->attributes(array('role' => 'switcher'))
+                ->options(array(
                     'yes' => 'Yes',
                     'no'  => 'No',
                 ));
-            });
         });
     }
 
@@ -60,62 +57,51 @@ class Setting extends AbstractablePresenter
     protected function mailer($form, $model)
     {
         $form->fieldset(trans('orchestra/foundation::label.settings.mail'), function ($fieldset) use ($model) {
-            $fieldset->control('select', 'email_driver', function ($control) {
-                $control->label(trans('orchestra/foundation::label.email.driver'));
-                $control->options(array(
+            $fieldset->control('select', 'email_driver')
+                ->label(trans('orchestra/foundation::label.email.driver'))
+                ->options(array(
                     'mail'     => 'Mail',
                     'smtp'     => 'SMTP',
                     'sendmail' => 'Sendmail',
                     'mailgun'  => 'Mailgun',
                     'mandrill' => 'Mandrill',
                 ));
-            });
 
-            $fieldset->control('input:text', 'email_host', function ($control) {
-                $control->label(trans('orchestra/foundation::label.email.host'));
-            });
+            $fieldset->control('input:text', 'email_host')
+                ->label(trans('orchestra/foundation::label.email.host'));
 
-            $fieldset->control('input:text', 'email_port', function ($control) {
-                $control->label(trans('orchestra/foundation::label.email.port'));
-            });
+            $fieldset->control('input:text', 'email_port')
+                ->label(trans('orchestra/foundation::label.email.port'));
 
-            $fieldset->control('input:text', 'email_address', function ($control) {
-                $control->label(trans('orchestra/foundation::label.email.from'));
-            });
+            $fieldset->control('input:text', 'email_address')
+                ->label(trans('orchestra/foundation::label.email.from'));
 
-            $fieldset->control('input:text', 'email_username', function ($control) {
-                $control->label(trans('orchestra/foundation::label.email.username'));
-            });
+            $fieldset->control('input:text', 'email_username')
+                ->label(trans('orchestra/foundation::label.email.username'));
 
-            $fieldset->control('input:password', 'email_password', function ($control) use ($model) {
-                $control->label(trans('orchestra/foundation::label.email.password'));
-                $control->help(View::make('orchestra/foundation::settings.email-password', compact('model')));
-            });
+            $fieldset->control('input:password', 'email_password')
+                ->label(trans('orchestra/foundation::label.email.password'))
+                ->help(View::make('orchestra/foundation::settings.email-password', compact('model')));
 
-            $fieldset->control('input:text', 'email_encryption', function ($control) {
-                $control->label(trans('orchestra/foundation::label.email.encryption'));
-            });
+            $fieldset->control('input:text', 'email_encryption')
+                ->label(trans('orchestra/foundation::label.email.encryption'));
 
-            $fieldset->control('input:text', 'email_secret', function ($control) {
-                $control->label(trans('orchestra/foundation::label.email.secret'));
-            });
+            $fieldset->control('input:text', 'email_secret')
+                ->label(trans('orchestra/foundation::label.email.secret'));
 
-            $fieldset->control('input:text', 'email_domain', function ($control) {
-                $control->label(trans('orchestra/foundation::label.email.domain'));
-            });
+            $fieldset->control('input:text', 'email_domain')
+                ->label(trans('orchestra/foundation::label.email.domain'));
 
-            $fieldset->control('input:text', 'email_sendmail', function ($control) {
-                $control->label(trans('orchestra/foundation::label.email.command'));
-            });
+            $fieldset->control('input:text', 'email_sendmail')
+                ->label(trans('orchestra/foundation::label.email.command'));
 
-            $fieldset->control('select', 'email_queue', function ($control) {
-                $control->label(trans('orchestra/foundation::label.email.queue'));
-                $control->attributes(array('role' => 'switcher'));
-                $control->options(array(
+            $fieldset->control('select', 'email_queue')
+                ->label(trans('orchestra/foundation::label.email.queue'))
+                ->attributes(array('role' => 'switcher'))
+                ->options(array(
                     'yes' => 'Yes',
                     'no'  => 'No',
                 ));
-            });
         });
     }
 }
