@@ -44,9 +44,6 @@
 		"orchestra/testbench": "2.3.*",
 		"twbs/bootstrap": "~3@stable"
 	},
-	"replace": {
-		"illuminate/contracts": "4.3.*"
-	},
 	"extra": {
 		"branch-alias": {
 			"dev-master": "2.3-dev"
