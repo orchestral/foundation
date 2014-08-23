@@ -3,9 +3,9 @@
 use Closure;
 use Illuminate\Auth\Reminders\PasswordBroker as Broker;
 use Illuminate\Auth\Reminders\ReminderRepositoryInterface;
-use Illuminate\Auth\Reminders\RemindableInterface;
+use Illuminate\Contracts\ArrayableInterface;
+use Illuminate\Contracts\Auth\Remindable as RemindableContract;
 use Illuminate\Auth\UserProviderInterface;
-use Illuminate\Support\Contracts\ArrayableInterface;
 use Orchestra\Notifier\Message;
 use Orchestra\Notifier\NotifierInterface;
 
@@ -25,7 +25,6 @@ class PasswordBroker extends Broker
      * @param  \Illuminate\Auth\UserProviderInterface                  $users
      * @param  \Orchestra\Notifier\NotifierInterface                   $mailer
      * @param  string                                                  $reminderView
-     * @return void
      */
     public function __construct(
         ReminderRepositoryInterface $reminders,
@@ -70,12 +69,12 @@ class PasswordBroker extends Broker
     /**
      * Send the password reminder e-mail.
      *
-     * @param  \Illuminate\Auth\Reminders\RemindableInterface  $user
-     * @param  string                                          $token
-     * @param  Closure                                         $callback
+     * @param  \Illuminate\Contracts\Auth\Remindable    $user
+     * @param  string                                   $token
+     * @param  Closure                                  $callback
      * @return \Orchestra\Notifier\Receipt
      */
-    public function sendReminder(RemindableInterface $user, $token, Closure $callback = null)
+    public function sendReminder(RemindableContract $user, $token, Closure $callback = null)
     {
         // We will use the reminder view that was given to the broker to display the
         // password reminder e-mail. We'll pass a "token" variable into the views

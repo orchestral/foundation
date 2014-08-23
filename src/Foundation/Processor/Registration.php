@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Exception;
-use Illuminate\Support\Contracts\ArrayableInterface;
+use Illuminate\Contracts\Support\ArrayableInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;

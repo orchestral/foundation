@@ -3,7 +3,6 @@
 use Mockery as m;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Messages;

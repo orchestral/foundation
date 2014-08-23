@@ -49,6 +49,7 @@ class PasswordBroker extends AbstractableProcessor
      * Reset the password.
      *
      * @param  object  $listener
+     * @param  array   $input
      * @return mixed
      */
     public function reset($listener, array $input)

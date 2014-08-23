@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Support\Facades\App as Orchestra;
-use Orchestra\Support\Facades\Form;
 use Orchestra\Support\Facades\Notifier;
 use Orchestra\Support\Facades\Messages;
 

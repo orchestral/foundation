@@ -1,10 +1,7 @@
 <?php namespace Orchestra\Foundation\Routing;
 
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
-use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Traits\ControllerResponseTrait;
 
 abstract class BaseController extends Controller
