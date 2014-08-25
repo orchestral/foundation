@@ -5,6 +5,13 @@ title: Foundation Change Log
 
 ## Version 2.2 {#v2-2}
 
+### v2.2.5 {#v2-2-5}
+
+* Update all reference to utilise `orchestra/messages`.
+* Add `Orchestra\Foundation\Installation\InstallerInterface::bootInstallerFiles()` for future compatibility.
+* Utilize method chaining when building form and table.
+* Improve `bower` usage by including `bower-installer`.
+
 ### v2.2.4 {#v2-2-4}
 
 * Deprecate `orchestra.validate: user.registration` event and replace it with `orchestra.validate: user.account.register` event.
