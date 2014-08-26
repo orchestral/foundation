@@ -113,7 +113,14 @@ class FoundationServiceProvider extends ServiceProvider
 
         $this->app['orchestra.app']->boot();
 
-        include "{$path}/start.php";
+        require "{$path}/start/global.php";
+        require "{$path}/start/macros.php";
+        require "{$path}/start/events.php";
+        require "{$path}/filters.php";
+
+        if (! $this->app->routesAreCached()) {
+            require "{$path}/routes.php";
+        }
 
         $this->app['events']->fire('orchestra.ready');
     }
