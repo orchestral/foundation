@@ -1,7 +1,9 @@
 <?php namespace Orchestra\Foundation\Abstractable\TestCase;
 
 use Mockery as m;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Facade;
+use Orchestra\Foundation\Abstractable\RouteManager;
 
 class RouteManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,7 +19,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app = new \Illuminate\Foundation\Application;
+        $this->app = new Application;
         $_SERVER['RouteManagerTest@callback'] = null;
 
         Facade::clearResolvedInstances();
@@ -192,6 +194,27 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test Orchestra\Foundation\RouteManager::namespaced() method.
+     *
+     * @test
+     */
+    public function testNamespacedMethod()
+    {
+        $app  = $this->getApplicationMocks();
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository');
+
+        $stub = m::mock('\Orchestra\Foundation\Abstractable\RouteManager[group]', [$app]);
+
+        $closure = function () {
+
+        };
+
+        $stub->shouldReceive('group')->once()->with('orchestra/foundation', 'orchestra', [], $closure)->andReturn([]);
+
+        $this->assertNull($stub->namespaced($closure));
+    }
+
+    /**
      * Test Orchestra\Foundation\RouteManager::when() method.
      *
      * @test
@@ -199,7 +222,6 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     public function testWhenMethod()
     {
         $app = $this->getApplicationMocks();
-        $request = $app['request'];
         $app['config'] = $config = m::mock('\Illuminate\Config\Repository')->makePartial();
         $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory')->makePartial();
@@ -237,7 +259,7 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     }
 }
 
-class StubRouteManager extends \Orchestra\Foundation\Abstractable\RouteManager
+class StubRouteManager extends RouteManager
 {
     public function boot()
     {

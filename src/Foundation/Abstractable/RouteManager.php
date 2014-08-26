@@ -137,6 +137,17 @@ abstract class RouteManager
     }
 
     /**
+     * Register the given Closure with the "group" function namespace set.
+     *
+     * @param  \Closure  $callback
+     * @return void
+     */
+    public function namespaced(Closure $callback)
+    {
+        $this->group('orchestra/foundation', 'orchestra', [], $callback);
+    }
+
+    /**
      * Get extension route.
      *
      * @param  string   $name
