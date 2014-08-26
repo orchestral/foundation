@@ -3,7 +3,7 @@
 use Closure;
 use Illuminate\Auth\Reminders\PasswordBroker as Broker;
 use Illuminate\Auth\Reminders\ReminderRepositoryInterface;
-use Illuminate\Contracts\ArrayableInterface;
+use Illuminate\Contracts\Support\ArrayableInterface;
 use Illuminate\Contracts\Auth\Remindable as RemindableContract;
 use Illuminate\Auth\UserProviderInterface;
 use Orchestra\Notifier\Message;
