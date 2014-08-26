@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Orchestra\Support\Facades\App;
 
-Route::group(App::group('orchestra/foundation', 'orchestra'), function () {
+App::namespaced(function () {
     // Route to account/profile.
     Route::get('account', 'Orchestra\Foundation\Routing\AccountController@showProfile');
     Route::post('account', 'Orchestra\Foundation\Routing\AccountController@updateProfile');
