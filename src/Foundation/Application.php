@@ -108,6 +108,7 @@ class Application extends RouteManager
      * Run booting on installed application.
      *
      * @return \Orchestra\Memory\Provider
+     * @throws \Exception
      */
     protected function bootInstalledApplication()
     {
