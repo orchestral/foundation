@@ -25,7 +25,6 @@ class PasswordBroker extends Broker
      * @param  \Illuminate\Auth\UserProviderInterface                  $users
      * @param  \Orchestra\Notifier\NotifierInterface                   $mailer
      * @param  string                                                  $reminderView
-     * @return void
      */
     public function __construct(
         ReminderRepositoryInterface $reminders,
