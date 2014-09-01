@@ -26,7 +26,6 @@ abstract class RouteManager
      * Construct a new instance.
      *
      * @param  \Illuminate\Foundation\Application   $app
-     * @return void
      */
     public function __construct(Application $app)
     {
