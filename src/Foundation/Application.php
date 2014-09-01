@@ -2,7 +2,7 @@
 
 use Exception;
 use Illuminate\Support\Arr;
-use Orchestra\Foundation\Abstractable\RouteManager;
+use Orchestra\Http\RouteManager;
 use Orchestra\Memory\Provider;
 
 class Application extends RouteManager

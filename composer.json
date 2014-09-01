@@ -28,6 +28,7 @@
 		"orchestra/extension": "2.3.*",
 		"orchestra/facile": "2.3.*",
 		"orchestra/html": "2.3.*",
+		"orchestra/http": "2.3.*",
 		"orchestra/memory": "2.3.*",
 		"orchestra/messages": "2.3.*",
 		"orchestra/model": "2.3.*",
