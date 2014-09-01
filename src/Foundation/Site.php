@@ -5,10 +5,12 @@ use Carbon\Carbon;
 use Illuminate\Config\Repository;
 use Illuminate\Auth\AuthManager;
 use Orchestra\Memory\Provider;
-use Orchestra\Support\Relic;
+use Orchestra\Support\Traits\DataContainerTrait;
 
-class Site extends Relic
+class Site
 {
+    use DataContainerTrait;
+
     /**
      * Auth manager instance.
      *
