@@ -32,6 +32,7 @@
 		"orchestra/model": "2.1.*",
 		"orchestra/notifier": "2.1.*",
 		"orchestra/optimize": "2.1.*",
+		"orchestra/publisher": "2.1.*",
 		"orchestra/resources": "2.1.*",
 		"orchestra/support": "2.1.*",
 		"orchestra/translation": "2.1.*",
