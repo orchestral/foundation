@@ -33,7 +33,8 @@ class FoundationServiceProvider extends ServiceProvider
         $loader = AliasLoader::getInstance();
 
         $loader->alias('Orchestra\Asset', 'Orchestra\Support\Facades\Asset');
-        $loader->alias('Orchestra\Acl', 'Orchestra\Support\Facades\Acl');
+        $loader->alias('Orchestra\Acl', 'Orchestra\Support\Facades\ACL');
+        $loader->alias('Orchestra\ACL', 'Orchestra\Support\Facades\ACL');
         $loader->alias('Orchestra\App', 'Orchestra\Support\Facades\App');
         $loader->alias('Orchestra\Config', 'Orchestra\Support\Facades\Config');
         $loader->alias('Orchestra\Extension', 'Orchestra\Support\Facades\Extension');
