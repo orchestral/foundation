@@ -8,7 +8,7 @@
 		@placeholder('orchestra.resources')
 	</div>
 	<div class="nine columns">
-		{{ $content }}
+		{!! $content !!}
 	</div>
 </div>
 @stop

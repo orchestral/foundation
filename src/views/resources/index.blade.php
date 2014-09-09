@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
 	<div class="twelve columns white rounded box">
-		{{ $table }}
+		{!! $table !!}
 	</div>
 </div>
 @stop

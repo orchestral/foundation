@@ -16,18 +16,18 @@ $user = Auth::user(); ?>
 		@unless (is_null($user))
 		<ul class="dropdown-menu">
 			<li>
-				<a href="{{ handles('orchestra::account') }}">
+				<a href="{!! handles('orchestra::account') !!}">
 					{{ trans('orchestra/foundation::title.account.profile') }}
 				</a>
 			</li>
 			<li>
-				<a href="{{ handles('orchestra::account/password') }}">
+				<a href="{!! handles('orchestra::account/password') !!}">
 					{{ trans('orchestra/foundation::title.account.password') }}
 				</a>
 			</li>
 			<li class="divider"></li>
 			<li>
-				<a href="{{ handles('orchestra::logout') }}">
+				<a href="{!! handles('orchestra::logout') !!}">
 					{{ trans('orchestra/foundation::title.logout') }}
 				</a>
 			</li>

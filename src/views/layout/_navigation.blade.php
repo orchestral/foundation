@@ -11,12 +11,12 @@ use Orchestra\Support\Facades\App; ?>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a href="{{ handles('orchestra::/') }}" class="navbar-brand">
+			<a href="{!! handles('orchestra::/') !!}" class="navbar-brand">
 				{{ memorize('site.name', 'Orchestra Platform') }}
 			</a>
 		</div>
 		<div class="collapse navbar-collapse main-responsive-collapse">
-			@include('orchestra/foundation::components.menu', array('menu' => App::menu('orchestra')))
+			@include('orchestra/foundation::components.menu', ['menu' => App::menu('orchestra')])
 			@include('orchestra/foundation::components.usernav')
 		</div>
 	</div>

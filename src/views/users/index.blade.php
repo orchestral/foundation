@@ -6,7 +6,7 @@
 <div class="row">
 	@include('orchestra/foundation::users._search')
 	<div class="twelve columns white rounded box">
-		{{ $table }}
+		{!! $table !!}
 	</div>
 </div>
 @stop

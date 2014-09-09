@@ -6,6 +6,6 @@
 	</div>
 </div>
 <div class="white rounded-bottom box no-padding list-group">
-	<a href="{{ handles('orchestra::account') }}" class="list-group-item">Profile</a>
-	<a href="{{ handles('orchestra::logout') }}" class="list-group-item">Logout</a>
+	<a href="{!! handles('orchestra::account') !!}" class="list-group-item">Profile</a>
+	<a href="{!! handles('orchestra::logout') !!}" class="list-group-item">Logout</a>
 </div>

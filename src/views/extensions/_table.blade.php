@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\Extension; ?>
+
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -28,18 +29,18 @@ use Orchestra\Support\Facades\Extension; ?>
 					@if (! ($started))
 						{{ $extension->name }}
 					@else
-						<a href="{{ handles("orchestra::extensions/configure/{$uid}") }}">
+						<a href="{!! handles("orchestra::extensions/configure/{$uid}") !!}">
 							{{ $extension->name }}
 						</a>
 					@endif
 				</strong>
 				<div class="pull-right btn-group">
 					@if (! ($started || $active))
-						<a href="{{ handles("orchestra::extensions/activate/{$uid}") }}" class="btn btn-primary btn-mini">
+						<a href="{!! handles("orchestra::extensions/activate/{$uid}") !!}" class="btn btn-primary btn-mini">
 							{{ trans('orchestra/foundation::label.extensions.actions.activate') }}
 						</a>
 					@else
-						<a href="{{ handles("orchestra::extensions/deactivate/{$uid}") }}" class="btn btn-warning btn-mini">
+						<a href="{!! handles("orchestra::extensions/deactivate/{$uid}") !!}" class="btn btn-warning btn-mini">
 							{{ trans('orchestra/foundation::label.extensions.actions.deactivate') }}
 						</a>
 					@endif
@@ -52,8 +53,8 @@ use Orchestra\Support\Facades\Extension; ?>
 				</p>
 
 				<span class="meta">
-					{{ trans('orchestra/foundation::label.extensions.version', array('version' => $extension->version )) }} |
-					{{ trans('orchestra/foundation::label.extensions.author', array('author' => sprintf('<a href="%s" target="_blank">%s</a>', $extension->url ?: '#', $extension->author))) }}
+					{{ trans('orchestra/foundation::label.extensions.version', ['version' => $extension->version ]) }} |
+					{{ trans('orchestra/foundation::label.extensions.author', ['author' => sprintf('<a href="%s" target="_blank">%s</a>', $extension->url ?: '#', $extension->author)]) }}
 				</span>
 			</td>
 		</tr>

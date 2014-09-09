@@ -1,41 +1,44 @@
 <?php
 
-use Orchestra\Support\Facades\HTML; ?>
+use Orchestra\Support\Facades\HTML;
+
+$auth = ['form-group'];
+(false === $authentication) && $auth[] = 'error';
+('eloquent' !== $auth['driver']) && $auth[] = 'hide'; ?>
 
 <div class="row">
 	<div class="twelve columns">
 		<h3>{{ trans('orchestra/foundation::install.auth.title') }}</h3>
 
 		<p>
-			{{ trans('orchestra/foundation::install.verify', array(
-				'filename' => HTML::create('code', 'app/config/auth.php', array('title' => app_path().'config/auth.php'))
-			)) }}
+			{{ trans('orchestra/foundation::install.verify', [
+				'filename' => HTML::create('code', 'app/config/auth.php', ['title' => app_path('config/auth.php')])
+			]) }}
 		</p>
 
 		<div class="form-group">
-			<label class="three columns control-label {{ 'fluent' === $auth['driver'] ? 'error' : '' }}">
+			<label class="three columns control-label {!! 'fluent' === $auth['driver'] ? 'error' : '' !!}">
 				{{ trans('orchestra/foundation::install.auth.driver') }}
 			</label>
-			<div class="nine columns">
-				<input disabled class="form-control" type="text" value="{{ $auth['driver'] }}">
+			<div class="nine column">
+				<input disabled class="form-control" type="text" value="{!! $auth['driver'] !!}">
 				@if ('fluent' === $auth['driver'])
 				<p class="help-block">{{ trans('orchestra/foundation::install.auth.requirement.driver') }}</p>
 				@endif
 			</div>
 		</div>
 
-		<div class="form-group
-			{{ false === $authentication ? ' error' : ''; echo 'eloquent' !== $auth['driver'] ? ' hide' : '' }}">
+		<div class="{!! implode(' ', $auth) !!}">
 			<label class="three columns control-label">
 				{{ trans('orchestra/foundation::install.auth.model') }}
 			</label>
 			<div class="nine columns">
-				<input disabled class="form-control" type="text" value="{{ $auth['model'] }}">
+				<input disabled class="form-control" type="text" value="{!! $auth['model'] !!}">
 				@if (false === $authentication)
 				<p class="help-block">
-					{{ trans('orchestra/foundation::install.auth.requirement.driver', array(
+					{{ trans('orchestra/foundation::install.auth.requirement.driver', [
 						'class' => HTML::create('code', 'Orchestra\Model\User')
-					)) }}
+					]) }}
 				</p>
 				@endif
 			</div>
@@ -45,7 +48,7 @@ use Orchestra\Support\Facades\HTML; ?>
 		<hr>
 		<div class="form-group">
 			<div class="nine columns offset-by-three">
-				<a href="{{ handles('orchestra::install/prepare') }}" class="btn btn-primary">
+				<a href="{!! handles('orchestra::install/prepare') !!}" class="btn btn-primary">
 					{{ trans('orchestra/foundation::label.next') }}
 				</a>
 			</div>

@@ -4,10 +4,10 @@
 <div class="row">
 	<div class="three columns">
 		<div class="list-group">
-			<a href="{{ handles('orchestra::install') }}" class="list-group-item">
+			<a href="{!! handles('orchestra::install') !!}" class="list-group-item">
 				{{ trans('orchestra/foundation::install.steps.requirement') }}
 			</a>
-			<a href="{{ handles('orchestra::install/create') }}" class="list-group-item active">
+			<a href="{!! handles('orchestra::install/create') !!}" class="list-group-item active">
 				{{ trans('orchestra/foundation::install.steps.account') }}
 			</a>
 			<a href="#" class="list-group-item disabled">

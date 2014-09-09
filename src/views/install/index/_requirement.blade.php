@@ -17,7 +17,7 @@
 					<td>
 						{{ trans("orchestra/foundation::install.system.{$name}.name", $requirement['data']) }}
 						@if (! ($requirement['is'] === $requirement['should']))
-						<div class="alert{{ true === $requirement['explicit'] ? ' alert-error ' : '' }}">
+						<div class="alert{!! true === $requirement['explicit'] ? ' alert-error ' : '' !!}">
 							<strong>{{ trans("orchestra/foundation::install.solution") }}:</strong>
 							{{ trans("orchestra/foundation::install.system.{$name}.solution", $requirement['data']) }}
 						</div>

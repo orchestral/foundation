@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
 	<div class="eight columns rounded box">
-		{{ $form }}
+		{!! $form !!}
 	</div>
 	<div class="four columns">
 		@placeholder('orchestra.extensions')

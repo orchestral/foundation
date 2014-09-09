@@ -11,18 +11,18 @@ use Orchestra\Support\Facades\HTML; ?>
 	@if (count($panes) > 0)
 
 	<?php $panes->add('mini-profile', '<')->title('Mini Profile')
-		->attributes(array('class' => 'three columns widget'))
+		->attributes(['class' => 'three columns widget'])
 		->content(View::make('orchestra/foundation::components.miniprofile')); ?>
 
 	@foreach ($panes as $id => $pane)
-		<div{{ HTML::attributes(HTML::decorate($pane->attributes, array('class' => 'panel'))) }}>
+		<div{!! HTML::attributes(HTML::decorate($pane->attributes, ['class' => 'panel'])) !!}>
 		@if (! empty($pane->html))
-		{{ $pane->html }}
+		{!! $pane->html !!}
 		@else
 		<div class="panel-heading">
-			{{ $pane->title }}
+			{!! $pane->title !!}
 		</div>
-		{{ $pane->content }}
+		{!! $pane->content !!}
 		@endif
 		</div>
 	@endforeach

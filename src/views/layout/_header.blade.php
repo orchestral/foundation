@@ -5,7 +5,7 @@ use Orchestra\Support\Facades\Asset;
 use Orchestra\Support\Facades\HTML; ?>
 
 <meta charset="utf-8">
-{{ HTML::title() }}
+{!! HTML::title() !!}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Orchestra Platform">
 <meta name="author" content="Orchestra Platform">
@@ -28,11 +28,11 @@ $asset->script('underscore', 'packages/orchestra/foundation/components/underscor
 $asset->script('jquery', 'packages/orchestra/foundation/components/jquery/jquery.min.js');
 $asset->script('javie', 'packages/orchestra/foundation/components/javie/javie.min.js', array('jquery', 'underscore')); ?>
 
-{{ $asset->styles() }}
-{{ $asset->scripts() }}
+{!! $asset->styles() !!}
+{!! $asset->scripts() !!}
 
 <script>
-Javie.ENV = "{{ App::environment() }}";
+Javie.ENV = "{!! App::environment() !!}";
 </script>
 
 @placeholder("orchestra.layout: header")

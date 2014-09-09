@@ -11,7 +11,7 @@
 			back online as soon as possible.
 		</p>
 		<p>
-			Perhaps you would like to go to our <a href="{{ handles('orchestra::/') }}">home page</a>?
+			Perhaps you would like to go to our <a href="{!! handles('orchestra::/') !!}">home page</a>?
 		</p>
 	</div>
 </div>

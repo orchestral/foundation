@@ -21,8 +21,8 @@ $asset->script('orchestra', 'packages/orchestra/foundation/js/orchestra.min.js',
 $asset->script('jui-toggleSwitch', 'packages/orchestra/foundation/vendor/delta/js/jquery-ui.toggleSwitch.js', array('jquery-ui'));
 $asset->script('select2', 'packages/orchestra/foundation/components/select2/select2.min.js'); ?>
 
-{{ $asset->styles() }}
-{{ $asset->scripts() }}
+{!! $asset->styles() !!}
+{!! $asset->scripts() !!}
 
 @placeholder("orchestra.layout: footer")
 
