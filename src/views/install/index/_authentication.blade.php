@@ -2,9 +2,13 @@
 
 use Orchestra\Support\Facades\HTML;
 
-$auth = ['form-group'];
-(false === $authentication) && $auth[] = 'error';
-('eloquent' !== $auth['driver']) && $auth[] = 'hide'; ?>
+$authFormGroup = function ($authentication, $auth) {
+	$class = ['form-group'];
+	(false === $authentication) && $class[] = 'error';
+	('eloquent' !== $auth['driver']) && $class[] = 'hide';
+
+	return implode(' ', $class);
+}; ?>
 
 <div class="row">
 	<div class="twelve columns">
@@ -28,7 +32,7 @@ $auth = ['form-group'];
 			</div>
 		</div>
 
-		<div class="{!! implode(' ', $auth) !!}">
+		<div class="{!! $authFormGroup($authentication, $auth) !!}">
 			<label class="three columns control-label">
 				{{ trans('orchestra/foundation::install.auth.model') }}
 			</label>
@@ -53,7 +57,6 @@ $auth = ['form-group'];
 				</a>
 			</div>
 		</div>
-
 		@endif
 	</div>
 </div>
