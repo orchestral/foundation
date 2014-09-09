@@ -3,7 +3,7 @@
 use Closure;
 use Illuminate\Auth\Reminders\PasswordBroker as Broker;
 use Illuminate\Auth\Reminders\ReminderRepositoryInterface;
-use Illuminate\Contracts\Support\ArrayableInterface;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Auth\Remindable as RemindableContract;
 use Illuminate\Auth\UserProviderInterface;
 use Orchestra\Notifier\Message;
@@ -80,7 +80,7 @@ class PasswordBroker extends Broker
         // password reminder e-mail. We'll pass a "token" variable into the views
         // so that it may be displayed for an user to click for password reset.
         $data = array(
-            'user'  => ($user instanceof ArrayableInterface ? $user->toArray() : $user),
+            'user'  => ($user instanceof Arrayable ? $user->toArray() : $user),
             'token' => $token,
         );
 

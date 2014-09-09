@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Exception;
-use Illuminate\Contracts\Support\ArrayableInterface;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
@@ -114,7 +114,7 @@ class Registration extends AbstractableProcessor
         $data = array(
             'password' => $password,
             'site'     => $site,
-            'user'     => ($user instanceof ArrayableInterface ? $user->toArray() : $user),
+            'user'     => ($user instanceof Arrayable ? $user->toArray() : $user),
         );
 
         $subject = trans('orchestra/foundation::email.credential.register', array('site' => $site));
