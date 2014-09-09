@@ -7,7 +7,7 @@ $authFormGroup = function ($authentication, $auth) {
 	(false === $authentication) && $class[] = 'error';
 	('eloquent' !== $auth['driver']) && $class[] = 'hide';
 
-	return ['class' => $class];
+	return ['class' => implode(' ', $class)];
 }; ?>
 
 <div class="row">
