@@ -54,7 +54,7 @@ use Orchestra\Support\Facades\Extension; ?>
 
 				<span class="meta">
 					{{ trans('orchestra/foundation::label.extensions.version', ['version' => $extension->version ]) }} |
-					{{ trans('orchestra/foundation::label.extensions.author', ['author' => sprintf('<a href="%s" target="_blank">%s</a>', $extension->url ?: '#', $extension->author)]) }}
+					{!! trans('orchestra/foundation::label.extensions.author', ['author' => sprintf('<a href="%s" target="_blank">%s</a>', $extension->url ?: '#', $extension->author)]) !!}
 				</span>
 			</td>
 		</tr>

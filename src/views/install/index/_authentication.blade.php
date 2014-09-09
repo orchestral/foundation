@@ -7,7 +7,7 @@ $authFormGroup = function ($authentication, $auth) {
 	(false === $authentication) && $class[] = 'error';
 	('eloquent' !== $auth['driver']) && $class[] = 'hide';
 
-	return implode(' ', $class);
+	return ['class' => $class];
 }; ?>
 
 <div class="row">
@@ -32,7 +32,7 @@ $authFormGroup = function ($authentication, $auth) {
 			</div>
 		</div>
 
-		<div class="{!! $authFormGroup($authentication, $auth) !!}">
+		<div{!! HTML::attributes($authFormGroup($authentication, $auth)) !!}>
 			<label class="three columns control-label">
 				{{ trans('orchestra/foundation::install.auth.model') }}
 			</label>
