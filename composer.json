@@ -1,6 +1,6 @@
 {
 	"name": "orchestra/foundation",
-	"description": "Orchestra Platform 2 Foundation Component",
+	"description": "Orchestra Platform Foundation",
 	"homepage": "http://orchestraplatform.com/docs/latest/",
 	"license": "MIT",
 	"keywords": ["orchestra-platform", "orchestral", "laravel", "administrator", "admin", "user-management"],
@@ -21,34 +21,34 @@
 	},
 	"require": {
 		"php": ">=5.4.0",
-		"laravel/framework": "4.3.*",
-		"orchestra/asset": "2.3.*",
-		"orchestra/auth": "2.3.*",
-		"orchestra/debug": "2.3.*",
-		"orchestra/extension": "2.3.*",
-		"orchestra/facile": "2.3.*",
-		"orchestra/html": "2.3.*",
-		"orchestra/http": "2.3.*",
-		"orchestra/memory": "2.3.*",
-		"orchestra/messages": "2.3.*",
-		"orchestra/model": "2.3.*",
-		"orchestra/notifier": "2.3.*",
-		"orchestra/optimize": "2.3.*",
-		"orchestra/publisher": "2.3.*",
-		"orchestra/resources": "2.3.*",
-		"orchestra/support": "2.3.*",
-		"orchestra/translation": "2.3.*",
-		"orchestra/view": "2.3.*",
-		"orchestra/widget": "2.3.*"
+		"laravel/framework": "5.0.*",
+		"orchestra/asset": "3.0.*",
+		"orchestra/auth": "3.0.*",
+		"orchestra/debug": "3.0.*",
+		"orchestra/extension": "3.0.*",
+		"orchestra/facile": "3.0.*",
+		"orchestra/html": "3.0.*",
+		"orchestra/http": "3.0.*",
+		"orchestra/memory": "3.0.*",
+		"orchestra/messages": "3.0.*",
+		"orchestra/model": "3.0.*",
+		"orchestra/notifier": "3.0.*",
+		"orchestra/optimize": "3.0.*",
+		"orchestra/publisher": "3.0.*",
+		"orchestra/resources": "3.0.*",
+		"orchestra/support": "3.0.*",
+		"orchestra/translation": "3.0.*",
+		"orchestra/view": "3.0.*",
+		"orchestra/widget": "3.0.*"
 	},
 	"require-dev": {
 		"mockery/mockery": "0.9.*",
-		"orchestra/testbench": "2.3.*",
+		"orchestra/testbench": "3.0.*",
 		"twbs/bootstrap": "~3@stable"
 	},
 	"extra": {
 		"branch-alias": {
-			"dev-master": "2.3-dev"
+			"dev-master": "3.0-dev"
 		}
 	},
 	"minimum-stability": "dev"
