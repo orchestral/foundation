@@ -34,14 +34,4 @@ class ReminderServiceProvider extends \Illuminate\Auth\Reminders\ReminderService
             return new PasswordBroker($reminders, $users, $notifier, $view);
         });
     }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return array('auth.reminder', 'auth.reminder.repository', 'command.auth.reminders');
-    }
 }
