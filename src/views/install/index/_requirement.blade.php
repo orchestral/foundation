@@ -15,11 +15,11 @@
 				@foreach ($checklist as $name => $requirement)
 				<tr>
 					<td>
-						{{ trans("orchestra/foundation::install.system.{$name}.name", $requirement['data']) }}
+						{!! trans("orchestra/foundation::install.system.{$name}.name", $requirement['data']) !!}
 						@if (! ($requirement['is'] === $requirement['should']))
 						<div class="alert{!! true === $requirement['explicit'] ? ' alert-error ' : '' !!}">
-							<strong>{{ trans("orchestra/foundation::install.solution") }}:</strong>
-							{{ trans("orchestra/foundation::install.system.{$name}.solution", $requirement['data']) }}
+							<strong>{!! trans("orchestra/foundation::install.solution") !!}:</strong>
+							{!! trans("orchestra/foundation::install.system.{$name}.solution", $requirement['data']) !!}
 						</div>
 						@endif
 					</td>
