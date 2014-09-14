@@ -4,6 +4,7 @@ use Closure;
 use Illuminate\Auth\Reminders\PasswordBroker as Broker;
 use Illuminate\Auth\Reminders\ReminderRepositoryInterface;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Auth\PasswordBroker as PasswordBrokerContract;
 use Illuminate\Contracts\Auth\Remindable as RemindableContract;
 use Illuminate\Auth\UserProviderInterface;
 use Orchestra\Notifier\Message;
@@ -11,13 +12,6 @@ use Orchestra\Notifier\NotifierInterface;
 
 class PasswordBroker extends Broker
 {
-    /**
-     * The messages instance.
-     *
-     * @var \Orchestra\Support\Messages
-     */
-    protected $messages;
-
     /**
      * Create a new password broker instance.
      *
@@ -53,7 +47,7 @@ class PasswordBroker extends Broker
         $user = $this->getUser($credentials);
 
         if (is_null($user)) {
-            return self::INVALID_USER;
+            return PasswordBrokerContract::INVALID_USER;
         }
 
         // Once we have the reminder token, we are ready to send a message out to the
@@ -63,7 +57,7 @@ class PasswordBroker extends Broker
 
         $this->sendReminder($user, $token, $callback);
 
-        return self::REMINDER_SENT;
+        return PasswordBrokerContract::REMINDER_SENT;
     }
 
     /**
