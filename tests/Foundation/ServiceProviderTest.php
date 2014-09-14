@@ -127,7 +127,6 @@ class ServiceProviderTest extends TestCase
         $reminderProvides = array(
             'auth.reminder',
             'auth.reminder.repository',
-            'command.auth.reminders',
         );
         $consoleProvides = array(
             'orchestra.commands.auth',
