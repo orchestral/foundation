@@ -15,9 +15,9 @@ $authFormGroup = function ($authentication, $auth) {
 		<h3>{{ trans('orchestra/foundation::install.auth.title') }}</h3>
 
 		<p>
-			{{ trans('orchestra/foundation::install.verify', [
+			{!! trans('orchestra/foundation::install.verify', [
 				'filename' => HTML::create('code', 'app/config/auth.php', ['title' => app_path('config/auth.php')])
-			]) }}
+			]) !!}
 		</p>
 
 		<div class="form-group">
