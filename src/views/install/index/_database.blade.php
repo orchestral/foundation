@@ -3,9 +3,9 @@
 		<h3>{{ trans('orchestra/foundation::install.database.title') }}</h3>
 
 		<p>
-			{{ trans('orchestra/foundation::install.verify', array(
+			{!! trans('orchestra/foundation::install.verify', array(
 				'filename' => '<code title="'.app_path('config/database.php').'">app/config/database.php</code>'
-			)) }}
+			)) !!}
 		</p>
 
 		<div class="form-group">
