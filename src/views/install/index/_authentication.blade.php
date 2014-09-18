@@ -24,7 +24,7 @@ $authFormGroup = function ($authentication, $auth) {
 			<label class="three columns control-label {!! 'fluent' === $auth['driver'] ? 'error' : '' !!}">
 				{{ trans('orchestra/foundation::install.auth.driver') }}
 			</label>
-			<div class="nine column">
+			<div class="nine columns">
 				<input disabled class="form-control" type="text" value="{!! $auth['driver'] !!}">
 				@if ('fluent' === $auth['driver'])
 				<p class="help-block">{{ trans('orchestra/foundation::install.auth.requirement.driver') }}</p>
