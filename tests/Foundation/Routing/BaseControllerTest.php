@@ -33,8 +33,11 @@ class BaseControllerTest extends TestCase
      */
     public function testMissingMethodAction()
     {
+        $view = m::mock('\Illuminate\View\Factory');
+        $redirector = m::mock('\Illuminate\Routing\Redirector');
+        $response = new \Illuminate\Routing\ResponseFactory($view, $redirector);
         $app = array(
-            'view' => $view = m::mock('\Illuminate\View\Factory'),
+            'Illuminate\Contracts\Routing\ResponseFactory' => $response,
         );
 
         $view->shouldReceive('make')->once()
