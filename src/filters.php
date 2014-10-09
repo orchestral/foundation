@@ -1,14 +1,13 @@
 <?php
 
 use Illuminate\Session\TokenMismatchException;
-use Illuminate\Support\Facades\Aoo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-use Orchestra\Support\Facades\App as Orchestra;
+use Orchestra\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,7 +75,7 @@ Route::filter('orchestra.csrf', function () {
 */
 
 Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestra') {
-    if (! Orchestra::acl()->can("manage-{$value}")) {
+    if (! App::acl()->can("manage-{$value}")) {
         $type     = (Auth::guest() ? 'guest' : 'user');
         $redirect = Config::get("orchestra/foundation::routes.{$type}");
 
@@ -96,7 +95,7 @@ Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestr
 */
 
 Route::filter('orchestra.registrable', function () {
-    if (! Orchestra::memory()->get('site.registrable', false)) {
+    if (! App::memory()->get('site.registrable', false)) {
         return App::abort(404);
     }
 });
@@ -112,13 +111,13 @@ Route::filter('orchestra.registrable', function () {
 */
 
 Route::filter('orchestra.installable', function () {
-    if (App::make('orchestra.installed') === false) {
+    if (! App::installed()) {
         return Redirect::to(handles('orchestra::install'));
     }
 });
 
 Route::filter('orchestra.installed', function () {
-    if (App::make('orchestra.installed') === true) {
+    if (App::installed()) {
         $type     = (Auth::guest() ? 'guest' : 'user');
         $redirect = Config::get("orchestra/foundation::routes.{$type}");
 
