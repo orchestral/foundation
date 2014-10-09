@@ -2,7 +2,7 @@
 
 use Closure;
 use RuntimeException;
-use Orchestra\Support\Ftp as FtpClient;
+use Orchestra\Support\Ftp\Client as FtpClient;
 use Orchestra\Support\Ftp\ServerException;
 use Orchestra\Support\Str;
 
@@ -26,8 +26,7 @@ class Ftp implements UploaderInterface
      * Construct a new FTP instance.
      *
      * @param  \Illuminate\Foundation\Application   $app
-     * @param  \Orchestra\Support\Ftp               $client
-     * @return void
+     * @param  \Orchestra\Support\Ftp\Client        $client
      * @throws \Orchestra\Support\Ftp\ServerException
      */
     public function __construct($app, FtpClient $client)

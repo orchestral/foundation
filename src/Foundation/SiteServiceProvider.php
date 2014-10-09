@@ -4,7 +4,7 @@ use Illuminate\Support\ServiceProvider;
 use Orchestra\Foundation\Publisher\PublisherManager;
 use Orchestra\Model\Role;
 use Orchestra\Model\User;
-use Orchestra\Support\Ftp as FtpClient;
+use Orchestra\Support\Ftp\Client as FtpClient;
 
 class SiteServiceProvider extends ServiceProvider
 {

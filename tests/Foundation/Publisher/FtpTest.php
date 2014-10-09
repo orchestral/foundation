@@ -26,7 +26,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->app    = new Container;
-        $this->client = m::mock('\Orchestra\Support\Ftp');
+        $this->client = m::mock('\Orchestra\Support\Ftp\Client');
     }
 
     /**

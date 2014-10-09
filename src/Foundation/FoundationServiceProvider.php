@@ -96,7 +96,7 @@ class FoundationServiceProvider extends ServiceProvider
     {
         $app = $this->app;
 
-        $app->after(function () use ($app) {
+        $app['router']->after(function () use ($app) {
             $app['events']->fire('orchestra.done');
         });
     }

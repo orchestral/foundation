@@ -1,13 +1,14 @@
 <?php
 
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\Aoo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-use Orchestra\Support\Facades\App;
+use Orchestra\Support\Facades\App as Orchestra;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,7 +76,7 @@ Route::filter('orchestra.csrf', function () {
 */
 
 Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestra') {
-    if (! App::acl()->can("manage-{$value}")) {
+    if (! Orchestra::acl()->can("manage-{$value}")) {
         $type     = (Auth::guest() ? 'guest' : 'user');
         $redirect = Config::get("orchestra/foundation::routes.{$type}");
 
@@ -95,7 +96,7 @@ Route::filter('orchestra.manage', function ($route, $request, $value = 'orchestr
 */
 
 Route::filter('orchestra.registrable', function () {
-    if (! App::memory()->get('site.registrable', false)) {
+    if (! Orchestra::memory()->get('site.registrable', false)) {
         return App::abort(404);
     }
 });

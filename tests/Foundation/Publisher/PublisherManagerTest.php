@@ -45,7 +45,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
 
         $app['session'] = $session = m::mock('\Illuminate\Session\Store')->makePartial();
-        $app['orchestra.publisher.ftp'] = $client = m::mock('\Orchestra\Support\Ftp');
+        $app['orchestra.publisher.ftp'] = $client = m::mock('\Orchestra\Support\Ftp\Client');
         $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
 
         $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
@@ -61,7 +61,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $ftp  = $stub->driver();
 
         $this->assertInstanceOf('\Orchestra\Foundation\Publisher\Ftp', $ftp);
-        $this->assertInstanceOf('\Orchestra\Support\Ftp', $ftp->getConnection());
+        $this->assertInstanceOf('\Orchestra\Support\Ftp\Client', $ftp->getConnection());
     }
 
     /**
@@ -78,7 +78,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $app['path.public'] = $path = '/var/foo/public';
         $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem')->makePartial();
         $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory')->makePartial();
-        $app['orchestra.publisher.ftp'] = $client = m::mock('\Orchestra\Support\Ftp');
+        $app['orchestra.publisher.ftp'] = $client = m::mock('\Orchestra\Support\Ftp\Client');
         $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator')->makePartial();
         $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
 
