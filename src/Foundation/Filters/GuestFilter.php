@@ -14,6 +14,13 @@ class GuestFilter
     protected $auth;
 
     /**
+     * The config repository implementation.
+     *
+     * @var \Illuminate\Contracts\Config\Repository
+     */
+    protected $config;
+
+    /**
      * Create a new filter instance.
      *
      * @param  \Illuminate\Contracts\Auth\Authenticator $auth
