@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Orchestra\Routing\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Response;
 use Orchestra\Support\Traits\ControllerResponseTrait;
 
