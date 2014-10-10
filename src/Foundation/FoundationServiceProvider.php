@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
 
 class FoundationServiceProvider extends ServiceProvider
 {
@@ -117,7 +117,6 @@ class FoundationServiceProvider extends ServiceProvider
         require "{$path}/start/global.php";
         require "{$path}/start/macros.php";
         require "{$path}/start/events.php";
-        require "{$path}/filters.php";
 
         if (! $this->app->routesAreCached()) {
             require "{$path}/routes.php";
@@ -133,6 +132,6 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array('orchestra.app', 'orchestra.installed');
+        return ['orchestra.app', 'orchestra.installed'];
     }
 }
