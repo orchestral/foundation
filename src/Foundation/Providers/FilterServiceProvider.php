@@ -34,18 +34,15 @@ class FilterServiceProvider extends ServiceProvider
     {
         $router = $this->app['router'];
 
-        foreach ($this->before as $before)
-        {
+        foreach ($this->before as $before) {
             $router->before($before);
         }
 
-        foreach ($this->after as $after)
-        {
+        foreach ($this->after as $after) {
             $router->after($after);
         }
 
-        foreach ($this->filters as $name => $filter)
-        {
+        foreach ($this->filters as $name => $filter) {
             $router->filter($name, $filter);
         }
     }
