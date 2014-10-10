@@ -39,6 +39,7 @@ class AuthFilter
     public function __construct(Authenticator $auth, Repository $config, ResponseFactory $response)
     {
         $this->auth = $auth;
+        $this->config = $config;
         $this->response = $response;
     }
 
