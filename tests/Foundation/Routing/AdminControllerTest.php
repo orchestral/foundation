@@ -25,7 +25,7 @@ class AdminControllerTest extends TestCase
             ->shouldReceive('fire')->once()->with('orchestra.ready: admin')->andReturnNull()
             ->shouldReceive('fire')->once()->with('orchestra.done: admin')->andReturnNull();
 
-        StubAdminController::setFilterer($route = m::mock('Illuminate\Routing\RouteFiltererInterface'));
+        StubAdminController::setRouter($route = m::mock('Illuminate\Routing\Router'));
 
         $route->shouldReceive('filter')->twice()
             ->with(m::type('String'), m::type('Closure'))->andReturnUsing(function ($name, $callback) {
