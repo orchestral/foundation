@@ -2,10 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 use Orchestra\Foundation\Application;
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Contracts\Auth\Authenticator;
 
 class ManageAuthorizationFilter
 {
@@ -19,7 +19,7 @@ class ManageAuthorizationFilter
     /**
      * The authenticator implementation.
      *
-     * @var \Illuminate\Contracts\Auth\Authenticator
+     * @var \Illuminate\Contracts\Auth\Guard
      */
     protected $auth;
 
@@ -34,10 +34,10 @@ class ManageAuthorizationFilter
      * Create a new filter instance.
      *
      * @param  \Orchestra\Foundation\Application        $app
-     * @param  \Illuminate\Contracts\Auth\Authenticator $auth
+     * @param  \Illuminate\Contracts\Auth\Guard         $auth
      * @param  \Illuminate\Contracts\Config\Repository  $config
      */
-    public function __construct(Application $app, Authenticator $auth, Repository $config)
+    public function __construct(Application $app, Guard $auth, Repository $config)
     {
         $this->app = $app;
         $this->auth = $auth;

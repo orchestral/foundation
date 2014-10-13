@@ -1,15 +1,15 @@
 <?php namespace Orchestra\Foundation\Filters;
 
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Contracts\Auth\Authenticator;
 
 class GuestFilter
 {
     /**
      * The authenticator implementation.
      *
-     * @var \Illuminate\Contracts\Auth\Authenticator
+     * @var \Illuminate\Contracts\Auth\Guard
      */
     protected $auth;
 
@@ -23,10 +23,10 @@ class GuestFilter
     /**
      * Create a new filter instance.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticator $auth
+     * @param  \Illuminate\Contracts\Auth\Guard         $auth
      * @param  \Illuminate\Contracts\Config\Repository  $config
      */
-    public function __construct(Authenticator $auth, Repository $config)
+    public function __construct(Guard $auth, Repository $config)
     {
         $this->auth = $auth;
         $this->config = $config;

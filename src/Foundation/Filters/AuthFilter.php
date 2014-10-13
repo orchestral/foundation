@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Contracts\Auth\Authenticator;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
 class AuthFilter
@@ -11,7 +11,7 @@ class AuthFilter
     /**
      * The authenticator implementation.
      *
-     * @var \Illuminate\Contracts\Auth\Authenticator
+     * @var \Illuminate\Contracts\Auth\Guard
      */
     protected $auth;
 
@@ -32,11 +32,11 @@ class AuthFilter
     /**
      * Create a new filter instance.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticator         $auth
+     * @param  \Illuminate\Contracts\Auth\Guard                 $auth
      * @param  \Illuminate\Contracts\Config\Repository          $config
      * @param  \Illuminate\Contracts\Routing\ResponseFactory    $response
      */
-    public function __construct(Authenticator $auth, Repository $config, ResponseFactory $response)
+    public function __construct(Guard $auth, Repository $config, ResponseFactory $response)
     {
         $this->auth = $auth;
         $this->config = $config;
