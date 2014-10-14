@@ -6,6 +6,59 @@ use Illuminate\Support\ServiceProvider;
 class FoundationServiceProvider extends ServiceProvider
 {
     /**
+     * List of core aliases.
+     *
+     * @var array
+     */
+    protected $aliases = [
+        'orchestra.acl'              => 'Orchestra\Auth\Acl\Factory',
+        'orchestra.app'              => 'Orchestra\Foundation\Application',
+        'orchestra.asset'            => 'Orchestra\Asset\Factory',
+        'orchestra.decorator'        => 'Orchestra\View\Decorator',
+        'orchestra.extension.config' => 'Orchestra\Extension\ConfigManager',
+        'orchestra.extension.finder' => 'Orchestra\Extension\Finder',
+        'orchestra.extension'        => 'Orchestra\Extension\Factory',
+        'orchestra.facile'           => 'Orchestra\Facile\Factory',
+        'orchestra.form'             => 'Orchestra\Html\Form\Factory',
+        'orchestra.mail'             => 'Orchestra\Notifier\Mailer',
+        'orchestra.memory'           => 'Orchestra\Memory\MemoryManager',
+        'orchestra.messages'         => 'Orchestra\Messages\MessageBag',
+        'orchestra.notifier'         => 'Orchestra\Notifier\NotifierManager',
+        'orchestra.profiler'         => 'Orchestra\Debug\Profiler',
+        'orchestra.publisher'        => 'Orchestra\Foundation\Publisher\PublisherManager',
+        'orchestra.resources'        => 'Orchestra\Resources\Factory',
+        'orchestra.site'             => 'Orchestra\Foundation\Site',
+        'orchestra.table'            => 'Orchestra\Html\Table\Factory',
+        'orchestra.theme'            => 'Orchestra\View\Theme\ThemeManager',
+        'orchestra.widget'           => 'Orchestra\Widget\WidgetManager',
+    ];
+
+    /**
+     * List of core facades.
+     *
+     * @var array
+     */
+    protected $facades = [
+        'Orchestra\Support\Facades\Asset' => 'Orchestra\Asset',
+        'Orchestra\Support\Facades\ACL' => 'Orchestra\ACL',
+        'Orchestra\Support\Facades\App' => 'Orchestra\App',
+        'Orchestra\Support\Facades\Config' => 'Orchestra\Config',
+        'Orchestra\Support\Facades\Extension' => 'Orchestra\Extension',
+        'Orchestra\Support\Facades\Form' => 'Orchestra\Form',
+        'Orchestra\Support\Facades\Mail' => 'Orchestra\Mail',
+        'Orchestra\Support\Facades\Memory' => 'Orchestra\Memory',
+        'Orchestra\Support\Facades\Messages' => 'Orchestra\Messages',
+        'Orchestra\Support\Facades\Notifier' => 'Orchestra\Notifier',
+        'Orchestra\Support\Facades\Profiler' => 'Orchestra\Profiler',
+        'Orchestra\Support\Facades\Publisher' => 'Orchestra\Publisher',
+        'Orchestra\Support\Facades\Resources' => 'Orchestra\Resources',
+        'Orchestra\Support\Facades\Site' => 'Orchestra\Site',
+        'Orchestra\Support\Facades\Table' => 'Orchestra\Table',
+        'Orchestra\Support\Facades\Theme' => 'Orchestra\Theme',
+        'Orchestra\Support\Facades\Widget' => 'Orchestra\Widget',
+    ];
+
+    /**
      * Register the service provider.
      *
      * @return void
@@ -18,7 +71,7 @@ class FoundationServiceProvider extends ServiceProvider
             return new Application($app);
         });
 
-        $this->registerAliases();
+        $this->registerFacadesAliases();
         $this->registerCoreContainerAliases();
         $this->registerEvents();
     }
@@ -28,28 +81,15 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerAliases()
+    protected function registerFacadesAliases()
     {
         $loader = AliasLoader::getInstance();
 
-        $loader->alias('Orchestra\Asset', 'Orchestra\Support\Facades\Asset');
-        $loader->alias('Orchestra\Acl', 'Orchestra\Support\Facades\ACL');
-        $loader->alias('Orchestra\ACL', 'Orchestra\Support\Facades\ACL');
-        $loader->alias('Orchestra\App', 'Orchestra\Support\Facades\App');
-        $loader->alias('Orchestra\Config', 'Orchestra\Support\Facades\Config');
-        $loader->alias('Orchestra\Extension', 'Orchestra\Support\Facades\Extension');
-        $loader->alias('Orchestra\Form', 'Orchestra\Support\Facades\Form');
-        $loader->alias('Orchestra\Mail', 'Orchestra\Support\Facades\Mail');
-        $loader->alias('Orchestra\Memory', 'Orchestra\Support\Facades\Memory');
-        $loader->alias('Orchestra\Messages', 'Orchestra\Messages\Facade');
-        $loader->alias('Orchestra\Notifier', 'Orchestra\Support\Facades\Notifier');
-        $loader->alias('Orchestra\Profiler', 'Orchestra\Support\Facades\Profiler');
-        $loader->alias('Orchestra\Publisher', 'Orchestra\Support\Facades\Publisher');
-        $loader->alias('Orchestra\Resources', 'Orchestra\Support\Facades\Resources');
-        $loader->alias('Orchestra\Site', 'Orchestra\Support\Facades\Site');
-        $loader->alias('Orchestra\Table', 'Orchestra\Support\Facades\Table');
-        $loader->alias('Orchestra\Theme', 'Orchestra\Support\Facades\Theme');
-        $loader->alias('Orchestra\Widget', 'Orchestra\Support\Facades\Widget');
+        foreach ($this->facades as $facade => $aliases) {
+            foreach ((array) $aliases as $alias) {
+                $loader->alias($alias, $facade);
+            }
+        }
     }
 
     /**
@@ -59,31 +99,10 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function registerCoreContainerAliases()
     {
-        $aliases = array(
-            'orchestra.acl'              => 'Orchestra\Auth\Acl\Factory',
-            'orchestra.app'              => 'Orchestra\Foundation\Application',
-            'orchestra.asset'            => 'Orchestra\Asset\Factory',
-            'orchestra.decorator'        => 'Orchestra\View\Decorator',
-            'orchestra.extension.config' => 'Orchestra\Extension\ConfigManager',
-            'orchestra.extension.finder' => 'Orchestra\Extension\Finder',
-            'orchestra.extension'        => 'Orchestra\Extension\Factory',
-            'orchestra.facile'           => 'Orchestra\Facile\Factory',
-            'orchestra.form'             => 'Orchestra\Html\Form\Factory',
-            'orchestra.mail'             => 'Orchestra\Notifier\Mailer',
-            'orchestra.memory'           => 'Orchestra\Memory\MemoryManager',
-            'orchestra.messages'         => 'Orchestra\Messages\MessageBag',
-            'orchestra.notifier'         => 'Orchestra\Notifier\NotifierManager',
-            'orchestra.profiler'         => 'Orchestra\Debug\Profiler',
-            'orchestra.publisher'        => 'Orchestra\Foundation\Publisher\PublisherManager',
-            'orchestra.resources'        => 'Orchestra\Resources\Factory',
-            'orchestra.site'             => 'Orchestra\Foundation\Site',
-            'orchestra.table'            => 'Orchestra\Html\Table\Factory',
-            'orchestra.theme'            => 'Orchestra\View\Theme\ThemeManager',
-            'orchestra.widget'           => 'Orchestra\Widget\WidgetManager',
-        );
-
-        foreach ($aliases as $key => $alias) {
-            $this->app->alias($key, $alias);
+        foreach ($this->aliases as $key => $aliases) {
+            foreach ((array) $aliases as $alias) {
+                $this->alias($key, $alias);
+            }
         }
     }
 
@@ -94,10 +113,8 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function registerEvents()
     {
-        $app = $this->app;
-
-        $app['router']->after(function () use ($app) {
-            $app['events']->fire('orchestra.done');
+        $app['router']->after(function () {
+            $this->app['events']->fire('orchestra.done');
         });
     }
 

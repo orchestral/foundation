@@ -111,10 +111,10 @@ class ServiceProviderTest extends TestCase
     {
         $app = App::getFacadeApplication();
 
-        $foundation = new \Orchestra\Foundation\FoundationServiceProvider($app);
-        $site       = new \Orchestra\Foundation\SiteServiceProvider($app);
-        $reminder   = new \Orchestra\Foundation\Reminders\ReminderServiceProvider($app);
-        $console    = new \Orchestra\Foundation\ConsoleSupportServiceProvider($app);
+        $foundation = new FoundationServiceProvider($app);
+        $site       = new SiteServiceProvider($app);
+        $reminder   = new PasswordResetServiceProvider($app);
+        $console    = new ConsoleSupportServiceProvider($app);
 
         $foundationProvides = array(
             'orchestra.app',
@@ -128,8 +128,8 @@ class ServiceProviderTest extends TestCase
             'orchestra.user',
         );
         $reminderProvides = array(
-            'auth.reminder',
-            'auth.reminder.repository',
+            'auth.password',
+            'auth.password.tokens',
         );
         $consoleProvides = array(
             'orchestra.commands.auth',
@@ -171,7 +171,7 @@ class ServiceProviderTest extends TestCase
                 $c();
             });
 
-        $foundation = new \Orchestra\Foundation\FoundationServiceProvider($app);
+        $foundation = new FoundationServiceProvider($app);
         $foundation->register();
     }
 }
