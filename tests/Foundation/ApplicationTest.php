@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\Facade;
 use Orchestra\Foundation\Application;
+use Illuminate\Support\Facades\Facade;
 
 class ApplicationTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,13 +21,15 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app = new \Illuminate\Foundation\Application(m::mock('\Illuminate\Http\Request')->makePartial());
 
         $app['orchestra.acl'] = m::mock('\Orchestra\Auth\Acl\Container')->makePartial();
+        $app['orchestra.extension'] = m::mock('\Orchestra\Contracts\Extension\Factory');
         $app['orchestra.mail'] = m::mock('\Orchestra\Notifier\Mailer')->makePartial();
         $app['orchestra.memory'] = m::mock('\Orchestra\Memory\MemoryManager')->makePartial();
         $app['orchestra.notifier'] = m::mock('\Orchestra\Notifier\NotifierManager')->makePartial();
         $app['orchestra.widget'] = m::mock('\Orchestra\Widget\MenuWidgetHandler')->makePartial();
-        $app['config'] = m::mock('\Illuminate\Config\Repository')->makePartial();
-        $app['events'] = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
+        $app['config'] = m::mock('\Illuminate\Contracts\Config\Repository');
+        $app['events'] = m::mock('\Illuminate\Contracts\Events\Dispatcher');
         $app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
+        $app['url'] = m::mock('\Illuminate\Routing\UrlGenerator')->makePartial();
 
         Facade::clearResolvedInstances();
         Facade::setFacadeApplication($this->app = $app);
@@ -173,5 +175,108 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('\Illuminate\Foundation\Application', $stub->illuminate());
         $this->assertInstanceOf('\Illuminate\Http\Request', $stub->make('request'));
+    }
+
+    /**
+     * Test Orchestra\Foundation\RouteManager::handles() method.
+     *
+     * @test
+     */
+    public function testHandlesMethod()
+    {
+        $app       = $this->app;
+        $request   = $app['request'];
+        $config    = $app['config'];
+        $extension = $app['orchestra.extension'];
+        $url       = $app['url'];
+
+        $request->shouldReceive('root')->andReturn('http://localhost')
+            ->shouldReceive('secure')->andReturn(false);
+
+        $appRoute = m::mock('\Orchestra\Contracts\Extension\RouteGenerator');
+
+        $config->shouldReceive('get')->once()
+            ->with('orchestra/foundation::handles', '/')->andReturn('admin');
+
+        $appRoute->shouldReceive('to')->once()->with('/')->andReturn('/')
+            ->shouldReceive('to')->once()->with('info?foo=bar')->andReturn('info?foo=bar');
+        $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
+        $url->shouldReceive('to')->once()->with('/')->andReturn('/')
+            ->shouldReceive('to')->once()->with('info?foo=bar')->andReturn('info?foo=bar');
+
+        $stub = new StubRouteManager($app);
+
+        $this->assertEquals('/', $stub->handles('app::/'));
+        $this->assertEquals('info?foo=bar', $stub->handles('info?foo=bar'));
+        $this->assertEquals('http://localhost/admin/installer', $stub->handles('orchestra::installer'));
+        $this->assertEquals('http://localhost/admin/installer', $stub->handles('orchestra::installer/'));
+    }
+
+    /**
+     * Test Orchestra\Foundation\Application::is() method.
+     *
+     * @test
+     */
+    public function testIsMethod()
+    {
+        $app       = $this->app;
+        $request   = $app['request'];
+        $config    = $app['config'];
+        $extension = $app['orchestra.extension'];
+        $url       = $app['url'];
+
+        $request->shouldReceive('root')->andReturn('http://localhost')
+            ->shouldReceive('secure')->andReturn(false);
+
+        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator')->makePartial();
+
+        $config->shouldReceive('get')->once()
+            ->with('orchestra/foundation::handles', '/')->andReturn('admin');
+        $request->shouldReceive('path')->twice()->andReturn('/');
+        $appRoute->shouldReceive('is')->once()->with('/')->andReturn(true)
+            ->shouldReceive('is')->once()->with('info?foo=bar')->andReturn(true);
+        $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
+
+        $stub = new StubRouteManager($app);
+
+        $this->assertTrue($stub->is('app::/'));
+        $this->assertTrue($stub->is('info?foo=bar'));
+        $this->assertFalse($stub->is('orchestra::login'));
+        $this->assertFalse($stub->is('orchestra::login'));
+    }
+
+
+
+    /**
+     * Test Orchestra\Foundation\RouteManager::namespaced() method.
+     *
+     * @test
+     */
+    public function testNamespacedMethod()
+    {
+        $app    = $this->app;
+        $config = $app['config'];
+
+        $stub = m::mock('\Orchestra\Http\RouteManager[group]', [$app]);
+
+        $closure = function () {
+
+        };
+
+        $stub->shouldReceive('group')->times(3)->with('orchestra/foundation', 'orchestra', [], $closure)->andReturn([]);
+        $stub->shouldReceive('group')->once()->with('orchestra/foundation', 'orchestra', ['namespace' => 'Foo'], $closure)->andReturn([]);
+
+        $this->assertNull($stub->namespaced('', $closure));
+        $this->assertNull($stub->namespaced('\\', $closure));
+        $this->assertNull($stub->namespaced(null, $closure));
+        $this->assertNull($stub->namespaced('Foo', $closure));
+    }
+}
+
+class StubRouteManager extends Application
+{
+    public function boot()
+    {
+        //
     }
 }

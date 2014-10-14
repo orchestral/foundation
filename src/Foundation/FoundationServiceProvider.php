@@ -113,7 +113,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function registerEvents()
     {
-        $app['router']->after(function () {
+        $this->app['router']->after(function () {
             $this->app['events']->fire('orchestra.done');
         });
     }

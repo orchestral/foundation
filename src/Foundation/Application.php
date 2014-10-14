@@ -1,9 +1,11 @@
 <?php namespace Orchestra\Foundation;
 
+use Closure;
 use Exception;
 use Illuminate\Support\Arr;
-use Orchestra\Http\RouteManager;
 use Orchestra\Memory\Provider;
+use Orchestra\Http\RouteManager;
+use Orchestra\Extension\RouteGenerator;
 
 class Application extends RouteManager
 {
@@ -19,14 +21,14 @@ class Application extends RouteManager
      *
      * @var array
      */
-    protected $passtru = array('abort', 'bound', 'make');
+    protected $passtru = ['abort', 'bound', 'make'];
 
     /**
      * List of services.
      *
      * @var array
      */
-    public $services = array();
+    public $services = [];
 
     /**
      * Start the application.
@@ -83,6 +85,43 @@ class Application extends RouteManager
     }
 
     /**
+     * Register the given Closure with the "group" function namespace set.
+     *
+     * @param  string|null      $namespace
+     * @param  \Closure|null    $callback
+     * @return void
+     */
+    public function namespaced($namespace, Closure $callback)
+    {
+        $attributes = [];
+
+        if (! empty($namespace) && $namespace != '\\') {
+            $attributes['namespace'] = $namespace;
+        }
+
+        $this->group('orchestra/foundation', 'orchestra', $attributes, $callback);
+    }
+
+    /**
+     * Get extension route.
+     *
+     * @param  string   $name
+     * @param  string   $default
+     * @return \Orchestra\Contracts\Extension\RouteGenerator
+     */
+    public function route($name, $default = '/')
+    {
+        // Boot the application.
+        $this->boot();
+
+        if (in_array($name, ['orchestra', 'orchestra/foundation'])) {
+            $name = 'orchestra';
+        }
+
+        return parent::route($name, $default);
+    }
+
+    /**
      * Boot application.
      *
      * @return void
@@ -101,7 +140,7 @@ class Application extends RouteManager
 
         $this->registerComponents($memory);
 
-        $this->app['events']->fire('orchestra.started', array($memory));
+        $this->app['events']->fire('orchestra.started', [$memory]);
     }
 
     /**
@@ -193,12 +232,29 @@ class Application extends RouteManager
         // Allow Orchestra\Foundation\Application to called method available
         // in Illuminate\Foundation\Application without any issue.
         if (in_array($method, $this->passtru)) {
-            return call_user_func_array(array($this->app, $method), $parameters);
+            return call_user_func_array([$this->app, $method], $parameters);
         }
 
         $action = (count($parameters) < 1 ? "orchestra" : array_shift($parameters));
         $method = "{$action}.{$method}";
 
         return Arr::get($this->services, $method);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function generateRouteByName($name, $default)
+    {
+        // Orchestra Platform routing is managed by `orchestra/foundation::handles`
+        // and can be manage using configuration.
+        if (in_array($name, ['orchestra'])) {
+            return new RouteGenerator(
+                $this->app['config']->get('orchestra/foundation::handles', $default),
+                $this->app['request']
+            );
+        }
+
+        return parent::generateRouteByName($name, $default);
     }
 }
