@@ -1,26 +1,36 @@
 <?php namespace Orchestra\Foundation\Processor;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Password;
-use Orchestra\Foundation\Validation\Auth as AuthValidator;
 use Orchestra\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\PasswordBroker as Password;
+use Orchestra\Foundation\Validation\Auth as AuthValidator;
 
 class PasswordBroker extends AbstractableProcessor
 {
     /**
+     * The password broker implementation.
+     *
+     * @var \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    protected $password;
+
+    /**
      * Create a new processor instance.
      *
-     * @param \Orchestra\Foundation\Validation\Auth $validator
+     * @param \Orchestra\Foundation\Validation\Auth     $validator
+     * @param \Illuminate\Contracts\Auth\PasswordBroker $password
      */
-    public function __construct(AuthValidator $validator)
+    public function __construct(AuthValidator $validator, Password $password)
     {
         $this->validator = $validator;
+        $this->password = $password;
     }
 
     /**
      * Request to reset password.
      *
      * @param  object  $listener
+     * @param  array   $input
      * @return mixed
      */
     public function create($listener, array $input)
@@ -32,13 +42,14 @@ class PasswordBroker extends AbstractableProcessor
         }
 
         $memory = App::memory();
-        $site = $memory->get('site.name', 'Orchestra Platform');
+        $site  = $memory->get('site.name', 'Orchestra Platform');
+        $data  = ['email' => $input['email']];
 
-        $response = Password::remind(array('email' => $input['email']), function ($mail) use ($site) {
-            $mail->subject(trans('orchestra/foundation::email.forgot.request', array('site' => $site)));
+        $response = $this->password->sendResetLink($data, function ($mail) use ($site) {
+            $mail->subject(trans('orchestra/foundation::email.forgot.request', ['site' => $site]));
         });
 
-        if ($response !== Password::REMINDER_SENT) {
+        if ($response !== Password::RESET_LINK_SENT) {
             return $listener->createFailed($response);
         }
 
@@ -54,7 +65,7 @@ class PasswordBroker extends AbstractableProcessor
      */
     public function reset($listener, array $input)
     {
-        $response = Password::reset($input, function ($user, $password) {
+        $response = $this->password->reset($input, function ($user, $password) {
             // Save the new password and login the user.
             $user->password = $password;
             $user->save();

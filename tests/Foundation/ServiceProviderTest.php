@@ -1,10 +1,13 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Orchestra\Foundation\Testing\TestCase;
+use Orchestra\Foundation\SiteServiceProvider;
+use Orchestra\Foundation\FoundationServiceProvider;
+use Orchestra\Foundation\ConsoleSupportServiceProvider;
+use Orchestra\Auth\Passwords\PasswordResetServiceProvider;
 
 class ServiceProviderTest extends TestCase
 {
