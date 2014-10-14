@@ -101,7 +101,7 @@ class FoundationServiceProvider extends ServiceProvider
     {
         foreach ($this->aliases as $key => $aliases) {
             foreach ((array) $aliases as $alias) {
-                $this->alias($key, $alias);
+                $this->app->alias($key, $alias);
             }
         }
     }
