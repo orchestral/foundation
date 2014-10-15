@@ -257,7 +257,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app    = $this->app;
         $config = $app['config'];
 
-        $stub = m::mock('\Orchestra\Http\RouteManager[group]', [$app]);
+        $stub = m::mock('\Orchestra\Foundation\Application[group]', [$app]);
 
         $closure = function () {
 
