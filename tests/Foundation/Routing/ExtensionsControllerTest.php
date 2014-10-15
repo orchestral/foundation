@@ -12,6 +12,16 @@ use Orchestra\Support\Facades\Publisher;
 class ExtensionsControllerTest extends TestCase
 {
     /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        View::shouldReceive('share')->once()->with('errors', m::any());
+    }
+
+    /**
      * Teardown the test environment.
      */
     public function tearDown()

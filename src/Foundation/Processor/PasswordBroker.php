@@ -49,7 +49,7 @@ class PasswordBroker extends AbstractableProcessor
             $mail->subject(trans('orchestra/foundation::email.forgot.request', ['site' => $site]));
         });
 
-        if ($response !== Password::RESET_LINK_SENT) {
+        if ($response != Password::RESET_LINK_SENT) {
             return $listener->createFailed($response);
         }
 
@@ -73,11 +73,11 @@ class PasswordBroker extends AbstractableProcessor
             Auth::login($user);
         });
 
-        $errors = array(
+        $errors = [
             Password::INVALID_PASSWORD,
             Password::INVALID_TOKEN,
             Password::INVALID_USER,
-        );
+        ];
 
         if (in_array($response, $errors)) {
             return $listener->resetFailed($response);

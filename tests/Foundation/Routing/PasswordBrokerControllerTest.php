@@ -3,11 +3,12 @@
 use Mockery as m;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\View;
-use Orchestra\Foundation\Testing\TestCase;
-use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Messages;
+use Illuminate\Support\Facades\Password;
+use Orchestra\Foundation\Testing\TestCase;
+use Illuminate\Contracts\Auth\PasswordBroker;
+use Orchestra\Support\Facades\App as Orchestra;
 
 class PasswordBrokerControllerTest extends TestCase
 {
@@ -40,7 +41,11 @@ class PasswordBrokerControllerTest extends TestCase
      */
     public function testGetIndexAction()
     {
+        $password = m::mock('\Orchestra\Auth\Passwords\PasswordBroker');
+        App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
+
         View::shouldReceive('make')->once()->with('orchestra/foundation::forgot.index')->andReturn('foo');
+        View::shouldReceive('share')->once()->with('errors', m::any());
 
         $this->call('GET', 'admin/forgot');
         $this->assertResponseOk();
@@ -60,7 +65,7 @@ class PasswordBrokerControllerTest extends TestCase
         $validator = $this->bindDependencies();
         $mailer    = m::mock('\Orchestra\Notifier\Mailer');
         $memory    = m::mock('\Orchestra\Memory\Provider')->makePartial();
-        $password  = m::mock('\Orchestra\Foundation\Reminders\PasswordBroker');
+        $password  = m::mock('\Orchestra\Auth\Passwords\PasswordBroker');
 
         $validator->shouldReceive('with')->once()->with(m::type('Array'))->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(false);
@@ -71,13 +76,13 @@ class PasswordBrokerControllerTest extends TestCase
         $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')
             ->andReturn('Orchestra Platform');
 
-        Password::swap($password);
-
-        $password->shouldReceive('remind')->once()->andReturnUsing(function ($d, $c) use ($mailer) {
+        $password->shouldReceive('sendResetLink')->once()->andReturnUsing(function ($d, $c) use ($mailer) {
             $c($mailer);
 
-            return Password::REMINDER_SENT;
+            return PasswordBroker::RESET_LINK_SENT;
         });
+
+        App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         Orchestra::shouldReceive('handles')->once()->with('orchestra::forgot')->andReturn('forgot');
@@ -100,7 +105,7 @@ class PasswordBrokerControllerTest extends TestCase
         $validator = $this->bindDependencies();
         $mailer    = m::mock('\Orchestra\Notifier\Mailer');
         $memory    = m::mock('\Orchestra\Memory\Provider')->makePartial();
-        $password  = m::mock('\Orchestra\Foundation\Reminders\PasswordBroker');
+        $password  = m::mock('\Orchestra\Auth\Passwords\PasswordBroker');
 
         $validator->shouldReceive('with')->once()->with(m::type('Array'))->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(false);
@@ -110,9 +115,9 @@ class PasswordBrokerControllerTest extends TestCase
         $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')
             ->andReturn('Orchestra Platform');
 
-        Password::swap($password);
+        $password->shouldReceive('sendResetLink')->once()->andReturn(Password::INVALID_USER);
 
-        $password->shouldReceive('remind')->once()->andReturn(Password::INVALID_USER);
+        App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
         Orchestra::shouldReceive('handles')->once()->with('orchestra::forgot')->andReturn('forgot');
@@ -131,6 +136,9 @@ class PasswordBrokerControllerTest extends TestCase
         $input = array(
             'email' => 'email@orchestraplatform.com',
         );
+
+        $password = m::mock('\Orchestra\Auth\Passwords\PasswordBroker');
+        App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
         $validator = $this->bindDependencies();
 
@@ -151,8 +159,17 @@ class PasswordBrokerControllerTest extends TestCase
      */
     public function testGetResetAction()
     {
-        View::shouldReceive('make')->once()->with('orchestra/foundation::forgot.reset')->andReturn(m::self());
-        View::shouldReceive('with')->once()->with('token', 'auniquetoken')->andReturn('foo');
+        $password = m::mock('\Orchestra\Auth\Passwords\PasswordBroker');
+        App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
+
+        $factory = m::mock('\Illuminate\Contracts\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\View');
+
+        $factory->shouldReceive('make')->once()->with('orchestra/foundation::forgot.reset')->andReturn($view)
+            ->shouldReceive('share')->with('errors', m::any());
+        $view->shouldReceive('with')->once()->with('token', 'auniquetoken')->andReturn('foo');
+
+        View::swap($factory);
 
         $this->call('GET', 'admin/forgot/reset/auniquetoken');
         $this->assertResponseOk();
@@ -182,7 +199,7 @@ class PasswordBrokerControllerTest extends TestCase
             'token' => 'auniquetoken',
         );
 
-        $password = m::mock('\Orchestra\Foundation\Reminders\PasswordBroker');
+        $password = m::mock('\Orchestra\Auth\Passwords\PasswordBroker');
         $user     = m::mock('\Orchestra\Model\User');
 
         $user->shouldReceive('setAttribute')->once()->with('password', '123456')->andReturnNull()
@@ -192,10 +209,10 @@ class PasswordBrokerControllerTest extends TestCase
             ->andReturnUsing(function ($d, $c) use ($user) {
                 $c($user, '123456');
 
-                return Password::PASSWORD_RESET;
+                return PasswordBroker::PASSWORD_RESET;
             });
 
-        Password::swap($password);
+        App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
         Auth::shouldReceive('login')->once()->with($user)->andReturnNull();
         Orchestra::shouldReceive('handles')->once()->with('orchestra::/')->andReturn('dashboard');
@@ -219,12 +236,12 @@ class PasswordBrokerControllerTest extends TestCase
             'token' => 'auniquetoken',
         );
 
-        $password = m::mock('\Orchestra\Foundation\Reminders\PasswordBroker');
+        $password = m::mock('\Orchestra\Auth\Passwords\PasswordBroker');
 
         $password->shouldReceive('reset')->once()->with($input, m::type('Closure'))
             ->andReturn(Password::INVALID_PASSWORD);
 
-        Password::swap($password);
+        App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
         Orchestra::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken')->andReturn('reset');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
@@ -247,12 +264,12 @@ class PasswordBrokerControllerTest extends TestCase
             'token' => 'auniquetoken',
         );
 
-        $password = m::mock('\Orchestra\Foundation\Reminders\PasswordBroker');
+        $password = m::mock('\Orchestra\Auth\Passwords\PasswordBroker');
 
         $password->shouldReceive('reset')->once()->with($input, m::type('Closure'))
             ->andReturn(Password::INVALID_TOKEN);
 
-        Password::swap($password);
+        App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
         Orchestra::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken')->andReturn('reset');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
@@ -275,12 +292,12 @@ class PasswordBrokerControllerTest extends TestCase
             'token' => 'auniquetoken',
         );
 
-        $password = m::mock('\Orchestra\Foundation\Reminders\PasswordBroker');
+        $password = m::mock('\Orchestra\Auth\Passwords\PasswordBroker');
 
         $password->shouldReceive('reset')->once()->with($input, m::type('Closure'))
             ->andReturn(Password::INVALID_USER);
 
-        Password::swap($password);
+        App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
         Orchestra::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken')->andReturn('reset');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();

@@ -8,6 +8,16 @@ use Orchestra\Support\Facades\Widget;
 class DashboardControllerTest extends TestCase
 {
     /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        View::shouldReceive('share')->once()->with('errors', m::any());
+    }
+
+    /**
      * Teardown the test environment.
      */
     public function tearDown()
@@ -35,10 +45,10 @@ class DashboardControllerTest extends TestCase
      * Test GET /admin/missing
      *
      * @test
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function testMissingAction()
     {
         $this->call('GET', 'admin/missing');
-        $this->assertResponseStatus(404);
     }
 }

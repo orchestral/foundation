@@ -1,9 +1,10 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\View;
-use Orchestra\Foundation\Processor\Dashboard as DashboardProcessor;
 use Orchestra\Support\Facades\Site;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Orchestra\Foundation\Processor\Dashboard as DashboardProcessor;
 
 class DashboardController extends AdminController
 {
@@ -55,7 +56,7 @@ class DashboardController extends AdminController
      */
     public function missing()
     {
-        return $this->missingMethod(func_get_args());
+        throw new NotFoundHttpException("Controller method not found.");
     }
 
     /**
