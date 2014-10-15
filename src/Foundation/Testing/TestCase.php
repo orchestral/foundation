@@ -11,7 +11,7 @@ abstract class TestCase extends TestbenchTestCase
      */
     protected function getApplicationAliases()
     {
-        return array(
+        return [
             'App'             => 'Illuminate\Support\Facades\App',
             'Artisan'         => 'Illuminate\Support\Facades\Artisan',
             'Asset'           => 'Orchestra\Support\Facades\Asset',
@@ -19,7 +19,6 @@ abstract class TestCase extends TestbenchTestCase
             'Blade'           => 'Illuminate\Support\Facades\Blade',
             'Cache'           => 'Illuminate\Support\Facades\Cache',
             'Config'          => 'Illuminate\Support\Facades\Config',
-            'Controller'      => 'Illuminate\Routing\Controller',
             'Cookie'          => 'Illuminate\Support\Facades\Cookie',
             'Crypt'           => 'Illuminate\Support\Facades\Crypt',
             'DB'              => 'Illuminate\Support\Facades\DB',
@@ -28,7 +27,6 @@ abstract class TestCase extends TestbenchTestCase
             'Facile'          => 'Orchestra\Support\Facades\Facile',
             'File'            => 'Illuminate\Support\Facades\File',
             'Form'            => 'Orchestra\Support\Facades\Form',
-            'FormRequest'     => 'Illuminate\Foundation\Http\FormRequest',
             'Hash'            => 'Illuminate\Support\Facades\Hash',
             'HTML'            => 'Orchestra\Support\Facades\HTML',
             'Input'           => 'Illuminate\Support\Facades\Input',
@@ -51,7 +49,7 @@ abstract class TestCase extends TestbenchTestCase
             'URL'             => 'Illuminate\Support\Facades\URL',
             'Validator'       => 'Illuminate\Support\Facades\Validator',
             'View'            => 'Illuminate\Support\Facades\View',
-        );
+        ];
     }
 
     /**
@@ -61,7 +59,7 @@ abstract class TestCase extends TestbenchTestCase
      */
     protected function getPackageAliases()
     {
-        return array();
+        return [];
     }
     /**
      * Get application providers.
@@ -74,7 +72,6 @@ abstract class TestCase extends TestbenchTestCase
             'Illuminate\Foundation\Providers\ArtisanServiceProvider',
             'Illuminate\Cache\CacheServiceProvider',
             'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
-            'Orchestra\Routing\ControllerServiceProvider',
             'Illuminate\Cookie\CookieServiceProvider',
             'Illuminate\Database\DatabaseServiceProvider',
             'Illuminate\Encryption\EncryptionServiceProvider',
@@ -96,6 +93,7 @@ abstract class TestCase extends TestbenchTestCase
 
             'Orchestra\Asset\AssetServiceProvider',
             'Orchestra\Auth\AuthServiceProvider',
+            'Orchestra\Routing\ControllerServiceProvider',
             'Orchestra\Debug\DebugServiceProvider',
             'Orchestra\View\DecoratorServiceProvider',
             'Orchestra\Extension\ExtensionServiceProvider',
@@ -112,7 +110,7 @@ abstract class TestCase extends TestbenchTestCase
             'Orchestra\View\ViewServiceProvider',
             'Orchestra\Widget\WidgetServiceProvider',
 
-            'Orchestra\Foundation\FilterServiceProvider',
+            //'Orchestra\Foundation\FilterServiceProvider',
             'Orchestra\Foundation\ConsoleSupportServiceProvider',
             'Orchestra\Foundation\FoundationServiceProvider',
         );
