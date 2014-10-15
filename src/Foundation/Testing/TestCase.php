@@ -61,6 +61,23 @@ abstract class TestCase extends TestbenchTestCase
     {
         return [];
     }
+
+    /**
+     * Get application middlewares.
+     *
+     * @return array
+     */
+    protected function getApplicationMiddlewares()
+    {
+        return [
+            'Illuminate\Cookie\Middleware\Guard',
+            'Illuminate\Cookie\Middleware\Queue',
+            'Illuminate\Session\Middleware\Reader',
+            'Illuminate\Session\Middleware\Writer',
+            'Illuminate\View\Middleware\ErrorBinder',
+        ];
+    }
+
     /**
      * Get application providers.
      *
