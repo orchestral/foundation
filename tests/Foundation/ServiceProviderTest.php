@@ -3,6 +3,7 @@
 use Mockery as m;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Application;
 use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\SiteServiceProvider;
 use Orchestra\Foundation\FoundationServiceProvider;
@@ -30,7 +31,7 @@ class ServiceProviderTest extends TestCase
         $this->assertInstanceOf('\Orchestra\Foundation\Publisher\PublisherManager', $stub);
 
         $stub = App::make('orchestra.publisher.ftp');
-        $this->assertInstanceOf('\Orchestra\Support\Ftp', $stub);
+        $this->assertInstanceOf('\Orchestra\Support\Ftp\Client', $stub);
     }
 
     /**
@@ -68,14 +69,14 @@ class ServiceProviderTest extends TestCase
     public function testInstanceOfAuthReminder()
     {
         $app = App::getFacadeApplication();
-        $app['auth.reminder.repository'] = m::mock('\Illuminate\Auth\Reminders\DatabaseReminderRepository');
+        $app['auth.password.tokens'] = m::mock('\Illuminate\Auth\Passwords\TokenRepositoryInterface');
         $app['auth'] = $user = m::mock('\Illuminate\Auth\UserProviderInterface');
 
         $user->shouldReceive('driver')->once()->andReturn($user)
             ->shouldReceive('getProvider')->once()->andReturn($user);
 
-        $stub = App::make('auth.reminder');
-        $this->assertInstanceOf('\Orchestra\Foundation\Reminders\PasswordBroker', $stub);
+        $stub = App::make('auth.password');
+        $this->assertInstanceOf('\Orchestra\Auth\Passwords\PasswordBroker', $stub);
     }
 
     /**
@@ -161,12 +162,12 @@ class ServiceProviderTest extends TestCase
 
     public function testRegisterEventsOnAfter()
     {
-        $app = m::mock('\Illuminate\Foundation\Application[after]');
-        $app['events'] = $events = m::mock('\Illuminate\Events\Dispatcher[fire]');
-
+        $app = new Application(m::mock('\Illuminate\Http\Request'));
+        $app['events'] = $events = m::mock('\Illuminate\Contracts\Events\Dispatcher[fire]');
+        $app['router'] = $router = m::mock('\Illuminate\Routing\Router');
         $events->shouldReceive('fire')->once()->with('orchestra.done')->andReturnNull();
 
-        $app->shouldReceive('after')->once()->with(m::type('Closure'))
+        $router->shouldReceive('after')->once()->with(m::type('Closure'))
             ->andReturnUsing(function ($c) {
                 $c();
             });

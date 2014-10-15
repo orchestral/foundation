@@ -74,7 +74,7 @@ abstract class TestCase extends TestbenchTestCase
             'Illuminate\Foundation\Providers\ArtisanServiceProvider',
             'Illuminate\Cache\CacheServiceProvider',
             'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
-            'Illuminate\Routing\ControllerServiceProvider',
+            'Orchestra\Routing\ControllerServiceProvider',
             'Illuminate\Cookie\CookieServiceProvider',
             'Illuminate\Database\DatabaseServiceProvider',
             'Illuminate\Encryption\EncryptionServiceProvider',
