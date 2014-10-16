@@ -5,8 +5,9 @@ use Exception;
 use Orchestra\Memory\Provider;
 use Orchestra\Http\RouteManager;
 use Orchestra\Extension\RouteGenerator;
+use Orchestra\Contracts\Foundation\Foundation as FoundationContract;
 
-class Foundation extends RouteManager
+class Foundation extends RouteManager implements FoundationContract
 {
     /**
      * Booted indicator.
