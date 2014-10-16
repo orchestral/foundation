@@ -1,7 +1,5 @@
 <?php
 
-use Orchestra\Support\Facades\HTML;
-
 $authFormGroup = function ($authentication, $auth) {
 	$class = ['form-group'];
 	(false === $authentication) && $class[] = 'error';
@@ -16,7 +14,7 @@ $authFormGroup = function ($authentication, $auth) {
 
 		<p>
 			{!! trans('orchestra/foundation::install.verify', [
-				'filename' => HTML::create('code', 'app/config/auth.php', ['title' => app_path('config/auth.php')])
+				'filename' => app('html')->create('code', 'app/config/auth.php', ['title' => app_path('config/auth.php')])
 			]) !!}
 		</p>
 
@@ -32,7 +30,7 @@ $authFormGroup = function ($authentication, $auth) {
 			</div>
 		</div>
 
-		<div{!! HTML::attributes($authFormGroup($authentication, $auth)) !!}>
+		<div{!! app('html')->attributes($authFormGroup($authentication, $auth)) !!}>
 			<label class="three columns control-label">
 				{{ trans('orchestra/foundation::install.auth.model') }}
 			</label>
@@ -41,7 +39,7 @@ $authFormGroup = function ($authentication, $auth) {
 				@if (false === $authentication)
 				<p class="help-block">
 					{{ trans('orchestra/foundation::install.auth.requirement.driver', [
-						'class' => HTML::create('code', 'Orchestra\Model\User')
+						'class' => app('html')->create('code', 'Orchestra\Model\User')
 					]) }}
 				</p>
 				@endif

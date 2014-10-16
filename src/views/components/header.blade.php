@@ -1,16 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\URL;
-use Orchestra\Support\Facades\Site;
+$title       = app('orchestra.site')->get('title');
+$description = app('orchestra.site')->get('description'); ?>
 
-$title       = Site::get('title');
-$description = Site::get('description'); ?>
-
-<div class="{!! Site::get('header::class', 'page-header') !!}">
+<div class="{!! app('orchestra.site')->get('header::class', 'page-header') !!}">
 	<div class="container">
-		@if (Site::get('header::add-button'))
+		@if (app('orchestra.site')->get('header::add-button'))
 		<div class="pull-right">
-			<a href="{!! URL::current() !!}/create" class="btn btn-primary">
+			<a href="{!! app('url')->current() !!}/create" class="btn btn-primary">
 				{{ trans('orchestra/foundation::label.add') }}
 			</a>
 		</div>
@@ -24,4 +21,4 @@ $description = Site::get('description'); ?>
 	</div>
 </div>
 
-<?php Site::set('header::class', 'page-header'); ?>
+<?php app('orchestra.site')->set('header::class', 'page-header'); ?>

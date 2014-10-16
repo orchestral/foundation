@@ -1,21 +1,16 @@
 @extends('orchestra/foundation::layout.main')
 
-<?php
-
-use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\HTML; ?>
-
 @section('content')
-
 <div class="row">
 	@if (count($panes) > 0)
 
 	<?php $panes->add('mini-profile', '<')->title('Mini Profile')
 		->attributes(['class' => 'three columns widget'])
-		->content(View::make('orchestra/foundation::components.miniprofile')); ?>
+		->content(view('orchestra/foundation::components.miniprofile')); ?>
 
 	@foreach ($panes as $id => $pane)
-		<div{!! HTML::attributes(HTML::decorate($pane->attributes, ['class' => 'panel'])) !!}>
+		<?php $attributes = app('html')->decorate($pane->attributes, ['class' => 'panel']); ?>
+		<div{!! app('html')->attributes($attributes) !!}>
 		@if (! empty($pane->html))
 		{!! $pane->html !!}
 		@else

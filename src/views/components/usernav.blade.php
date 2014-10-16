@@ -1,11 +1,6 @@
-<?php
+<?php $user = app('auth')->user(); ?>
 
-use Illuminate\Support\Facades\Auth;
-use Orchestra\Support\Facades\Site;
-
-$user = Auth::user(); ?>
-
-@if (Site::get('navigation::usernav', true))
+@if (app('orchestra.site')->get('navigation::usernav', true))
 <ul class="nav navbar-nav navbar-right">
 	<li class="dropdown" id="user-menu">
 		<a href="#user-menu" rel="user-menu" class="dropdown-toggle" data-toggle="dropdown">

@@ -1,41 +1,37 @@
 @extends('orchestra/foundation::layout.main')
 
-<?php
-
-use Orchestra\Support\Facades\Form;
-
-$label = ['class' => 'three columns control-label']; ?>
+<?php $label = ['class' => 'three columns control-label']; ?>
 
 @section('content')
 <div class="row">
 	<div class="eight columns rounded box">
-		{!! Form::open(['url' => handles('orchestra::publisher/ftp'), 'method' => 'POST', 'class' => 'form-horizontal']) !!}
+		{!! app('form')->open(['url' => handles('orchestra::publisher/ftp'), 'method' => 'POST', 'class' => 'form-horizontal']) !!}
 			<fieldset>
 				<div class="form-group{{ $errors->has('host') ? ' error' : '' }}">
-					{!! Form::label('host', trans('orchestra/foundation::label.extensions.publisher.host'), $label) !!}
+					{!! app('form')->label('host', trans('orchestra/foundation::label.extensions.publisher.host'), $label) !!}
 					<div class="nine columns">
-						{!! Form::text('host', Input::old('host'), ['class' => 'form-control']) !!}
+						{!! app('form')->text('host', app('request')->old('host'), ['class' => 'form-control']) !!}
 						{!! $errors->first('host', '<p class="help-block">:message</p>') !!}
 					</div>
 				</div>
 				<div class="form-group{{ $errors->has('user') ? ' error' : '' }}">
-					{!! Form::label('user', trans('orchestra/foundation::label.extensions.publisher.user'), $label) !!}
+					{!! app('form')->label('user', trans('orchestra/foundation::label.extensions.publisher.user'), $label) !!}
 					<div class="nine columns">
-						{!! Form::text('user', Input::old('user'), ['class' => 'form-control']) !!}
+						{!! app('form')->text('user', app('request')->old('user'), ['class' => 'form-control']) !!}
 						{!! $errors->first('user', '<p class="help-block">:message</p>') !!}
 					</div>
 				</div>
 				<div class="form-group{{ $errors->has('password') ? ' error' : '' }}">
-					{!! Form::label('password', trans('orchestra/foundation::label.extensions.publisher.password'), $label) !!}
+					{!! app('form')->label('password', trans('orchestra/foundation::label.extensions.publisher.password'), $label) !!}
 					<div class="nine columns">
-						{!! Form::password('password', ['class' => 'form-control']) !!}
+						{!! app('form')->password('password', ['class' => 'form-control']) !!}
 						{!! $errors->first('password', '<p class="help-block">:message</p>') !!}
 					</div>
 				</div>
 				<div class="form-group">
-					{!! Form::label('connection-type', trans('orchestra/foundation::label.extensions.publisher.connection-type'), $label) !!}
+					{!! app('form')->label('connection-type', trans('orchestra/foundation::label.extensions.publisher.connection-type'), $label) !!}
 					<div class="nine columns">
-						{!! Form::select('connection-type', ['ftp' => 'FTP', 'sftp' => 'SFTP'], Input::old('connection-type', 'ftp'), ['role' => 'switcher']) !!}
+						{!! app('form')->select('connection-type', ['ftp' => 'FTP', 'sftp' => 'SFTP'], app('request')->old('connection-type', 'ftp'), ['role' => 'switcher']) !!}
 					</div>
 				</div>
 				<div class="row">
@@ -44,7 +40,7 @@ $label = ['class' => 'three columns control-label']; ?>
 					</div>
 				</div>
 			</fieldset>
-		{!! Form::close() !!}
+		{!! app('form')->close() !!}
 	</div>
 	<div class="four columns">
 		@placeholder('orchestra.publisher')

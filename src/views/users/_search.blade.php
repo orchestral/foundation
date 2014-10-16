@@ -1,12 +1,7 @@
-<?php
-
-use Illuminate\Support\Facades\Input;
-use Orchestra\Support\Facades\Form; ?>
-
 <div class="navbar user-search">
 	<form class="navbar-form">
-		{!! Form::text('q', Input::get('q', ''), ['placeholder' => 'Search keyword...', 'role' => 'keyword']) !!}
-		{!! Form::select('roles[]', $roles, Input::get('roles', []), ['multiple' => true, 'placeholder' => 'Roles', 'role' => 'roles']) !!}
-		{!! Form::submit(trans('orchestra/foundation::label.search.button'), ['class' => 'btn btn-primary']) !!}
+		{!! app('form')->text('q', app('request')->input('q', ''), ['placeholder' => 'Search keyword...', 'role' => 'keyword']) !!}
+		{!! app('form')->select('roles[]', $roles, app('request')->input('roles', []), ['multiple' => true, 'placeholder' => 'Roles', 'role' => 'roles']) !!}
+		{!! app('form')->submit(trans('orchestra/foundation::label.search.button'), ['class' => 'btn btn-primary']) !!}
 	</form>
 </div>

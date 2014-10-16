@@ -1,26 +1,21 @@
 @extends('orchestra/foundation::layout.extra')
 
-<?php
-
-use Illuminate\Support\Facades\Input;
-use Orchestra\Support\Facades\Form; ?>
-
 @section('content')
 <div class="row">
 	<div class="six columns offset-by-three">
-		{!! Form::open(['url' => handles('orchestra::login'), 'action' => 'POST', 'class' => 'form-horizontal']) !!}
+		{!! app('form')->open(['url' => handles('orchestra::login'), 'action' => 'POST', 'class' => 'form-horizontal']) !!}
 			<fieldset>
 				<div class="form-group{{ $errors->has('email') ? ' error' : '' }}">
-					{!! Form::label('email', trans("orchestra/foundation::label.users.email"), ['class' => 'three columns control-label']) !!}
+					{!! app('form')->label('email', trans("orchestra/foundation::label.users.email"), ['class' => 'three columns control-label']) !!}
 					<div class="nine columns">
-						{!! Form::input('text', 'email', Input::old('email'), ['required' => true, 'tabindex' => 1, 'class' => 'form-control']) !!}
+						{!! app('form')->input('text', 'email', app('request')->old('email'), ['required' => true, 'tabindex' => 1, 'class' => 'form-control']) !!}
 						{!! $errors->first('email', '<p class="help-block">:message</p>') !!}
 					</div>
 				</div>
 				<div class="form-group{{ $errors->has('password') ? ' error' : '' }}">
-					{!! Form::label('password', trans('orchestra/foundation::label.users.password'), ['class' => 'three columns control-label']) !!}
+					{!! app('form')->label('password', trans('orchestra/foundation::label.users.password'), ['class' => 'three columns control-label']) !!}
 					<div class="nine columns">
-						{!! Form::input('password', 'password', '', ['required' => true, 'tabindex' => 2, 'class' => 'form-control']) !!}
+						{!! app('form')->input('password', 'password', '', ['required' => true, 'tabindex' => 2, 'class' => 'form-control']) !!}
 						{!! $errors->first('password', '<p class="help-block">:message</p>') !!}
 						<p class="help-block">
 							<a href="{!! handles('orchestra::forgot') !!}">
@@ -30,7 +25,7 @@ use Orchestra\Support\Facades\Form; ?>
 					</div>
 					<div class="nine columns offset-by-three">
 						<label class="checkbox">
-							{!! Form::checkbox('remember', 'yes', false, ['tabindex' => 3]) !!}
+							{!! app('form')->checkbox('remember', 'yes', false, ['tabindex' => 3]) !!}
 							{{ trans('orchestra/foundation::title.remember-me') }}
 						</label>
 					</div>
@@ -48,7 +43,7 @@ use Orchestra\Support\Facades\Form; ?>
 					</div>
 				</div>
 			</fieldset>
-		{!! Form::close() !!}
+		{!! app('form')->close() !!}
 	</div>
 </div>
 @stop

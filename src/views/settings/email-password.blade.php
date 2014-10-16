@@ -1,7 +1,3 @@
-<?php
-
-use Orchestra\Support\Facades\Form; ?>
-
 <div id="cancel_password_container">
 	<a href="#" id="cancel_password_button" class="btn btn-mini btn-info">
 		{{ trans('orchestra/foundation::label.cancel') }}
@@ -13,5 +9,5 @@ use Orchestra\Support\Facades\Form; ?>
 	<a href="#" id="change_password_button" class="btn btn-mini btn-warning">
 		{{ trans('orchestra/foundation::label.email.change_password') }}
 	</a>
-	{!! Form::hidden('change_password', 'no') !!}
+	{!! app('form')->hidden('change_password', 'no') !!}
 </div>

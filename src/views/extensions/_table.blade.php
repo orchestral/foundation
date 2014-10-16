@@ -1,7 +1,6 @@
 <?php
 
-use Illuminate\Support\Fluent;
-use Orchestra\Support\Facades\Extension; ?>
+use Illuminate\Support\Fluent; ?>
 
 <table class="table table-striped">
 	<thead>
@@ -22,8 +21,8 @@ use Orchestra\Support\Facades\Extension; ?>
 			<td>
 				<strong>
 					<?php
-					$active  = Extension::activated($name);
-					$started = Extension::started($name);
+					$active  = app('orchestra.extension')->activated($name);
+					$started = app('orchestra.extension')->started($name);
 					$uid     = str_replace('/', '.', $name); ?>
 
 					@if (! ($started))

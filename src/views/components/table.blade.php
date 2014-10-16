@@ -1,10 +1,12 @@
-<?php $attributes['table'] = HTML::decorate($attributes['table'], ['class' => 'table table-striped']); ?>
+<?php $attributes['table'] = app('html')->decorate($attributes['table'], [
+	'class' => 'table table-striped'
+]); ?>
 
-<table{!! HTML::attributes($attributes['table']) !!}>
+<table{!! app('html')->attributes($attributes['table']) !!}>
 	<thead>
 		<tr>
 			@foreach ($columns as $col)
-			<th{!! HTML::attributes($col->headers ?: []) !!}>
+			<th{!! app('html')->attributes($col->headers ?: []) !!}>
 				{!! $col->label !!}
 			</th>
 			@endforeach
@@ -12,9 +14,9 @@
 	</thead>
 	<tbody>
 		@foreach ($rows as $row)
-		<tr{!! HTML::attributes(call_user_func($attributes['row'], $row) ?: []) !!}>
+		<tr{!! app('html')->attributes(call_user_func($attributes['row'], $row) ?: []) !!}>
 			@foreach ($columns as $col)
-			<td{!! HTML::attributes(call_user_func($col->attributes, $row)) !!}>
+			<td{!! app('html')->attributes(call_user_func($col->attributes, $row)) !!}>
 				{!! $col->getValue($row) !!}
 			</td>
 			@endforeach

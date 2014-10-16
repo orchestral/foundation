@@ -1,7 +1,3 @@
-<?php
-
-use Illuminate\Support\Facades\Request;
-use Orchestra\Support\Facades\Asset; ?>
 <footer>
 	<div class="container">
 		<hr>
@@ -13,7 +9,7 @@ use Orchestra\Support\Facades\Asset; ?>
 
 <?php
 
-$asset = Asset::container('orchestra/foundation::footer');
+$asset = app('orchestra.asset')->container('orchestra/foundation::footer');
 
 $asset->script('bootstrap', 'packages/orchestra/foundation/vendor/bootstrap/js/bootstrap.min.js');
 $asset->script('jquery-ui', 'packages/orchestra/foundation/vendor/jquery.ui/jquery.ui.js');
@@ -30,7 +26,7 @@ $asset->script('select2', 'packages/orchestra/foundation/components/select2/sele
 jQuery(function onPageReady($) { 'use strict';
 	var dispatcher = Javie.make('event');
 
-	dispatcher.fire("orchestra.ready: <?php echo Request::path(); ?>");
+	dispatcher.fire("orchestra.ready: {!! app('request')->path() !!}");
 });
 </script>
 
