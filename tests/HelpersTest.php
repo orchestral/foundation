@@ -18,8 +18,9 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->app = new \Illuminate\Foundation\Application;
+
         $this->app['translator'] = $trans = m::mock('\Illuminate\Translation\Translator')->makePartial();
-        $this->app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Kernel')->makePartial();
+        $this->app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
 
         Facade::clearResolvedInstances();
         Facade::setFacadeApplication($this->app);
@@ -45,7 +46,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function testOrchestraMethod()
     {
-        $this->assertInstanceOf('\Orchestra\Foundation\Kernel', orchestra());
+        $this->assertInstanceOf('\Orchestra\Foundation\Foundation', orchestra());
     }
 
     /**

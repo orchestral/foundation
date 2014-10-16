@@ -8,7 +8,7 @@ class AdminMenuHandler
     /**
      * Kernel instance.
      *
-     * @var \Orchestra\Foundation\Kernel
+     * @var \Orchestra\Foundation\Foundation
      */
     protected $kernel;
 
@@ -43,11 +43,11 @@ class AdminMenuHandler
     /**
      * Construct a new handler.
      *
-     * @param  \Orchestra\Foundation\Kernel  $kernel
+     * @param  \Orchestra\Foundation\Foundation  $kernel
      * @param  \Orchestra\Resources\Factory  $resources
      * @param  \Illuminate\Translation\Translator  $translator
      */
-    public function __construct(Kernel $kernel, Resources $resources, Translator $translator)
+    public function __construct(Foundation $kernel, Resources $resources, Translator $translator)
     {
         $this->kernel = $kernel;
         $this->menu = $kernel->menu();

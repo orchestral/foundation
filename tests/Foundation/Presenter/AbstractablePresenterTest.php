@@ -32,7 +32,7 @@ class AbstractablePresenterTest extends \PHPUnit_Framework_TestCase
     public function testHandlesMethod()
     {
         $app = m::mock('\Illuminate\Contracts\Foundation\Application[make]');
-        $orchestra = m::mock('\Orchestra\Foundation\Kernel[handles]', [$app]);
+        $orchestra = m::mock('\Orchestra\Foundation\Foundation[handles]', [$app]);
 
         Facade::setFacadeApplication($app);
 

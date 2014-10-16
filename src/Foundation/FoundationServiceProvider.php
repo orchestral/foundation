@@ -18,7 +18,7 @@ class FoundationServiceProvider extends ServiceProvider
         'orchestra.platform.memory'  => 'Orchestra\Memory\Provider',
 
         'orchestra.acl'              => 'Orchestra\Auth\Acl\Factory',
-        'orchestra.app'              => 'Orchestra\Foundation\Kernel',
+        'orchestra.app'              => 'Orchestra\Foundation\Foundation',
         'orchestra.asset'            => 'Orchestra\Asset\Factory',
         'orchestra.decorator'        => 'Orchestra\View\Decorator',
         'orchestra.extension.config' => 'Orchestra\Extension\ConfigManager',
@@ -74,7 +74,7 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app['orchestra.installed'] = false;
 
         $this->app->bindShared('orchestra.app', function ($app) {
-            return new Kernel($app);
+            return new Foundation($app);
         });
 
         $this->registerFacadesAliases();

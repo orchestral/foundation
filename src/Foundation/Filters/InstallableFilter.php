@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Filters;
 
-use Orchestra\Foundation\Kernel;
+use Orchestra\Foundation\Foundation;
 use Illuminate\Http\RedirectResponse;
 
 class InstallableFilter
@@ -8,16 +8,16 @@ class InstallableFilter
     /**
      * The application implementation.
      *
-     * @var \Orchestra\Foundation\Kernel
+     * @var \Orchestra\Foundation\Foundation
      */
     protected $kernel;
 
     /**
      * Create a new filter instance.
      *
-     * @param  \Orchestra\Foundation\Kernel    $kernel
+     * @param  \Orchestra\Foundation\Foundation    $kernel
      */
-    public function __construct(Kernel $kernel)
+    public function __construct(Foundation $kernel)
     {
         $this->kernel = $kernel;
     }

@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
-use Orchestra\Foundation\Kernel;
+use Orchestra\Foundation\Foundation;
 use Illuminate\Support\Facades\Facade;
 
 class ApplicationTest extends \PHPUnit_Framework_TestCase
@@ -128,14 +128,14 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Kernel::boot() method.
+     * Test Orchestra\Foundation\Foundation::boot() method.
      *
      * @test
      */
     public function testBootMethod()
     {
         $app  = $this->getInstallableContainerSetup();
-        $stub = new Kernel($app);
+        $stub = new Foundation($app);
         $stub->boot();
 
         $this->assertTrue($app['orchestra.installed']);
@@ -148,7 +148,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Kernel::boot() method when database
+     * Test Orchestra\Foundation\Foundation::boot() method when database
      * is not installed yet.
      *
      * @test
@@ -157,7 +157,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getUnInstallableContainerSetup();
 
-        $stub = new Kernel($app);
+        $stub = new Foundation($app);
         $stub->boot();
 
         $this->assertFalse($app['orchestra.installed']);
@@ -200,7 +200,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Kernel::is() method.
+     * Test Orchestra\Foundation\Foundation::is() method.
      *
      * @test
      */
@@ -239,10 +239,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
      */
     public function testNamespacedMethod()
     {
-        $app    = $this->app;
-        $config = $app['config'];
-
-        $stub = m::mock('\Orchestra\Foundation\Kernel[group]', [$app]);
+        $stub = m::mock('\Orchestra\Foundation\Foundation[group]', [$this->app]);
 
         $closure = function () {
 
@@ -258,7 +255,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     }
 }
 
-class StubRouteManager extends Kernel
+class StubRouteManager extends Foundation
 {
     public function boot()
     {

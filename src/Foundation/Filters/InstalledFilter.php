@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Filters;
 
-use Orchestra\Foundation\Kernel;
+use Orchestra\Foundation\Foundation;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Config\Repository;
@@ -10,7 +10,7 @@ class InstalledFilter
     /**
      * The application implementation.
      *
-     * @var \Orchestra\Foundation\Kernel
+     * @var \Orchestra\Foundation\Foundation
      */
     protected $kernel;
 
@@ -31,11 +31,11 @@ class InstalledFilter
     /**
      * Create a new filter instance.
      *
-     * @param  \Orchestra\Foundation\Kernel  $kernel
+     * @param  \Orchestra\Foundation\Foundation  $kernel
      * @param  \Illuminate\Contracts\Auth\Guard  $auth
      * @param  \Illuminate\Contracts\Config\Repository  $config
      */
-    public function __construct(Kernel $kernel, Guard $auth, Repository $config)
+    public function __construct(Foundation $kernel, Guard $auth, Repository $config)
     {
         $this->kernel = $kernel;
         $this->auth = $auth;

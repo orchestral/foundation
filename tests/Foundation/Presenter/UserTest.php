@@ -25,7 +25,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->app = new Container;
 
         $this->app['app'] = $this->app;
-        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Kernel')->makePartial();
+        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
         $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $this->app['orchestra.app']->shouldReceive('handles');

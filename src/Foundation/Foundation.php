@@ -6,12 +6,12 @@ use Orchestra\Memory\Provider;
 use Orchestra\Http\RouteManager;
 use Orchestra\Extension\RouteGenerator;
 
-class Kernel extends RouteManager
+class Foundation extends RouteManager
 {
     /**
      * Booted indicator.
      *
-     * @var boolean
+     * @var bool
      */
     protected $booted = false;
 
@@ -28,7 +28,7 @@ class Kernel extends RouteManager
     /**
      * Start the application.
      *
-     * @return Application
+     * @return $this
      */
     public function boot()
     {
@@ -75,8 +75,8 @@ class Kernel extends RouteManager
     /**
      * Register the given Closure with the "group" function namespace set.
      *
-     * @param  string|null      $namespace
-     * @param  \Closure|null    $callback
+     * @param  string|null  $namespace
+     * @param  \Closure|null  $callback
      * @return void
      */
     public function namespaced($namespace, Closure $callback)
