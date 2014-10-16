@@ -24,13 +24,6 @@ class Kernel extends RouteManager
     protected $passtru = ['abort', 'bound', 'make'];
 
     /**
-     * List of services.
-     *
-     * @var array
-     */
-    public $services = [];
-
-    /**
      * Start the application.
      *
      * @return Application
@@ -54,7 +47,7 @@ class Kernel extends RouteManager
      */
     protected function createAdminMenu()
     {
-        $menu    = $this->services['orchestra.menu'];
+        $menu    = $this->menu();
         $handler = 'Orchestra\Foundation\AdminMenuHandler';
 
         $menu->add('home')
@@ -136,7 +129,7 @@ class Kernel extends RouteManager
             $memory = $this->bootNewApplication();
         }
 
-        $this->services['orchestra.memory'] = $memory;
+        $this->app->instance('orchestra.platform.memory', $memory);
 
         $this->registerComponents($memory);
 
@@ -162,7 +155,7 @@ class Kernel extends RouteManager
         // In event where we reach this point, we can consider no
         // exception has occur, we should be able to compile acl and
         // menu configuration
-        $this->services['orchestra.acl']->attach($memory);
+        $this->acl()->attach($memory);
 
         // In any event where Memory failed to load, we should set
         // Installation status to false routing for installation is
@@ -187,7 +180,7 @@ class Kernel extends RouteManager
         $memory = $this->app['orchestra.memory']->make('runtime.orchestra');
         $memory->put('site.name', 'Orchestra Platform');
 
-        $this->services['orchestra.menu']->add('install')
+        $this->menu()->add('install')
             ->title('Install')
             ->link($this->handles('orchestra::install'));
 
@@ -203,9 +196,10 @@ class Kernel extends RouteManager
      */
     protected function registerBaseServices()
     {
-        $this->services['orchestra.menu'] = $this->app['orchestra.widget']->make('menu.orchestra');
-        $this->services['app.menu']       = $this->app['orchestra.widget']->make('menu.app');
-        $this->services['orchestra.acl']  = $this->app['orchestra.acl']->make('orchestra');
+        $this->app->instance('orchestra.platform.menu', $this->app['orchestra.widget']->make('menu.orchestra'));
+        $this->app->instance('orchestra.platform.acl', $this->app['orchestra.acl']->make('orchestra'));
+
+        $this->app->instance('app.menu', $this->app['orchestra.widget']->make('menu.app'));
     }
 
     /**
@@ -235,10 +229,10 @@ class Kernel extends RouteManager
             return call_user_func_array([$this->app, $method], $parameters);
         }
 
-        $action = (count($parameters) < 1 ? "orchestra" : array_shift($parameters));
-        $method = "{$action}.{$method}";
+        $action = (count($parameters) < 1 ? "orchestra.platform" : array_shift($parameters));
+        $service = "{$action}.{$method}";
 
-        return Arr::get($this->services, $method);
+        return $this->app[$service];
     }
 
     /**

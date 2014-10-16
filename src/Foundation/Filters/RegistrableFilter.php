@@ -17,7 +17,7 @@ class RegistrableFilter
      *
      * @param  \Orchestra\Foundation\Kernel  $kernel
      */
-    public function __construct(Application $kernel)
+    public function __construct(Kernel $kernel)
     {
         $this->kernel = $kernel;
     }

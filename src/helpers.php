@@ -21,7 +21,7 @@ if (! function_exists('memorize')) {
      * @param  string   $key
      * @param  string   $default
      * @return mixed
-     * @see    \Orchestra\Foundation\Application::memory()
+     * @see    \Orchestra\Foundation\Kernel::memory()
      */
     function memorize($key, $default = null)
     {
