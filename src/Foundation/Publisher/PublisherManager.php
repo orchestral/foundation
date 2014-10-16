@@ -19,7 +19,7 @@ class PublisherManager extends Manager
     {
         parent::__construct($app);
 
-        $this->memory = $app['orchestra.app']->memory();
+        $this->memory = $app['orchestra.platform.memory'];
     }
 
     /**

@@ -1,10 +1,10 @@
 <?php namespace Orchestra\TestCase;
 
 use Mockery as m;
-use Orchestra\Foundation\Testing\TestCase;
-use Orchestra\Support\Facades\App;
+use Illuminate\Support\Facades\App;
 use Orchestra\Support\Facades\HTML;
 use Orchestra\Support\Facades\Site;
+use Orchestra\Foundation\Testing\TestCase;
 
 class MacrosTest extends TestCase
 {
@@ -25,8 +25,7 @@ class MacrosTest extends TestCase
      */
     public function testHtmlTitleMacro()
     {
-        App::shouldReceive('memory')->twice()
-            ->andReturn($memory = m::mock('\Orchestra\Memory\Provider')->makePartial());
+        $this->app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
 
         $memory->shouldReceive('get')->once()->with('site.name', '')->andReturn('Foo')
             ->shouldReceive('get')->once()
@@ -43,10 +42,8 @@ class MacrosTest extends TestCase
      */
     public function testHtmlTitleMacroWithPageTitle()
     {
-        App::shouldReceive('memory')->twice()
-            ->andReturn($memory = m::mock('\Orchestra\Memory\Provider')->makePartial());
-        Site::shouldReceive('get')->once()
-            ->with('title', '')->andReturn('Foobar');
+        $this->app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
+        Site::shouldReceive('get')->once()->with('title', '')->andReturn('Foobar');
 
         $memory->shouldReceive('get')->once()->with('site.name', '')->andReturn('Foo')
             ->shouldReceive('get')->once()->with('site.format.title', ':pageTitle &mdash; :siteTitle')

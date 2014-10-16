@@ -1,16 +1,22 @@
 <?php namespace Orchestra\Foundation;
 
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Orchestra\Foundation\Traits\AliasesProviderTrait;
 
 class FoundationServiceProvider extends ServiceProvider
 {
+    use AliasesProviderTrait;
+
     /**
      * List of core aliases.
      *
      * @var array
      */
     protected $aliases = [
+        'app'                        => 'Orchestra\Foundation\Application',
+        'orchestra.platform.acl'     => 'Orchestra\Auth\Acl\Acl',
+        'orchestra.platform.memory'  => 'Orchestra\Memory\Provider',
+
         'orchestra.acl'              => 'Orchestra\Auth\Acl\Factory',
         'orchestra.app'              => 'Orchestra\Foundation\Kernel',
         'orchestra.asset'            => 'Orchestra\Asset\Factory',
@@ -74,36 +80,6 @@ class FoundationServiceProvider extends ServiceProvider
         $this->registerFacadesAliases();
         $this->registerCoreContainerAliases();
         $this->registerEvents();
-    }
-
-    /**
-     * Register application aliases.
-     *
-     * @return void
-     */
-    protected function registerFacadesAliases()
-    {
-        $loader = AliasLoader::getInstance();
-
-        foreach ($this->facades as $facade => $aliases) {
-            foreach ((array) $aliases as $alias) {
-                $loader->alias($alias, $facade);
-            }
-        }
-    }
-
-    /**
-     * Register the core class aliases in the container.
-     *
-     * @return void
-     */
-    protected function registerCoreContainerAliases()
-    {
-        foreach ($this->aliases as $key => $aliases) {
-            foreach ((array) $aliases as $alias) {
-                $this->app->alias($key, $alias);
-            }
-        }
     }
 
     /**

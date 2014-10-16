@@ -46,11 +46,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
 
         $app['session'] = $session = m::mock('\Illuminate\Session\Store')->makePartial();
         $app['orchestra.publisher.ftp'] = $client = m::mock('\Orchestra\Support\Ftp\Client');
-        $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
-
-        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
-
-        $app['orchestra.app']->shouldReceive('memory')->once()->andReturn($memory);
+        $app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
 
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp');
         $session->shouldReceive('get')->once()->with('orchestra.ftp', array())->andReturn(array('foo'));
@@ -80,11 +76,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory')->makePartial();
         $app['orchestra.publisher.ftp'] = $client = m::mock('\Orchestra\Support\Ftp\Client');
         $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator')->makePartial();
-        $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
-
-        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
-
-        $app['orchestra.app']->shouldReceive('memory')->once()->andReturn($memory);
+        $app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
 
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', array())->andReturn(array('a', 'b'))
             ->shouldReceive('get')->times(2)->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp')
@@ -117,11 +109,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
     public function testQueueMethod()
     {
         $app = $this->app;
-        $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
-
-        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
-
-        $app['orchestra.app']->shouldReceive('memory')->once()->andReturn($memory);
+        $app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
 
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', array())
                 ->andReturn(array('foo', 'foobar'))
@@ -140,11 +128,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
     public function testQueuedMethod()
     {
         $app = $this->app;
-        $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
-
-        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
-
-        $app['orchestra.app']->shouldReceive('memory')->once()->andReturn($memory);
+        $app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
 
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', array())->andReturn('foo');
 

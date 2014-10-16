@@ -1,15 +1,18 @@
 <?php
 
-use Orchestra\Support\Facades\App;
-
 if (! function_exists('orchestra')) {
     /**
      * Return orchestra.app instance.
      *
-     * @return \Orchestra\Foundation\Application
+     * @param  string|null  $service
+     * @return mixed
      */
-    function orchestra()
+    function orchestra($service = null)
     {
+        if (! is_null($service)) {
+            return app("orchestra.platform.{$service}");
+        }
+
         return app('orchestra.app');
     }
 }
@@ -25,7 +28,7 @@ if (! function_exists('memorize')) {
      */
     function memorize($key, $default = null)
     {
-        return App::memory()->get($key, $default);
+        return app('orchestra.platform.memory')->get($key, $default);
     }
 }
 
@@ -38,7 +41,7 @@ if (! function_exists('handles')) {
      */
     function handles($name)
     {
-        return App::handles($name);
+        return app('orchestra.app')->handles($name);
     }
 }
 
@@ -53,6 +56,6 @@ if (! function_exists('resources')) {
     {
         $name = ltrim($name, '/');
 
-        return App::handles("orchestra/foundation::resources/{$name}");
+        return app('orchestra.app')->handles("orchestra/foundation::resources/{$name}");
     }
 }

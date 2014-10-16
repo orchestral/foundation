@@ -2,7 +2,6 @@
 
 use Closure;
 use Exception;
-use Illuminate\Support\Arr;
 use Orchestra\Memory\Provider;
 use Orchestra\Http\RouteManager;
 use Orchestra\Extension\RouteGenerator;

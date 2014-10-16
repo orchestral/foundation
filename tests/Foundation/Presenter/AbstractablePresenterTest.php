@@ -31,10 +31,12 @@ class AbstractablePresenterTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandlesMethod()
     {
-        $app = new Container;
+        $app = m::mock('\Illuminate\Contracts\Foundation\Application[make]');
+        $orchestra = m::mock('\Orchestra\Foundation\Kernel[handles]', [$app]);
+
         Facade::setFacadeApplication($app);
 
-        $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
+        $app->shouldReceive('make')->once()->with('orchestra.app')->andReturn($orchestra);
 
         $orchestra->shouldReceive('handles')->with(m::type('String'))
                 ->andReturnUsing(function ($s) {

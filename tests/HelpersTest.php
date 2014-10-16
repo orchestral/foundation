@@ -2,7 +2,6 @@
 
 use Mockery as m;
 use Illuminate\Support\Facades\Facade;
-use Orchestra\Support\Facades\App;
 
 class HelpersTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,7 +19,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new \Illuminate\Foundation\Application;
         $this->app['translator'] = $trans = m::mock('\Illuminate\Translation\Translator')->makePartial();
-        $this->app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application');
+        $this->app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Kernel')->makePartial();
 
         Facade::clearResolvedInstances();
         Facade::setFacadeApplication($this->app);
@@ -33,6 +32,9 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
+        Facade::clearResolvedInstances();
+        Facade::setFacadeApplication(null);
+
         m::close();
     }
 
@@ -43,7 +45,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function testOrchestraMethod()
     {
-        $this->assertInstanceOf('\Orchestra\Foundation\Application', orchestra());
+        $this->assertInstanceOf('\Orchestra\Foundation\Kernel', orchestra());
     }
 
     /**
@@ -53,12 +55,8 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function testMemorizeMethod()
     {
-        $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
-        $memory    = m::mock('\Orchestra\Memory\Provider')->makePartial();
+        $this->app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
 
-        App::swap($orchestra);
-
-        $orchestra->shouldReceive('memory')->once()->andReturn($memory);
         $memory->shouldReceive('get')->once()->with('site.name', null)->andReturn('Orchestra');
 
         $this->assertEquals('Orchestra', memorize('site.name'));
@@ -71,9 +69,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandlesMethod()
     {
-        $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
-
-        App::swap($orchestra);
+        $orchestra = $this->app['orchestra.app'];
 
         $orchestra->shouldReceive('handles')->once()->with('app::foo')->andReturn('foo');
 
@@ -87,9 +83,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function testResourcesMethod()
     {
-        $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
-
-        App::swap($orchestra);
+        $orchestra = $this->app['orchestra.app'];
 
         $orchestra->shouldReceive('handles')->once()
             ->with('orchestra/foundation::resources/foo')->andReturn('foo');
