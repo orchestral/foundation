@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Testing;
 
+use Orchestra\Foundation\Application;
 use Orchestra\Testbench\TestCase as TestbenchTestCase;
 
 abstract class TestCase extends TestbenchTestCase
@@ -153,5 +154,16 @@ abstract class TestCase extends TestbenchTestCase
      */
     protected function getEnvironmentSetUp($app)
     {
+        $app['router']->disableFilters();
+    }
+
+    /**
+     * Resolve application implementation.
+     *
+     * @return \Illuminate\Foundation\Application
+     */
+    protected function resolveApplication()
+    {
+        return new Application;
     }
 }

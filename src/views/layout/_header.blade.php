@@ -1,11 +1,5 @@
-<?php
-
-use Illuminate\Support\Facades\App;
-use Orchestra\Support\Facades\Asset;
-use Orchestra\Support\Facades\HTML; ?>
-
 <meta charset="utf-8">
-{!! HTML::title() !!}
+{!! app('html')->title() !!}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Orchestra Platform">
 <meta name="author" content="Orchestra Platform">
@@ -18,7 +12,7 @@ use Orchestra\Support\Facades\HTML; ?>
 
 <?php
 
-$asset = Asset::container('orchestra/foundation::header');
+$asset = app('orchestra.asset')->container('orchestra/foundation::header');
 
 $asset->style('select2', 'packages/orchestra/foundation/components/select2/select2.css');
 $asset->style('jquery-ui', 'packages/orchestra/foundation/vendor/delta/theme/jquery-ui.css');
@@ -32,7 +26,7 @@ $asset->script('javie', 'packages/orchestra/foundation/components/javie/javie.mi
 {!! $asset->scripts() !!}
 
 <script>
-Javie.ENV = "{!! App::environment() !!}";
+Javie.ENV = "{!! app('env') !!}";
 </script>
 
 @placeholder("orchestra.layout: header")

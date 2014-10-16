@@ -1,8 +1,3 @@
-<?php
-
-use Illuminate\Support\Facades\Auth;
-use Orchestra\Support\Facades\App; ?>
-
 <header class="navbar navbar-fixed-top navbar-inverse" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
@@ -16,13 +11,13 @@ use Orchestra\Support\Facades\App; ?>
 			</a>
 		</div>
 		<div class="collapse navbar-collapse main-responsive-collapse">
-			@include('orchestra/foundation::components.menu', ['menu' => App::menu('orchestra')])
+			@include('orchestra/foundation::components.menu', ['menu' => app('orchestra.platform.menu')])
 			@include('orchestra/foundation::components.usernav')
 		</div>
 	</div>
 </header>
 
-@unless (Auth::check())
+@unless (app('auth')->check())
 @push('orchestra.footer')
 <script>
 jQuery(function ($) {
