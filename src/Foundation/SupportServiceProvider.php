@@ -52,9 +52,7 @@ class SupportServiceProvider extends ServiceProvider
     protected function registerSite()
     {
         $this->app->bindShared('orchestra.site', function ($app) {
-            $user = $app['orchestra.memory']->make('user');
-
-            return new Site($app['auth'], $app['config'], $user);
+            return new Site;
         });
     }
 
