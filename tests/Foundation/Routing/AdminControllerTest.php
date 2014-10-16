@@ -11,6 +11,8 @@ class AdminControllerTest extends TestCase
      */
     public function tearDown()
     {
+        parent::tearDown();
+
         m::close();
     }
 

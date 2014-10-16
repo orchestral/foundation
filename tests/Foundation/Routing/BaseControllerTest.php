@@ -12,6 +12,8 @@ class BaseControllerTest extends TestCase
      */
     public function setUp()
     {
+        parent::setUp();
+
         $_SERVER['StubBaseController@setupFilters'] = false;
     }
 
@@ -20,8 +22,10 @@ class BaseControllerTest extends TestCase
      */
     public function tearDown()
     {
+        parent::tearDown();
+
         unset($_SERVER['StubBaseController@setupFilters']);
-        Facade::setFacadeApplication(null);
+
         m::close();
     }
 
