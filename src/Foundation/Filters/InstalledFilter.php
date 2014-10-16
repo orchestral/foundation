@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\Filters;
 
+use Orchestra\Foundation\Kernel;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
-use Orchestra\Foundation\Application;
 use Illuminate\Contracts\Config\Repository;
 
 class InstalledFilter
@@ -10,9 +10,9 @@ class InstalledFilter
     /**
      * The application implementation.
      *
-     * @var \Orchestra\Foundation\Application
+     * @var \Orchestra\Foundation\Kernel
      */
-    protected $app;
+    protected $kernel;
 
     /**
      * The authenticator implementation.
@@ -31,13 +31,13 @@ class InstalledFilter
     /**
      * Create a new filter instance.
      *
-     * @param  \Orchestra\Foundation\Application        $app
-     * @param  \Illuminate\Contracts\Auth\Guard         $auth
+     * @param  \Orchestra\Foundation\Kernel  $kernel
+     * @param  \Illuminate\Contracts\Auth\Guard  $auth
      * @param  \Illuminate\Contracts\Config\Repository  $config
      */
-    public function __construct(Application $app, Guard $auth, Repository $config)
+    public function __construct(Kernel $kernel, Guard $auth, Repository $config)
     {
-        $this->app = $app;
+        $this->kernel = $kernel;
         $this->auth = $auth;
         $this->config = $config;
     }
@@ -49,7 +49,7 @@ class InstalledFilter
      */
     public function filter()
     {
-        if ($this->app->installed()) {
+        if ($this->kernel->installed()) {
             $type = ($this->auth->guest() ? 'guest' : 'user');
             $url  = $this->config->get("orchestra/foundation::routes.{$type}");
 

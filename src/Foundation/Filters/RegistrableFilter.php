@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Filters;
 
-use Orchestra\Foundation\Application;
+use Orchestra\Foundation\Kernel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RegistrableFilter
@@ -8,18 +8,18 @@ class RegistrableFilter
     /**
      * The application implementation.
      *
-     * @var \Orchestra\Foundation\Application
+     * @var \Orchestra\Foundation\Kernel
      */
-    protected $app;
+    protected $kernel;
 
     /**
      * Create a new filter instance.
      *
-     * @param  \Orchestra\Foundation\Application    $app
+     * @param  \Orchestra\Foundation\Kernel  $kernel
      */
-    public function __construct(Application $app)
+    public function __construct(Application $kernel)
     {
-        $this->app = $app;
+        $this->kernel = $kernel;
     }
 
     /**
@@ -29,7 +29,7 @@ class RegistrableFilter
      */
     public function filter()
     {
-        if (! $this->app->memory()->get('site.registrable', false)) {
+        if (! $this->kernel->memory()->get('site.registrable', false)) {
             throw new NotFoundHttpException('User registration is not available.');
         }
     }

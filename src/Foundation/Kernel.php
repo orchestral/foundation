@@ -7,7 +7,7 @@ use Orchestra\Memory\Provider;
 use Orchestra\Http\RouteManager;
 use Orchestra\Extension\RouteGenerator;
 
-class Application extends RouteManager
+class Kernel extends RouteManager
 {
     /**
      * Booted indicator.
@@ -229,8 +229,8 @@ class Application extends RouteManager
      */
     public function __call($method, $parameters)
     {
-        // Allow Orchestra\Foundation\Application to called method available
-        // in Illuminate\Foundation\Application without any issue.
+        // Allow this class to be able to call method available in
+        // Illuminate\Foundation\Application.
         if (in_array($method, $this->passtru)) {
             return call_user_func_array([$this->app, $method], $parameters);
         }

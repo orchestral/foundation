@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
-use Orchestra\Foundation\Application;
+use Orchestra\Foundation\Kernel;
 use Illuminate\Support\Facades\Facade;
 
 class ApplicationTest extends \PHPUnit_Framework_TestCase
@@ -128,14 +128,14 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Application::boot() method.
+     * Test Orchestra\Foundation\Kernel::boot() method.
      *
      * @test
      */
     public function testBootMethod()
     {
         $app  = $this->getInstallableContainerSetup();
-        $stub = new Application($app);
+        $stub = new Kernel($app);
         $stub->boot();
 
         $this->assertTrue($app['orchestra.installed']);
@@ -148,7 +148,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Application::boot() method when database
+     * Test Orchestra\Foundation\Kernel::boot() method when database
      * is not installed yet.
      *
      * @test
@@ -157,7 +157,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getUnInstallableContainerSetup();
 
-        $stub = new Application($app);
+        $stub = new Kernel($app);
         $stub->boot();
 
         $this->assertFalse($app['orchestra.installed']);
@@ -165,13 +165,13 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Application::illuminate() method.
+     * Test Orchestra\Foundation\Kernel::illuminate() method.
      *
      * @test
      */
     public function testIlluminateMethod()
     {
-        $stub = new Application($this->app);
+        $stub = new Kernel($this->app);
 
         $this->assertInstanceOf('\Illuminate\Foundation\Application', $stub->illuminate());
         $this->assertInstanceOf('\Illuminate\Http\Request', $stub->make('request'));
@@ -213,7 +213,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Application::is() method.
+     * Test Orchestra\Foundation\Kernel::is() method.
      *
      * @test
      */
@@ -245,8 +245,6 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($stub->is('orchestra::login'));
     }
 
-
-
     /**
      * Test Orchestra\Foundation\RouteManager::namespaced() method.
      *
@@ -257,7 +255,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app    = $this->app;
         $config = $app['config'];
 
-        $stub = m::mock('\Orchestra\Foundation\Application[group]', [$app]);
+        $stub = m::mock('\Orchestra\Foundation\Kernel[group]', [$app]);
 
         $closure = function () {
 
@@ -273,7 +271,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     }
 }
 
-class StubRouteManager extends Application
+class StubRouteManager extends Kernel
 {
     public function boot()
     {

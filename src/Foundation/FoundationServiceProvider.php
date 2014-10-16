@@ -12,7 +12,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected $aliases = [
         'orchestra.acl'              => 'Orchestra\Auth\Acl\Factory',
-        'orchestra.app'              => 'Orchestra\Foundation\Application',
+        'orchestra.app'              => 'Orchestra\Foundation\Kernel',
         'orchestra.asset'            => 'Orchestra\Asset\Factory',
         'orchestra.decorator'        => 'Orchestra\View\Decorator',
         'orchestra.extension.config' => 'Orchestra\Extension\ConfigManager',
@@ -68,7 +68,7 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app['orchestra.installed'] = false;
 
         $this->app->bindShared('orchestra.app', function ($app) {
-            return new Application($app);
+            return new Kernel($app);
         });
 
         $this->registerFacadesAliases();

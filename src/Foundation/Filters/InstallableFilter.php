@@ -1,25 +1,25 @@
 <?php namespace Orchestra\Foundation\Filters;
 
+use Orchestra\Foundation\Kernel;
 use Illuminate\Http\RedirectResponse;
-use Orchestra\Foundation\Application;
 
 class InstallableFilter
 {
     /**
      * The application implementation.
      *
-     * @var \Orchestra\Foundation\Application
+     * @var \Orchestra\Foundation\Kernel
      */
-    protected $app;
+    protected $kernel;
 
     /**
      * Create a new filter instance.
      *
-     * @param  \Orchestra\Foundation\Application    $app
+     * @param  \Orchestra\Foundation\Kernel    $kernel
      */
-    public function __construct(Application $app)
+    public function __construct(Kernel $kernel)
     {
-        $this->app = $app;
+        $this->kernel = $kernel;
     }
 
     /**
@@ -29,7 +29,7 @@ class InstallableFilter
      */
     public function filter()
     {
-        if (! $this->app->installed()) {
+        if (! $this->kernel->installed()) {
             return new RedirectResponse(handles('orchestra::install'));
         }
     }
