@@ -10,16 +10,16 @@ class InstallableFilter
      *
      * @var \Orchestra\Foundation\Foundation
      */
-    protected $kernel;
+    protected $foundation;
 
     /**
      * Create a new filter instance.
      *
-     * @param  \Orchestra\Foundation\Foundation    $kernel
+     * @param  \Orchestra\Foundation\Foundation  $foundation
      */
-    public function __construct(Foundation $kernel)
+    public function __construct(Foundation $foundation)
     {
-        $this->kernel = $kernel;
+        $this->foundation = $foundation;
     }
 
     /**
@@ -29,7 +29,7 @@ class InstallableFilter
      */
     public function filter()
     {
-        if (! $this->kernel->installed()) {
+        if (! $this->foundation->installed()) {
             return new RedirectResponse(handles('orchestra::install'));
         }
     }

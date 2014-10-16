@@ -14,7 +14,7 @@ class ManageAuthorizationFilter
      *
      * @var \Orchestra\Foundation\Foundation
      */
-    protected $kernel;
+    protected $foundation;
 
     /**
      * The authenticator implementation.
@@ -33,20 +33,20 @@ class ManageAuthorizationFilter
     /**
      * Create a new filter instance.
      *
-     * @param  \Orchestra\Foundation\Foundation  $kernel
+     * @param  \Orchestra\Foundation\Foundation  $foundation
      * @param  \Illuminate\Contracts\Auth\Guard  $auth
      * @param  \Illuminate\Contracts\Config\Repository  $config
      */
-    public function __construct(Foundation $kernel, Guard $auth, Repository $config)
+    public function __construct(Foundation $foundation, Guard $auth, Repository $config)
     {
-        $this->kernel = $kernel;
+        $this->foundation = $foundation;
         $this->auth = $auth;
         $this->config = $config;
     }
 
     public function filter(Route $route, Request $request, $value = 'orchestra')
     {
-        if (! $this->kernel->acl()->can("manage-{$value}")) {
+        if (! $this->foundation->acl()->can("manage-{$value}")) {
             $type = ($this->auth->guest() ? 'guest' : 'user');
             $url  = $this->config->get("orchestra/foundation::routes.{$type}");
 

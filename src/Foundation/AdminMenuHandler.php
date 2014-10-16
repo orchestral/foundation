@@ -10,7 +10,7 @@ class AdminMenuHandler
      *
      * @var \Orchestra\Foundation\Foundation
      */
-    protected $kernel;
+    protected $foundation;
 
     /**
      * ACL instance.
@@ -43,15 +43,15 @@ class AdminMenuHandler
     /**
      * Construct a new handler.
      *
-     * @param  \Orchestra\Foundation\Foundation  $kernel
+     * @param  \Orchestra\Foundation\Foundation  $foundation
      * @param  \Orchestra\Resources\Factory  $resources
      * @param  \Illuminate\Translation\Translator  $translator
      */
-    public function __construct(Foundation $kernel, Resources $resources, Translator $translator)
+    public function __construct(Foundation $foundation, Resources $resources, Translator $translator)
     {
-        $this->kernel = $kernel;
-        $this->menu = $kernel->menu();
-        $this->acl = $kernel->acl();
+        $this->foundation = $foundation;
+        $this->menu = $foundation->menu();
+        $this->acl = $foundation->acl();
         $this->resources = $resources;
         $this->translator = $translator;
     }
@@ -86,21 +86,21 @@ class AdminMenuHandler
         if ($this->acl->can('manage-users')) {
             $this->menu->add('users')
                 ->title($this->translator->trans('orchestra/foundation::title.users.list'))
-                ->link($this->kernel->handles('orchestra::users'));
+                ->link($this->foundation->handles('orchestra::users'));
         }
 
         // Add menu when logged-in user has authorization to
         // `manage orchestra`
         if ($this->acl->can('manage-orchestra')) {
-            if ($this->kernel->bound('orchestra.extension')) {
+            if ($this->foundation->bound('orchestra.extension')) {
                 $this->menu->add('extensions', '>:home')
                     ->title($this->translator->trans('orchestra/foundation::title.extensions.list'))
-                    ->link($this->kernel->handles('orchestra::extensions'));
+                    ->link($this->foundation->handles('orchestra::extensions'));
             }
 
             $this->menu->add('settings')
                 ->title($this->translator->trans('orchestra/foundation::title.settings.list'))
-                ->link($this->kernel->handles('orchestra::settings'));
+                ->link($this->foundation->handles('orchestra::settings'));
         }
     }
 
@@ -112,10 +112,10 @@ class AdminMenuHandler
      */
     protected function resources($resources)
     {
-        $boot = function ($kernel, $menu, $translator) {
+        $boot = function ($foundation, $menu, $translator) {
             $menu->add('resources', '>:extensions')
                 ->title($translator->trans('orchestra/foundation::title.resources.list'))
-                ->link($kernel->handles('orchestra::resources'));
+                ->link($foundation->handles('orchestra::resources'));
         };
 
         foreach ($resources as $name => $option) {
@@ -124,13 +124,13 @@ class AdminMenuHandler
             }
 
             if (! is_null($boot)) {
-                $boot($this->kernel, $this->menu, $this->translator);
+                $boot($this->foundation, $this->menu, $this->translator);
                 $boot = null;
             }
 
             $this->menu->add($name, '^:resources')
                 ->title($option->name)
-                ->link($this->kernel->handles("orchestra::resources/{$name}"));
+                ->link($this->foundation->handles("orchestra::resources/{$name}"));
         }
     }
 }

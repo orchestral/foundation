@@ -12,7 +12,7 @@ class InstalledFilter
      *
      * @var \Orchestra\Foundation\Foundation
      */
-    protected $kernel;
+    protected $foundation;
 
     /**
      * The authenticator implementation.
@@ -31,13 +31,13 @@ class InstalledFilter
     /**
      * Create a new filter instance.
      *
-     * @param  \Orchestra\Foundation\Foundation  $kernel
+     * @param  \Orchestra\Foundation\Foundation  $foundation
      * @param  \Illuminate\Contracts\Auth\Guard  $auth
      * @param  \Illuminate\Contracts\Config\Repository  $config
      */
-    public function __construct(Foundation $kernel, Guard $auth, Repository $config)
+    public function __construct(Foundation $foundation, Guard $auth, Repository $config)
     {
-        $this->kernel = $kernel;
+        $this->foundation = $foundation;
         $this->auth = $auth;
         $this->config = $config;
     }
@@ -49,7 +49,7 @@ class InstalledFilter
      */
     public function filter()
     {
-        if ($this->kernel->installed()) {
+        if ($this->foundation->installed()) {
             $type = ($this->auth->guest() ? 'guest' : 'user');
             $url  = $this->config->get("orchestra/foundation::routes.{$type}");
 
