@@ -3,6 +3,18 @@ title: Foundation Change Log
 
 ---
 
+## Version 3.0 {#v3-0}
+
+* Add support for Laravel 5.0.
+* Rename `Orchestra\Foundation\Application` to `Orchestra\Foundation\Foundation`.
+* Add `Orchestra\Foundation\Application`, extending `Illuminate\Foundation\Application`.
+* Convert all closure based filters to class.
+* Allow `orchestra/foundation` routing to be cached.
+* Add `Orchestra\Foundation\Traits\AliasesProviderTrait`.
+* Move password reset code to `orchestra/auth`.
+* Add `orchestra/kernel` as a dependencies
+* Convert all `Orchestra\Foundation\Foundation` services to IoC bindings.
+
 ## Version 2.2 {#v2-2}
 
 ### v2.2.5 {#v2-2-5}
