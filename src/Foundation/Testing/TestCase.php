@@ -125,7 +125,7 @@ abstract class TestCase extends TestbenchTestCase
             'Orchestra\Auth\Passwords\PasswordResetServiceProvider',
             'Orchestra\Publisher\PublisherServiceProvider',
             'Orchestra\Resources\ResourcesServiceProvider',
-            'Orchestra\Foundation\SiteServiceProvider',
+            'Orchestra\Foundation\SupportServiceProvider',
             'Orchestra\Translation\TranslationServiceProvider',
             'Orchestra\View\ViewServiceProvider',
             'Orchestra\Widget\WidgetServiceProvider',

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Application;
 use Orchestra\Foundation\Testing\TestCase;
-use Orchestra\Foundation\SiteServiceProvider;
+use Orchestra\Foundation\SupportServiceProvider;
 use Orchestra\Foundation\FoundationServiceProvider;
 use Orchestra\Foundation\ConsoleSupportServiceProvider;
 use Orchestra\Auth\Passwords\PasswordResetServiceProvider;
@@ -115,7 +115,7 @@ class ServiceProviderTest extends TestCase
         $app = App::getFacadeApplication();
 
         $foundation = new FoundationServiceProvider($app);
-        $site       = new SiteServiceProvider($app);
+        $site       = new SupportServiceProvider($app);
         $reminder   = new PasswordResetServiceProvider($app);
         $console    = new ConsoleSupportServiceProvider($app);
 

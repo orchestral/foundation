@@ -1,12 +1,12 @@
 <?php namespace Orchestra\Foundation;
 
-use Illuminate\Support\ServiceProvider;
-use Orchestra\Foundation\Publisher\PublisherManager;
 use Orchestra\Model\Role;
 use Orchestra\Model\User;
+use Illuminate\Support\ServiceProvider;
 use Orchestra\Support\Ftp\Client as FtpClient;
+use Orchestra\Foundation\Publisher\PublisherManager;
 
-class SiteServiceProvider extends ServiceProvider
+class SupportServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.

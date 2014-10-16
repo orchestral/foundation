@@ -5,8 +5,11 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.0@dev {#v3-0-0}
+
 * Add support for Laravel 5.0.
 * Rename `Orchestra\Foundation\Application` to `Orchestra\Foundation\Foundation`.
+* Rename `Orchestra\Foundation\SiteServiceProvider` to `Orchestra\Foundation\SupportServiceProvider`.
 * Add `Orchestra\Foundation\Application`, extending `Illuminate\Foundation\Application`.
 * Convert all closure based filters to class.
 * Allow `orchestra/foundation` routing to be cached.
