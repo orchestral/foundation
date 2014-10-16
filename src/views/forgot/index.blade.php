@@ -15,7 +15,7 @@
 				<div class="row">
 					<div class="nine columns offset-by-three">
 						<button type="submit" class="btn btn-primary">
-							{!! app('orchestra.site')->get('title', 'Submit') !!}
+							{!! get_meta('title', 'Submit') !!}
 						</button>
 					</div>
 				</div>

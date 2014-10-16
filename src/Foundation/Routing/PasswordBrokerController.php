@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Illuminate\Support\Facades\Input;
+use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Processor\PasswordBroker as PasswordBrokerProcessor;
-use Orchestra\Support\Facades\Site;
 
 class PasswordBrokerController extends AdminController
 {
@@ -41,7 +41,7 @@ class PasswordBrokerController extends AdminController
      */
     public function index()
     {
-        Site::set('title', trans('orchestra/foundation::title.forgot-password'));
+        Meta::set('title', trans('orchestra/foundation::title.forgot-password'));
 
         return View::make('orchestra/foundation::forgot.index');
     }
@@ -71,7 +71,7 @@ class PasswordBrokerController extends AdminController
      */
     public function show($token)
     {
-        Site::set('title', trans('orchestra/foundation::title.reset-password'));
+        Meta::set('title', trans('orchestra/foundation::title.reset-password'));
 
         return View::make('orchestra/foundation::forgot.reset')->with('token', $token);
     }

@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\Routing;
 
+use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Processor\Resource as ResourceProcessor;
-use Orchestra\Support\Facades\Site;
 
 class ResourcesController extends AdminController
 {
@@ -63,8 +63,8 @@ class ResourcesController extends AdminController
      */
     public function indexSucceed(array $data)
     {
-        Site::set('title', trans('orchestra/foundation::title.resources.list'));
-        Site::set('description', trans('orchestra/foundation::title.resources.list-detail'));
+        Meta::set('title', trans('orchestra/foundation::title.resources.list'));
+        Meta::set('description', trans('orchestra/foundation::title.resources.list-detail'));
 
         return View::make('orchestra/foundation::resources.index', $data);
     }

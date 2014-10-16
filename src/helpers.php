@@ -59,3 +59,31 @@ if (! function_exists('resources')) {
         return app('orchestra.app')->handles("orchestra/foundation::resources/{$name}");
     }
 }
+
+if (! function_exists('get_meta')) {
+    /**
+     * Get meta.
+     *
+     * @param  string   $key
+     * @param  mixed    $default
+     * @return string
+     */
+    function get_meta($key, $default = null)
+    {
+        return app('orchestra.meta')->get($key, $default);
+    }
+}
+
+if (! function_exists('set_meta')) {
+    /**
+     * Set meta.
+     *
+     * @param  string   $key
+     * @param  mixed    $value
+     * @return string
+     */
+    function set_meta($key, $value = null)
+    {
+        return app('orchestra.meta')->set($key, $value);
+    }
+}

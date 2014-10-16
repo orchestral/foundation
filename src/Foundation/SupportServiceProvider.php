@@ -23,7 +23,7 @@ class SupportServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerPublisher();
-        $this->registerSite();
+        $this->registerMeta();
         $this->registerRoleEloquent();
         $this->registerUserEloquent();
     }
@@ -49,10 +49,10 @@ class SupportServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerSite()
+    protected function registerMeta()
     {
-        $this->app->bindShared('orchestra.site', function ($app) {
-            return new Site;
+        $this->app->bindShared('orchestra.meta', function () {
+            return new Meta;
         });
     }
 
@@ -89,7 +89,7 @@ class SupportServiceProvider extends ServiceProvider
     {
         return array(
             'orchestra.publisher', 'orchestra.publisher.ftp',
-            'orchestra.site', 'orchestra.role', 'orchestra.user',
+            'orchestra.meta', 'orchestra.role', 'orchestra.user',
         );
     }
 }

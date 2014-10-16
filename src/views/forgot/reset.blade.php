@@ -29,7 +29,7 @@
 				</div>
 				<div class="row">
 					<div class="nine columns offset-by-three">
-						<button type="submit" class="btn btn-primary">{!! app('orchestra.site')->get('title', 'Submit') !!}</button>
+						<button type="submit" class="btn btn-primary">{!! get_meta('title', 'Submit') !!}</button>
 					</div>
 				</div>
 			</fieldset>

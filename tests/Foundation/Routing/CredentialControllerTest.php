@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Messages;
-use Orchestra\Support\Facades\Site;
+use Orchestra\Support\Facades\Meta;
 
 class CredentialControllerTest extends TestCase
 {
@@ -44,7 +44,7 @@ class CredentialControllerTest extends TestCase
         $this->call('GET', 'admin/login');
         $this->assertResponseOk();
 
-        $this->assertTrue(Site::has('title'));
+        $this->assertTrue(Meta::has('title'));
     }
 
     /**

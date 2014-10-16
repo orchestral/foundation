@@ -126,7 +126,7 @@ class ServiceProviderTest extends TestCase
         $siteProvides = array(
             'orchestra.publisher',
             'orchestra.publisher.ftp',
-            'orchestra.site',
+            'orchestra.meta',
             'orchestra.role',
             'orchestra.user',
         );

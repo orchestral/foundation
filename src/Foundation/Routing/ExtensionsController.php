@@ -1,11 +1,11 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Fluent;
-use Orchestra\Foundation\Processor\Extension as ExtensionProcessor;
 use Orchestra\Support\Facades\App;
-use Orchestra\Support\Facades\Site;
+use Orchestra\Support\Facades\Meta;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Input;
+use Orchestra\Foundation\Processor\Extension as ExtensionProcessor;
 
 class ExtensionsController extends AdminController
 {
@@ -140,7 +140,7 @@ class ExtensionsController extends AdminController
      */
     public function indexSucceed(array $data)
     {
-        Site::set('title', trans("orchestra/foundation::title.extensions.list"));
+        Meta::set('title', trans("orchestra/foundation::title.extensions.list"));
 
         return View::make('orchestra/foundation::extensions.index', $data);
     }
@@ -155,8 +155,8 @@ class ExtensionsController extends AdminController
     {
         $name = $data['extension']->name;
 
-        Site::set('title', App::memory()->get("extensions.available.{$name}.name", $name));
-        Site::set('description', trans("orchestra/foundation::title.extensions.configure"));
+        Meta::set('title', App::memory()->get("extensions.available.{$name}.name", $name));
+        Meta::set('description', trans("orchestra/foundation::title.extensions.configure"));
 
         return View::make('orchestra/foundation::extensions.configure', $data);
     }

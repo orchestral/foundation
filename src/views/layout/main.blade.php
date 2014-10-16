@@ -5,7 +5,7 @@
 	</head>
 	<body>
 		@include('orchestra/foundation::layout._navigation')
-		<?php app('orchestra.site')->set('header::class', 'main-header') ?>
+		<?php set_meta('header::class', 'main-header') ?>
 		@include('orchestra/foundation::components.header')
 		<section class="container main">
 			@include('orchestra/foundation::components.messages')

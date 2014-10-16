@@ -1,10 +1,10 @@
 <?php namespace Orchestra\Foundation\Routing;
 
+use Orchestra\Support\Facades\Meta;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Processor\Publisher as PublisherProcessor;
-use Orchestra\Support\Facades\Site;
 
 class PublisherController extends AdminController
 {
@@ -46,8 +46,8 @@ class PublisherController extends AdminController
      */
     public function ftp()
     {
-        Site::set('title', trans('orchestra/foundation::title.publisher.ftp'));
-        Site::set('description', trans('orchestra/foundation::title.publisher.description'));
+        Meta::set('title', trans('orchestra/foundation::title.publisher.ftp'));
+        Meta::set('description', trans('orchestra/foundation::title.publisher.description'));
 
         return View::make('orchestra/foundation::publisher.ftp');
     }

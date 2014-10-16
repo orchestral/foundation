@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Orchestra\Support\Facades\Site;
+use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -42,7 +42,7 @@ class DashboardController extends AdminController
      */
     public function index()
     {
-        Site::set('title', trans("orchestra/foundation::title.home"));
+        Meta::set('title', trans("orchestra/foundation::title.home"));
 
         return $this->processor->show($this);
     }

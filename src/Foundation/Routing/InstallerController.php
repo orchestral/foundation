@@ -1,10 +1,10 @@
 <?php namespace Orchestra\Foundation\Routing;
 
+use Orchestra\Support\Facades\Meta;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Processor\Installer as InstallerProcessor;
-use Orchestra\Support\Facades\Site;
 
 class InstallerController extends BaseController
 {
@@ -17,8 +17,8 @@ class InstallerController extends BaseController
     {
         $this->processor = $processor;
 
-        Site::set('navigation::usernav', false);
-        Site::set('title', 'Installer');
+        Meta::set('navigation::usernav', false);
+        Meta::set('title', 'Installer');
 
         parent::__construct();
     }

@@ -3,7 +3,7 @@
 use Mockery as m;
 use Illuminate\Support\Facades\App;
 use Orchestra\Support\Facades\HTML;
-use Orchestra\Support\Facades\Site;
+use Orchestra\Support\Facades\Meta;
 use Orchestra\Foundation\Testing\TestCase;
 
 class MacrosTest extends TestCase
@@ -43,7 +43,7 @@ class MacrosTest extends TestCase
     public function testHtmlTitleMacroWithPageTitle()
     {
         $this->app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
-        Site::shouldReceive('get')->once()->with('title', '')->andReturn('Foobar');
+        Meta::shouldReceive('get')->once()->with('title', '')->andReturn('Foobar');
 
         $memory->shouldReceive('get')->once()->with('site.name', '')->andReturn('Foo')
             ->shouldReceive('get')->once()->with('site.format.title', ':pageTitle &mdash; :siteTitle')

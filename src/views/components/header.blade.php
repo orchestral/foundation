@@ -1,11 +1,11 @@
 <?php
 
-$title       = app('orchestra.site')->get('title');
-$description = app('orchestra.site')->get('description'); ?>
+$title       = get_meta('title');
+$description = get_meta('description'); ?>
 
-<div class="{!! app('orchestra.site')->get('header::class', 'page-header') !!}">
+<div class="{!! get_meta('header::class', 'page-header') !!}">
 	<div class="container">
-		@if (app('orchestra.site')->get('header::add-button'))
+		@if (get_meta('header::add-button'))
 		<div class="pull-right">
 			<a href="{!! app('url')->current() !!}/create" class="btn btn-primary">
 				{{ trans('orchestra/foundation::label.add') }}
@@ -21,4 +21,4 @@ $description = app('orchestra.site')->get('description'); ?>
 	</div>
 </div>
 
-<?php app('orchestra.site')->set('header::class', 'page-header'); ?>
+<?php set_meta('header::class', 'page-header'); ?>

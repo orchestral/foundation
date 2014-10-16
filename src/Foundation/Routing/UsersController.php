@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Illuminate\Support\Facades\Input;
+use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Processor\User as UserProcessor;
-use Orchestra\Support\Facades\Site;
 
 class UsersController extends AdminController
 {
@@ -125,7 +125,7 @@ class UsersController extends AdminController
      */
     public function indexSucceed(array $data)
     {
-        Site::set('title', trans('orchestra/foundation::title.users.list'));
+        Meta::set('title', trans('orchestra/foundation::title.users.list'));
 
         return View::make('orchestra/foundation::users.index', $data);
     }
@@ -149,7 +149,7 @@ class UsersController extends AdminController
      */
     public function editSucceed(array $data)
     {
-        Site::set('title', trans('orchestra/foundation::title.users.update'));
+        Meta::set('title', trans('orchestra/foundation::title.users.update'));
 
         return View::make('orchestra/foundation::users.edit', $data);
     }

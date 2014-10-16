@@ -1,11 +1,9 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
-use Carbon\Carbon;
-use Illuminate\Container\Container;
-use Orchestra\Foundation\Site;
+use Orchestra\Foundation\Meta;
 
-class SiteTest extends \PHPUnit_Framework_TestCase
+class MetaTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Setup the test environment.
@@ -24,7 +22,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Site::get() method.
+     * Test Orchestra\Foundation\Meta::get() method.
      *
      * @test
      * @group support
@@ -35,7 +33,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase
         $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
-        $stub = new Site($auth, $config, $memory);
+        $stub = new Meta($auth, $config, $memory);
 
         $refl = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
@@ -50,7 +48,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Site::set() method.
+     * Test Orchestra\Foundation\Meta::set() method.
      *
      * @test
      * @group support
@@ -61,7 +59,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase
         $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
-        $stub = new Site($auth, $config, $memory);
+        $stub = new Meta($auth, $config, $memory);
         $stub->set('title', 'Foo');
         $stub->set('foo.bar', 'Foobar');
 
@@ -70,7 +68,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Site::has() method.
+     * Test Orchestra\Foundation\Meta::has() method.
      *
      * @test
      * @group support
@@ -81,7 +79,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase
         $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
-        $stub = new Site($auth, $config, $memory);
+        $stub = new Meta($auth, $config, $memory);
 
         $refl = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
@@ -98,7 +96,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Site::forget() method.
+     * Test Orchestra\Foundation\Meta::forget() method.
      *
      * @test
      * @group support
@@ -109,7 +107,7 @@ class SiteTest extends \PHPUnit_Framework_TestCase
         $auth = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
         $memory = m::mock('\Orchestra\Memory\Provider');
 
-        $stub = new Site($auth, $config, $memory);
+        $stub = new Meta($auth, $config, $memory);
 
         $refl = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');

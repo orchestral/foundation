@@ -2,7 +2,7 @@
 
 use Orchestra\Support\Traits\DataContainerTrait;
 
-class Site
+class Meta
 {
     use DataContainerTrait;
 }

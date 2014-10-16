@@ -1,11 +1,11 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
+use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
-use Orchestra\Foundation\Processor\Registration as RegistrationProcessor;
+use Illuminate\Support\Facades\Input;
 use Orchestra\Support\Facades\Messages;
-use Orchestra\Support\Facades\Site;
+use Illuminate\Support\Facades\Redirect;
+use Orchestra\Foundation\Processor\Registration as RegistrationProcessor;
 
 class RegistrationController extends AdminController
 {
@@ -65,7 +65,7 @@ class RegistrationController extends AdminController
      */
     public function indexSucceed(array $data)
     {
-        Site::set('title', trans('orchestra/foundation::title.register'));
+        Meta::set('title', trans('orchestra/foundation::title.register'));
 
         return View::make('orchestra/foundation::credential.register', $data);
     }

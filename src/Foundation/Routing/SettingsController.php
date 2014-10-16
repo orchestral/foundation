@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Illuminate\Support\Facades\Input;
+use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Processor\Setting as SettingProcessor;
-use Orchestra\Support\Facades\Site;
 
 class SettingsController extends AdminController
 {
@@ -72,7 +72,7 @@ class SettingsController extends AdminController
      */
     public function showSucceed(array $data)
     {
-        Site::set('title', trans('orchestra/foundation::title.settings.list'));
+        Meta::set('title', trans('orchestra/foundation::title.settings.list'));
 
         return View::make('orchestra/foundation::settings.index', $data);
     }

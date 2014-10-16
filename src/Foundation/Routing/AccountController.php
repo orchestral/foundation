@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Illuminate\Support\Facades\Input;
+use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Processor\Account as AccountProcessor;
-use Orchestra\Support\Facades\Site;
 
 class AccountController extends AdminController
 {
@@ -86,7 +86,7 @@ class AccountController extends AdminController
      */
     public function showProfileSucceed(array $data)
     {
-        Site::set('title', trans("orchestra/foundation::title.account.profile"));
+        Meta::set('title', trans("orchestra/foundation::title.account.profile"));
 
         return View::make('orchestra/foundation::account.index', $data);
     }
@@ -135,7 +135,7 @@ class AccountController extends AdminController
      */
     public function showPasswordSucceed(array $data)
     {
-        Site::set('title', trans("orchestra/foundation::title.account.password"));
+        Meta::set('title', trans("orchestra/foundation::title.account.password"));
 
         return View::make('orchestra/foundation::account.password', $data);
     }
