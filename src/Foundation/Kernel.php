@@ -16,11 +16,14 @@ class Kernel extends RouteManager
     protected $booted = false;
 
     /**
-     * Passtru method for Illuminate\Foundation\Application.
+     * Get acl services.
      *
-     * @var array
+     * @var \Orchestra\Auth\Acl\Acl
      */
-    protected $passtru = ['abort', 'bound', 'make'];
+    public function acl()
+    {
+        return $this->app['orchestra.platform.acl'];
+    }
 
     /**
      * Start the application.
@@ -40,33 +43,6 @@ class Kernel extends RouteManager
     }
 
     /**
-     * Create Administration Menu for Orchestra Platform.
-     *
-     * @return void
-     */
-    protected function createAdminMenu()
-    {
-        $menu    = $this->menu();
-        $handler = 'Orchestra\Foundation\AdminMenuHandler';
-
-        $menu->add('home')
-            ->title($this->app['translator']->get('orchestra/foundation::title.home'))
-            ->link($this->handles('orchestra::/'));
-
-        $this->app['events']->listen('orchestra.ready: admin', $handler);
-    }
-
-    /**
-     * Get Application instance.
-     *
-     * @return \Illuminate\Foundation\Application
-     */
-    public function illuminate()
-    {
-        return $this->app;
-    }
-
-    /**
      * Get installation status.
      *
      * @return bool
@@ -74,6 +50,26 @@ class Kernel extends RouteManager
     public function installed()
     {
         return $this->app['orchestra.installed'];
+    }
+
+    /**
+     * Get memory services.
+     *
+     * @var \Orchestra\Memory\Provider
+     */
+    public function memory()
+    {
+        return $this->app['orchestra.platform.memory'];
+    }
+
+    /**
+     * Get menu services.
+     *
+     * @var \Orchestra\Widget\MenuWidgetHandler
+     */
+    public function menu()
+    {
+        return $this->app['orchestra.platform.menu'];
     }
 
     /**
@@ -189,6 +185,23 @@ class Kernel extends RouteManager
     }
 
     /**
+     * Create Administration Menu for Orchestra Platform.
+     *
+     * @return void
+     */
+    protected function createAdminMenu()
+    {
+        $menu    = $this->menu();
+        $handler = 'Orchestra\Foundation\AdminMenuHandler';
+
+        $menu->add('home')
+            ->title($this->app['translator']->get('orchestra/foundation::title.home'))
+            ->link($this->handles('orchestra::/'));
+
+        $this->app['events']->listen('orchestra.ready: admin', $handler);
+    }
+
+    /**
      * Register base application services.
      *
      * @return void
@@ -222,16 +235,7 @@ class Kernel extends RouteManager
      */
     public function __call($method, $parameters)
     {
-        // Allow this class to be able to call method available in
-        // Illuminate\Foundation\Application.
-        if (in_array($method, $this->passtru)) {
-            return call_user_func_array([$this->app, $method], $parameters);
-        }
-
-        $action = (count($parameters) < 1 ? "orchestra.platform" : array_shift($parameters));
-        $service = "{$action}.{$method}";
-
-        return $this->app[$service];
+        return call_user_func_array([$this->app, $method], $parameters);
     }
 
     /**

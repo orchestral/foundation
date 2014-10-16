@@ -165,19 +165,6 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Kernel::illuminate() method.
-     *
-     * @test
-     */
-    public function testIlluminateMethod()
-    {
-        $stub = new Kernel($this->app);
-
-        $this->assertInstanceOf('\Illuminate\Foundation\Application', $stub->illuminate());
-        $this->assertInstanceOf('\Illuminate\Http\Request', $stub->make('request'));
-    }
-
-    /**
      * Test Orchestra\Foundation\RouteManager::handles() method.
      *
      * @test
