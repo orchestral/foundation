@@ -1,14 +1,14 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Closure;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\Facades\Event;
+use Orchestra\Support\Facades\Publisher;
+use Orchestra\Support\Facades\Foundation;
+use Orchestra\Support\Facades\Extension as E;
+use Orchestra\Publisher\FilePermissionException;
 use Orchestra\Foundation\Presenter\Extension as ExtensionPresenter;
 use Orchestra\Foundation\Validation\Extension as ExtensionValidator;
-use Orchestra\Publisher\FilePermissionException;
-use Orchestra\Support\Facades\App;
-use Orchestra\Support\Facades\Extension as E;
-use Orchestra\Support\Facades\Publisher;
 
 class Extension extends AbstractableProcessor
 {
@@ -108,7 +108,7 @@ class Extension extends AbstractableProcessor
             return $listener->suspend(404);
         }
 
-        $memory = App::memory();
+        $memory = Foundation::memory();
 
         // Load configuration from memory.
         $activeConfig = (array) $memory->get("extensions.active.{$extension->name}.config", array());
@@ -145,7 +145,7 @@ class Extension extends AbstractableProcessor
             return $listener->updateValidationFailed($validation, $extension->uid);
         }
 
-        $memory = App::memory();
+        $memory = Foundation::memory();
         $config = (array) $memory->get("extension.active.{$extension->name}.config", array());
         $input  = new Fluent(array_merge($config, $input));
 

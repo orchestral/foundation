@@ -1,17 +1,17 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Exception;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Facades\Config;
+use Orchestra\Model\User;
+use Orchestra\Support\Str;
+use Orchestra\Notifier\Message;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Config;
+use Orchestra\Support\Facades\Notifier;
+use Orchestra\Support\Facades\Foundation;
+use Illuminate\Contracts\Support\Arrayable;
 use Orchestra\Foundation\Presenter\Account as AccountPresenter;
 use Orchestra\Foundation\Validation\Account as AccountValidator;
-use Orchestra\Model\User;
-use Orchestra\Notifier\Message;
-use Orchestra\Support\Facades\App;
-use Orchestra\Support\Facades\Notifier;
-use Orchestra\Support\Str;
 
 class Registration extends AbstractableProcessor
 {
@@ -35,7 +35,7 @@ class Registration extends AbstractableProcessor
      */
     public function index($listener)
     {
-        $eloquent = App::make('orchestra.user');
+        $eloquent = Foundation::make('orchestra.user');
 
         $title = 'orchestra/foundation::title.register';
         $form  = $this->presenter->profile($eloquent, 'orchestra::register');
@@ -68,7 +68,7 @@ class Registration extends AbstractableProcessor
             return $listener->createValidationFailed($validation);
         }
 
-        $user = App::make('orchestra.user');
+        $user = Foundation::make('orchestra.user');
 
         $user->email    = $input['email'];
         $user->fullname = $input['fullname'];
@@ -108,7 +108,7 @@ class Registration extends AbstractableProcessor
         // object. This allow the data to be transferred to JSON if the
         // mail is send using queue.
 
-        $memory = App::memory();
+        $memory = Foundation::memory();
         $site   = $memory->get('site.name', 'Orchestra Platform');
 
         $data = array(

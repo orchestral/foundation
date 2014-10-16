@@ -1,11 +1,11 @@
 <?php namespace Orchestra\Foundation\Processor;
 
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Fluent;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Config;
+use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Presenter\Setting as SettingPresenter;
 use Orchestra\Foundation\Validation\Setting as SettingValidator;
-use Orchestra\Support\Facades\App;
 
 class Setting extends AbstractableProcessor
 {
@@ -31,7 +31,7 @@ class Setting extends AbstractableProcessor
     {
         // Orchestra settings are stored using Orchestra\Memory, we need to
         // fetch it and convert it to Fluent (to mimick Eloquent properties).
-        $memory   = App::memory();
+        $memory   = Foundation::memory();
         $eloquent = new Fluent(array(
             'site_name'        => $memory->get('site.name', ''),
             'site_description' => $memory->get('site.description', ''),
@@ -74,7 +74,7 @@ class Setting extends AbstractableProcessor
         if ($validation->fails()) {
             return $listener->updateValidationFailed($validation);
         }
-        $memory = App::memory();
+        $memory = Foundation::memory();
 
         $memory->put('site.name', $input['site_name']);
         $memory->put('site.description', $input['site_description']);
@@ -113,8 +113,8 @@ class Setting extends AbstractableProcessor
      */
     public function migrate($listener)
     {
-        App::make('orchestra.publisher.asset')->foundation();
-        App::make('orchestra.publisher.migrate')->foundation();
+        Foundation::make('orchestra.publisher.asset')->foundation();
+        Foundation::make('orchestra.publisher.migrate')->foundation();
 
         return $listener->migrateSucceed();
     }

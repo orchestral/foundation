@@ -1,10 +1,10 @@
 <?php namespace Orchestra\Foundation\Routing;
 
 use Illuminate\Support\Fluent;
-use Orchestra\Support\Facades\App;
 use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
+use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Processor\Extension as ExtensionProcessor;
 
 class ExtensionsController extends AdminController
@@ -155,7 +155,7 @@ class ExtensionsController extends AdminController
     {
         $name = $data['extension']->name;
 
-        Meta::set('title', App::memory()->get("extensions.available.{$name}.name", $name));
+        Meta::set('title', Foundation::memory()->get("extensions.available.{$name}.name", $name));
         Meta::set('description', trans("orchestra/foundation::title.extensions.configure"));
 
         return View::make('orchestra/foundation::extensions.configure', $data);

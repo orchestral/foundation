@@ -2,13 +2,13 @@
 
 use Exception;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
+use Orchestra\Model\User as Eloquent;
+use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Presenter\User as UserPresenter;
 use Orchestra\Foundation\Validation\User as UserValidator;
-use Orchestra\Model\User as Eloquent;
-use Orchestra\Support\Facades\App;
 
 class User extends AbstractableProcessor
 {
@@ -38,8 +38,8 @@ class User extends AbstractableProcessor
 
         // Get Users (with roles) and limit it to only 30 results for
         // pagination. Don't you just love it when pagination simply works.
-        $eloquent = App::make('orchestra.user')->search($searchKeyword, $searchRoles);
-        $roles = App::make('orchestra.role')->lists('name', 'id');
+        $eloquent = Foundation::make('orchestra.user')->search($searchKeyword, $searchRoles);
+        $roles = Foundation::make('orchestra.role')->lists('name', 'id');
 
         // Build users table HTML using a schema liked code structure.
         $table = $this->presenter->table($eloquent);
@@ -68,7 +68,7 @@ class User extends AbstractableProcessor
      */
     public function create($listener)
     {
-        $eloquent = App::make('orchestra.user');
+        $eloquent = Foundation::make('orchestra.user');
         $form = $this->presenter->form($eloquent, 'create');
 
         $this->fireEvent('form', array($eloquent, $form));
@@ -85,7 +85,7 @@ class User extends AbstractableProcessor
      */
     public function edit($listener, $id)
     {
-        $eloquent = App::make('orchestra.user')->findOrFail($id);
+        $eloquent = Foundation::make('orchestra.user')->findOrFail($id);
         $form = $this->presenter->form($eloquent, 'update');
 
         $this->fireEvent('form', array($eloquent, $form));
@@ -108,7 +108,7 @@ class User extends AbstractableProcessor
             return $listener->storeValidationFailed($validation);
         }
 
-        $user = App::make('orchestra.user');
+        $user = Foundation::make('orchestra.user');
 
         $user->status = Eloquent::UNVERIFIED;
         $user->password = $input['password'];
@@ -143,7 +143,7 @@ class User extends AbstractableProcessor
             return $listener->updateValidationFailed($validation, $id);
         }
 
-        $user = App::make('orchestra.user')->findOrFail($id);
+        $user = Foundation::make('orchestra.user')->findOrFail($id);
 
         ! empty($input['password']) && $user->password = $input['password'];
 
@@ -165,7 +165,7 @@ class User extends AbstractableProcessor
      */
     public function destroy($listener, $id)
     {
-        $user = App::make('orchestra.user')->findOrFail($id);
+        $user = Foundation::make('orchestra.user')->findOrFail($id);
 
         // Avoid self-deleting accident.
         if ((string) $user->id === (string) Auth::user()->id) {

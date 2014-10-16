@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Illuminate\Support\Facades\Password;
+use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Testing\TestCase;
 use Illuminate\Contracts\Auth\PasswordBroker;
-use Orchestra\Support\Facades\App as Orchestra;
 
 class PasswordBrokerControllerTest extends TestCase
 {
@@ -72,7 +72,7 @@ class PasswordBrokerControllerTest extends TestCase
         $validator->shouldReceive('with')->once()->with(m::type('Array'))->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(false);
 
-        Orchestra::shouldReceive('memory')->once()->andReturn($memory);
+        Foundation::shouldReceive('memory')->once()->andReturn($memory);
 
         $mailer->shouldReceive('subject')->once()->andReturnNull();
         $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')
@@ -87,7 +87,7 @@ class PasswordBrokerControllerTest extends TestCase
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::forgot')->andReturn('forgot');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot')->andReturn('forgot');
 
         $this->call('POST', 'admin/forgot', $input);
         $this->assertRedirectedTo('forgot');
@@ -112,7 +112,7 @@ class PasswordBrokerControllerTest extends TestCase
         $validator->shouldReceive('with')->once()->with(m::type('Array'))->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(false);
 
-        Orchestra::shouldReceive('memory')->once()->andReturn($memory);
+        Foundation::shouldReceive('memory')->once()->andReturn($memory);
 
         $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')
             ->andReturn('Orchestra Platform');
@@ -122,7 +122,7 @@ class PasswordBrokerControllerTest extends TestCase
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::forgot')->andReturn('forgot');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot')->andReturn('forgot');
 
         $this->call('POST', 'admin/forgot', $input);
         $this->assertRedirectedTo('forgot');
@@ -147,7 +147,7 @@ class PasswordBrokerControllerTest extends TestCase
         $validator->shouldReceive('with')->once()->with(m::type('Array'))->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(true);
 
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::forgot')->andReturn('forgot');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot')->andReturn('forgot');
 
         $this->call('POST', 'admin/forgot', $input);
         $this->assertRedirectedTo('forgot');
@@ -217,7 +217,7 @@ class PasswordBrokerControllerTest extends TestCase
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
         Auth::shouldReceive('login')->once()->with($user)->andReturnNull();
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::/')->andReturn('dashboard');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::/')->andReturn('dashboard');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/forgot/reset', $input);
@@ -245,7 +245,7 @@ class PasswordBrokerControllerTest extends TestCase
 
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken')->andReturn('reset');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken')->andReturn('reset');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/forgot/reset', $input);
@@ -273,7 +273,7 @@ class PasswordBrokerControllerTest extends TestCase
 
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken')->andReturn('reset');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken')->andReturn('reset');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/forgot/reset', $input);
@@ -301,7 +301,7 @@ class PasswordBrokerControllerTest extends TestCase
 
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken')->andReturn('reset');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken')->andReturn('reset');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/forgot/reset', $input);

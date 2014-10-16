@@ -1,8 +1,8 @@
 <?php
 
-use Orchestra\Support\Facades\App;
+use Orchestra\Support\Facades\Foundation;
 
-App::namespaced('Orchestra\Foundation\Routing', function ($router) {
+Foundation::namespaced('Orchestra\Foundation\Routing', function ($router) {
     // Route to account/profile.
     $router->get('account', 'AccountController@showProfile');
     $router->post('account', 'AccountController@updateProfile');
@@ -10,7 +10,7 @@ App::namespaced('Orchestra\Foundation\Routing', function ($router) {
     $router->post('account/password', 'AccountController@updatePassword');
 
     // Route to extensions.
-    if (App::bound('orchestra.extension')) {
+    if (Foundation::bound('orchestra.extension')) {
         $router->get('extensions', 'ExtensionsController@index');
         $router->get('extensions/activate/{name}', 'ExtensionsController@activate');
         $router->get('extensions/deactivate/{name}', 'ExtensionsController@deactivate');

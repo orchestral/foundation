@@ -1,14 +1,14 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
-use Orchestra\Foundation\Testing\TestCase;
-use Orchestra\Support\Facades\App as Orchestra;
 use Orchestra\Support\Facades\Messages;
+use Orchestra\Support\Facades\Foundation;
+use Orchestra\Foundation\Testing\TestCase;
 
 class AccountControllerTest extends TestCase
 {
@@ -93,7 +93,7 @@ class AccountControllerTest extends TestCase
             ->shouldReceive('save')->once()->andReturnNull();
 
         Auth::shouldReceive('user')->once()->andReturn($user);
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::account')->andReturn('account');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::account')->andReturn('account');
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
                 $c();
@@ -151,7 +151,7 @@ class AccountControllerTest extends TestCase
             ->shouldReceive('save')->never()->andReturnNull();
 
         Auth::shouldReceive('user')->once()->andReturn($user);
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::account')->andReturn('account');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::account')->andReturn('account');
         DB::shouldReceive('transaction')->once()->with(m::type('Closure'))->andThrow('\Exception');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
@@ -181,7 +181,7 @@ class AccountControllerTest extends TestCase
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id']);
 
         Auth::shouldReceive('user')->once()->andReturn($user);
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::account')->andReturn('account');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::account')->andReturn('account');
 
         $this->call('POST', 'admin/account', $input);
         $this->assertRedirectedTo('account');
@@ -239,7 +239,7 @@ class AccountControllerTest extends TestCase
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
                 $c();
             });
-        Orchestra::shouldReceive('handles')->once()
+        Foundation::shouldReceive('handles')->once()
             ->with('orchestra::account/password')->andReturn('account/password');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
 
@@ -299,7 +299,7 @@ class AccountControllerTest extends TestCase
             ->with($input['current_password'], 'hashedstring')->andReturn(true);
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andThrow('\Exception');
-        Orchestra::shouldReceive('handles')->once()
+        Foundation::shouldReceive('handles')->once()
             ->with('orchestra::account/password')->andReturn('account/password');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
@@ -333,7 +333,7 @@ class AccountControllerTest extends TestCase
         Auth::shouldReceive('user')->once()->andReturn($user);
         Hash::shouldReceive('check')->once()
             ->with($input['current_password'], 'hashedstring')->andReturn(false);
-        Orchestra::shouldReceive('handles')->once()
+        Foundation::shouldReceive('handles')->once()
             ->with('orchestra::account/password')->andReturn('account/password');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
@@ -364,7 +364,7 @@ class AccountControllerTest extends TestCase
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id']);
 
         Auth::shouldReceive('user')->once()->andReturn($user);
-        Orchestra::shouldReceive('handles')->once()
+        Foundation::shouldReceive('handles')->once()
             ->with('orchestra::account/password')->andReturn('account/password');
 
         $this->call('POST', 'admin/account/password', $input);

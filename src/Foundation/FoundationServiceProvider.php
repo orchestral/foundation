@@ -47,7 +47,7 @@ class FoundationServiceProvider extends ServiceProvider
     protected $facades = [
         'Orchestra\Support\Facades\Asset' => 'Orchestra\Asset',
         'Orchestra\Support\Facades\ACL' => 'Orchestra\ACL',
-        'Orchestra\Support\Facades\App' => 'Orchestra\App',
+        'Orchestra\Support\Facades\Foundation' => ['Orchestra\App', 'Orchestra\Foundation'],
         'Orchestra\Support\Facades\Config' => 'Orchestra\Config',
         'Orchestra\Support\Facades\Extension' => 'Orchestra\Extension',
         'Orchestra\Support\Facades\Form' => 'Orchestra\Form',

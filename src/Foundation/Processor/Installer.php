@@ -1,11 +1,11 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use ReflectionException;
+use Orchestra\Model\User;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Foundation\Installation\InstallerInterface;
 use Orchestra\Foundation\Installation\RequirementInterface;
-use Orchestra\Model\User;
-use Orchestra\Support\Facades\App;
 
 class Installer
 {

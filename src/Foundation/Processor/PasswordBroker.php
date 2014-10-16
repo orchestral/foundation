@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Processor;
 
-use Orchestra\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Orchestra\Support\Facades\Foundation;
 use Illuminate\Contracts\Auth\PasswordBroker as Password;
 use Orchestra\Foundation\Validation\Auth as AuthValidator;
 
@@ -41,7 +41,7 @@ class PasswordBroker extends AbstractableProcessor
             return $listener->requestValidationFailed($validation);
         }
 
-        $memory = App::memory();
+        $memory = Foundation::memory();
         $site  = $memory->get('site.name', 'Orchestra Platform');
         $data  = ['email' => $input['email']];
 

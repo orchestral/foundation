@@ -1,13 +1,12 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Fluent;
-use Orchestra\Foundation\Testing\TestCase;
-use Orchestra\Support\Facades\App as Orchestra;
-use Orchestra\Support\Facades\Resources;
 use Orchestra\Support\Facades\Table;
+use Orchestra\Support\Facades\Resources;
+use Orchestra\Foundation\Testing\TestCase;
 
 class ResourcesControllerTest extends TestCase
 {

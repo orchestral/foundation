@@ -2,11 +2,11 @@
 
 use Mockery as m;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
-use Orchestra\Foundation\Testing\TestCase;
-use Orchestra\Support\Facades\App as Orchestra;
-use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Meta;
+use Illuminate\Support\Facades\Auth;
+use Orchestra\Support\Facades\Messages;
+use Orchestra\Support\Facades\Foundation;
+use Orchestra\Foundation\Testing\TestCase;
 
 class CredentialControllerTest extends TestCase
 {
@@ -75,7 +75,7 @@ class CredentialControllerTest extends TestCase
         Auth::shouldReceive('user')->once()->andReturn($user);
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
 
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::/')->andReturn('/');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::/')->andReturn('/');
 
         $this->call('POST', 'admin/login', $input);
         $this->assertRedirectedTo('/');
@@ -104,7 +104,7 @@ class CredentialControllerTest extends TestCase
             ->with(m::type('Array'), true)->andReturn(false);
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
 
         $this->call('POST', 'admin/login', $input);
         $this->assertRedirectedTo('login');
@@ -129,7 +129,7 @@ class CredentialControllerTest extends TestCase
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(true);
 
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
 
         $this->call('POST', 'admin/login', $input);
         $this->assertRedirectedTo('login');
@@ -144,7 +144,7 @@ class CredentialControllerTest extends TestCase
     public function testDeleteLoginAction()
     {
         Auth::shouldReceive('logout')->once()->andReturnNull();
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
 
         $this->call('GET', 'admin/logout');
         $this->assertRedirectedTo('login');
@@ -158,7 +158,7 @@ class CredentialControllerTest extends TestCase
     public function testDeleteLoginActionWithRedirection()
     {
         Auth::shouldReceive('logout')->once()->andReturnNull();
-        Orchestra::shouldReceive('handles')->once()->with('home')->andReturn('home');
+        Foundation::shouldReceive('handles')->once()->with('home')->andReturn('home');
 
         $this->call('GET', 'admin/logout', array('redirect' => 'home'));
         $this->assertRedirectedTo('home');

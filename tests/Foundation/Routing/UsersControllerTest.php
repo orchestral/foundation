@@ -1,15 +1,15 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\View;
-use Orchestra\Foundation\Testing\TestCase;
-use Orchestra\Support\Facades\App as Orchestra;
+use Illuminate\Support\Facades\App;
 use Orchestra\Support\Facades\Form;
-use Orchestra\Support\Facades\Messages;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Table;
+use Orchestra\Support\Facades\Messages;
+use Orchestra\Support\Facades\Foundation;
+use Orchestra\Foundation\Testing\TestCase;
 
 class UsersControllerTest extends TestCase
 {
@@ -67,8 +67,8 @@ class UsersControllerTest extends TestCase
         $presenter->shouldReceive('table')->once()->andReturn($table)
             ->shouldReceive('actions')->once()->with($table)->andReturn('list.users');
 
-        Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
-        Orchestra::shouldReceive('make')->once()->with('orchestra.role')->andReturn($role);
+        Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
+        Foundation::shouldReceive('make')->once()->with('orchestra.role')->andReturn($role);
         View::shouldReceive('make')->once()
             ->with('orchestra/foundation::users.index', m::type('Array'))->andReturn('foo');
 
@@ -87,7 +87,7 @@ class UsersControllerTest extends TestCase
 
         $presenter->shouldReceive('form')->once()->andReturn('form.users');
 
-        Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn(array());
+        Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn(array());
         View::shouldReceive('make')->once()
             ->with('orchestra/foundation::users.edit', m::type('Array'))->andReturn('foo');
 
@@ -110,7 +110,7 @@ class UsersControllerTest extends TestCase
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
         $presenter->shouldReceive('form')->once()->andReturn('form.users');
 
-        Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
+        Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
         View::shouldReceive('make')->once()
             ->with('orchestra/foundation::users.edit', m::type('Array'))->andReturn('foo');
 
@@ -147,8 +147,8 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturnNull();
 
-        Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::users')->andReturn('users');
+        Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
+        Foundation::shouldReceive('handles')->once()->with('orchestra::users')->andReturn('users');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
@@ -188,8 +188,8 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturnNull();
 
-        Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::users')->andReturn('users');
+        Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
+        Foundation::shouldReceive('handles')->once()->with('orchestra::users')->andReturn('users');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
@@ -220,7 +220,7 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(true);
 
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::users/create')->andReturn('users/create');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::users/create')->andReturn('users/create');
 
         $this->call('POST', 'admin/users', $input);
         $this->assertRedirectedTo('users/create');
@@ -258,8 +258,8 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturnNull();
 
-        Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::users')->andReturn('users');
+        Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
+        Foundation::shouldReceive('handles')->once()->with('orchestra::users')->andReturn('users');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
@@ -321,9 +321,9 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturnNull();
 
-        Orchestra::shouldReceive('make')->once()
+        Foundation::shouldReceive('make')->once()
             ->with('orchestra.user')->andReturn($builder);
-        Orchestra::shouldReceive('handles')->once()
+        Foundation::shouldReceive('handles')->once()
             ->with('orchestra::users')->andReturn('users');
         Messages::shouldReceive('add')->once()
             ->with('error', m::any())->andReturnNull();
@@ -357,7 +357,7 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(true);
 
-        Orchestra::shouldReceive('handles')->once()
+        Foundation::shouldReceive('handles')->once()
             ->with('orchestra::users/foo/edit')->andReturn('users/foo/edit');
 
         $this->call('PUT', 'admin/users/foo', $input);
@@ -382,9 +382,9 @@ class UsersControllerTest extends TestCase
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foo')
             ->shouldReceive('delete')->once()->andReturnNull();
 
-        Orchestra::shouldReceive('make')->once()
+        Foundation::shouldReceive('make')->once()
             ->with('orchestra.user')->andReturn($builder);
-        Orchestra::shouldReceive('handles')->once()
+        Foundation::shouldReceive('handles')->once()
             ->with('orchestra::users')->andReturn('users');
         Messages::shouldReceive('add')->once()
             ->with('success', m::any())->andReturnNull();
@@ -415,7 +415,7 @@ class UsersControllerTest extends TestCase
         $builder->shouldReceive('findOrFail')->once()->with('foobar')->andReturn($user);
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foobar');
 
-        Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
+        Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
         App::shouldReceive('abort')->once();
         Auth::shouldReceive('user')->once()->andReturn($auth);
 
@@ -439,9 +439,9 @@ class UsersControllerTest extends TestCase
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foo')
             ->shouldReceive('delete')->once()->andThrow('\Exception');
 
-        Orchestra::shouldReceive('make')->once()
+        Foundation::shouldReceive('make')->once()
             ->with('orchestra.user')->andReturn($builder);
-        Orchestra::shouldReceive('handles')->once()
+        Foundation::shouldReceive('handles')->once()
             ->with('orchestra::users')->andReturn('users');
         Messages::shouldReceive('add')->once()
             ->with('error', m::any())->andReturnNull();
