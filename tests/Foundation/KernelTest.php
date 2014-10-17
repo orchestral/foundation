@@ -25,7 +25,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.mail'] = m::mock('\Orchestra\Notifier\Mailer')->makePartial();
         $app['orchestra.memory'] = m::mock('\Orchestra\Memory\MemoryManager')->makePartial();
         $app['orchestra.notifier'] = m::mock('\Orchestra\Notifier\NotifierManager')->makePartial();
-        $app['orchestra.widget'] = m::mock('\Orchestra\Widget\MenuWidgetHandler')->makePartial();
+        $app['orchestra.widget'] = m::mock('\Orchestra\Widget\Handlers\Menu')->makePartial();
         $app['config'] = m::mock('\Illuminate\Contracts\Config\Repository');
         $app['events'] = m::mock('\Illuminate\Contracts\Events\Dispatcher');
         $app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();

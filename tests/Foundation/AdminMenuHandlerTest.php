@@ -24,7 +24,7 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $app = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
         $acl = m::mock('\Orchestra\Auth\Acl\Container');
-        $menu = m::mock('\Orchestra\Widget\MenuWidgetHandler');
+        $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
         $resources = m::mock('\Orchestra\Resources\Factory')->makePartial();
         $translator = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
