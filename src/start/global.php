@@ -4,31 +4,11 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
 use Orchestra\Model\Memory\UserMetaProvider;
 use Orchestra\Model\Memory\UserMetaRepository;
-use Orchestra\Foundation\Installation\Requirement;
-use Orchestra\Foundation\Installation\Installation;
 
 App::make('orchestra.memory')->extend('user', function ($app, $name) {
     $handler = new UserMetaRepository($name, array(), $app);
 
     return new UserMetaProvider($handler);
-});
-
-/*
-|--------------------------------------------------------------------------
-| Bind Installation Interface
-|--------------------------------------------------------------------------
-|
-| These interface allow Orchestra Platform installation process to be
-| customized by the application when there a requirement for it.
-|
-*/
-
-App::bind('Orchestra\Contracts\Installation\Installation', function () {
-    return new Installation(App::make('app'));
-});
-
-App::bind('Orchestra\Contracts\Installation\Requirement', function () {
-    return new Requirement(App::make('app'));
 });
 
 /*

@@ -26,13 +26,6 @@ Foundation::namespaced('Orchestra\Foundation\Routing', function ($router) {
     $router->post('forgot/reset/{token}', 'PasswordBrokerController@reset');
     $router->post('forgot/reset', 'PasswordBrokerController@reset');
 
-    // Route to installation.
-    $router->get('install', 'InstallerController@index');
-    $router->get('install/create', 'InstallerController@create');
-    $router->post('install/create', 'InstallerController@store');
-    $router->get('install/done', 'InstallerController@done');
-    $router->get('install/prepare', 'InstallerController@prepare');
-
     // Route to asset publishing.
     $router->get('publisher', 'PublisherController@index');
     $router->get('publisher/ftp', 'PublisherController@ftp');
