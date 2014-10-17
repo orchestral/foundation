@@ -1,11 +1,11 @@
 <?php namespace Orchestra\Foundation\Installation\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\Facade;
 use Illuminate\Container\Container;
-use Orchestra\Foundation\Installation\Installer;
+use Illuminate\Support\Facades\Facade;
+use Orchestra\Foundation\Installation\Installation;
 
-class InstallerTest extends \PHPUnit_Framework_TestCase
+class InstallationTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Application instance.
@@ -70,7 +70,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Installation\Installer::bootInstallerFiles() method.
+     * Test Orchestra\Foundation\Installation\Installation::bootInstallerFiles() method.
      *
      * @test
      */
@@ -86,12 +86,12 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('exists')->once()->with('/var/laravel/app/orchestra/installer.php')->andReturn(true)
             ->shouldReceive('requireOnce')->once()->with('/var/laravel/app/orchestra/installer.php')->andReturnNull();
 
-        $stub = new Installer($app);
+        $stub = new Installation($app);
         $this->assertNull($stub->bootInstallerFiles());
     }
 
     /**
-     * Test Orchestra\Foundation\Installation\Installer::migrate() method.
+     * Test Orchestra\Foundation\Installation\Installation::migrate() method.
      *
      * @test
      */
@@ -105,11 +105,11 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
         $migrate->shouldReceive('foundation')->once()->andReturnNull();
         $events->shouldReceive('fire')->once()->with('orchestra.install.schema')->andReturnNull();
 
-        $stub = new Installer($app);
+        $stub = new Installation($app);
         $this->assertTrue($stub->migrate());
     }
     /**
-     * Test Orchestra\Foundation\Installation\Installer::createAdmin() method.
+     * Test Orchestra\Foundation\Installation\Installation::createAdmin() method.
      *
      * @test
      */
@@ -163,12 +163,12 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
 
         $messages->shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
 
-        $stub = new Installer($app);
+        $stub = new Installation($app);
         $this->assertTrue($stub->createAdmin($input, false));
     }
 
     /**
-     * Test Orchestra\Foundation\Installation\Installer::createAdmin() method
+     * Test Orchestra\Foundation\Installation\Installation::createAdmin() method
      * with validation errors.
      *
      * @test
@@ -188,12 +188,12 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('messages')->once()->andReturn('foo-errors');
         $session->shouldReceive('flash')->once()->with('errors', 'foo-errors')->andReturnNull();
 
-        $stub = new Installer($app);
+        $stub = new Installation($app);
         $this->assertFalse($stub->createAdmin($input));
     }
 
     /**
-     * Test Orchestra\Foundation\Installation\Installer::createAdmin() method
+     * Test Orchestra\Foundation\Installation\Installation::createAdmin() method
      * throws exception.
      *
      * @test
@@ -215,7 +215,7 @@ class InstallerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('all')->once()->andReturn(array('not so empty'));
         $messages->shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
-        $stub = new Installer($app);
+        $stub = new Installation($app);
         $this->assertFalse($stub->createAdmin($input, false));
     }
 }

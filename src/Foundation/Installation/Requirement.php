@@ -1,13 +1,14 @@
 <?php namespace Orchestra\Foundation\Installation;
 
 use PDOException;
+use Orchestra\Contracts\Installation\Requirement as RequirementContract;
 
-class Requirement implements RequirementInterface
+class Requirement implements RequirementContract
 {
     /**
      * Application instance.
      *
-     * @var \Illuminate\Foundation\Application
+     * @var \Illuminate\Contracts\Foundation\Application
      */
     protected $app;
 
@@ -21,15 +22,14 @@ class Requirement implements RequirementInterface
     /**
      * Installable status.
      *
-     * @var boolean
+     * @var bool
      */
     protected $installable = true;
 
     /**
      * Construct a new instance.
      *
-     * @param  \Illuminate\Foundation\Application   $app
-     * @return void
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      */
     public function __construct($app)
     {

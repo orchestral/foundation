@@ -2,20 +2,21 @@
 
 use Exception;
 use Orchestra\Model\User;
+use Orchestra\Contracts\Installation\Installation as InstallationContract;
 
-class Installer implements InstallerInterface
+class Installation implements InstallationContract
 {
     /**
      * Application instance.
      *
-     * @var \Illuminate\Foundation\Application
+     * @var \Illuminate\Contracts\Foundation\Application
      */
     protected $app;
 
     /**
      * Construct a new instance.
      *
-     * @param  \Illuminate\Foundation\Application   $app
+     * @param  \Illuminate\Contracts\Foundation\Application   $app
      */
     public function __construct($app)
     {
@@ -57,10 +58,10 @@ class Installer implements InstallerInterface
      * Create adminstrator account.
      *
      * @param  array    $input
-     * @param  bool     $multipleAdmin
+     * @param  bool     $allowMultiple
      * @return bool
      */
-    public function createAdmin($input, $multipleAdmin = true)
+    public function createAdmin($input, $allowMultiple = true)
     {
         // Grab input fields and define the rules for user validations.
         $rules = array(
@@ -80,7 +81,7 @@ class Installer implements InstallerInterface
         }
 
         try {
-            ! $multipleAdmin && $this->hasNoExistingUser();
+            ! $allowMultiple && $this->hasNoExistingUser();
 
             $this->runApplicationSetup($input);
 

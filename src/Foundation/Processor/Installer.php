@@ -4,32 +4,32 @@ use ReflectionException;
 use Orchestra\Model\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
-use Orchestra\Foundation\Installation\InstallerInterface;
-use Orchestra\Foundation\Installation\RequirementInterface;
+use Orchestra\Contracts\Installation\Requirement;
+use Orchestra\Contracts\Installation\Installation;
 
 class Installer
 {
     /**
      * Installer instance.
      *
-     * @var \Orchestra\Foundation\Installation\Installer
+     * @var \Orchestra\Contracts\Installation\Installation
      */
     protected $installer;
 
     /**
      * Requirement instance.
      *
-     * @var \Orchestra\Foundation\Installation\Requirement
+     * @var \Orchestra\Contracts\Installation\Requirement
      */
     protected $requirement;
 
     /**
      * Create a new processor instance.
      *
-     * @param  \Orchestra\Foundation\Installation\InstallerInterface    $installer
-     * @param  \Orchestra\Foundation\Installation\RequirementInterface  $requirement
+     * @param  \Orchestra\Contracts\Installation\Installation  $installer
+     * @param  \Orchestra\Contracts\Installation\Requirement  $requirement
      */
-    public function __construct(InstallerInterface $installer, RequirementInterface $requirement)
+    public function __construct(Installation $installer, Requirement $requirement)
     {
         $this->installer   = $installer;
         $this->requirement = $requirement;
@@ -124,10 +124,9 @@ class Installer
      */
     protected function getRunningConfiguration()
     {
-        $driver         = Config::get('database.default', 'mysql');
-        $database       = Config::get("database.connections.{$driver}", array());
-        $auth           = Config::get('auth');
-        $authentication = false;
+        $driver   = Config::get('database.default', 'mysql');
+        $database = Config::get("database.connections.{$driver}", array());
+        $auth     = Config::get('auth');
 
         // For security, we shouldn't expose database connection to anyone,
         // This snippet change the password value into *.

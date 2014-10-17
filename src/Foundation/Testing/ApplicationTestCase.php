@@ -30,7 +30,7 @@ abstract class ApplicationTestCase extends TestCase
      */
     protected function runInstallation()
     {
-        $installer   = new \Orchestra\Foundation\Installation\Installer($this->app);
+        $installer   = new \Orchestra\Foundation\Installation\Installation($this->app);
         $requirement = new \Orchestra\Foundation\Installation\Requirement($this->app);
 
         if (! $requirement->check()) {
