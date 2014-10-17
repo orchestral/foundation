@@ -23,7 +23,7 @@ class AdminMenuHandler
     /**
      * Menu instance.
      *
-     * @var \Orchestra\Widget\MenuWidgetHandler
+     * @var \Orchestra\Widget\Handlers\Menu
      */
     protected $menu;
 
