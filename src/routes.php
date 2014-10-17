@@ -32,10 +32,8 @@ Foundation::namespaced('Orchestra\Foundation\Routing', function ($router) {
     $router->post('publisher/ftp', 'PublisherController@publish');
 
     // Route to resources.
-    if (Foundation::bound('orchestra.resources')) {
-        $router->any('resources/{any}', 'ResourcesController@call')->where('any', '(.*)');
-        $router->any('resources', 'ResourcesController@index');
-    }
+    $router->any('resources/{any}', 'ResourcesController@call')->where('any', '(.*)');
+    $router->any('resources', 'ResourcesController@index');
 
     // Route to users.
     $router->resource('users', 'UsersController', ['except' => ['show']]);
