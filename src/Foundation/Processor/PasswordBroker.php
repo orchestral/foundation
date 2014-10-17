@@ -5,7 +5,7 @@ use Orchestra\Support\Facades\Foundation;
 use Illuminate\Contracts\Auth\PasswordBroker as Password;
 use Orchestra\Foundation\Validation\Auth as AuthValidator;
 
-class PasswordBroker extends AbstractableProcessor
+class PasswordBroker extends Processor
 {
     /**
      * The password broker implementation.

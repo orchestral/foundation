@@ -2,7 +2,7 @@
 
 use Orchestra\Support\Facades\Form;
 
-class Account extends AbstractablePresenter
+class Account extends Presenter
 {
     /**
      * Form view generator for User Account.

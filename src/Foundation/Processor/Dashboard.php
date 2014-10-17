@@ -2,7 +2,7 @@
 
 use Orchestra\Support\Facades\Widget;
 
-class Dashboard extends AbstractableProcessor
+class Dashboard extends Processor
 {
     /**
      * View dashboard.

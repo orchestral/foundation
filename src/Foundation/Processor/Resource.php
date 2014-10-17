@@ -3,7 +3,7 @@
 use Orchestra\Foundation\Presenter\Resource as ResourcePresenter;
 use Orchestra\Support\Facades\Resources;
 
-class Resource extends AbstractableProcessor
+class Resource extends Processor
 {
     /**
      * Create a new processor instance.

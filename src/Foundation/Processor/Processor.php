@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Processor;
 
-abstract class AbstractableProcessor
+abstract class Processor
 {
     /**
      * Presenter instance.

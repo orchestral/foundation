@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Orchestra\Foundation\Validation\Auth as AuthValidator;
 use Orchestra\Model\User;
 
-class Credential extends AbstractableProcessor
+class Credential extends Processor
 {
     /**
      * Create a new processor instance.

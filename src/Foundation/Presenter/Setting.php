@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Form;
 
-class Setting extends AbstractablePresenter
+class Setting extends Presenter
 {
     /**
      * Form View Generator for Setting Page.

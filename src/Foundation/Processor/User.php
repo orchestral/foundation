@@ -10,7 +10,7 @@ use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Presenter\User as UserPresenter;
 use Orchestra\Foundation\Validation\User as UserValidator;
 
-class User extends AbstractableProcessor
+class User extends Processor
 {
     /**
      * Create a new processor instance.

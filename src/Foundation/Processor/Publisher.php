@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Session;
 use Orchestra\Support\Facades\Publisher as P;
 use Orchestra\Support\Ftp\ServerException;
 
-class Publisher extends AbstractableProcessor
+class Publisher extends Processor
 {
     /**
      * Run publishing if possible.

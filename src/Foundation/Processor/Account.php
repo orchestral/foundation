@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Orchestra\Foundation\Presenter\Account as AccountPresenter;
 use Orchestra\Foundation\Validation\Account as AccountValidator;
 
-class Account extends AbstractableProcessor
+class Account extends Processor
 {
     /**
      * Create a new processor instance.

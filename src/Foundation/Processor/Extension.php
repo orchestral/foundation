@@ -10,7 +10,7 @@ use Orchestra\Publisher\FilePermissionException;
 use Orchestra\Foundation\Presenter\Extension as ExtensionPresenter;
 use Orchestra\Foundation\Validation\Extension as ExtensionValidator;
 
-class Extension extends AbstractableProcessor
+class Extension extends Processor
 {
     /**
      * Create a new processor instance.

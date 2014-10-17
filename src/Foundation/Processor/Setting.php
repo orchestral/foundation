@@ -7,7 +7,7 @@ use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Presenter\Setting as SettingPresenter;
 use Orchestra\Foundation\Validation\Setting as SettingValidator;
 
-class Setting extends AbstractableProcessor
+class Setting extends Processor
 {
     /**
      * Create a new processor instance.

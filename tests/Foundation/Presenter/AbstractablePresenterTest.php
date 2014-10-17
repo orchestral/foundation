@@ -3,7 +3,7 @@
 use Mockery as m;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
-use Orchestra\Foundation\Presenter\AbstractablePresenter;
+use Orchestra\Foundation\Presenter\Presenter;
 
 class AbstractablePresenterTest extends \PHPUnit_Framework_TestCase
 {
@@ -65,7 +65,7 @@ class AbstractablePresenterTest extends \PHPUnit_Framework_TestCase
     }
 }
 
-class PresenterStub extends AbstractablePresenter
+class PresenterStub extends Presenter
 {
     //
 }

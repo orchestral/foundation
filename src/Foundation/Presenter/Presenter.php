@@ -2,7 +2,7 @@
 
 use Orchestra\Html\Form\PresenterInterface as FormPresenterInterface;
 
-abstract class AbstractablePresenter implements FormPresenterInterface
+abstract class Presenter implements FormPresenterInterface
 {
     /**
      * {@inheritdoc}

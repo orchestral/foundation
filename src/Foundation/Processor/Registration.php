@@ -13,7 +13,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Orchestra\Foundation\Presenter\Account as AccountPresenter;
 use Orchestra\Foundation\Validation\Account as AccountValidator;
 
-class Registration extends AbstractableProcessor
+class Registration extends Processor
 {
     /**
      * Create a new processor instance.
