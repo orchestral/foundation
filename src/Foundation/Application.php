@@ -1,14 +1,6 @@
 <?php namespace Orchestra\Foundation;
 
-use Orchestra\Routing\RoutingServiceProvider;
-
-class Application extends \Illuminate\Foundation\Application
+class Application extends \Orchestra\Kernel\Application
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function registerRoutingProvider()
-    {
-        $this->register(new RoutingServiceProvider($this));
-    }
+
 }

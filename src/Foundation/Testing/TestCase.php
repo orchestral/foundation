@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Testing;
 
-use Orchestra\Foundation\Application;
+use Orchestra\Kernel\Application;
 use Orchestra\Testbench\TestCase as TestbenchTestCase;
 
 abstract class TestCase extends TestbenchTestCase
@@ -164,6 +164,6 @@ abstract class TestCase extends TestbenchTestCase
      */
     protected function resolveApplication()
     {
-        return new Application;
+        return new Application($this->getBasePath());
     }
 }
