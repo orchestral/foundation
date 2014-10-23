@@ -1,10 +1,11 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
+use Orchestra\Foundation\Application;
 use Orchestra\Foundation\Foundation;
 use Illuminate\Support\Facades\Facade;
 
-class ApplicationTest extends \PHPUnit_Framework_TestCase
+class FoundationTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Application instance.
@@ -18,9 +19,9 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $app = new \Illuminate\Foundation\Application(m::mock('\Illuminate\Http\Request')->makePartial());
+        $app = new Application(__DIR__);
 
-        $app['orchestra.acl'] = m::mock('\Orchestra\Auth\Acl\Container')->makePartial();
+        $app['orchestra.acl'] = m::mock('\Orchestra\Contracts\Auth\Acl\Acl');
         $app['orchestra.extension'] = m::mock('\Orchestra\Contracts\Extension\Factory');
         $app['orchestra.mail'] = m::mock('\Orchestra\Notifier\Mailer')->makePartial();
         $app['orchestra.memory'] = m::mock('\Orchestra\Memory\MemoryManager')->makePartial();
@@ -54,13 +55,13 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
         $app['env'] = 'production';
         $app['orchestra.installed'] = false;
+        $app['request'] = $request = m::mock('\Illuminate\Http\Request');
         $acl = $app['orchestra.acl'];
         $config = $app['config'];
         $event = $app['events'];
         $mailer = $app['orchestra.mail'];
         $memory = $app['orchestra.memory'];
         $notifier = $app['orchestra.notifier'];
-        $request = $app['request'];
         $translator = $app['translator'];
         $widget = $app['orchestra.widget'];
 
@@ -97,13 +98,13 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
         $app['env'] = 'production';
         $app['orchestra.installed'] = false;
+        $app['request'] = $request = m::mock('\Illuminate\Http\Request');
         $acl = $app['orchestra.acl'];
         $config = $app['config'];
         $event = $app['events'];
         $mailer = $app['orchestra.mail'];
         $memory = $app['orchestra.memory'];
         $notifier = $app['orchestra.notifier'];
-        $request = $app['request'];
         $widget = $app['orchestra.widget'];
 
         $memoryProvider = m::mock('\Orchestra\Memory\Provider');
@@ -172,10 +173,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     public function testHandlesMethod()
     {
         $app       = $this->app;
-        $request   = $app['request'];
         $config    = $app['config'];
         $extension = $app['orchestra.extension'];
         $url       = $app['url'];
+
+        $app['request'] = $request = m::mock('\Illuminate\Http\Request');
 
         $request->shouldReceive('root')->andReturn('http://localhost')
             ->shouldReceive('secure')->andReturn(false);
@@ -207,10 +209,10 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
     public function testIsMethod()
     {
         $app       = $this->app;
-        $request   = $app['request'];
         $config    = $app['config'];
         $extension = $app['orchestra.extension'];
-        $url       = $app['url'];
+
+        $app['request'] = $request = m::mock('\Illuminate\Http\Request');
 
         $request->shouldReceive('root')->andReturn('http://localhost')
             ->shouldReceive('secure')->andReturn(false);

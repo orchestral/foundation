@@ -62,22 +62,6 @@ abstract class TestCase extends TestbenchTestCase
     }
 
     /**
-     * Get application middlewares.
-     *
-     * @return array
-     */
-    protected function getApplicationMiddlewares()
-    {
-        return [
-            'Illuminate\Cookie\Middleware\Guard',
-            'Illuminate\Cookie\Middleware\Queue',
-            'Illuminate\Session\Middleware\Reader',
-            'Illuminate\Session\Middleware\Writer',
-            'Illuminate\View\Middleware\ErrorBinder',
-        ];
-    }
-
-    /**
      * Get application providers.
      *
      * @return array
@@ -165,5 +149,15 @@ abstract class TestCase extends TestbenchTestCase
     protected function resolveApplication()
     {
         return new Application($this->getBasePath());
+    }
+
+    /**
+     * Resolve application implementation.
+     *
+     * @param \Illuminate\Foundation\Application  $app
+     */
+    protected function resolveApplicationKernel($app)
+    {
+        $app->bind('Illuminate\Contracts\Http\Kernel', 'Orchestra\Foundation\Testing\Http\Kernel');
     }
 }
