@@ -5,7 +5,7 @@ use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
 use Orchestra\Foundation\Presenter\Presenter;
 
-class AbstractablePresenterTest extends \PHPUnit_Framework_TestCase
+class PresenterTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Setup the test environment.
@@ -35,6 +35,7 @@ class AbstractablePresenterTest extends \PHPUnit_Framework_TestCase
         $orchestra = m::mock('\Orchestra\Foundation\Foundation[handles]', [$app]);
 
         Facade::setFacadeApplication($app);
+        Container::setInstance($app);
 
         $app->shouldReceive('make')->once()->with('orchestra.app')->andReturn($orchestra);
 
