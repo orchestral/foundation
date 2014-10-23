@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
-use Orchestra\Foundation\Application;
+use Orchestra\Kernel\Application;
 use Orchestra\Foundation\Foundation;
 use Illuminate\Support\Facades\Facade;
 
