@@ -24,6 +24,7 @@
 		"laravel/framework": "5.0.*",
 		"orchestra/asset": "3.0.*",
 		"orchestra/auth": "3.0.*",
+		"orchestra/debug": "3.0.*",
 		"orchestra/extension": "3.0.*",
 		"orchestra/facile": "3.0.*",
 		"orchestra/html": "3.0.*",
