@@ -117,7 +117,7 @@ class PasswordBrokerControllerTest extends TestCase
         $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')
             ->andReturn('Orchestra Platform');
 
-        $password->shouldReceive('sendResetLink')->once()->andReturn(Password::INVALID_USER);
+        $password->shouldReceive('sendResetLink')->once()->andReturn(PasswordBroker::INVALID_USER);
 
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
@@ -241,7 +241,7 @@ class PasswordBrokerControllerTest extends TestCase
         $password = m::mock('\Orchestra\Auth\Passwords\PasswordBroker');
 
         $password->shouldReceive('reset')->once()->with($input, m::type('Closure'))
-            ->andReturn(Password::INVALID_PASSWORD);
+            ->andReturn(PasswordBroker::INVALID_PASSWORD);
 
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
@@ -269,7 +269,7 @@ class PasswordBrokerControllerTest extends TestCase
         $password = m::mock('\Orchestra\Auth\Passwords\PasswordBroker');
 
         $password->shouldReceive('reset')->once()->with($input, m::type('Closure'))
-            ->andReturn(Password::INVALID_TOKEN);
+            ->andReturn(PasswordBroker::INVALID_TOKEN);
 
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
@@ -297,7 +297,7 @@ class PasswordBrokerControllerTest extends TestCase
         $password = m::mock('\Orchestra\Auth\Passwords\PasswordBroker');
 
         $password->shouldReceive('reset')->once()->with($input, m::type('Closure'))
-            ->andReturn(Password::INVALID_USER);
+            ->andReturn(PasswordBroker::INVALID_USER);
 
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 

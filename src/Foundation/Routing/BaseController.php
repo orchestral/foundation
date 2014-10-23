@@ -35,10 +35,11 @@ abstract class BaseController extends Controller
      *
      * GET (:orchestra) return 404
      *
-     * @param  array    $parameters
-     * @return Response
+     * @param
+     * @param  array  $parameters
+     * @return mixed
      */
-    public function missingMethod($parameters = array())
+    public function missingMethod($parameters = [])
     {
         return Response::view('orchestra/foundation::dashboard.missing', $parameters, 404);
     }

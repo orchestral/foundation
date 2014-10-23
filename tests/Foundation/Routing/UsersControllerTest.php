@@ -274,6 +274,7 @@ class UsersControllerTest extends TestCase
      * Test PUT /admin/users/(:any) when invalid user id is given.
      *
      * @test
+     * @expectedException \Symfony\Component\HttpKernel\Exception\HttpException
      */
     public function testPutUpdateActionGivenInvalidUserId()
     {
@@ -284,8 +285,6 @@ class UsersControllerTest extends TestCase
             'password' => '123456',
             'roles'    => array(1),
         );
-
-        App::shouldReceive('abort')->once()->with(500);
 
         $this->call('PUT', 'admin/users/foobar', $input);
     }
@@ -403,6 +402,7 @@ class UsersControllerTest extends TestCase
      * account.
      *
      * @test
+     * @expectedException \Symfony\Component\HttpKernel\Exception\HttpException
      */
     public function testGetDeleteActionWhenDeletingOwnAccount()
     {
@@ -416,7 +416,6 @@ class UsersControllerTest extends TestCase
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foobar');
 
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
-        App::shouldReceive('abort')->once();
         Auth::shouldReceive('user')->once()->andReturn($auth);
 
         $this->call('GET', 'admin/users/foobar/delete');

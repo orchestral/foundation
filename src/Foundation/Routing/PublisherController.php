@@ -32,7 +32,7 @@ class PublisherController extends AdminController
     /**
      * Load publisher based on service.
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -42,7 +42,7 @@ class PublisherController extends AdminController
     /**
      * Show FTP configuration form or run the queue.
      *
-     * @return Response
+     * @return mixed
      */
     public function ftp()
     {
@@ -57,7 +57,7 @@ class PublisherController extends AdminController
      *
      * POST (orchestra)/publisher/ftp
      *
-     * @return Response
+     * @return mixed
      */
     public function publish()
     {
@@ -71,7 +71,7 @@ class PublisherController extends AdminController
      * Response when publishing failed.
      *
      * @param  string|null $message
-     * @return Response
+     * @return mixed
      */
     public function publishFailed($message = null)
     {
@@ -81,7 +81,7 @@ class PublisherController extends AdminController
     /**
      * Redirect back to publisher.
      *
-     * @return Response
+     * @return mixed
      */
     public function redirectToPublisher()
     {

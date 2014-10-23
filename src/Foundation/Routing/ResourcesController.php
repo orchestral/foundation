@@ -32,7 +32,7 @@ class ResourcesController extends AdminController
     /**
      * Route to Resources List.
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -44,7 +44,7 @@ class ResourcesController extends AdminController
      *
      * @param  string $request
      * @param  array  $arguments
-     * @return Response
+     * @return mixed
      */
     public function call($request)
     {
@@ -59,7 +59,7 @@ class ResourcesController extends AdminController
      * Response when index page succeed.
      *
      * @param  array  $data
-     * @return Response
+     * @return mixed
      */
     public function indexSucceed(array $data)
     {
@@ -73,7 +73,7 @@ class ResourcesController extends AdminController
      * Response when call resource page succeed.
      *
      * @param  array  $data
-     * @return Response
+     * @return mixed
      */
     public function callSucceed(array $data)
     {

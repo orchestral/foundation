@@ -37,7 +37,7 @@ class ExtensionsController extends AdminController
      *
      * GET (:orchestra)/extensions
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -50,7 +50,7 @@ class ExtensionsController extends AdminController
      * GET (:orchestra)/extensions/activate/(:name)
      *
      * @param  string   $uid
-     * @return Response
+     * @return mixed
      */
     public function activate($uid)
     {
@@ -65,7 +65,7 @@ class ExtensionsController extends AdminController
      * GET (:orchestra)/extensions/deactivate/(:name)
      *
      * @param  string   $uid
-     * @return Response
+     * @return mixed
      */
     public function deactivate($uid)
     {
@@ -80,7 +80,7 @@ class ExtensionsController extends AdminController
      * GET (:orchestra)/extensions/update/(:name)
      *
      * @param  string   $uid
-     * @return Response
+     * @return mixed
      */
     public function migrate($uid)
     {
@@ -95,7 +95,7 @@ class ExtensionsController extends AdminController
      * GET (:orchestra)/extensions/configure/(:name)
      *
      * @param  string   $uid
-     * @return Response
+     * @return mixed
      */
     public function configure($uid)
     {
@@ -110,7 +110,7 @@ class ExtensionsController extends AdminController
      * POST (:orchestra)/extensions/configure/(:name)
      *
      * @param  string   $uid
-     * @return Response
+     * @return mixed
      */
     public function update($uid)
     {
@@ -136,7 +136,7 @@ class ExtensionsController extends AdminController
      * Response for list of extensions page.
      *
      * @param  array  $data
-     * @return Response
+     * @return mixed
      */
     public function indexSucceed(array $data)
     {
@@ -149,7 +149,7 @@ class ExtensionsController extends AdminController
      * Response for extension configuration page.
      *
      * @param  array  $data
-     * @return Response
+     * @return mixed
      */
     public function configureSucceed(array $data)
     {
@@ -165,7 +165,7 @@ class ExtensionsController extends AdminController
      * Response when activate an extension failed.
      *
      * @param  \Illuminate\Support\Fluent  $extension
-     * @return Response
+     * @return mixed
      */
     public function activateFailed(Fluent $extension)
     {
@@ -176,7 +176,7 @@ class ExtensionsController extends AdminController
      * Response when activate an extension succeed.
      *
      * @param  \Illuminate\Support\Fluent  $extension
-     * @return Response
+     * @return mixed
      */
     public function activateSucceed(Fluent $extension)
     {
@@ -189,7 +189,7 @@ class ExtensionsController extends AdminController
      * Response when migrate an extension failed.
      *
      * @param  \Illuminate\Support\Fluent  $extension
-     * @return Response
+     * @return mixed
      */
     public function migrateFailed(Fluent $extension)
     {
@@ -200,7 +200,7 @@ class ExtensionsController extends AdminController
      * Response when migrate an extension succeed.
      *
      * @param  \Illuminate\Support\Fluent  $extension
-     * @return Response
+     * @return mixed
      */
     public function migrateSucceed(Fluent $extension)
     {
@@ -213,7 +213,7 @@ class ExtensionsController extends AdminController
      * Response when deactivate an extension succeed.
      *
      * @param  \Illuminate\Support\Fluent  $extension
-     * @return Response
+     * @return mixed
      */
     public function deactivateSucceed(Fluent $extension)
     {
@@ -227,7 +227,7 @@ class ExtensionsController extends AdminController
      *
      * @param  mixed   $validation
      * @param  string  $id
-     * @return Response
+     * @return mixed
      */
     public function updateValidationFailed($validation, $id)
     {
@@ -238,7 +238,7 @@ class ExtensionsController extends AdminController
      * Response when update extension configuration succeed.
      *
      * @param  \Illuminate\Support\Fluent  $extension
-     * @return Response
+     * @return mixed
      */
     public function updateSucceed(Fluent $extension)
     {

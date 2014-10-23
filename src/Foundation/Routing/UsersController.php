@@ -35,7 +35,7 @@ class UsersController extends AdminController
      *
      * GET (:orchestra)/users
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -47,7 +47,7 @@ class UsersController extends AdminController
      *
      * GET (:orchestra)/users/create
      *
-     * @return Response
+     * @return mixed
      */
     public function create()
     {
@@ -59,7 +59,7 @@ class UsersController extends AdminController
      *
      * GET (:orchestra)/users/$id/edit
      *
-     * @return Response
+     * @return mixed
      */
     public function edit($id)
     {
@@ -71,7 +71,7 @@ class UsersController extends AdminController
      *
      * POST (:orchestra)/users
      *
-     * @return Response
+     * @return mixed
      */
     public function store()
     {
@@ -84,7 +84,7 @@ class UsersController extends AdminController
      * PUT (:orchestra)/users/1
      *
      * @param  integer  $id
-     * @return Response
+     * @return mixed
      */
     public function update($id)
     {
@@ -97,7 +97,7 @@ class UsersController extends AdminController
      * GET (:orchestra)/$id/delete
      *
      * @param  integer  $id
-     * @return Response
+     * @return mixed
      */
     public function delete($id)
     {
@@ -110,7 +110,7 @@ class UsersController extends AdminController
      * DELETE (:orchestra)/$id
      *
      * @param  integer  $id
-     * @return Response
+     * @return mixed
      */
     public function destroy($id)
     {
@@ -121,7 +121,7 @@ class UsersController extends AdminController
      * Response when list users page succeed.
      *
      * @param  array  $data
-     * @return Response
+     * @return mixed
      */
     public function indexSucceed(array $data)
     {
@@ -134,7 +134,7 @@ class UsersController extends AdminController
      * Response when create user page succeed.
      *
      * @param  array  $data
-     * @return Response
+     * @return mixed
      */
     public function createSucceed(array $data)
     {
@@ -145,7 +145,7 @@ class UsersController extends AdminController
      * Response when edit user page succeed.
      *
      * @param  array  $data
-     * @return Response
+     * @return mixed
      */
     public function editSucceed(array $data)
     {
@@ -158,7 +158,7 @@ class UsersController extends AdminController
      * Response when storing user failed on validation.
      *
      * @param  object  $validation
-     * @return Response
+     * @return mixed
      */
     public function storeValidationFailed($validation)
     {
@@ -169,7 +169,7 @@ class UsersController extends AdminController
      * Response when storing user failed.
      *
      * @param  array    $error
-     * @return Response
+     * @return mixed
      */
     public function storeFailed(array $error)
     {
@@ -180,7 +180,7 @@ class UsersController extends AdminController
     /**
      * Response when storing user succeed.
      *
-     * @return Response
+     * @return mixed
      */
     public function storeSucceed()
     {
@@ -193,7 +193,7 @@ class UsersController extends AdminController
      * Response when update user failed on validation.
      *
      * @param  object  $validation
-     * @return Response
+     * @return mixed
      */
     public function updateValidationFailed($validation, $id)
     {
@@ -204,7 +204,7 @@ class UsersController extends AdminController
      * Response when updating user failed.
      *
      * @param  array   $error
-     * @return Response
+     * @return mixed
      */
     public function updateFailed(array $error)
     {
@@ -216,7 +216,7 @@ class UsersController extends AdminController
     /**
      * Response when updating user succeed.
      *
-     * @return Response
+     * @return mixed
      */
     public function updateSucceed()
     {
@@ -229,7 +229,7 @@ class UsersController extends AdminController
      * Response when destroying user failed.
      *
      * @param  array   $error
-     * @return Response
+     * @return mixed
      */
     public function destroyFailed(array $error)
     {
@@ -241,7 +241,7 @@ class UsersController extends AdminController
     /**
      * Response when destroying user succeed.
      *
-     * @return Response
+     * @return mixed
      */
     public function destroySucceed()
     {
@@ -253,7 +253,7 @@ class UsersController extends AdminController
     /**
      * Response when user verification failed.
      *
-     * @return Response
+     * @return mixed
      */
     public function selfDeletionFailed()
     {
@@ -263,7 +263,7 @@ class UsersController extends AdminController
     /**
      * Response when user verification failed.
      *
-     * @return Response
+     * @return mixed
      */
     public function userVerificationFailed()
     {

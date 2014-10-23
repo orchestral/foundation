@@ -35,7 +35,7 @@ class SettingsController extends AdminController
      *
      * GET (:orchestra)/settings
      *
-     * @return Response
+     * @return mixed
      */
     public function show()
     {
@@ -47,7 +47,7 @@ class SettingsController extends AdminController
      *
      * POST (:orchestra)/settings
      *
-     * @return Response
+     * @return mixed
      */
     public function update()
     {
@@ -57,7 +57,7 @@ class SettingsController extends AdminController
     /**
      * Update orchestra/foundation.
      *
-     * @return Response
+     * @return mixed
      */
     public function migrate()
     {
@@ -68,7 +68,7 @@ class SettingsController extends AdminController
      * Response when show setting page.
      *
      * @param  array  $data
-     * @return Response
+     * @return mixed
      */
     public function showSucceed(array $data)
     {
@@ -81,7 +81,7 @@ class SettingsController extends AdminController
      * Response when update setting failed on validation.
      *
      * @param  mixed   $validation
-     * @return Response
+     * @return mixed
      */
     public function updateValidationFailed($validation)
     {
@@ -91,7 +91,7 @@ class SettingsController extends AdminController
     /**
      * Response when update setting succeed.
      *
-     * @return Response
+     * @return mixed
      */
     public function updateSucceed()
     {
@@ -103,7 +103,7 @@ class SettingsController extends AdminController
     /**
      * Response when update Orchestra Platform components succeed.
      *
-     * @return Response
+     * @return mixed
      */
     public function migrateSucceed()
     {

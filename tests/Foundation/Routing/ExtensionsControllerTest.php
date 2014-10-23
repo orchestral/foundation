@@ -85,11 +85,11 @@ class ExtensionsControllerTest extends TestCase
      * started.
      *
      * @test
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function testGetActivateActionGivenStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
-        App::shouldReceive('abort')->once()->with(404);
 
         $this->call('GET', 'admin/extensions/activate/laravel.framework');
     }
@@ -131,12 +131,12 @@ class ExtensionsControllerTest extends TestCase
      * started.
      *
      * @test
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function testGetDeactivateActionGivenNotStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
         Extension::shouldReceive('activated')->once()->with('laravel/framework')->andReturn(false);
-        App::shouldReceive('abort')->once()->with(404);
 
         $this->call('GET', 'admin/extensions/deactivate/laravel.framework');
     }
@@ -174,11 +174,11 @@ class ExtensionsControllerTest extends TestCase
      * started.
      *
      * @test
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function testGetConfigureActionGivenStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
-        App::shouldReceive('abort')->once()->with(404);
 
         $this->call('GET', 'admin/extensions/configure/laravel.framework');
     }
@@ -223,6 +223,7 @@ class ExtensionsControllerTest extends TestCase
      * started.
      *
      * @test
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function testPostConfigureActionGivenNotStartedExtension()
     {
@@ -232,7 +233,6 @@ class ExtensionsControllerTest extends TestCase
         );
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
-        App::shouldReceive('abort')->once()->with(404);
 
         $this->call('POST', 'admin/extensions/configure/laravel.framework', $input);
     }
@@ -285,11 +285,11 @@ class ExtensionsControllerTest extends TestCase
      * started.
      *
      * @test
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function testGetUpdateActionGivenNotStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
-        App::shouldReceive('abort')->once()->with(404);
 
         $this->call('GET', 'admin/extensions/update/laravel.framework');
     }

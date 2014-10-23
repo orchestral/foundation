@@ -108,6 +108,7 @@ class AccountControllerTest extends TestCase
      * Test POST /admin/account with invalid user id.
      *
      * @test
+     * @expectedException \Symfony\Component\HttpKernel\Exception\HttpException
      */
     public function testPostIndexActionGivenInvalidUserId()
     {
@@ -121,7 +122,6 @@ class AccountControllerTest extends TestCase
 
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn(2);
         Auth::shouldReceive('user')->once()->andReturn($user);
-        App::shouldReceive('abort')->once()->with(500);
 
         $this->call('POST', 'admin/account', $input);
     }
@@ -251,6 +251,7 @@ class AccountControllerTest extends TestCase
      * Test POST /admin/account/password with invalid user id.
      *
      * @test
+     * @expectedException \Symfony\Component\HttpKernel\Exception\HttpException
      */
     public function testPostPasswordActionGivenInvalidUserId()
     {
@@ -264,7 +265,6 @@ class AccountControllerTest extends TestCase
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn(2);
 
         Auth::shouldReceive('user')->once()->andReturn($user);
-        App::shouldReceive('abort')->once()->with(500);
 
         $this->call('POST', 'admin/account/password', $input);
     }

@@ -35,7 +35,7 @@ class AccountController extends AdminController
      *
      * GET (:orchestra)/account
      *
-     * @return Response
+     * @return mixed
      */
     public function showProfile()
     {
@@ -47,7 +47,7 @@ class AccountController extends AdminController
      *
      * POST (:orchestra)/account
      *
-     * @return Response
+     * @return mixed
      */
     public function updateProfile()
     {
@@ -59,7 +59,7 @@ class AccountController extends AdminController
      *
      * GET (:orchestra)/account/password
      *
-     * @return Response
+     * @return mixed
      */
     public function showPassword()
     {
@@ -71,7 +71,7 @@ class AccountController extends AdminController
      *
      * POST (:orchestra)/account/password
      *
-     * @return Response
+     * @return mixed
      */
     public function updatePassword()
     {
@@ -82,7 +82,7 @@ class AccountController extends AdminController
      * Response view account/profile page.
      *
      * @param  array   $data
-     * @return Response
+     * @return mixed
      */
     public function showProfileSucceed(array $data)
     {
@@ -95,7 +95,7 @@ class AccountController extends AdminController
      * Response when validation on update profile failed.
      *
      * @param  object  $validation
-     * @return Response
+     * @return mixed
      */
     public function updateProfileValidationFailed($validation)
     {
@@ -105,8 +105,8 @@ class AccountController extends AdminController
     /**
      * Response when update profile failed.
      *
-     * @param  string|null $message
-     * @return Response
+     * @param  array  $error
+     * @return mixed
      */
     public function updateProfileFailed(array $error)
     {
@@ -118,7 +118,7 @@ class AccountController extends AdminController
     /**
      * Response when update profile succeed.
      *
-     * @return Response
+     * @return mixed
      */
     public function updateProfileSucceed()
     {
@@ -131,7 +131,7 @@ class AccountController extends AdminController
      * Response view change password page.
      *
      * @param  array   $data
-     * @return Response
+     * @return mixed
      */
     public function showPasswordSucceed(array $data)
     {
@@ -144,7 +144,7 @@ class AccountController extends AdminController
      * Response when validation on change password failed.
      *
      * @param  object  $validation
-     * @return Response
+     * @return mixed
      */
     public function updatePasswordValidationFailed($validation)
     {
@@ -165,7 +165,7 @@ class AccountController extends AdminController
      * Response when update password failed.
      *
      * @param  array   $error
-     * @return Response
+     * @return mixed
      */
     public function updatePasswordFailed(array $error)
     {
@@ -177,7 +177,7 @@ class AccountController extends AdminController
     /**
      * Response when update password succeed.
      *
-     * @return Response
+     * @return mixed
      */
     public function updatePasswordSucceed()
     {

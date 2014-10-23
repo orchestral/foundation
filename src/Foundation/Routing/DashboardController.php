@@ -38,7 +38,7 @@ class DashboardController extends AdminController
      *
      * GET (:orchestra)/
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -52,7 +52,7 @@ class DashboardController extends AdminController
      *
      * GET (:orchestra) return 404
      *
-     * @return Response
+     * @return mixed
      */
     public function missing()
     {
@@ -63,7 +63,7 @@ class DashboardController extends AdminController
      * Response with widget.
      *
      * @param  array  $data
-     * @return Response
+     * @return mixed
      */
     public function dashboardSucceed(array $data)
     {

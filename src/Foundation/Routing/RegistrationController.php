@@ -38,7 +38,7 @@ class RegistrationController extends AdminController
      *
      * GET (:orchestra)/register
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -50,7 +50,7 @@ class RegistrationController extends AdminController
      *
      * POST (:orchestra)/register
      *
-     * @return Response
+     * @return mixed
      */
     public function create()
     {
@@ -61,7 +61,7 @@ class RegistrationController extends AdminController
      * Response when show registration page succeed.
      *
      * @param  array  $data
-     * @return Response
+     * @return mixed
      */
     public function indexSucceed(array $data)
     {
@@ -74,7 +74,7 @@ class RegistrationController extends AdminController
      * Response when create a user failed validation.
      *
      * @param  mixed   $validation
-     * @return Response
+     * @return mixed
      */
     public function createValidationFailed($validation)
     {
@@ -85,7 +85,7 @@ class RegistrationController extends AdminController
      * Response when create a user failed.
      *
      * @param  array   $error
-     * @return Response
+     * @return mixed
      */
     public function createFailed(array $error)
     {
@@ -97,7 +97,7 @@ class RegistrationController extends AdminController
     /**
      * Response when create a user succeed but unable to notify the user.
      *
-     * @return Response
+     * @return mixed
      */
     public function createSucceedWithoutNotification()
     {
@@ -110,7 +110,7 @@ class RegistrationController extends AdminController
     /**
      * Response when create a user succeed with notification.
      *
-     * @return Response
+     * @return mixed
      */
     public function createSucceed()
     {

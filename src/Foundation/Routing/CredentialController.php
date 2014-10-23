@@ -40,7 +40,7 @@ class CredentialController extends AdminController
      *
      * GET (:orchestra)/login
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -54,7 +54,7 @@ class CredentialController extends AdminController
      *
      * POST (:orchestra)/login
      *
-     * @return Response
+     * @return mixed
      */
     public function login()
     {
@@ -66,7 +66,7 @@ class CredentialController extends AdminController
      *
      * DELETE (:bundle)/login
      *
-     * @return Response
+     * @return mixed
      */
     public function logout()
     {
@@ -77,7 +77,7 @@ class CredentialController extends AdminController
      * Response when validation on login failed.
      *
      * @param  object  $validation
-     * @return Response
+     * @return mixed
      */
     public function loginValidationFailed($validation)
     {
@@ -87,7 +87,7 @@ class CredentialController extends AdminController
     /**
      * Response when login failed.
      *
-     * @return Response
+     * @return mixed
      */
     public function loginFailed()
     {
@@ -99,7 +99,7 @@ class CredentialController extends AdminController
     /**
      * Response when login succeed.
      *
-     * @return Response
+     * @return mixed
      */
     public function loginSucceed()
     {
@@ -111,7 +111,7 @@ class CredentialController extends AdminController
     /**
      * Response when logout succeed.
      *
-     * @return Response
+     * @return mixed
      */
     public function logoutSucceed()
     {

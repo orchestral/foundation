@@ -37,7 +37,7 @@ class PasswordBrokerController extends AdminController
      *
      * GET (:orchestra)/forgot
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -53,7 +53,7 @@ class PasswordBrokerController extends AdminController
      *
      * POST (:orchestra)/forgot
      *
-     * @return Response
+     * @return mixed
      */
     public function create()
     {
@@ -67,7 +67,7 @@ class PasswordBrokerController extends AdminController
      * GET (:orchestra)/forgot/reset/(:hash)
      *
      * @param  string   $token
-     * @return Response
+     * @return mixed
      */
     public function show($token)
     {
@@ -81,7 +81,7 @@ class PasswordBrokerController extends AdminController
      *
      * POST (:orchestra)/forgot/reset
      *
-     * @return Response
+     * @return mixed
      */
     public function reset()
     {
@@ -94,7 +94,7 @@ class PasswordBrokerController extends AdminController
      * Response when request password failed on validation.
      *
      * @param  mixed   $validation
-     * @return Response
+     * @return mixed
      */
     public function requestValidationFailed($validation)
     {
@@ -109,7 +109,7 @@ class PasswordBrokerController extends AdminController
      * Response when request reset password failed.
      *
      * @param  string  $response
-     * @return Response
+     * @return mixed
      */
     public function createFailed($response)
     {
@@ -122,7 +122,7 @@ class PasswordBrokerController extends AdminController
      * Response when request reset password succeed.
      *
      * @param  string  $response
-     * @return Response
+     * @return mixed
      */
     public function createSucceed($response)
     {
@@ -135,7 +135,7 @@ class PasswordBrokerController extends AdminController
      * Response when reset password failed.
      *
      * @param  string  $response
-     * @return Response
+     * @return mixed
      */
     public function resetFailed($response)
     {
@@ -149,7 +149,7 @@ class PasswordBrokerController extends AdminController
      * Response when reset password succeed.
      *
      * @param  string  $response
-     * @return Response
+     * @return mixed
      */
     public function resetSucceed()
     {
