@@ -1,11 +1,11 @@
 <?php namespace Orchestra\Foundation\Presenter;
 
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
-use Orchestra\Html\Table\TableBuilder;
 use Orchestra\Support\Facades\Form;
 use Orchestra\Support\Facades\HTML;
+use Illuminate\Support\Facades\Auth;
 use Orchestra\Support\Facades\Table;
+use Orchestra\Html\Table\TableBuilder;
 
 class User extends Presenter
 {
@@ -28,25 +28,7 @@ class User extends Presenter
             $table->column('fullname')
                 ->label(trans('orchestra/foundation::label.users.fullname'))
                 ->escape(false)
-                ->value(function ($row) {
-                    $roles = $row->roles;
-                    $value = array();
-
-                    foreach ($roles as $role) {
-                        $value[] = HTML::create('span', e($role->name), array(
-                            'class' => 'label label-info',
-                            'role'  => 'role',
-                        ));
-                    }
-
-                    return implode('', array(
-                        HTML::create('strong', e($row->fullname)),
-                        HTML::create('br'),
-                        HTML::create('span', HTML::raw(implode(' ', $value)), array(
-                            'class' => 'meta',
-                        )),
-                    ));
-                });
+                ->value($this->getFullnameColumn());
 
             $table->column('email')
                 ->label(trans('orchestra/foundation::label.users.email'));
@@ -65,40 +47,11 @@ class User extends Presenter
             $table->column('action')
                 ->label('')
                 ->escape(false)
-                ->headers(array('class' => 'th-action'))
+                ->headers(['class' => 'th-action'])
                 ->attributes(function ($row) {
-                    return array('class' => 'th-action');
+                    return ['class' => 'th-action'];
                 })
-                ->value(function ($row) {
-                    $btn = array();
-                    $btn[] = HTML::link(
-                        handles("orchestra::users/{$row->id}/edit"),
-                        trans('orchestra/foundation::label.edit'),
-                        array(
-                            'class'   => 'btn btn-mini btn-warning',
-                            'role'    => 'edit',
-                            'data-id' => $row->id,
-                        )
-                    );
-
-                    if (Auth::user()->id !== $row->id) {
-                        $btn[] = HTML::link(
-                            handles("orchestra::users/{$row->id}/delete"),
-                            trans('orchestra/foundation::label.delete'),
-                            array(
-                                'class'   => 'btn btn-mini btn-danger',
-                                'role'    => 'delete',
-                                'data-id' => $row->id,
-                            )
-                        );
-                    }
-
-                    return HTML::create(
-                        'div',
-                        HTML::raw(implode('', $btn)),
-                        array('class' => 'btn-group')
-                    );
-                });
+                ->value($this->getActionsColumn());
         });
     }
 
@@ -127,7 +80,7 @@ class User extends Presenter
 
                 $fieldset->control('select', 'roles[]')
                     ->label(trans('orchestra/foundation::label.users.roles'))
-                    ->attributes(array('multiple' => true))
+                    ->attributes(['multiple' => true])
                     ->options(function () {
                         $roles = App::make('orchestra.role');
 
@@ -135,7 +88,7 @@ class User extends Presenter
                     })
                     ->value(function ($row) {
                         // get all the user roles from objects
-                        $roles = array();
+                        $roles = [];
 
                         foreach ($row->roles as $row) {
                             $roles[] = $row->id;
@@ -145,5 +98,72 @@ class User extends Presenter
                     });
             });
         });
+    }
+
+    /**
+     * Get actions column for table builder.
+     *
+     * @return callable
+     */
+    protected function getActionsColumn()
+    {
+        return function ($row) {
+            $btn = [];
+            $btn[] = HTML::link(
+                handles("orchestra::users/{$row->id}/edit"),
+                trans('orchestra/foundation::label.edit'),
+                [
+                    'class'   => 'btn btn-mini btn-warning',
+                    'role'    => 'edit',
+                    'data-id' => $row->id,
+                ]
+            );
+
+            if (Auth::user()->id !== $row->id) {
+                $btn[] = HTML::link(
+                    handles("orchestra::users/{$row->id}/delete"),
+                    trans('orchestra/foundation::label.delete'),
+                    [
+                        'class'   => 'btn btn-mini btn-danger',
+                        'role'    => 'delete',
+                        'data-id' => $row->id,
+                    ]
+                );
+            }
+
+            return HTML::create(
+                'div',
+                HTML::raw(implode('', $btn)),
+                ['class' => 'btn-group']
+            );
+        };
+    }
+
+    /**
+     * Get fullname column for table builder.
+     *
+     * @return callable
+     */
+    protected function getFullnameColumn()
+    {
+        return function ($row) {
+            $roles = $row->roles;
+            $value = [];
+
+            foreach ($roles as $role) {
+                $value[] = HTML::create('span', e($role->name), [
+                    'class' => 'label label-info',
+                    'role'  => 'role',
+                ]);
+            }
+
+            return implode('', [
+                HTML::create('strong', e($row->fullname)),
+                HTML::create('br'),
+                HTML::create('span', HTML::raw(implode(' ', $value)), [
+                    'class' => 'meta',
+                ]),
+            ]);
+        };
     }
 }
