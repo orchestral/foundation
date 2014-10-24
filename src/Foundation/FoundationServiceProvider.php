@@ -13,7 +13,7 @@ class FoundationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $aliases = [
-        'app'                        => 'Orchestra\Kernel\Application',
+        'app'                        => 'Orchestra\Foundation\Application',
         'orchestra.platform.acl'     => ['Orchestra\Auth\Acl\Acl', 'Orchestra\Contracts\Auth\Acl\Acl'],
         'orchestra.platform.memory'  => ['Orchestra\Memory\Provider', 'Orchestra\Contracts\Memory\Provider'],
 

@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
-use Orchestra\Kernel\Application;
 use Orchestra\Foundation\Foundation;
+use Orchestra\Foundation\Application;
 use Illuminate\Support\Facades\Facade;
 
 class FoundationTest extends \PHPUnit_Framework_TestCase
