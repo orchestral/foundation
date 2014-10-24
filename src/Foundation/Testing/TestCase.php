@@ -97,7 +97,6 @@ abstract class TestCase extends TestbenchTestCase
             'Orchestra\Asset\AssetServiceProvider',
             'Orchestra\Auth\AuthServiceProvider',
             'Orchestra\Routing\ControllerServiceProvider',
-            'Orchestra\Debug\DebugServiceProvider',
             'Orchestra\View\DecoratorServiceProvider',
             'Orchestra\Extension\ExtensionServiceProvider',
             'Orchestra\Facile\FacileServiceProvider',

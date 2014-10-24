@@ -11,7 +11,6 @@ class ConsoleSupportServiceProvider extends AggregateServiceProvider
      */
     protected $providers = array(
         'Orchestra\Auth\CommandServiceProvider',
-        'Orchestra\Debug\CommandServiceProvider',
         'Orchestra\Extension\CommandServiceProvider',
         'Orchestra\Memory\CommandServiceProvider',
         'Orchestra\Optimize\OptimizeServiceProvider',

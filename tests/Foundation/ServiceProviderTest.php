@@ -136,7 +136,6 @@ class ServiceProviderTest extends TestCase
         );
         $consoleProvides = array(
             'orchestra.commands.auth',
-            'command.debug',
             'orchestra.commands.extension.activate',
             'orchestra.commands.extension.deactivate',
             'orchestra.commands.extension.detect',
