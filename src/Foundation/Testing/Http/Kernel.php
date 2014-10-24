@@ -7,6 +7,16 @@ class Kernel extends \Orchestra\Testbench\Http\Kernel
      *
      * @var array
      */
+    protected $bootstrappers = [
+        'Illuminate\Foundation\Bootstrap\ConfigureLogging',
+        'Illuminate\Foundation\Bootstrap\HandleExceptions',
+    ];
+
+    /**
+     * The application's middleware stack.
+     *
+     * @var array
+     */
     protected $middleware = [
         'Illuminate\Cookie\Middleware\EncryptCookies',
         'Illuminate\Cookie\Middleware\AddQueuedCookiesToRequest',
