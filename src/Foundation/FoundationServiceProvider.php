@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation;
 
 use Illuminate\Support\ServiceProvider;
-use Orchestra\Foundation\Traits\AliasesProviderTrait;
+use Orchestra\Support\Traits\AliasesProviderTrait;
 
 class FoundationServiceProvider extends ServiceProvider
 {
