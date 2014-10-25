@@ -12,6 +12,20 @@ use Orchestra\Auth\Passwords\PasswordResetServiceProvider;
 
 class ServiceProviderTest extends TestCase
 {
+
+    /**
+     * Define environment setup.
+     *
+     * @param  \Illuminate\Foundation\Application   $app
+     * @return void
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+        parent::getEnvironmentSetUp($app);
+
+        $app->make('Orchestra\Foundation\Bootstrap\LoadUserMetaData')->bootstrap($app);
+    }
+
     /**
      * Teardown the test environment.
      */
