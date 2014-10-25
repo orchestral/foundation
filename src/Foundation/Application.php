@@ -28,11 +28,11 @@ class Application extends BaseApplication implements DeferrableServiceContainer
      */
     public function bootstrapWith(array $bootstrappers)
     {
-        parent::bootstrapWith($bootstrappers);
-
         if ($this->runningInConsole() && ! $this->bound('request')) {
             $this->setRequestForConsoleEnvironment();
         }
+
+        parent::bootstrapWith($bootstrappers);
     }
 
     /**
