@@ -64,11 +64,11 @@ class ServiceProviderTest extends TestCase
     }
 
     /**
-     * Test instance of auth reminder.
+     * Test instance of auth password broker.
      *
      * @test
      */
-    public function testInstanceOfAuthReminder()
+    public function testInstanceOfAuthPasswordBroker()
     {
         $app = App::getFacadeApplication();
         $app['auth.password.tokens'] = m::mock('\Illuminate\Auth\Passwords\TokenRepositoryInterface');
@@ -79,30 +79,6 @@ class ServiceProviderTest extends TestCase
 
         $stub = App::make('auth.password');
         $this->assertInstanceOf('\Orchestra\Auth\Passwords\PasswordBroker', $stub);
-    }
-
-    /**
-     * Test auth event listeners.
-     *
-     * @test
-     */
-    public function testAuthListeners()
-    {
-        $app = App::getFacadeApplication();
-
-        $this->assertEquals(array('Guest'), Auth::roles());
-
-        $user = m::mock('\Orchestra\Model\User[getRoles]');
-        $user->id = 1;
-
-        $user->shouldReceive('getRoles')->once()->andReturn(array(
-            'Administrator',
-        ));
-
-        $this->assertEquals(
-            array('Administrator'),
-            $app['events']->until('orchestra.auth: roles', array($user, array()))
-        );
     }
 
     /**

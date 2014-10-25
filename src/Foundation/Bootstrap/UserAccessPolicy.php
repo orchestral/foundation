@@ -47,6 +47,8 @@ class UserAccessPolicy
      */
     protected function attachAccessPolicyEvents(Application $app)
     {
+        // Orchestra Platform should be able to watch any changes to Role model
+        // and sync the information to "orchestra.acl".
         Role::observe(new RoleObserver);
 
         // Orchestra Platform should be able to determine admin and member roles
