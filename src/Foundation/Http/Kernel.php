@@ -18,6 +18,7 @@ class Kernel extends HttpKernel
         'Illuminate\Foundation\Bootstrap\BootProviders',
         'Orchestra\Foundation\Bootstrap\UserAccessPolicy',
         'Orchestra\Extension\Bootstrap\LoadExtension',
+        'Orchestra\Foundation\Bootstrap\NotifyIfSafeMode',
         'Orchestra\View\Bootstrap\LoadCurrentTheme',
         'Orchestra\Foundation\Bootstrap\LoadExpresso',
     ];
