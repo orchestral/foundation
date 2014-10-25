@@ -21,21 +21,6 @@ class Application extends BaseApplication implements DeferrableServiceContainer
     }
 
     /**
-     * Run the given array of bootstrap classes.
-     *
-     * @param  array  $bootstrappers
-     * @return void
-     */
-    public function bootstrapWith(array $bootstrappers)
-    {
-        if ($this->runningInConsole() && ! $this->bound('request')) {
-            $this->setRequestForConsoleEnvironment();
-        }
-
-        parent::bootstrapWith($bootstrappers);
-    }
-
-    /**
      * Get the application's deferred services.
      *
      * @return array

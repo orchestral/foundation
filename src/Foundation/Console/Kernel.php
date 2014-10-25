@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
         'Illuminate\Foundation\Bootstrap\RegisterFacades',
         'Illuminate\Foundation\Bootstrap\RegisterProviders',
         'Illuminate\Foundation\Bootstrap\BootProviders',
+        'Orchestra\Foundation\Bootstrap\SetRequestForConsole',
         'Orchestra\Extension\Bootstrap\LoadExtension',
     ];
 }
