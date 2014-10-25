@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Foundation;
 
-use Illuminate\Http\Request;
 use Illuminate\Events\EventServiceProvider;
 use Orchestra\Routing\RoutingServiceProvider;
 use Illuminate\Foundation\Application as BaseApplication;
@@ -40,17 +39,5 @@ class Application extends BaseApplication implements DeferrableServiceContainer
         parent::flush();
 
         $this->hasBeenBootstrapped = false;
-    }
-
-    /**
-     * Set the application request for the console environment.
-     *
-     * @return void
-     */
-    public function setRequestForConsoleEnvironment()
-    {
-        $url = $this['config']->get('app.url', 'http://localhost');
-
-        $this->instance('request', Request::create($url, 'GET', [], [], [], $_SERVER));
     }
 }
