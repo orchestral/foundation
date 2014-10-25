@@ -8,8 +8,6 @@ class Kernel extends \Orchestra\Testbench\Http\Kernel
      * @var array
      */
     protected $bootstrappers = [
-        'Illuminate\Foundation\Bootstrap\ConfigureLogging',
-        'Illuminate\Foundation\Bootstrap\HandleExceptions',
     ];
 
     /**

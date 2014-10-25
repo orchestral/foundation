@@ -19,5 +19,6 @@ class Kernel extends ConsoleKernel
         'Orchestra\Foundation\Bootstrap\UserAccessPolicy',
         'Orchestra\Extension\Bootstrap\LoadExtension',
         'Orchestra\View\Bootstrap\LoadCurrentTheme',
+        'Orchestra\Foundation\Bootstrap\LoadExpresso',
     ];
 }

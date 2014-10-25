@@ -126,7 +126,7 @@ abstract class TestCase extends TestbenchTestCase
         return [];
     }
 
-     /**
+    /**
      * Define environment setup.
      *
      * @param  \Illuminate\Foundation\Application   $app

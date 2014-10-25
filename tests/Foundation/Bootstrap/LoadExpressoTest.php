@@ -1,4 +1,4 @@
-<?php namespace Orchestra\TestCase;
+<?php namespace Orchestra\Foundation\Bootstrap\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Facades\App;
@@ -6,8 +6,21 @@ use Orchestra\Support\Facades\HTML;
 use Orchestra\Support\Facades\Meta;
 use Orchestra\Foundation\Testing\TestCase;
 
-class MacrosTest extends TestCase
+class LoadExpressoTest extends TestCase
 {
+    /**
+     * Define environment setup.
+     *
+     * @param  \Illuminate\Foundation\Application   $app
+     * @return void
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+        parent::getEnvironmentSetUp($app);
+
+        $app->make('Orchestra\Foundation\Bootstrap\LoadExpresso')->bootstrap($app);
+    }
+
     /**
      * Teardown the test environment.
      */
@@ -59,8 +72,8 @@ class MacrosTest extends TestCase
      */
     public function testDecoratorIsRegistered()
     {
-        $stub = App::make('orchestra.decorator');
-        $view = $stub->render('navbar', array());
+        $stub = $this->app['orchestra.decorator'];
+        $view = $stub->render('navbar', []);
 
         $this->assertInstanceOf('\Orchestra\View\Decorator', $stub);
         $this->assertInstanceOf('\Illuminate\View\View', $view);

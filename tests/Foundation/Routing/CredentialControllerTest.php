@@ -4,12 +4,23 @@ use Mockery as m;
 use Illuminate\Support\Facades\App;
 use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Testing\TestCase;
 
 class CredentialControllerTest extends TestCase
 {
+    /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        View::shouldReceive('share')->once()->with('errors', m::any());
+    }
+
     /**
      * Teardown the test environment.
      */
@@ -41,9 +52,12 @@ class CredentialControllerTest extends TestCase
      */
     public function testGetLoginAction()
     {
-        $this->call('GET', 'admin/login');
-        $this->assertResponseOk();
+        View::shouldReceive('make')->once()
+            ->with('orchestra/foundation::credential.login')->andReturn('foo');
 
+        $this->call('GET', 'admin/login');
+
+        $this->assertResponseOk();
         $this->assertTrue(Meta::has('title'));
     }
 
