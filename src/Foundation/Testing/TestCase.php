@@ -88,7 +88,6 @@ abstract class TestCase extends TestbenchTestCase
             'Illuminate\Redis\RedisServiceProvider',
             'Illuminate\Session\SessionServiceProvider',
             'Illuminate\Validation\ValidationServiceProvider',
-            'Illuminate\View\ViewServiceProvider',
 
             /*
              * Orchestra Platform Service Providers...
