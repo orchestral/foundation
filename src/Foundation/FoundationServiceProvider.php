@@ -106,7 +106,6 @@ class FoundationServiceProvider extends ServiceProvider
 
         require "{$path}/start/global.php";
         require "{$path}/start/macros.php";
-        require "{$path}/start/events.php";
 
         if (! $this->app->routesAreCached()) {
             require "{$path}/routes.php";
