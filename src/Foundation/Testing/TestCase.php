@@ -152,7 +152,7 @@ abstract class TestCase extends TestbenchTestCase
      *
      * @param \Illuminate\Foundation\Application  $app
      */
-    protected function resolveApplicationKernel($app)
+    protected function resolveApplicationHttpKernel($app)
     {
         $app->bind('Illuminate\Contracts\Http\Kernel', 'Orchestra\Foundation\Testing\Http\Kernel');
     }
