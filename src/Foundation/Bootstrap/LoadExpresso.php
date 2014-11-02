@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Foundation\Bootstrap;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Contracts\Foundation\Application;
 
 class LoadExpresso
@@ -28,7 +27,9 @@ class LoadExpresso
      */
     protected function addBladeExtensions(Application $app)
     {
-        Blade::extend(function ($view) {
+        $blade = $app['view']->getEngineResolver()->resolve('blade')->getCompiler();
+
+        $blade->extend(function ($view) {
             $decorator = '$1<?php echo app("orchestra.decorator")->render($2); ?>';
             $placeholder = '$1<?php $__ps = app("orchestra.widget")->make("placeholder.".$2); '
                                 .'foreach ($__ps as $__p) { echo value($__p->value ?:""); } ?>';
