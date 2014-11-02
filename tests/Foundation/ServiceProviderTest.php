@@ -81,11 +81,11 @@ class ServiceProviderTest extends TestCase
         $foundationProvides = array(
             'orchestra.app',
             'orchestra.installed',
+            'orchestra.meta',
         );
         $siteProvides = array(
             'orchestra.publisher',
             'orchestra.publisher.ftp',
-            'orchestra.meta',
             'orchestra.role',
             'orchestra.user',
         );

@@ -68,6 +68,18 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerFoundation();
+
+        $this->registerMeta();
+    }
+
+    /**
+    * Register the service provider for foundation.
+    *
+    * @return void
+    */
+    protected function registerFoundation()
+    {
         $this->app['orchestra.installed'] = false;
 
         $this->app->bindShared('orchestra.app', function ($app) {
@@ -77,6 +89,18 @@ class FoundationServiceProvider extends ServiceProvider
         $this->registerFacadesAliases();
         $this->registerCoreContainerAliases();
         $this->registerEvents();
+    }
+
+    /**
+     * Register the service provider for site.
+     *
+     * @return void
+     */
+    protected function registerMeta()
+    {
+        $this->app->bindShared('orchestra.meta', function () {
+            return new Meta;
+        });
     }
 
     /**
@@ -118,6 +142,6 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['orchestra.app', 'orchestra.installed'];
+        return ['orchestra.app', 'orchestra.installed', 'orchestra.meta'];
     }
 }
