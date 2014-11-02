@@ -49,7 +49,10 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function testOrchestraMethod()
     {
+        $this->app['orchestra.platform.memory'] = m::mock('\Orchestra\Memory\Provider');
+
         $this->assertInstanceOf('\Orchestra\Foundation\Foundation', orchestra());
+        $this->assertInstanceOf('\Orchestra\Memory\Provider', orchestra('memory'));
     }
 
     /**
@@ -93,5 +96,33 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
             ->with('orchestra/foundation::resources/foo')->andReturn('foo');
 
         $this->assertEquals('foo', resources('foo'));
+    }
+
+    /**
+     * Test get_meta() method.
+     *
+     * @test
+     */
+    public function testGetMetaMethod()
+    {
+        $this->app['orchestra.meta'] = $meta = m::mock('\Orchestra\Foundation\Meta');
+
+        $meta->shouldReceive('get')->once()->with('title', 'foo')->andReturn('foobar');
+
+        $this->assertEquals('foobar', get_meta('title', 'foo'));
+    }
+
+    /**
+     * Test set_meta() method.
+     *
+     * @test
+     */
+    public function testSetMetaMethod()
+    {
+        $this->app['orchestra.meta'] = $meta = m::mock('\Orchestra\Foundation\Meta');
+
+        $meta->shouldReceive('set')->once()->with('title', 'foo')->andReturnNull();
+
+        $this->assertNull(set_meta('title', 'foo'));
     }
 }
