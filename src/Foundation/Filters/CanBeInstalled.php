@@ -30,7 +30,7 @@ class CanBeInstalled
     public function filter()
     {
         if (! $this->foundation->installed()) {
-            return new RedirectResponse(handles('orchestra::install'));
+            return new RedirectResponse($this->foundation->handles('orchestra::install'));
         }
     }
 }

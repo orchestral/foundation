@@ -44,13 +44,21 @@ class CanManage
         $this->config = $config;
     }
 
+    /**
+     * Run the request filter.
+     *
+     * @param  \Illuminate\Routing\Route  $route
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $value
+     * @return mixed
+     */
     public function filter(Route $route, Request $request, $value = 'orchestra')
     {
         if (! $this->foundation->acl()->can("manage-{$value}")) {
             $type = ($this->auth->guest() ? 'guest' : 'user');
             $url  = $this->config->get("orchestra/foundation::routes.{$type}");
 
-            return new RedirectResponse(handles($url));
+            return new RedirectResponse($this->foundation->handles($url));
         }
     }
 }

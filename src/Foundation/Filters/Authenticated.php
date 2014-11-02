@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Config\Repository;
+use Orchestra\Contracts\Foundation\Foundation;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
 class Authenticated
@@ -23,6 +24,13 @@ class Authenticated
     protected $config;
 
     /**
+     * The application implementation.
+     *
+     * @var \Orchestra\Contracts\Foundation\Foundation
+     */
+    protected $foundation;
+
+    /**
      * The response factory implementation.
      *
      * @var \Illuminate\Contracts\Routing\ResponseFactory
@@ -32,12 +40,14 @@ class Authenticated
     /**
      * Create a new filter instance.
      *
-     * @param  \Illuminate\Contracts\Auth\Guard                 $auth
-     * @param  \Illuminate\Contracts\Config\Repository          $config
-     * @param  \Illuminate\Contracts\Routing\ResponseFactory    $response
+     * @param  \Orchestra\Contracts\Foundation\Foundation  $foundation
+     * @param  \Illuminate\Contracts\Auth\Guard  $auth
+     * @param  \Illuminate\Contracts\Config\Repository  $config
+     * @param  \Illuminate\Contracts\Routing\ResponseFactory  $response
      */
-    public function __construct(Guard $auth, Repository $config, ResponseFactory $response)
+    public function __construct(Foundation $foundation, Guard $auth, Repository $config, ResponseFactory $response)
     {
+        $this->foundation = $foundation;
         $this->auth = $auth;
         $this->config = $config;
         $this->response = $response;
@@ -46,8 +56,8 @@ class Authenticated
     /**
      * Run the request filter.
      *
-     * @param  \Illuminate\Routing\Route    $route
-     * @param  \Illuminate\Http\Request     $request
+     * @param  \Illuminate\Routing\Route  $route
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed|null
      */
     public function filter(Route $route, Request $request)
@@ -58,7 +68,7 @@ class Authenticated
             } else {
                 $url = $this->config->get('orchestra/foundation::routes.guest');
 
-                return $this->response->redirectGuest(handles($url));
+                return $this->response->redirectGuest($this->foundation->handles($url));
             }
         }
     }

@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Filters;
 
-use Orchestra\Foundation\Foundation;
+use Orchestra\Contracts\Foundation\Foundation;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class IsRegistrable
@@ -8,14 +8,14 @@ class IsRegistrable
     /**
      * The application implementation.
      *
-     * @var \Orchestra\Foundation\Foundation
+     * @var \Orchestra\Contracts\Foundation\Foundation
      */
     protected $foundation;
 
     /**
      * Create a new filter instance.
      *
-     * @param  \Orchestra\Foundation\Foundation  $foundation
+     * @param  \Orchestra\Contracts\Foundation\Foundation  $foundation
      */
     public function __construct(Foundation $foundation)
     {
@@ -26,6 +26,7 @@ class IsRegistrable
      * Run the request filter.
      *
      * @return mixed
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function filter()
     {

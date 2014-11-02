@@ -53,7 +53,7 @@ class IsInstalled
             $type = ($this->auth->guest() ? 'guest' : 'user');
             $url  = $this->config->get("orchestra/foundation::routes.{$type}");
 
-            return new RedirectResponse(handles($url));
+            return new RedirectResponse($this->foundation->handles($url));
         }
     }
 }
