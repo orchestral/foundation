@@ -1,8 +1,6 @@
 <?php namespace Orchestra\Foundation\Bootstrap\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\App;
-use Orchestra\Support\Facades\HTML;
 use Orchestra\Support\Facades\Meta;
 use Orchestra\Foundation\Testing\TestCase;
 
@@ -45,7 +43,7 @@ class LoadExpressoTest extends TestCase
                 ->with('site.format.title', ':pageTitle &mdash; :siteTitle')
                 ->andReturn(':pageTitle &mdash; :siteTitle');
 
-        $this->assertEquals('<title>Foo</title>', HTML::title());
+        $this->assertEquals('<title>Foo</title>', $this->app['html']->title());
     }
 
     /**
@@ -62,7 +60,7 @@ class LoadExpressoTest extends TestCase
             ->shouldReceive('get')->once()->with('site.format.title', ':pageTitle &mdash; :siteTitle')
             ->andReturn(':pageTitle &mdash; :siteTitle');
 
-        $this->assertEquals('<title>Foobar &mdash; Foo</title>', HTML::title());
+        $this->assertEquals('<title>Foobar &mdash; Foo</title>', $this->app['html']->title());
     }
 
     /**

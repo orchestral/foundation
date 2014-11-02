@@ -1,8 +1,6 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Application;
 use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\SupportServiceProvider;
@@ -64,7 +62,7 @@ class ServiceProviderTest extends TestCase
         $user->shouldReceive('driver')->once()->andReturn($user)
             ->shouldReceive('getProvider')->once()->andReturn($user);
 
-        $stub = App::make('auth.password');
+        $stub = $this->app->make('auth.password');
         $this->assertInstanceOf('\Orchestra\Auth\Passwords\PasswordBroker', $stub);
     }
 
@@ -122,6 +120,11 @@ class ServiceProviderTest extends TestCase
         $this->assertTrue($console->isDeferred());
     }
 
+    /**
+     * Test event are registered.
+     *
+     * @test
+     */
     public function testRegisterEventsOnAfter()
     {
         $app = new Application(__DIR__);
