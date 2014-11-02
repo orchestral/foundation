@@ -29,10 +29,10 @@ class ServiceProviderTest extends TestCase
      */
     public function testInstanceOfOrchestraPublisher()
     {
-        $stub = App::make('orchestra.publisher');
+        $stub = $this->app->make('orchestra.publisher');
         $this->assertInstanceOf('\Orchestra\Foundation\Publisher\PublisherManager', $stub);
 
-        $stub = App::make('orchestra.publisher.ftp');
+        $stub = $this->app->make('orchestra.publisher.ftp');
         $this->assertInstanceOf('\Orchestra\Support\Ftp\Client', $stub);
     }
 
@@ -43,10 +43,10 @@ class ServiceProviderTest extends TestCase
      */
     public function testInstanceOfEloquents()
     {
-        $stub = App::make('orchestra.role');
+        $stub = $this->app->make('orchestra.role');
         $this->assertInstanceOf('\Orchestra\Model\Role', $stub);
 
-        $stub = App::make('orchestra.user');
+        $stub = $this->app->make('orchestra.user');
         $this->assertInstanceOf('\Orchestra\Model\User', $stub);
     }
 
@@ -57,7 +57,7 @@ class ServiceProviderTest extends TestCase
      */
     public function testInstanceOfAuthPasswordBroker()
     {
-        $app = App::getFacadeApplication();
+        $app = $this->app;
         $app['auth.password.tokens'] = m::mock('\Illuminate\Auth\Passwords\TokenRepositoryInterface');
         $app['auth'] = $user = m::mock('\Illuminate\Auth\UserProviderInterface');
 
@@ -75,12 +75,10 @@ class ServiceProviderTest extends TestCase
      */
     public function testListOfProvides()
     {
-        $app = App::getFacadeApplication();
-
-        $foundation = new FoundationServiceProvider($app);
-        $site       = new SupportServiceProvider($app);
-        $reminder   = new PasswordResetServiceProvider($app);
-        $console    = new ConsoleSupportServiceProvider($app);
+        $foundation = new FoundationServiceProvider($this->app);
+        $site       = new SupportServiceProvider($this->app);
+        $reminder   = new PasswordResetServiceProvider($this->app);
+        $console    = new ConsoleSupportServiceProvider($this->app);
 
         $foundationProvides = array(
             'orchestra.app',
