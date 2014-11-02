@@ -12,20 +12,6 @@ use Orchestra\Auth\Passwords\PasswordResetServiceProvider;
 
 class ServiceProviderTest extends TestCase
 {
-
-    /**
-     * Define environment setup.
-     *
-     * @param  \Illuminate\Foundation\Application   $app
-     * @return void
-     */
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        $app->make('Orchestra\Foundation\Bootstrap\LoadUserMetaData')->bootstrap($app);
-    }
-
     /**
      * Teardown the test environment.
      */
@@ -48,19 +34,6 @@ class ServiceProviderTest extends TestCase
 
         $stub = App::make('orchestra.publisher.ftp');
         $this->assertInstanceOf('\Orchestra\Support\Ftp\Client', $stub);
-    }
-
-    /**
-     * Test instance of `orchestra.memory`.
-     *
-     * @test
-     */
-    public function testInstanceOfOrchestraMemory()
-    {
-        $stub = App::make('orchestra.memory')->driver('user');
-
-        $this->assertInstanceOf('\Orchestra\Model\Memory\UserMetaProvider', $stub);
-        $this->assertInstanceOf('\Orchestra\Memory\Provider', $stub);
     }
 
     /**
@@ -153,7 +126,7 @@ class ServiceProviderTest extends TestCase
 
     public function testRegisterEventsOnAfter()
     {
-        $app = new Application(m::mock('\Illuminate\Http\Request'));
+        $app = new Application(__DIR__);
         $app['events'] = $events = m::mock('\Illuminate\Contracts\Events\Dispatcher[fire]');
         $app['router'] = $router = m::mock('\Illuminate\Routing\Router');
         $events->shouldReceive('fire')->once()->with('orchestra.done')->andReturnNull();
