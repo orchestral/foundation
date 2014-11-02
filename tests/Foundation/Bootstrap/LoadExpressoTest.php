@@ -29,6 +29,11 @@ class LoadExpressoTest extends TestCase
         m::close();
     }
 
+    /**
+     * Test Blade::extend() is registered.
+     *
+     * @test
+     */
     public function testBladeExtendIsRegistered()
     {
         $compiler = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();

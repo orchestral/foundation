@@ -67,6 +67,4 @@ class NotifyIfSafeModeTest extends \PHPUnit_Framework_TestCase
 
         (new NotifyIfSafeMode)->bootstrap($app);
     }
-
-
 }
