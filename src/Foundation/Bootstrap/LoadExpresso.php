@@ -27,9 +27,9 @@ class LoadExpresso
      */
     protected function addBladeExtensions(Application $app)
     {
-        $blade = $app['view']->getEngineResolver()->resolve('blade')->getCompiler();
+        $compiler = $app['view']->getEngineResolver()->resolve('blade')->getCompiler();
 
-        $blade->extend(function ($view) {
+        $compiler->extend(function ($view) {
             $decorator = '$1<?php echo app("orchestra.decorator")->render($2); ?>';
             $placeholder = '$1<?php $__ps = app("orchestra.widget")->make("placeholder.".$2); '
                                 .'foreach ($__ps as $__p) { echo value($__p->value ?:""); } ?>';

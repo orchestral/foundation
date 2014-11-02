@@ -29,6 +29,13 @@ class LoadExpressoTest extends TestCase
         m::close();
     }
 
+    public function testBladeExtendIsRegistered()
+    {
+        $compiler = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
+
+        $this->assertEquals('<?php echo app("orchestra.decorator")->render("foo"); ?>', $compiler->compileString('@decorator("foo")'));
+    }
+
     /**
      * Test HTML::title() macro.
      *
