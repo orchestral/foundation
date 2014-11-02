@@ -1,6 +1,7 @@
 <?php namespace Orchestra\TestCase;
 
 use Mockery as m;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Facade;
 
 class HelpersTest extends \PHPUnit_Framework_TestCase
@@ -8,7 +9,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
     /**
      * Application instance.
      *
-     * @var Illuminate\Foundation\Application
+     * @var \Illuminate\Foundation\Application
      */
     private $app = null;
 
@@ -17,7 +18,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app = new \Illuminate\Foundation\Application;
+        $this->app = new Application;
 
         $this->app['translator'] = $trans = m::mock('\Illuminate\Translation\Translator')->makePartial();
         $this->app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
