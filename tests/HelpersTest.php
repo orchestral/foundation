@@ -12,7 +12,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      *
      * @var \Illuminate\Foundation\Application
      */
-    private $app = null;
+    private $app;
 
     /**
      * Setup the test environment.
