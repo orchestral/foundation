@@ -14,6 +14,12 @@ class FilterServiceProviderTest extends \PHPUnit_Framework_TestCase
         m::close();
     }
 
+    /**
+     * Test Orchestra\Foundation\Providers\FilterServiceProvider::boot()
+     * method.
+     *
+     * @test
+     */
     public function testBootMethod()
     {
         $app = new Container;
