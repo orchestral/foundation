@@ -17,4 +17,11 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Illuminate\Events\Dispatcher', $app['events']);
         $this->assertInstanceOf('\Orchestra\Routing\Router', $app['router']);
     }
+
+    public function testGettingDeferredServices()
+    {
+        $app = new Application(__DIR__);
+
+        $this->assertEquals([], $app->getDeferredServices());
+    }
 }

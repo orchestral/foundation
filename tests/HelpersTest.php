@@ -1,5 +1,6 @@
 <?php namespace Orchestra\TestCase;
 
+use Illuminate\Container\Container;
 use Mockery as m;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Facade;
@@ -18,13 +19,14 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app = new Application;
+        $this->app = new Application(__DIR__);
 
         $this->app['translator'] = $trans = m::mock('\Illuminate\Translation\Translator')->makePartial();
         $this->app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
 
         Facade::clearResolvedInstances();
         Facade::setFacadeApplication($this->app);
+        Container::setInstance($this->app);
 
         $trans->shouldReceive('trans')->andReturn('translated');
     }
