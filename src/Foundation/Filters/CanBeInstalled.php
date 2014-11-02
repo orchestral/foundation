@@ -1,21 +1,21 @@
 <?php namespace Orchestra\Foundation\Filters;
 
-use Orchestra\Foundation\Foundation;
 use Illuminate\Http\RedirectResponse;
+use Orchestra\Contracts\Foundation\Foundation;
 
 class CanBeInstalled
 {
     /**
      * The application implementation.
      *
-     * @var \Orchestra\Foundation\Foundation
+     * @var \Orchestra\Contracts\Foundation\Foundation
      */
     protected $foundation;
 
     /**
      * Create a new filter instance.
      *
-     * @param  \Orchestra\Foundation\Foundation  $foundation
+     * @param  \Orchestra\Contracts\Foundation\Foundation  $foundation
      */
     public function __construct(Foundation $foundation)
     {

@@ -1,16 +1,16 @@
 <?php namespace Orchestra\Foundation\Filters;
 
-use Orchestra\Foundation\Foundation;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Config\Repository;
+use Orchestra\Contracts\Foundation\Foundation;
 
 class IsInstalled
 {
     /**
      * The application implementation.
      *
-     * @var \Orchestra\Foundation\Foundation
+     * @var \Orchestra\Contracts\Foundation\Foundation
      */
     protected $foundation;
 
@@ -31,7 +31,7 @@ class IsInstalled
     /**
      * Create a new filter instance.
      *
-     * @param  \Orchestra\Foundation\Foundation  $foundation
+     * @param  \Orchestra\Contracts\Foundation\Foundation  $foundation
      * @param  \Illuminate\Contracts\Auth\Guard  $auth
      * @param  \Illuminate\Contracts\Config\Repository  $config
      */
