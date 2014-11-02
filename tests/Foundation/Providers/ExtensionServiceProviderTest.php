@@ -1,7 +1,7 @@
-<?php namespace Orchestra\Foundation\TestCase\Providers;
+<?php namespace Orchestra\Foundation\Providers\TestCase;
 
-use Illuminate\Container\Container;
 use Mockery as m;
+use Illuminate\Container\Container;
 use Orchestra\Foundation\Providers\ExtensionServiceProvider;
 
 class ExtensionServiceProviderTest extends \PHPUnit_Framework_TestCase
