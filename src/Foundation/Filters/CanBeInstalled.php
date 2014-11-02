@@ -3,7 +3,7 @@
 use Orchestra\Foundation\Foundation;
 use Illuminate\Http\RedirectResponse;
 
-class InstallableFilter
+class CanBeInstalled
 {
     /**
      * The application implementation.

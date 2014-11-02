@@ -7,7 +7,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Config\Repository;
 
-class ManageAuthorizationFilter
+class CanManage
 {
     /**
      * The application implementation.

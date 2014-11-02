@@ -3,7 +3,7 @@
 use Orchestra\Foundation\Foundation;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class RegistrableFilter
+class IsRegistrable
 {
     /**
      * The application implementation.

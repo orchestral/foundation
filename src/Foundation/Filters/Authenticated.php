@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
-class AuthFilter
+class Authenticated
 {
     /**
      * The authenticator implementation.

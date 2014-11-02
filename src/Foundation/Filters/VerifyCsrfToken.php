@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Session\TokenMismatchException;
 
-class CsrfFilter
+class VerifyCsrfToken
 {
     /**
      * Run the request filter.

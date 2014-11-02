@@ -1,11 +1,19 @@
 <?php namespace Orchestra\Foundation\Filters;
 
+use Orchestra\Foundation\Foundation;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Config\Repository;
 
-class GuestFilter
+class IsInstalled
 {
+    /**
+     * The application implementation.
+     *
+     * @var \Orchestra\Foundation\Foundation
+     */
+    protected $foundation;
+
     /**
      * The authenticator implementation.
      *
@@ -23,11 +31,13 @@ class GuestFilter
     /**
      * Create a new filter instance.
      *
-     * @param  \Illuminate\Contracts\Auth\Guard         $auth
+     * @param  \Orchestra\Foundation\Foundation  $foundation
+     * @param  \Illuminate\Contracts\Auth\Guard  $auth
      * @param  \Illuminate\Contracts\Config\Repository  $config
      */
-    public function __construct(Guard $auth, Repository $config)
+    public function __construct(Foundation $foundation, Guard $auth, Repository $config)
     {
+        $this->foundation = $foundation;
         $this->auth = $auth;
         $this->config = $config;
     }
@@ -39,9 +49,10 @@ class GuestFilter
      */
     public function filter()
     {
-        $url = $this->config->get('orchestra/foundation::routes.user');
+        if ($this->foundation->installed()) {
+            $type = ($this->auth->guest() ? 'guest' : 'user');
+            $url  = $this->config->get("orchestra/foundation::routes.{$type}");
 
-        if ($this->auth->check()) {
             return new RedirectResponse(handles($url));
         }
     }
