@@ -80,7 +80,6 @@ abstract class TestCase extends TestbenchTestCase
             'Illuminate\Filesystem\FilesystemServiceProvider',
             'Illuminate\Foundation\Providers\FoundationServiceProvider',
             'Illuminate\Hashing\HashServiceProvider',
-            'Illuminate\Log\LogServiceProvider',
             'Illuminate\Mail\MailServiceProvider',
             'Illuminate\Pagination\PaginationServiceProvider',
             'Illuminate\Foundation\Providers\PublisherServiceProvider',
