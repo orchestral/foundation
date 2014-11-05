@@ -23,7 +23,9 @@ class SupportServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerPublisher();
+
         $this->registerRoleEloquent();
+
         $this->registerUserEloquent();
     }
 
@@ -34,11 +36,11 @@ class SupportServiceProvider extends ServiceProvider
      */
     protected function registerPublisher()
     {
-        $this->app->bindShared('orchestra.publisher.ftp', function () {
+        $this->app->singleton('orchestra.publisher.ftp', function () {
             return new FtpClient;
         });
 
-        $this->app->bindShared('orchestra.publisher', function ($app) {
+        $this->app->singleton('orchestra.publisher', function ($app) {
             return new PublisherManager($app);
         });
     }
@@ -50,7 +52,7 @@ class SupportServiceProvider extends ServiceProvider
      */
     protected function registerRoleEloquent()
     {
-        $this->app->bindShared('orchestra.role', function () {
+        $this->app->bind('orchestra.role', function () {
             return new Role;
         });
     }
@@ -62,7 +64,7 @@ class SupportServiceProvider extends ServiceProvider
      */
     protected function registerUserEloquent()
     {
-        $this->app->bindShared('orchestra.user', function () {
+        $this->app->bind('orchestra.user', function () {
             return new User;
         });
     }
