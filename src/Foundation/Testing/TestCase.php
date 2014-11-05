@@ -8,9 +8,10 @@ abstract class TestCase extends TestbenchTestCase
     /**
      * Get application aliases.
      *
+     * @param  \Illuminate\Foundation\Application  $app
      * @return array
      */
-    protected function getApplicationAliases()
+    protected function getApplicationAliases($app)
     {
         return [
             'App'        => 'Illuminate\Support\Facades\App',
@@ -53,9 +54,10 @@ abstract class TestCase extends TestbenchTestCase
     /**
      * Get package aliases.
      *
+     * @param  \Illuminate\Foundation\Application  $app
      * @return array
      */
-    protected function getPackageAliases()
+    protected function getPackageAliases($app)
     {
         return [];
     }
@@ -63,9 +65,10 @@ abstract class TestCase extends TestbenchTestCase
     /**
      * Get application providers.
      *
+     * @param  \Illuminate\Foundation\Application  $app
      * @return array
      */
-    protected function getApplicationProviders()
+    protected function getApplicationProviders($app)
     {
         return [
             /*
@@ -118,9 +121,10 @@ abstract class TestCase extends TestbenchTestCase
     /**
      * Get package providers.
      *
+     * @param  \Illuminate\Foundation\Application  $app
      * @return array
      */
-    protected function getPackageProviders()
+    protected function getPackageProviders($app)
     {
         return [];
     }
