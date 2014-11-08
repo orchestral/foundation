@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Foundation\Presenter\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Fluent;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
-use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Presenter\Extension;
 
 class ExtensionTest extends \PHPUnit_Framework_TestCase
@@ -22,7 +22,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new Container;
 
-        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
+        $this->app['orchestra.app'] = m::mock('\Orchestra\Contracts\Foundation\Foundation');
         $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $this->app['orchestra.app']->shouldReceive('handles');
@@ -39,6 +39,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         unset($this->app);
+
         m::close();
     }
 
@@ -50,13 +51,18 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormMethod()
     {
-        $app      = $this->app;
-        $model    = new Fluent;
-        $grid     = m::mock('\Orchestra\Html\Form\Grid')->makePartial();
-        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->makePartial();
-        $control  = m::mock('\Orchestra\Html\Form\Control')->makePartial();
+        $model = new Fluent;
+        $app   = $this->app;
+        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
 
-        $stub = new Extension;
+        $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
+        $extension = m::mock('\Orchestra\Contracts\Extension\Factory');
+
+        $grid     = m::mock('\Orchestra\Contracts\Html\Form\Grid');
+        $fieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
+        $control  = m::mock('\Orchestra\Contracts\Html\Form\Control');
+
+        $stub = new Extension($extension, $form);
 
         $control->shouldReceive('label')->twice()->andReturnSelf()
             ->shouldReceive('value')->once()->andReturnSelf()
@@ -70,18 +76,14 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);
                 });
-
-        $app['orchestra.extension'] = m::mock('\Orchestra\Extension\Factory')->makePartial();
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Factory')->makePartial();
-        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
-
-        $app['orchestra.extension']->shouldReceive('option')->once()->with('foo/bar', 'handles')->andReturn('foo');
-        $app['orchestra.form']->shouldReceive('of')->once()
+        $extension->shouldReceive('option')->once()->with('foo/bar', 'handles')->andReturn('foo');
+        $form->shouldReceive('of')->once()
                 ->with('orchestra.extension: foo/bar', m::type('Closure'))
                 ->andReturnUsing(function ($t, $c) use ($grid) {
                     $c($grid);
                     return 'foo';
                 });
+
         $app['html']->shouldReceive('link')->once()
                 ->with(handles("orchestra/foundation::extensions/update/foo.bar"), m::any(), m::any())
                 ->andReturn('foo');

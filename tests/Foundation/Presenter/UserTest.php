@@ -1,12 +1,11 @@
 <?php namespace Orchestra\Foundation\Presenter\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Fluent;
+use Illuminate\Support\Collection;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Presenter\User;
-use Orchestra\Model\User as Eloquent;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
@@ -53,10 +52,18 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testTableMethod()
     {
-        $app    = $this->app;
-        $model  = m::mock('\Orchestra\Model\User');
-        $grid   = m::mock('\Orchestra\Html\Table\Grid')->makePartial();
-        $column = m::mock('\Orchestra\Html\Table\Column')->makePartial();
+        $app   = $this->app;
+        $model = m::mock('\Orchestra\Model\User');
+
+        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,raw]');
+
+        $auth  = m::mock('Illuminate\Contracts\Auth\User');
+        $form  = m::mock('\Orchestra\Contracts\Html\Form\Factory');
+        $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
+
+        $grid   = m::mock('\Orchestra\Contracts\Html\Table\Grid');
+        $column = m::mock('\Orchestra\Contracts\Html\Table\Column');
+
         $value  = (object) array(
             'fullname' => 'Foo',
             'roles'    => array(
@@ -65,7 +72,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
-        $stub = new User;
+        $stub = new User($auth, $form, $table);
 
         $column->shouldReceive('label')->twice()->andReturnSelf()
             ->shouldReceive('escape')->once()->with(false)->andReturnSelf()
@@ -79,16 +86,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('layout')->once()->with('orchestra/foundation::components.table')->andReturnNull()
             ->shouldReceive('column')->once()->with('fullname')->andReturn($column)
             ->shouldReceive('column')->once()->with('email')->andReturn($column);
-
-        $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Factory')->makePartial();
-        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,raw]');
-
-        $app['orchestra.table']->shouldReceive('of')->once()
+        $table->shouldReceive('of')->once()
                 ->with('orchestra.users', m::type('Closure'))
                 ->andReturnUsing(function ($t, $c) use ($grid) {
                     $c($grid);
                     return 'foo';
                 });
+
         $app['html']->shouldReceive('create')->once()
                 ->with('span', 'Administrator', m::any())->andReturn('administrator')
             ->shouldReceive('create')->once()
@@ -110,16 +114,25 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testActionsMethod()
     {
-        $app    = $this->app;
-        $table  = m::mock('\Orchestra\Html\Table\TableBuilder')->makePartial();
-        $grid   = m::mock('\Orchestra\Html\Table\Grid')->makePartial();
-        $column = m::mock('\Orchestra\Html\Table\Column')->makePartial();
+        $app = $this->app;
+
+        $auth  = m::mock('Illuminate\Contracts\Auth\User');
+        $form  = m::mock('\Orchestra\Contracts\Html\Form\Factory');
+        $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
+
+        $builder = m::mock('\Orchestra\Contracts\Html\Table\Builder');
+        $grid    = m::mock('\Orchestra\Contracts\Html\Table\Grid');
+        $column  = m::mock('\Orchestra\Contracts\Html\Table\Column');
+
+
+        $auth->id = 2;
+
         $value  = (object) array(
             'id'   => 1,
             'name' => 'Foo',
         );
 
-        $stub = new User;
+        $stub = new User($auth, $form, $table);
 
         $column->shouldReceive('label')->once()->with('')->andReturnSelf()
             ->shouldReceive('escape')->once()->with(false)->andReturnSelf()
@@ -136,7 +149,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 });
         $grid->shouldReceive('column')->once()->with('action')->andReturn($column);
 
-        $table->shouldReceive('extend')->once()->with(m::type('Closure'))
+        $builder->shouldReceive('extend')->once()->with(m::type('Closure'))
             ->andReturnUsing(function ($c) use ($grid) {
                 $c($grid);
                 return 'foo';
@@ -144,8 +157,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $app['auth'] = m::mock('\Illuminate\Auth\Guard')->makePartial();
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
-
-        $app['auth']->shouldReceive('user')->once()->andReturn((object) array('id' => 2));
         $app['html']->shouldReceive('link')->once()
                 ->with(handles("orchestra/foundation::users/1/edit"), m::any(), m::type('Array'))
                 ->andReturn('edit')
@@ -156,7 +167,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('create')->once()
                 ->with('div', 'raw-edit', m::type('Array'))->andReturn('create-div');
 
-        $this->assertEquals('foo', $stub->actions($table));
+        $this->assertEquals('foo', $stub->actions($builder));
     }
 
     /**
@@ -166,12 +177,21 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormMethod()
     {
-        $app      = $this->app;
-        $model    = m::mock('\Orchestra\Model\User');
-        $grid     = m::mock('\Orchestra\Html\Form\Grid')->makePartial();
-        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->makePartial();
-        $control  = m::mock('\Orchestra\Html\Form\Control')->makePartial();
-        $value    = (object) array(
+        $app   = $this->app;
+        $model = m::mock('\Orchestra\Model\User');
+
+        $auth  = m::mock('Illuminate\Contracts\Auth\User');
+        $form  = m::mock('\Orchestra\Contracts\Html\Form\Factory');
+        $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
+
+        $grid     = m::mock('\Orchestra\Contracts\Html\Form\Grid');
+        $fieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
+        $control  = m::mock('\Orchestra\Contracts\Html\Form\Control');
+
+        $app['Orchestra\Contracts\Html\Form\Control'] = $control;
+        $app['orchestra.role'] = m::mock('\Orchestra\Model\Role');
+
+        $value = (object) array(
             'roles' => new Collection(array(
                 new Fluent(array('id' => 1, 'name' => 'Administrator')),
                 new Fluent(array('id' => 2, 'name' => 'Member')),
@@ -180,7 +200,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $model->shouldReceive('hasGetMutator')->andReturn(false);
 
-        $stub = new User;
+        $stub = new User($auth, $form, $table);
 
         $control->shouldReceive('label')->times(4)->andReturnSelf()
             ->shouldReceive('options')->once()->with(m::type('Closure'))
@@ -203,19 +223,17 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);
                 });
-
-        $app['orchestra.role'] = m::mock('\Orchestra\Model\Role')->makePartial();
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Factory')->makePartial();
-        $app['orchestra.form.control'] = $control;
-
-        $app['orchestra.role']->shouldReceive('lists')->once()
-                ->with('name', 'id')->andReturn('roles');
-        $app['orchestra.form']->shouldReceive('of')->once()
+        $form->shouldReceive('of')->once()
                 ->with('orchestra.users', m::any())
                 ->andReturnUsing(function ($f, $c) use ($grid) {
                     $c($grid);
                     return 'foo';
                 });
+
+
+        $app['orchestra.role']->shouldReceive('lists')->once()
+                ->with('name', 'id')->andReturn('roles');
+
 
         $stub->form($model);
     }

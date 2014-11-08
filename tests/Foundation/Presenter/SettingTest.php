@@ -30,6 +30,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
 
         Facade::clearResolvedInstances();
         Facade::setFacadeApplication($this->app);
+        Container::setInstance($this->app);
     }
 
     /**
@@ -38,6 +39,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         unset($this->app);
+
         m::close();
     }
 
@@ -54,15 +56,18 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_password' => 123456,
         ));
 
-        $grid = m::mock('\Orchestra\Html\Form\Grid')->makePartial();
+        $app['Illuminate\Contracts\View\Factory'] = m::mock('\Illuminate\View\Factory');
 
-        $siteFieldset = m::mock('\Orchestra\Html\Form\Fieldset')->makePartial();
-        $siteControl  = m::mock('\Orchestra\Html\Form\Control')->makePartial();
+        $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
+        $grid = m::mock('\Orchestra\Contracts\Html\Form\Grid');
 
-        $emailFieldset = m::mock('\Orchestra\Html\Form\Fieldset')->makePartial();
-        $emailControl  = m::mock('\Orchestra\Html\Form\Control')->makePartial();
+        $siteFieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
+        $siteControl  = m::mock('\Orchestra\Contracts\Html\Form\Control');
 
-        $stub = new Setting;
+        $emailFieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
+        $emailControl  = m::mock('\Orchestra\Contracts\Html\Form\Control');
+
+        $stub = new Setting($form);
 
         $siteFieldset->shouldReceive('control')->times(3)->andReturn($siteControl);
         $siteControl->shouldReceive('label')->times(3)->andReturnSelf()
@@ -89,17 +94,15 @@ class SettingTest extends \PHPUnit_Framework_TestCase
                     $c($emailFieldset);
                 });
 
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Factory')->makePartial();
-        $app['view'] = m::mock('\Illuminate\View\Factory')->makePartial();
-
-        $app['orchestra.form']->shouldReceive('of')->once()
+        $form->shouldReceive('of')->once()
                 ->with('orchestra.settings', m::type('Closure'))
                 ->andReturnUsing(function ($n, $c) use ($grid) {
                     $c($grid);
                     return 'foo';
                 });
-        $app['view']->shouldReceive('make')->once()
-            ->with('orchestra/foundation::settings.email-password', compact('model'))
+
+        $app['Illuminate\Contracts\View\Factory']->shouldReceive('make')->once()
+            ->with('orchestra/foundation::settings.email-password', compact('model'), [])
             ->andReturn('email.password.help');
 
         $this->assertEquals('foo', $stub->form($model));

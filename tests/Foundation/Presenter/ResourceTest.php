@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Foundation\Presenter\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Fluent;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
-use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Presenter\Resource;
 
 class ResourceTest extends \PHPUnit_Framework_TestCase
@@ -39,6 +39,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         unset($this->app);
+
         m::close();
     }
 
@@ -50,16 +51,20 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testTableMethod()
     {
-        $app    = $this->app;
-        $model  = new Fluent;
-        $grid   = m::mock('\Orchestra\Html\Table\Grid')->makePartial();
-        $column = m::mock('\Orchestra\Html\Table\Column')->makePartial();
-        $value  = (object) array(
+        $app   = $this->app;
+        $model = new Fluent;
+        $value = (object) array(
             'id'   => 'foo',
             'name' => 'Foobar'
         );
 
-        $stub = new Resource;
+        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
+
+        $table  = m::mock('\Orchestra\Contracts\Html\Table\Factory');
+        $grid   = m::mock('\Orchestra\Contracts\Html\Table\Grid');
+        $column = m::mock('\Orchestra\Contracts\Html\Table\Column');
+
+        $stub = new Resource($table);
 
         $column->shouldReceive('escape')->once()->with(false)->andReturnSelf()
             ->shouldReceive('value')->once()->with(m::type('Closure'))
@@ -69,16 +74,13 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $grid->shouldReceive('with')->once()->with($model, false)->andReturnNull()
             ->shouldReceive('layout')->once()->with('orchestra/foundation::components.table')->andReturnNull()
             ->shouldReceive('column')->once()->with('name')->andReturn($column);
-
-        $app['orchestra.table'] = m::mock('\Orchestra\Html\Table\Factory')->makePartial();
-        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
-
-        $app['orchestra.table']->shouldReceive('of')->once()
+        $table->shouldReceive('of')->once()
                 ->with('orchestra.resources: list', m::type('Closure'))
                 ->andReturnUsing(function ($t, $c) use ($grid) {
                     $c($grid);
                     return 'foo';
                 });
+
         $app['html']->shouldReceive('create')->once()->with('strong', 'Foobar')->andReturn('foo')
             ->shouldReceive('raw')->once()->with('foo')->andReturn('Foobar')
             ->shouldReceive('link')->once()

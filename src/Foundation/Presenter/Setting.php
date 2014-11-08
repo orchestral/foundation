@@ -1,19 +1,30 @@
 <?php namespace Orchestra\Foundation\Presenter;
 
-use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\Form;
+use Orchestra\Contracts\Html\Form\Fieldset;
+use Orchestra\Contracts\Html\Form\Grid as FormGrid;
+use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 
 class Setting extends Presenter
 {
     /**
+     * Construct a new User presenter.
+     *
+     * @param  \Orchestra\Contracts\Html\Form\Factory   $form
+     */
+    public function __construct(FormFactory $form)
+    {
+        $this->form = $form;
+    }
+
+    /**
      * Form View Generator for Setting Page.
      *
      * @param  \Illuminate\Support\Fluent   $model
-     * @return \Orchestra\Html\Form\FormBuilder
+     * @return \Orchestra\Contracts\Html\Form\Builder
      */
     public function form($model)
     {
-        return Form::of('orchestra.settings', function ($form) use ($model) {
+        return $this->form->of('orchestra.settings', function (FormGrid $form) use ($model) {
             $form->setup($this, 'orchestra::settings', $model);
 
             $this->application($form);
@@ -24,48 +35,48 @@ class Setting extends Presenter
     /**
      * Form view generator for application configuration.
      *
-     * @return \Orchestra\Html\Form\Grid $form
+     * @param  \Orchestra\Contracts\Html\Form\Grid   $form
      * @return void
      */
-    protected function application($form)
+    protected function application(FormGrid $form)
     {
-        $form->fieldset(trans('orchestra/foundation::label.settings.application'), function ($fieldset) {
+        $form->fieldset(trans('orchestra/foundation::label.settings.application'), function (Fieldset $fieldset) {
             $fieldset->control('input:text', 'site_name')
                 ->label(trans('orchestra/foundation::label.name'));
 
             $fieldset->control('textarea', 'site_description')
                 ->label(trans('orchestra/foundation::label.description'))
-                ->attributes(array('rows' => 3));
+                ->attributes(['rows' => 3]);
 
             $fieldset->control('select', 'site_registrable')
                 ->label(trans('orchestra/foundation::label.settings.user-registration'))
-                ->attributes(array('role' => 'switcher'))
-                ->options(array(
+                ->attributes(['role' => 'agreement'])
+                ->options([
                     'yes' => 'Yes',
                     'no'  => 'No',
-                ));
+                ]);
         });
     }
 
     /**
      * Form view generator for email configuration.
      *
-     * @param  \Orchestra\Html\Form\Grid  $form
-     * @param  \Illuminate\Support\Fluent $model
+     * @param  \Orchestra\Contracts\Html\Form\Grid   $form
+     * @param  \Illuminate\Support\Fluent   $model
      * @return void
      */
-    protected function mailer($form, $model)
+    protected function mailer(FormGrid $form, $model)
     {
-        $form->fieldset(trans('orchestra/foundation::label.settings.mail'), function ($fieldset) use ($model) {
+        $form->fieldset(trans('orchestra/foundation::label.settings.mail'), function (Fieldset $fieldset) use ($model) {
             $fieldset->control('select', 'email_driver')
                 ->label(trans('orchestra/foundation::label.email.driver'))
-                ->options(array(
+                ->options([
                     'mail'     => 'Mail',
                     'smtp'     => 'SMTP',
                     'sendmail' => 'Sendmail',
                     'mailgun'  => 'Mailgun',
                     'mandrill' => 'Mandrill',
-                ));
+                ]);
 
             $fieldset->control('input:text', 'email_host')
                 ->label(trans('orchestra/foundation::label.email.host'));
@@ -81,7 +92,7 @@ class Setting extends Presenter
 
             $fieldset->control('input:password', 'email_password')
                 ->label(trans('orchestra/foundation::label.email.password'))
-                ->help(View::make('orchestra/foundation::settings.email-password', compact('model')));
+                ->help(view('orchestra/foundation::settings.email-password', compact('model')));
 
             $fieldset->control('input:text', 'email_encryption')
                 ->label(trans('orchestra/foundation::label.email.encryption'));
@@ -97,11 +108,11 @@ class Setting extends Presenter
 
             $fieldset->control('select', 'email_queue')
                 ->label(trans('orchestra/foundation::label.email.queue'))
-                ->attributes(array('role' => 'switcher'))
-                ->options(array(
+                ->attributes(['role' => 'agreement'])
+                ->options([
                     'yes' => 'Yes',
                     'no'  => 'No',
-                ));
+                ]);
         });
     }
 }

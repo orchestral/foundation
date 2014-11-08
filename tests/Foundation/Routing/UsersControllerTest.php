@@ -3,10 +3,8 @@
 use Mockery as m;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
-use Orchestra\Support\Facades\Form;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\Table;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Testing\TestCase;
@@ -21,6 +19,7 @@ class UsersControllerTest extends TestCase
         parent::setUp();
 
         View::shouldReceive('share')->once()->with('errors', m::any());
+        $this->app['Illuminate\Contracts\Auth\User'] = m::mock('\Illuminate\Contracts\Auth\User');
     }
 
     /**
@@ -58,7 +57,7 @@ class UsersControllerTest extends TestCase
     {
         $user  = m::mock('\Orchestra\Model\User');
         $role  = m::mock('\Orchestra\Model\Role');
-        $table = m::mock('\Orchestra\Html\Table\TableBuilder');
+        $table = m::mock('\Orchestra\Contracts\Html\Table\Builder');
 
         list($presenter, ) = $this->bindDependencies();
 

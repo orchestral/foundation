@@ -1,23 +1,35 @@
 <?php namespace Orchestra\Foundation\Presenter;
 
-use Orchestra\Support\Facades\Form;
+use Orchestra\Contracts\Html\Form\Fieldset;
+use Orchestra\Contracts\Html\Form\Grid as FormGrid;
+use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 
 class Account extends Presenter
 {
     /**
+     * Construct a new Account presenter.
+     *
+     * @param  \Orchestra\Contracts\Html\Form\Factory   $form
+     */
+    public function __construct(FormFactory $form)
+    {
+        $this->form = $form;
+    }
+
+    /**
      * Form view generator for User Account.
      *
-     * @param  \Orchestra\Model\User    $model
-     * @param  string                   $url
-     * @return \Orchestra\Html\Form\FormBuilder
+     * @param  \Orchestra\Model\User   $model
+     * @param  string   $url
+     * @return \Orchestra\Contracts\Html\Form\Builder
      */
     public function profile($model, $url)
     {
-        return Form::of('orchestra.account', function ($form) use ($model, $url) {
+        return $this->form->of('orchestra.account', function (FormGrid $form) use ($model, $url) {
             $form->setup($this, $url, $model);
             $form->hidden('id');
 
-            $form->fieldset(function ($fieldset) {
+            $form->fieldset(function (Fieldset $fieldset) {
                 $fieldset->control('input:text', 'email')
                     ->label(trans('orchestra/foundation::label.users.email'));
 
@@ -31,15 +43,15 @@ class Account extends Presenter
      * Form view generator for user account edit password.
      *
      * @param  \Orchestra\Model\User    $model
-     * @return \Orchestra\Html\Form\FormBuilder
+     * @return \Orchestra\Contracts\Html\Form\Builder
      */
     public function password($model)
     {
-        return Form::of('orchestra.account: password', function ($form) use ($model) {
+        return $this->form->of('orchestra.account: password', function (FormGrid $form) use ($model) {
             $form->setup($this, 'orchestra::account/password', $model);
             $form->hidden('id');
 
-            $form->fieldset(function ($fieldset) {
+            $form->fieldset(function (Fieldset $fieldset) {
                 $fieldset->control('input:password', 'current_password')
                     ->label(trans('orchestra/foundation::label.account.current_password'));
 

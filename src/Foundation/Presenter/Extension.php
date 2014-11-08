@@ -1,29 +1,49 @@
 <?php namespace Orchestra\Foundation\Presenter;
 
-use Orchestra\Support\Facades\Extension as E;
-use Orchestra\Support\Facades\HTML;
-use Orchestra\Support\Facades\Form;
+use Orchestra\Contracts\Html\Form\Fieldset;
+use Orchestra\Contracts\Html\Form\Grid as FormGrid;
+use Orchestra\Contracts\Html\Form\Factory as FormFactory;
+use Orchestra\Contracts\Extension\Factory as ExtensionContract;
 
 class Extension extends Presenter
 {
     /**
+     * Implementation of extension contract.
+     *
+     * @var \Orchestra\Contracts\Extension\Factory
+     */
+    protected $extension;
+
+    /**
+     * Construct a new Extension presenter.
+     *
+     * @param  \Orchestra\Contracts\Extension\Factory   $extension
+     * @param  \Orchestra\Contracts\Html\Form\Factory   $form
+     */
+    public function __construct(ExtensionContract $extension, FormFactory $form)
+    {
+        $this->form = $form;
+        $this->extension = $extension;
+    }
+
+    /**
      * Form View Generator for Orchestra\Extension.
      *
      * @param  \Illuminate\Support\Fluent   $model
-     * @param  string                       $name
-     * @return \Orchestra\Html\Form\FormBuilder
+     * @param  string   $name
+     * @return \Orchestra\Contracts\Html\Form\Builder
      */
     public function configure($model, $name)
     {
-        return Form::of("orchestra.extension: {$name}", function ($form) use ($model, $name) {
+        return $this->form->of("orchestra.extension: {$name}", function (FormGrid $form) use ($model, $name) {
             $uid = str_replace('/', '.', $name);
 
             $form->setup($this, "orchestra::extensions/configure/{$uid}", $model);
 
-            $handles      = isset($model->handles) ? $model->handles : E::option($name, 'handles');
-            $configurable = isset($model->configurable) ? $model->configurable : true;
+            $handles      = data_get($model, 'handles', $this->extension->option($name, 'handles'));
+            $configurable = data_get($model, 'configurable', true);
 
-            $form->fieldset(function ($fieldset) use ($handles, $name, $configurable) {
+            $form->fieldset(function (Fieldset $fieldset) use ($handles, $name, $configurable) {
                 // We should only cater for custom URL handles for a route.
                 if (! is_null($handles) && $configurable !== false) {
                     $fieldset->control('input:text', 'handles')
@@ -35,10 +55,10 @@ class Extension extends Presenter
                     ->label(trans('orchestra/foundation::label.extensions.update'))
                     ->field(function () use ($name) {
                         $uid = str_replace('/', '.', $name);
-                        return HTML::link(
+                        return app('html')->link(
                             handles("orchestra::extensions/update/{$uid}"),
                             trans('orchestra/foundation::label.extensions.actions.update'),
-                            array('class' => 'btn btn-info')
+                            ['class' => 'btn btn-info']
                         );
                     });
             });

@@ -1,19 +1,29 @@
 <?php namespace Orchestra\Foundation\Presenter;
 
-use Orchestra\Support\Facades\HTML;
-use Orchestra\Support\Facades\Table;
+use Orchestra\Contracts\Html\Table\Grid as TableGrid;
+use Orchestra\Contracts\Html\Table\Factory as TableFactory;
 
 class Resource extends Presenter
 {
     /**
+     * Construct a new Resource presenter.
+     *
+     * @param  \Orchestra\Contracts\Html\Table\Factory   $table
+     */
+    public function __construct(TableFactory $table)
+    {
+        $this->table = $table;
+    }
+
+    /**
      * Table View Generator for Orchestra\Resources.
      *
-     * @param  array    $model
-     * @return \Orchestra\Html\Table\TableBuilder
+     * @param  array   $model
+     * @return \Orchestra\Contracts\Html\Table\Builder
      */
     public function table($model)
     {
-        return Table::of('orchestra.resources: list', function ($table) use ($model) {
+        return $this->table->of('orchestra.resources: list', function (TableGrid $table) use ($model) {
             $table->with($model, false);
 
             $table->layout('orchestra/foundation::components.table');
@@ -21,8 +31,9 @@ class Resource extends Presenter
             $table->column('name')
                 ->escape(false)
                 ->value(function ($row) {
-                    $link = HTML::link(handles("orchestra::resources/{$row->id}"), e($row->name));
-                    return HTML::create('strong', HTML::raw($link));
+                    $link = app('html')->link(handles("orchestra::resources/{$row->id}"), e($row->name));
+
+                    return app('html')->create('strong', app('html')->raw($link));
                 });
         });
     }

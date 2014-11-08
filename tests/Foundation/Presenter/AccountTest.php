@@ -1,35 +1,28 @@
 <?php namespace Orchestra\Foundation\Presenter\TestCase;
 
 use Mockery as m;
+use Illuminate\Support\Fluent;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
-use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Presenter\Account;
 
 class AccountTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Application instance.
-     *
-     * @var \Illuminate\Foundation\Application
-     */
-    protected $app;
-
-    /**
      * Setup the test environment.
      */
     public function setUp()
     {
-        $this->app = new Container;
+        $app = new Container;
 
-        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
-        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
+        $app['orchestra.app'] = m::mock('\Orchestra\Contracts\Foundation\Foundation');
+        $app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
-        $this->app['orchestra.app']->shouldReceive('handles');
-        $this->app['translator']->shouldReceive('trans');
+        $app['orchestra.app']->shouldReceive('handles');
+        $app['translator']->shouldReceive('trans');
 
         Facade::clearResolvedInstances();
-        Facade::setFacadeApplication($this->app);
+        Facade::setFacadeApplication($app);
     }
 
     /**
@@ -37,7 +30,6 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        unset($this->app);
         m::close();
     }
 
@@ -49,13 +41,14 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testProfileFormMethod()
     {
-        $app      = $this->app;
-        $model    = new Fluent;
-        $grid     = m::mock('\Orchestra\Html\Form\Grid')->makePartial();
-        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->makePartial();
-        $control  = m::mock('\Orchestra\Html\Form\Control')->makePartial();
+        $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
 
-        $stub = new Account;
+        $grid     = m::mock('\Orchestra\Contracts\Html\Form\Grid');
+        $fieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
+        $control  = m::mock('\Orchestra\Contracts\Html\Form\Control');
+
+        $model = new Fluent;
+        $stub  = new Account($form);
 
         $control->shouldReceive('label')->twice()->andReturnSelf();
         $fieldset->shouldReceive('control')->twice()->with('input:text', m::any())->andReturn($control);
@@ -65,10 +58,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);
                 });
-
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Factory')->makePartial();
-
-        $app['orchestra.form']->shouldReceive('of')->once()
+        $form->shouldReceive('of')->once()
                 ->with('orchestra.account', m::type('Closure'))
                 ->andReturnUsing(function ($f, $c) use ($grid) {
                     $c($grid);
@@ -86,13 +76,14 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testPasswordFormMethod()
     {
-        $app      = $this->app;
-        $model    = new Fluent;
-        $grid     = m::mock('\Orchestra\Html\Form\Grid')->makePartial();
-        $fieldset = m::mock('\Orchestra\Html\Form\Fieldset')->makePartial();
-        $control  = m::mock('\Orchestra\Html\Form\Control')->makePartial();
+        $grid     = m::mock('\Orchestra\Contracts\Html\Form\Grid');
+        $fieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
+        $control  = m::mock('\Orchestra\Contracts\Html\Form\Control');
+        $form     = m::mock('\Orchestra\Contracts\Html\Form\Factory');
 
-        $stub = new Account;
+
+        $model = new Fluent;
+        $stub  = new Account($form);
 
         $control->shouldReceive('label')->times(3)->andReturnSelf();
         $fieldset->shouldReceive('control')->times(3)->with('input:password', m::any())->andReturn($control);
@@ -102,10 +93,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);
                 });
-
-        $app['orchestra.form'] = m::mock('\Orchestra\Html\Form\Factory')->makePartial();
-
-        $app['orchestra.form']->shouldReceive('of')->once()
+        $form->shouldReceive('of')->once()
                 ->with('orchestra.account: password', m::type('Closure'))
                 ->andReturnUsing(function ($f, $c) use ($grid) {
                     $c($grid);
