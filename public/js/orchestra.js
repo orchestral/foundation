@@ -1,5 +1,5 @@
 (function() {
-  var Dispatcher, Javie, jQuery, root, setup_button_group, setup_helper, setup_pagination, setup_switcher;
+  var Dispatcher, Javie, jQuery, root, setup_agreement, setup_button_group, setup_helper, setup_pagination;
 
   root = this;
 
@@ -39,7 +39,7 @@
     $('input[type="date"]').datepicker({
       dateFormat: "yy-mm-dd"
     });
-    $('select.form-control[role!="switcher"], .navbar-form > select[role!="switcher"]').select2().removeClass('form-control');
+    $('select.form-control[role!="agreement"], .navbar-form > select[role!="agreement"]').select2().removeClass('form-control');
     $('*[role="tooltip"]').tooltip();
     return true;
   };
@@ -52,9 +52,9 @@
     return true;
   };
 
-  setup_switcher = function($) {
+  setup_agreement = function($) {
     var switchers;
-    switchers = $('select[role="switcher"]');
+    switchers = $('select[role="agreement"]');
     switchers.removeClass('form-control');
     switchers.each(function(i, item) {
       var switcher;
@@ -74,7 +74,7 @@
   };
 
   jQuery(function($) {
-    setup_switcher($);
+    setup_agreement($);
     setup_button_group($);
     setup_helper($);
     setup_pagination($);

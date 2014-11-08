@@ -27,7 +27,7 @@ setup_button_group = ($) ->
 
 setup_helper = ($) ->
 	$('input[type="date"]').datepicker({ dateFormat: "yy-mm-dd" })
-	$('select.form-control[role!="switcher"], .navbar-form > select[role!="switcher"]').select2().removeClass('form-control')
+	$('select.form-control[role!="agreement"], .navbar-form > select[role!="agreement"]').select2().removeClass('form-control')
 	$('*[role="tooltip"]').tooltip()
 	true
 
@@ -38,8 +38,8 @@ setup_pagination = ($) ->
 	)
 	true
 
-setup_switcher = ($) ->
-	switchers = $('select[role="switcher"]')
+setup_agreement = ($) ->
+	switchers = $('select[role="agreement"]')
 	switchers.removeClass('form-control')
 	switchers.each((i, item) ->
 		switcher = $(item)
@@ -56,7 +56,7 @@ setup_switcher = ($) ->
 	true
 
 jQuery(($) ->
-	setup_switcher($)
+	setup_agreement($)
 	setup_button_group($)
 	setup_helper($)
 	setup_pagination($)
