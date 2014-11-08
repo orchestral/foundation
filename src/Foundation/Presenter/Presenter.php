@@ -1,8 +1,9 @@
 <?php namespace Orchestra\Foundation\Presenter;
 
-use Orchestra\Html\Form\PresenterInterface as FormPresenterInterface;
+use Orchestra\Contracts\Html\Form\Grid;
+use Orchestra\Contracts\Html\Form\Presenter as PresenterContract;
 
-abstract class Presenter implements FormPresenterInterface
+abstract class Presenter implements PresenterContract
 {
     /**
      * {@inheritdoc}
@@ -15,7 +16,7 @@ abstract class Presenter implements FormPresenterInterface
     /**
      * {@inheritdoc}
      */
-    public function setupForm($form)
+    public function setupForm(Grid $form)
     {
         $form->layout('orchestra/foundation::components.form');
     }
