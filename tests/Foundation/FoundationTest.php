@@ -247,8 +247,14 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
 
         };
 
-        $stub->shouldReceive('group')->times(3)->with('orchestra/foundation', 'orchestra', [], $closure)->andReturn([]);
-        $stub->shouldReceive('group')->once()->with('orchestra/foundation', 'orchestra', ['namespace' => 'Foo'], $closure)->andReturn([]);
+        $middleware = ['Orchestra\Foundation\Middleware\UseBackendTheme'];
+
+        $stub->shouldReceive('group')->times(3)
+            ->with('orchestra/foundation', 'orchestra', ['middleware' => $middleware], $closure)
+            ->andReturn([]);
+        $stub->shouldReceive('group')->once()
+            ->with('orchestra/foundation', 'orchestra', ['namespace' => 'Foo', 'middleware' => $middleware], $closure)
+            ->andReturn([]);
 
         $this->assertNull($stub->namespaced('', $closure));
         $this->assertNull($stub->namespaced('\\', $closure));
