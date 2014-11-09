@@ -1,6 +1,8 @@
 <?php namespace Orchestra\Foundation;
 
-class FilterServiceProvider extends Providers\FilterServiceProvider
+use Orchestra\Support\Providers\FilterServiceProvider as ServiceProvider;
+
+class FilterServiceProvider extends ServiceProvider
 {
     /**
      * All available route filters.
