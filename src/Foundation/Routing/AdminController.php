@@ -11,8 +11,6 @@ abstract class AdminController extends BaseController
         // Orchestra Platform is installed.
         $this->beforeFilter('orchestra.installable');
 
-        $this->middleware('Orchestra\Foundation\Middleware\UseBackendTheme');
-
         parent::__construct();
     }
 }

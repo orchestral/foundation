@@ -59,7 +59,6 @@ class UseBackendTheme implements Middleware
      */
     protected function afterHandle()
     {
-
         $this->dispatcher->fire('orchestra.done: admin');
     }
 }
