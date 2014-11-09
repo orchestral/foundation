@@ -32,13 +32,34 @@ class UseBackendTheme implements Middleware
      */
     public function handle($request, Closure $next)
     {
-        $this->dispatcher->fire('orchestra.started: admin');
-        $this->dispatcher->fire('orchestra.ready: admin');
+        $this->beforeHandle();
 
         $response = $next($request);
 
-        $this->dispatcher->fire('orchestra.done: admin');
+        $this->afterHandle();
 
         return $response;
+    }
+
+    /**
+     * Before handle.
+     *
+     * @return void
+     */
+    protected function beforeHandle()
+    {
+        $this->dispatcher->fire('orchestra.started: admin');
+        $this->dispatcher->fire('orchestra.ready: admin');
+    }
+
+    /**
+     * After handle.
+     *
+     * @return void
+     */
+    protected function afterHandle()
+    {
+
+        $this->dispatcher->fire('orchestra.done: admin');
     }
 }

@@ -230,18 +230,6 @@ class Foundation extends RouteManager implements FoundationContract
     }
 
     /**
-     * Magic method to get services.
-     *
-     * @param  string   $method
-     * @param  array    $parameters
-     * @return mixed
-     */
-    public function __call($method, $parameters)
-    {
-        return call_user_func_array([$this->app, $method], $parameters);
-    }
-
-    /**
      * {@inheritdoc}
      */
     protected function generateRouteByName($name, $default)
@@ -256,5 +244,17 @@ class Foundation extends RouteManager implements FoundationContract
         }
 
         return parent::generateRouteByName($name, $default);
+    }
+
+    /**
+     * Magic method to get services.
+     *
+     * @param  string   $method
+     * @param  array    $parameters
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        return call_user_func_array([$this->app, $method], $parameters);
     }
 }
