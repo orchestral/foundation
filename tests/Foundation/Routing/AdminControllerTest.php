@@ -1,41 +1,37 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\Event;
-use Orchestra\Foundation\Testing\TestCase;
 
-class AdminControllerTest extends TestCase
+class AdminControllerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Teardown the test environment.
      */
     public function tearDown()
     {
-        parent::tearDown();
-
         m::close();
     }
 
     /**
      * Test Orchestra\Foundation\Routing\AdminController filters.
+     *
+     * @test
      */
     public function testFilters()
     {
-        Event::swap($event = m::mock('\Illuminate\Events\Dispatcher[fire]'));
+        $stub = new StubAdminController;
 
-        $event->shouldReceive('fire')->once()->with('orchestra.started: admin')->andReturnNull()
-            ->shouldReceive('fire')->once()->with('orchestra.ready: admin')->andReturnNull()
-            ->shouldReceive('fire')->once()->with('orchestra.done: admin')->andReturnNull();
+        $beforeFilter = [
+            [
+                'original'   => 'orchestra.installable',
+                'filter'     => 'orchestra.installable',
+                'parameters' => [],
+                'options'    => [],
+            ]
+        ];
 
-        StubAdminController::setRouter($route = m::mock('Illuminate\Routing\Router'));
-
-        $route->shouldReceive('filter')->twice()
-            ->with(m::type('String'), m::type('Closure'))->andReturnUsing(function ($name, $callback) {
-                $callback();
-                return $name;
-            });
-
-        new StubAdminController;
+        $this->assertEquals($beforeFilter, $stub->getBeforeFilters());
+        $this->assertEquals(['Orchestra\Foundation\Middleware\UseBackendTheme' => []], $stub->getMiddleware());
     }
 }
 
