@@ -12,10 +12,12 @@ class Kernel extends HttpKernel
     protected $bootstrappers = [
         'Illuminate\Foundation\Bootstrap\DetectEnvironment',
         'Illuminate\Foundation\Bootstrap\LoadConfiguration',
+        'Illuminate\Foundation\Bootstrap\ConfigureLogging',
         'Illuminate\Foundation\Bootstrap\HandleExceptions',
         'Illuminate\Foundation\Bootstrap\RegisterFacades',
         'Illuminate\Foundation\Bootstrap\RegisterProviders',
         'Illuminate\Foundation\Bootstrap\BootProviders',
+
         'Orchestra\Foundation\Bootstrap\UserAccessPolicy',
         'Orchestra\Extension\Bootstrap\LoadExtension',
         'Orchestra\Foundation\Bootstrap\LoadUserMetaData',
