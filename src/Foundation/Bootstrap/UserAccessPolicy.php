@@ -35,7 +35,9 @@ class UserAccessPolicy
                 return null;
             }
 
-            return $roles = $user->getRoles();
+            $roles = $user->getRoles();
+
+            return $roles;
         });
     }
 
