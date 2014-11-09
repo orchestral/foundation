@@ -31,7 +31,6 @@ class AdminControllerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->assertEquals($beforeFilter, $stub->getBeforeFilters());
-        $this->assertEquals(['Orchestra\Foundation\Middleware\UseBackendTheme' => []], $stub->getMiddleware());
     }
 }
 
