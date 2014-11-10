@@ -5,7 +5,7 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
-### v2.1.12@dev {#v2-1-12}
+### v2.1.12 {#v2-1-12}
 
 * Check for session token type.
 * Add `orchestra/publisher` as a dependency.
