@@ -20,6 +20,11 @@ title: Foundation Change Log
 
 ## Version 2.2 {#v2-2}
 
+### v2.2.6 {#v2-2-6}
+
+* Check for session token type.
+* Add `orchestra/publisher` as a dependency.
+
 ### v2.2.5 {#v2-2-5}
 
 * Update all reference to utilise `orchestra/messages`.
@@ -69,6 +74,11 @@ title: Foundation Change Log
 * Add support for `orchestra/view` command.
 
 ## Version 2.1 {#v2-1}
+
+### v2.1.12 {#v2-1-12}
+
+* Check for session token type.
+* Add `orchestra/publisher` as a dependency.
 
 ### v2.1.11 {#v2-1-11}
 
