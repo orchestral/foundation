@@ -30,7 +30,6 @@ class RegistrationController extends AdminController
     protected function setupFilters()
     {
         $this->beforeFilter('orchestra.registrable');
-        $this->beforeFilter('orchestra.csrf', array('only' => array('create')));
     }
 
     /**

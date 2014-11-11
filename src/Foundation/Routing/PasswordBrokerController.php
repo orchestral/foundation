@@ -28,7 +28,6 @@ class PasswordBrokerController extends AdminController
     protected function setupFilters()
     {
         $this->beforeFilter('orchestra.guest');
-        $this->beforeFilter('orchestra.csrf', array('only' => array('create')));
     }
 
     /**
