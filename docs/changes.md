@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 2.1 {#v2-1}
 
+### v2.1.13 {#v2-1-13}
+
+* Use timing safe string comparison in CSRF filter.
+
 ### v2.1.12 {#v2-1-12}
 
 * Check for session token type.
