@@ -42,8 +42,7 @@ class ResourcesController extends AdminController
     /**
      * Add a drop-in resource anywhere on Orchestra
      *
-     * @param  string $request
-     * @param  array  $arguments
+     * @param  string  $request
      * @return Response
      */
     public function call($request)

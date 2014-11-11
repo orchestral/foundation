@@ -28,6 +28,7 @@ class SettingsController extends AdminController
     {
         $this->beforeFilter('orchestra.auth');
         $this->beforeFilter('orchestra.manage');
+        $this->beforeFilter('orchestra.csrf', array('on' => 'post'));
     }
 
     /**
