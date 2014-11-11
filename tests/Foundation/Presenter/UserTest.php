@@ -57,7 +57,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,raw]');
 
-        $auth  = m::mock('Illuminate\Contracts\Auth\User');
+        $auth  = m::mock('Illuminate\Contracts\Auth\Authenticatable');
         $form  = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
 
@@ -116,7 +116,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $auth  = m::mock('Illuminate\Contracts\Auth\User');
+        $auth  = m::mock('Illuminate\Contracts\Auth\Authenticatable');
         $form  = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
 
@@ -180,7 +180,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $app   = $this->app;
         $model = m::mock('\Orchestra\Model\User');
 
-        $auth  = m::mock('Illuminate\Contracts\Auth\User');
+        $auth  = m::mock('Illuminate\Contracts\Auth\Authenticatable');
         $form  = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
 

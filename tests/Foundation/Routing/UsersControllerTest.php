@@ -19,7 +19,7 @@ class UsersControllerTest extends TestCase
         parent::setUp();
 
         View::shouldReceive('share')->once()->with('errors', m::any());
-        $this->app['Illuminate\Contracts\Auth\User'] = m::mock('\Illuminate\Contracts\Auth\User');
+        $this->app['Illuminate\Contracts\Auth\Authenticatable'] = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
     }
 
     /**

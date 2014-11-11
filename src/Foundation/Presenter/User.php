@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Presenter;
 
 use Orchestra\Contracts\Html\Form\Fieldset;
-use Illuminate\Contracts\Auth\User as UserContract;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Contracts\Html\Form\Grid as FormGrid;
 use Orchestra\Contracts\Html\Table\Grid as TableGrid;
 use Orchestra\Contracts\Html\Form\Factory as FormFactory;
@@ -20,11 +20,11 @@ class User extends Presenter
     /**
      * Construct a new User presenter.
      *
-     * @param  \Illuminate\Contracts\Auth\User   $user
+     * @param  \Illuminate\Contracts\Auth\Authenticatable   $user
      * @param  \Orchestra\Contracts\Html\Form\Factory   $form
      * @param  \Orchestra\Contracts\Html\Table\Factory   $table
      */
-    public function __construct(UserContract $user, FormFactory $form, TableFactory $table)
+    public function __construct(Authenticatable $user, FormFactory $form, TableFactory $table)
     {
         $this->user = $user;
         $this->form = $form;
