@@ -28,6 +28,7 @@ class AccountController extends AdminController
     protected function setupFilters()
     {
         $this->beforeFilter('orchestra.auth');
+        $this->beforeFilter('orchestra.csrf', array('on' => 'post'));
     }
 
     /**
