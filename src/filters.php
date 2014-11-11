@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Orchestra\Support\Facades\App;
+use Symfony\Component\Security\Core\Util\StringUtils;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +59,7 @@ Route::filter('orchestra.csrf', function () {
     // differently or deleted by the user. To avoid un-expected behaviour
     // the same functionality is duplicated.
 
-    if (Session::token() !== Input::get('_token')) {
+    if (! StringUtils::equals(Session::token(), Input::get('_token'))) {
         throw new TokenMismatchException;
     }
 });
