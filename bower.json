@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "javie": "~1.1.4",
+    "javie": "master",
     "jquery": "~1.10.2",
     "underscore": "~1.6.0",
     "select2": "~3.4.8"
@@ -16,10 +16,6 @@
   "install" : {
     "path": "public/components",
     "sources": {
-      "javie": [
-        "components/javie/javie.js",
-        "components/javie/javie.min.js"
-      ],
       "jquery": [
         "components/jquery/jquery.js",
         "components/jquery/jquery.min.js",

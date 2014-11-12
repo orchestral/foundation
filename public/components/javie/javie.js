@@ -5,7 +5,7 @@
  *
  * @package Javie
  * @require underscore, console, jQuery/Zepto
- * @version 1.1.2
+ * @version 2.0.0
  * @author  Mior Muhammad Zaki <https://github.com/crynobone>
  * @license MIT License
  * ========================================================================
@@ -120,6 +120,7 @@
 
 }).call(this);
 
+
 /*
  * ==========================================================
  * Javie.EventDispatcher
@@ -131,7 +132,7 @@
  * @package Javie
  * @class   Event
  * @require underscore
- * @version 1.1.0-dev
+ * @version 2.0.0
  * @since   0.1.0
  * @author  Mior Muhammad Zaki <https://github.com/crynobone>
  * @license MIT License
@@ -306,6 +307,7 @@
 
 }).call(this);
 
+
 /*
  * ==========================================================
  * Javie.Logger
@@ -316,7 +318,7 @@
  * @package Javie
  * @class   Logger
  * @require console
- * @version 1.1.1
+ * @version 2.0.0
  * @since   0.1.0
  * @author  Mior Muhammad Zaki <https://github.com/crynobone>
  * @license MIT License
@@ -452,6 +454,7 @@
 
 }).call(this);
 
+
 /*
  * ==========================================================
  * Javie.Profiler
@@ -462,7 +465,7 @@
  * @package Javie
  * @class   Profiler
  * @require console
- * @version 1.1.1
+ * @version 2.0.0
  * @since   0.1.0
  * @author  Mior Muhammad Zaki <https://github.com/crynobone>
  * @license MIT License
@@ -647,6 +650,7 @@
   }
 
 }).call(this);
+
 
 /*
  * ==========================================================
@@ -921,6 +925,7 @@
   }
 
 }).call(this);
+
 (function() {
   var javie, root;
 
