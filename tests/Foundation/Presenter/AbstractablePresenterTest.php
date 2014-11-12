@@ -36,7 +36,7 @@ class AbstractablePresenterTest extends \PHPUnit_Framework_TestCase
 
         $app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Application')->makePartial();
 
-        $orchestra->shouldReceive('handles')->with(m::type('String'))
+        $orchestra->shouldReceive('handles')->with(m::type('String'), m::type('Array'))
                 ->andReturnUsing(function ($s) {
                     return "foobar/{$s}";
                 });
