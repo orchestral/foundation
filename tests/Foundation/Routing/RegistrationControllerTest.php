@@ -93,7 +93,7 @@ class RegistrationControllerTest extends TestCase
         $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('foo');
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Orchestra::shouldReceive('memory')->once()->andReturn($memory);
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::login')->andReturn('login');
+        Orchestra::shouldReceive('handles')->once()->with('orchestra::login', array())->andReturn('login');
         DB::shouldReceive('transaction')->once()->with(m::type('Closure'))
             ->andReturnUsing(function ($c) {
                 $c();
@@ -138,7 +138,7 @@ class RegistrationControllerTest extends TestCase
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Orchestra::shouldReceive('memory')->once()->andReturn($memory);
         Orchestra::shouldReceive('handles')->once()
-            ->with('orchestra::login')->andReturn('login');
+            ->with('orchestra::login', array())->andReturn('login');
         DB::shouldReceive('transaction')->once()->with(m::type('Closure'))
             ->andReturnUsing(function ($c) {
                 $c();
@@ -177,7 +177,7 @@ class RegistrationControllerTest extends TestCase
             ->shouldReceive('setAttribute')->once()->with('password', m::any())->andReturnNull();
 
         Orchestra::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::register')->andReturn('register');
+        Orchestra::shouldReceive('handles')->once()->with('orchestra::register', array())->andReturn('register');
         DB::shouldReceive('transaction')->once()->with(m::type('Closure'))->andThrow('\Exception');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
@@ -202,7 +202,7 @@ class RegistrationControllerTest extends TestCase
         $validator->shouldReceive('on')->once()->with('register')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(true);
-        Orchestra::shouldReceive('handles')->once()->with('orchestra::register')->andReturn('register');
+        Orchestra::shouldReceive('handles')->once()->with('orchestra::register', array())->andReturn('register');
 
         $this->call('POST', 'admin/register', $input);
         $this->assertRedirectedTo('register');
