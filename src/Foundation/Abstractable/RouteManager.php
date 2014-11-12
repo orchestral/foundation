@@ -2,6 +2,7 @@
 
 use Closure;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Arr;
 use Illuminate\Support\NamespacedItemResolver;
 use Orchestra\Extension\RouteGenerator;
 use Orchestra\Support\Str;
@@ -43,9 +44,10 @@ abstract class RouteManager
      *  Return locate handles configuration for a package/app.
      *
      * @param  string   $path
+     * @param  array    $options
      * @return array
      */
-    public function locate($path)
+    public function locate($path, array $options = array())
     {
         $query = '';
 
@@ -57,12 +59,8 @@ abstract class RouteManager
 
         list($package, $route, $item) = with(new NamespacedItemResolver)->parseKey($path);
 
-        ! empty($item) && $route = "{$route}.{$item}";
+        $route = $this->prepareValidRoute($route, $item, $query, $options);
 
-        // Prepare route valid, since we already extract package from route
-        // we can re append query string to route value.
-        empty($route) && $route = '';
-        empty($query) || $route = "{$route}?{$query}";
 
         // If package is empty, we should consider that the route is using
         // app (or root path), it doesn't matter at this stage if app is
@@ -106,11 +104,12 @@ abstract class RouteManager
      *  Return handles URL for a package/app.
      *
      * @param  string   $path
+     * @param  array    $options
      * @return string
      */
-    public function handles($path)
+    public function handles($path, array $options = array())
     {
-        list($package, $route) = $this->locate($path);
+        list($package, $route) = $this->locate($path, $options);
 
         // Get the path from route configuration, and append route.
         $locate = $this->route($package)->to($route);
@@ -197,5 +196,28 @@ abstract class RouteManager
         }
 
         return $this->app['orchestra.extension']->route($name, $default);
+    }
+
+    /**
+     * Prepare valid route, since we already extract package from route
+     * we can re-append query string to route value.
+     *
+     * @param  string  $route
+     * @param  string  $item
+     * @param  string  $query
+     * @param  array   $options
+     * @return string
+     */
+    protected function prepareValidRoute($route, $item, $query, array $options)
+    {
+        if (!! Arr::get($options, 'csrf', false)) {
+            $query .= (! empty($query) ? "&" : "")."_token=".csrf_token();
+        }
+
+        ! empty($item) && $route = "{$route}.{$item}";
+        empty($route) && $route = '';
+        empty($query) || $route = "{$route}?{$query}";
+
+        return $route;
     }
 }
