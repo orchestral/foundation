@@ -36,12 +36,13 @@ if (! function_exists('handles')) {
     /**
      * Return handles configuration for a package/app.
      *
-     * @param  string   $name   Route
+     * @param  string   $name
+     * @param  array    $options
      * @return string
      */
-    function handles($name)
+    function handles($name, array $options = [])
     {
-        return app('orchestra.app')->handles($name);
+        return app('orchestra.app')->handles($name, $options);
     }
 }
 
@@ -49,14 +50,15 @@ if (! function_exists('resources')) {
     /**
      * Return resources route.
      *
-     * @param  string   $name   Route
+     * @param  string   $name
+     * @param  array    $options
      * @return string
      */
-    function resources($name)
+    function resources($name, array $options = array())
     {
         $name = ltrim($name, '/');
 
-        return app('orchestra.app')->handles("orchestra/foundation::resources/{$name}");
+        return app('orchestra.app')->handles("orchestra::resources/{$name}", $options);
     }
 }
 

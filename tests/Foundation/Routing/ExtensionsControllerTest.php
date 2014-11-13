@@ -74,7 +74,7 @@ class ExtensionsControllerTest extends TestCase
         Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('activate')->once()->with('laravel/framework')->andReturn(true);
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
-        Foundation::shouldReceive('handles')->once()->with('orchestra::extensions')->andReturn('extensions');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', array())->andReturn('extensions');
 
         $this->call('GET', 'admin/extensions/activate/laravel.framework');
         $this->assertRedirectedTo('extensions');
@@ -104,7 +104,7 @@ class ExtensionsControllerTest extends TestCase
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
         Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(false);
         Publisher::shouldReceive('queue')->once()->with('laravel/framework')->andReturnNull();
-        Foundation::shouldReceive('handles')->once()->with('orchestra::publisher')->andReturn('publisher');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::publisher', array())->andReturn('publisher');
 
         $this->call('GET', 'admin/extensions/activate/laravel.framework');
         $this->assertRedirectedTo('publisher');
@@ -120,7 +120,7 @@ class ExtensionsControllerTest extends TestCase
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('deactivate')->once()->with('laravel/framework')->andReturn(true);
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
-        Foundation::shouldReceive('handles')->once()->with('orchestra::extensions')->andReturn('extensions');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', array())->andReturn('extensions');
 
         $this->call('GET', 'admin/extensions/deactivate/laravel.framework');
         $this->assertRedirectedTo('extensions');
@@ -211,7 +211,7 @@ class ExtensionsControllerTest extends TestCase
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Foundation::shouldReceive('memory')->once()->andReturn($memory);
-        Foundation::shouldReceive('handles')->once()->with('orchestra::extensions')->andReturn('extensions');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', array())->andReturn('extensions');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/extensions/configure/laravel.framework', $input);
@@ -257,7 +257,7 @@ class ExtensionsControllerTest extends TestCase
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Foundation::shouldReceive('handles')->once()
-            ->with('orchestra::extensions/configure/laravel.framework')->andReturn('extensions');
+            ->with('orchestra::extensions/configure/laravel.framework', array())->andReturn('extensions');
 
         $this->call('POST', 'admin/extensions/configure/laravel.framework', $input);
         $this->assertRedirectedTo('extensions');
@@ -274,7 +274,7 @@ class ExtensionsControllerTest extends TestCase
         Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('publish')->once()->with('laravel/framework')->andReturn(true);
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
-        Foundation::shouldReceive('handles')->once()->with('orchestra::extensions')->andReturn('extensions');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', array())->andReturn('extensions');
 
         $this->call('GET', 'admin/extensions/update/laravel.framework');
         $this->assertRedirectedTo('extensions');
@@ -304,7 +304,7 @@ class ExtensionsControllerTest extends TestCase
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(false);
         Publisher::shouldReceive('queue')->once()->with('laravel/framework')->andReturnNull();
-        Foundation::shouldReceive('handles')->once()->with('orchestra::publisher')->andReturn('publisher');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::publisher', array())->andReturn('publisher');
 
         $this->call('GET', 'admin/extensions/update/laravel.framework');
         $this->assertRedirectedTo('publisher');

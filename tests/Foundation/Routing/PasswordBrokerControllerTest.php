@@ -85,9 +85,8 @@ class PasswordBrokerControllerTest extends TestCase
         });
 
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
-
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
-        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot')->andReturn('forgot');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot', array())->andReturn('forgot');
 
         $this->call('POST', 'admin/forgot', $input);
         $this->assertRedirectedTo('forgot');
@@ -122,7 +121,7 @@ class PasswordBrokerControllerTest extends TestCase
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
-        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot')->andReturn('forgot');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot', array())->andReturn('forgot');
 
         $this->call('POST', 'admin/forgot', $input);
         $this->assertRedirectedTo('forgot');
@@ -147,7 +146,7 @@ class PasswordBrokerControllerTest extends TestCase
         $validator->shouldReceive('with')->once()->with(m::type('Array'))->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(true);
 
-        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot')->andReturn('forgot');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot', array())->andReturn('forgot');
 
         $this->call('POST', 'admin/forgot', $input);
         $this->assertRedirectedTo('forgot');
@@ -217,7 +216,7 @@ class PasswordBrokerControllerTest extends TestCase
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
 
         Auth::shouldReceive('login')->once()->with($user)->andReturnNull();
-        Foundation::shouldReceive('handles')->once()->with('orchestra::/')->andReturn('dashboard');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::/', array())->andReturn('dashboard');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/forgot/reset', $input);
@@ -244,8 +243,7 @@ class PasswordBrokerControllerTest extends TestCase
             ->andReturn(PasswordBroker::INVALID_PASSWORD);
 
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
-
-        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken')->andReturn('reset');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken', array())->andReturn('reset');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/forgot/reset', $input);
@@ -272,8 +270,7 @@ class PasswordBrokerControllerTest extends TestCase
             ->andReturn(PasswordBroker::INVALID_TOKEN);
 
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
-
-        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken')->andReturn('reset');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken', array())->andReturn('reset');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/forgot/reset', $input);
@@ -300,8 +297,7 @@ class PasswordBrokerControllerTest extends TestCase
             ->andReturn(PasswordBroker::INVALID_USER);
 
         App::instance('Illuminate\Contracts\Auth\PasswordBroker', $password);
-
-        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken')->andReturn('reset');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken', array())->andReturn('reset');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/forgot/reset', $input);

@@ -101,7 +101,7 @@ class SettingsControllerTest extends TestCase
             ->shouldReceive('fails')->once()->andReturn(false);
 
         Foundation::shouldReceive('memory')->once()->andReturn($memory);
-        Foundation::shouldReceive('handles')->once()->with('orchestra::settings')->andReturn('settings');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::settings', array())->andReturn('settings');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/settings', $input);
@@ -138,7 +138,7 @@ class SettingsControllerTest extends TestCase
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(true);
 
-        Foundation::shouldReceive('handles')->once()->with('orchestra::settings')->andReturn('settings');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::settings', array())->andReturn('settings');
 
         $this->call('POST', 'admin/settings', $input);
         $this->assertRedirectedTo('settings');
@@ -160,7 +160,7 @@ class SettingsControllerTest extends TestCase
 
         Foundation::shouldReceive('make')->once()->with('orchestra.publisher.asset')->andReturn($asset);
         Foundation::shouldReceive('make')->once()->with('orchestra.publisher.migrate')->andReturn($migrate);
-        Foundation::shouldReceive('handles')->once()->with('orchestra::settings')->andReturn('settings');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::settings', array())->andReturn('settings');
 
         $this->call('GET', 'admin/settings/migrate');
         $this->assertRedirectedTo('settings');

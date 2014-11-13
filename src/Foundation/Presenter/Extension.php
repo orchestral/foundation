@@ -55,8 +55,9 @@ class Extension extends Presenter
                     ->label(trans('orchestra/foundation::label.extensions.update'))
                     ->field(function () use ($name) {
                         $uid = str_replace('/', '.', $name);
+
                         return app('html')->link(
-                            handles("orchestra::extensions/update/{$uid}"),
+                            handles("orchestra::extensions/update/{$uid}", ['csrf' => true]),
                             trans('orchestra/foundation::label.extensions.actions.update'),
                             ['class' => 'btn btn-info']
                         );
