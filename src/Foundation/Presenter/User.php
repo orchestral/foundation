@@ -84,7 +84,7 @@ class User extends AbstractablePresenter
 
                     if (Auth::user()->id !== $row->id) {
                         $btn[] = HTML::link(
-                            handles("orchestra::users/{$row->id}/delete"),
+                            handles("orchestra::users/{$row->id}/delete", array('csrf' => true)),
                             trans('orchestra/foundation::label.delete'),
                             array(
                                 'class'   => 'btn btn-mini btn-danger',

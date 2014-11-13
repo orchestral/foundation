@@ -40,7 +40,7 @@ class Extension extends AbstractablePresenter
                     $control->field(function () use ($name) {
                         $uid = str_replace('/', '.', $name);
                         return HTML::link(
-                            handles("orchestra::extensions/update/{$uid}"),
+                            handles("orchestra::extensions/update/{$uid}", array('csrf' => true)),
                             trans('orchestra/foundation::label.extensions.actions.update'),
                             array('class' => 'btn btn-info')
                         );
