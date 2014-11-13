@@ -1,14 +1,10 @@
 <?php
 
-use Illuminate\Session\TokenMismatchException;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 use Orchestra\Support\Facades\App;
-use Symfony\Component\Security\Core\Util\StringUtils;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,15 +50,7 @@ Route::filter('orchestra.guest', function () {
 |
 */
 
-Route::filter('orchestra.csrf', function () {
-    // In most case the application already has one, however it might behave
-    // differently or deleted by the user. To avoid un-expected behaviour
-    // the same functionality is duplicated.
-
-    if (! StringUtils::equals(Session::token(), Input::get('_token'))) {
-        throw new TokenMismatchException;
-    }
-});
+Route::filter('orchestra.csrf', 'Orchestra\Foundation\Filters\VerifyCsrfToken');
 
 /*
 |--------------------------------------------------------------------------
