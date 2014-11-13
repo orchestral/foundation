@@ -354,8 +354,7 @@ class AccountControllerTest extends TestCase
 
         Auth::shouldReceive('user')->once()->andReturn($user);
         Orchestra::shouldReceive('handles')->once()
-            ->with('orchestra::account/password', array()
-            )->andReturn('account/password');
+            ->with('orchestra::account/password', array())->andReturn('account/password');
 
         $this->call('POST', 'admin/account/password', $input);
         $this->assertRedirectedTo('account/password');
