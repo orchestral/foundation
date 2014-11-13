@@ -28,7 +28,9 @@ class UsersController extends AdminController
     {
         $this->beforeFilter('orchestra.auth');
         $this->beforeFilter('orchestra.manage:users');
-        $this->beforeFilter('orchestra.csrf', array('on' => array('post', 'put')));
+        $this->beforeFilter('orchestra.csrf', array(
+            'on' => array('post', 'put', 'delete'),
+        ));
     }
 
     /**

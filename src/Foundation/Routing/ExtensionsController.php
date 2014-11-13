@@ -30,7 +30,12 @@ class ExtensionsController extends AdminController
     {
         $this->beforeFilter('orchestra.auth');
         $this->beforeFilter('orchestra.manage');
-        $this->beforeFilter('orchestra.csrf', array('on' => 'post'));
+        $this->beforeFilter('orchestra.csrf', array(
+            'on' => 'post',
+        ));
+        $this->beforeFilter('orchestra.csrf', array(
+            'only' => array('activate', 'deactivate', 'migrate'),
+        ));
     }
 
     /**

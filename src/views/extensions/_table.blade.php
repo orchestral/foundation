@@ -35,11 +35,11 @@ use Orchestra\Support\Facades\Extension; ?>
 				</strong>
 				<div class="pull-right btn-group">
 					@if (! ($started || $active))
-						<a href="{{ handles("orchestra::extensions/activate/{$uid}") }}" class="btn btn-primary btn-mini">
+						<a href="{{ handles("orchestra::extensions/activate/{$uid}", array('csrf' => true)) }}" class="btn btn-primary btn-mini">
 							{{ trans('orchestra/foundation::label.extensions.actions.activate') }}
 						</a>
 					@else
-						<a href="{{ handles("orchestra::extensions/deactivate/{$uid}") }}" class="btn btn-warning btn-mini">
+						<a href="{{ handles("orchestra::extensions/deactivate/{$uid}", array('csrf' => true)) }}" class="btn btn-warning btn-mini">
 							{{ trans('orchestra/foundation::label.extensions.actions.deactivate') }}
 						</a>
 					@endif

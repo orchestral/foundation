@@ -162,6 +162,37 @@ class RouteManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test Orchestra\Foundation\RouteManager::handles() method
+     * with CSRF Token.
+     *
+     * @test
+     */
+    public function testHandlesMethodWithCsrfToken()
+    {
+        $app = $this->getApplicationMocks();
+        $app['config'] = $config = m::mock('\Illuminate\Config\Repository')->makePartial();
+        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Environment')->makePartial();
+        $app['session'] = $session = m::mock('\Illuminate\Session\Store')->makePartial();
+        $app['url'] = $url = m::mock('\Illuminate\Routing\UrlGenerator')->makePartial();
+
+        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator')->makePartial();
+
+        $appRoute->shouldReceive('to')->once()->with('/?_token=StAGiQ')->andReturn('/?_token=StAGiQ')
+            ->shouldReceive('to')->once()->with('info?foo=bar&_token=StAGiQ')->andReturn('info?foo=bar&_token=StAGiQ');
+        $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
+        $session->shouldReceive('getToken')->twice()->andReturn('StAGiQ');
+        $url->shouldReceive('to')->once()->with('/?_token=StAGiQ')->andReturn('/?_token=StAGiQ')
+            ->shouldReceive('to')->once()->with('info?foo=bar&_token=StAGiQ')->andReturn('info?foo=bar&_token=StAGiQ');
+
+        $stub = new StubRouteManager($app);
+
+        $options = array('csrf' => true);
+
+        $this->assertEquals('/?_token=StAGiQ', $stub->handles('app::/', $options));
+        $this->assertEquals('info?foo=bar&_token=StAGiQ', $stub->handles('info?foo=bar', $options));
+    }
+
+    /**
      * Test Orchestra\Foundation\RouteManager::is() method.
      *
      * @test
