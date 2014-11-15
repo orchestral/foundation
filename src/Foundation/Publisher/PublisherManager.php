@@ -59,7 +59,7 @@ class PublisherManager extends Manager
 
                 $messages->add('success', trans('orchestra/foundation::response.extensions.activate', [
                     'name' => $queue,
-               ]));
+                ]));
             } catch (Exception $e) {
                 // this could be anything.
                 $messages->add('error', $e->getMessage());
