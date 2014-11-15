@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Foundation\Bootstrap\TestCase;
 
-use Illuminate\Foundation\Application;
 use Mockery as m;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Foundation\Application;
 use Orchestra\Foundation\Bootstrap\NotifyIfSafeMode;
 
 class NotifyIfSafeModeTest extends \PHPUnit_Framework_TestCase
@@ -52,7 +52,7 @@ class NotifyIfSafeModeTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.messages'] = $messages = m::mock('\Orchestra\Messages\MessageBag');
         $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
-        $events->shouldReceive('listen')->once()->with('composing: *', m::type('Closure'))
+        $events->shouldReceive('listen')->once()->with('orchestra.extension: booted', m::type('Closure'))
             ->andReturnUsing(function ($n, $c) {
                 return $c();
             });
