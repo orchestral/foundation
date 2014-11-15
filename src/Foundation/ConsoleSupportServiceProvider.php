@@ -20,7 +20,7 @@ class ConsoleSupportServiceProvider extends AggregateServiceProvider
     /**
      * Indicates if loading of the provider is deferred.
      *
-     * @var boo;
+     * @var bool
      */
     protected $defer = true;
 }
