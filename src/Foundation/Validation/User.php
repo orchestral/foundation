@@ -9,21 +9,21 @@ class User extends Validator
      *
      * @var array
      */
-    protected $rules = array(
-        'email'    => array('required', 'email'),
-        'fullname' => array('required'),
-        'roles'    => array('required'),
-    );
+    protected $rules = [
+        'email'    => ['required', 'email'],
+        'fullname' => ['required'],
+        'roles'    => ['required'],
+    ];
 
     /**
      * List of events.
      *
      * @var array
      */
-    protected $events = array(
+    protected $events = [
         'orchestra.validate: users',
         'orchestra.validate: user.account',
-    );
+    ];
 
     /**
      * On create user scenario.
@@ -32,6 +32,6 @@ class User extends Validator
      */
     protected function onCreate()
     {
-        $this->rules['password'] = array('required');
+        $this->rules['password'] = ['required'];
     }
 }

@@ -10,7 +10,7 @@ class ResourcesController extends AdminController
      * Orchestra Platform resources routing is dynamically handle by this
      * Controller.
      *
-     * @param  \Orchestra\Foundation\Processor\Resource    $processor
+     * @param  \Orchestra\Foundation\Processor\Resource  $processor
      */
     public function __construct(ResourceProcessor $processor)
     {

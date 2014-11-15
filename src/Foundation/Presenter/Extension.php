@@ -17,8 +17,8 @@ class Extension extends Presenter
     /**
      * Construct a new Extension presenter.
      *
-     * @param  \Orchestra\Contracts\Extension\Factory   $extension
-     * @param  \Orchestra\Contracts\Html\Form\Factory   $form
+     * @param  \Orchestra\Contracts\Extension\Factory  $extension
+     * @param  \Orchestra\Contracts\Html\Form\Factory  $form
      */
     public function __construct(ExtensionContract $extension, FormFactory $form)
     {
@@ -29,8 +29,8 @@ class Extension extends Presenter
     /**
      * Form View Generator for Orchestra\Extension.
      *
-     * @param  \Illuminate\Support\Fluent   $model
-     * @param  string   $name
+     * @param  \Illuminate\Support\Fluent  $model
+     * @param  string  $name
      * @return \Orchestra\Contracts\Html\Form\Builder
      */
     public function configure($model, $name)

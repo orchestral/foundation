@@ -2,9 +2,9 @@
 
 use Closure;
 use Exception;
-use Orchestra\Memory\Provider;
 use Orchestra\Http\RouteManager;
 use Orchestra\Extension\RouteGenerator;
+use Orchestra\Contracts\Memory\Provider;
 use Orchestra\Contracts\Foundation\Foundation as FoundationContract;
 
 class Foundation extends RouteManager implements FoundationContract
@@ -56,7 +56,7 @@ class Foundation extends RouteManager implements FoundationContract
     /**
      * Get memory services.
      *
-     * @var \Orchestra\Memory\Provider
+     * @var \Orchestra\Contracts\Memory\Provider
      */
     public function memory()
     {
@@ -96,8 +96,8 @@ class Foundation extends RouteManager implements FoundationContract
     /**
      * Get extension route.
      *
-     * @param  string   $name
-     * @param  string   $default
+     * @param  string  $name
+     * @param  string  $default
      * @return \Orchestra\Contracts\Extension\RouteGenerator
      */
     public function route($name, $default = '/')
@@ -137,7 +137,7 @@ class Foundation extends RouteManager implements FoundationContract
     /**
      * Run booting on installed application.
      *
-     * @return \Orchestra\Memory\Provider
+     * @return \Orchestra\Contracts\Memory\Provider
      * @throws \Exception
      */
     protected function bootInstalledApplication()
@@ -168,7 +168,7 @@ class Foundation extends RouteManager implements FoundationContract
     /**
      * Run booting on new application.
      *
-     * @return \Orchestra\Memory\Provider
+     * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function bootNewApplication()
     {
@@ -220,7 +220,7 @@ class Foundation extends RouteManager implements FoundationContract
     /**
      * Register base application components.
      *
-     * @param  \Orchestra\Memory\Provider  $memory
+     * @param  \Orchestra\Contracts\Memory\Provider  $memory
      * @return void
      */
     protected function registerComponents(Provider $memory)

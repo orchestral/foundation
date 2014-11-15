@@ -20,9 +20,9 @@ class User extends Presenter
     /**
      * Construct a new User presenter.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable   $user
-     * @param  \Orchestra\Contracts\Html\Form\Factory   $form
-     * @param  \Orchestra\Contracts\Html\Table\Factory   $table
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
+     * @param  \Orchestra\Contracts\Html\Form\Factory  $form
+     * @param  \Orchestra\Contracts\Html\Table\Factory  $table
      */
     public function __construct(Authenticatable $user, FormFactory $form, TableFactory $table)
     {
@@ -34,7 +34,7 @@ class User extends Presenter
     /**
      * Table View Generator for Orchestra\Model\User.
      *
-     * @param  \Orchestra\Model\User   $model
+     * @param  \Orchestra\Model\User  $model
      * @return \Orchestra\Contracts\Html\Table\Builder
      */
     public function table($model)
@@ -60,7 +60,7 @@ class User extends Presenter
     /**
      * Table actions View Generator for Orchestra\Model\User.
      *
-     * @param  \Orchestra\Contracts\Html\Table\Builder   $table
+     * @param  \Orchestra\Contracts\Html\Table\Builder  $table
      * @return \Orchestra\Contracts\Html\Table\Builder
      */
     public function actions(TableBuilder $table)
@@ -80,7 +80,7 @@ class User extends Presenter
     /**
      * Form View Generator for Orchestra\Model\User.
      *
-     * @param  \Orchestra\Model\User   $model
+     * @param  \Orchestra\Model\User  $model
      * @return \Orchestra\Contracts\Html\Form\Builder
      */
     public function form($model)

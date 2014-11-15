@@ -54,7 +54,7 @@ if (! function_exists('resources')) {
      * @param  array    $options
      * @return string
      */
-    function resources($name, array $options = array())
+    function resources($name, array $options = [])
     {
         $name = ltrim($name, '/');
 

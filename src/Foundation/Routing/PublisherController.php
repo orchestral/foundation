@@ -11,7 +11,7 @@ class PublisherController extends AdminController
     /**
      * Publisher controller.
      *
-     * @param  \Orchestra\Foundation\Processor\Publisher   $processor
+     * @param  \Orchestra\Foundation\Processor\Publisher  $processor
      */
     public function __construct(PublisherProcessor $processor)
     {
@@ -61,7 +61,7 @@ class PublisherController extends AdminController
      */
     public function publish()
     {
-        $input = Input::only(array('host', 'user', 'password'));
+        $input = Input::only(['host', 'user', 'password']);
         $input['ssl'] = (Input::get('connection-type', 'sftp') === 'sftp');
 
         return $this->processor->publish($this, $input);
@@ -70,7 +70,7 @@ class PublisherController extends AdminController
     /**
      * Response when publishing failed.
      *
-     * @param  string|null $message
+     * @param  string|null  $message
      * @return mixed
      */
     public function publishFailed($message = null)

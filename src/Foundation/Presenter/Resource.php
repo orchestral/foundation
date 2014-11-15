@@ -8,7 +8,7 @@ class Resource extends Presenter
     /**
      * Construct a new Resource presenter.
      *
-     * @param  \Orchestra\Contracts\Html\Table\Factory   $table
+     * @param  \Orchestra\Contracts\Html\Table\Factory  $table
      */
     public function __construct(TableFactory $table)
     {
@@ -18,7 +18,7 @@ class Resource extends Presenter
     /**
      * Table View Generator for Orchestra\Resources.
      *
-     * @param  array   $model
+     * @param  array  $model
      * @return \Orchestra\Contracts\Html\Table\Builder
      */
     public function table($model)

@@ -13,7 +13,7 @@ class Setting extends Processor
      * Create a new processor instance.
      *
      * @param  \Orchestra\Foundation\Presenter\Setting  $presenter
-     * @param  \Orchestra\Foundation\Validation\Setting $validator
+     * @param  \Orchestra\Foundation\Validation\Setting  $validator
      */
     public function __construct(SettingPresenter $presenter, SettingValidator $validator)
     {
@@ -32,7 +32,7 @@ class Setting extends Processor
         // Orchestra settings are stored using Orchestra\Memory, we need to
         // fetch it and convert it to Fluent (to mimick Eloquent properties).
         $memory   = Foundation::memory();
-        $eloquent = new Fluent(array(
+        $eloquent = new Fluent([
             'site_name'        => $memory->get('site.name', ''),
             'site_description' => $memory->get('site.description', ''),
             'site_registrable' => ($memory->get('site.registrable', false) ? 'yes' : 'no'),
@@ -48,11 +48,11 @@ class Setting extends Processor
             'email_queue'      => ($memory->get('email.queue', false) ? 'yes' : 'no'),
             'email_secret'     => $memory->get('email.secret', ''),
             'email_domain'     => $memory->get('email.domain', ''),
-        ));
+        ]);
 
         $form = $this->presenter->form($eloquent);
 
-        Event::fire('orchestra.form: settings', array($eloquent, $form));
+        Event::fire('orchestra.form: settings', [$eloquent, $form]);
 
         return $listener->showSucceed(compact('eloquent', 'form'));
     }
@@ -81,10 +81,10 @@ class Setting extends Processor
         $memory->put('site.registrable', ($input['site_registrable'] === 'yes'));
         $memory->put('email.driver', $driver);
 
-        $memory->put('email.from', array(
+        $memory->put('email.from', [
             'address' => $this->resolveMailConfig($input['email_address'], 'mail.from.address'),
             'name'    => $input['site_name'],
-        ));
+        ]);
 
         if ((empty($input['email_password']) && $input['change_password'] === 'no')) {
             $input['email_password'] = $memory->get('email.password');
@@ -100,7 +100,7 @@ class Setting extends Processor
         $memory->put('email.secret', $this->resolveMailConfig($input['email_secret'], "services.{$driver}.secret"));
         $memory->put('email.domain', $this->resolveMailConfig($input['email_domain'], "services.{$driver}.domain"));
 
-        Event::fire('orchestra.saved: settings', array($memory, $input));
+        Event::fire('orchestra.saved: settings', [$memory, $input]);
 
         return $listener->updateSucceed();
     }

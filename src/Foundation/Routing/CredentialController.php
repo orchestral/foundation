@@ -12,7 +12,7 @@ class CredentialController extends AdminController
     /**
      * Authentication/Credential controller routing.
      *
-     * @param \Orchestra\Foundation\Processor\Credential   $processor
+     * @param \Orchestra\Foundation\Processor\Credential  $processor
      */
     public function __construct(CredentialProcessor $processor)
     {
@@ -28,9 +28,7 @@ class CredentialController extends AdminController
      */
     protected function setupFilters()
     {
-        $this->beforeFilter('orchestra.guest', [
-            'only' => ['index', 'login'],
-        ]);
+        $this->beforeFilter('orchestra.guest', ['only' => ['index', 'login']]);
     }
 
     /**

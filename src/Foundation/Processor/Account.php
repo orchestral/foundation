@@ -1,10 +1,10 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Event;
 use Orchestra\Foundation\Presenter\Account as AccountPresenter;
 use Orchestra\Foundation\Validation\Account as AccountValidator;
 
@@ -14,7 +14,7 @@ class Account extends Processor
      * Create a new processor instance.
      *
      * @param  \Orchestra\Foundation\Presenter\Account  $presenter
-     * @param  \Orchestra\Foundation\Validation\Account $validator
+     * @param  \Orchestra\Foundation\Validation\Account  $validator
      */
     public function __construct(AccountPresenter $presenter, AccountValidator $validator)
     {
@@ -33,9 +33,9 @@ class Account extends Processor
         $eloquent = Auth::user();
         $form = $this->presenter->profile($eloquent, 'orchestra::account');
 
-        $this->fireEvent('form', array($eloquent, $form));
+        $this->fireEvent('form', [$eloquent, $form]);
 
-        return $listener->showProfileSucceed(array('eloquent' => $eloquent, 'form' => $form));
+        return $listener->showProfileSucceed(['eloquent' => $eloquent, 'form' => $form]);
     }
 
     /**
@@ -63,18 +63,18 @@ class Account extends Processor
         $user->fullname = $input['fullname'];
 
         try {
-            $this->fireEvent('updating', array($user));
-            $this->fireEvent('saving', array($user));
+            $this->fireEvent('updating', [$user]);
+            $this->fireEvent('saving', [$user]);
 
             DB::transaction(function () use ($user) {
                 $user->save();
             });
 
-            $this->fireEvent('updated', array($user));
-            $this->fireEvent('saved', array($user));
+            $this->fireEvent('updated', [$user]);
+            $this->fireEvent('saved', [$user]);
 
         } catch (Exception $e) {
-            return $listener->updateProfileFailed(array('error' => $e->getMessage()));
+            return $listener->updateProfileFailed(['error' => $e->getMessage()]);
         }
 
         return $listener->updateProfileSucceed();
@@ -91,7 +91,7 @@ class Account extends Processor
         $eloquent = Auth::user();
         $form = $this->presenter->password($eloquent);
 
-        return $listener->showPasswordSucceed(array('eloquent' => $eloquent, 'form' => $form));
+        return $listener->showPasswordSucceed(['eloquent' => $eloquent, 'form' => $form]);
     }
 
     /**
@@ -126,7 +126,7 @@ class Account extends Processor
                 $user->save();
             });
         } catch (Exception $e) {
-            return $listener->updatePasswordFailed(array('error' => $e->getMessage()));
+            return $listener->updatePasswordFailed(['error' => $e->getMessage()]);
         }
 
         return $listener->updatePasswordSucceed();
@@ -139,7 +139,7 @@ class Account extends Processor
      * @param  array   $parameters
      * @return void
      */
-    private function fireEvent($type, array $parameters = array())
+    private function fireEvent($type, array $parameters = [])
     {
         Event::fire("orchestra.{$type}: user.account", $parameters);
     }

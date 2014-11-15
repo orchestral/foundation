@@ -14,6 +14,6 @@ class Dashboard extends Processor
     {
         $panes = Widget::make('pane.orchestra');
 
-        return $listener->dashboardSucceed(array('panes' => $panes));
+        return $listener->dashboardSucceed(['panes' => $panes]);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'add'    => 'Add',
     'cancel' => 'Cancel',
     'delete' => 'Delete',
@@ -15,13 +15,13 @@ return array(
     'no-data'      => 'No data at the moment',
     'no-extension' => 'No extension available at the moment',
 
-    'account' => array(
+    'account' => [
         'current_password' => 'Current Password',
         'new_password'     => 'New Password',
         'confirm_password' => 'Confirm Password',
-    ),
+    ],
 
-    'email' => array(
+    'email' => [
         'driver'          => 'Driver',
         'from'            => 'From Address',
         'host'            => 'Host',
@@ -34,9 +34,9 @@ return array(
         'queue'           => 'Mail via Queue',
         'domain'          => 'Domain',
         'secret'          => 'Secret Key',
-    ),
+    ],
 
-    'extensions' => array(
+    'extensions' => [
         'name'         => 'Extension',
         'author'       => 'By :author',
         'version'      => 'Version :version',
@@ -44,37 +44,37 @@ return array(
         'update'       => 'Update',
         'handles'      => 'Handle URL',
 
-        'actions' => array(
+        'actions' => [
             'activate'   => 'Activate',
             'deactivate' => 'Deactivate',
             'update'     => 'Migrate and Publish',
-        ),
+        ],
 
-        'publisher' => array(
+        'publisher' => [
             'host'            => 'Host',
             'user'            => 'User',
             'password'        => 'Password',
             'connection-type' => 'Connection Type',
-        ),
-    ),
+        ],
+    ],
 
-    'search'    => array(
+    'search'    => [
         'button'  => 'Search',
         'filter'  => 'Filter',
         'keyword' => 'Search keyword...',
-    ),
+    ],
 
-    'settings' => array(
+    'settings' => [
         'application'       => 'Application',
         'mail'              => 'E-mail',
         'user-registration' => 'Allow User Registration',
-    ),
+    ],
 
-    'users' => array(
+    'users' => [
         'email'    => 'E-mail Address',
         'username' => 'Username',
         'fullname' => 'Full Name',
         'password' => 'Password',
         'roles'    => 'Roles',
-    ),
-);
+    ],
+];

@@ -30,7 +30,7 @@ trait TimezoneTrait
      * Convert given time to user localtime, however if it a guest user
      * return based on default timezone.
      *
-     * @param  mixed    $datetime
+     * @param  mixed  $datetime
      * @return \Carbon\Carbon
      */
     public function toLocalTime($datetime)
@@ -55,7 +55,7 @@ trait TimezoneTrait
      * Convert given time to user from localtime, however if it a guest user
      * return based on default timezone.
      *
-     * @param  mixed    $datetime
+     * @param  mixed  $datetime
      * @return \Carbon\Carbon
      */
     public function fromLocalTime($datetime)
@@ -78,8 +78,8 @@ trait TimezoneTrait
     /**
      * Convert datetime string to DateTime.
      *
-     * @param  mixed    $datetime
-     * @param  string   $timezone
+     * @param  mixed   $datetime
+     * @param  string  $timezone
      * @return \Carbon\Carbon
      */
     public function convertToDateTime($datetime, $timezone = null)

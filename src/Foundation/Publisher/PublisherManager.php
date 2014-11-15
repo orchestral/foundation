@@ -51,15 +51,15 @@ class PublisherManager extends Manager
     {
         $messages = $this->app['orchestra.messages'];
         $queues   = $this->queued();
-        $fails    = array();
+        $fails    = [];
 
         foreach ($queues as $queue) {
             try {
                 $this->driver()->upload($queue);
 
-                $messages->add('success', trans('orchestra/foundation::response.extensions.activate', array(
+                $messages->add('success', trans('orchestra/foundation::response.extensions.activate', [
                     'name' => $queue,
-                )));
+               ]));
             } catch (Exception $e) {
                 // this could be anything.
                 $messages->add('error', $e->getMessage());
@@ -75,7 +75,7 @@ class PublisherManager extends Manager
     /**
      * Add a process to be queue.
      *
-     * @param  string   $queue
+     * @param  string  $queue
      * @return bool
      */
     public function queue($queue)
@@ -93,6 +93,6 @@ class PublisherManager extends Manager
      */
     public function queued()
     {
-        return $this->memory->get('orchestra.publisher.queue', array());
+        return $this->memory->get('orchestra.publisher.queue', []);
     }
 }

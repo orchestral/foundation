@@ -13,7 +13,7 @@ class RegistrationController extends AdminController
      * Registration Controller routing. It should only be accessible if
      * registration is allowed through the setting.
      *
-     * @param  \Orchestra\Foundation\Processor\Registration    $processor
+     * @param  \Orchestra\Foundation\Processor\Registration  $processor
      */
     public function __construct(RegistrationProcessor $processor)
     {
@@ -72,7 +72,7 @@ class RegistrationController extends AdminController
     /**
      * Response when create a user failed validation.
      *
-     * @param  mixed   $validation
+     * @param  mixed  $validation
      * @return mixed
      */
     public function createValidationFailed($validation)
@@ -83,7 +83,7 @@ class RegistrationController extends AdminController
     /**
      * Response when create a user failed.
      *
-     * @param  array   $error
+     * @param  array  $error
      * @return mixed
      */
     public function createFailed(array $error)

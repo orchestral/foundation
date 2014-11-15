@@ -9,18 +9,18 @@ class ConsoleSupportServiceProvider extends AggregateServiceProvider
      *
      * @var array
      */
-    protected $providers = array(
+    protected $providers = [
         'Orchestra\Auth\CommandServiceProvider',
         'Orchestra\Extension\CommandServiceProvider',
         'Orchestra\Memory\CommandServiceProvider',
         'Orchestra\Optimize\OptimizeServiceProvider',
         'Orchestra\View\CommandServiceProvider',
-    );
+    ];
 
     /**
      * Indicates if loading of the provider is deferred.
      *
-     * @var boolean
+     * @var boo;
      */
     protected $defer = true;
 }

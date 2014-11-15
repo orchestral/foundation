@@ -2,7 +2,6 @@
 
 use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Orchestra\Foundation\Processor\Dashboard as DashboardProcessor;
 
@@ -11,7 +10,7 @@ class DashboardController extends AdminController
     /**
      * Dashboard controller routing.
      *
-     * @param \Orchestra\Foundation\Processor\Dashboard    $processor
+     * @param \Orchestra\Foundation\Processor\Dashboard  $processor
      */
     public function __construct(DashboardProcessor $processor)
     {
@@ -28,9 +27,7 @@ class DashboardController extends AdminController
     protected function setupFilters()
     {
         // User has to be authenticated before using this controller.
-        $this->beforeFilter('orchestra.auth', array(
-            'only' => array('index'),
-        ));
+        $this->beforeFilter('orchestra.auth', ['only' => ['index']]);
     }
 
     /**

@@ -1,15 +1,16 @@
 <?php namespace Orchestra\Foundation\Processor;
 
+use Orchestra\Model\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Orchestra\Foundation\Validation\Auth as AuthValidator;
-use Orchestra\Model\User;
 
 class Credential extends Processor
 {
     /**
      * Create a new processor instance.
      *
-     * @param  \Orchestra\Foundation\Validation\Account $validator
+     * @param  \Orchestra\Foundation\Validation\Auth  $validator
      */
     public function __construct(AuthValidator $validator)
     {
@@ -56,15 +57,12 @@ class Credential extends Processor
     /**
      * Authenticate the user.
      *
-     * @param  array    $input
+     * @param  array  $input
      * @return bool
      */
     protected function authenticate($input)
     {
-        $data = array(
-            'email'    => $input['email'],
-            'password' => $input['password'],
-        );
+        $data = Arr::only($input, ['email', 'password']);
 
         $remember = (isset($input['remember']) && $input['remember'] === 'yes');
 

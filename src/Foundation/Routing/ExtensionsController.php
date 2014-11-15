@@ -12,7 +12,7 @@ class ExtensionsController extends AdminController
     /**
      * Extensions Controller routing to manage available extensions.
      *
-     * @param  \Orchestra\Foundation\Processor\Extension   $processor
+     * @param  \Orchestra\Foundation\Processor\Extension  $processor
      */
     public function __construct(ExtensionProcessor $processor)
     {
@@ -49,7 +49,7 @@ class ExtensionsController extends AdminController
      *
      * GET (:orchestra)/extensions/activate/(:name)
      *
-     * @param  string   $uid
+     * @param  string  $uid
      * @return mixed
      */
     public function activate($uid)
@@ -64,7 +64,7 @@ class ExtensionsController extends AdminController
      *
      * GET (:orchestra)/extensions/deactivate/(:name)
      *
-     * @param  string   $uid
+     * @param  string  $uid
      * @return mixed
      */
     public function deactivate($uid)
@@ -79,7 +79,7 @@ class ExtensionsController extends AdminController
      *
      * GET (:orchestra)/extensions/update/(:name)
      *
-     * @param  string   $uid
+     * @param  string  $uid
      * @return mixed
      */
     public function migrate($uid)
@@ -94,7 +94,7 @@ class ExtensionsController extends AdminController
      *
      * GET (:orchestra)/extensions/configure/(:name)
      *
-     * @param  string   $uid
+     * @param  string  $uid
      * @return mixed
      */
     public function configure($uid)
@@ -129,7 +129,7 @@ class ExtensionsController extends AdminController
     {
         $name = str_replace('.', '/', $uid);
 
-        return new Fluent(array('name' => $name, 'uid' => $uid));
+        return new Fluent(['name' => $name, 'uid' => $uid]);
     }
 
     /**

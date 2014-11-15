@@ -80,7 +80,7 @@ class SettingsController extends AdminController
     /**
      * Response when update setting failed on validation.
      *
-     * @param  mixed   $validation
+     * @param  mixed  $validation
      * @return mixed
      */
     public function updateValidationFailed($validation)

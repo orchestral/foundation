@@ -1,14 +1,14 @@
 <?php namespace Orchestra\Foundation\Processor;
 
-use Orchestra\Foundation\Presenter\Resource as ResourcePresenter;
 use Orchestra\Support\Facades\Resources;
+use Orchestra\Foundation\Presenter\Resource as ResourcePresenter;
 
 class Resource extends Processor
 {
     /**
      * Create a new processor instance.
      *
-     * @param  \Orchestra\Foundation\Presenter\Resource $presenter
+     * @param  \Orchestra\Foundation\Presenter\Resource  $presenter
      */
     public function __construct(ResourcePresenter $presenter)
     {
@@ -24,7 +24,7 @@ class Resource extends Processor
     public function index($listener)
     {
         $resources = Resources::all();
-        $eloquent  = array();
+        $eloquent  = [];
 
         foreach ($resources as $name => $options) {
             if (false !== value($options->visible)) {
@@ -34,7 +34,7 @@ class Resource extends Processor
 
         $table = $this->presenter->table($eloquent);
 
-        return $listener->indexSucceed(array('eloquent' => $eloquent, 'table' => $table));
+        return $listener->indexSucceed(['eloquent' => $eloquent, 'table' => $table]);
     }
 
     /**
@@ -55,15 +55,15 @@ class Resource extends Processor
             ( ! str_contains($name, '.')) ?
                 $namespace = $name : list($namespace,) = explode('.', $name, 2);
 
-            return $listener->callSucceed(array(
+            return $listener->callSucceed([
                 'content'   => $content,
-                'resources' => array(
+                'resources' => [
                     'list'      => $resources,
                     'namespace' => $namespace,
                     'name'      => $name,
                     'request'   => $request,
-                ),
-            ));
+                ],
+            ]);
         });
     }
 }

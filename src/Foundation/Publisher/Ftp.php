@@ -2,9 +2,9 @@
 
 use Closure;
 use RuntimeException;
-use Orchestra\Support\Ftp\Client as FtpClient;
-use Orchestra\Support\Ftp\ServerException;
 use Orchestra\Support\Str;
+use Orchestra\Support\Ftp\ServerException;
+use Orchestra\Support\Ftp\Client as FtpClient;
 
 class Ftp implements UploaderInterface
 {
@@ -25,8 +25,8 @@ class Ftp implements UploaderInterface
     /**
      * Construct a new FTP instance.
      *
-     * @param  \Illuminate\Foundation\Application   $app
-     * @param  \Orchestra\Support\Ftp\Client        $client
+     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Orchestra\Support\Ftp\Client  $client
      * @throws \Orchestra\Support\Ftp\ServerException
      */
     public function __construct($app, FtpClient $client)
@@ -36,13 +36,13 @@ class Ftp implements UploaderInterface
 
         // If FTP credential is stored in the session, we should reuse it
         // and connect to FTP server straight away.
-        $config = $this->app['session']->get('orchestra.ftp', array());
+        $config = $this->app['session']->get('orchestra.ftp', []);
 
         try {
             $this->connect($config);
         } catch (ServerException $e) {
             // Connection might failed, but there nothing really to report.
-            $this->app['session']->put('orchestra.ftp', array());
+            $this->app['session']->put('orchestra.ftp', []);
         }
     }
 
@@ -59,7 +59,7 @@ class Ftp implements UploaderInterface
     /**
      * Set service connection instance.
      *
-     * @param  \Orchestra\Support\FTP   $client
+     * @param  \Orchestra\Support\FTP  $client
      * @return void
      */
     public function setConnection($client)
@@ -70,10 +70,10 @@ class Ftp implements UploaderInterface
     /**
      * Connect to the service.
      *
-     * @param  array    $config
+     * @param  array  $config
      * @return bool
      */
-    public function connect($config = array())
+    public function connect($config = [])
     {
         $this->connection->setUp($config);
 
@@ -83,7 +83,7 @@ class Ftp implements UploaderInterface
     /**
      * Make a directory.
      *
-     * @param  string   $path
+     * @param  string  $path
      * @return bool
      */
     public function makeDirectory($path)
@@ -94,8 +94,8 @@ class Ftp implements UploaderInterface
     /**
      * CHMOD a directory/file.
      *
-     * @param  string   $path
-     * @param  integer  $mode
+     * @param  string  $path
+     * @param  int     $mode
      * @return bool
      */
     public function permission($path, $mode = 0755)
@@ -106,8 +106,8 @@ class Ftp implements UploaderInterface
     /**
      * CHMOD a file/directory recursively.
      *
-     * @param  string   $path
-     * @param  integer  $mode
+     * @param  string  $path
+     * @param  int     $mode
      * @return bool
      */
     public function recursivePermission($path, $mode = 0755)
@@ -126,8 +126,8 @@ class Ftp implements UploaderInterface
     /**
      * CHMOD both file and directory recursively.
      *
-     * @param  string   $path
-     * @param  integer  $mode
+     * @param  string  $path
+     * @param  int     $mode
      * @return bool
      */
     protected function recursiveFilePermission($path, $mode = 0755)
@@ -140,7 +140,7 @@ class Ftp implements UploaderInterface
 
         // this is to check if return value is just a single file,
         // avoiding infinite loop when we reach a file.
-        if ($lists !== array($path)) {
+        if ($lists !== [$path]) {
             foreach ($lists as $dir) {
                 // Not a file or folder, ignore it.
                 if (! $ignored_path($dir)) {
@@ -155,8 +155,8 @@ class Ftp implements UploaderInterface
     /**
      * Upload the file.
      *
-     * @param  string   $name           Extension name
-     * @param  boolean  $recursively
+     * @param  string  $name           Extension name
+     * @param  bool    $recursively
      * @return bool
      * @throws \RuntimeException
      */
@@ -193,8 +193,8 @@ class Ftp implements UploaderInterface
     /**
      * Check upload path.
      *
-     * @param  string   $name           Extension name
-     * @param  boolean  $recursively
+     * @param  string  $name           Extension name
+     * @param  bool    $recursively
      * @return array
      */
     protected function checkDestination($name, $recursively = false)
@@ -229,16 +229,16 @@ class Ftp implements UploaderInterface
             }
         }
 
-        return array($path, $basePath, $recursively, $folderExist);
+        return [$path, $basePath, $recursively, $folderExist];
     }
 
     /**
      * Revert chmod back to original state.
      *
-     * @param  string   $path
-     * @param  boolean  $recursively
-     * @param  integer  $mode
-     * @param  \Closure $callback
+     * @param  string  $path
+     * @param  bool  $recursively
+     * @param  int  $mode
+     * @param  \Closure  $callback
      * @return void
      */
     protected function changePermission($path, $recursively, $mode = 0755, Closure $callback = null)
@@ -257,7 +257,7 @@ class Ftp implements UploaderInterface
     /**
      * Get base path for FTP.
      *
-     * @param  string   $path
+     * @param  string  $path
      * @return string
      */
     public function basePath($path)

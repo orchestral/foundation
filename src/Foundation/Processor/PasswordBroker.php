@@ -17,8 +17,8 @@ class PasswordBroker extends Processor
     /**
      * Create a new processor instance.
      *
-     * @param \Orchestra\Foundation\Validation\Auth     $validator
-     * @param \Illuminate\Contracts\Auth\PasswordBroker $password
+     * @param \Orchestra\Foundation\Validation\Auth  $validator
+     * @param \Illuminate\Contracts\Auth\PasswordBroker  $password
      */
     public function __construct(AuthValidator $validator, Password $password)
     {

@@ -59,6 +59,7 @@ class UsersController extends AdminController
      *
      * GET (:orchestra)/users/$id/edit
      *
+     * @param  int|string  $id
      * @return mixed
      */
     public function edit($id)
@@ -83,7 +84,7 @@ class UsersController extends AdminController
      *
      * PUT (:orchestra)/users/1
      *
-     * @param  integer  $id
+     * @param  int|string  $id
      * @return mixed
      */
     public function update($id)
@@ -96,7 +97,7 @@ class UsersController extends AdminController
      *
      * GET (:orchestra)/$id/delete
      *
-     * @param  integer  $id
+     * @param  int|string  $id
      * @return mixed
      */
     public function delete($id)
@@ -109,7 +110,7 @@ class UsersController extends AdminController
      *
      * DELETE (:orchestra)/$id
      *
-     * @param  integer  $id
+     * @param  int|string  $id
      * @return mixed
      */
     public function destroy($id)
@@ -168,7 +169,7 @@ class UsersController extends AdminController
     /**
      * Response when storing user failed.
      *
-     * @param  array    $error
+     * @param  array  $error
      * @return mixed
      */
     public function storeFailed(array $error)
@@ -203,7 +204,7 @@ class UsersController extends AdminController
     /**
      * Response when updating user failed.
      *
-     * @param  array   $error
+     * @param  array  $error
      * @return mixed
      */
     public function updateFailed(array $error)
@@ -228,7 +229,7 @@ class UsersController extends AdminController
     /**
      * Response when destroying user failed.
      *
-     * @param  array   $error
+     * @param  array  $error
      * @return mixed
      */
     public function destroyFailed(array $error)

@@ -11,7 +11,7 @@ class VerifyCsrfToken
      * Run the request filter.
      *
      * @param  \Illuminate\Routing\Route  $route
-     * @param  \Illuminate\Http\Request   $request
+     * @param  \Illuminate\Http\Request  $request
      * @return mixed
      * @throws \Illuminate\Session\TokenMismatchException
     */

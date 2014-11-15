@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Illuminate\Support\Facades\Session;
-use Orchestra\Support\Facades\Publisher as P;
 use Orchestra\Support\Ftp\ServerException;
+use Orchestra\Support\Facades\Publisher as P;
 
 class Publisher extends Processor
 {

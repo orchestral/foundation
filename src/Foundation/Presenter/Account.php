@@ -9,7 +9,7 @@ class Account extends Presenter
     /**
      * Construct a new Account presenter.
      *
-     * @param  \Orchestra\Contracts\Html\Form\Factory   $form
+     * @param  \Orchestra\Contracts\Html\Form\Factory  $form
      */
     public function __construct(FormFactory $form)
     {
@@ -19,8 +19,8 @@ class Account extends Presenter
     /**
      * Form view generator for User Account.
      *
-     * @param  \Orchestra\Model\User   $model
-     * @param  string   $url
+     * @param  \Orchestra\Model\User  $model
+     * @param  string  $url
      * @return \Orchestra\Contracts\Html\Form\Builder
      */
     public function profile($model, $url)
@@ -42,7 +42,7 @@ class Account extends Presenter
     /**
      * Form view generator for user account edit password.
      *
-     * @param  \Orchestra\Model\User    $model
+     * @param  \Orchestra\Model\User  $model
      * @return \Orchestra\Contracts\Html\Form\Builder
      */
     public function password($model)

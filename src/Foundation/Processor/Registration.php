@@ -19,7 +19,7 @@ class Registration extends Processor
      * Create a new processor instance.
      *
      * @param  \Orchestra\Foundation\Presenter\Account  $presenter
-     * @param  \Orchestra\Foundation\Validation\Account $validator
+     * @param  \Orchestra\Foundation\Validation\Account  $validator
      */
     public function __construct(AccountPresenter $presenter, AccountValidator $validator)
     {
@@ -44,7 +44,7 @@ class Registration extends Processor
             $form->submit = $title;
         });
 
-        Event::fire('orchestra.form: user.account', array($eloquent, $form));
+        Event::fire('orchestra.form: user.account', [$eloquent, $form]);
 
         return $listener->indexSucceed(compact('eloquent', 'form'));
     }
@@ -75,20 +75,20 @@ class Registration extends Processor
         $user->password = $password;
 
         try {
-            $this->fireEvent('creating', array($user));
-            $this->fireEvent('saving', array($user));
+            $this->fireEvent('creating', [$user]);
+            $this->fireEvent('saving', [$user]);
 
             DB::transaction(function () use ($user) {
                 $user->save();
-                $user->roles()->sync(array(
+                $user->roles()->sync([
                     Config::get('orchestra/foundation::roles.member', 2)
-                ));
+                ]);
             });
 
-            $this->fireEvent('created', array($user));
-            $this->fireEvent('saved', array($user));
+            $this->fireEvent('created', [$user]);
+            $this->fireEvent('saved', [$user]);
         } catch (Exception $e) {
-            return $listener->createFailed(array('error' => $e->getMessage()));
+            return $listener->createFailed(['error' => $e->getMessage()]);
         }
 
         return $this->sendEmail($listener, $user, $password);
@@ -97,9 +97,9 @@ class Registration extends Processor
     /**
      * Send new registration e-mail to user.
      *
-     * @param  object                  $listener
-     * @param  \Orchestra\Model\User   $user
-     * @param  string                  $password
+     * @param  object  $listener
+     * @param  \Orchestra\Model\User  $user
+     * @param  string  $password
      * @return mixed
      */
     protected function sendEmail($listener, User $user, $password)
@@ -111,13 +111,13 @@ class Registration extends Processor
         $memory = Foundation::memory();
         $site   = $memory->get('site.name', 'Orchestra Platform');
 
-        $data = array(
+        $data = [
             'password' => $password,
             'site'     => $site,
             'user'     => ($user instanceof Arrayable ? $user->toArray() : $user),
-        );
+        ];
 
-        $subject = trans('orchestra/foundation::email.credential.register', array('site' => $site));
+        $subject = trans('orchestra/foundation::email.credential.register', ['site' => $site]);
         $view    = 'emails.auth.register';
         $message = Message::create($view, $data, $subject);
 
@@ -137,7 +137,7 @@ class Registration extends Processor
      * @param  array   $parameters
      * @return void
      */
-    protected function fireEvent($type, array $parameters = array())
+    protected function fireEvent($type, array $parameters = [])
     {
         Event::fire("orchestra.{$type}: user.account", $parameters);
     }

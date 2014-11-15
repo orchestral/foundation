@@ -10,7 +10,7 @@ class FilterServiceProvider extends ServiceProvider
      * @var array
      */
     protected $filters = [
-        'orchestra.auth' => 'Orchestra\Foundation\Filters\Authenticated',
+        'orchestra.auth' => 'Orchestra\Foundation\Filters\Authenticate',
         'orchestra.guest' => 'Orchestra\Foundation\Filters\IsGuest',
         'orchestra.installable' => 'Orchestra\Foundation\Filters\CanBeInstalled',
         'orchestra.installed' => 'Orchestra\Foundation\Filters\IsInstalled',

@@ -16,7 +16,7 @@ class UseBackendTheme implements Middleware
     /**
      * Create a new middleware instance.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher   $dispatcher
+     * @param  \Illuminate\Contracts\Events\Dispatcher  $dispatcher
      */
     public function __construct(Dispatcher $dispatcher)
     {
@@ -26,8 +26,8 @@ class UseBackendTheme implements Middleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request   $request
-     * @param  \Closure   $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)

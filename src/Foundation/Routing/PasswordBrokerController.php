@@ -11,7 +11,7 @@ class PasswordBrokerController extends AdminController
      * Construct Forgot Password Controller with some pre-define
      * configuration
      *
-     * @param \Orchestra\Foundation\Processor\PasswordBroker   $processor
+     * @param \Orchestra\Foundation\Processor\PasswordBroker  $processor
      */
     public function __construct(PasswordBrokerProcessor $processor)
     {
@@ -65,7 +65,7 @@ class PasswordBrokerController extends AdminController
      *
      * GET (:orchestra)/forgot/reset/(:hash)
      *
-     * @param  string   $token
+     * @param  string  $token
      * @return mixed
      */
     public function show($token)
@@ -92,7 +92,7 @@ class PasswordBrokerController extends AdminController
     /**
      * Response when request password failed on validation.
      *
-     * @param  mixed   $validation
+     * @param  mixed  $validation
      * @return mixed
      */
     public function requestValidationFailed($validation)
@@ -147,7 +147,6 @@ class PasswordBrokerController extends AdminController
     /**
      * Response when reset password succeed.
      *
-     * @param  string  $response
      * @return mixed
      */
     public function resetSucceed()

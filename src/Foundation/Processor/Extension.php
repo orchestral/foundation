@@ -15,8 +15,8 @@ class Extension extends Processor
     /**
      * Create a new processor instance.
      *
-     * @param  \Orchestra\Foundation\Presenter\Extension    $presenter
-     * @param  \Orchestra\Foundation\Validation\Extension   $validator
+     * @param  \Orchestra\Foundation\Presenter\Extension  $presenter
+     * @param  \Orchestra\Foundation\Validation\Extension  $validator
      */
     public function __construct(ExtensionPresenter $presenter, ExtensionValidator $validator)
     {
@@ -40,7 +40,7 @@ class Extension extends Processor
     /**
      * Activate an extension.
      *
-     * @param  object                      $listener
+     * @param  object  $listener
      * @param  \Illuminate\Support\Fluent  $extension
      * @return mixed
      */
@@ -60,8 +60,8 @@ class Extension extends Processor
     /**
      * Deactivate an extension.
      *
-     * @param  object                       $listener
-     * @param  \Illuminate\Support\Fluent   $extension
+     * @param  object  $listener
+     * @param  \Illuminate\Support\Fluent  $extension
      * @return mixed
      */
     public function deactivate($listener, Fluent $extension)
@@ -78,7 +78,7 @@ class Extension extends Processor
     /**
      * Update/migrate an extension.
      *
-     * @param  object                      $listener
+     * @param  object  $listener
      * @param  \Illuminate\Support\Fluent  $extension
      * @return mixed
      */
@@ -98,7 +98,7 @@ class Extension extends Processor
     /**
      * View edit extension configuration page.
      *
-     * @param  object                      $listener
+     * @param  object  $listener
      * @param  \Illuminate\Support\Fluent  $extension
      * @return mixed
      */
@@ -111,8 +111,8 @@ class Extension extends Processor
         $memory = Foundation::memory();
 
         // Load configuration from memory.
-        $activeConfig = (array) $memory->get("extensions.active.{$extension->name}.config", array());
-        $baseConfig   = (array) $memory->get("extension_{$extension->name}", array());
+        $activeConfig = (array) $memory->get("extensions.active.{$extension->name}.config", []);
+        $baseConfig   = (array) $memory->get("extension_{$extension->name}", []);
 
         $eloquent = new Fluent(array_merge($activeConfig, $baseConfig));
 
@@ -120,7 +120,7 @@ class Extension extends Processor
         // to this form using events.
         $form = $this->presenter->configure($eloquent, $extension->name);
 
-        Event::fire("orchestra.form: extension.{$extension->name}", array($eloquent, $form));
+        Event::fire("orchestra.form: extension.{$extension->name}", [$eloquent, $form]);
 
         return $listener->configureSucceed(compact('eloquent', 'form', 'extension'));
     }
@@ -128,9 +128,9 @@ class Extension extends Processor
     /**
      * Update an extension configuration.
      *
-     * @param  object                      $listener
+     * @param  object  $listener
      * @param  \Illuminate\Support\Fluent  $extension
-     * @param  array                       $input
+     * @param  array  $input
      * @return mixed
      */
     public function update($listener, Fluent $extension, array $input)
@@ -139,24 +139,24 @@ class Extension extends Processor
             return $listener->suspend(404);
         }
 
-        $validation = $this->validator->with($input, array("orchestra.validate: extension.{$extension->name}"));
+        $validation = $this->validator->with($input, ["orchestra.validate: extension.{$extension->name}"]);
 
         if ($validation->fails()) {
             return $listener->updateValidationFailed($validation, $extension->uid);
         }
 
         $memory = Foundation::memory();
-        $config = (array) $memory->get("extension.active.{$extension->name}.config", array());
+        $config = (array) $memory->get("extension.active.{$extension->name}.config", []);
         $input  = new Fluent(array_merge($config, $input));
 
         unset($input['_token']);
 
-        Event::fire("orchestra.saving: extension.{$extension->name}", array( & $input));
+        Event::fire("orchestra.saving: extension.{$extension->name}", [& $input]);
 
         $memory->put("extensions.active.{$extension->name}.config", $input->getAttributes());
         $memory->put("extension_{$extension->name}", $input->getAttributes());
 
-        Event::fire("orchestra.saved: extension.{$extension->name}", array($input));
+        Event::fire("orchestra.saved: extension.{$extension->name}", [$input]);
 
         return $listener->updateSucceed($extension);
     }
@@ -164,10 +164,10 @@ class Extension extends Processor
     /**
      * Execute installation or update for an extension.
      *
-     * @param  object                      $listener
-     * @param  string                      $type
+     * @param  object  $listener
+     * @param  string  $type
      * @param  \Illuminate\Support\Fluent  $extension
-     * @param  \Closure                    $callback
+     * @param  \Closure  $callback
      * @return mixed
      */
     protected function execute($listener, $type, Fluent $extension, Closure $callback)
@@ -187,9 +187,9 @@ class Extension extends Processor
             // put this under a publisher queue.
             Publisher::queue($extension->name);
 
-            return call_user_func(array($listener, "{$type}Failed"), $extension);
+            return call_user_func([$listener, "{$type}Failed"], $extension);
         }
 
-        return call_user_func(array($listener, "{$type}Succeed"), $extension);
+        return call_user_func([$listener, "{$type}Succeed"], $extension);
     }
 }

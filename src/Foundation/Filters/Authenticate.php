@@ -7,7 +7,7 @@ use Illuminate\Contracts\Config\Repository;
 use Orchestra\Contracts\Foundation\Foundation;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
-class Authenticated
+class Authenticate
 {
     /**
      * The authenticator implementation.

@@ -11,7 +11,7 @@ class AccountController extends AdminController
      * Construct Account Controller to allow user to update own profile.
      * Only authenticated user should be able to access this controller.
      *
-     * @param  \Orchestra\Foundation\Processor\Account $processor
+     * @param  \Orchestra\Foundation\Processor\Account  $processor
      */
     public function __construct(AccountProcessor $processor)
     {
@@ -81,7 +81,7 @@ class AccountController extends AdminController
     /**
      * Response view account/profile page.
      *
-     * @param  array   $data
+     * @param  array  $data
      * @return mixed
      */
     public function showProfileSucceed(array $data)
@@ -130,7 +130,7 @@ class AccountController extends AdminController
     /**
      * Response view change password page.
      *
-     * @param  array   $data
+     * @param  array  $data
      * @return mixed
      */
     public function showPasswordSucceed(array $data)
@@ -153,6 +153,8 @@ class AccountController extends AdminController
 
     /**
      * Response when verify current password failed.
+     *
+     * @return mixed
      */
     public function verifyCurrentPasswordFailed()
     {
@@ -164,7 +166,7 @@ class AccountController extends AdminController
     /**
      * Response when update password failed.
      *
-     * @param  array   $error
+     * @param  array  $error
      * @return mixed
      */
     public function updatePasswordFailed(array $error)

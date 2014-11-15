@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Foundation\Filters\TestCase;
 
 use Mockery as m;
-use Orchestra\Foundation\Filters\Authenticated;
+use Orchestra\Foundation\Filters\Authenticate;
 
-class AuthenticatedTest extends \PHPUnit_Framework_TestCase
+class AuthenticateTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Teardown the test environment.
@@ -33,7 +33,7 @@ class AuthenticatedTest extends \PHPUnit_Framework_TestCase
         $request->shouldReceive('ajax')->once()->andReturn(true);
         $response->shouldReceive('make')->once()->with('Unauthorized', 401)->andReturn('foo');
 
-        $stub = new Authenticated($foundation, $auth, $config, $response);
+        $stub = new Authenticate($foundation, $auth, $config, $response);
         $this->assertEquals('foo', $stub->filter($route, $request));
     }
 
@@ -59,7 +59,7 @@ class AuthenticatedTest extends \PHPUnit_Framework_TestCase
         $foundation->shouldReceive('handles')->once()->with('orchestra::login')->andReturn('http://localhost/admin/login');
         $response->shouldReceive('redirectGuest')->once()->with('http://localhost/admin/login')->andReturn('foo');
 
-        $stub = new Authenticated($foundation, $auth, $config, $response);
+        $stub = new Authenticate($foundation, $auth, $config, $response);
         $this->assertEquals('foo', $stub->filter($route, $request));
     }
 
@@ -81,7 +81,7 @@ class AuthenticatedTest extends \PHPUnit_Framework_TestCase
 
         $auth->shouldReceive('guest')->once()->andReturn(false);
 
-        $stub = new Authenticated($foundation, $auth, $config, $response);
+        $stub = new Authenticate($foundation, $auth, $config, $response);
         $this->assertNull($stub->filter($route, $request));
     }
 }

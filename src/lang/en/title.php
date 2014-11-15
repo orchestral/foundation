@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'home'     => 'Home',
     'login'    => 'Login',
     'logout'   => 'Logout',
@@ -10,33 +10,33 @@ return array(
     'forgot-password' => 'Forgot Password',
     'reset-password'  => 'Reset Password',
 
-    'account' => array(
+    'account' => [
         'profile'  => 'Edit Profile',
         'password' => 'Edit Password',
-    ),
+    ],
 
-    'extensions' => array(
+    'extensions' => [
         'list'      => 'Extensions',
         'configure' => 'Configure Extension',
-    ),
+    ],
 
-    'resources' => array(
+    'resources' => [
         'list'        => 'Resources',
         'list-detail' => 'List of available resources',
-    ),
+    ],
 
-    'settings' => array(
+    'settings' => [
         'list'    => 'Settings',
-    ),
+    ],
 
-    'publisher' => array(
+    'publisher' => [
         'ftp'         => 'FTP Credential',
         'description' => 'We would need to have your credential in order to run the following task.'
-    ),
+    ],
 
-    'users' => array(
+    'users' => [
         'list'   => 'Users',
         'create' => 'Add User',
         'update' => 'Edit User',
-    ),
-);
+    ],
+];
