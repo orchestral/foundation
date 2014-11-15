@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         'Illuminate\Foundation\Bootstrap\BootProviders',
 
         'Orchestra\Foundation\Bootstrap\UserAccessPolicy',
+        'Orchestra\Foundation\Bootstrap\LoadFoundation',
         'Orchestra\Extension\Bootstrap\LoadExtension',
         'Orchestra\Foundation\Bootstrap\LoadUserMetaData',
         'Orchestra\View\Bootstrap\LoadCurrentTheme',

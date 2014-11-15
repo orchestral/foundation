@@ -129,8 +129,6 @@ class FoundationServiceProvider extends ServiceProvider
 
         $this->package('orchestra/foundation', 'orchestra/foundation', $path);
 
-        $this->app['orchestra.app']->boot();
-
         if (! $this->app->routesAreCached()) {
             require "{$path}/routes.php";
         }
