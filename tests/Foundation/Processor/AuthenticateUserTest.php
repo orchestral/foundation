@@ -27,11 +27,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
         $user      = m::mock('\Orchestra\Model\User, \Illuminate\Contracts\Auth\Authenticatable');
 
-        $input = [
-            'email'    => 'hello@orchestraplatform.com',
-            'password' => '123456',
-            'remember' => 'yes',
-        ];
+        $input = $this->getInput();
 
         $validator->shouldReceive('on')->once()->with('login')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
@@ -61,11 +57,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
         $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
 
-        $input = [
-            'email'    => 'hello@orchestraplatform.com',
-            'password' => '123456',
-            'remember' => 'yes',
-        ];
+        $input = $this->getInput();
 
         $validator->shouldReceive('on')->once()->with('login')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
@@ -92,11 +84,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
         $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
 
-        $input = [
-            'email'    => 'hello@orchestraplatform.com',
-            'password' => '123456',
-            'remember' => 'yes',
-        ];
+        $input = $this->getInput();
 
         $validator->shouldReceive('on')->once()->with('login')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
@@ -129,5 +117,21 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $listener->shouldReceive('userHasLoggedOut')->once()->andReturn('logged.out');
 
         $this->assertEquals('logged.out', $stub->logout($listener));
+    }
+
+
+
+    /**
+     * Get sample input.
+     *
+     * @return array
+     */
+    protected function getInput()
+    {
+        return [
+            'email'    => 'hello@orchestraplatform.com',
+            'password' => '123456',
+            'remember' => 'yes',
+        ];
     }
 }

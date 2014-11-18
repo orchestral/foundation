@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Foundation\Contracts\Listener;
 
-use Illuminate\Support\MessageBag;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 interface AuthenticateUser

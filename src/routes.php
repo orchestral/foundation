@@ -4,10 +4,10 @@ use Orchestra\Support\Facades\Foundation;
 
 Foundation::namespaced('Orchestra\Foundation\Routing', function ($router) {
     // Route to account/profile.
-    $router->get('account', 'AccountController@showProfile');
-    $router->post('account', 'AccountController@updateProfile');
-    $router->get('account/password', 'AccountController@showPassword');
-    $router->post('account/password', 'AccountController@updatePassword');
+    $router->get('account', 'Account\ProfileController@show');
+    $router->post('account', 'Account\ProfileController@update');
+    $router->get('account/password', 'Account\PasswordController@show');
+    $router->post('account/password', 'Account\PasswordController@update');
 
     // Route to extensions.
     if (Foundation::bound('orchestra.extension')) {
