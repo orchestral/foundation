@@ -20,6 +20,10 @@ title: Foundation Change Log
 
 ## Version 2.2 {#v2-2}
 
+### v2.2.9 {#v2-2-9}
+
+* Missing missing csrf token missmatch checking on delete user request.
+
 ### v2.2.8 {#v2-2-8}
 
 * Convert `orchestra.csrf` filter closure to `Orchestra\Foundation\Filters\VerifyCsrfToken`.
@@ -83,6 +87,10 @@ title: Foundation Change Log
 * Add support for `orchestra/view` command.
 
 ## Version 2.1 {#v2-1}
+
+### v2.1.15 {#v2-1-15}
+
+* Missing missing csrf token missmatch checking on delete user request.
 
 ### v2.1.14 {#v2-1-14}
 
