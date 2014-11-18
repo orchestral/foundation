@@ -1,23 +1,10 @@
 <?php namespace Orchestra\Foundation\Tests\Validation;
 
 use Mockery as m;
-use Illuminate\Support\Facades\Facade;
-use Illuminate\Container\Container;
 use Orchestra\Foundation\Validation\Setting;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Validator;
 
 class SettingTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Setup the test environment.
-     */
-    public function setUp()
-    {
-        Facade::clearResolvedInstances();
-        Facade::setFacadeApplication(new Container);
-    }
-
     /**
      * Teardown the test environment.
      */
@@ -33,7 +20,10 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance()
     {
-        $stub = new Setting;
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+
+        $stub = new Setting($factory, $events);
 
         $this->assertInstanceOf('\Orchestra\Support\Validator', $stub);
     }
@@ -45,6 +35,10 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidation()
     {
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
+
         $input = array(
             'site_name'     => 'Orchestra Platform',
             'email_address' => 'admin@orchestraplatform.com',
@@ -59,18 +53,10 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_port'    => array('numeric'),
         );
 
-        $factory = m::mock('\Illuminate\Validation\Factory[make]', array(
-            m::mock('\Symfony\Component\Translation\TranslatorInterface'),
-        ));
-        $validator = m::mock('\Illuminate\Validation\Validator');
         $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
-        Validator::swap($factory);
-
-        $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
-        Event::swap($events);
 
-        $stub       = new Setting;
+        $stub       = new Setting($factory, $events);
         $validation = $stub->with($input);
 
         $this->assertEquals($validator, $validation);
@@ -84,6 +70,10 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnSmtp()
     {
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
+
         $input = array(
             'site_name'      => 'Orchestra Platform',
             'email_address'  => 'admin@orchestraplatform.com',
@@ -102,18 +92,10 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_host'     => array('required'),
         );
 
-        $factory = m::mock('\Illuminate\Validation\Factory[make]', array(
-            m::mock('\Symfony\Component\Translation\TranslatorInterface'),
-        ));
-        $validator = m::mock('\Illuminate\Validation\Validator');
         $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
-        Validator::swap($factory);
-
-        $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
-        Event::swap($events);
 
-        $stub       = new Setting;
+        $stub       = new Setting($factory, $events);
         $validation = $stub->on('smtp')->with($input);
 
         $this->assertEquals($validator, $validation);
@@ -127,6 +109,10 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnSendmail()
     {
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
+
         $input = array(
             'site_name'      => 'Orchestra Platform',
             'email_address'  => 'admin@orchestraplatform.com',
@@ -143,18 +129,10 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_sendmail' => array('required'),
         );
 
-        $factory = m::mock('\Illuminate\Validation\Factory[make]', array(
-            m::mock('\Symfony\Component\Translation\TranslatorInterface'),
-        ));
-        $validator = m::mock('\Illuminate\Validation\Validator');
         $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
-        Validator::swap($factory);
-
-        $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
-        Event::swap($events);
 
-        $stub       = new Setting;
+        $stub       = new Setting($factory, $events);
         $validation = $stub->on('sendmail')->with($input);
 
         $this->assertEquals($validator, $validation);
@@ -168,6 +146,10 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnMailgun()
     {
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
+
         $input = array(
             'site_name'     => 'Orchestra Platform',
             'email_address' => 'admin@orchestraplatform.com',
@@ -186,18 +168,10 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_domain'  => array('required'),
         );
 
-        $factory = m::mock('\Illuminate\Validation\Factory[make]', array(
-            m::mock('\Symfony\Component\Translation\TranslatorInterface'),
-        ));
-        $validator = m::mock('\Illuminate\Validation\Validator');
         $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
-        Validator::swap($factory);
-
-        $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
-        Event::swap($events);
 
-        $stub       = new Setting;
+        $stub       = new Setting($factory, $events);
         $validation = $stub->on('mailgun')->with($input);
 
         $this->assertEquals($validator, $validation);
@@ -211,6 +185,10 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnMandrill()
     {
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
+
         $input = array(
             'site_name'     => 'Orchestra Platform',
             'email_address' => 'admin@orchestraplatform.com',
@@ -227,18 +205,10 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_secret'  => array('required'),
         );
 
-        $factory = m::mock('\Illuminate\Validation\Factory[make]', array(
-            m::mock('\Symfony\Component\Translation\TranslatorInterface'),
-        ));
-        $validator = m::mock('\Illuminate\Validation\Validator');
         $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
-        Validator::swap($factory);
-
-        $events = m::mock('\Illuminate\Events\Dispatcher')->makePartial();
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
-        Event::swap($events);
 
-        $stub       = new Setting;
+        $stub       = new Setting($factory, $events);
         $validation = $stub->on('mandrill')->with($input);
 
         $this->assertEquals($validator, $validation);
