@@ -52,7 +52,7 @@ class CredentialControllerTest extends TestCase
     public function testGetLoginAction()
     {
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::credential.login', array(), array())->andReturn('foo');
+            ->with('orchestra/foundation::credential.login', [], [])->andReturn('foo');
 
         $this->call('GET', 'admin/login');
 
@@ -77,7 +77,7 @@ class CredentialControllerTest extends TestCase
         $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $processor->shouldReceive('login')->once()
-            ->andReturnUsing(function ($listener, $input) use ($user) {
+            ->andReturnUsing(function ($listener) use ($user) {
                 return $listener->userHasLoggedIn($user);
             });
 
@@ -132,7 +132,7 @@ class CredentialControllerTest extends TestCase
 
         $this->getProcessorMock()->shouldReceive('login')->once()
             ->with(m::type('\Orchestra\Foundation\Routing\CredentialController'), m::type('Array'))
-            ->andReturnUsing(function ($listener, $input) {
+            ->andReturnUsing(function ($listener) {
                 return $listener->userLoginHasFailedValidation([]);
             });
         Foundation::shouldReceive('handles')->once()->with('orchestra::login', array())->andReturn('login');

@@ -3,7 +3,6 @@
 use Mockery as m;
 use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Testing\TestCase;
-use Orchestra\Support\Facades\Widget;
 
 class DashboardControllerTest extends TestCase
 {
@@ -34,10 +33,13 @@ class DashboardControllerTest extends TestCase
      */
     public function testIndexAction()
     {
+        $this->getProcessorMock()->shouldReceive('show')->once()
+            ->andReturnUsing(function ($listener) {
+                return $listener->showDashboard(['panes' => 'foo']);
+            });
+
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::dashboard.index', array('panes' => array()))
-            ->andReturn('foo');
-        Widget::shouldReceive('make')->once()->with('pane.orchestra')->andReturn(array());
+            ->with('orchestra/foundation::dashboard.index', ['panes' => 'foo'], [])->andReturn('foo');
 
         $this->call('GET', 'admin');
         $this->assertResponseOk();
@@ -46,11 +48,26 @@ class DashboardControllerTest extends TestCase
     /**
      * Test GET /admin/missing
      *
-     * @test
      * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function testMissingAction()
     {
         $this->call('GET', 'admin/missing');
+    }
+
+    /**
+     * Get processor mock.
+     *
+     * @return \Orchestra\Foundation\Processor\UserDashboard
+     */
+    protected function getProcessorMock()
+    {
+        $processor = m::mock('\Orchestra\Foundation\Processor\UserDashboard', [
+            m::mock('\Orchestra\Widget\WidgetManager'),
+        ]);
+
+        $this->app->instance('Orchestra\Foundation\Processor\UserDashboard', $processor);
+
+        return $processor;
     }
 }

@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Input;
 use Orchestra\Support\Facades\Messages;
 use Illuminate\Support\Facades\Redirect;

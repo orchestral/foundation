@@ -1,18 +1,17 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Orchestra\Support\Facades\Meta;
-use Illuminate\Support\Facades\View;
+use Orchestra\Foundation\Processor\UserDashboard as Processor;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Orchestra\Foundation\Processor\Dashboard as DashboardProcessor;
+use Orchestra\Foundation\Contracts\Listener\UserDashboard as Listener;
 
-class DashboardController extends AdminController
+class DashboardController extends AdminController implements Listener
 {
     /**
      * Dashboard controller routing.
      *
-     * @param \Orchestra\Foundation\Processor\Dashboard  $processor
+     * @param \Orchestra\Foundation\Processor\UserDashboard  $processor
      */
-    public function __construct(DashboardProcessor $processor)
+    public function __construct(Processor $processor)
     {
         $this->processor = $processor;
 
@@ -39,8 +38,6 @@ class DashboardController extends AdminController
      */
     public function index()
     {
-        Meta::set('title', trans("orchestra/foundation::title.home"));
-
         return $this->processor->show($this);
     }
 
@@ -57,13 +54,15 @@ class DashboardController extends AdminController
     }
 
     /**
-     * Response with widget.
+     * Response to show dashboard.
      *
      * @param  array  $data
      * @return mixed
      */
-    public function dashboardSucceed(array $data)
+    public function showDashboard(array $data)
     {
-        return View::make('orchestra/foundation::dashboard.index', $data);
+        set_meta('title', trans("orchestra/foundation::title.home"));
+
+        return view('orchestra/foundation::dashboard.index', $data);
     }
 }

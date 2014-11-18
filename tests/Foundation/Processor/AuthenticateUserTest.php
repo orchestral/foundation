@@ -13,6 +13,12 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         m::close();
     }
 
+    /**
+     * Test Orchestra\Foundation\Processor\AuthenticateUser::login()
+     * method.
+     *
+     * @test
+     */
     public function testLoginMethod()
     {
         $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\AuthenticateUser');
@@ -42,6 +48,12 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('logged.in', $stub->login($listener, $input));
     }
 
+    /**
+     * Test Orchestra\Foundation\Processor\AuthenticateUser::login()
+     * method given failed authentication.
+     *
+     * @test
+     */
     public function testLoginMethodGivenFailedAuthentication()
     {
         $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\AuthenticateUser');
@@ -67,6 +79,12 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('login.authentication.failed', $stub->login($listener, $input));
     }
 
+    /**
+     * Test Orchestra\Foundation\Processor\AuthenticateUser::login()
+     * method given failed validation.
+     *
+     * @test
+     */
     public function testLoginMethodGivenFailedValidation()
     {
         $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\AuthenticateUser');
@@ -92,6 +110,12 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('login.validation.failed', $stub->login($listener, $input));
     }
 
+    /**
+     * Test Orchestra\Foundation\Processor\AuthenticateUser::logout()
+     * method.
+     *
+     * @test
+     */
     public function testLogoutMethod()
     {
         $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\AuthenticateUser');
