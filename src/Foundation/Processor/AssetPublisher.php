@@ -7,6 +7,10 @@ use Orchestra\Foundation\Contracts\Listener\AssetPublishing as Listener;
 
 class AssetPublisher extends Processor
 {
+    protected $publisher;
+
+    protected $session;
+
     /**
      * Run publishing if possible.
      *
@@ -37,7 +41,7 @@ class AssetPublisher extends Processor
         } catch (ServerException $e) {
             Session::forget('orchestra.ftp');
 
-            return $listener->publishingAssetFailed(['error' => $e->getMessage()]);
+            return $listener->publishFailed(['error' => $e->getMessage()]);
         }
 
         Session::put('orchestra.ftp', $input);
@@ -46,6 +50,6 @@ class AssetPublisher extends Processor
             Publisher::execute();
         }
 
-        return $listener->assetPublished();
+        return $listener->publishSucceed();
     }
 }

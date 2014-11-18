@@ -71,7 +71,7 @@ class PublisherController extends AdminController implements Listener
      * @param  array  $errors
      * @return mixed
      */
-    public function publishingAssetFailed(array $errors)
+    public function publishFailed(array $errors)
     {
         return $this->redirectWithMessage(handles('orchestra::publisher/ftp'), $errors['error'], 'error')->withInput();
     }
@@ -91,7 +91,7 @@ class PublisherController extends AdminController implements Listener
      *
      * @return mixed
      */
-    public function assetPublished()
+    public function publishSucceed()
     {
         return $this->redirectToCurrentPublisher();
     }

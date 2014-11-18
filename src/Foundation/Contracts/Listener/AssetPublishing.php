@@ -8,7 +8,7 @@ interface AssetPublishing
      * @param  array $errors
      * @return mixed
      */
-    public function publishingAssetFailed(array $errors);
+    public function publishFailed(array $errors);
 
     /**
      * Redirect back to current publisher.
@@ -22,5 +22,5 @@ interface AssetPublishing
      *
      * @return mixed
      */
-    public function assetPublished();
+    public function publishSucceed();
 }
