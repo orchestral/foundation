@@ -13,6 +13,12 @@ class UserDashboardTest extends \PHPUnit_Framework_TestCase
         m::close();
     }
 
+    /**
+     * Test Orchestra\Foundation\Processor\UserDashboard::show()
+     * method.
+     *
+     * @test
+     */
     public function testShowMethod()
     {
         $listener = m::mock('\Orchestra\Foundation\Contracts\Listener\UserDashboard');
