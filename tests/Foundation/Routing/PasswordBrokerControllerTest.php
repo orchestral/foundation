@@ -29,9 +29,9 @@ class PasswordBrokerControllerTest extends TestCase
      */
     protected function bindDependencies()
     {
-        $validator = m::mock('\Orchestra\Foundation\Validation\Auth');
+        $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
 
-        App::instance('Orchestra\Foundation\Validation\Auth', $validator);
+        App::instance('Orchestra\Foundation\Validation\AuthenticateUser', $validator);
 
         return $validator;
     }

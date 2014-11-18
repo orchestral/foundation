@@ -1,20 +1,21 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Orchestra\Support\Facades\Meta;
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Input;
 use Orchestra\Support\Facades\Messages;
 use Illuminate\Support\Facades\Redirect;
-use Orchestra\Foundation\Processor\Credential as CredentialProcessor;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Orchestra\Foundation\Processor\AuthenticateUser as Processor;
+use Orchestra\Foundation\Contracts\Listener\AuthenticateUser as Listener;
 
-class CredentialController extends AdminController
+class CredentialController extends AdminController implements Listener
 {
     /**
      * Authentication/Credential controller routing.
      *
-     * @param \Orchestra\Foundation\Processor\Credential  $processor
+     * @param \Orchestra\Foundation\Processor\AuthenticateUser  $processor
      */
-    public function __construct(CredentialProcessor $processor)
+    public function __construct(Processor $processor)
     {
         $this->processor = $processor;
 
@@ -40,9 +41,9 @@ class CredentialController extends AdminController
      */
     public function index()
     {
-        Meta::set('title', trans("orchestra/foundation::title.login"));
+        set_meta('title', trans("orchestra/foundation::title.login"));
 
-        return View::make('orchestra/foundation::credential.login');
+        return view('orchestra/foundation::credential.login');
     }
 
     /**
@@ -70,22 +71,23 @@ class CredentialController extends AdminController
     }
 
     /**
-     * Response when validation on login failed.
+     * Response to user log-in trigger failed validation .
      *
-     * @param  object  $validation
+     * @param  \Illuminate\Support\MessageBag|array  $errors
      * @return mixed
      */
-    public function loginValidationFailed($validation)
+    public function userLoginHasFailedValidation($errors)
     {
-        return $this->redirectWithErrors(handles('orchestra::login'), $validation);
+        return $this->redirectWithErrors(handles('orchestra::login'), $errors);
     }
 
     /**
-     * Response when login failed.
+     * Response to user log-in trigger has failed authentication.
      *
+     * @param  array  $input
      * @return mixed
      */
-    public function loginFailed()
+    public function userLoginHasFailedAuthentication(array $input)
     {
         $message = trans('orchestra/foundation::response.credential.invalid-combination');
 
@@ -93,11 +95,12 @@ class CredentialController extends AdminController
     }
 
     /**
-     * Response when login succeed.
+     * Response to user has logged in successfully.
      *
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @return mixed
      */
-    public function loginSucceed()
+    public function userHasLoggedIn(Authenticatable $user)
     {
         Messages::add('success', trans('orchestra/foundation::response.credential.logged-in'));
 
@@ -105,11 +108,11 @@ class CredentialController extends AdminController
     }
 
     /**
-     * Response when logout succeed.
+     * Response to user has logged out successfully.
      *
      * @return mixed
      */
-    public function logoutSucceed()
+    public function userHasLoggedOut()
     {
         Messages::add('success', trans('orchestra/foundation::response.credential.logged-out'));
 

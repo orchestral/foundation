@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\App;
 use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -36,11 +35,11 @@ class CredentialControllerTest extends TestCase
      *
      * @return array
      */
-    protected function bindDependencies()
+    protected function bindValidation()
     {
-        $validator = m::mock('\Orchestra\Foundation\Validation\Auth');
+        $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
 
-        App::instance('Orchestra\Foundation\Validation\Auth', $validator);
+        $this->app->instance('Orchestra\Foundation\Validation\AuthenticateUser', $validator);
 
         return $validator;
     }
@@ -53,7 +52,7 @@ class CredentialControllerTest extends TestCase
     public function testGetLoginAction()
     {
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::credential.login')->andReturn('foo');
+            ->with('orchestra/foundation::credential.login', array(), array())->andReturn('foo');
 
         $this->call('GET', 'admin/login');
 
@@ -74,19 +73,14 @@ class CredentialControllerTest extends TestCase
             'remember' => 'yes',
         );
 
-        $user = m::mock('\Orchestra\Model\User');
-        $validator = $this->bindDependencies();
+        $processor = $this->getProcessorMock();
+        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
-        $validator->shouldReceive('on')->once()->with('login')->andReturn($validator)
-            ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturn(false);
+        $processor->shouldReceive('login')->once()
+            ->andReturnUsing(function ($listener, $input) use ($user) {
+                return $listener->userHasLoggedIn($user);
+            });
 
-        $user->shouldReceive('getAttribute')->once()->with('status')->andReturn(0)
-            ->shouldReceive('activate')->once()->andReturnNull()
-            ->shouldReceive('save')->once()->andReturnNull();
-
-        Auth::shouldReceive('attempt')->once()->with(m::type('Array'), true)->andReturn(true);
-        Auth::shouldReceive('user')->once()->andReturn($user);
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::/', array())->andReturn('/');
 
@@ -99,7 +93,7 @@ class CredentialControllerTest extends TestCase
      *
      * @test
      */
-    public function testPostLoginActionGivenAuthenticationFails()
+    public function testPostLoginActionGivenFailedAuthentication()
     {
         $input = array(
             'email'    => 'hello@orchestraplatform.com',
@@ -107,14 +101,15 @@ class CredentialControllerTest extends TestCase
             'remember' => 'yes',
         );
 
-        $validator = $this->bindDependencies();
+        $processor = $this->getProcessorMock();
+        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
-        $validator->shouldReceive('on')->once()->with('login')->andReturn($validator)
-            ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturn(false);
+        $processor->shouldReceive('login')->once()
+            ->with(m::type('\Orchestra\Foundation\Routing\CredentialController'), m::type('Array'))
+            ->andReturnUsing(function ($listener, $input) use ($user) {
+                return $listener->userLoginHasFailedAuthentication($input);
+            });
 
-        Auth::shouldReceive('attempt')->once()
-            ->with(m::type('Array'), true)->andReturn(false);
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::login', array())->andReturn('login');
 
@@ -127,7 +122,7 @@ class CredentialControllerTest extends TestCase
      *
      * @test
      */
-    public function testPostLoginActionGivenValidationFails()
+    public function testPostLoginActionGivenFailedValidation()
     {
         $input = array(
             'email'    => 'hello@orchestraplatform.com',
@@ -135,12 +130,11 @@ class CredentialControllerTest extends TestCase
             'remember' => 'yes',
         );
 
-        $validator = $this->bindDependencies();
-
-        $validator->shouldReceive('on')->once()->with('login')->andReturn($validator)
-            ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturn(true);
-
+        $this->getProcessorMock()->shouldReceive('login')->once()
+            ->with(m::type('\Orchestra\Foundation\Routing\CredentialController'), m::type('Array'))
+            ->andReturnUsing(function ($listener, $input) {
+                return $listener->userLoginHasFailedValidation([]);
+            });
         Foundation::shouldReceive('handles')->once()->with('orchestra::login', array())->andReturn('login');
 
         $this->call('POST', 'admin/login', $input);
@@ -155,7 +149,12 @@ class CredentialControllerTest extends TestCase
      */
     public function testDeleteLoginAction()
     {
-        Auth::shouldReceive('logout')->once()->andReturnNull();
+        $this->getProcessorMock()->shouldReceive('logout')->once()
+            ->with(m::type('\Orchestra\Foundation\Routing\CredentialController'))
+            ->andReturnUsing(function ($listener) {
+                return $listener->userHasLoggedOut();
+            });
+
         Foundation::shouldReceive('handles')->once()->with('orchestra::login', array())->andReturn('login');
 
         $this->call('GET', 'admin/logout');
@@ -169,10 +168,32 @@ class CredentialControllerTest extends TestCase
      */
     public function testDeleteLoginActionWithRedirection()
     {
-        Auth::shouldReceive('logout')->once()->andReturnNull();
+        $this->getProcessorMock()->shouldReceive('logout')->once()
+            ->with(m::type('\Orchestra\Foundation\Routing\CredentialController'))
+            ->andReturnUsing(function ($listener) {
+                return $listener->userHasLoggedOut();
+            });
+
         Foundation::shouldReceive('handles')->once()->with('home', array())->andReturn('home');
 
         $this->call('GET', 'admin/logout', array('redirect' => 'home'));
         $this->assertRedirectedTo('home');
+    }
+
+    /**
+     * Get processor mock.
+     *
+     * @return \Orchestra\Foundation\Processor\AuthenticateUser
+     */
+    protected function getProcessorMock()
+    {
+        $processor = m::mock('\Orchestra\Foundation\Processor\AuthenticateUser', [
+            m::mock('\Orchestra\Foundation\Validation\AuthenticateUser'),
+            m::mock('\Illuminate\Contracts\Auth\Guard')
+        ]);
+
+        $this->app->instance('Orchestra\Foundation\Processor\AuthenticateUser', $processor);
+
+        return $processor;
     }
 }

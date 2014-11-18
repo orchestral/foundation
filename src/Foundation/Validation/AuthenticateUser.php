@@ -2,7 +2,7 @@
 
 use Orchestra\Support\Validator;
 
-class Auth extends Validator
+class AuthenticateUser extends Validator
 {
     /**
      * List of rules.

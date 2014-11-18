@@ -1,10 +1,10 @@
 <?php namespace Orchestra\Foundation\Validation\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\Facade;
 use Illuminate\Container\Container;
-use Orchestra\Foundation\Validation\Auth;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Validator;
+use Orchestra\Foundation\Validation\AuthenticateUser;
 
 class AuthTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,7 +32,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance()
     {
-        $stub = new Auth;
+        $stub = new AuthenticateUser;
 
         $this->assertInstanceOf('\Orchestra\Support\Validator', $stub);
     }
@@ -52,7 +52,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
         Validator::swap($factory);
 
-        $stub       = new Auth;
+        $stub       = new AuthenticateUser;
         $validation = $stub->with($input);
 
         $this->assertEquals($validator, $validation);
@@ -73,7 +73,7 @@ class AuthTest extends \PHPUnit_Framework_TestCase
         $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
         Validator::swap($factory);
 
-        $stub       = new Auth;
+        $stub       = new AuthenticateUser;
         $validation = $stub->on('login')->with($input);
 
         $this->assertEquals($validator, $validation);

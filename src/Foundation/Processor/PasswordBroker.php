@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Orchestra\Support\Facades\Foundation;
 use Illuminate\Contracts\Auth\PasswordBroker as Password;
-use Orchestra\Foundation\Validation\Auth as AuthValidator;
+use Orchestra\Foundation\Validation\AuthenticateUser as Validator;
 
 class PasswordBroker extends Processor
 {
@@ -17,10 +17,10 @@ class PasswordBroker extends Processor
     /**
      * Create a new processor instance.
      *
-     * @param \Orchestra\Foundation\Validation\Auth  $validator
+     * @param \Orchestra\Foundation\Validation\AuthenticateUser  $validator
      * @param \Illuminate\Contracts\Auth\PasswordBroker  $password
      */
-    public function __construct(AuthValidator $validator, Password $password)
+    public function __construct(Validator $validator, Password $password)
     {
         $this->validator = $validator;
         $this->password = $password;

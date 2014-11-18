@@ -1,0 +1,109 @@
+<?php namespace Orchestra\Foundation\Processor\TestCase;
+
+use Mockery as m;
+use Orchestra\Foundation\Processor\AuthenticateUser;
+
+class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * Teardown the test environment.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
+    public function testLoginMethod()
+    {
+        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\AuthenticateUser');
+        $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
+        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $user      = m::mock('\Orchestra\Model\User, \Illuminate\Contracts\Auth\Authenticatable');
+
+        $input = [
+            'email'    => 'hello@orchestraplatform.com',
+            'password' => '123456',
+            'remember' => 'yes',
+        ];
+
+        $validator->shouldReceive('on')->once()->with('login')->andReturn($validator)
+            ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
+        $resolver->shouldReceive('fails')->once()->andReturn(false);
+        $auth->shouldReceive('attempt')->once()->with(m::type('Array'), true)->andReturn(true)
+            ->shouldReceive('getUser')->once()->andReturn($user);
+        $user->shouldReceive('getAttribute')->once()->with('status')->andReturn(0)
+            ->shouldReceive('activate')->once()->andReturnSelf()
+            ->shouldReceive('save')->once()->andReturnNull();
+        $listener->shouldReceive('userHasLoggedIn')->once()->andReturn('logged.in');
+
+        $stub = new AuthenticateUser($validator, $auth);
+
+        $this->assertEquals('logged.in', $stub->login($listener, $input));
+    }
+
+    public function testLoginMethodGivenFailedAuthentication()
+    {
+        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\AuthenticateUser');
+        $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
+        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
+
+        $input = [
+            'email'    => 'hello@orchestraplatform.com',
+            'password' => '123456',
+            'remember' => 'yes',
+        ];
+
+        $validator->shouldReceive('on')->once()->with('login')->andReturn($validator)
+            ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
+        $resolver->shouldReceive('fails')->once()->andReturn(false);
+        $auth->shouldReceive('attempt')->once()->with(m::type('Array'), true)->andReturn(false);
+        $listener->shouldReceive('userLoginHasFailedAuthentication')->once()
+                ->with(m::type('Array'))->andReturn('login.authentication.failed');
+
+        $stub = new AuthenticateUser($validator, $auth);
+
+        $this->assertEquals('login.authentication.failed', $stub->login($listener, $input));
+    }
+
+    public function testLoginMethodGivenFailedValidation()
+    {
+        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\AuthenticateUser');
+        $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
+        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
+
+        $input = [
+            'email'    => 'hello@orchestraplatform.com',
+            'password' => '123456',
+            'remember' => 'yes',
+        ];
+
+        $validator->shouldReceive('on')->once()->with('login')->andReturn($validator)
+            ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
+        $resolver->shouldReceive('fails')->once()->andReturn(true)
+            ->shouldReceive('getMessageBag')->once()->andReturn([]);
+        $listener->shouldReceive('userLoginHasFailedValidation')->once()
+                ->with(m::type('Array'))->andReturn('login.validation.failed');
+
+        $stub = new AuthenticateUser($validator, $auth);
+
+        $this->assertEquals('login.validation.failed', $stub->login($listener, $input));
+    }
+
+    public function testLogoutMethod()
+    {
+        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\AuthenticateUser');
+        $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
+        $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
+
+        $stub = new AuthenticateUser($validator, $auth);
+
+        $auth->shouldReceive('logout')->once()->andReturnNull();
+
+        $listener->shouldReceive('userHasLoggedOut')->once()->andReturn('logged.out');
+
+        $this->assertEquals('logged.out', $stub->logout($listener));
+    }
+}
