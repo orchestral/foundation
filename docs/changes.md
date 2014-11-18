@@ -7,7 +7,7 @@ title: Foundation Change Log
 
 ### v2.2.9 {#v2-2-9}
 
-* Missing missing csrf token missmatch checking on delete user request.
+* Fixes missing csrf token missmatch checking on delete user request.
 
 ### v2.2.8 {#v2-2-8}
 
