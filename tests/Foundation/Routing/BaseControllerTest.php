@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
+use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
-use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Testing\TestCase;
 
 class BaseControllerTest extends TestCase
@@ -37,17 +37,18 @@ class BaseControllerTest extends TestCase
      */
     public function testMissingMethodAction()
     {
-        $view = m::mock('\Illuminate\View\Factory');
+        $app = new Container;
+        $view = m::mock('\Illuminate\Contracts\View\Factory');
         $redirector = m::mock('\Illuminate\Routing\Redirector');
+
         $response = new \Illuminate\Routing\ResponseFactory($view, $redirector);
-        $app = array(
-            'Illuminate\Contracts\Routing\ResponseFactory' => $response,
-        );
+        $app['Illuminate\Contracts\Routing\ResponseFactory'] = $response;
 
         $view->shouldReceive('make')->once()
             ->with('orchestra/foundation::dashboard.missing', array())->andReturn('foo');
 
         Facade::setFacadeApplication($app);
+        Container::setInstance($app);
 
         $this->assertFalse($_SERVER['StubBaseController@setupFilters']);
 

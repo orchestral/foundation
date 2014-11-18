@@ -23,6 +23,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
 
         Facade::clearResolvedInstances();
         Facade::setFacadeApplication($app);
+        Container::setInstance($app);
     }
 
     /**

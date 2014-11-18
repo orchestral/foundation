@@ -33,7 +33,10 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
         $app['url'] = m::mock('\Illuminate\Routing\UrlGenerator')->makePartial();
 
         Facade::clearResolvedInstances();
-        Facade::setFacadeApplication($this->app = $app);
+        Facade::setFacadeApplication($app);
+        Application::setInstance($app);
+
+        $this->app = $app;
     }
 
     /**

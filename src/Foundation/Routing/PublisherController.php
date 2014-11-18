@@ -1,19 +1,17 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Orchestra\Support\Facades\Meta;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
-use Orchestra\Foundation\Processor\Publisher as PublisherProcessor;
+use Orchestra\Foundation\Processor\AssetPublisher;
+use Orchestra\Foundation\Contracts\Listener\AssetPublishing as Listener;
 
-class PublisherController extends AdminController
+class PublisherController extends AdminController implements Listener
 {
     /**
      * Publisher controller.
      *
-     * @param  \Orchestra\Foundation\Processor\Publisher  $processor
+     * @param  \Orchestra\Foundation\Processor\AssetPublisher  $processor
      */
-    public function __construct(PublisherProcessor $processor)
+    public function __construct(AssetPublisher $processor)
     {
         $this->processor = $processor;
 
@@ -46,10 +44,10 @@ class PublisherController extends AdminController
      */
     public function ftp()
     {
-        Meta::set('title', trans('orchestra/foundation::title.publisher.ftp'));
-        Meta::set('description', trans('orchestra/foundation::title.publisher.description'));
+        set_meta('title', trans('orchestra/foundation::title.publisher.ftp'));
+        set_meta('description', trans('orchestra/foundation::title.publisher.description'));
 
-        return View::make('orchestra/foundation::publisher.ftp');
+        return view('orchestra/foundation::publisher.ftp');
     }
 
     /**
@@ -68,23 +66,33 @@ class PublisherController extends AdminController
     }
 
     /**
-     * Response when publishing failed.
+     * Response to publishing asset failed.
      *
-     * @param  string|null  $message
+     * @param  array  $errors
      * @return mixed
      */
-    public function publishFailed($message = null)
+    public function publishingAssetFailed(array $errors)
     {
-        return $this->redirectWithMessage(handles('orchestra::publisher/ftp'), $message, 'error')->withInput();
+        return $this->redirectWithMessage(handles('orchestra::publisher/ftp'), $errors['error'], 'error')->withInput();
     }
 
     /**
-     * Redirect back to publisher.
+     * Redirect back to current publisher.
      *
      * @return mixed
      */
-    public function redirectToPublisher()
+    public function redirectToCurrentPublisher()
     {
-        return Redirect::to(handles('orchestra::publisher/ftp'));
+        return $this->redirect(handles('orchestra::publisher/ftp'));
+    }
+
+    /**
+     * Response to asset published.
+     *
+     * @return mixed
+     */
+    public function assetPublished()
+    {
+        return $this->redirectToCurrentPublisher();
     }
 }
