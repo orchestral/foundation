@@ -82,12 +82,12 @@ class PasswordUpdaterController extends Controller implements Listener
     /**
      * Response when update password failed.
      *
-     * @param  array  $error
+     * @param  array  $errors
      * @return mixed
      */
-    public function updatePasswordFailed(array $error)
+    public function updatePasswordFailed(array $errors)
     {
-        $message = trans('orchestra/foundation::response.db-failed', $error);
+        $message = trans('orchestra/foundation::response.db-failed', $errors);
 
         return $this->redirectWithMessage(handles('orchestra::account/password'), $message, 'error');
     }
