@@ -14,6 +14,8 @@ class ProfileCreatorTest extends TestCase
      */
     public function tearDown()
     {
+        parent::tearDown();
+
         m::close();
     }
 
@@ -189,7 +191,6 @@ class ProfileCreatorTest extends TestCase
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $user      = m::mock('\Orchestra\Model\User');
 
         $input = $this->getInput();
 

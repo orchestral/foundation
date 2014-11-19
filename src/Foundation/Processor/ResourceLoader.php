@@ -8,6 +8,13 @@ use Orchestra\Foundation\Contracts\Listener\ResourceLoader as Listener;
 class ResourceLoader extends Processor implements Command
 {
     /**
+     * The resources factory implementation.
+     *
+     * @var \Orchestra\Resources\Factory
+     */
+    protected $resources;
+
+    /**
      * Create a new processor instance.
      *
      * @param  \Orchestra\Foundation\Presenter\Resource  $presenter

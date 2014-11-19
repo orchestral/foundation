@@ -1,19 +1,20 @@
-<?php namespace Orchestra\Foundation\Routing;
+<?php namespace Orchestra\Foundation\Routing\Account;
 
-use Orchestra\Support\Facades\Meta;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
-use Orchestra\Foundation\Processor\PasswordBroker as PasswordBrokerProcessor;
+use Orchestra\Foundation\Contracts\Listener\Account\PasswordReset;
+use Orchestra\Foundation\Routing\AdminController;
+use Orchestra\Foundation\Contracts\Listener\Account\PasswordResetLink;
+use Orchestra\Foundation\Processor\Account\PasswordBroker as Processor;
 
-class PasswordBrokerController extends AdminController
+class PasswordBrokerController extends AdminController implements PasswordResetLink, PasswordReset
 {
     /**
      * Construct Forgot Password Controller with some pre-define
      * configuration
      *
-     * @param \Orchestra\Foundation\Processor\PasswordBroker  $processor
+     * @param \Orchestra\Foundation\Processor\Account\PasswordBroker  $processor
      */
-    public function __construct(PasswordBrokerProcessor $processor)
+    public function __construct(Processor $processor)
     {
         $this->processor = $processor;
 
@@ -38,11 +39,11 @@ class PasswordBrokerController extends AdminController
      *
      * @return mixed
      */
-    public function index()
+    public function create()
     {
-        Meta::set('title', trans('orchestra/foundation::title.forgot-password'));
+        set_meta('title', trans('orchestra/foundation::title.forgot-password'));
 
-        return View::make('orchestra/foundation::forgot.index');
+        return view('orchestra/foundation::forgot.index');
     }
 
     /**
@@ -54,9 +55,9 @@ class PasswordBrokerController extends AdminController
      *
      * @return mixed
      */
-    public function create()
+    public function store()
     {
-        return $this->processor->create($this, Input::all());
+        return $this->processor->store($this, Input::all());
     }
 
     /**
@@ -70,9 +71,9 @@ class PasswordBrokerController extends AdminController
      */
     public function show($token)
     {
-        Meta::set('title', trans('orchestra/foundation::title.reset-password'));
+        set_meta('title', trans('orchestra/foundation::title.reset-password'));
 
-        return View::make('orchestra/foundation::forgot.reset')->with('token', $token);
+        return view('orchestra/foundation::forgot.reset')->with('token', $token);
     }
 
     /**
@@ -82,26 +83,26 @@ class PasswordBrokerController extends AdminController
      *
      * @return mixed
      */
-    public function reset()
+    public function update()
     {
         $input = Input::only('email', 'password', 'password_confirmation', 'token');
 
-        return $this->processor->reset($this, $input);
+        return $this->processor->update($this, $input);
     }
 
     /**
      * Response when request password failed on validation.
      *
-     * @param  mixed  $validation
+     * @param  mixed  $errors
      * @return mixed
      */
-    public function requestValidationFailed($validation)
+    public function resetLinkFailedValidation($errors)
     {
         // If any of the validation is not properly formatted, we need
         // to tell it the the user. This might not be important but a
         // good practice to make sure all form use the same e-mail
         // address validation
-        return $this->redirectWithErrors(handles('orchestra::forgot'), $validation);
+        return $this->redirectWithErrors(handles('orchestra::forgot'), $errors);
     }
 
     /**
@@ -110,7 +111,7 @@ class PasswordBrokerController extends AdminController
      * @param  string  $response
      * @return mixed
      */
-    public function createFailed($response)
+    public function resetLinkFailed($response)
     {
         $message = trans($response);
 
@@ -123,7 +124,7 @@ class PasswordBrokerController extends AdminController
      * @param  string  $response
      * @return mixed
      */
-    public function createSucceed($response)
+    public function resetLinkSent($response)
     {
         $message = trans($response);
 
@@ -136,7 +137,7 @@ class PasswordBrokerController extends AdminController
      * @param  string  $response
      * @return mixed
      */
-    public function resetFailed($response)
+    public function passwordResetHasFailed($response)
     {
         $message = trans($response);
         $token   = Input::get('token');
@@ -149,7 +150,7 @@ class PasswordBrokerController extends AdminController
      *
      * @return mixed
      */
-    public function resetSucceed()
+    public function passwordHasReset()
     {
         $message = trans('orchestra/foundation::response.account.password.update');
 

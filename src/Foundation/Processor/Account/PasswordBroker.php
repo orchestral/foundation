@@ -1,11 +1,16 @@
-<?php namespace Orchestra\Foundation\Processor;
+<?php namespace Orchestra\Foundation\Processor\Account;
 
 use Illuminate\Support\Facades\Auth;
+use Orchestra\Model\User as Eloquent;
 use Orchestra\Support\Facades\Foundation;
+use Orchestra\Foundation\Processor\Processor;
 use Illuminate\Contracts\Auth\PasswordBroker as Password;
 use Orchestra\Foundation\Validation\AuthenticateUser as Validator;
+use Orchestra\Foundation\Contracts\Listener\Account\PasswordReset;
+use Orchestra\Foundation\Contracts\Listener\Account\PasswordResetLink;
+use Orchestra\Foundation\Contracts\Command\Account\PasswordBroker as Command;
 
-class PasswordBroker extends Processor
+class PasswordBroker extends Processor implements Command
 {
     /**
      * The password broker implementation.
@@ -29,16 +34,16 @@ class PasswordBroker extends Processor
     /**
      * Request to reset password.
      *
-     * @param  object  $listener
-     * @param  array   $input
+     * @param  \Orchestra\Foundation\Contracts\Listener\Account\PasswordResetLink  $listener
+     * @param  array  $input
      * @return mixed
      */
-    public function create($listener, array $input)
+    public function store(PasswordResetLink $listener, array $input)
     {
         $validation = $this->validator->with($input);
 
         if ($validation->fails()) {
-            return $listener->requestValidationFailed($validation);
+            return $listener->resetLinkFailedValidation($validation->getMessageBag());
         }
 
         $memory = Foundation::memory();
@@ -50,24 +55,24 @@ class PasswordBroker extends Processor
         });
 
         if ($response != Password::RESET_LINK_SENT) {
-            return $listener->createFailed($response);
+            return $listener->resetLinkFailed($response);
         }
 
-        return $listener->createSucceed($response);
+        return $listener->resetLinkSent($response);
     }
 
     /**
      * Reset the password.
      *
-     * @param  object  $listener
-     * @param  array   $input
+     * @param  \Orchestra\Foundation\Contracts\Listener\Account\PasswordReset  $listener
+     * @param  array  $input
      * @return mixed
      */
-    public function reset($listener, array $input)
+    public function update(PasswordReset $listener, array $input)
     {
-        $response = $this->password->reset($input, function ($user, $password) {
+        $response = $this->password->reset($input, function (Eloquent $user, $password) {
             // Save the new password and login the user.
-            $user->password = $password;
+            $user->setAttribute('password', $password);
             $user->save();
 
             Auth::login($user);
@@ -80,9 +85,9 @@ class PasswordBroker extends Processor
         ];
 
         if (in_array($response, $errors)) {
-            return $listener->resetFailed($response);
+            return $listener->passwordResetHasFailed($response);
         }
 
-        return $listener->resetSucceed($response);
+        return $listener->passwordHasReset($response);
     }
 }
