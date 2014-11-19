@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Orchestra\Resources\Factory;
-use Orchestra\Support\Facades\Resources;
 use Orchestra\Foundation\Presenter\Resource as Presenter;
 use Orchestra\Foundation\Contracts\Command\ResourceLoader as Command;
 use Orchestra\Foundation\Contracts\Listener\ResourceLoader as Listener;
