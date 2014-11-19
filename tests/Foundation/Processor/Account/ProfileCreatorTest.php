@@ -78,7 +78,7 @@ class ProfileCreatorTest extends TestCase
             ->shouldReceive('roles')->once()->andReturn($role)
             ->shouldReceive('toArray')->once()->andReturn([])
             ->shouldReceive('notify')->once()
-                ->with(m::type('String'), m::type('\Orchestra\Contracts\Notification\Message'))
+                ->with(m::type('\Orchestra\Contracts\Notification\Message'))
                 ->andReturn($receipt);
         $role->shouldReceive('sync')->once()->with([2])->andReturnNull();
         $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('Orchestra Platform');
@@ -127,7 +127,7 @@ class ProfileCreatorTest extends TestCase
             ->shouldReceive('roles')->once()->andReturn($role)
             ->shouldReceive('toArray')->once()->andReturn([])
             ->shouldReceive('notify')->once()
-                ->with(m::type('String'), m::type('\Orchestra\Contracts\Notification\Message'))
+                ->with(m::type('\Orchestra\Contracts\Notification\Message'))
                 ->andReturn($receipt);
         $role->shouldReceive('sync')->once()->with([2])->andReturnNull();
         $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('Orchestra Platform');
