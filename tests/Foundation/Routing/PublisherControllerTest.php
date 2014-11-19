@@ -35,8 +35,11 @@ class PublisherControllerTest extends TestCase
      */
     public function testGetIndexAction()
     {
-        Publisher::shouldReceive('connected')->once()->andReturn(true);
-        Publisher::shouldReceive('execute')->once()->andReturn(true);
+        $this->getProcessorMock()->shouldReceive('executeAndRedirect')->once()
+            ->with(m::type('\Orchestra\Foundation\Routing\PublisherController'))
+            ->andReturnUsing(function ($listener) {
+                return $listener->redirectToCurrentPublisher();
+            });
 
         $this->call('GET', 'admin/publisher');
         $this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
@@ -62,18 +65,14 @@ class PublisherControllerTest extends TestCase
      */
     public function testPostFtpAction()
     {
-        $input = array(
-            'host'     => 'localhost',
-            'username' => 'foo',
-            'password' => 'foobar',
-        );
-
-        Publisher::shouldReceive('connect')->once()->andReturn(true);
-        Publisher::shouldReceive('queued')->once()->andReturn(array('laravel/framework'));
-        Publisher::shouldReceive('connected')->once()->andReturn(true);
-        Publisher::shouldReceive('execute')->once()->andReturn(true);
-
+        $input = $this->getInput();
         $input['connection-type'] = 'ftp';
+
+        $this->getProcessorMock()->shouldReceive('publish')->once()
+            ->with(m::type('\Orchestra\Foundation\Routing\PublisherController'), m::type('Array'))
+            ->andReturnUsing(function ($listener) {
+                return $listener->publishingHasSucceed();
+            });
 
         $this->call('POST', 'admin/publisher/ftp', $input);
         $this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
@@ -86,19 +85,47 @@ class PublisherControllerTest extends TestCase
      */
     public function testPostFtpActionWhenFtpConnectFailed()
     {
-        $input = array(
-            'host'     => 'localhost',
-            'username' => 'foo',
-            'password' => 'foobar',
-        );
-
-        Publisher::shouldReceive('connect')->once()->andThrow('\Orchestra\Support\Ftp\ServerException');
-        Publisher::shouldReceive('queued')->once()->andReturn(array('laravel/framework'));
-        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturn(true);
-
+        $input = $this->getInput();
         $input['connection-type'] = 'ftp';
+
+        $this->getProcessorMock()->shouldReceive('publish')->once()
+            ->with(m::type('\Orchestra\Foundation\Routing\PublisherController'), m::type('Array'))
+            ->andReturnUsing(function ($listener) {
+                return $listener->publishingHasFailed(['error' => 'failed']);
+            });
 
         $this->call('POST', 'admin/publisher/ftp', $input);
         $this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
+    }
+
+    /**
+     * Get processor mock.
+     *
+     * @return \Orchestra\Foundation\Processor\AssetPublisher
+     */
+    protected function getProcessorMock()
+    {
+        $processor = m::mock('\Orchestra\Foundation\Processor\AssetPublisher', [
+            m::mock('\Orchestra\Foundation\Publisher\PublisherManager'),
+            m::mock('\Illuminate\Session\Store')
+        ]);
+
+        $this->app->instance('Orchestra\Foundation\Processor\AssetPublisher', $processor);
+
+        return $processor;
+    }
+
+    /**
+     * Get request input.
+     *
+     * @return array
+     */
+    protected function getInput()
+    {
+        return [
+            'host'     => 'localhost',
+            'username' => 'foo',
+            'password' => 'foobar',
+        ];
     }
 }

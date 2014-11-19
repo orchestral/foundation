@@ -13,7 +13,7 @@ class User extends Presenter
     /**
      * Current logged in user contract implementation.
      *
-     * @var \Illuminate\Contracts\Auth\User
+     * @var \Illuminate\Contracts\Auth\Authenticatable
      */
     protected $user;
 

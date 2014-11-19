@@ -18,7 +18,7 @@ class Ftp implements UploaderInterface
     /**
      * FTP Connection instance.
      *
-     * @var \Orchestra\Support\FTP
+     * @var \Orchestra\Support\FTP\Client
      */
     protected $connection;
 
@@ -49,7 +49,7 @@ class Ftp implements UploaderInterface
     /**
      * Get service connection instance.
      *
-     * @return \Orchestra\Support\FTP
+     * @return \Orchestra\Support\FTP\Client
      */
     public function getConnection()
     {
@@ -59,7 +59,7 @@ class Ftp implements UploaderInterface
     /**
      * Set service connection instance.
      *
-     * @param  \Orchestra\Support\FTP  $client
+     * @param  \Orchestra\Support\FTP\Client  $client
      * @return void
      */
     public function setConnection($client)
@@ -155,7 +155,7 @@ class Ftp implements UploaderInterface
     /**
      * Upload the file.
      *
-     * @param  string  $name           Extension name
+     * @param  string  $name
      * @param  bool    $recursively
      * @return bool
      * @throws \RuntimeException
@@ -193,7 +193,7 @@ class Ftp implements UploaderInterface
     /**
      * Check upload path.
      *
-     * @param  string  $name           Extension name
+     * @param  string  $name
      * @param  bool    $recursively
      * @return array
      */

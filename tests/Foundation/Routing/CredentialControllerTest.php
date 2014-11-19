@@ -2,7 +2,6 @@
 
 use Mockery as m;
 use Orchestra\Support\Facades\Meta;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;

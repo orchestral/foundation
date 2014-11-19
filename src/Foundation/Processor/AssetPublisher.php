@@ -1,15 +1,38 @@
 <?php namespace Orchestra\Foundation\Processor;
 
-use Illuminate\Support\Facades\Session;
+use Illuminate\Session\Store;
 use Orchestra\Support\Ftp\ServerException;
-use Orchestra\Support\Facades\Publisher;
+use Orchestra\Foundation\Publisher\PublisherManager;
+use Orchestra\Foundation\Contracts\Command\AssetPublisher as Command;
 use Orchestra\Foundation\Contracts\Listener\AssetPublishing as Listener;
 
-class AssetPublisher extends Processor
+class AssetPublisher extends Processor implements Command
 {
+    /**
+     * The publisher manager implementation.
+     *
+     * @var \Orchestra\Foundation\Publisher\PublisherManager
+     */
     protected $publisher;
 
+    /**
+     * The session store implementation.
+     *
+     * @var \Illuminate\Session\Store
+     */
     protected $session;
+
+    /**
+     * Create a new instance of Asset Publisher.
+     *
+     * @param \Orchestra\Foundation\Publisher\PublisherManager $publisher
+     * @param \Illuminate\Session\Store  $session
+     */
+    public function __construct(PublisherManager $publisher, Store $session)
+    {
+        $this->publisher = $publisher;
+        $this->session = $session;
+    }
 
     /**
      * Run publishing if possible.
@@ -17,9 +40,9 @@ class AssetPublisher extends Processor
      * @param  \Orchestra\Foundation\Contracts\Listener\AssetPublishing  $listener
      * @return mixed
      */
-    public function index(Listener $listener)
+    public function executeAndRedirect(Listener $listener)
     {
-        Publisher::connected() && Publisher::execute();
+        $this->publisher->connected() && $this->publisher->execute();
 
         return $listener->redirectToCurrentPublisher();
     }
@@ -33,23 +56,23 @@ class AssetPublisher extends Processor
      */
     public function publish(Listener $listener, array $input)
     {
-        $queues = Publisher::queued();
+        $queues = $this->publisher->queued();
 
         // Make an attempt to connect to service first before
         try {
-            Publisher::connect($input);
+            $this->publisher->connect($input);
         } catch (ServerException $e) {
-            Session::forget('orchestra.ftp');
+            $this->session->forget('orchestra.ftp');
 
-            return $listener->publishFailed(['error' => $e->getMessage()]);
+            return $listener->publishingHasFailed(['error' => $e->getMessage()]);
         }
 
-        Session::put('orchestra.ftp', $input);
+        $this->session->put('orchestra.ftp', $input);
 
-        if (Publisher::connected() && ! empty($queues)) {
-            Publisher::execute();
+        if ($this->publisher->connected() && ! empty($queues)) {
+            $this->publisher->execute();
         }
 
-        return $listener->publishSucceed();
+        return $listener->publishingHasSucceed();
     }
 }

@@ -1,9 +1,10 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Orchestra\Widget\WidgetManager;
+use Orchestra\Foundation\Contracts\Command\UserDashboard as Command;
 use Orchestra\Foundation\Contracts\Listener\UserDashboard as Listener;
 
-class UserDashboard extends Processor implements \Orchestra\Foundation\Contracts\Command\UserDashboard
+class UserDashboard extends Processor implements Command
 {
     /**
      * The widget manager implementation.

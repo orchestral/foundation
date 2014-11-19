@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\Processor;
 
-use Orchestra\Model\User;
 use Illuminate\Support\Arr;
 use Illuminate\Contracts\Auth\Guard;
+use Orchestra\Model\User as Eloquent;
 use Orchestra\Foundation\Validation\AuthenticateUser as Validator;
 use Orchestra\Foundation\Contracts\Command\AuthenticateUser as Command;
 use Orchestra\Foundation\Contracts\Listener\AuthenticateUser as Listener;
@@ -97,9 +97,9 @@ class AuthenticateUser extends Processor implements Command
      * @param  \Orchestra\Model\User  $user
      * @return void
      */
-    protected function verifyWhenFirstTimeLogin(User $user)
+    protected function verifyWhenFirstTimeLogin(Eloquent $user)
     {
-        if ((int) $user->getAttribute('status') === User::UNVERIFIED) {
+        if ((int) $user->getAttribute('status') === Eloquent::UNVERIFIED) {
             $user->activate()->save();
         }
     }
