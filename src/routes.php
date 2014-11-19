@@ -40,7 +40,7 @@ Foundation::namespaced('Orchestra\Foundation\Routing', function ($router) {
     $router->any('users/{user}/delete', 'UsersController@delete');
 
     // Route for settings
-    $router->get('settings', 'SettingsController@show');
+    $router->get('settings', 'SettingsController@edit');
     $router->post('settings', 'SettingsController@update');
     $router->get('settings/migrate', 'SettingsController@migrate');
 

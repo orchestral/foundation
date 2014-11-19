@@ -4,10 +4,14 @@ use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Presenter\Setting as SettingPresenter;
-use Orchestra\Foundation\Validation\Setting as SettingValidator;
+use Orchestra\Foundation\Presenter\Setting as Presenter;
+use Orchestra\Foundation\Validation\Setting as Validator;
+use Orchestra\Foundation\Contracts\Command\SystemUpdater as SystemUpdateCommand;
+use Orchestra\Foundation\Contracts\Listener\SystemUpdater as SystemUpdateListener;
+use Orchestra\Foundation\Contracts\Command\SettingUpdater as SettingUpdateCommand;
+use Orchestra\Foundation\Contracts\Listener\SettingUpdater as SettingUpdateListener;
 
-class Setting extends Processor
+class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCommand
 {
     /**
      * Create a new processor instance.
@@ -15,7 +19,7 @@ class Setting extends Processor
      * @param  \Orchestra\Foundation\Presenter\Setting  $presenter
      * @param  \Orchestra\Foundation\Validation\Setting  $validator
      */
-    public function __construct(SettingPresenter $presenter, SettingValidator $validator)
+    public function __construct(Presenter $presenter, Validator $validator)
     {
         $this->presenter = $presenter;
         $this->validator = $validator;
@@ -24,10 +28,10 @@ class Setting extends Processor
     /**
      * View setting page.
      *
-     * @param  object  $listener
+     * @param  \Orchestra\Foundation\Contracts\Listener\SettingUpdater  $listener
      * @return mixed
      */
-    public function show($listener)
+    public function edit(SettingUpdateListener $listener)
     {
         // Orchestra settings are stored using Orchestra\Memory, we need to
         // fetch it and convert it to Fluent (to mimick Eloquent properties).
@@ -54,17 +58,17 @@ class Setting extends Processor
 
         Event::fire('orchestra.form: settings', [$eloquent, $form]);
 
-        return $listener->showSucceed(compact('eloquent', 'form'));
+        return $listener->showSettingChanger(compact('eloquent', 'form'));
     }
 
     /**
      * Update setting.
      *
-     * @param  object  $listener
+     * @param  \Orchestra\Foundation\Contracts\Listener\SettingUpdater  $listener
      * @param  array   $input
      * @return mixed
      */
-    public function update($listener, array $input)
+    public function update(SettingUpdateListener $listener, array $input)
     {
         $input  = new Fluent($input);
         $driver = $this->resolveMailConfig($input['email_driver'], 'mail.driver');
@@ -72,7 +76,7 @@ class Setting extends Processor
         $validation = $this->validator->on($driver)->with($input->toArray());
 
         if ($validation->fails()) {
-            return $listener->updateValidationFailed($validation);
+            return $listener->settingFailedValidation($validation);
         }
         $memory = Foundation::memory();
 
@@ -102,21 +106,21 @@ class Setting extends Processor
 
         Event::fire('orchestra.saved: settings', [$memory, $input]);
 
-        return $listener->updateSucceed();
+        return $listener->settingHasUpdated();
     }
 
     /**
      * Migrate Orchestra Platform components.
      *
-     * @param  object  $listener
+     * @param  \Orchestra\Foundation\Contracts\Listener\SystemUpdater  $listener
      * @return mixed
      */
-    public function migrate($listener)
+    public function migrate(SystemUpdateListener $listener)
     {
         Foundation::make('orchestra.publisher.asset')->foundation();
         Foundation::make('orchestra.publisher.migrate')->foundation();
 
-        return $listener->migrateSucceed();
+        return $listener->systemHasUpdated();
     }
 
     /**

@@ -61,7 +61,7 @@ class SettingsControllerTest extends TestCase
 
         Foundation::shouldReceive('memory')->once()->andReturn($memory);
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::settings.index', m::type('Array'))->andReturn('foo');
+            ->with('orchestra/foundation::settings.index', m::type('Array'), [])->andReturn('foo');
 
         $this->call('GET', 'admin/settings');
         $this->assertResponseOk();

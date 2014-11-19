@@ -1,18 +1,18 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Orchestra\Support\Facades\Meta;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
-use Orchestra\Foundation\Processor\Setting as SettingProcessor;
+use Orchestra\Foundation\Processor\Setting as Processor;
+use Orchestra\Foundation\Contracts\Listener\SystemUpdater;
+use Orchestra\Foundation\Contracts\Listener\SettingUpdater;
 
-class SettingsController extends AdminController
+class SettingsController extends AdminController implements SystemUpdater, SettingUpdater
 {
     /**
      * Settings configuration Controller for the application.
      *
      * @param  \Orchestra\Foundation\Processor\Setting  $processor
      */
-    public function __construct(SettingProcessor $processor)
+    public function __construct(Processor $processor)
     {
         $this->processor = $processor;
 
@@ -37,9 +37,9 @@ class SettingsController extends AdminController
      *
      * @return mixed
      */
-    public function show()
+    public function edit()
     {
-        return $this->processor->show($this);
+        return $this->processor->edit($this);
     }
 
     /**
@@ -70,22 +70,22 @@ class SettingsController extends AdminController
      * @param  array  $data
      * @return mixed
      */
-    public function showSucceed(array $data)
+    public function showSettingChanger(array $data)
     {
-        Meta::set('title', trans('orchestra/foundation::title.settings.list'));
+        set_meta('title', trans('orchestra/foundation::title.settings.list'));
 
-        return View::make('orchestra/foundation::settings.index', $data);
+        return view('orchestra/foundation::settings.index', $data);
     }
 
     /**
      * Response when update setting failed on validation.
      *
-     * @param  mixed  $validation
+     * @param  \Illuminate\Support\MessageBag|array  $errors
      * @return mixed
      */
-    public function updateValidationFailed($validation)
+    public function settingFailedValidation($errors)
     {
-        return $this->redirectWithErrors(handles('orchestra::settings'), $validation);
+        return $this->redirectWithErrors(handles('orchestra::settings'), $errors);
     }
 
     /**
@@ -93,7 +93,7 @@ class SettingsController extends AdminController
      *
      * @return mixed
      */
-    public function updateSucceed()
+    public function settingHasUpdated()
     {
         $message = trans('orchestra/foundation::response.settings.update');
 
@@ -105,7 +105,7 @@ class SettingsController extends AdminController
      *
      * @return mixed
      */
-    public function migrateSucceed()
+    public function systemHasUpdated()
     {
         $message = trans('orchestra/foundation::response.settings.system-update');
 
