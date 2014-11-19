@@ -4,10 +4,10 @@ use Orchestra\Support\Facades\Foundation;
 
 Foundation::namespaced('Orchestra\Foundation\Routing', function ($router) {
     // Route to account/profile.
-    $router->get('account', 'Account\ProfileController@show');
-    $router->post('account', 'Account\ProfileController@update');
-    $router->get('account/password', 'Account\PasswordController@show');
-    $router->post('account/password', 'Account\PasswordController@update');
+    $router->get('account', 'Account\ProfileUpdaterController@edit');
+    $router->post('account', 'Account\ProfileUpdaterController@update');
+    $router->get('account/password', 'Account\PasswordUpdaterController@edit');
+    $router->post('account/password', 'Account\PasswordUpdaterController@update');
 
     // Route to extensions.
     if (Foundation::bound('orchestra.extension')) {
@@ -49,8 +49,8 @@ Foundation::namespaced('Orchestra\Foundation\Routing', function ($router) {
     $router->post('login', 'CredentialController@login');
     $router->any('logout', 'CredentialController@logout');
 
-    $router->get('register', 'RegistrationController@index');
-    $router->post('register', 'RegistrationController@create');
+    $router->get('register', 'Account\ProfileCreatorController@create');
+    $router->post('register', 'Account\ProfileCreatorController@store');
 
     // Base routing.
     $router->any('/', [

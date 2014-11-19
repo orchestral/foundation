@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Processor\Account\ProfileUpdater as Processor;
 use Orchestra\Foundation\Contracts\Listener\Account\ProfileUpdater as Listener;
 
-class ProfileController extends Controller implements Listener
+class ProfileUpdaterController extends Controller implements Listener
 {
     /**
      * Construct Account Controller to allow user to update own profile.
@@ -26,9 +26,9 @@ class ProfileController extends Controller implements Listener
      *
      * @return mixed
      */
-    public function show()
+    public function edit()
     {
-        return $this->processor->show($this);
+        return $this->processor->edit($this);
     }
 
     /**

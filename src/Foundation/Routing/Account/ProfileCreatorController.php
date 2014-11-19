@@ -1,21 +1,21 @@
-<?php namespace Orchestra\Foundation\Routing;
+<?php namespace Orchestra\Foundation\Routing\Account;
 
-use Orchestra\Support\Facades\Meta;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Orchestra\Support\Facades\Messages;
 use Illuminate\Support\Facades\Redirect;
-use Orchestra\Foundation\Processor\Registration as RegistrationProcessor;
+use Orchestra\Foundation\Routing\AdminController;
+use Orchestra\Foundation\Processor\Account\ProfileCreator as Processor;
+use Orchestra\Foundation\Contracts\Listener\Account\ProfileCreator as Listener;
 
-class RegistrationController extends AdminController
+class ProfileCreatorController extends AdminController implements Listener
 {
     /**
      * Registration Controller routing. It should only be accessible if
      * registration is allowed through the setting.
      *
-     * @param  \Orchestra\Foundation\Processor\Registration  $processor
+     * @param  \Orchestra\Foundation\Processor\Account\ProfileCreator  $processor
      */
-    public function __construct(RegistrationProcessor $processor)
+    public function __construct(Processor $processor)
     {
         $this->processor = $processor;
 
@@ -39,9 +39,9 @@ class RegistrationController extends AdminController
      *
      * @return mixed
      */
-    public function index()
+    public function create()
     {
-        return $this->processor->index($this);
+        return $this->processor->create($this);
     }
 
     /**
@@ -51,9 +51,9 @@ class RegistrationController extends AdminController
      *
      * @return mixed
      */
-    public function create()
+    public function store()
     {
-        return $this->processor->create($this, Input::all());
+        return $this->processor->store($this, Input::all());
     }
 
     /**
@@ -62,22 +62,22 @@ class RegistrationController extends AdminController
      * @param  array  $data
      * @return mixed
      */
-    public function indexSucceed(array $data)
+    public function showProfileCreator(array $data)
     {
-        Meta::set('title', trans('orchestra/foundation::title.register'));
+        set_meta('title', trans('orchestra/foundation::title.register'));
 
-        return View::make('orchestra/foundation::credential.register', $data);
+        return view('orchestra/foundation::credential.register', $data);
     }
 
     /**
      * Response when create a user failed validation.
      *
-     * @param  mixed  $validation
+     * @param  \Illuminate\Support\MessageBag|array  $errors
      * @return mixed
      */
-    public function createValidationFailed($validation)
+    public function createProfileFailedValidation($errors)
     {
-        return $this->redirectWithErrors(handles('orchestra::register'), $validation);
+        return $this->redirectWithErrors(handles('orchestra::register'), $errors);
     }
 
     /**
@@ -86,7 +86,7 @@ class RegistrationController extends AdminController
      * @param  array  $error
      * @return mixed
      */
-    public function createFailed(array $error)
+    public function createProfileFailed(array $error)
     {
         $message = trans('orchestra/foundation::response.db-failed', $error);
 
@@ -98,7 +98,7 @@ class RegistrationController extends AdminController
      *
      * @return mixed
      */
-    public function createSucceedWithoutNotification()
+    public function profileCreatedWithoutNotification()
     {
         Messages::add('success', trans("orchestra/foundation::response.users.create"));
         Messages::add('error', trans('orchestra/foundation::response.credential.register.email-fail'));
@@ -111,7 +111,7 @@ class RegistrationController extends AdminController
      *
      * @return mixed
      */
-    public function createSucceed()
+    public function profileCreated()
     {
         Messages::add('success', trans("orchestra/foundation::response.users.create"));
         Messages::add('success', trans('orchestra/foundation::response.credential.register.email-send'));

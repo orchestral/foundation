@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Processor\Account\PasswordUpdater as Processor;
 use Orchestra\Foundation\Contracts\Listener\Account\PasswordUpdater as Listener;
 
-class PasswordController extends Controller implements Listener
+class PasswordUpdaterController extends Controller implements Listener
 {
     /**
      * Construct Account Controller to allow user to update own profile.
@@ -26,9 +26,9 @@ class PasswordController extends Controller implements Listener
      *
      * @return mixed
      */
-    public function show()
+    public function edit()
     {
-        return $this->processor->show($this);
+        return $this->processor->edit($this);
     }
 
     /**

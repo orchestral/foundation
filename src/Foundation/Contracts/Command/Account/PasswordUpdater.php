@@ -10,7 +10,7 @@ interface PasswordUpdater
      * @param  \Orchestra\Foundation\Contracts\Listener\Account\PasswordUpdater  $listener
      * @return mixed
      */
-    public function show(Listener $listener);
+    public function edit(Listener $listener);
 
     /**
      * Update password information.

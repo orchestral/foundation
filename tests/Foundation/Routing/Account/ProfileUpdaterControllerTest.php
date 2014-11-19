@@ -6,7 +6,7 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Testing\TestCase;
 
-class ProfileControllerTest extends TestCase
+class ProfileUpdaterControllerTest extends TestCase
 {
     /**
      * Setup the test environment.
@@ -33,10 +33,10 @@ class ProfileControllerTest extends TestCase
      *
      * @test
      */
-    public function testGetShowAction()
+    public function testGetEditAction()
     {
-        $this->getProcessorMock()->shouldReceive('show')->once()
-            ->with(m::type('\Orchestra\Foundation\Routing\Account\ProfileController'))
+        $this->getProcessorMock()->shouldReceive('edit')->once()
+            ->with(m::type('\Orchestra\Foundation\Routing\Account\ProfileUpdaterController'))
             ->andReturnUsing(function ($listener) {
                 return $listener->showProfileChanger([]);
             });
@@ -58,7 +58,7 @@ class ProfileControllerTest extends TestCase
         $input = $this->getInput();
 
         $this->getProcessorMock()->shouldReceive('update')->once()
-            ->with(m::type('\Orchestra\Foundation\Routing\Account\ProfileController'), $input)
+            ->with(m::type('\Orchestra\Foundation\Routing\Account\ProfileUpdaterController'), $input)
             ->andReturnUsing(function ($listener) {
                 return $listener->profileUpdated([]);
             });
@@ -81,7 +81,7 @@ class ProfileControllerTest extends TestCase
         $input = $this->getInput();
 
         $this->getProcessorMock()->shouldReceive('update')->once()
-            ->with(m::type('\Orchestra\Foundation\Routing\Account\ProfileController'), $input)
+            ->with(m::type('\Orchestra\Foundation\Routing\Account\ProfileUpdaterController'), $input)
             ->andReturnUsing(function ($listener) {
                 return $listener->abortWhenUserMismatched();
             });
@@ -100,7 +100,7 @@ class ProfileControllerTest extends TestCase
         $input = $this->getInput();
 
         $this->getProcessorMock()->shouldReceive('update')->once()
-            ->with(m::type('\Orchestra\Foundation\Routing\Account\ProfileController'), $input)
+            ->with(m::type('\Orchestra\Foundation\Routing\Account\ProfileUpdaterController'), $input)
             ->andReturnUsing(function ($listener) {
                 return $listener->updateProfileFailed([]);
             });
@@ -122,7 +122,7 @@ class ProfileControllerTest extends TestCase
         $input = $this->getInput();
 
         $this->getProcessorMock()->shouldReceive('update')->once()
-            ->with(m::type('\Orchestra\Foundation\Routing\Account\ProfileController'), $input)
+            ->with(m::type('\Orchestra\Foundation\Routing\Account\ProfileUpdaterController'), $input)
             ->andReturnUsing(function ($listener) {
                 return $listener->updateProfileFailedValidation([]);
             });

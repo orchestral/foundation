@@ -10,7 +10,7 @@ interface ProfileUpdater
      * @param  \Orchestra\Foundation\Contracts\Listener\Account\ProfileUpdater  $listener
      * @return mixed
      */
-    public function show(Listener $listener);
+    public function edit(Listener $listener);
 
     /**
      * Update profile information.

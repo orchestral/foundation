@@ -4,6 +4,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Orchestra\Model\User as Eloquent;
 use Orchestra\Foundation\Contracts\Command\Account\PasswordUpdater as Command;
 use Orchestra\Foundation\Contracts\Listener\Account\PasswordUpdater as Listener;
 
@@ -15,7 +16,7 @@ class PasswordUpdater extends User implements Command
      * @param  \Orchestra\Foundation\Contracts\Listener\Account\PasswordUpdater  $listener
      * @return mixed
      */
-    public function show(Listener $listener)
+    public function edit(Listener $listener)
     {
         $eloquent = Auth::user();
         $form = $this->presenter->password($eloquent);
@@ -48,16 +49,27 @@ class PasswordUpdater extends User implements Command
             return $listener->verifyCurrentPasswordFailed();
         }
 
-        $user->setAttribute('password', $input['new_password']);
-
         try {
-            DB::transaction(function () use ($user) {
-                $user->save();
-            });
+            $this->saving($user, $input);
         } catch (Exception $e) {
             return $listener->updatePasswordFailed(['error' => $e->getMessage()]);
         }
 
         return $listener->passwordUpdated();
+    }
+
+    /**
+     * Saving new password.
+     *
+     * @param  \Orchestra\Model\User $user
+     * @param  array  $input
+     */
+    protected function saving(Eloquent $user, array $input)
+    {
+        $user->setAttribute('password', $input['new_password']);
+
+        DB::transaction(function () use ($user) {
+            $user->save();
+        });
     }
 }

@@ -6,7 +6,7 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Testing\TestCase;
 
-class PasswordControllerTest extends TestCase
+class PasswordUpdaterControllerTest extends TestCase
 {
     /**
      * Setup the test environment.
@@ -33,10 +33,10 @@ class PasswordControllerTest extends TestCase
      *
      * @test
      */
-    public function testGetShowAction()
+    public function testGetEditAction()
     {
-        $this->getProcessorMock()->shouldReceive('show')->once()
-            ->with(m::type('\Orchestra\Foundation\Routing\Account\PasswordController'))
+        $this->getProcessorMock()->shouldReceive('edit')->once()
+            ->with(m::type('\Orchestra\Foundation\Routing\Account\PasswordUpdaterController'))
             ->andReturnUsing(function ($listener) {
                 return $listener->showPasswordChanger([]);
             });
@@ -58,7 +58,7 @@ class PasswordControllerTest extends TestCase
         $input = $this->getInput();
 
         $this->getProcessorMock()->shouldReceive('update')->once()
-            ->with(m::type('\Orchestra\Foundation\Routing\Account\PasswordController'), $input)
+            ->with(m::type('\Orchestra\Foundation\Routing\Account\PasswordUpdaterController'), $input)
             ->andReturnUsing(function ($listener) {
                 return $listener->passwordUpdated([]);
             });
@@ -81,7 +81,7 @@ class PasswordControllerTest extends TestCase
         $input = $this->getInput();
 
         $this->getProcessorMock()->shouldReceive('update')->once()
-            ->with(m::type('\Orchestra\Foundation\Routing\Account\PasswordController'), $input)
+            ->with(m::type('\Orchestra\Foundation\Routing\Account\PasswordUpdaterController'), $input)
             ->andReturnUsing(function ($listener) {
                 return $listener->abortWhenUserMismatched();
             });
@@ -100,7 +100,7 @@ class PasswordControllerTest extends TestCase
         $input = $this->getInput();
 
         $this->getProcessorMock()->shouldReceive('update')->once()
-            ->with(m::type('\Orchestra\Foundation\Routing\Account\PasswordController'), $input)
+            ->with(m::type('\Orchestra\Foundation\Routing\Account\PasswordUpdaterController'), $input)
             ->andReturnUsing(function ($listener) {
                 return $listener->updatePasswordFailed([]);
             });
@@ -122,7 +122,7 @@ class PasswordControllerTest extends TestCase
         $input = $this->getInput();
 
         $this->getProcessorMock()->shouldReceive('update')->once()
-            ->with(m::type('\Orchestra\Foundation\Routing\Account\PasswordController'), $input)
+            ->with(m::type('\Orchestra\Foundation\Routing\Account\PasswordUpdaterController'), $input)
             ->andReturnUsing(function ($listener) {
                 return $listener->updatePasswordFailedValidation([]);
             });
@@ -143,7 +143,7 @@ class PasswordControllerTest extends TestCase
         $input = $this->getInput();
 
         $this->getProcessorMock()->shouldReceive('update')->once()
-            ->with(m::type('\Orchestra\Foundation\Routing\Account\PasswordController'), $input)
+            ->with(m::type('\Orchestra\Foundation\Routing\Account\PasswordUpdaterController'), $input)
             ->andReturnUsing(function ($listener) {
                 return $listener->verifyCurrentPasswordFailed([]);
             });

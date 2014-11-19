@@ -20,12 +20,12 @@ class PasswordUpdaterTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Processor\Account\ProfileUpdater::show()
+     * Test Orchestra\Foundation\Processor\Account\ProfileUpdater::edit()
      * method.
      *
      * @test
      */
-    public function testShowMethod()
+    public function testEditMethod()
     {
         $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\PasswordUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
@@ -40,7 +40,7 @@ class PasswordUpdaterTest extends TestCase
 
         Auth::shouldReceive('user')->once()->andReturn($user);
 
-        $this->assertEquals('show.password.changer', $stub->show($listener));
+        $this->assertEquals('show.password.changer', $stub->edit($listener));
     }
 
     /**

@@ -13,7 +13,7 @@ class ProfileUpdater extends User implements \Orchestra\Foundation\Contracts\Com
      * @param  \Orchestra\Foundation\Contracts\Listener\Account\ProfileUpdater  $listener
      * @return mixed
      */
-    public function show(Listener $listener)
+    public function edit(Listener $listener)
     {
         $eloquent = Auth::user();
         $form = $this->presenter->profile($eloquent, 'orchestra::account');
