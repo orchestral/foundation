@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Event;
 use Orchestra\Foundation\Processor\Processor;
-use Orchestra\Foundation\Presenter\Account as AccountPresenter;
-use Orchestra\Foundation\Validation\Account as AccountValidator;
+use Orchestra\Foundation\Presenter\Account as Presenter;
+use Orchestra\Foundation\Validation\Account as Validator;
 
 abstract class User extends Processor
 {
@@ -13,7 +13,7 @@ abstract class User extends Processor
      * @param  \Orchestra\Foundation\Presenter\Account  $presenter
      * @param  \Orchestra\Foundation\Validation\Account  $validator
      */
-    public function __construct(AccountPresenter $presenter, AccountValidator $validator)
+    public function __construct(Presenter $presenter, Validator $validator)
     {
         $this->presenter = $presenter;
         $this->validator = $validator;
