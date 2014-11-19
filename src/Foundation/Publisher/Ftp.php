@@ -49,7 +49,7 @@ class Ftp implements UploaderInterface
     /**
      * Get service connection instance.
      *
-     * @return \Orchestra\Support\FTP\Client
+     * @return object
      */
     public function getConnection()
     {
@@ -59,7 +59,7 @@ class Ftp implements UploaderInterface
     /**
      * Set service connection instance.
      *
-     * @param  \Orchestra\Support\FTP\Client  $client
+     * @param  object  $client
      * @return void
      */
     public function setConnection($client)

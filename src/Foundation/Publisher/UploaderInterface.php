@@ -28,7 +28,7 @@ interface UploaderInterface
     /**
      * Upload the file.
      *
-     * @param  string   $name   Extension name
+     * @param  string  $name
      * @return bool
      */
     public function upload($name);
