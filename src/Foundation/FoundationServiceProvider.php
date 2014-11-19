@@ -46,7 +46,7 @@ class FoundationServiceProvider extends ServiceProvider
     protected $facades = [
         'Orchestra\Support\Facades\Asset' => 'Orchestra\Asset',
         'Orchestra\Support\Facades\ACL' => 'Orchestra\ACL',
-        'Orchestra\Support\Facades\Foundation' => ['Orchestra\Foundation', 'Orchestra\App'],
+        'Orchestra\Support\Facades\Foundation' => 'Orchestra\Foundation',
         'Orchestra\Support\Facades\Config' => 'Orchestra\Config',
         'Orchestra\Support\Facades\Extension' => 'Orchestra\Extension',
         'Orchestra\Support\Facades\Form' => 'Orchestra\Form',
@@ -56,7 +56,7 @@ class FoundationServiceProvider extends ServiceProvider
         'Orchestra\Support\Facades\Notifier' => 'Orchestra\Notifier',
         'Orchestra\Support\Facades\Publisher' => 'Orchestra\Publisher',
         'Orchestra\Support\Facades\Resources' => 'Orchestra\Resources',
-        'Orchestra\Support\Facades\Meta' => ['Orchestra\Meta', 'Orchestra\Site'],
+        'Orchestra\Support\Facades\Meta' => 'Orchestra\Meta',
         'Orchestra\Support\Facades\Table' => 'Orchestra\Table',
         'Orchestra\Support\Facades\Theme' => 'Orchestra\Theme',
         'Orchestra\Support\Facades\Widget' => 'Orchestra\Widget',
