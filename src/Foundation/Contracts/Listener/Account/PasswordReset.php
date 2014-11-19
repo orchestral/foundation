@@ -5,7 +5,7 @@ interface PasswordReset
     /**
      * Response when reset password failed.
      *
-     * @param  string $response
+     * @param  string  $response
      * @return mixed
      */
     public function passwordResetHasFailed($response);
@@ -13,7 +13,8 @@ interface PasswordReset
     /**
      * Response when reset password succeed.
      *
+     * @param  string  $response
      * @return mixed
      */
-    public function passwordHasReset();
+    public function passwordHasReset($response);
 }

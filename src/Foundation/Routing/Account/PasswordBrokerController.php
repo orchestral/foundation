@@ -148,9 +148,10 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
     /**
      * Response when reset password succeed.
      *
+     * @param  string  $response
      * @return mixed
      */
-    public function passwordHasReset()
+    public function passwordHasReset($response)
     {
         $message = trans('orchestra/foundation::response.account.password.update');
 
