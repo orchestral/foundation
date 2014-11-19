@@ -59,7 +59,8 @@ class SettingsControllerTest extends TestCase
         $memory->shouldReceive('get')->times(14)->andReturn('');
         $presenter->shouldReceive('form')->once()->andReturn('edit.settings');
 
-        Foundation::shouldReceive('memory')->once()->andReturn($memory);
+        $this->app->instance('Orchestra\Contracts\Memory\Provider', $memory);
+
         View::shouldReceive('make')->once()
             ->with('orchestra/foundation::settings.index', m::type('Array'), [])->andReturn('foo');
 
@@ -100,7 +101,8 @@ class SettingsControllerTest extends TestCase
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(false);
 
-        Foundation::shouldReceive('memory')->once()->andReturn($memory);
+        $this->app->instance('Orchestra\Contracts\Memory\Provider', $memory);
+
         Foundation::shouldReceive('handles')->once()->with('orchestra::settings', array())->andReturn('settings');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
 
@@ -136,7 +138,8 @@ class SettingsControllerTest extends TestCase
 
         $validator->shouldReceive('on')->once()->with('smtp')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturn(true);
+            ->shouldReceive('fails')->once()->andReturn(true)
+            ->shouldReceive('getMessageBag')->once()->andReturn([]);
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::settings', array())->andReturn('settings');
 

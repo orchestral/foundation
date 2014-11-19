@@ -46,7 +46,7 @@ class Extension extends Processor
      */
     public function activate($listener, Fluent $extension)
     {
-        if (E::started($extension->name)) {
+        if (E::started($extension->get('name'))) {
             return $listener->suspend(404);
         }
 
@@ -66,11 +66,11 @@ class Extension extends Processor
      */
     public function deactivate($listener, Fluent $extension)
     {
-        if (! E::started($extension->name) && ! E::activated($extension->name)) {
+        if (! E::started($extension->get('name')) && ! E::activated($extension->get('name'))) {
             return $listener->suspend(404);
         }
 
-        E::deactivate($extension->name);
+        E::deactivate($extension->get('name'));
 
         return $listener->deactivateSucceed($extension);
     }
@@ -84,7 +84,7 @@ class Extension extends Processor
      */
     public function migrate($listener, Fluent $extension)
     {
-        if (! E::started($extension->name)) {
+        if (! E::started($extension->get('name'))) {
             return $listener->suspend(404);
         }
 
@@ -104,23 +104,23 @@ class Extension extends Processor
      */
     public function configure($listener, Fluent $extension)
     {
-        if (! E::started($extension->name)) {
+        if (! E::started($extension->get('name'))) {
             return $listener->suspend(404);
         }
 
         $memory = Foundation::memory();
 
         // Load configuration from memory.
-        $activeConfig = (array) $memory->get("extensions.active.{$extension->name}.config", []);
-        $baseConfig   = (array) $memory->get("extension_{$extension->name}", []);
+        $activeConfig = (array) $memory->get("extensions.active.{$extension->get('name')}.config", []);
+        $baseConfig   = (array) $memory->get("extension_{$extension->get('name')}", []);
 
         $eloquent = new Fluent(array_merge($activeConfig, $baseConfig));
 
         // Add basic form, allow extension to add custom configuration field
         // to this form using events.
-        $form = $this->presenter->configure($eloquent, $extension->name);
+        $form = $this->presenter->configure($eloquent, $extension->get('name'));
 
-        Event::fire("orchestra.form: extension.{$extension->name}", [$eloquent, $form]);
+        Event::fire("orchestra.form: extension.{$extension->get('name')}", [$eloquent, $form]);
 
         return $listener->configureSucceed(compact('eloquent', 'form', 'extension'));
     }
@@ -135,28 +135,28 @@ class Extension extends Processor
      */
     public function update($listener, Fluent $extension, array $input)
     {
-        if (! E::started($extension->name)) {
+        if (! E::started($extension->get('name'))) {
             return $listener->suspend(404);
         }
 
-        $validation = $this->validator->with($input, ["orchestra.validate: extension.{$extension->name}"]);
+        $validation = $this->validator->with($input, ["orchestra.validate: extension.{$extension->get('name')}"]);
 
         if ($validation->fails()) {
             return $listener->updateValidationFailed($validation, $extension->uid);
         }
 
         $memory = Foundation::memory();
-        $config = (array) $memory->get("extension.active.{$extension->name}.config", []);
+        $config = (array) $memory->get("extension.active.{$extension->get('name')}.config", []);
         $input  = new Fluent(array_merge($config, $input));
 
         unset($input['_token']);
 
-        Event::fire("orchestra.saving: extension.{$extension->name}", [& $input]);
+        Event::fire("orchestra.saving: extension.{$extension->get('name')}", [& $input]);
 
-        $memory->put("extensions.active.{$extension->name}.config", $input->getAttributes());
-        $memory->put("extension_{$extension->name}", $input->getAttributes());
+        $memory->put("extensions.active.{$extension->get('name')}.config", $input->getAttributes());
+        $memory->put("extension_{$extension->get('name')}", $input->getAttributes());
 
-        Event::fire("orchestra.saved: extension.{$extension->name}", [$input]);
+        Event::fire("orchestra.saved: extension.{$extension->get('name')}", [$input]);
 
         return $listener->updateSucceed($extension);
     }
@@ -176,16 +176,16 @@ class Extension extends Processor
             // Check if folder is writable via the web instance, this would
             // avoid issue running Orchestra Platform with debug as true where
             // creating/copying the directory would throw an ErrorException.
-            if (! E::permission($extension->name)) {
-                throw new FilePermissionException("[{$extension->name}] is not writable.");
+            if (! E::permission($extension->get('name'))) {
+                throw new FilePermissionException("[{$extension->get('name')}] is not writable.");
             }
 
-            call_user_func($callback, $extension->name);
+            call_user_func($callback, $extension->get('name'));
         } catch (FilePermissionException $e) {
             // In events where extension can't be activated due to extension
             // publish failed to push the asset to proper path. We need to
             // put this under a publisher queue.
-            Publisher::queue($extension->name);
+            Publisher::queue($extension->get('name'));
 
             return call_user_func([$listener, "{$type}Failed"], $extension);
         }

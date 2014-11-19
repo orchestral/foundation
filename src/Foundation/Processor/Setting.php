@@ -3,6 +3,7 @@
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Config;
+use Orchestra\Contracts\Memory\Provider;
 use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Presenter\Setting as Presenter;
 use Orchestra\Foundation\Validation\Setting as Validator;
@@ -14,15 +15,24 @@ use Orchestra\Foundation\Contracts\Listener\SettingUpdater as SettingUpdateListe
 class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCommand
 {
     /**
+     * The memory provider implementation.
+     *
+     * @var \Orchestra\Contracts\Memory\Provider
+     */
+    protected $memory;
+
+    /**
      * Create a new processor instance.
      *
      * @param  \Orchestra\Foundation\Presenter\Setting  $presenter
      * @param  \Orchestra\Foundation\Validation\Setting  $validator
+     * @param  \Orchestra\Contracts\Memory\Provider  $memory
      */
-    public function __construct(Presenter $presenter, Validator $validator)
+    public function __construct(Presenter $presenter, Validator $validator, Provider $memory)
     {
         $this->presenter = $presenter;
         $this->validator = $validator;
+        $this->memory = $memory;
     }
 
     /**
@@ -35,7 +45,8 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
     {
         // Orchestra settings are stored using Orchestra\Memory, we need to
         // fetch it and convert it to Fluent (to mimick Eloquent properties).
-        $memory   = Foundation::memory();
+        $memory = $this->memory;
+
         $eloquent = new Fluent([
             'site_name'        => $memory->get('site.name', ''),
             'site_description' => $memory->get('site.description', ''),
@@ -65,20 +76,21 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
      * Update setting.
      *
      * @param  \Orchestra\Foundation\Contracts\Listener\SettingUpdater  $listener
-     * @param  array   $input
+     * @param  array  $input
      * @return mixed
      */
     public function update(SettingUpdateListener $listener, array $input)
     {
         $input  = new Fluent($input);
-        $driver = $this->resolveMailConfig($input['email_driver'], 'mail.driver');
+        $driver = $this->getValue($input['email_driver'], 'mail.driver');
 
         $validation = $this->validator->on($driver)->with($input->toArray());
 
         if ($validation->fails()) {
-            return $listener->settingFailedValidation($validation);
+            return $listener->settingFailedValidation($validation->getMessageBag());
         }
-        $memory = Foundation::memory();
+
+        $memory = $this->memory;
 
         $memory->put('site.name', $input['site_name']);
         $memory->put('site.description', $input['site_description']);
@@ -86,7 +98,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
         $memory->put('email.driver', $driver);
 
         $memory->put('email.from', [
-            'address' => $this->resolveMailConfig($input['email_address'], 'mail.from.address'),
+            'address' => $this->getValue($input['email_address'], 'mail.from.address'),
             'name'    => $input['site_name'],
         ]);
 
@@ -94,15 +106,15 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
             $input['email_password'] = $memory->get('email.password');
         }
 
-        $memory->put('email.host', $this->resolveMailConfig($input['email_host'], 'mail.host'));
-        $memory->put('email.port', $this->resolveMailConfig($input['email_port'], 'mail.port'));
-        $memory->put('email.username', $this->resolveMailConfig($input['email_username'], 'mail.username'));
-        $memory->put('email.password', $this->resolveMailConfig($input['email_password'], 'mail.password'));
-        $memory->put('email.encryption', $this->resolveMailConfig($input['email_encryption'], 'mail.encryption'));
-        $memory->put('email.sendmail', $this->resolveMailConfig($input['email_sendmail'], 'mail.sendmail'));
+        $memory->put('email.host', $this->getValue($input['email_host'], 'mail.host'));
+        $memory->put('email.port', $this->getValue($input['email_port'], 'mail.port'));
+        $memory->put('email.username', $this->getValue($input['email_username'], 'mail.username'));
+        $memory->put('email.password', $this->getValue($input['email_password'], 'mail.password'));
+        $memory->put('email.encryption', $this->getValue($input['email_encryption'], 'mail.encryption'));
+        $memory->put('email.sendmail', $this->getValue($input['email_sendmail'], 'mail.sendmail'));
         $memory->put('email.queue', ($input['email_queue'] === 'yes'));
-        $memory->put('email.secret', $this->resolveMailConfig($input['email_secret'], "services.{$driver}.secret"));
-        $memory->put('email.domain', $this->resolveMailConfig($input['email_domain'], "services.{$driver}.domain"));
+        $memory->put('email.secret', $this->getValue($input['email_secret'], "services.{$driver}.secret"));
+        $memory->put('email.domain', $this->getValue($input['email_domain'], "services.{$driver}.domain"));
 
         Event::fire('orchestra.saved: settings', [$memory, $input]);
 
@@ -124,13 +136,13 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
     }
 
     /**
-     * Resolve mail configuration.
+     * Resolve value or grab from configuration.
      *
      * @param  mixed   $input
      * @param  string  $alternative
      * @return mixed
      */
-    private function resolveMailConfig($input, $alternative)
+    private function getValue($input, $alternative)
     {
         if (empty($input)) {
             $input = Config::get($alternative);

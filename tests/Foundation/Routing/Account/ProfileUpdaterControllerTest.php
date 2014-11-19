@@ -73,7 +73,6 @@ class ProfileUpdaterControllerTest extends TestCase
     /**
      * Test POST /admin/account with invalid user id.
      *
-     * @test
      * @expectedException \Symfony\Component\HttpKernel\Exception\HttpException
      */
     public function testPostIndexActionGivenInvalidUserId()
@@ -87,7 +86,6 @@ class ProfileUpdaterControllerTest extends TestCase
             });
 
         $this->call('POST', 'admin/account', $input);
-        $this->assertRedirectedTo('account');
     }
 
     /**
