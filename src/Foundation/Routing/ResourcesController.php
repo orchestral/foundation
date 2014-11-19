@@ -1,18 +1,17 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Orchestra\Support\Facades\Meta;
-use Illuminate\Support\Facades\View;
-use Orchestra\Foundation\Processor\Resource as ResourceProcessor;
+use Orchestra\Foundation\Processor\ResourceLoader as Processor;
+use Orchestra\Foundation\Contracts\Listener\ResourceLoader as Listener;
 
-class ResourcesController extends AdminController
+class ResourcesController extends AdminController implements Listener
 {
     /**
      * Orchestra Platform resources routing is dynamically handle by this
      * Controller.
      *
-     * @param  \Orchestra\Foundation\Processor\Resource  $processor
+     * @param  \Orchestra\Foundation\Processor\ResourceLoader  $processor
      */
-    public function __construct(ResourceProcessor $processor)
+    public function __construct(Processor $processor)
     {
         $this->processor = $processor;
 
@@ -36,46 +35,46 @@ class ResourcesController extends AdminController
      */
     public function index()
     {
-        return $this->processor->index($this);
+        return $this->processor->showAll($this);
     }
 
     /**
-     * Add a drop-in resource anywhere on Orchestra
+     * Add a drop-in resource anywhere on Orchestra Platform.
      *
      * @param  string  $request
      * @return mixed
      */
-    public function call($request)
+    public function show($request)
     {
         if ($request === 'index') {
             return $this->index();
         }
 
-        return $this->processor->call($this, $request);
+        return $this->processor->request($this, $request);
     }
 
     /**
-     * Response when index page succeed.
+     * Response when show resources lists succeed.
      *
      * @param  array  $data
      * @return mixed
      */
-    public function indexSucceed(array $data)
+    public function showResourcesList(array $data)
     {
-        Meta::set('title', trans('orchestra/foundation::title.resources.list'));
-        Meta::set('description', trans('orchestra/foundation::title.resources.list-detail'));
+        set_meta('title', trans('orchestra/foundation::title.resources.list'));
+        set_meta('description', trans('orchestra/foundation::title.resources.list-detail'));
 
-        return View::make('orchestra/foundation::resources.index', $data);
+        return view('orchestra/foundation::resources.index', $data);
     }
 
     /**
-     * Response when call resource page succeed.
+     * Response when load resource succeed.
      *
      * @param  array  $data
      * @return mixed
      */
-    public function callSucceed(array $data)
+    public function onRequestSucceed(array $data)
     {
-        return View::make('orchestra/foundation::resources.page', $data);
+        return view('orchestra/foundation::resources.page', $data);
     }
 }

@@ -32,7 +32,7 @@ Foundation::namespaced('Orchestra\Foundation\Routing', function ($router) {
     $router->post('publisher/ftp', 'PublisherController@publish');
 
     // Route to resources.
-    $router->any('resources/{any}', 'ResourcesController@call')->where('any', '(.*)');
+    $router->any('resources/{any}', 'ResourcesController@show')->where('any', '(.*)');
     $router->any('resources', 'ResourcesController@index');
 
     // Route to users.

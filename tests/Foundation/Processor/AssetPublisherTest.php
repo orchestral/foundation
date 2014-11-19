@@ -13,6 +13,12 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
         m::close();
     }
 
+    /**
+     * Test Orchestra\Foundation\Processor\AssetPublisher::executeAndRedirect()
+     * method.
+     *
+     * @test
+     */
     public function testExecuteAndRedirectMethod()
     {
         $listener = m::mock('\Orchestra\Foundation\Contracts\Listener\AssetPublishing');
@@ -28,6 +34,12 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('redirected', $stub->executeAndRedirect($listener));
     }
 
+    /**
+     * Test Orchestra\Foundation\Processor\AssetPublisher::publish()
+     * method.
+     *
+     * @test
+     */
     public function testPublishMethod()
     {
         $listener = m::mock('\Orchestra\Foundation\Contracts\Listener\AssetPublishing');
@@ -48,6 +60,12 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('asset.published', $stub->publish($listener, $input));
     }
 
+    /**
+     * Test Orchestra\Foundation\Processor\AssetPublisher::publish()
+     * method when connection failed.
+     *
+     * @test
+     */
     public function testPublishMethodGivenConnectionFailed()
     {
         $listener = m::mock('\Orchestra\Foundation\Contracts\Listener\AssetPublishing');

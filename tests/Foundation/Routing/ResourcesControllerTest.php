@@ -51,19 +51,14 @@ class ResourcesControllerTest extends TestCase
      */
     public function testGetIndexAction()
     {
-        $resources = array(
-            'foo' => new Fluent(array(
-                'visible' => true,
-                'name'    => 'Foo',
-            )),
-        );
+        $this->getProcessorMock()->shouldReceive('showAll')->once()
+            ->with(m::type('\Orchestra\Foundation\Routing\ResourcesController'))
+            ->andReturnUsing(function ($listener) {
+                return $listener->showResourcesList([]);
+            });
 
-        $presenter = $this->bindDependencies();
-        $presenter->shouldReceive('table')->once()->andReturn('list.resources');
-
-        Resources::shouldReceive('all')->once()->andReturn($resources);
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::resources.index', m::type('Array'))->andReturn('foo');
+            ->with('orchestra/foundation::resources.index', [], [])->andReturn('show.all');
 
         $this->call('GET', 'admin/resources/index');
         $this->assertResponseOk();
@@ -76,23 +71,47 @@ class ResourcesControllerTest extends TestCase
      */
     public function testGetCallAction()
     {
-        $resources = array(
-            'laravel' => new Fluent(array(
-                'visible' => true,
-                'name'    => 'Laravel',
-            )),
-        );
-
-        Resources::shouldReceive('all')->once()->andReturn($resources);
-        Resources::shouldReceive('call')->once()->with('laravel', array('index'))->andReturn('laravel');
-        Resources::shouldReceive('response')->once()->with('laravel', m::type('Closure'))
-            ->andReturnUsing(function ($n, $c) {
-                return $c($n);
+        $this->getProcessorMock()->shouldReceive('request')->once()
+            ->with(m::type('\Orchestra\Foundation\Routing\ResourcesController'), 'laravel/index')
+            ->andReturnUsing(function ($listener) {
+                return $listener->onRequestSucceed([]);
             });
+
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::resources.page', m::type('Array'))->andReturn('foo');
+            ->with('orchestra/foundation::resources.page', [], [])->andReturn('show.request');
 
         $this->call('GET', 'admin/resources/laravel/index');
         $this->assertResponseOk();
+    }
+
+
+
+    /**
+     * Get processor mock.
+     *
+     * @return \Orchestra\Foundation\Processor\ResourceLoader
+     */
+    protected function getProcessorMock()
+    {
+        $processor = m::mock('\Orchestra\Foundation\Processor\ResourceLoader', [
+            m::mock('\Orchestra\Foundation\Presenter\Resource'),
+            m::mock('\Orchestra\Resources\Factory')
+        ]);
+
+        $this->app->instance('Orchestra\Foundation\Processor\ResourceLoader', $processor);
+
+        return $processor;
+    }
+
+    /**
+     * Get request data.
+     *
+     * @return array
+     */
+    protected function getData()
+    {
+        return [
+            'laravel' => new Fluent(['visible' => true, 'name' => 'Laravel']),
+        ];
     }
 }
