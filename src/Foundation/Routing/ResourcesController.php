@@ -35,7 +35,7 @@ class ResourcesController extends AdminController implements Listener
      */
     public function index()
     {
-        return $this->processor->showAll($this);
+        return $this->processor->index($this);
     }
 
     /**
@@ -50,7 +50,7 @@ class ResourcesController extends AdminController implements Listener
             return $this->index();
         }
 
-        return $this->processor->request($this, $request);
+        return $this->processor->show($this, $request);
     }
 
     /**

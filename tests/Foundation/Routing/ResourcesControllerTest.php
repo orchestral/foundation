@@ -51,7 +51,7 @@ class ResourcesControllerTest extends TestCase
      */
     public function testGetIndexAction()
     {
-        $this->getProcessorMock()->shouldReceive('showAll')->once()
+        $this->getProcessorMock()->shouldReceive('index')->once()
             ->with(m::type('\Orchestra\Foundation\Routing\ResourcesController'))
             ->andReturnUsing(function ($listener) {
                 return $listener->showResourcesList([]);
@@ -71,7 +71,7 @@ class ResourcesControllerTest extends TestCase
      */
     public function testGetCallAction()
     {
-        $this->getProcessorMock()->shouldReceive('request')->once()
+        $this->getProcessorMock()->shouldReceive('show')->once()
             ->with(m::type('\Orchestra\Foundation\Routing\ResourcesController'), 'laravel/index')
             ->andReturnUsing(function ($listener) {
                 return $listener->onRequestSucceed([]);

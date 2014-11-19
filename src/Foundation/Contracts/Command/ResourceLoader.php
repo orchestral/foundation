@@ -10,7 +10,7 @@ interface ResourceLoader
      * @param  \Orchestra\Foundation\Contracts\Listener\ResourceLoader  $listener
      * @return mixed
      */
-    public function showAll(Listener $listener);
+    public function index(Listener $listener);
 
     /**
      * View call a resource page.
@@ -19,5 +19,5 @@ interface ResourceLoader
      * @param  string  $request
      * @return mixed
      */
-    public function request(Listener $listener, $request);
+    public function show(Listener $listener, $request);
 }

@@ -37,7 +37,7 @@ class ResourceLoaderTest extends \PHPUnit_Framework_TestCase
         $listener->shouldReceive('showResourcesList')->once()
             ->with(m::type('Array'))->andReturn('show.all');
 
-        $this->assertEquals('show.all', $stub->showAll($listener));
+        $this->assertEquals('show.all', $stub->index($listener));
     }
 
     /**
@@ -67,6 +67,6 @@ class ResourceLoaderTest extends \PHPUnit_Framework_TestCase
         $listener->shouldReceive('onRequestSucceed')->once()
             ->with(m::type('Array'))->andReturn('request.succeed');
 
-        $this->assertEquals('request.succeed', $stub->request($listener, 'laravel'));
+        $this->assertEquals('request.succeed', $stub->show($listener, 'laravel'));
     }
 }

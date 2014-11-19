@@ -32,7 +32,7 @@ class ResourceLoader extends Processor implements Command
      * @param  \Orchestra\Foundation\Contracts\Listener\ResourceLoader  $listener
      * @return mixed
      */
-    public function showAll(Listener $listener)
+    public function index(Listener $listener)
     {
         $resources = $this->resources->all();
         $eloquent  = [];
@@ -55,7 +55,7 @@ class ResourceLoader extends Processor implements Command
      * @param  string  $request
      * @return mixed
      */
-    public function request(Listener $listener, $request)
+    public function show(Listener $listener, $request)
     {
         $resources  = $this->resources->all();
         $parameters = explode('/', trim($request, '/'));

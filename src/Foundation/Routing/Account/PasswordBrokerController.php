@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\Routing\Account;
 
 use Illuminate\Support\Facades\Input;
-use Orchestra\Foundation\Contracts\Listener\Account\PasswordReset;
 use Orchestra\Foundation\Routing\AdminController;
+use Orchestra\Foundation\Contracts\Listener\Account\PasswordReset;
 use Orchestra\Foundation\Contracts\Listener\Account\PasswordResetLink;
 use Orchestra\Foundation\Processor\Account\PasswordBroker as Processor;
 
