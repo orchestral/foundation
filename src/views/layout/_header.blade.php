@@ -30,3 +30,4 @@ Javie.ENV = "{!! app('env') !!}";
 </script>
 
 @placeholder("orchestra.layout: header")
+@stack('orchestra.header')
