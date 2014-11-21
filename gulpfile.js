@@ -8,7 +8,7 @@ var gulp = require('gulp'),
 
 // Less
 gulp.task('css', function () {
-    return gulp.src('public/css/orchestra.less')
+    return gulp.src('assets/less/orchestra.less')
         .pipe(less())
         .pipe(csso())
         .pipe(gulp.dest('public/css'));
@@ -16,7 +16,7 @@ gulp.task('css', function () {
 
 // Coffee
 gulp.task('js', function () {
-    return gulp.src('public/js/orchestra.coffee')
+    return gulp.src('assets/coffee/orchestra.coffee')
         .pipe(coffee().on('error', gutil.log))
         .pipe(gulp.dest('public/js'));
 });
@@ -38,8 +38,8 @@ gulp.task('uglify', function () {
 
 // Add file watch
 gulp.task('watch', function () {
-    gulp.watch('public/css/orchestra.less', ['css']);
-    gulp.watch('public/css/orchestra.coffee', ['js']);
+    gulp.watch('assets/less/orchestra.less', ['css']);
+    gulp.watch('assets/coffee/orchestra.coffee', ['js']);
     gulp.watch('public/css/orchestra.js', ['uglify']);
 });
 
