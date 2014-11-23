@@ -22,7 +22,6 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $this->app = new Container;
 
         Facade::clearResolvedInstances();
-        Facade::setFacadeApplication($this->app);
         Container::setInstance($this->app);
     }
 

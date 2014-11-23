@@ -22,7 +22,6 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $app['translator']->shouldReceive('trans');
 
         Facade::clearResolvedInstances();
-        Facade::setFacadeApplication($app);
         Container::setInstance($app);
     }
 

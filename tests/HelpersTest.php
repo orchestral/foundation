@@ -25,7 +25,6 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
         $this->app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
 
         Facade::clearResolvedInstances();
-        Facade::setFacadeApplication($this->app);
         Container::setInstance($this->app);
 
         $trans->shouldReceive('trans')->andReturn('translated');
@@ -37,7 +36,6 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         Facade::clearResolvedInstances();
-        Facade::setFacadeApplication(null);
 
         m::close();
     }

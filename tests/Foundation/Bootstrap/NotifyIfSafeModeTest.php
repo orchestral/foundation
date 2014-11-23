@@ -23,7 +23,6 @@ class NotifyIfSafeModeTest extends \PHPUnit_Framework_TestCase
         $this->app = new Application(__DIR__);
 
         Facade::clearResolvedInstances();
-        Facade::setFacadeApplication($this->app);
         Container::setInstance($this->app);
     }
     /**
@@ -32,7 +31,6 @@ class NotifyIfSafeModeTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         Facade::clearResolvedInstances();
-        Facade::setFacadeApplication(null);
 
         m::close();
     }

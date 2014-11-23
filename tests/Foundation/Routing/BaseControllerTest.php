@@ -38,27 +38,26 @@ class BaseControllerTest extends TestCase
     public function testMissingMethodAction()
     {
         $app = new Container;
-        $view = m::mock('\Illuminate\Contracts\View\Factory');
+        $factory = m::mock('\Illuminate\Contracts\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\View');
         $redirector = m::mock('\Illuminate\Routing\Redirector');
+        $response = m::mock('\Illuminate\Routing\ResponseFactory', [$factory, $redirector]);
 
-        $response = new \Illuminate\Routing\ResponseFactory($view, $redirector);
         $app['Illuminate\Contracts\Routing\ResponseFactory'] = $response;
 
-        $view->shouldReceive('make')->once()
-            ->with('orchestra/foundation::dashboard.missing', array())->andReturn('foo');
-
+        Facade::clearResolvedInstances();
         Facade::setFacadeApplication($app);
         Container::setInstance($app);
+
+        $response->shouldReceive('view')->once()
+            ->with('orchestra/foundation::dashboard.missing', [], 404)->andReturn($view);
 
         $this->assertFalse($_SERVER['StubBaseController@setupFilters']);
 
         $stub = new StubBaseController;
-        $response = $stub->missingMethod(array());
 
+        $this->assertEquals($view, $stub->missingMethod([]));
         $this->assertTrue($_SERVER['StubBaseController@setupFilters']);
-
-        $this->assertEquals('foo', $response->getContent());
-        $this->assertEquals(404, $response->getStatusCode());
     }
 }
 

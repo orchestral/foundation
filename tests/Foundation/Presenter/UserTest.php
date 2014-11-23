@@ -31,7 +31,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->app['translator']->shouldReceive('trans');
 
         Facade::clearResolvedInstances();
-        Facade::setFacadeApplication($this->app);
         Container::setInstance($this->app);
     }
 

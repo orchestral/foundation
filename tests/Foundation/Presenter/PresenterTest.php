@@ -34,7 +34,6 @@ class PresenterTest extends \PHPUnit_Framework_TestCase
         $app = m::mock('\Illuminate\Container\Container', '\Illuminate\Contracts\Foundation\Application');
         $orchestra = m::mock('\Orchestra\Foundation\Foundation[handles]', [$app]);
 
-        Facade::setFacadeApplication($app);
         Container::setInstance($app);
 
         $app->shouldReceive('make')->once()->with('orchestra.app')->andReturn($orchestra);
