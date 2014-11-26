@@ -83,12 +83,12 @@ class ProfileCreatorController extends AdminController implements Listener
     /**
      * Response when create a user failed.
      *
-     * @param  array  $error
+     * @param  array  $errors
      * @return mixed
      */
-    public function createProfileFailed(array $error)
+    public function createProfileFailed(array $errors)
     {
-        $message = trans('orchestra/foundation::response.db-failed', $error);
+        $message = trans('orchestra/foundation::response.db-failed', $errors);
 
         return $this->redirectWithMessage(handles('orchestra::register'), $message, 'error')->withInput();
     }

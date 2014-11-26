@@ -170,12 +170,13 @@ class UsersController extends AdminController
     /**
      * Response when storing user failed.
      *
-     * @param  array  $error
+     * @param  array  $errors
      * @return mixed
      */
-    public function storeFailed(array $error)
+    public function storeFailed(array $errors)
     {
-        $message = trans('orchestra/foundation::response.db-failed', $error);
+        $message = trans('orchestra/foundation::response.db-failed', $errors);
+
         return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
     }
 
@@ -205,12 +206,12 @@ class UsersController extends AdminController
     /**
      * Response when updating user failed.
      *
-     * @param  array  $error
+     * @param  array  $errors
      * @return mixed
      */
-    public function updateFailed(array $error)
+    public function updateFailed(array $errors)
     {
-        $message = trans('orchestra/foundation::response.db-failed', $error);
+        $message = trans('orchestra/foundation::response.db-failed', $errors);
 
         return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
     }
@@ -230,12 +231,12 @@ class UsersController extends AdminController
     /**
      * Response when destroying user failed.
      *
-     * @param  array  $error
+     * @param  array  $errors
      * @return mixed
      */
-    public function destroyFailed(array $error)
+    public function destroyFailed(array $errors)
     {
-        $message = trans('orchestra/foundation::response.db-failed', $error);
+        $message = trans('orchestra/foundation::response.db-failed', $errors);
 
         return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
     }

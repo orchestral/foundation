@@ -21,10 +21,10 @@ interface ProfileCreator
     /**
      * Response when create a user failed.
      *
-     * @param  array  $error
+     * @param  array  $errors
      * @return mixed
      */
-    public function createProfileFailed(array $error);
+    public function createProfileFailed(array $errors);
 
     /**
      * Response when create a user succeed but unable to notify the user.
