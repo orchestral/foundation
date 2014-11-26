@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Foundation\Providers;
 
+use Orchestra\Foundation\Meta;
+use Orchestra\Foundation\Foundation;
 use Illuminate\Support\ServiceProvider;
 use Orchestra\Support\Providers\Traits\AliasesProviderTrait;
 
@@ -125,7 +127,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $path = realpath(__DIR__.'/../');
+        $path = realpath(__DIR__.'/../../');
 
         $this->package('orchestra/foundation', 'orchestra/foundation', $path);
 
