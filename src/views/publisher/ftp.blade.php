@@ -1,4 +1,4 @@
-@extends('orchestra/foundation::layout.main')
+@extends('orchestra/foundation::layouts.main')
 
 <?php $label = ['class' => 'three columns control-label']; ?>
 
