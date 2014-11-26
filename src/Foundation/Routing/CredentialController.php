@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Routing;
 
 use Illuminate\Support\Facades\Input;
-use Orchestra\Support\Facades\Messages;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Foundation\Processor\AuthenticateUser as Processor;
@@ -101,7 +100,7 @@ class CredentialController extends AdminController implements Listener
      */
     public function userHasLoggedIn(Authenticatable $user)
     {
-        Messages::add('success', trans('orchestra/foundation::response.credential.logged-in'));
+        messages('success', trans('orchestra/foundation::response.credential.logged-in'));
 
         return Redirect::intended(handles('orchestra::/'));
     }
@@ -113,7 +112,7 @@ class CredentialController extends AdminController implements Listener
      */
     public function userHasLoggedOut()
     {
-        Messages::add('success', trans('orchestra/foundation::response.credential.logged-out'));
+        messages('success', trans('orchestra/foundation::response.credential.logged-out'));
 
         return Redirect::intended(handles(Input::get('redirect', 'orchestra::login')));
     }

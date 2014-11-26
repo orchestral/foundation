@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Routing\Account;
 
 use Illuminate\Support\Facades\Input;
-use Orchestra\Support\Facades\Messages;
 use Illuminate\Support\Facades\Redirect;
 use Orchestra\Foundation\Routing\AdminController;
 use Orchestra\Foundation\Processor\Account\ProfileCreator as Processor;
@@ -88,9 +87,9 @@ class ProfileCreatorController extends AdminController implements Listener
      */
     public function createProfileFailed(array $errors)
     {
-        $message = trans('orchestra/foundation::response.db-failed', $errors);
+        messages('error', trans('orchestra/foundation::response.db-failed', $errors));
 
-        return $this->redirectWithMessage(handles('orchestra::register'), $message, 'error')->withInput();
+        return $this->redirect(handles('orchestra::register'))->withInput();
     }
 
     /**
@@ -100,8 +99,8 @@ class ProfileCreatorController extends AdminController implements Listener
      */
     public function profileCreatedWithoutNotification()
     {
-        Messages::add('success', trans("orchestra/foundation::response.users.create"));
-        Messages::add('error', trans('orchestra/foundation::response.credential.register.email-fail'));
+        messages('success', trans("orchestra/foundation::response.users.create"));
+        messages('error', trans('orchestra/foundation::response.credential.register.email-fail'));
 
         return Redirect::intended(handles('orchestra::login'));
     }
@@ -113,8 +112,8 @@ class ProfileCreatorController extends AdminController implements Listener
      */
     public function profileCreated()
     {
-        Messages::add('success', trans("orchestra/foundation::response.users.create"));
-        Messages::add('success', trans('orchestra/foundation::response.credential.register.email-send'));
+        messages('success', trans("orchestra/foundation::response.users.create"));
+        messages('success', trans('orchestra/foundation::response.credential.register.email-send'));
 
         return Redirect::intended(handles('orchestra::login'));
     }
