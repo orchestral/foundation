@@ -2,7 +2,7 @@
 
 use Orchestra\Routing\Controller;
 use Illuminate\Support\Facades\Response;
-use Orchestra\Support\Traits\ControllerResponseTrait;
+use Orchestra\Routing\Traits\ControllerResponseTrait;
 
 abstract class BaseController extends Controller
 {
