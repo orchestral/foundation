@@ -5,14 +5,14 @@
  *
  * @package Javie
  * @require underscore, console, jQuery/Zepto
- * @version 2.0.0
+ * @version 1.2.0
  * @author  Mior Muhammad Zaki <https://github.com/crynobone>
  * @license MIT License
  * ========================================================================
  */
 
 (function() {
-  var Application, root, _;
+  var Application, array_make, root, _;
 
   root = this;
 
@@ -26,14 +26,12 @@
     throw new Error("underscore.js is missing");
   }
 
+  array_make = function(args) {
+    return Array.prototype.slice.call(args);
+  };
+
   Application = (function() {
-    var array_make;
-
     function Application() {}
-
-    array_make = function(args) {
-      return Array.prototype.slice.call(args);
-    };
 
     Application.prototype.config = {};
 
@@ -87,7 +85,7 @@
     Application.prototype.resolve = function(name) {
       var base;
       base = this.instances[name];
-      if (base === 'undefined') {
+      if (_.isUndefined(base)) {
         base = null;
       }
       return base;
@@ -101,7 +99,7 @@
       if (this.environment != null) {
         env = this.environment;
       }
-      if (env === environment || _.isNull(environment)) {
+      if (env === environment || environment === '*') {
         return this.run(callback);
       }
     };
@@ -132,7 +130,7 @@
  * @package Javie
  * @class   Event
  * @require underscore
- * @version 2.0.0
+ * @version 1.2.0
  * @since   0.1.0
  * @author  Mior Muhammad Zaki <https://github.com/crynobone>
  * @license MIT License
@@ -318,7 +316,7 @@
  * @package Javie
  * @class   Logger
  * @require console
- * @version 2.0.0
+ * @version 1.2.0
  * @since   0.1.0
  * @author  Mior Muhammad Zaki <https://github.com/crynobone>
  * @license MIT License
@@ -465,7 +463,7 @@
  * @package Javie
  * @class   Profiler
  * @require console
- * @version 2.0.0
+ * @version 1.2.0
  * @since   0.1.0
  * @author  Mior Muhammad Zaki <https://github.com/crynobone>
  * @license MIT License
@@ -473,7 +471,7 @@
  */
 
 (function() {
-  var Profiler, ProfilerRepository, enabled, profilers, root;
+  var Profiler, ProfilerRepository, enabled, microtime, profilers, root, schema;
 
   profilers = {};
 
@@ -481,41 +479,39 @@
 
   root = typeof exports !== "undefined" && exports !== null ? exports : this;
 
+  schema = function(id, type, start) {
+    if (id == null) {
+      id = '';
+    }
+    if (type == null) {
+      type = '';
+    }
+    if (start == null) {
+      start = microtime(true);
+    }
+    return {
+      id: id,
+      type: type,
+      start: start,
+      end: null,
+      total: null,
+      message: ''
+    };
+  };
+
+  microtime = function(seconds) {
+    var ms, sec, time;
+    time = new Date().getTime();
+    ms = parseInt(time / 1000, 10);
+    sec = "" + ((time - (ms * 1000)) / 1000) + " sec";
+    if (seconds === true) {
+      return ms;
+    } else {
+      return sec;
+    }
+  };
+
   Profiler = (function() {
-    var microtime, schema;
-
-    schema = function(id, type, start) {
-      if (id == null) {
-        id = '';
-      }
-      if (type == null) {
-        type = '';
-      }
-      if (start == null) {
-        start = microtime(true);
-      }
-      return {
-        id: id,
-        type: type,
-        start: start,
-        end: null,
-        total: null,
-        message: ''
-      };
-    };
-
-    microtime = function(seconds) {
-      var ms, sec, time;
-      time = new Date().getTime();
-      ms = parseInt(time / 1000, 10);
-      sec = "" + ((time - (ms * 1000)) / 1000) + " sec";
-      if (seconds === true) {
-        return ms;
-      } else {
-        return sec;
-      }
-    };
-
     Profiler.prototype.logs = null;
 
     Profiler.prototype.pair = null;
@@ -670,7 +666,7 @@
  */
 
 (function() {
-  var Request, RequestRepository, api, dispatcher, requests, root, _;
+  var Request, RequestRepository, api, dispatcher, find_request, json_parse, requests, root, _;
 
   root = typeof exports !== "undefined" && exports !== null ? exports : this;
 
@@ -704,22 +700,46 @@
     throw new Error("Required jQuery or Zepto object is missing");
   }
 
-  Request = (function() {
-    var json_parse;
-
-    function Request() {}
-
-    json_parse = function(data) {
-      var e;
-      if (_.isString(data) === true) {
-        try {
-          data = api.parseJSON(data);
-        } catch (_error) {
-          e = _error;
-        }
+  find_request = function(name) {
+    var child, child_name, parent, request;
+    request = null;
+    if (!_.isUndefined(requests[name])) {
+      parent = requests[name];
+      if (parent.executed === true) {
+        child_name = _.uniqueId("" + name + "_");
+        child = new Request;
+        dispatcher.clone("Request.onError: " + name).to("Request.onError: " + child_name);
+        dispatcher.clone("Request.onComplete: " + name).to("Request.onComplete: " + child_name);
+        dispatcher.clone("Request.beforeSend: " + name).to("Request.beforeSend: " + child_name);
+        child.put(parent.config);
+        request = child;
       }
-      return data;
-    };
+      request = parent;
+    } else {
+      request = new Request;
+      request.config = _.defaults(request.config, RequestRepository.config);
+      request.put({
+        'name': name
+      });
+      requests[name] = request;
+    }
+    return request;
+  };
+
+  json_parse = function(data) {
+    var e;
+    if (_.isString(data) === true) {
+      try {
+        data = api.parseJSON(data);
+      } catch (_error) {
+        e = _error;
+      }
+    }
+    return data;
+  };
+
+  Request = (function() {
+    function Request() {}
 
     Request.prototype.executed = false;
 
@@ -845,34 +865,6 @@
   })();
 
   RequestRepository = (function() {
-    var find_request;
-
-    find_request = function(name) {
-      var child, child_name, parent, request;
-      request = null;
-      if (!_.isUndefined(requests[name])) {
-        parent = requests[name];
-        if (parent.executed === true) {
-          child_name = _.uniqueId("" + name + "_");
-          child = new Request;
-          dispatcher.clone("Request.onError: " + name).to("Request.onError: " + child_name);
-          dispatcher.clone("Request.onComplete: " + name).to("Request.onComplete: " + child_name);
-          dispatcher.clone("Request.beforeSend: " + name).to("Request.beforeSend: " + child_name);
-          child.put(parent.config);
-          request = child;
-        }
-        request = parent;
-      } else {
-        request = new Request;
-        request.config = _.defaults(request.config, RequestRepository.config);
-        request.put({
-          'name': name
-        });
-        requests[name] = request;
-      }
-      return request;
-    };
-
     function RequestRepository(name) {
       return RequestRepository.make(name);
     }
@@ -942,7 +934,10 @@
   });
 
   javie.bind('profiler', function(name) {
-    return new javie.Profiler(name);
+    if (name != null) {
+      return new javie.Profiler(name);
+    }
+    return javie.Profiler;
   });
 
   javie.bind('log', function() {
@@ -950,7 +945,10 @@
   });
 
   javie.bind('request', function(name) {
-    return new javie.Request(name);
+    if (name != null) {
+      return new javie.Request(name);
+    }
+    return javie.Request;
   });
 
 }).call(this);

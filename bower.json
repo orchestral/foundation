@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "javie": "master",
+    "javie": "~1.2.0",
     "jquery": "~1.10.2",
     "underscore": "~1.6.0",
     "select2": "~3.4.8"
