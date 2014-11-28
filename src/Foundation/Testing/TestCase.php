@@ -19,6 +19,7 @@ abstract class TestCase extends TestbenchTestCase
             'Artisan'    => 'Illuminate\Support\Facades\Artisan',
             'Asset'      => 'Orchestra\Support\Facades\Asset',
             'Auth'       => 'Illuminate\Support\Facades\Auth',
+            'Avatar'     => 'Orchestra\Support\Facades\Avatar',
             'Blade'      => 'Illuminate\Support\Facades\Blade',
             'Cache'      => 'Illuminate\Support\Facades\Cache',
             'Config'     => 'Illuminate\Support\Facades\Config',
@@ -96,6 +97,7 @@ abstract class TestCase extends TestbenchTestCase
              */
             'Orchestra\Asset\AssetServiceProvider',
             'Orchestra\Auth\AuthServiceProvider',
+            'Orchestra\Avatar\AvatarServiceProvider',
             'Orchestra\Routing\ControllerServiceProvider',
             'Orchestra\View\DecoratorServiceProvider',
             'Orchestra\Extension\ExtensionServiceProvider',
