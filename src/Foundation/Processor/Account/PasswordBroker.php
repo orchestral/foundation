@@ -4,11 +4,11 @@ use Illuminate\Support\Facades\Auth;
 use Orchestra\Model\User as Eloquent;
 use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Processor\Processor;
+use Orchestra\Contracts\Auth\Listener\PasswordReset;
+use Orchestra\Contracts\Auth\Listener\PasswordResetLink;
 use Illuminate\Contracts\Auth\PasswordBroker as Password;
+use Orchestra\Contracts\Auth\Command\PasswordBroker as Command;
 use Orchestra\Foundation\Validation\AuthenticateUser as Validator;
-use Orchestra\Foundation\Contracts\Listener\Account\PasswordReset;
-use Orchestra\Foundation\Contracts\Listener\Account\PasswordResetLink;
-use Orchestra\Foundation\Contracts\Command\Account\PasswordBroker as Command;
 
 class PasswordBroker extends Processor implements Command
 {
@@ -34,7 +34,7 @@ class PasswordBroker extends Processor implements Command
     /**
      * Request to reset password.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\Account\PasswordResetLink  $listener
+     * @param  \Orchestra\Contracts\Auth\Listener\PasswordResetLink  $listener
      * @param  array  $input
      * @return mixed
      */
@@ -64,7 +64,7 @@ class PasswordBroker extends Processor implements Command
     /**
      * Reset the password.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\Account\PasswordReset  $listener
+     * @param  \Orchestra\Contracts\Auth\Listener\PasswordReset  $listener
      * @param  array  $input
      * @return mixed
      */

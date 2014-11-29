@@ -21,7 +21,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoginMethod()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\AuthenticateUser');
+        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
         $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
@@ -52,7 +52,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoginMethodGivenFailedAuthentication()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\AuthenticateUser');
+        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
         $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
@@ -79,7 +79,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoginMethodGivenFailedValidation()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\AuthenticateUser');
+        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
         $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
@@ -106,7 +106,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
      */
     public function testLogoutMethod()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\AuthenticateUser');
+        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
 

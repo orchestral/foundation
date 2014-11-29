@@ -3,9 +3,9 @@
 use Illuminate\Support\Arr;
 use Illuminate\Contracts\Auth\Guard;
 use Orchestra\Model\User as Eloquent;
+use Orchestra\Contracts\Auth\Command\AuthenticateUser as Command;
 use Orchestra\Foundation\Validation\AuthenticateUser as Validator;
-use Orchestra\Foundation\Contracts\Command\AuthenticateUser as Command;
-use Orchestra\Foundation\Contracts\Listener\AuthenticateUser as Listener;
+use Orchestra\Contracts\Auth\Listener\AuthenticateUser as Listener;
 
 class AuthenticateUser extends Processor implements Command
 {
@@ -31,7 +31,7 @@ class AuthenticateUser extends Processor implements Command
     /**
      * Login a user.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\AuthenticateUser  $listener
+     * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
      * @param  array  $input
      * @return mixed
      */
@@ -59,7 +59,7 @@ class AuthenticateUser extends Processor implements Command
     /**
      * Logout a user.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\AuthenticateUser  $listener
+     * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
      * @return mixed
      */
     public function logout(Listener $listener)

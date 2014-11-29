@@ -27,7 +27,7 @@ class PasswordBrokerTest extends TestCase
      */
     public function testStoreMethod()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\PasswordResetLink');
+        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordResetLink');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
         $password  = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
@@ -64,7 +64,7 @@ class PasswordBrokerTest extends TestCase
      */
     public function testStoreMethodGivenInvalidUser()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\PasswordResetLink');
+        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordResetLink');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
         $password  = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
@@ -97,7 +97,7 @@ class PasswordBrokerTest extends TestCase
      */
     public function testStoreMethodGivenFailedValidation()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\PasswordResetLink');
+        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordResetLink');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
         $password  = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
@@ -122,7 +122,7 @@ class PasswordBrokerTest extends TestCase
      */
     public function testUpdateMethod()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\PasswordReset');
+        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordReset');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $password  = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
         $user      = m::mock('\Orchestra\Model\User');
@@ -155,7 +155,7 @@ class PasswordBrokerTest extends TestCase
      */
     public function testUpdateMethodGivenFailed()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\PasswordReset');
+        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordReset');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $password  = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
 

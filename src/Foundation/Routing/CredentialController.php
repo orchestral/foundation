@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Foundation\Processor\AuthenticateUser as Processor;
-use Orchestra\Foundation\Contracts\Listener\AuthenticateUser as Listener;
+use Orchestra\Contracts\Auth\Listener\AuthenticateUser as Listener;
 
 class CredentialController extends AdminController implements Listener
 {
