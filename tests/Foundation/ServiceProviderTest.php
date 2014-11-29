@@ -3,10 +3,10 @@
 use Mockery as m;
 use Illuminate\Foundation\Application;
 use Orchestra\Foundation\Testing\TestCase;
-use Orchestra\Foundation\SupportServiceProvider;
-use Orchestra\Foundation\FoundationServiceProvider;
-use Orchestra\Foundation\ConsoleSupportServiceProvider;
 use Orchestra\Auth\Passwords\PasswordResetServiceProvider;
+use Orchestra\Foundation\Providers\SupportServiceProvider;
+use Orchestra\Foundation\Providers\FoundationServiceProvider;
+use Orchestra\Foundation\Providers\ConsoleSupportServiceProvider;
 
 class ServiceProviderTest extends TestCase
 {

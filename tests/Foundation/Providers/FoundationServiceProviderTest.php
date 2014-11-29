@@ -1,8 +1,8 @@
-<?php namespace Foundation;
+<?php namespace Orchestra\Foundation\Providers\TestCase;
 
 use Mockery as m;
 use Illuminate\Container\Container;
-use Orchestra\Foundation\FoundationServiceProvider;
+use Orchestra\Foundation\Providers\FoundationServiceProvider;
 
 class FoundationServiceProviderTest extends \PHPUnit_Framework_TestCase
 {
