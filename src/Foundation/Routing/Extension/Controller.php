@@ -4,27 +4,8 @@ use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Routing\AdminController;
 use Orchestra\Contracts\Extension\Listener\Extension;
 
-class Controller extends AdminController implements Extension
+abstract class Controller extends AdminController implements Extension
 {
-    /**
-     * Extension processor implementation.
-     *
-     * @var \Orchestra\Extension\Processor\Processor
-     */
-    protected $processor;
-
-    /**
-     * Setup controller filters.
-     *
-     * @return void
-     */
-    protected function setupFilters()
-    {
-        $this->beforeFilter('orchestra.auth');
-        $this->beforeFilter('orchestra.manage');
-        $this->beforeFilter('orchestra.csrf');
-    }
-
     /**
      * Abort request when extension requirement mismatched.
      *

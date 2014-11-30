@@ -48,36 +48,6 @@ class ExtensionsController extends AdminController
     }
 
     /**
-     * Deactivate an extension.
-     *
-     * GET (:orchestra)/extensions/deactivate/(:name)
-     *
-     * @param  string  $uid
-     * @return mixed
-     */
-    public function deactivate($uid)
-    {
-        $extension = $this->getExtension($uid);
-
-        return $this->processor->deactivate($this, $extension);
-    }
-
-    /**
-     * Update an extension, run migration and asset publish command.
-     *
-     * GET (:orchestra)/extensions/update/(:name)
-     *
-     * @param  string  $uid
-     * @return mixed
-     */
-    public function migrate($uid)
-    {
-        $extension = $this->getExtension($uid);
-
-        return $this->processor->migrate($this, $extension);
-    }
-
-    /**
      * Configure an extension.
      *
      * GET (:orchestra)/extensions/configure/(:name)
@@ -147,43 +117,6 @@ class ExtensionsController extends AdminController
         Meta::set('description', trans("orchestra/foundation::title.extensions.configure"));
 
         return View::make('orchestra/foundation::extensions.configure', $data);
-    }
-
-    /**
-     * Response when migrate an extension failed.
-     *
-     * @param  \Illuminate\Support\Fluent  $extension
-     * @return mixed
-     */
-    public function migrateFailed(Fluent $extension)
-    {
-        return $this->redirect(handles('orchestra::publisher'));
-    }
-
-    /**
-     * Response when migrate an extension succeed.
-     *
-     * @param  \Illuminate\Support\Fluent  $extension
-     * @return mixed
-     */
-    public function migrateSucceed(Fluent $extension)
-    {
-        $message = trans('orchestra/foundation::response.extensions.migrate', $extension->getAttributes());
-
-        return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
-    }
-
-    /**
-     * Response when deactivate an extension succeed.
-     *
-     * @param  \Illuminate\Support\Fluent  $extension
-     * @return mixed
-     */
-    public function deactivateSucceed(Fluent $extension)
-    {
-        $message = trans('orchestra/foundation::response.extensions.deactivate', $extension->getAttributes());
-
-        return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
     }
 
     /**

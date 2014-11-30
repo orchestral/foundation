@@ -1,0 +1,143 @@
+<?php namespace Orchestra\Foundation\Routing\Extension;
+
+use Illuminate\Support\Fluent;
+use Orchestra\Support\Facades\Publisher;
+use Orchestra\Extension\Processor\Migrator as MigratorProcessor;
+use Orchestra\Extension\Processor\Activator as ActivatorProcessor;
+use Orchestra\Extension\Processor\Deactivator as DeactivatorProcessor;
+use Orchestra\Contracts\Extension\Listener\Migrator as MigratorListener;
+use Orchestra\Contracts\Extension\Listener\Activator as ActivatorListener;
+use Orchestra\Contracts\Extension\Listener\Deactivator as DeactivatorListener;
+
+class ActionController extends Controller implements ActivatorListener, DeactivatorListener, MigratorListener
+{
+    /**
+     * Setup controller filters.
+     *
+     * @return void
+     */
+    protected function setupFilters()
+    {
+        $this->beforeFilter('orchestra.auth');
+        $this->beforeFilter('orchestra.manage');
+        $this->beforeFilter('orchestra.csrf');
+    }
+
+    /**
+     * Activate an extension.
+     *
+     * GET (:orchestra)/extensions/activate/(:name)
+     *
+     * @param  \Orchestra\Extension\Processor\Activator  $activator
+     * @param  string  $name
+     * @return mixed
+     */
+    public function activate(ActivatorProcessor $activator, $name)
+    {
+        return $activator->activate($this, $this->getExtension($name));
+    }
+
+    /**
+     * Update an extension, run migration and asset publish command.
+     *
+     * GET (:orchestra)/extensions/activate/(:name)
+     *
+     * @param  \Orchestra\Extension\Processor\Migrator  $migrator
+     * @param  string  $name
+     * @return mixed
+     */
+    public function migrate(MigratorProcessor $migrator, $name)
+    {
+        return $migrator->migrate($this, $this->getExtension($name));
+    }
+
+    /**
+     * Deactivate an extension.
+     *
+     * GET (:orchestra)/extensions/deactivate/(:name)
+     *
+     * @param  \Orchestra\Extension\Processor\Deactivator  $deactivator
+     * @param  string  $name
+     * @return mixed
+     */
+    public function deactivate(DeactivatorProcessor $deactivator, $name)
+    {
+        return $deactivator->deactivate($this, $this->getExtension($name));
+    }
+
+    /**
+     * Response when extension activation has failed.
+     *
+     * @param  \Illuminate\Support\Fluent  $extension
+     * @param  array  $errors
+     * @return mixed
+     */
+    public function activationHasFailed(Fluent $extension, array $errors)
+    {
+        return $this->queueToPublisher($extension);
+    }
+
+    /**
+     * Response when extension activation has succeed.
+     *
+     * @param  \Illuminate\Support\Fluent  $extension
+     * @return mixed
+     */
+    public function activationHasSucceed(Fluent $extension)
+    {
+        $message = trans('orchestra/foundation::response.extensions.activate', $extension->getAttributes());
+
+        return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
+    }
+
+    /**
+     * Response when extension deactivation has succeed.
+     *
+     * @param  \Illuminate\Support\Fluent  $extension
+     * @return mixed
+     */
+    public function deactivationHasSucceed(Fluent $extension)
+    {
+        $message = trans('orchestra/foundation::response.extensions.deactivate', $extension->getAttributes());
+
+        return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
+    }
+
+    /**
+     * Response when extension migration has failed.
+     *
+     * @param  \Illuminate\Support\Fluent $extension
+     * @param  array $errors
+     * @return mixed
+     */
+    public function migrationHasFailed(Fluent $extension, array $errors)
+    {
+        return $this->queueToPublisher($extension);
+    }
+
+    /**
+     * Response when extension migration has succeed.
+     *
+     * @param  \Illuminate\Support\Fluent $extension
+     * @return mixed
+     */
+    public function migrationHasSucceed(Fluent $extension)
+    {
+        $message = trans('orchestra/foundation::response.extensions.migrate', $extension->getAttributes());
+
+        return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
+    }
+
+    /**
+     * Queue publishing asset to publisher.
+     *
+     * @param  \Illuminate\Support\Fluent  $extension
+     * @return mixed
+     */
+    protected function queueToPublisher(Fluent $extension)
+    {
+        Publisher::queue($extension->get('name'));
+
+        return $this->redirect(handles('orchestra::publisher'));
+    }
+}

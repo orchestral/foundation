@@ -38,44 +38,6 @@ class Extension extends Processor
     }
 
     /**
-     * Deactivate an extension.
-     *
-     * @param  object  $listener
-     * @param  \Illuminate\Support\Fluent  $extension
-     * @return mixed
-     */
-    public function deactivate($listener, Fluent $extension)
-    {
-        if (! E::started($extension->get('name')) && ! E::activated($extension->get('name'))) {
-            return $listener->suspend(404);
-        }
-
-        E::deactivate($extension->get('name'));
-
-        return $listener->deactivateSucceed($extension);
-    }
-
-    /**
-     * Update/migrate an extension.
-     *
-     * @param  object  $listener
-     * @param  \Illuminate\Support\Fluent  $extension
-     * @return mixed
-     */
-    public function migrate($listener, Fluent $extension)
-    {
-        if (! E::started($extension->get('name'))) {
-            return $listener->suspend(404);
-        }
-
-        $type = 'migrate';
-
-        return $this->execute($listener, $type, $extension, function ($name) {
-            E::publish($name);
-        });
-    }
-
-    /**
      * View edit extension configuration page.
      *
      * @param  object  $listener
