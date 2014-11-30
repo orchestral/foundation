@@ -1,6 +1,6 @@
-<?php namespace Orchestra\Foundation\Contracts\Listener;
+<?php namespace Orchestra\Foundation\Contracts\Listener\Account;
 
-interface UserDashboard
+interface ProfileDashboard
 {
     /**
      * Response to show dashboard.

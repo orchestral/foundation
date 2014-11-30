@@ -58,15 +58,15 @@ class DashboardControllerTest extends TestCase
     /**
      * Get processor mock.
      *
-     * @return \Orchestra\Foundation\Processor\UserDashboard
+     * @return \Orchestra\Foundation\Processor\Account\ProfileDashboard
      */
     protected function getProcessorMock()
     {
-        $processor = m::mock('\Orchestra\Foundation\Processor\UserDashboard', [
+        $processor = m::mock('\Orchestra\Foundation\Processor\Account\ProfileDashboard', [
             m::mock('\Orchestra\Widget\WidgetManager'),
         ]);
 
-        $this->app->instance('Orchestra\Foundation\Processor\UserDashboard', $processor);
+        $this->app->instance('Orchestra\Foundation\Processor\Account\ProfileDashboard', $processor);
 
         return $processor;
     }

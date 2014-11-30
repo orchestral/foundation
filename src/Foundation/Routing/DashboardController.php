@@ -1,15 +1,15 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Orchestra\Foundation\Processor\UserDashboard as Processor;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Orchestra\Foundation\Contracts\Listener\UserDashboard as Listener;
+use Orchestra\Foundation\Processor\Account\ProfileDashboard as Processor;
+use Orchestra\Foundation\Contracts\Listener\Account\ProfileDashboard as Listener;
 
 class DashboardController extends AdminController implements Listener
 {
     /**
      * Dashboard controller routing.
      *
-     * @param \Orchestra\Foundation\Processor\UserDashboard  $processor
+     * @param \Orchestra\Foundation\Processor\Account\ProfileDashboard  $processor
      */
     public function __construct(Processor $processor)
     {

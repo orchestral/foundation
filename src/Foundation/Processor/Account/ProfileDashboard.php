@@ -1,10 +1,11 @@
-<?php namespace Orchestra\Foundation\Processor;
+<?php namespace Orchestra\Foundation\Processor\Account;
 
 use Orchestra\Widget\WidgetManager;
-use Orchestra\Foundation\Contracts\Command\UserDashboard as Command;
-use Orchestra\Foundation\Contracts\Listener\UserDashboard as Listener;
+use Orchestra\Foundation\Processor\Processor;
+use Orchestra\Foundation\Contracts\Command\Account\ProfileDashboard as Command;
+use Orchestra\Foundation\Contracts\Listener\Account\ProfileDashboard as Listener;
 
-class UserDashboard extends Processor implements Command
+class ProfileDashboard extends Processor implements Command
 {
     /**
      * The widget manager implementation.
@@ -26,7 +27,7 @@ class UserDashboard extends Processor implements Command
     /**
      * View dashboard.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\UserDashboard  $listener
+     * @param  \Orchestra\Foundation\Contracts\Listener\Account\ProfileDashboard  $listener
      * @return mixed
      */
     public function show(Listener $listener)

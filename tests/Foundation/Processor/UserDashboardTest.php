@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Processor\TestCase;
 
 use Mockery as m;
-use Orchestra\Foundation\Processor\UserDashboard;
+use Orchestra\Foundation\Processor\Account\ProfileDashboard;
 
 class UserDashboardTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,10 +21,10 @@ class UserDashboardTest extends \PHPUnit_Framework_TestCase
      */
     public function testShowMethod()
     {
-        $listener = m::mock('\Orchestra\Foundation\Contracts\Listener\UserDashboard');
+        $listener = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\ProfileDashboard');
         $widget = m::mock('\Orchestra\Widget\WidgetManager');
 
-        $stub = new UserDashboard($widget);
+        $stub = new ProfileDashboard($widget);
 
         $widget->shouldReceive('make')->once()->with('pane.orchestra')->andReturn([]);
 
