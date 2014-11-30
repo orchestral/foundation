@@ -21,7 +21,7 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
      */
     public function testExecuteAndRedirectMethod()
     {
-        $listener = m::mock('\Orchestra\Foundation\Contracts\Listener\AssetPublishing');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
         $publisher = m::mock('\Orchestra\Foundation\Publisher\PublisherManager');
         $session = m::mock('\Illuminate\Session\Store');
 
@@ -42,7 +42,7 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
      */
     public function testPublishMethod()
     {
-        $listener = m::mock('\Orchestra\Foundation\Contracts\Listener\AssetPublishing');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
         $publisher = m::mock('\Orchestra\Foundation\Publisher\PublisherManager');
         $session = m::mock('\Illuminate\Session\Store');
 
@@ -68,7 +68,7 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
      */
     public function testPublishMethodGivenConnectionFailed()
     {
-        $listener = m::mock('\Orchestra\Foundation\Contracts\Listener\AssetPublishing');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
         $publisher = m::mock('\Orchestra\Foundation\Publisher\PublisherManager');
         $session = m::mock('\Illuminate\Session\Store');
 

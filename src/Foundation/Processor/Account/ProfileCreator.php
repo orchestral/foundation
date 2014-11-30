@@ -8,15 +8,15 @@ use Orchestra\Model\User as Eloquent;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Support\Facades\Foundation;
 use Illuminate\Contracts\Support\Arrayable;
-use Orchestra\Foundation\Contracts\Command\Account\ProfileCreator as Command;
-use Orchestra\Foundation\Contracts\Listener\Account\ProfileCreator as Listener;
+use Orchestra\Contracts\Foundation\Command\Account\ProfileCreator as Command;
+use Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator as Listener;
 
 class ProfileCreator extends User implements Command
 {
     /**
      * View registration page.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\Account\ProfileCreator  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator  $listener
      * @return mixed
      */
     public function create(Listener $listener)
@@ -36,7 +36,7 @@ class ProfileCreator extends User implements Command
     /**
      * Create a new user.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\Account\ProfileCreator  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator  $listener
      * @param  array  $input
      * @return mixed
      */
@@ -66,7 +66,7 @@ class ProfileCreator extends User implements Command
     /**
      * Send new registration e-mail to user.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\Account\ProfileCreator  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator  $listener
      * @param  \Orchestra\Model\User  $user
      * @param  string  $password
      * @return mixed

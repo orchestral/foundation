@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Routing;
 
 use Orchestra\Foundation\Processor\ResourceLoader as Processor;
-use Orchestra\Foundation\Contracts\Listener\ResourceLoader as Listener;
+use Orchestra\Contracts\Foundation\Listener\ResourceLoader as Listener;
 
 class ResourcesController extends AdminController implements Listener
 {

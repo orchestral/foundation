@@ -3,8 +3,8 @@
 use Illuminate\Session\Store;
 use Orchestra\Support\Ftp\ServerException;
 use Orchestra\Foundation\Publisher\PublisherManager;
-use Orchestra\Foundation\Contracts\Command\AssetPublisher as Command;
-use Orchestra\Foundation\Contracts\Listener\AssetPublishing as Listener;
+use Orchestra\Contracts\Foundation\Command\AssetPublisher as Command;
+use Orchestra\Contracts\Foundation\Listener\AssetPublishing as Listener;
 
 class AssetPublisher extends Processor implements Command
 {
@@ -37,7 +37,7 @@ class AssetPublisher extends Processor implements Command
     /**
      * Run publishing if possible.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\AssetPublishing  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\AssetPublishing  $listener
      * @return mixed
      */
     public function executeAndRedirect(Listener $listener)
@@ -50,7 +50,7 @@ class AssetPublisher extends Processor implements Command
     /**
      * Publish process.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\AssetPublishing  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\AssetPublishing  $listener
      * @param  array  $input
      * @return mixed
      */

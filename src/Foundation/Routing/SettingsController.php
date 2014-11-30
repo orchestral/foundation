@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Processor\Setting as Processor;
-use Orchestra\Foundation\Contracts\Listener\SystemUpdater;
-use Orchestra\Foundation\Contracts\Listener\SettingUpdater;
+use Orchestra\Contracts\Foundation\Listener\SystemUpdater;
+use Orchestra\Contracts\Foundation\Listener\SettingUpdater;
 
 class SettingsController extends AdminController implements SystemUpdater, SettingUpdater
 {
@@ -28,7 +28,7 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
     {
         $this->beforeFilter('orchestra.auth');
         $this->beforeFilter('orchestra.manage');
-        $this->beforeFilter('orchestra.csrf', ['on' => 'migrate']);
+        $this->beforeFilter('orchestra.csrf', ['only' => 'migrate']);
     }
 
     /**

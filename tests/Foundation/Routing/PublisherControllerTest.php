@@ -3,8 +3,6 @@
 use Mockery as m;
 use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Testing\TestCase;
-use Orchestra\Support\Facades\Messages;
-use Orchestra\Support\Facades\Publisher;
 
 class PublisherControllerTest extends TestCase
 {

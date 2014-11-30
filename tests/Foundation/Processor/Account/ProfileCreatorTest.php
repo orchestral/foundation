@@ -3,8 +3,8 @@
 use Mockery as m;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
-use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Support\Facades\Foundation;
+use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\Processor\Account\ProfileCreator;
 
 class ProfileCreatorTest extends TestCase
@@ -27,7 +27,7 @@ class ProfileCreatorTest extends TestCase
      */
     public function testCreateMethod()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\ProfileCreator');
+        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $user      = m::mock('\Orchestra\Model\User');
@@ -57,7 +57,7 @@ class ProfileCreatorTest extends TestCase
      */
     public function testStoreMethod()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\ProfileCreator');
+        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
@@ -106,7 +106,7 @@ class ProfileCreatorTest extends TestCase
      */
     public function testStoreMethodGivenFailedNotification()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\ProfileCreator');
+        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
@@ -155,7 +155,7 @@ class ProfileCreatorTest extends TestCase
      */
     public function testStoreMethodGivenFailedSavingToDB()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\ProfileCreator');
+        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
@@ -187,7 +187,7 @@ class ProfileCreatorTest extends TestCase
      */
     public function testStoreMethodGivenFailedValidation()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\ProfileCreator');
+        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');

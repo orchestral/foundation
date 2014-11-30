@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Processor\Account\ProfileUpdater as Processor;
-use Orchestra\Foundation\Contracts\Listener\Account\ProfileUpdater as Listener;
+use Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater as Listener;
 
 class ProfileUpdaterController extends Controller implements Listener
 {

@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Routing\Account;
 
 use Orchestra\Foundation\Routing\AdminController;
-use Orchestra\Foundation\Contracts\Listener\Account\User;
+use Orchestra\Contracts\Foundation\Listener\Account\User;
 
 abstract class Controller extends AdminController implements User
 {

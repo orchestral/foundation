@@ -5,15 +5,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Orchestra\Model\User as Eloquent;
-use Orchestra\Foundation\Contracts\Command\Account\PasswordUpdater as Command;
-use Orchestra\Foundation\Contracts\Listener\Account\PasswordUpdater as Listener;
+use Orchestra\Contracts\Foundation\Command\Account\PasswordUpdater as Command;
+use Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater as Listener;
 
 class PasswordUpdater extends User implements Command
 {
     /**
      * Get password information.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\Account\PasswordUpdater  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater  $listener
      * @return mixed
      */
     public function edit(Listener $listener)
@@ -27,7 +27,7 @@ class PasswordUpdater extends User implements Command
     /**
      * Update password information.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\Account\PasswordUpdater  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater  $listener
      * @param  array  $input
      * @return mixed
      */

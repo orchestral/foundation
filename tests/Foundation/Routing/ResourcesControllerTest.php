@@ -4,8 +4,6 @@ use Mockery as m;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\Table;
-use Orchestra\Support\Facades\Resources;
 use Orchestra\Foundation\Testing\TestCase;
 
 class ResourcesControllerTest extends TestCase

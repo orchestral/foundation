@@ -2,7 +2,7 @@
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Orchestra\Foundation\Processor\Account\ProfileDashboard as Processor;
-use Orchestra\Foundation\Contracts\Listener\Account\ProfileDashboard as Listener;
+use Orchestra\Contracts\Foundation\Listener\Account\ProfileDashboard as Listener;
 
 class DashboardController extends AdminController implements Listener
 {

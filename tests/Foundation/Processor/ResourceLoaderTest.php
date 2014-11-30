@@ -22,7 +22,7 @@ class ResourceLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testShowAllMethod()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\ResourceLoader');
+        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\ResourceLoader');
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Resource');
         $resources = m::mock('\Orchestra\Resources\Factory');
 
@@ -48,7 +48,7 @@ class ResourceLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequestMethod()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\ResourceLoader');
+        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\ResourceLoader');
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Resource');
         $resources = m::mock('\Orchestra\Resources\Factory');
 

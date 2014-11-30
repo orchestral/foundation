@@ -7,10 +7,10 @@ use Orchestra\Contracts\Memory\Provider;
 use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Presenter\Setting as Presenter;
 use Orchestra\Foundation\Validation\Setting as Validator;
-use Orchestra\Foundation\Contracts\Command\SystemUpdater as SystemUpdateCommand;
-use Orchestra\Foundation\Contracts\Listener\SystemUpdater as SystemUpdateListener;
-use Orchestra\Foundation\Contracts\Command\SettingUpdater as SettingUpdateCommand;
-use Orchestra\Foundation\Contracts\Listener\SettingUpdater as SettingUpdateListener;
+use Orchestra\Contracts\Foundation\Command\SystemUpdater as SystemUpdateCommand;
+use Orchestra\Contracts\Foundation\Listener\SystemUpdater as SystemUpdateListener;
+use Orchestra\Contracts\Foundation\Command\SettingUpdater as SettingUpdateCommand;
+use Orchestra\Contracts\Foundation\Listener\SettingUpdater as SettingUpdateListener;
 
 class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCommand
 {
@@ -38,7 +38,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
     /**
      * View setting page.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\SettingUpdater  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\SettingUpdater  $listener
      * @return mixed
      */
     public function edit(SettingUpdateListener $listener)
@@ -75,7 +75,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
     /**
      * Update setting.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\SettingUpdater  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\SettingUpdater  $listener
      * @param  array  $input
      * @return mixed
      */
@@ -124,7 +124,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
     /**
      * Migrate Orchestra Platform components.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\SystemUpdater  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\SystemUpdater  $listener
      * @return mixed
      */
     public function migrate(SystemUpdateListener $listener)

@@ -26,7 +26,7 @@ class ProfileUpdaterTest extends TestCase
      */
     public function testEditMethod()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\ProfileUpdater');
+        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $user     = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
@@ -50,7 +50,7 @@ class ProfileUpdaterTest extends TestCase
      */
     public function testUpdateMethod()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\ProfileUpdater');
+        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
@@ -85,7 +85,7 @@ class ProfileUpdaterTest extends TestCase
      */
     public function testUpdateMethodGivenUserMissmatched()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\ProfileUpdater');
+        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
@@ -110,7 +110,7 @@ class ProfileUpdaterTest extends TestCase
      */
     public function testUpdateMethodGivenValidationFailed()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\ProfileUpdater');
+        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
@@ -140,7 +140,7 @@ class ProfileUpdaterTest extends TestCase
      */
     public function testUpdateMethodGivenSavingFailed()
     {
-        $listener  = m::mock('\Orchestra\Foundation\Contracts\Listener\Account\ProfileUpdater');
+        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');

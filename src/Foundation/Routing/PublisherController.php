@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Processor\AssetPublisher;
-use Orchestra\Foundation\Contracts\Listener\AssetPublishing as Listener;
+use Orchestra\Contracts\Foundation\Listener\AssetPublishing as Listener;
 
 class PublisherController extends AdminController implements Listener
 {

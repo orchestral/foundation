@@ -2,8 +2,8 @@
 
 use Orchestra\Resources\Factory;
 use Orchestra\Foundation\Presenter\Resource as Presenter;
-use Orchestra\Foundation\Contracts\Command\ResourceLoader as Command;
-use Orchestra\Foundation\Contracts\Listener\ResourceLoader as Listener;
+use Orchestra\Contracts\Foundation\Command\ResourceLoader as Command;
+use Orchestra\Contracts\Foundation\Listener\ResourceLoader as Listener;
 
 class ResourceLoader extends Processor implements Command
 {
@@ -29,7 +29,7 @@ class ResourceLoader extends Processor implements Command
     /**
      * View list resources page.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\ResourceLoader  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\ResourceLoader  $listener
      * @return mixed
      */
     public function index(Listener $listener)
@@ -51,7 +51,7 @@ class ResourceLoader extends Processor implements Command
     /**
      * View call a resource page.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\ResourceLoader  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\ResourceLoader  $listener
      * @param  string  $request
      * @return mixed
      */
@@ -70,7 +70,7 @@ class ResourceLoader extends Processor implements Command
     /**
      * Get response callback.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\ResourceLoader  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\ResourceLoader  $listener
      * @param  string  $request
      * @param  array  $resources
      * @param  string  $name

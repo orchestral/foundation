@@ -3,14 +3,14 @@
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Orchestra\Foundation\Contracts\Listener\Account\ProfileUpdater as Listener;
+use Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater as Listener;
 
-class ProfileUpdater extends User implements \Orchestra\Foundation\Contracts\Command\Account\ProfileUpdater
+class ProfileUpdater extends User implements \Orchestra\Contracts\Foundation\Command\Account\ProfileUpdater
 {
     /**
      * Get account/profile information.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\Account\ProfileUpdater  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater  $listener
      * @return mixed
      */
     public function edit(Listener $listener)
@@ -26,7 +26,7 @@ class ProfileUpdater extends User implements \Orchestra\Foundation\Contracts\Com
     /**
      * Update profile information.
      *
-     * @param  \Orchestra\Foundation\Contracts\Listener\Account\ProfileUpdater  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater  $listener
      * @param  array  $input
      * @return mixed
      */

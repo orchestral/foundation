@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Processor\Account\PasswordUpdater as Processor;
-use Orchestra\Foundation\Contracts\Listener\Account\PasswordUpdater as Listener;
+use Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater as Listener;
 
 class PasswordUpdaterController extends Controller implements Listener
 {
