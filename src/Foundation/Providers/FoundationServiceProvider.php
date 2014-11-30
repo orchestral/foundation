@@ -17,7 +17,7 @@ class FoundationServiceProvider extends ServiceProvider
     protected $aliases = [
         'app'                        => 'Orchestra\Foundation\Application',
         'auth'                       => ['Orchestra\Auth\Guard', 'Orchestra\Contracts\Auth\Guard'],
-        'orchestra.platform.acl'     => ['Orchestra\Auth\Acl\Acl', 'Orchestra\Contracts\Auth\Acl\Acl'],
+        'orchestra.platform.acl'     => ['Orchestra\Auth\Acl\Acl', 'Orchestra\Contracts\Auth\Authorization'],
         'orchestra.platform.memory'  => ['Orchestra\Memory\Provider', 'Orchestra\Contracts\Memory\Provider'],
 
         'orchestra.acl'              => 'Orchestra\Auth\Acl\Factory',
