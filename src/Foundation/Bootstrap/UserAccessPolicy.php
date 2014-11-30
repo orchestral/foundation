@@ -2,7 +2,6 @@
 
 use Orchestra\Model\Role;
 use Illuminate\Contracts\Foundation\Application;
-use Orchestra\Model\Observer\Role as RoleObserver;
 
 class UserAccessPolicy
 {
@@ -51,7 +50,7 @@ class UserAccessPolicy
     {
         // Orchestra Platform should be able to watch any changes to Role model
         // and sync the information to "orchestra.acl".
-        Role::observe(new RoleObserver);
+        Role::observe($app->make('Orchestra\Model\Observer\Role'));
 
         // Orchestra Platform should be able to determine admin and member roles
         // dynamically.
