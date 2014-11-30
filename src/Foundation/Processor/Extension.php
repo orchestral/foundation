@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Event;
 use Orchestra\Support\Facades\Publisher;
 use Orchestra\Support\Facades\Foundation;
 use Orchestra\Support\Facades\Extension as E;
-use Orchestra\Publisher\FilePermissionException;
+use Orchestra\Contracts\Publisher\FilePermissionException;
 use Orchestra\Foundation\Presenter\Extension as ExtensionPresenter;
 use Orchestra\Foundation\Validation\Extension as ExtensionValidator;
 
