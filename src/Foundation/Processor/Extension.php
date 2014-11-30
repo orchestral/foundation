@@ -102,36 +102,4 @@ class Extension extends Processor
 
         return $listener->updateSucceed($extension);
     }
-
-    /**
-     * Execute installation or update for an extension.
-     *
-     * @param  object  $listener
-     * @param  string  $type
-     * @param  \Illuminate\Support\Fluent  $extension
-     * @param  \Closure  $callback
-     * @return mixed
-     */
-    protected function execute($listener, $type, Fluent $extension, Closure $callback)
-    {
-        try {
-            // Check if folder is writable via the web instance, this would
-            // avoid issue running Orchestra Platform with debug as true where
-            // creating/copying the directory would throw an ErrorException.
-            if (! E::permission($extension->get('name'))) {
-                throw new FilePermissionException("[{$extension->get('name')}] is not writable.");
-            }
-
-            call_user_func($callback, $extension->get('name'));
-        } catch (FilePermissionException $e) {
-            // In events where extension can't be activated due to extension
-            // publish failed to push the asset to proper path. We need to
-            // put this under a publisher queue.
-            Publisher::queue($extension->get('name'));
-
-            return call_user_func([$listener, "{$type}Failed"], $extension);
-        }
-
-        return call_user_func([$listener, "{$type}Succeed"], $extension);
-    }
 }
