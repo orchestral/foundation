@@ -1,4 +1,4 @@
-@extends('orchestra/foundation::layout.main')
+@extends('orchestra/foundation::layouts.main')
 
 @section('content')
 <div class="row">
