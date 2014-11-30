@@ -16,7 +16,7 @@ class AdminMenuHandler
     /**
      * ACL instance.
      *
-     * @var \Orchestra\Contracts\Auth\Authorization
+     * @var \Orchestra\Contracts\Authorization\Authorization
      */
     protected $acl;
 
