@@ -38,26 +38,6 @@ class Extension extends Processor
     }
 
     /**
-     * Activate an extension.
-     *
-     * @param  object  $listener
-     * @param  \Illuminate\Support\Fluent  $extension
-     * @return mixed
-     */
-    public function activate($listener, Fluent $extension)
-    {
-        if (E::started($extension->get('name'))) {
-            return $listener->suspend(404);
-        }
-
-        $type = 'activate';
-
-        return $this->execute($listener, $type, $extension, function ($name) {
-            E::activate($name);
-        });
-    }
-
-    /**
      * Deactivate an extension.
      *
      * @param  object  $listener

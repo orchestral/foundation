@@ -12,7 +12,7 @@ Foundation::namespaced('Orchestra\Foundation\Routing', function ($router) {
     // Route to extensions.
     if (Foundation::bound('orchestra.extension')) {
         $router->get('extensions', 'ExtensionsController@index');
-        $router->get('extensions/activate/{name}', 'ExtensionsController@activate');
+        $router->get('extensions/activate/{name}', 'Extension\ActivatorController@activate');
         $router->get('extensions/deactivate/{name}', 'ExtensionsController@deactivate');
         $router->get('extensions/update/{name}', 'ExtensionsController@migrate');
         $router->get('extensions/configure/{name}', 'ExtensionsController@configure');

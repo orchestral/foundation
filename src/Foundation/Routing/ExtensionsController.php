@@ -48,21 +48,6 @@ class ExtensionsController extends AdminController
     }
 
     /**
-     * Activate an extension.
-     *
-     * GET (:orchestra)/extensions/activate/(:name)
-     *
-     * @param  string  $uid
-     * @return mixed
-     */
-    public function activate($uid)
-    {
-        $extension = $this->getExtension($uid);
-
-        return $this->processor->activate($this, $extension);
-    }
-
-    /**
      * Deactivate an extension.
      *
      * GET (:orchestra)/extensions/deactivate/(:name)
@@ -162,30 +147,6 @@ class ExtensionsController extends AdminController
         Meta::set('description', trans("orchestra/foundation::title.extensions.configure"));
 
         return View::make('orchestra/foundation::extensions.configure', $data);
-    }
-
-    /**
-     * Response when activate an extension failed.
-     *
-     * @param  \Illuminate\Support\Fluent  $extension
-     * @return mixed
-     */
-    public function activateFailed(Fluent $extension)
-    {
-        return $this->redirect(handles('orchestra::publisher'));
-    }
-
-    /**
-     * Response when activate an extension succeed.
-     *
-     * @param  \Illuminate\Support\Fluent  $extension
-     * @return mixed
-     */
-    public function activateSucceed(Fluent $extension)
-    {
-        $message = trans('orchestra/foundation::response.extensions.activate', $extension->getAttributes());
-
-        return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
     }
 
     /**

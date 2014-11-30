@@ -99,7 +99,7 @@ class ExtensionsControllerTest extends TestCase
      *
      * @test
      */
-    public function testGetActivateActionGivenMgrationError()
+    public function testGetActivateActionGivenMigrationError()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
         Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(false);
