@@ -20,15 +20,17 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
      *
      * @test
      */
-    public function testHandleMethod()
+    public function testHandleMethodWithResources()
     {
-        $app = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
-        $acl = m::mock('\Orchestra\Auth\Acl\Container');
+        $app = m::mock('\Orchestra\Contracts\Foundation\Foundation');
+        $acl = m::mock('\Orchestra\Contracts\Authorization\Authorization');
         $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
         $resources = m::mock('\Orchestra\Resources\Factory')->makePartial();
         $translator = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
-        $app->shouldReceive('acl')->once()->andReturn($acl)
+        $app->shouldReceive('bound')->once()->with('orchestra.resources')->andReturn(true)
+            ->shouldReceive('make')->once()->with('orchestra.resources')->andReturn($resources)
+            ->shouldReceive('acl')->once()->andReturn($acl)
             ->shouldReceive('menu')->once()->andReturn($menu)
             ->shouldReceive('bound')->once()->with('orchestra.extension')->andReturn(true);
 
@@ -75,7 +77,49 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('title')->once()->with('Foo')->andReturn($menu)
             ->shouldReceive('link')->once()->with('foo-resource')->andReturnNull();
 
-        $stub = new AdminMenuHandler($app, $resources, $translator);
+        $stub = new AdminMenuHandler($app, $translator);
+        $stub->handle();
+    }
+
+    /**
+     * Test Orchestra\Foundation\AdminMenuHandler::handle()
+     * method.
+     *
+     * @test
+     */
+    public function testHandleMethodWithoutResources()
+    {
+        $app = m::mock('\Orchestra\Contracts\Foundation\Foundation');
+        $acl = m::mock('\Orchestra\Contracts\Authorization\Authorization');
+        $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
+        $translator = m::mock('\Illuminate\Translation\Translator')->makePartial();
+
+        $app->shouldReceive('bound')->once()->with('orchestra.resources')->andReturn(false)
+            ->shouldReceive('acl')->once()->andReturn($acl)
+            ->shouldReceive('menu')->once()->andReturn($menu)
+            ->shouldReceive('bound')->once()->with('orchestra.extension')->andReturn(true);
+
+        $acl->shouldReceive('can')->once()->with('manage-users')->andReturn(true);
+        $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.users.list')->andReturn('user');
+        $app->shouldReceive('handles')->once()->with('orchestra::users')->andReturn('user');
+        $menu->shouldReceive('add')->once()->with('users')->andReturn($menu)
+            ->shouldReceive('title')->once()->with('user')->andReturn($menu)
+            ->shouldReceive('link')->once()->with('user')->andReturnNull();
+
+        $acl->shouldReceive('can')->once()->with('manage-orchestra')->andReturn(true);
+        $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.extensions.list')->andReturn('extension');
+        $app->shouldReceive('handles')->once()->with('orchestra::extensions')->andReturn('extension');
+        $menu->shouldReceive('add')->once()->with('extensions', '>:home')->andReturn($menu)
+            ->shouldReceive('title')->once()->with('extension')->andReturn($menu)
+            ->shouldReceive('link')->once()->with('extension')->andReturnNull();
+
+        $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.settings.list')->andReturn('setting');
+        $app->shouldReceive('handles')->once()->with('orchestra::settings')->andReturn('setting');
+        $menu->shouldReceive('add')->once()->with('settings')->andReturn($menu)
+            ->shouldReceive('title')->once()->with('setting')->andReturn($menu)
+            ->shouldReceive('link')->once()->with('setting')->andReturnNull();
+
+        $stub = new AdminMenuHandler($app, $translator);
         $stub->handle();
     }
 }

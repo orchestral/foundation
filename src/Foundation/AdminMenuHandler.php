@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation;
 
 use Illuminate\Translation\Translator;
-use Orchestra\Resources\Factory as Resources;
 use Orchestra\Contracts\Foundation\Foundation as FoundationContract;
 
 class AdminMenuHandler
@@ -28,13 +27,6 @@ class AdminMenuHandler
     protected $menu;
 
     /**
-     * Resources instance.
-     *
-     * @var \Orchestra\Resources\Factory
-     */
-    protected $resources;
-
-    /**
      * Translator instance.
      *
      * @var \Illuminate\Translation\Translator
@@ -45,15 +37,13 @@ class AdminMenuHandler
      * Construct a new handler.
      *
      * @param  \Orchestra\Contracts\Foundation\Foundation  $foundation
-     * @param  \Orchestra\Resources\Factory  $resources
      * @param  \Illuminate\Translation\Translator  $translator
      */
-    public function __construct(FoundationContract $foundation, Resources $resources, Translator $translator)
+    public function __construct(FoundationContract $foundation, Translator $translator)
     {
         $this->foundation = $foundation;
         $this->menu = $foundation->menu();
         $this->acl = $foundation->acl();
-        $this->resources = $resources;
         $this->translator = $translator;
     }
 
@@ -66,12 +56,14 @@ class AdminMenuHandler
     {
         $this->settings();
 
-        $repository = $this->resources->all();
+        if ($this->foundation->bound('orchestra.resources')) {
+            $repository = $this->foundation->make('orchestra.resources')->all();
 
-        // Resources menu should only be appended if there is actually
-        // resources to be displayed.
-        if (! empty($repository)) {
-            $this->resources($repository);
+            // Resources menu should only be appended if there is actually
+            // resources to be displayed.
+            if (! empty($repository)) {
+                $this->resources($repository);
+            }
         }
     }
 

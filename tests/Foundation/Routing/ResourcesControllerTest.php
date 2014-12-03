@@ -19,6 +19,19 @@ class ResourcesControllerTest extends TestCase
     }
 
     /**
+     * Define environment setup.
+     *
+     * @param  \Illuminate\Foundation\Application   $app
+     * @return void
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+        parent::getEnvironmentSetUp($app);
+
+        $app->register('Orchestra\Resources\ResourcesServiceProvider');
+    }
+
+    /**
      * Teardown the test environment.
      */
     public function tearDown()
