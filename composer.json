@@ -41,6 +41,7 @@
 	},
 	"require-dev": {
 		"mockery/mockery": "0.9.*",
+		"orchestra/resources": "3.0.*",
 		"orchestra/testbench": "3.0.*",
 		"twbs/bootstrap": "~3@stable"
 	},
