@@ -20,6 +20,16 @@ class Application extends BaseApplication implements DeferrableServiceContainer
     }
 
     /**
+     * Get the path to the language files.
+     *
+     * @return string
+     */
+    public function langPath()
+    {
+        return $this->basePath.'/resources/lang';
+    }
+
+    /**
      * Get the application's deferred services.
      *
      * @return array
