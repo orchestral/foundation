@@ -105,6 +105,10 @@ class ServiceProviderTest extends TestCase
             'orchestra.commands.memory',
             'orchestra.commands.optimize',
             'orchestra.optimize',
+            'asset.publisher',
+            'command.asset.publish',
+            'view.publisher',
+            'command.view.publish',
             'orchestra.view.command.detect',
             'orchestra.view.command.activate',
         );
