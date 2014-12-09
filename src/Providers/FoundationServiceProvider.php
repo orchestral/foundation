@@ -129,10 +129,10 @@ class FoundationServiceProvider extends ServiceProvider
     {
         $path = realpath(__DIR__.'/../../');
 
-        $this->package('orchestra/foundation', 'orchestra/foundation', $path);
+        $this->package('orchestra/foundation', 'orchestra/foundation', $path.'/resources');
 
         if (! $this->app->routesAreCached()) {
-            require "{$path}/routes.php";
+            require "{$path}/src/routes.php";
         }
 
         $this->app['events']->fire('orchestra.ready');
