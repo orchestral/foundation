@@ -12,7 +12,7 @@ class ConsoleSupportServiceProvider extends AggregateServiceProvider
     protected $providers = [
         'Illuminate\Auth\GeneratorServiceProvider',
         'Illuminate\Console\ScheduleServiceProvider',
-        'Illuminate\Database\MigrationServiceProvider',
+        'Orchestra\Database\MigrationServiceProvider',
         'Illuminate\Database\SeedServiceProvider',
         'Illuminate\Foundation\Providers\ComposerServiceProvider',
         'Illuminate\Queue\FailConsoleServiceProvider',
