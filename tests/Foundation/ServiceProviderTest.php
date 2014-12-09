@@ -3,7 +3,6 @@
 use Mockery as m;
 use Illuminate\Foundation\Application;
 use Orchestra\Foundation\Testing\TestCase;
-use Orchestra\Auth\Passwords\PasswordResetServiceProvider;
 use Orchestra\Foundation\Providers\SupportServiceProvider;
 use Orchestra\Foundation\Providers\FoundationServiceProvider;
 use Orchestra\Foundation\Providers\ConsoleSupportServiceProvider;
@@ -75,25 +74,78 @@ class ServiceProviderTest extends TestCase
     {
         $foundation = new FoundationServiceProvider($this->app);
         $site       = new SupportServiceProvider($this->app);
-        $reminder   = new PasswordResetServiceProvider($this->app);
         $console    = new ConsoleSupportServiceProvider($this->app);
 
-        $foundationProvides = array(
+        $this->assertEquals($this->getFoundationProvides(), $foundation->provides());
+        $this->assertFalse($foundation->isDeferred());
+
+        $this->assertEquals($this->getSupportProvides(), $site->provides());
+        $this->assertTrue($site->isDeferred());
+
+        $this->assertEquals($this->getConsoleSupportProvides(), $console->provides());
+        $this->assertTrue($console->isDeferred());
+    }
+
+    /**
+     * Get value of Orchestra\Foundation\Providers\FoundationServiceProvider::provides()
+     *
+     * @return array
+     */
+    protected function getFoundationProvides()
+    {
+        return [
             'orchestra.app',
             'orchestra.installed',
             'orchestra.meta',
-        );
-        $siteProvides = array(
+        ];
+    }
+
+    /**
+     * Get value of Orchestra\Foundation\Providers\SupportServiceProvider::provides()
+     *
+     * @return array.
+     */
+    protected function getSupportProvides()
+    {
+        return [
             'orchestra.publisher',
             'orchestra.publisher.ftp',
             'orchestra.role',
             'orchestra.user',
-        );
-        $reminderProvides = array(
-            'auth.password',
-            'auth.password.tokens',
-        );
-        $consoleProvides = array(
+        ];
+    }
+
+    /**
+     * Get value of Orchestra\Foundation\Providers\ConsoleSupportServiceProvider::provides()
+     *
+     * @return array
+     */
+    protected function getConsoleSupportProvides()
+    {
+        return [
+            'command.auth.reminders.clear',
+            'Illuminate\Console\Scheduling\ScheduleRunCommand',
+            'migrator',
+            'migration.repository',
+            'command.migrate',
+            'command.migrate.rollback',
+            'command.migrate.reset',
+            'command.migrate.refresh',
+            'command.migrate.install',
+            'command.migrate.status',
+            'migration.creator',
+            'command.migrate.make',
+            'seeder',
+            'command.seed',
+            'composer',
+            'command.queue.failed',
+            'command.queue.retry',
+            'command.queue.forget',
+            'command.queue.flush',
+            'command.queue.failed-table',
+            'command.controller.make',
+            'command.middleware.make',
+            'command.session.database',
             'orchestra.commands.auth',
             'orchestra.commands.extension.activate',
             'orchestra.commands.extension.deactivate',
@@ -111,18 +163,6 @@ class ServiceProviderTest extends TestCase
             'command.view.publish',
             'orchestra.view.command.detect',
             'orchestra.view.command.activate',
-        );
-
-        $this->assertEquals($foundationProvides, $foundation->provides());
-        $this->assertFalse($foundation->isDeferred());
-
-        $this->assertEquals($siteProvides, $site->provides());
-        $this->assertTrue($site->isDeferred());
-
-        $this->assertEquals($reminderProvides, $reminder->provides());
-        $this->assertTrue($reminder->isDeferred());
-
-        $this->assertEquals($consoleProvides, $console->provides());
-        $this->assertTrue($console->isDeferred());
+        ];
     }
 }
