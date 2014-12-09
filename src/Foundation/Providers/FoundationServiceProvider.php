@@ -2,7 +2,7 @@
 
 use Orchestra\Foundation\Meta;
 use Orchestra\Foundation\Foundation;
-use Illuminate\Support\ServiceProvider;
+use Orchestra\Support\Providers\ServiceProvider;
 use Orchestra\Support\Providers\Traits\AliasesProviderTrait;
 
 class FoundationServiceProvider extends ServiceProvider

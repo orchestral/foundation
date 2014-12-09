@@ -86,7 +86,6 @@ abstract class TestCase extends TestbenchTestCase
             'Illuminate\Hashing\HashServiceProvider',
             'Illuminate\Mail\MailServiceProvider',
             'Illuminate\Pagination\PaginationServiceProvider',
-            'Illuminate\Foundation\Providers\PublisherServiceProvider',
             'Illuminate\Queue\QueueServiceProvider',
             'Illuminate\Redis\RedisServiceProvider',
             'Illuminate\Session\SessionServiceProvider',
@@ -149,7 +148,11 @@ abstract class TestCase extends TestbenchTestCase
      */
     protected function resolveApplication()
     {
-        return new Application($this->getBasePath());
+        $app = new Application($this->getBasePath());
+
+        $app->bind('Illuminate\Foundation\Bootstrap\LoadConfiguration', 'Orchestra\Config\Bootstrap\LoadConfiguration');
+
+        return $app;
     }
 
     /**
