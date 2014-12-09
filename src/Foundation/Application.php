@@ -26,7 +26,7 @@ class Application extends BaseApplication implements DeferrableServiceContainer
      */
     public function configPath()
     {
-        return $this->basePath.'/config';
+        return $this->basePath.'/resources/config';
     }
 
     /**
@@ -36,7 +36,7 @@ class Application extends BaseApplication implements DeferrableServiceContainer
      */
     public function databasePath()
     {
-        return $this->basePath.'/database';
+        return $this->basePath.'/resources/database';
     }
 
     /**
