@@ -11,14 +11,14 @@ gulp.task('css', function () {
     return gulp.src('resources/assets/less/orchestra.less')
         .pipe(less())
         .pipe(csso())
-        .pipe(gulp.dest('public/css'));
+        .pipe(gulp.dest('resources/public/css'));
 });
 
 // Coffee
 gulp.task('js', function () {
     return gulp.src('resources/assets/coffee/orchestra.coffee')
         .pipe(coffee().on('error', gutil.log))
-        .pipe(gulp.dest('public/js'));
+        .pipe(gulp.dest('resources/public/js'));
 });
 
 // Minify JavaScript
@@ -30,17 +30,17 @@ gulp.task('uglify', function () {
         }
     };
 
-    return gulp.src('public/js/orchestra.js')
+    return gulp.src('resources/public/js/orchestra.js')
         .pipe(rename({suffix: '.min'}))
         .pipe(uglify(options))
-        .pipe(gulp.dest('public/js'))
+        .pipe(gulp.dest('resources/public/js'))
 });
 
 // Add file watch
 gulp.task('watch', function () {
     gulp.watch('resources/assets/less/orchestra.less', ['css']);
     gulp.watch('resources/assets/coffee/orchestra.coffee', ['js']);
-    gulp.watch('public/css/orchestra.js', ['uglify']);
+    gulp.watch('resources/public/css/orchestra.js', ['uglify']);
 });
 
 // Default task.

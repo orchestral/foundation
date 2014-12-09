@@ -14,20 +14,20 @@
     "select2": "~3.4.8"
   },
   "install" : {
-    "path": "public/components",
+    "path": "resources/public/components",
     "sources": {
       "jquery": [
-        "components/jquery/jquery.js",
-        "components/jquery/jquery.min.js",
-        "components/jquery/jquery.min.map"
+        "resources/components/jquery/jquery.js",
+        "resources/components/jquery/jquery.min.js",
+        "resources/components/jquery/jquery.min.map"
       ],
       "select2": [
-        "components/select2/select2.js",
-        "components/select2/select2.min.js",
-        "components/select2/select2-spinner.gif",
-        "components/select2/select2.css",
-        "components/select2/select2.png",
-        "components/select2/select2x2.png"
+        "resources/components/select2/select2.js",
+        "resources/components/select2/select2.min.js",
+        "resources/components/select2/select2-spinner.gif",
+        "resources/components/select2/select2.css",
+        "resources/components/select2/select2.png",
+        "resources/components/select2/select2x2.png"
       ]
     }
   }
