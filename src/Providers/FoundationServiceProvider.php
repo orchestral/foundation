@@ -16,6 +16,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected $aliases = [
         'app'                        => 'Orchestra\Foundation\Application',
+        'config'                     => 'Orchestra\Config\Repository',
         'auth.driver'                => ['Orchestra\Auth\Guard', 'Orchestra\Contracts\Auth\Guard'],
         'orchestra.platform.acl'     => ['Orchestra\Authorization\Authorization', 'Orchestra\Contracts\Authorization\Authorization'],
         'orchestra.platform.memory'  => ['Orchestra\Memory\Provider', 'Orchestra\Contracts\Memory\Provider'],
@@ -57,7 +58,6 @@ class FoundationServiceProvider extends ServiceProvider
         'Orchestra\Support\Facades\Messages' => 'Orchestra\Messages',
         'Orchestra\Support\Facades\Notifier' => 'Orchestra\Notifier',
         'Orchestra\Support\Facades\Publisher' => 'Orchestra\Publisher',
-        'Orchestra\Support\Facades\Resources' => 'Orchestra\Resources',
         'Orchestra\Support\Facades\Meta' => 'Orchestra\Meta',
         'Orchestra\Support\Facades\Table' => 'Orchestra\Table',
         'Orchestra\Support\Facades\Theme' => 'Orchestra\Theme',
