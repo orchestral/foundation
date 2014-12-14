@@ -54,16 +54,6 @@ abstract class ApplicationTestCase extends TestCase
     }
 
     /**
-     * Get base path.
-     *
-     * @return string
-     */
-    protected function getBasePath()
-    {
-        return realpath(__DIR__.'/../');
-    }
-
-    /**
      * Resolve application implementation.
      *
      * @return \Illuminate\Foundation\Application
