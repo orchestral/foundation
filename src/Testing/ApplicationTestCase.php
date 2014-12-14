@@ -1,63 +1,102 @@
 <?php namespace Orchestra\Foundation\Testing;
 
+use Orchestra\Foundation\Application;
+
 abstract class ApplicationTestCase extends TestCase
 {
     /**
-     * Setup the test environment.
+     * Creates the application.
+     *
+     * Needs to be implemented by subclasses.
+     *
+     * @return \Illuminate\Foundation\Application
      */
-    public function setUp()
+    public function createApplication()
     {
-        parent::setUp();
+        $app = parent::createApplication();
 
-        $this->runInstallation();
+        $bootstraps = [
+            'Orchestra\Foundation\Bootstrap\UserAccessPolicy',
+            'Orchestra\Foundation\Bootstrap\LoadFoundation',
+            'Orchestra\Extension\Bootstrap\LoadExtension',
+            'Orchestra\Foundation\Bootstrap\LoadUserMetaData',
+            'Orchestra\View\Bootstrap\LoadCurrentTheme',
+            'Orchestra\Foundation\Bootstrap\LoadExpresso',
+        ];
+
+        foreach ($bootstraps as $bootstrap) {
+            $app->make($bootstrap)->bootstrap($app);
+        }
+
+        return $app;
+    }
+
+     /**
+     * Get application aliases.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return array
+     */
+    protected function getApplicationAliases($app)
+    {
+        return $app['config']['app.aliases'];
     }
 
     /**
-     * Define environment setup.
+     * Get application providers.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return array
+     */
+    protected function getApplicationProviders($app)
+    {
+        return $app['config']['app.providers'];
+    }
+
+    /**
+     * Get base path.
+     *
+     * @return string
+     */
+    protected function getBasePath()
+    {
+        return realpath(__DIR__.'/../');
+    }
+
+    /**
+     * Resolve application implementation.
+     *
+     * @return \Illuminate\Foundation\Application
+     */
+    protected function resolveApplication()
+    {
+        $app = new Application($this->getBasePath());
+
+        $app->singleton('Illuminate\Foundation\Bootstrap\LoadConfiguration', 'Orchestra\Config\Bootstrap\LoadConfiguration');
+        $app->singleton('Illuminate\Contracts\Debug\ExceptionHandler', 'App\Exceptions\Handler');
+
+        return $app;
+    }
+
+    /**
+     * Resolve application Console Kernel implementation.
      *
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
-    protected function getEnvironmentSetUp($app)
+    protected function resolveApplicationConsoleKernel($app)
     {
-        $app['config']->set('auth.model', 'Orchestra\Model\User');
+        $app->singleton('Illuminate\Contracts\Console\Kernel', 'App\Console\Kernel');
     }
 
     /**
-     * Installation Setup.
+     * Resolve application HTTP Kernel implementation.
      *
+     * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
-    protected function runInstallation()
+    protected function resolveApplicationHttpKernel($app)
     {
-        $installer   = new \Orchestra\Foundation\Installation\Installation($this->app);
-        $requirement = new \Orchestra\Foundation\Installation\Requirement($this->app);
-
-        if (! $requirement->check()) {
-            $this->markTestIncomplete('This testcase requirement a database connection.');
-        }
-
-        if (! $installer->migrate()) {
-            $this->markTestIncomplete('Unable to install the application.');
-        }
-
-        if (! $installer->createAdmin($this->getApplicationFixture())) {
-            $this->markTestIncomplete('Unable to setup the application.');
-        }
-    }
-
-    /**
-     * Define Administrator fixture.
-     *
-     * @return array
-     */
-    protected function getApplicationFixture()
-    {
-        return array(
-            'email'     => 'hello@orchestraplatform.com',
-            'password'  => 'awesome',
-            'fullname'  => 'Administrator',
-            'site_name' => 'Orchestra Platform',
-        );
+        $app->singleton('Illuminate\Contracts\Http\Kernel', 'App\Http\Kernel');
     }
 }
