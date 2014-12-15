@@ -57,13 +57,6 @@ abstract class MenuHandler
     protected abstract function getPosition();
 
     /**
-     * Get the icon.
-     *
-     * @return string
-     */
-    protected abstract function getIcon();
-
-    /**
      * Get the title.
      *
      * @return string
