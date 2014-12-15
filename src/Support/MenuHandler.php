@@ -34,7 +34,7 @@ abstract class MenuHandler
      *
      * @return void
      */
-    public function handles()
+    public function handle()
     {
         if (! $this->passesAuthorization()) {
             return ;
@@ -44,7 +44,7 @@ abstract class MenuHandler
                     ->title($this->getTitle())
                     ->link($this->getLink());
 
-        if (! method_exist($this, 'getIcon')) {
+        if (method_exists($this, 'getIcon')) {
             $menu->icon($this->getIcon());
         }
     }
