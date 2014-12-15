@@ -12,6 +12,13 @@ abstract class MenuHandler
     protected $container;
 
     /**
+     * Menu instance.
+     *
+     * @var \Orchestra\Widget\Handlers\Menu
+     */
+    protected $menu;
+
+    /**
      * Construct a new handler.
      *
      * @param  \Illuminate\Contracts\Container\Container  $container
@@ -19,6 +26,7 @@ abstract class MenuHandler
     public function __construct(Container $container)
     {
         $this->container = $container;
+        $this->menu = $container->make('orchestra.platform.menu');
     }
 
     /**
@@ -32,8 +40,7 @@ abstract class MenuHandler
             return ;
         }
 
-        $menu = $this->container->make('orchestra.platform.menu')
-                    ->add($this->getId(), $this->getPosition())
+        $menu = $this->createMenu()
                     ->title($this->getTitle())
                     ->link($this->getLink());
 
@@ -47,28 +54,38 @@ abstract class MenuHandler
      *
      * @return string
      */
-    protected abstract function getId();
+    abstract protected function getId();
 
     /**
      * Get position.
      *
      * @return string
      */
-    protected abstract function getPosition();
+    abstract protected function getPosition();
 
     /**
      * Get the title.
      *
      * @return string
      */
-    protected abstract function getTitle();
+    abstract protected function getTitle();
 
     /**
      * Get the URL.
      *
      * @return string
      */
-    protected abstract function getLink();
+    abstract protected function getLink();
+
+    /**
+     * Create a new menu.
+     *
+     * @return \Illuminate\Support\Fluent
+     */
+    protected function createMenu()
+    {
+        return $this->menu->add($this->getId(), $this->getPosition());
+    }
 
     /**
      * Determine if the request passes the authorization check.
@@ -77,8 +94,7 @@ abstract class MenuHandler
      */
     protected function passesAuthorization()
     {
-        if (method_exists($this, 'authorize'))
-        {
+        if (method_exists($this, 'authorize')) {
             return $this->container->call([$this, 'authorize']);
         }
 
