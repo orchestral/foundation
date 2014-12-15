@@ -64,18 +64,18 @@ abstract class MenuHandler
     abstract protected function getPosition();
 
     /**
-     * Get the title.
-     *
-     * @return string
-     */
-    abstract protected function getTitle();
-
-    /**
      * Get the URL.
      *
      * @return string
      */
     abstract protected function getLink();
+
+    /**
+     * Get the title.
+     *
+     * @return string
+     */
+    abstract protected function getTitle();
 
     /**
      * Create a new menu.
