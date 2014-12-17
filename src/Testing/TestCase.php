@@ -141,6 +141,16 @@ abstract class TestCase extends TestbenchTestCase
     }
 
     /**
+     * Get base path.
+     *
+     * @return string
+     */
+    protected function getBasePath()
+    {
+        return __DIR__.'/../../tests/fixture';
+    }
+
+    /**
      * Resolve application implementation.
      *
      * @return \Illuminate\Foundation\Application
