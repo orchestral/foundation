@@ -4,9 +4,7 @@
 <ul class="nav navbar-nav navbar-right">
 	<li class="dropdown" id="user-menu">
 		<a href="#user-menu" rel="user-menu" class="dropdown-toggle" data-toggle="dropdown">
-			<i class="icon-user"></i>
-			&nbsp;
-			{{ $user->fullname or trans('orchestra/foundation::title.login') }}
+			<i class="icon-user"></i> {{ ! is_null($user) ? $user->fullname : trans('orchestra/foundation::title.login') }}
 		</a>
 		@unless (is_null($user))
 		<ul class="dropdown-menu">
