@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\Bootstrap\TestCase;
 
 use Mockery as m;
+use Orchestra\Testing\TestCase;
 use Orchestra\Support\Facades\Meta;
-use Orchestra\Foundation\Testing\TestCase;
 
 class LoadExpressoTest extends TestCase
 {

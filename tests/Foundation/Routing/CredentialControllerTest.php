@@ -1,11 +1,11 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
+use Orchestra\Testing\TestCase;
 use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Testing\TestCase;
 
 class CredentialControllerTest extends TestCase
 {

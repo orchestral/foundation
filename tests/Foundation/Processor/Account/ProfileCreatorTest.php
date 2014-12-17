@@ -1,10 +1,10 @@
 <?php namespace Orchestra\Foundation\Processor\Account\TestCase;
 
 use Mockery as m;
+use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\Processor\Account\ProfileCreator;
 
 class ProfileCreatorTest extends TestCase

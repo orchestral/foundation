@@ -1,10 +1,10 @@
 <?php namespace Orchestra\Foundation\Routing\Account\TestCase;
 
 use Mockery as m;
+use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Testing\TestCase;
 
 class ProfileUpdaterControllerTest extends TestCase
 {

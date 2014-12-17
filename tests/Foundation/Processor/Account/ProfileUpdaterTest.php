@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Foundation\Processor\Account\TestCase;
 
 use Mockery as m;
+use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\Processor\Account\ProfileUpdater;
 
 class ProfileUpdaterTest extends TestCase

@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Bootstrap\TestCase;
 
 use Mockery as m;
-use Orchestra\Foundation\Testing\TestCase;
+use Orchestra\Testing\TestCase;
 
 class UserAccessPolicyTest extends TestCase
 {

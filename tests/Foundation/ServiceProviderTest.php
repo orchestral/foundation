@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
+use Orchestra\Testing\TestCase;
 use Illuminate\Foundation\Application;
-use Orchestra\Foundation\Testing\TestCase;
 use Orchestra\Foundation\Providers\SupportServiceProvider;
 use Orchestra\Foundation\Providers\FoundationServiceProvider;
 use Orchestra\Foundation\Providers\ConsoleSupportServiceProvider;

@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\Routing\TestCase;
 
 use Mockery as m;
+use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\View;
-use Orchestra\Foundation\Testing\TestCase;
 
 class DashboardControllerTest extends TestCase
 {

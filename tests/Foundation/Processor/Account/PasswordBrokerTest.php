@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Foundation\Processor\Account\TestCase;
 
 use Mockery as m;
+use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\Auth;
 use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Testing\TestCase;
 use Illuminate\Contracts\Auth\PasswordBroker as Password;
 use Orchestra\Foundation\Processor\Account\PasswordBroker;
 

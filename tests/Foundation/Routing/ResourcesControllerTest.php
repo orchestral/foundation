@@ -2,9 +2,9 @@
 
 use Mockery as m;
 use Illuminate\Support\Fluent;
+use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
-use Orchestra\Foundation\Testing\TestCase;
 
 class ResourcesControllerTest extends TestCase
 {

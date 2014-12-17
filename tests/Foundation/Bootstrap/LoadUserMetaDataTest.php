@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Bootstrap\TestCase;
 
-use Orchestra\Foundation\Testing\TestCase;
+use Orchestra\Testing\TestCase;
 
 class LoadUserMetaDataTest extends TestCase
 {
