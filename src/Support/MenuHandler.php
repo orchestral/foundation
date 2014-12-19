@@ -40,7 +40,7 @@ abstract class MenuHandler
     public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->handler = $this->menu = $container->make('orchestra.platform.menu');
+        $this->handler = $container->make('orchestra.platform.menu');
     }
 
     /**
