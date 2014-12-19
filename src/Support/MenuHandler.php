@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Support;
 
+use Illuminate\Support\Arr;
 use Illuminate\Contracts\Container\Container;
 
 abstract class MenuHandler
@@ -12,11 +13,24 @@ abstract class MenuHandler
     protected $container;
 
     /**
+     * Menu configuration.
+     *
+     * @var array
+     */
+    protected $menu = [
+        'id'       => null,
+        'position' => '*',
+        'title'    => null,
+        'link'     => '#',
+        'icon'     => null,
+    ];
+
+    /**
      * Menu instance.
      *
      * @var \Orchestra\Widget\Handlers\Menu
      */
-    protected $menu;
+    protected $handler;
 
     /**
      * Construct a new handler.
@@ -26,7 +40,7 @@ abstract class MenuHandler
     public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->menu = $container->make('orchestra.platform.menu');
+        $this->handler = $this->menu = $container->make('orchestra.platform.menu');
     }
 
     /**
@@ -41,41 +55,23 @@ abstract class MenuHandler
         }
 
         $menu = $this->createMenu()
-                    ->title($this->getTitle())
-                    ->link($this->getLink());
+                    ->title($this->title())
+                    ->link($this->link());
 
-        if (method_exists($this, 'getIcon')) {
-            $menu->icon($this->getIcon());
+        if (! is_null($icon = $this->icon())) {
+            $menu->icon($icon);
         }
     }
-
-    /**
-     * Get ID.
-     *
-     * @return string
-     */
-    abstract protected function getId();
-
-    /**
-     * Get position.
-     *
-     * @return string
-     */
-    abstract protected function getPosition();
 
     /**
      * Get the URL.
      *
      * @return string
      */
-    abstract protected function getLink();
-
-    /**
-     * Get the title.
-     *
-     * @return string
-     */
-    abstract protected function getTitle();
+    protected function getLink()
+    {
+        return handles($this->menu['link']);
+    }
 
     /**
      * Create a new menu.
@@ -84,7 +80,7 @@ abstract class MenuHandler
      */
     protected function createMenu()
     {
-        return $this->menu->add($this->getId(), $this->getPosition());
+        return $this->handler->add($this->id(), $this->position());
     }
 
     /**
@@ -99,5 +95,23 @@ abstract class MenuHandler
         }
 
         return false;
+    }
+
+    /**
+     *  Handle dynamic calls to the container to get attributes.
+     *
+     * @param  string  $name
+     * @param  array   $parameters
+     * @return mixed
+     */
+    public function __call($name, $parameters)
+    {
+        $method = 'get'.ucfirst($name);
+
+        if (method_exists($this, $method)) {
+            return $this->container->call([$this, $method]);
+        }
+
+        return Arr::get($this->menu, $name);
     }
 }
