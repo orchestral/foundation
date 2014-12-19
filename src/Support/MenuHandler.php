@@ -68,7 +68,7 @@ abstract class MenuHandler
      *
      * @return string
      */
-    protected function getLink()
+    public function getLink()
     {
         return handles($this->menu['link']);
     }
