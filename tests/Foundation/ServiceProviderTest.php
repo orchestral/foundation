@@ -138,6 +138,7 @@ class ServiceProviderTest extends TestCase
             'seeder',
             'command.seed',
             'composer',
+            'command.queue.table',
             'command.queue.failed',
             'command.queue.retry',
             'command.queue.forget',
