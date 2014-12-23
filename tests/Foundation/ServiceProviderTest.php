@@ -142,6 +142,8 @@ class ServiceProviderTest extends TestCase
             'orchestra.commands.memory',
             'orchestra.commands.optimize',
             'orchestra.optimize',
+            'orchestra.view.command.detect',
+            'orchestra.view.command.activate',
         );
 
         $this->assertEquals($foundationProvides, $foundation->provides());
