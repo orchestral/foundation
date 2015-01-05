@@ -2,9 +2,8 @@
 
 use Closure;
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Contracts\Routing\Middleware;
 
-class UseBackendTheme implements Middleware
+class UseBackendTheme
 {
     /**
      * The event dispatcher implementation.
