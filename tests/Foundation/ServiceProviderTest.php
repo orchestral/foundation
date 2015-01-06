@@ -48,24 +48,6 @@ class ServiceProviderTest extends TestCase
     }
 
     /**
-     * Test instance of auth password broker.
-     *
-     * @test
-     */
-    public function testInstanceOfAuthPasswordBroker()
-    {
-        $app = $this->app;
-        $app['auth.password.tokens'] = m::mock('\Illuminate\Auth\Passwords\TokenRepositoryInterface');
-        $app['auth'] = $user = m::mock('\Illuminate\Auth\UserProviderInterface');
-
-        $user->shouldReceive('driver')->once()->andReturn($user)
-            ->shouldReceive('getProvider')->once()->andReturn($user);
-
-        $stub = $this->app->make('auth.password');
-        $this->assertInstanceOf('\Orchestra\Auth\Passwords\PasswordBroker', $stub);
-    }
-
-    /**
      * Test list of provides.
      *
      * @test
