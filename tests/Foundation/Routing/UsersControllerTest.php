@@ -18,7 +18,9 @@ class UsersControllerTest extends TestCase
     {
         parent::setUp();
 
+        View::shouldReceive('addNamespace');
         View::shouldReceive('share')->once()->with('errors', m::any());
+
         $this->app['Illuminate\Contracts\Auth\Authenticatable'] = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
     }
 

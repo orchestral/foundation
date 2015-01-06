@@ -16,6 +16,7 @@ class SettingsControllerTest extends TestCase
     {
         parent::setUp();
 
+        View::shouldReceive('addNamespace');
         View::shouldReceive('share')->once()->with('errors', m::any());
     }
 
