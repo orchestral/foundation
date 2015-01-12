@@ -105,7 +105,7 @@ class ServiceProviderTest extends TestCase
     protected function getConsoleSupportProvides()
     {
         return [
-            'command.auth.reminders.clear',
+            'command.auth.resets.clear',
             'Illuminate\Console\Scheduling\ScheduleRunCommand',
             'migrator',
             'migration.repository',
