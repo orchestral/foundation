@@ -31,7 +31,7 @@ class IsRegistrable
     public function filter()
     {
         if (! $this->foundation->memory()->get('site.registrable', false)) {
-            throw new NotFoundHttpException('User registration is not available.');
+            throw new NotFoundHttpException('User registration is not allowed.');
         }
     }
 }
