@@ -127,11 +127,11 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $path = realpath(__DIR__.'/../../resources');
+        $path = realpath(__DIR__.'/../../');
 
-        $this->addConfigComponent('orchestra/foundation', 'orchestra/foundation', $path.'/config');
-        $this->addLanguageComponent('orchestra/foundation', 'orchestra/foundation', $path.'/lang');
-        $this->addViewComponent('orchestra/foundation', 'orchestra/foundation', $path.'/views');
+        $this->addConfigComponent('orchestra/foundation', 'orchestra/foundation', $path.'/resources/config');
+        $this->addLanguageComponent('orchestra/foundation', 'orchestra/foundation', $path.'/resources/lang');
+        $this->addViewComponent('orchestra/foundation', 'orchestra/foundation', $path.'/resources/views');
 
         if (! $this->app->routesAreCached()) {
             require "{$path}/src/routes.php";
