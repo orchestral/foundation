@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Routing\Router;
 use Orchestra\Support\Facades\Foundation;
 
-Foundation::namespaced('Orchestra\Foundation\Routing', function ($router) {
+Foundation::namespaced('Orchestra\Foundation\Routing', function (Router $router) {
     // Route to account/profile.
     $router->get('account', 'Account\ProfileUpdaterController@edit');
     $router->post('account', 'Account\ProfileUpdaterController@update');
@@ -44,7 +45,7 @@ Foundation::namespaced('Orchestra\Foundation\Routing', function ($router) {
 
     // Route to users.
     $router->resource('users', 'UsersController', ['except' => ['show']]);
-    $router->any('users/{user}/delete', 'UsersController@delete');
+    $router->match(['GET', 'HEAD', 'DELETE'], 'users/{user}/delete', 'UsersController@delete');
 
     // Route for settings
     $router->get('settings', 'SettingsController@edit');
@@ -54,13 +55,13 @@ Foundation::namespaced('Orchestra\Foundation\Routing', function ($router) {
     // Route for credentials.
     $router->get('login', 'CredentialController@index');
     $router->post('login', 'CredentialController@login');
-    $router->any('logout', 'CredentialController@logout');
+    $router->match(['GET', 'HEAD', 'DELETE'], 'logout', 'CredentialController@logout');
 
     $router->get('register', 'Account\ProfileCreatorController@create');
     $router->post('register', 'Account\ProfileCreatorController@store');
 
     // Base routing.
-    $router->any('/', [
+    $router->match(['GET', 'HEAD'], '/', [
         'as'     => 'orchestra.dashboard',
         'before' => 'orchestra.installable',
         'uses'   => 'DashboardController@show'
