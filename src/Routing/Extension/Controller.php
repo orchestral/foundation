@@ -19,13 +19,14 @@ abstract class Controller extends AdminController implements Extension
     /**
      * Get extension information.
      *
-     * @param  string  $uid
+     * @param  string  $vendor
+     * @param  string|null  $package
      * @return \Illuminate\Support\Fluent
      */
-    protected function getExtension($uid)
+    protected function getExtension($vendor, $package = null)
     {
-        $name = str_replace('.', '/', $uid);
+        $name = (is_null($package) ? $vendor : implode('/', [$vendor, $package]));
 
-        return new Fluent(['name' => $name, 'uid' => $uid]);
+        return new Fluent(['name' => $name, 'uid' => $name]);
     }
 }

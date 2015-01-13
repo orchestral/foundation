@@ -36,9 +36,7 @@ class Extension extends Presenter
     public function configure($model, $name)
     {
         return $this->form->of("orchestra.extension: {$name}", function (FormGrid $form) use ($model, $name) {
-            $uid = str_replace('/', '.', $name);
-
-            $form->setup($this, "orchestra::extensions/configure/{$uid}", $model);
+            $form->setup($this, "orchestra::extensions/{$name}/configure", $model);
 
             $handles      = data_get($model, 'handles', $this->extension->option($name, 'handles'));
             $configurable = data_get($model, 'configurable', true);
@@ -54,10 +52,8 @@ class Extension extends Presenter
                 $fieldset->control('input:text', 'migrate')
                     ->label(trans('orchestra/foundation::label.extensions.update'))
                     ->field(function () use ($name) {
-                        $uid = str_replace('/', '.', $name);
-
                         return app('html')->link(
-                            handles("orchestra::extensions/update/{$uid}", ['csrf' => true]),
+                            handles("orchestra::extensions/{$name}/update", ['csrf' => true]),
                             trans('orchestra/foundation::label.extensions.actions.update'),
                             ['class' => 'btn btn-info']
                         );

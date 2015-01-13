@@ -29,12 +29,13 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      * GET (:orchestra)/extensions/activate/(:name)
      *
      * @param  \Orchestra\Extension\Processor\Activator  $activator
-     * @param  string  $name
+     * @param  string  $vendor
+     * @param  string|null  $package
      * @return mixed
      */
-    public function activate(ActivatorProcessor $activator, $name)
+    public function activate(ActivatorProcessor $activator, $vendor, $package = null)
     {
-        return $activator->activate($this, $this->getExtension($name));
+        return $activator->activate($this, $this->getExtension($vendor, $package));
     }
 
     /**
@@ -43,12 +44,13 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      * GET (:orchestra)/extensions/activate/(:name)
      *
      * @param  \Orchestra\Extension\Processor\Migrator  $migrator
-     * @param  string  $name
+     * @param  string  $vendor
+     * @param  string|null  $package
      * @return mixed
      */
-    public function migrate(MigratorProcessor $migrator, $name)
+    public function migrate(MigratorProcessor $migrator, $vendor, $package = null)
     {
-        return $migrator->migrate($this, $this->getExtension($name));
+        return $migrator->migrate($this, $this->getExtension($vendor, $package));
     }
 
     /**
@@ -57,12 +59,13 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      * GET (:orchestra)/extensions/deactivate/(:name)
      *
      * @param  \Orchestra\Extension\Processor\Deactivator  $deactivator
-     * @param  string  $name
+     * @param  string  $vendor
+     * @param  string|null  $package
      * @return mixed
      */
-    public function deactivate(DeactivatorProcessor $deactivator, $name)
+    public function deactivate(DeactivatorProcessor $deactivator, $vendor, $package = null)
     {
-        return $deactivator->deactivate($this, $this->getExtension($name));
+        return $deactivator->deactivate($this, $this->getExtension($vendor, $package));
     }
 
     /**

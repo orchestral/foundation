@@ -70,7 +70,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
                     $c();
                 });
         $fieldset->shouldReceive('control')->twice()->with('input:text', m::any())->andReturn($control);
-        $grid->shouldReceive('setup')->once()->with($stub, 'orchestra::extensions/configure/foo.bar', $model)->andReturnNull()
+        $grid->shouldReceive('setup')->once()->with($stub, 'orchestra::extensions/foo/bar/configure', $model)->andReturnNull()
             ->shouldReceive('fieldset')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);
@@ -84,7 +84,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
                 });
 
         $app['html']->shouldReceive('link')->once()
-                ->with(handles("orchestra/foundation::extensions/update/foo.bar"), m::any(), m::any())
+                ->with(handles("orchestra/foundation::extensions/foo/bar/update"), m::any(), m::any())
                 ->andReturn('foo');
 
         $this->assertEquals('foo', $stub->configure($model, 'foo/bar'));

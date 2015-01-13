@@ -77,7 +77,7 @@ class ExtensionsControllerTest extends TestCase
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', array())->andReturn('extensions');
 
-        $this->call('GET', 'admin/extensions/activate/laravel.framework');
+        $this->call('GET', 'admin/extensions/laravel/framework/activate');
         $this->assertRedirectedTo('extensions');
     }
 
@@ -92,7 +92,7 @@ class ExtensionsControllerTest extends TestCase
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
 
-        $this->call('GET', 'admin/extensions/activate/laravel.framework');
+        $this->call('GET', 'admin/extensions/laravel/framework/activate');
     }
 
     /**
@@ -107,7 +107,7 @@ class ExtensionsControllerTest extends TestCase
         Publisher::shouldReceive('queue')->once()->with('laravel/framework')->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::publisher', array())->andReturn('publisher');
 
-        $this->call('GET', 'admin/extensions/activate/laravel.framework');
+        $this->call('GET', 'admin/extensions/laravel/framework/activate');
         $this->assertRedirectedTo('publisher');
     }
 
@@ -123,7 +123,7 @@ class ExtensionsControllerTest extends TestCase
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', array())->andReturn('extensions');
 
-        $this->call('GET', 'admin/extensions/deactivate/laravel.framework');
+        $this->call('GET', 'admin/extensions/laravel/framework/deactivate');
         $this->assertRedirectedTo('extensions');
     }
 
@@ -139,7 +139,7 @@ class ExtensionsControllerTest extends TestCase
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
         Extension::shouldReceive('activated')->once()->with('laravel/framework')->andReturn(false);
 
-        $this->call('GET', 'admin/extensions/deactivate/laravel.framework');
+        $this->call('GET', 'admin/extensions/laravel/framework/deactivate');
     }
 
     /**
@@ -166,7 +166,7 @@ class ExtensionsControllerTest extends TestCase
         View::shouldReceive('make')->once()
             ->with('orchestra/foundation::extensions.configure', m::type('Array'))->andReturn('foo');
 
-        $this->call('GET', 'admin/extensions/configure/laravel.framework');
+        $this->call('GET', 'admin/extensions/laravel/framework/configure');
         $this->assertResponseOk();
     }
 
@@ -181,7 +181,7 @@ class ExtensionsControllerTest extends TestCase
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
 
-        $this->call('GET', 'admin/extensions/configure/laravel.framework');
+        $this->call('GET', 'admin/extensions/laravel/framework/configure');
     }
 
     /**
@@ -215,7 +215,7 @@ class ExtensionsControllerTest extends TestCase
         Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', array())->andReturn('extensions');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
 
-        $this->call('POST', 'admin/extensions/configure/laravel.framework', $input);
+        $this->call('POST', 'admin/extensions/laravel/framework/configure', $input);
         $this->assertRedirectedTo('extensions');
     }
 
@@ -235,7 +235,7 @@ class ExtensionsControllerTest extends TestCase
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
 
-        $this->call('POST', 'admin/extensions/configure/laravel.framework', $input);
+        $this->call('POST', 'admin/extensions/laravel/framework/configure', $input);
     }
 
     /**
@@ -258,9 +258,9 @@ class ExtensionsControllerTest extends TestCase
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Foundation::shouldReceive('handles')->once()
-            ->with('orchestra::extensions/configure/laravel.framework', array())->andReturn('extensions');
+            ->with('orchestra::extensions/laravel/framework/configure', array())->andReturn('extensions');
 
-        $this->call('POST', 'admin/extensions/configure/laravel.framework', $input);
+        $this->call('POST', 'admin/extensions/laravel/framework/configure', $input);
         $this->assertRedirectedTo('extensions');
     }
 
@@ -277,7 +277,7 @@ class ExtensionsControllerTest extends TestCase
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', array())->andReturn('extensions');
 
-        $this->call('GET', 'admin/extensions/update/laravel.framework');
+        $this->call('GET', 'admin/extensions/laravel/framework/update');
         $this->assertRedirectedTo('extensions');
     }
 
@@ -292,7 +292,7 @@ class ExtensionsControllerTest extends TestCase
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
 
-        $this->call('GET', 'admin/extensions/update/laravel.framework');
+        $this->call('GET', 'admin/extensions/laravel/framework/update');
     }
 
     /**
@@ -307,7 +307,7 @@ class ExtensionsControllerTest extends TestCase
         Publisher::shouldReceive('queue')->once()->with('laravel/framework')->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::publisher', array())->andReturn('publisher');
 
-        $this->call('GET', 'admin/extensions/update/laravel.framework');
+        $this->call('GET', 'admin/extensions/laravel/framework/update');
         $this->assertRedirectedTo('publisher');
     }
 }

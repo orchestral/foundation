@@ -22,24 +22,23 @@ use Illuminate\Support\Fluent; ?>
 				<strong>
 					<?php
 					$active  = app('orchestra.extension')->activated($name);
-					$started = app('orchestra.extension')->started($name);
-					$uid     = str_replace('/', '.', $name); ?>
+					$started = app('orchestra.extension')->started($name); ?>
 
 					@if (! ($started))
 						{{ $extension->name }}
 					@else
-						<a href="{!! handles("orchestra::extensions/configure/{$uid}") !!}">
+						<a href="{!! handles("orchestra::extensions/{$name}/configure") !!}">
 							{{ $extension->name }}
 						</a>
 					@endif
 				</strong>
 				<div class="pull-right btn-group">
 					@if (! ($started || $active))
-						<a href="{!! handles("orchestra::extensions/activate/{$uid}", ['csrf' => true]) !!}" class="btn btn-primary btn-mini">
+						<a href="{!! handles("orchestra::extensions/{$name}/activate", ['csrf' => true]) !!}" class="btn btn-primary btn-mini">
 							{{ trans('orchestra/foundation::label.extensions.actions.activate') }}
 						</a>
 					@else
-						<a href="{!! handles("orchestra::extensions/deactivate/{$uid}", ['csrf' => true]) !!}" class="btn btn-warning btn-mini">
+						<a href="{!! handles("orchestra::extensions/{$name}/deactivate", ['csrf' => true]) !!}" class="btn btn-warning btn-mini">
 							{{ trans('orchestra/foundation::label.extensions.actions.deactivate') }}
 						</a>
 					@endif

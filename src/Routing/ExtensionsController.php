@@ -5,9 +5,10 @@ use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Orchestra\Support\Facades\Foundation;
+use Orchestra\Foundation\Routing\Extension\Controller;
 use Orchestra\Foundation\Processor\Extension as ExtensionProcessor;
 
-class ExtensionsController extends AdminController
+class ExtensionsController extends Controller
 {
     /**
      * Extensions Controller routing to manage available extensions.
@@ -49,12 +50,13 @@ class ExtensionsController extends AdminController
      *
      * GET (:orchestra)/extensions/configure/(:name)
      *
-     * @param  string  $uid
+     * @param  string  $vendor
+     * @param  string|null  $package
      * @return mixed
      */
-    public function configure($uid)
+    public function configure($vendor, $package = null)
     {
-        $extension = $this->getExtension($uid);
+        $extension = $this->getExtension($vendor, $package);
 
         return $this->processor->configure($this, $extension);
     }
@@ -64,27 +66,15 @@ class ExtensionsController extends AdminController
      *
      * POST (:orchestra)/extensions/configure/(:name)
      *
-     * @param  string   $uid
+     * @param  string  $vendor
+     * @param  string|null  $package
      * @return mixed
      */
-    public function update($uid)
+    public function update($vendor, $package = null)
     {
-        $extension = $this->getExtension($uid);
+        $extension = $this->getExtension($vendor, $package);
 
         return $this->processor->update($this, $extension, Input::all());
-    }
-
-    /**
-     * Get extension information.
-     *
-     * @param  string  $uid
-     * @return \Illuminate\Support\Fluent
-     */
-    protected function getExtension($uid)
-    {
-        $name = str_replace('.', '/', $uid);
-
-        return new Fluent(['name' => $name, 'uid' => $uid]);
     }
 
     /**
@@ -125,7 +115,7 @@ class ExtensionsController extends AdminController
      */
     public function updateValidationFailed($validation, $id)
     {
-        return $this->redirectWithErrors(handles("orchestra::extensions/configure/{$id}"), $validation);
+        return $this->redirectWithErrors(handles("orchestra::extensions/{$id}/configure"), $validation);
     }
 
     /**
