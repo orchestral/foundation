@@ -15,10 +15,10 @@ class Kernel extends HttpKernel
         'Illuminate\Foundation\Bootstrap\ConfigureLogging',
         'Illuminate\Foundation\Bootstrap\HandleExceptions',
         'Illuminate\Foundation\Bootstrap\RegisterFacades',
+        'Orchestra\Foundation\Bootstrap\UserAccessPolicy',
         'Illuminate\Foundation\Bootstrap\RegisterProviders',
         'Illuminate\Foundation\Bootstrap\BootProviders',
 
-        'Orchestra\Foundation\Bootstrap\UserAccessPolicy',
         'Orchestra\Foundation\Bootstrap\LoadFoundation',
         'Orchestra\Extension\Bootstrap\LoadExtension',
         'Orchestra\Foundation\Bootstrap\LoadUserMetaData',
