@@ -16,8 +16,8 @@ class Kernel extends ConsoleKernel
         'Illuminate\Foundation\Bootstrap\HandleExceptions',
         'Illuminate\Foundation\Bootstrap\RegisterFacades',
         'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
-        'Orchestra\Foundation\Bootstrap\UserAccessPolicy',
         'Illuminate\Foundation\Bootstrap\RegisterProviders',
+        'Orchestra\Foundation\Bootstrap\UserAccessPolicy',
         'Illuminate\Foundation\Bootstrap\BootProviders',
 
         'Orchestra\Foundation\Bootstrap\LoadFoundation',
