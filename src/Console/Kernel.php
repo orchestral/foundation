@@ -17,10 +17,10 @@ class Kernel extends ConsoleKernel
         'Illuminate\Foundation\Bootstrap\RegisterFacades',
         'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
         'Illuminate\Foundation\Bootstrap\RegisterProviders',
-        'Orchestra\Foundation\Bootstrap\UserAccessPolicy',
         'Illuminate\Foundation\Bootstrap\BootProviders',
 
         'Orchestra\Foundation\Bootstrap\LoadFoundation',
+        'Orchestra\Foundation\Bootstrap\UserAccessPolicy',
         'Orchestra\Extension\Bootstrap\LoadExtension',
         'Orchestra\Foundation\Bootstrap\LoadUserMetaData',
         'Orchestra\View\Bootstrap\LoadCurrentTheme',
