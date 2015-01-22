@@ -32,24 +32,24 @@
     </target>
 
     <target name="twbs" description="Copy Twitter Bootstrap Files">
-        <delete dir="${basedir}/public/vendor/bootstrap/css"/>
-        <delete dir="${basedir}/public/vendor/bootstrap/fonts"/>
-        <delete dir="${basedir}/public/vendor/bootstrap/js"/>
+        <delete dir="${basedir}/resources/public/vendor/bootstrap/css"/>
+        <delete dir="${basedir}/resources/public/vendor/bootstrap/fonts"/>
+        <delete dir="${basedir}/resources/public/vendor/bootstrap/js"/>
 
-        <mkdir dir="${basedir}/public/vendor/bootstrap/css"/>
-        <mkdir dir="${basedir}/public/vendor/bootstrap/fonts"/>
-        <mkdir dir="${basedir}/public/vendor/bootstrap/js"/>
+        <mkdir dir="${basedir}/resources/public/vendor/bootstrap/css"/>
+        <mkdir dir="${basedir}/resources/public/vendor/bootstrap/fonts"/>
+        <mkdir dir="${basedir}/resources/public/vendor/bootstrap/js"/>
 
-        <copy todir="${basedir}/public/vendor/bootstrap/css">
+        <copy todir="${basedir}/resources/public/vendor/bootstrap/css">
             <fileset dir="${basedir}/vendor/twbs/bootstrap/dist/css">
                 <exclude name="bootstrap-theme.css"/>
                 <exclude name="bootstrap.css"/>
             </fileset>
         </copy>
-        <copy todir="${basedir}/public/vendor/bootstrap/fonts">
+        <copy todir="${basedir}/resources/public/vendor/bootstrap/fonts">
             <fileset dir="${basedir}/vendor/twbs/bootstrap/dist/fonts"/>
         </copy>
-        <copy todir="${basedir}/public/vendor/bootstrap/js">
+        <copy todir="${basedir}/resources/public/vendor/bootstrap/js">
             <fileset dir="${basedir}/vendor/twbs/bootstrap/dist/js"/>
         </copy>
     </target>
@@ -153,7 +153,7 @@
 
     <target name="chmod-component-dir" description="Chmod the Component">
         <exec executable="find">
-            <arg value="${basedir}/public/components"/>
+            <arg value="${basedir}/resources/public/components"/>
             <arg value="-type"/>
             <arg value="d"/>
             <arg value="-exec"/>
@@ -166,7 +166,7 @@
 
     <target name="chmod-component-file" description="Chmod the Component">
         <exec executable="find">
-            <arg value="${basedir}/public/components"/>
+            <arg value="${basedir}/resources/public/components"/>
             <arg value="-type"/>
             <arg value="f"/>
             <arg value="-exec"/>
