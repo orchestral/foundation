@@ -36,7 +36,8 @@
 		"orchestra/support": "3.0.*",
 		"orchestra/translation": "3.0.*",
 		"orchestra/view": "3.0.*",
-		"orchestra/widget": "3.0.*"
+		"orchestra/widget": "3.0.*",
+		"predis/predis": "~1.0"
 	},
 	"require-dev": {
 		"mockery/mockery": "0.9.*",
