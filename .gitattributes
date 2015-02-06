@@ -10,7 +10,6 @@
 /.gitignore                     export-ignore
 /.scrutinizer.yml               export-ignore
 /.travis.yml                    export-ignore
-/Guardfile                      export-ignore
 /gulpfile.js                    export-ignore
 /bower.json                     export-ignore
 /build.xml                      export-ignore
@@ -18,5 +17,5 @@
 /public/.gitignore              export-ignore
 /phpunit.xml                    export-ignore
 /public/.gitignore              export-ignore
-/LICENSE.md                     export-ignore
+/LICENSE                        export-ignore
 /README.md                      export-ignore
