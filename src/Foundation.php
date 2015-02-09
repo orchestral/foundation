@@ -3,7 +3,6 @@
 use Closure;
 use Exception;
 use Orchestra\Http\RouteManager;
-use Orchestra\Extension\RouteGenerator;
 use Orchestra\Contracts\Memory\Provider;
 use Orchestra\Contracts\Foundation\Foundation as FoundationContract;
 
@@ -237,10 +236,10 @@ class Foundation extends RouteManager implements FoundationContract
         // Orchestra Platform routing is managed by `orchestra/foundation::handles`
         // and can be manage using configuration.
         if (in_array($name, ['orchestra'])) {
-            return new RouteGenerator(
+            return $this->app->make('Orchestra\Extension\RouteGenerator', [
                 $this->app['config']->get('orchestra/foundation::handles', $default),
                 $this->app['request']
-            );
+            ]);
         }
 
         return parent::generateRouteByName($name, $default);
