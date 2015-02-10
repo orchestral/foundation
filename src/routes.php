@@ -12,17 +12,17 @@ Foundation::namespaced('Orchestra\Foundation\Routing', function (Router $router)
 
     // Route to extensions.
     if (Foundation::bound('orchestra.extension')) {
-        $router->get('extensions', 'ExtensionsController@index');
+        $router->get('extensions', 'Extension\ViewerController@index');
         $router->get('extensions/{vendor}/{package}/activate', 'Extension\ActionController@activate');
-        $router->get('extensions/{vendor}/{package}/deactivate', 'Extension\ActionController@deactivate');
-        $router->get('extensions/{vendor}/{package}/update', 'Extension\ActionController@migrate');
-        $router->get('extensions/{vendor}/{package}/configure', 'ExtensionsController@configure');
-        $router->post('extensions/{vendor}/{package}/configure', 'ExtensionsController@update');
         $router->get('extensions/{vendor}/activate', 'Extension\ActionController@activate');
+        $router->get('extensions/{vendor}/{package}/deactivate', 'Extension\ActionController@deactivate');
         $router->get('extensions/{vendor}/deactivate', 'Extension\ActionController@deactivate');
+        $router->get('extensions/{vendor}/{package}/update', 'Extension\ActionController@migrate');
         $router->get('extensions/{vendor}/update', 'Extension\ActionController@migrate');
-        $router->get('extensions/{vendor}/configure', 'ExtensionsController@configure');
-        $router->post('extensions/{vendor}/configure', 'ExtensionsController@update');
+        $router->get('extensions/{vendor}/{package}/configure', 'Extension\ConfigureController@configure');
+        $router->get('extensions/{vendor}/configure', 'Extension\ConfigureController@configure');
+        $router->post('extensions/{vendor}/{package}/configure', 'Extension\ConfigureController@update');
+        $router->post('extensions/{vendor}/configure', 'Extension\ConfigureController@update');
     }
 
     // Route to reset password.

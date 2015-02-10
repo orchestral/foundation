@@ -7,10 +7,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Orchestra\Model\User as Eloquent;
 use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Presenter\User as UserPresenter;
-use Orchestra\Foundation\Validation\User as UserValidator;
+use Orchestra\Foundation\Presenter\User as Presenter;
+use Orchestra\Foundation\Validation\User as Validator;
+use Orchestra\Contracts\Foundation\Command\Account\UserViewer as UserViewerCommand;
+use Orchestra\Contracts\Foundation\Command\Account\UserCreator as UserCreatorCommand;
+use Orchestra\Contracts\Foundation\Command\Account\UserRemover as UserRemoverCommand;
+use Orchestra\Contracts\Foundation\Command\Account\UserUpdater as UserUpdaterCommand;
+use Orchestra\Contracts\Foundation\Listener\Account\UserViewer as UserViewerListener;
+use Orchestra\Contracts\Foundation\Listener\Account\UserCreator as UserCreatorListener;
+use Orchestra\Contracts\Foundation\Listener\Account\UserRemover as UserRemoverListener;
+use Orchestra\Contracts\Foundation\Listener\Account\UserUpdater as UserUpdaterListener;
 
-class User extends Processor
+class User extends Processor implements UserCreatorCommand, UserRemoverCommand, UserUpdaterCommand, UserViewerCommand
 {
     /**
      * Create a new processor instance.
@@ -18,7 +26,7 @@ class User extends Processor
      * @param  \Orchestra\Foundation\Presenter\User  $presenter
      * @param  \Orchestra\Foundation\Validation\User  $validator
      */
-    public function __construct(UserPresenter $presenter, UserValidator $validator)
+    public function __construct(Presenter $presenter, Validator $validator)
     {
         $this->presenter = $presenter;
         $this->validator = $validator;
@@ -27,11 +35,11 @@ class User extends Processor
     /**
      * View list users page.
      *
-     * @param  object  $listener
-     * @param  array   $input
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\UserViewer  $listener
+     * @param  array  $input
      * @return mixed
      */
-    public function index($listener, array $input = [])
+    public function index(UserViewerListener $listener, array $input = [])
     {
         $searchKeyword = Arr::get($input, 'q', '');
         $searchRoles = Arr::get($input, 'roles', []);
@@ -57,55 +65,55 @@ class User extends Processor
             'table'    => $table,
         ];
 
-        return $listener->indexSucceed($data);
+        return $listener->showUsers($data);
     }
 
     /**
      * View create user page.
      *
-     * @param  object  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\UserCreator  $listener
      * @return mixed
      */
-    public function create($listener)
+    public function create(UserCreatorListener $listener)
     {
         $eloquent = Foundation::make('orchestra.user');
         $form = $this->presenter->form($eloquent, 'create');
 
         $this->fireEvent('form', [$eloquent, $form]);
 
-        return $listener->createSucceed(compact('eloquent', 'form'));
+        return $listener->showUserCreator(compact('eloquent', 'form'));
     }
 
     /**
      * View edit user page.
      *
-     * @param  object  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\UserUpdater  $listener
      * @param  string|int  $id
      * @return mixed
      */
-    public function edit($listener, $id)
+    public function edit(UserUpdaterListener $listener, $id)
     {
         $eloquent = Foundation::make('orchestra.user')->findOrFail($id);
         $form = $this->presenter->form($eloquent, 'update');
 
         $this->fireEvent('form', [$eloquent, $form]);
 
-        return $listener->editSucceed(compact('eloquent', 'form'));
+        return $listener->showUserChanger(compact('eloquent', 'form'));
     }
 
     /**
      * Store a user.
      *
-     * @param  object  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\UserCreator  $listener
      * @param  array   $input
      * @return mixed
      */
-    public function store($listener, array $input)
+    public function store(UserCreatorListener $listener, array $input)
     {
         $validation = $this->validator->on('create')->with($input);
 
         if ($validation->fails()) {
-            return $listener->storeValidationFailed($validation);
+            return $listener->createUserFailedValidation($validation->getMessageBag());
         }
 
         $user = Foundation::make('orchestra.user');
@@ -116,31 +124,31 @@ class User extends Processor
         try {
             $this->saving($user, $input, 'create');
         } catch (Exception $e) {
-            return $listener->storeFailed(['error' => $e->getMessage()]);
+            return $listener->createUserFailed(['error' => $e->getMessage()]);
         }
 
-        return $listener->storeSucceed();
+        return $listener->userCreated();
     }
 
     /**
      * Update a user.
      *
-     * @param  object  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\UserUpdater  $listener
      * @param  string|int  $id
      * @param  array  $input
      * @return mixed
      */
-    public function update($listener, $id, array $input)
+    public function update(UserUpdaterListener $listener, $id, array $input)
     {
         // Check if provided id is the same as hidden id, just a pre-caution.
         if ((string) $id !== $input['id']) {
-            return $listener->userVerificationFailed();
+            return $listener->abortWhenUserMismatched();
         }
 
         $validation = $this->validator->on('update')->with($input);
 
         if ($validation->fails()) {
-            return $listener->updateValidationFailed($validation, $id);
+            return $listener->updateUserFailedValidation($validation->getMessageBag(), $id);
         }
 
         $user = Foundation::make('orchestra.user')->findOrFail($id);
@@ -150,20 +158,20 @@ class User extends Processor
         try {
             $this->saving($user, $input, 'update');
         } catch (Exception $e) {
-            return $listener->updateFailed(['error' => $e->getMessage()]);
+            return $listener->updateUserFailed(['error' => $e->getMessage()]);
         }
 
-        return $listener->updateSucceed();
+        return $listener->userUpdated();
     }
 
     /**
      * Destroy a user.
      *
-     * @param  object  $listener
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\UserRemover  $listener
      * @param  string|int  $id
      * @return mixed
      */
-    public function destroy($listener, $id)
+    public function destroy(UserRemoverListener $listener, $id)
     {
         $user = Foundation::make('orchestra.user')->findOrFail($id);
 
@@ -181,10 +189,10 @@ class User extends Processor
 
             $this->fireEvent('deleted', [$user]);
         } catch (Exception $e) {
-            return $listener->destroyFailed(['error' => $e->getMessage()]);
+            return $listener->userDeletionFailed(['error' => $e->getMessage()]);
         }
 
-        return $listener->destroySucceed();
+        return $listener->userDeleted();
     }
 
     /**

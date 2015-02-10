@@ -71,7 +71,7 @@ class UsersControllerTest extends TestCase
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Foundation::shouldReceive('make')->once()->with('orchestra.role')->andReturn($role);
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::users.index', m::type('Array'))->andReturn('foo');
+            ->with('orchestra/foundation::users.index', m::type('Array'), array())->andReturn('foo');
 
         $this->call('GET', 'admin/users');
         $this->assertResponseOk();
@@ -90,7 +90,7 @@ class UsersControllerTest extends TestCase
 
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn(array());
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::users.edit', m::type('Array'))->andReturn('foo');
+            ->with('orchestra/foundation::users.edit', m::type('Array'), array())->andReturn('foo');
 
         $this->call('GET', 'admin/users/create');
         $this->assertResponseOk();
@@ -113,7 +113,7 @@ class UsersControllerTest extends TestCase
 
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::users.edit', m::type('Array'))->andReturn('foo');
+            ->with('orchestra/foundation::users.edit', m::type('Array'), array())->andReturn('foo');
 
         $this->call('GET', 'admin/users/foo/edit');
         $this->assertResponseOk();
@@ -219,6 +219,7 @@ class UsersControllerTest extends TestCase
 
         $validator->shouldReceive('on')->once()->with('create')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
+            ->shouldReceive('getMessageBag')->once()->andReturn([])
             ->shouldReceive('fails')->once()->andReturn(true);
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::users/create', array())->andReturn('users/create');
@@ -355,6 +356,7 @@ class UsersControllerTest extends TestCase
 
         $validator->shouldReceive('on')->once()->with('update')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
+            ->shouldReceive('getMessageBag')->once()->andReturn([])
             ->shouldReceive('fails')->once()->andReturn(true);
 
         Foundation::shouldReceive('handles')->once()
