@@ -71,7 +71,7 @@ class UsersControllerTest extends TestCase
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Foundation::shouldReceive('make')->once()->with('orchestra.role')->andReturn($role);
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::users.index', m::type('Array'))->andReturn('foo');
+            ->with('orchestra/foundation::users.index', m::type('Array'), array())->andReturn('foo');
 
         $this->call('GET', 'admin/users');
         $this->assertResponseOk();
@@ -90,7 +90,7 @@ class UsersControllerTest extends TestCase
 
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn(array());
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::users.edit', m::type('Array'))->andReturn('foo');
+            ->with('orchestra/foundation::users.edit', m::type('Array'), array())->andReturn('foo');
 
         $this->call('GET', 'admin/users/create');
         $this->assertResponseOk();
@@ -113,7 +113,7 @@ class UsersControllerTest extends TestCase
 
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::users.edit', m::type('Array'))->andReturn('foo');
+            ->with('orchestra/foundation::users.edit', m::type('Array'), array())->andReturn('foo');
 
         $this->call('GET', 'admin/users/foo/edit');
         $this->assertResponseOk();

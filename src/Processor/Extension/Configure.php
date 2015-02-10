@@ -1,16 +1,16 @@
-<?php namespace Orchestra\Foundation\Processor;
+<?php namespace Orchestra\Foundation\Processor\Extension;
 
-use Closure;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\Event;
-use Orchestra\Support\Facades\Publisher;
+use Orchestra\Support\Facades\Extension;
 use Orchestra\Support\Facades\Foundation;
-use Orchestra\Support\Facades\Extension as E;
-use Orchestra\Contracts\Publisher\FilePermissionException;
-use Orchestra\Foundation\Presenter\Extension as ExtensionPresenter;
-use Orchestra\Foundation\Validation\Extension as ExtensionValidator;
+use Orchestra\Foundation\Processor\Processor;
+use Orchestra\Foundation\Presenter\Extension as Presenter;
+use Orchestra\Foundation\Validation\Extension as Validator;
+use Orchestra\Contracts\Extension\Command\Configure as Command;
+use Orchestra\Contracts\Extension\Listener\Configure as Listener;
 
-class Extension extends Processor
+class Configure extends Processor implements Command
 {
     /**
      * Create a new processor instance.
@@ -18,36 +18,23 @@ class Extension extends Processor
      * @param  \Orchestra\Foundation\Presenter\Extension  $presenter
      * @param  \Orchestra\Foundation\Validation\Extension  $validator
      */
-    public function __construct(ExtensionPresenter $presenter, ExtensionValidator $validator)
+    public function __construct(Presenter $presenter, Validator $validator)
     {
         $this->presenter = $presenter;
         $this->validator = $validator;
     }
 
     /**
-     * View all extension page.
-     *
-     * @param  object  $listener
-     * @return mixed
-     */
-    public function index($listener)
-    {
-        $data['extensions'] = E::detect();
-
-        return $listener->indexSucceed($data);
-    }
-
-    /**
      * View edit extension configuration page.
      *
-     * @param  object  $listener
+     * @param  \Orchestra\Contracts\Extension\Listener\Configure  $listener
      * @param  \Illuminate\Support\Fluent  $extension
      * @return mixed
      */
-    public function configure($listener, Fluent $extension)
+    public function configure(Listener $listener, Fluent $extension)
     {
-        if (! E::started($extension->get('name'))) {
-            return $listener->suspend(404);
+        if (! Extension::started($extension->get('name'))) {
+            return $listener->abortWhenRequirementMismatched();
         }
 
         $memory = Foundation::memory();
@@ -64,27 +51,27 @@ class Extension extends Processor
 
         Event::fire("orchestra.form: extension.{$extension->get('name')}", [$eloquent, $form]);
 
-        return $listener->configureSucceed(compact('eloquent', 'form', 'extension'));
+        return $listener->showConfigurationChanger(compact('eloquent', 'form', 'extension'));
     }
 
     /**
      * Update an extension configuration.
      *
-     * @param  object  $listener
+     * @param  \Orchestra\Contracts\Extension\Listener\Configure  $listener
      * @param  \Illuminate\Support\Fluent  $extension
      * @param  array  $input
      * @return mixed
      */
-    public function update($listener, Fluent $extension, array $input)
+    public function update(Listener $listener, Fluent $extension, array $input)
     {
-        if (! E::started($extension->get('name'))) {
+        if (! Extension::started($extension->get('name'))) {
             return $listener->suspend(404);
         }
 
         $validation = $this->validator->with($input, ["orchestra.validate: extension.{$extension->get('name')}"]);
 
         if ($validation->fails()) {
-            return $listener->updateValidationFailed($validation, $extension->uid);
+            return $listener->updateConfigurationFailedValidation($validation->getMessageBag(), $extension->uid);
         }
 
         $memory = Foundation::memory();
@@ -100,6 +87,6 @@ class Extension extends Processor
 
         Event::fire("orchestra.saved: extension.{$extension->get('name')}", [$input]);
 
-        return $listener->updateSucceed($extension);
+        return $listener->configurationUpdated($extension);
     }
 }

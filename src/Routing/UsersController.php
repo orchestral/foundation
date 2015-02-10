@@ -1,7 +1,5 @@
 <?php namespace Orchestra\Foundation\Routing;
 
-use Orchestra\Support\Facades\Meta;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Processor\User as UserProcessor;
 
@@ -10,7 +8,7 @@ class UsersController extends AdminController
     /**
      * CRUD Controller for Users management using resource routing.
      *
-     * @param  \Orchestra\Foundation\Processor\User    $processor
+     * @param  \Orchestra\Foundation\Processor\User  $processor
      */
     public function __construct(UserProcessor $processor)
     {
@@ -127,9 +125,9 @@ class UsersController extends AdminController
      */
     public function indexSucceed(array $data)
     {
-        Meta::set('title', trans('orchestra/foundation::title.users.list'));
+        set_meta('title', trans('orchestra/foundation::title.users.list'));
 
-        return View::make('orchestra/foundation::users.index', $data);
+        return view('orchestra/foundation::users.index', $data);
     }
 
     /**
@@ -140,7 +138,7 @@ class UsersController extends AdminController
      */
     public function createSucceed(array $data)
     {
-        return View::make('orchestra/foundation::users.edit', $data);
+        return view('orchestra/foundation::users.edit', $data);
     }
 
     /**
@@ -151,9 +149,9 @@ class UsersController extends AdminController
      */
     public function editSucceed(array $data)
     {
-        Meta::set('title', trans('orchestra/foundation::title.users.update'));
+        set_meta('title', trans('orchestra/foundation::title.users.update'));
 
-        return View::make('orchestra/foundation::users.edit', $data);
+        return view('orchestra/foundation::users.edit', $data);
     }
 
     /**
@@ -254,7 +252,7 @@ class UsersController extends AdminController
     }
 
     /**
-     * Response when user verification failed.
+     * Response when user tried to self delete.
      *
      * @return mixed
      */

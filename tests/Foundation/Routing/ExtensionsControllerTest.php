@@ -57,7 +57,7 @@ class ExtensionsControllerTest extends TestCase
     {
         Extension::shouldReceive('detect')->once()->andReturn('foo');
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::extensions.index', array('extensions' => 'foo'))
+            ->with('orchestra/foundation::extensions.index', array('extensions' => 'foo'), array())
             ->andReturn('foo');
 
         $this->call('GET', 'admin/extensions');
@@ -149,7 +149,7 @@ class ExtensionsControllerTest extends TestCase
      */
     public function testGetConfigureAction()
     {
-        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
+        $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
         list($presenter,) = $this->bindDependencies();
 
         $memory->shouldReceive('get')->once()
@@ -164,7 +164,8 @@ class ExtensionsControllerTest extends TestCase
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Foundation::shouldReceive('memory')->twice()->andReturn($memory);
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::extensions.configure', m::type('Array'))->andReturn('foo');
+            ->with('orchestra/foundation::extensions.configure', m::type('Array'), array())
+            ->andReturn('foo');
 
         $this->call('GET', 'admin/extensions/laravel/framework/configure');
         $this->assertResponseOk();
@@ -196,7 +197,7 @@ class ExtensionsControllerTest extends TestCase
             '_token'  => 'somesessiontoken',
         );
 
-        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
+        $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
         list(, $validator) = $this->bindDependencies();
 
         $memory->shouldReceive('get')->once()
@@ -254,6 +255,7 @@ class ExtensionsControllerTest extends TestCase
 
         $validator->shouldReceive('with')->once()
                 ->with($input, array("orchestra.validate: extension.laravel/framework"))->andReturn($validator)
+            ->shouldReceive('getMessageBag')->once()->andReturn([])
             ->shouldReceive('fails')->once()->andReturn(true);
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);

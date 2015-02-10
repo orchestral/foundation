@@ -1,21 +1,19 @@
-<?php namespace Orchestra\Foundation\Routing;
+<?php namespace Orchestra\Foundation\Routing\Extension;
 
 use Illuminate\Support\Fluent;
-use Orchestra\Support\Facades\Meta;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Routing\Extension\Controller;
-use Orchestra\Foundation\Processor\Extension as ExtensionProcessor;
+use Orchestra\Contracts\Extension\Listener\Configure as Listener;
+use Orchestra\Foundation\Processor\Extension\Configure as Processor;
 
-class ExtensionsController extends Controller
+class ConfigureController extends Controller implements Listener
 {
     /**
      * Extensions Controller routing to manage available extensions.
      *
-     * @param  \Orchestra\Foundation\Processor\Extension  $processor
+     * @param  \Orchestra\Foundation\Processor\Extension\Configure  $processor
      */
-    public function __construct(ExtensionProcessor $processor)
+    public function __construct(Processor $processor)
     {
         $this->processor = $processor;
 
@@ -31,18 +29,6 @@ class ExtensionsController extends Controller
     {
         $this->beforeFilter('orchestra.auth');
         $this->beforeFilter('orchestra.manage');
-    }
-
-    /**
-     * List all available extensions.
-     *
-     * GET (:orchestra)/extensions
-     *
-     * @return mixed
-     */
-    public function index()
-    {
-        return $this->processor->index($this);
     }
 
     /**
@@ -78,44 +64,31 @@ class ExtensionsController extends Controller
     }
 
     /**
-     * Response for list of extensions page.
+     * Response for extension configuration.
      *
      * @param  array  $data
      * @return mixed
      */
-    public function indexSucceed(array $data)
-    {
-        Meta::set('title', trans("orchestra/foundation::title.extensions.list"));
-
-        return View::make('orchestra/foundation::extensions.index', $data);
-    }
-
-    /**
-     * Response for extension configuration page.
-     *
-     * @param  array  $data
-     * @return mixed
-     */
-    public function configureSucceed(array $data)
+    public function showConfigurationChanger(array $data)
     {
         $name = $data['extension']->name;
 
-        Meta::set('title', Foundation::memory()->get("extensions.available.{$name}.name", $name));
-        Meta::set('description', trans("orchestra/foundation::title.extensions.configure"));
+        set_meta('title', Foundation::memory()->get("extensions.available.{$name}.name", $name));
+        set_meta('description', trans("orchestra/foundation::title.extensions.configure"));
 
-        return View::make('orchestra/foundation::extensions.configure', $data);
+        return view('orchestra/foundation::extensions.configure', $data);
     }
 
     /**
      * Response when update extension configuration failed on validation.
      *
-     * @param  mixed   $validation
+     * @param  \Illuminate\Support\MessageBag|array  $errors
      * @param  string  $id
      * @return mixed
      */
-    public function updateValidationFailed($validation, $id)
+    public function updateConfigurationFailedValidation($errors, $id)
     {
-        return $this->redirectWithErrors(handles("orchestra::extensions/{$id}/configure"), $validation);
+        return $this->redirectWithErrors(handles("orchestra::extensions/{$id}/configure"), $errors);
     }
 
     /**
@@ -124,7 +97,7 @@ class ExtensionsController extends Controller
      * @param  \Illuminate\Support\Fluent  $extension
      * @return mixed
      */
-    public function updateSucceed(Fluent $extension)
+    public function configurationUpdated(Fluent $extension)
     {
         $message = trans("orchestra/foundation::response.extensions.configure", $extension->getAttributes());
 
