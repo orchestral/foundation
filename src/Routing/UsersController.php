@@ -1,16 +1,20 @@
 <?php namespace Orchestra\Foundation\Routing;
 
 use Illuminate\Support\Facades\Input;
-use Orchestra\Foundation\Processor\User as UserProcessor;
+use Orchestra\Foundation\Processor\User as Processor;
+use Orchestra\Contracts\Foundation\Listener\Account\UserViewer;
+use Orchestra\Contracts\Foundation\Listener\Account\UserCreator;
+use Orchestra\Contracts\Foundation\Listener\Account\UserRemover;
+use Orchestra\Contracts\Foundation\Listener\Account\UserUpdater;
 
-class UsersController extends AdminController
+class UsersController extends AdminController implements UserCreator, UserRemover, UserUpdater, UserViewer
 {
     /**
      * CRUD Controller for Users management using resource routing.
      *
      * @param  \Orchestra\Foundation\Processor\User  $processor
      */
-    public function __construct(UserProcessor $processor)
+    public function __construct(Processor $processor)
     {
         $this->processor = $processor;
 
@@ -123,7 +127,7 @@ class UsersController extends AdminController
      * @param  array  $data
      * @return mixed
      */
-    public function indexSucceed(array $data)
+    public function showUsers(array $data)
     {
         set_meta('title', trans('orchestra/foundation::title.users.list'));
 
@@ -136,7 +140,7 @@ class UsersController extends AdminController
      * @param  array  $data
      * @return mixed
      */
-    public function createSucceed(array $data)
+    public function showUserCreator(array $data)
     {
         return view('orchestra/foundation::users.edit', $data);
     }
@@ -147,7 +151,7 @@ class UsersController extends AdminController
      * @param  array  $data
      * @return mixed
      */
-    public function editSucceed(array $data)
+    public function showUserChanger(array $data)
     {
         set_meta('title', trans('orchestra/foundation::title.users.update'));
 
@@ -157,12 +161,12 @@ class UsersController extends AdminController
     /**
      * Response when storing user failed on validation.
      *
-     * @param  object  $validation
+     * @param  \Illuminate\Support\MessageBag|array  $errors
      * @return mixed
      */
-    public function storeValidationFailed($validation)
+    public function createUserFailedValidation($errors)
     {
-        return $this->redirectWithErrors(handles("orchestra::users/create"), $validation);
+        return $this->redirectWithErrors(handles("orchestra::users/create"), $errors);
     }
 
     /**
@@ -171,7 +175,7 @@ class UsersController extends AdminController
      * @param  array  $errors
      * @return mixed
      */
-    public function storeFailed(array $errors)
+    public function createUserFailed(array $errors)
     {
         $message = trans('orchestra/foundation::response.db-failed', $errors);
 
@@ -183,7 +187,7 @@ class UsersController extends AdminController
      *
      * @return mixed
      */
-    public function storeSucceed()
+    public function userCreated()
     {
         $message = trans("orchestra/foundation::response.users.create");
 
@@ -193,12 +197,13 @@ class UsersController extends AdminController
     /**
      * Response when update user failed on validation.
      *
-     * @param  object  $validation
+     * @param  \Illuminate\Support\MessageBag|array  $errors
+     * @param  string|int  $id
      * @return mixed
      */
-    public function updateValidationFailed($validation, $id)
+    public function updateUserFailedValidation($errors, $id)
     {
-        return $this->redirectWithErrors(handles("orchestra::users/{$id}/edit"), $validation);
+        return $this->redirectWithErrors(handles("orchestra::users/{$id}/edit"), $errors);
     }
 
     /**
@@ -207,7 +212,7 @@ class UsersController extends AdminController
      * @param  array  $errors
      * @return mixed
      */
-    public function updateFailed(array $errors)
+    public function updateUserFailed(array $errors)
     {
         $message = trans('orchestra/foundation::response.db-failed', $errors);
 
@@ -219,7 +224,7 @@ class UsersController extends AdminController
      *
      * @return mixed
      */
-    public function updateSucceed()
+    public function userUpdated()
     {
         $message = trans("orchestra/foundation::response.users.update");
 
@@ -232,7 +237,7 @@ class UsersController extends AdminController
      * @param  array  $errors
      * @return mixed
      */
-    public function destroyFailed(array $errors)
+    public function userDeletionFailed(array $errors)
     {
         $message = trans('orchestra/foundation::response.db-failed', $errors);
 
@@ -244,7 +249,7 @@ class UsersController extends AdminController
      *
      * @return mixed
      */
-    public function destroySucceed()
+    public function userDeleted()
     {
         $message = trans('orchestra/foundation::response.users.delete');
 
@@ -266,7 +271,7 @@ class UsersController extends AdminController
      *
      * @return mixed
      */
-    public function userVerificationFailed()
+    public function abortWhenUserMismatched()
     {
         return $this->suspend(500);
     }
