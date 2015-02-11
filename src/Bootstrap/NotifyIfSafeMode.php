@@ -12,12 +12,10 @@ class NotifyIfSafeMode
      */
     public function bootstrap(Application $app)
     {
-        $app['events']->listen('orchestra.extension: booted', function () use ($app) {
-            if ('on' === $app['session']->get('orchestra.safemode')) {
-                $app['orchestra.messages']->extend(function ($messages) {
-                    $messages->add('info', trans('orchestra/foundation::response.safe-mode'));
-                });
-            }
-        });
+        if ($app['orchestra.extension.mode']->check()) {
+            $app['orchestra.messages']->extend(function ($messages) {
+                $messages->add('info', trans('orchestra/foundation::response.safe-mode'));
+            });
+        }
     }
 }

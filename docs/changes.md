@@ -5,18 +5,29 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
-### v3.0.0@dev {#v3-0-0}
+### v3.0.0 {#v3-0-0}
 
-* Add support for Laravel 5.0.
+* Update support to Laravel Framework v5.0.
+* Simplify PSR-4 path.
 * Rename `Orchestra\Foundation\Application` to `Orchestra\Foundation\Foundation`.
-* Rename `Orchestra\Foundation\SiteServiceProvider` to `Orchestra\Foundation\SupportServiceProvider`.
 * Add `Orchestra\Foundation\Application`, extending `Illuminate\Foundation\Application`.
-* Convert all closure based filters to class.
+* Add `Orchestra\Foundation\Providers\ArtisanServiceProvider`.
+* Add `Orchestra\Foundation\Providers\FilterServiceProvider`.
+* Rename `Orchestra\Foundation\ConsoleSupportServiceProvider` to `Orchestra\Foundation\Providers\ConsoleSupportServiceProvider`.
+* Rename `Orchestra\Foundation\FoundationServiceProvider` to `Orchestra\Foundation\Providers\FoundationServiceProvider`.
+* Rename `Orchestra\Foundation\SiteServiceProvider` to `Orchestra\Foundation\Providers\SupportServiceProvider`.
+* Convert all closure based filters to classes under `Orchestra\Foundation\Filters` namespace.
+* Convert all start-up files to classes under `Orchestra\Foundation\Bootstrap` namespace.
 * Allow `orchestra/foundation` routing to be cached.
 * Add `Orchestra\Foundation\Traits\AliasesProviderTrait`.
 * Move password reset code to `orchestra/auth`.
-* Add `orchestra/kernel` as a dependencies
+* Add `orchestra/kernel` as a dependencies.
 * Convert all `Orchestra\Foundation\Foundation` services to IoC bindings.
+* Add `get_meta()` and `set_meta()` helper function.
+* Add `predis/predis` (~1.0) as a dependency.
+* Assets:
+  - Update Twitter Bootstrap v3.3.2.
+  - Update Javie v1.2.0.
 
 ## Version 2.2 {#v2-2}
 
