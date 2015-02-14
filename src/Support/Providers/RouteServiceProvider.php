@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Support\Providers;
+<?php namespace Orchestra\Foundation\Support\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
