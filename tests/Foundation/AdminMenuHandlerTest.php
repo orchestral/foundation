@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Fluent;
+use Illuminate\Container\Container;
 use Orchestra\Foundation\AdminMenuHandler;
 
 class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
@@ -22,15 +22,11 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreatingMenu()
     {
-        $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $acl = m::mock('\Orchestra\Contracts\Authorization\Authorization');
-        $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
-        $translator = m::mock('\Illuminate\Translation\Translator');
+        $app = new Container();
+        $app['orchestra.platform.menu'] = $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
 
-        $foundation->shouldReceive('acl')->once()->andReturn($acl)
-            ->shouldReceive('menu')->once()->andReturn($menu);
 
-        $stub = new AdminMenuHandler($foundation, $translator);
+        $stub = new AdminMenuHandler($app);
         $stub->handle();
     }
 }
