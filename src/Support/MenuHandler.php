@@ -56,46 +56,7 @@ abstract class MenuHandler
 
         $menu = $this->createMenu();
 
-        if (! is_null($icon = $this->getAttribute('icon'))) {
-            $menu->icon($icon);
-        }
-    }
-
-    /**
-     * Get the URL.
-     *
-     * @param  string  $value
-     * @return string
-     */
-    public function getLinkAttribute($value)
-    {
-        return $this->container['orchestra.app']->handles($value);
-    }
-
-    /**
-     * Create a new menu.
-     *
-     * @return \Illuminate\Support\Fluent
-     */
-    protected function createMenu()
-    {
-        return $this->handler->add($this->getAttribute('id'), $this->getAttribute('position'))
-                    ->title($this->getAttribute('title'))
-                    ->link($this->getAttribute('link'));
-    }
-
-    /**
-     * Determine if the request passes the authorization check.
-     *
-     * @return bool
-     */
-    protected function passesAuthorization()
-    {
-        if (method_exists($this, 'authorize')) {
-            return $this->container->call([$this, 'authorize']);
-        }
-
-        return false;
+        $this->attachIcon($menu);
     }
 
     /**
@@ -113,5 +74,55 @@ abstract class MenuHandler
         }
 
         return Arr::get($this->menu, $name);
+    }
+
+    /**
+     * Get the URL.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getLinkAttribute($value)
+    {
+        return $this->container['orchestra.app']->handles($value);
+    }
+
+    /**
+     * Create a new menu.
+     *
+     * @return \Illuminate\Support\Fluent|null
+     */
+    protected function createMenu()
+    {
+        return $this->handler->add($this->getAttribute('id'), $this->getAttribute('position'))
+                    ->title($this->getAttribute('title'))
+                    ->link($this->getAttribute('link'));
+    }
+
+    /**
+     * Attach icon to menu.
+     *
+     * @param  \Illuminate\Support\Fluent|null  $menu
+     * @return void
+     */
+    protected function attachIcon(Fluent $menu = null)
+    {
+        if (! is_null($menu) && ! is_null($icon = $this->getAttribute('icon'))) {
+            $menu->icon($icon);
+        }
+    }
+
+    /**
+     * Determine if the request passes the authorization check.
+     *
+     * @return bool
+     */
+    protected function passesAuthorization()
+    {
+        if (method_exists($this, 'authorize')) {
+            return $this->container->call([$this, 'authorize']);
+        }
+
+        return false;
     }
 }
