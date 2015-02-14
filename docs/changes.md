@@ -5,7 +5,7 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
-### v3.0.1@dev {#v3-0-1}
+### v3.0.1 {#v3-0-1}
 
 * Add `Orchestra\Foundation\Support\Providers\RouteServiceProvider`.
 * Refactor `Orchestra\Foundation\Support\MenuHandler` to be more usable.
