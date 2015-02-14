@@ -128,4 +128,16 @@ abstract class MenuHandler
 
         return false;
     }
+
+    /**
+     *  Handle dynamic calls to the container to get attributes.
+     *
+     * @param  string  $name
+     * @param  array   $parameters
+     * @return mixed
+     */
+    public function __call($name, $parameters)
+    {
+        return $this->getAttribute($name);
+    }
 }
