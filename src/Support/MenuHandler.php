@@ -44,7 +44,7 @@ abstract class MenuHandler
     }
 
     /**
-     * Create a handler for `orchestra.ready: admin` event.
+     * Create a handler.
      *
      * @return void
      */
@@ -54,11 +54,9 @@ abstract class MenuHandler
             return ;
         }
 
-        $menu = $this->createMenu()
-                    ->title($this->title())
-                    ->link($this->link());
+        $menu = $this->createMenu();
 
-        if (! is_null($icon = $this->icon())) {
+        if (! is_null($icon = $this->getAttribute('icon'))) {
             $menu->icon($icon);
         }
     }
@@ -66,11 +64,12 @@ abstract class MenuHandler
     /**
      * Get the URL.
      *
+     * @param  string  $value
      * @return string
      */
-    public function getLink()
+    public function getLinkAttribute($value)
     {
-        return handles($this->menu['link']);
+        return $this->container['orchestra.app']->handles($value);
     }
 
     /**
@@ -80,7 +79,9 @@ abstract class MenuHandler
      */
     protected function createMenu()
     {
-        return $this->handler->add($this->id(), $this->position());
+        return $this->handler->add($this->getAttribute('id'), $this->getAttribute('position'))
+                    ->title($this->getAttribute('title'))
+                    ->link($this->getAttribute('link'));
     }
 
     /**
@@ -98,18 +99,17 @@ abstract class MenuHandler
     }
 
     /**
-     *  Handle dynamic calls to the container to get attributes.
+     *  Handle get attributes.
      *
      * @param  string  $name
-     * @param  array   $parameters
      * @return mixed
      */
-    public function __call($name, $parameters)
+    public function getAttribute($name)
     {
-        $method = 'get'.ucfirst($name);
+        $method = 'get'.ucfirst($name).'Attribute';
 
         if (method_exists($this, $method)) {
-            return $this->container->call([$this, $method]);
+            return $this->container->call([$this, $method], ['value' => $this->menu[$name]]);
         }
 
         return Arr::get($this->menu, $name);

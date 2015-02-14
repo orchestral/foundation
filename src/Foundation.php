@@ -193,14 +193,22 @@ class Foundation extends RouteManager implements FoundationContract
      */
     protected function createAdminMenu()
     {
-        $menu    = $this->menu();
-        $handler = 'Orchestra\Foundation\AdminMenuHandler';
+        $menu = $this->menu();
+        $handlers = [
+            'Orchestra\Foundation\Http\Handlers\UserMenuHandler',
+            'Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler',
+            'Orchestra\Foundation\Http\Handlers\SettingMenuHandler',
+            'Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler',
+            'Orchestra\Foundation\AdminMenuHandler',
+        ];
 
         $menu->add('home')
             ->title($this->app['translator']->get('orchestra/foundation::title.home'))
             ->link($this->handles('orchestra::/'));
 
-        $this->app['events']->listen('orchestra.ready: admin', $handler);
+        foreach ($handlers as $handler) {
+            $this->app['events']->listen('orchestra.ready: admin', $handler);
+        }
     }
 
     /**

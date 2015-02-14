@@ -8,6 +8,12 @@ title: Foundation Change Log
 ### v3.0.1@dev {#v3-0-1}
 
 * Add `Orchestra\Foundation\Support\Providers\RouteServiceProvider`.
+* Refactor `Orchestra\Foundation\Support\MenuHandler` to be more usable.
+* Refactor `Orchestra\Foundation\AdminMenuHandler` and split the handling to following classes:
+  - `Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler`.
+  - `Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler`.
+  - `Orchestra\Foundation\Http\Handlers\SettingMenuHandler`.
+  - `Orchestra\Foundation\Http\Handlers\UserMenuHandler`.
 
 ### v3.0.0 {#v3-0-0}
 
