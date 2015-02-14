@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.1@dev {#v3-0-1}
+
+* Add `Orchestra\Foundation\Support\Providers\RouteServiceProvider`.
+
 ### v3.0.0 {#v3-0-0}
 
 * Update support to Laravel Framework v5.0.

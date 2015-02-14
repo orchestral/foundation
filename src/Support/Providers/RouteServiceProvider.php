@@ -1,15 +1,13 @@
 <?php namespace Orchestra\Foundation\Support\Providers;
 
+use RuntimeException;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 abstract class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
-     *
-     * @param  \Illuminate\Routing\Router  $router
-     * @return void
+     * {@inheritdoc}
      */
     public function boot(Router $router)
     {
@@ -54,4 +52,19 @@ abstract class RouteServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    protected function loadCachedRoutes()
+    {
+        throw new RuntimeException('loadCachedRoutes() method is not supported.');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setRootControllerNamespace()
+    {
+        throw new RuntimeException('setRootControllerNamespace() method is not supported.');
+    }
 }
