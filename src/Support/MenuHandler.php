@@ -67,13 +67,16 @@ abstract class MenuHandler
      */
     public function getAttribute($name)
     {
-        $method = 'get'.ucfirst($name).'Attribute';
+        $methods = ['get'.ucfirst($name).'Attribute', 'get'.ucfirst($name)];
+        $value = Arr::get($this->menu, $name);
 
-        if (method_exists($this, $method)) {
-            return $this->container->call([$this, $method], ['value' => $this->menu[$name]]);
+        foreach ($methods as $method) {
+            if (method_exists($this, $method)) {
+                return $this->container->call([$this, $method], ['value' => $value]);
+            }
         }
 
-        return Arr::get($this->menu, $name);
+        return $value;
     }
 
     /**
