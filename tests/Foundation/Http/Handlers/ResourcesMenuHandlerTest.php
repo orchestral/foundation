@@ -7,6 +7,12 @@ use Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler;
 
 class ResourcesMenuHandlerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Test Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler::handle()
+     * method with resources.
+     *
+     * @test
+     */
     public function testCreatingMenuWithResources()
     {
         $app = new Container();
@@ -42,6 +48,12 @@ class ResourcesMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($stub->handle());
     }
 
+    /**
+     * Test Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler::handle()
+     * method without resources.
+     *
+     * @test
+     */
     public function testCreatingMenuWithoutResources()
     {
         $app = new Container();
@@ -67,6 +79,12 @@ class ResourcesMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($stub->handle());
     }
 
+    /**
+     * Test Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler::handle()
+     * method without `orchestra.resources` bound to container.
+     *
+     * @test
+     */
     public function testCreatingMenuWithoutBoundDependencies()
     {
         $app = new Container();

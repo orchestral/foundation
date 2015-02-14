@@ -6,6 +6,12 @@ use Orchestra\Foundation\Http\Handlers\UserMenuHandler;
 
 class UserMenuHandlerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Test Orchestra\Foundation\Http\Handlers\UserMenuHandler::handle()
+     * method with authorized user.
+     *
+     * @test
+     */
     public function testCreatingMenuWithAuthorizedUser()
     {
         $app = new Container();
@@ -25,6 +31,12 @@ class UserMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($stub->handle());
     }
 
+    /**
+     * Test Orchestra\Foundation\Http\Handlers\UserMenuHandler::handle()
+     * method with authorized user.
+     *
+     * @test
+     */
     public function testCreatingMenuWithoutAuthorizedUser()
     {
         $app = new Container();

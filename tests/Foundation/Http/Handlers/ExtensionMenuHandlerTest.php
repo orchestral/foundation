@@ -6,6 +6,12 @@ use Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler;
 
 class ExtensionMenuHandlerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Test Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler::handle()
+     * method with authorized user.
+     *
+     * @test
+     */
     public function testCreatingMenuWithAuthorizedUser()
     {
         $app = new Container();
@@ -26,6 +32,12 @@ class ExtensionMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($stub->handle());
     }
 
+    /**
+     * Test Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler::handle()
+     * method without authorized user.
+     *
+     * @test
+     */
     public function testCreatingMenuWithoutAuthorizedUser()
     {
         $app = new Container();
@@ -39,6 +51,12 @@ class ExtensionMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($stub->handle());
     }
 
+    /**
+     * Test Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler::handle()
+     * method without `orchestra.extension` bound to container.
+     *
+     * @test
+     */
     public function testCreatingMenuWithoutBoundDependencies()
     {
         $app = new Container();
