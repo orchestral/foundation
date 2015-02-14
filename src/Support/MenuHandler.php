@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Support;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Fluent;
 use Illuminate\Contracts\Container\Container;
 
 abstract class MenuHandler
@@ -44,7 +45,7 @@ abstract class MenuHandler
     }
 
     /**
-     * Create a handler for `orchestra.ready: admin` event.
+     * Create a handler.
      *
      * @return void
      */
@@ -54,33 +55,65 @@ abstract class MenuHandler
             return ;
         }
 
-        $menu = $this->createMenu()
-                    ->title($this->title())
-                    ->link($this->link());
+        $menu = $this->createMenu();
 
-        if (! is_null($icon = $this->icon())) {
-            $menu->icon($icon);
+        $this->attachIcon($menu);
+    }
+
+    /**
+     *  Handle get attributes.
+     *
+     * @param  string  $name
+     * @return mixed
+     */
+    public function getAttribute($name)
+    {
+        $methods = ['get'.ucfirst($name).'Attribute', 'get'.ucfirst($name)];
+        $value = Arr::get($this->menu, $name);
+
+        foreach ($methods as $method) {
+            if (method_exists($this, $method)) {
+                return $this->container->call([$this, $method], ['value' => $value]);
+            }
         }
+
+        return $value;
     }
 
     /**
      * Get the URL.
      *
+     * @param  string  $value
      * @return string
      */
-    public function getLink()
+    public function getLinkAttribute($value)
     {
-        return handles($this->menu['link']);
+        return $this->container['orchestra.app']->handles($value);
     }
 
     /**
      * Create a new menu.
      *
-     * @return \Illuminate\Support\Fluent
+     * @return \Illuminate\Support\Fluent|null
      */
     protected function createMenu()
     {
-        return $this->handler->add($this->id(), $this->position());
+        return $this->handler->add($this->getAttribute('id'), $this->getAttribute('position'))
+                    ->title($this->getAttribute('title'))
+                    ->link($this->getAttribute('link'));
+    }
+
+    /**
+     * Attach icon to menu.
+     *
+     * @param  \Illuminate\Support\Fluent|null  $menu
+     * @return void
+     */
+    protected function attachIcon(Fluent $menu = null)
+    {
+        if (! is_null($menu) && ! is_null($icon = $this->getAttribute('icon'))) {
+            $menu->icon($icon);
+        }
     }
 
     /**
@@ -106,12 +139,6 @@ abstract class MenuHandler
      */
     public function __call($name, $parameters)
     {
-        $method = 'get'.ucfirst($name);
-
-        if (method_exists($this, $method)) {
-            return $this->container->call([$this, $method]);
-        }
-
-        return Arr::get($this->menu, $name);
+        return $this->getAttribute($name);
     }
 }

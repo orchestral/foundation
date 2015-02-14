@@ -5,6 +5,16 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.1 {#v3-0-1}
+
+* Add `Orchestra\Foundation\Support\Providers\RouteServiceProvider`.
+* Refactor `Orchestra\Foundation\Support\MenuHandler` to be more usable.
+* Refactor `Orchestra\Foundation\AdminMenuHandler` and split the handling to following classes:
+  - `Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler`.
+  - `Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler`.
+  - `Orchestra\Foundation\Http\Handlers\SettingMenuHandler`.
+  - `Orchestra\Foundation\Http\Handlers\UserMenuHandler`.
+
 ### v3.0.0 {#v3-0-0}
 
 * Update support to Laravel Framework v5.0.
