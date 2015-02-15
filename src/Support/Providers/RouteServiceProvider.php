@@ -7,6 +7,20 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 abstract class RouteServiceProvider extends ServiceProvider
 {
     /**
+     * The controller namespace for the application or extension.
+     *
+     * @var string|null
+     */
+    protected $namespace = 'app';
+
+    /**
+     * The fallback route prefix.
+     *
+     * @var string
+     */
+    protected $fallbackRoutePrefix = '/';
+
+    /**
      * {@inheritdoc}
      */
     public function boot(Router $router)
@@ -27,9 +41,10 @@ abstract class RouteServiceProvider extends ServiceProvider
     {
         $foundation = $this->app['orchestra.app'];
 
-        $foundation->namespaced($namespace, function(Router $router) use ($path) {
-            require $path;
-        });
+        $foundation->namespaced(
+            $namespace,
+            $this->buildRouteGeneratorCallback($path)
+        );
     }
 
     /**
@@ -41,15 +56,32 @@ abstract class RouteServiceProvider extends ServiceProvider
      */
     protected function loadFrontendRoutesFrom($path, $namespace = null)
     {
-        $router = $this->app['router'];
+        $foundation = $this->app['orchestra.app'];
+        $attributes = [];
 
-        if (is_null($namespace)) {
-            return require $path;
+        if (! is_null($namespace)) {
+            $attributes['namespace'] = $namespace;
         }
 
-        $router->group(['namespace' => $namespace], function(Router $router) use ($path) {
+        $foundation->group(
+            $this->namespace,
+            $this->fallbackRoutePrefix,
+            $attributes,
+            $this->buildRouteGeneratorCallback($path)
+        );
+    }
+
+    /**
+     * Build route generator callback.
+     *
+     * @param  string  $path
+     * @return \Closure
+     */
+    protected function buildRouteGeneratorCallback($path)
+    {
+        return function(Router $router) use ($path) {
             require $path;
-        });
+        };
     }
 
     /**
