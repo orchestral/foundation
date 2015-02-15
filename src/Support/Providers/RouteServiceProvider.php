@@ -7,7 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 abstract class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * The controller namespace for the application or extension.
+     * The application or extension namespace.
      *
      * @var string|null
      */
