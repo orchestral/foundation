@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+## v3.0.2@dev {#v3-0-2}
+
+* Refactor `Orchestra\Foundation\Support\Providers\RouteServiceProvider::loadFrontendRoutesFrom()` to utilize `Orchestra\Foundation\Foundation::group()` instead of `Illuminate\Routing\Router::group()`.
+
 ### v3.0.1 {#v3-0-1}
 
 * Add `Orchestra\Foundation\Support\Providers\RouteServiceProvider`.
