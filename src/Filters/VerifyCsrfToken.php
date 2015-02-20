@@ -48,10 +48,12 @@ class VerifyCsrfToken
      */
     protected function tokensMatch($request)
     {
-        $token = $request->session()->token();
-        $header = $request->header('X-XSRF-TOKEN');
+        $token = $request->input('_token') ?: $request->header('X-CSRF-TOKEN');
 
-        return StringUtils::equals($token, $request->input('_token')) ||
-            ($header && StringUtils::equals($token, $this->encrypter->decrypt($header)));
+        if (! $token && $header = $request->header('X-XSRF-TOKEN')) {
+            $token = $this->encrypter->decrypt($header);
+        }
+
+        return StringUtils::equals($request->session()->token(), $token);
     }
 }
