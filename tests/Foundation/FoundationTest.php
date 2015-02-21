@@ -81,13 +81,13 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('add->title->link')->once()->andReturnNull();
         $translator->shouldReceive('get')->andReturn('foo');
         $event->shouldReceive('listen')->once()
-                ->with('orchestra.ready: admin', 'Orchestra\Foundation\Http\Handlers\UserMenuHandler')->andReturnNull()
+                ->with('orchestra.started: admin', 'Orchestra\Foundation\Http\Handlers\UserMenuHandler')->andReturnNull()
             ->shouldReceive('listen')->once()
-                ->with('orchestra.ready: admin', 'Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler')->andReturnNull()
+                ->with('orchestra.started: admin', 'Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler')->andReturnNull()
             ->shouldReceive('listen')->once()
-            ->with('orchestra.ready: admin', 'Orchestra\Foundation\Http\Handlers\SettingMenuHandler')->andReturnNull()
+            ->with('orchestra.started: admin', 'Orchestra\Foundation\Http\Handlers\SettingMenuHandler')->andReturnNull()
             ->shouldReceive('listen')->once()
-            ->with('orchestra.ready: admin', 'Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler')->andReturnNull()
+            ->with('orchestra.started: admin', 'Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler')->andReturnNull()
             ->shouldReceive('listen')->once()
             ->with('orchestra.ready: admin', 'Orchestra\Foundation\AdminMenuHandler')->andReturnNull()
             ->shouldReceive('fire')->once()->with('orchestra.started', array($memoryProvider))->andReturnNull();
