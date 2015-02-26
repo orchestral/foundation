@@ -56,7 +56,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,raw]');
 
-        $auth  = m::mock('Illuminate\Contracts\Auth\Authenticatable');
+        $auth  = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $user  = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
         $form  = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
 
@@ -70,6 +71,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 (object) array('id' => 2, 'name' => 'Member'),
             ),
         );
+
+        $auth->shouldReceive('user')->once()->andReturn($user);
 
         $stub = new User($auth, $form, $table);
 
@@ -115,7 +118,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $auth  = m::mock('Illuminate\Contracts\Auth\Authenticatable');
+        $auth  = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $user  = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
         $form  = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
 
@@ -123,13 +127,14 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $grid    = m::mock('\Orchestra\Contracts\Html\Table\Grid');
         $column  = m::mock('\Orchestra\Contracts\Html\Table\Column');
 
-
-        $auth->id = 2;
+        $user->id = 2;
 
         $value  = (object) array(
             'id'   => 1,
             'name' => 'Foo',
         );
+
+        $auth->shouldReceive('user')->once()->andReturn($user);
 
         $stub = new User($auth, $form, $table);
 
@@ -154,7 +159,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 return 'foo';
             });
 
-        $app['auth'] = m::mock('\Illuminate\Auth\Guard')->makePartial();
+        $app['auth'] = m::mock('\Illuminate\Contracts\Auth\Guard');
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
         $app['html']->shouldReceive('link')->once()
                 ->with(handles("orchestra/foundation::users/1/edit"), m::any(), m::type('Array'))
@@ -179,7 +184,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $app   = $this->app;
         $model = m::mock('\Orchestra\Model\User');
 
-        $auth  = m::mock('Illuminate\Contracts\Auth\Authenticatable');
+        $auth  = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $user  = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
         $form  = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
 
@@ -198,6 +204,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
         );
 
         $model->shouldReceive('hasGetMutator')->andReturn(false);
+
+        $auth->shouldReceive('user')->once()->andReturn($user);
 
         $stub = new User($auth, $form, $table);
 
