@@ -199,7 +199,6 @@ class Foundation extends RouteManager implements FoundationContract
             'Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler',
             'Orchestra\Foundation\Http\Handlers\SettingMenuHandler',
             'Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler',
-            'Orchestra\Foundation\AdminMenuHandler',
         ];
 
         $menu->add('home')
@@ -207,8 +206,10 @@ class Foundation extends RouteManager implements FoundationContract
             ->link($this->handles('orchestra::/'));
 
         foreach ($handlers as $handler) {
-            $this->app['events']->listen('orchestra.ready: admin', $handler);
+            $this->app['events']->listen('orchestra.started: admin', $handler);
         }
+
+        $this->app['events']->listen('orchestra.ready: admin', 'Orchestra\Foundation\AdminMenuHandler');
     }
 
     /**

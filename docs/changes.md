@@ -5,6 +5,11 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+## v3.0.4 {#v3-0-4}
+
+* Rework `Orchestra\Foundation\Filters\VerifyCsrfToken` to accept `X-CSRF-TOKEN` (raw token) as well as `X-XSRF-TOKEN` (encrypted token).
+* Push foundation menu handlers to `orchestra.started: admin` instead of `orchestra.ready: admin` to support Laravel Framework changes to middleware handling in v5.0.6.
+
 ## v3.0.3 {#v3-0-3}
 
 * Fixes `Orchestra\Foundation\Support\Providers\RouteServiceProvider` to be able to run `setRootControllerNamespace()` and `loadCachedRoutes()` during booting process.
