@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Presenter;
 
+use Illuminate\Contracts\Auth\Guard;
 use Orchestra\Contracts\Html\Form\Fieldset;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Contracts\Html\Form\Grid as FormGrid;
 use Orchestra\Contracts\Html\Table\Grid as TableGrid;
 use Orchestra\Contracts\Html\Form\Factory as FormFactory;
@@ -13,20 +13,20 @@ class User extends Presenter
     /**
      * Current logged in user contract implementation.
      *
-     * @var \Illuminate\Contracts\Auth\Authenticatable
+     * @var \Illuminate\Contracts\Auth\Authenticatable|null
      */
     protected $user;
 
     /**
      * Construct a new User presenter.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
+     * @param  \Illuminate\Contracts\Auth\Guard  $auth
      * @param  \Orchestra\Contracts\Html\Form\Factory  $form
      * @param  \Orchestra\Contracts\Html\Table\Factory  $table
      */
-    public function __construct(Authenticatable $user, FormFactory $form, TableFactory $table)
+    public function __construct(Guard $auth, FormFactory $form, TableFactory $table)
     {
-        $this->user = $user;
+        $this->user = $auth->user();
         $this->form = $form;
         $this->table = $table;
     }
@@ -141,7 +141,7 @@ class User extends Presenter
                 ]
             );
 
-            if ($this->user->id !== $row->id) {
+            if (! is_null($this->user) && $this->user->id !== $row->id) {
                 $btn[] = app('html')->link(
                     handles("orchestra::users/{$row->id}/delete", ['csrf' => true]),
                     trans('orchestra/foundation::label.delete'),

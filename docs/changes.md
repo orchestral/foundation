@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+## v3.0.5@dev {$v3-0-5}
+
+* Fixes unable to resolve `Illuminate\Contracts\Auth\Authenticatable` through IoC Container when using `php artisan route:list`.
+
 ## v3.0.4 {#v3-0-4}
 
 * Rework `Orchestra\Foundation\Filters\VerifyCsrfToken` to accept `X-CSRF-TOKEN` (raw token) as well as `X-XSRF-TOKEN` (encrypted token).
