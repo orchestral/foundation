@@ -4,18 +4,21 @@ php:
   - 5.4
   - 5.5
   - 5.6
+  - 7.0
   - hhvm
 
 before_script:
   - travis_retry composer self-update
-  - travis_retry composer require satooshi/php-coveralls:~0.6 --prefer-source --no-interaction --dev
+  - travis_retry composer require satooshi/php-coveralls:~0.6.1 --prefer-source --no-interaction --dev
 
 script: phpunit -c phpunit.xml --coverage-text
 
 after_script:
-  - if [[ "$TRAVIS_PHP_VERSION" != *hhvm* ]]; then php vendor/bin/coveralls -v; fi
+  - if [[ "$TRAVIS_PHP_VERSION" == *5.6* ]]; then php vendor/bin/coveralls -v; fi
 
 matrix:
   allow_failures:
-    - php: hhvm
+    - php:
+      - 7.0
+      - hhvm
   fash_finish: true
