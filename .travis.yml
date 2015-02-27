@@ -9,7 +9,7 @@ php:
 
 before_script:
   - travis_retry composer self-update
-  - sh ./build/travis.sh
+  - sh ./build/travis.sh $TRAVIS_PHP_VERSION
 
 script: phpunit -c phpunit.xml --coverage-text
 
