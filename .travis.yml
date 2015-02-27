@@ -8,8 +8,7 @@ php:
   - hhvm
 
 before_script:
-  - travis_retry composer self-update
-  - travis_retry composer require "satooshi/php-coveralls:~0.6.1" "symfony/config=~2.0" --prefer-source --no-interaction --dev
+  - bash build/travis.sh
 
 script: phpunit -c phpunit.xml --coverage-text
 
