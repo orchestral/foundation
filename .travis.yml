@@ -8,7 +8,8 @@ php:
   - hhvm
 
 before_script:
-  - bash build/travis.sh
+  - travis_retry composer self-update
+  - sh ./build/travis.sh
 
 script: phpunit -c phpunit.xml --coverage-text
 
