@@ -222,7 +222,7 @@ class Ftp implements UploaderInterface
         // change the permission on the vendor folder instead of
         // public/packages.
         if (! $recursively && Str::contains($name, '/')) {
-            list($vendor,) = explode('/', $name);
+            list($vendor, ) = explode('/', $name);
 
             if ($this->app['files']->isDirectory($folder = "{$basePath}{$vendor}/")) {
                 $path = $folder;

@@ -79,8 +79,8 @@ class ResourceLoader extends Processor implements Command
     protected function getResponseCallback(Listener $listener, $request, array $resources, $name)
     {
         return function ($content) use ($resources, $name, $request, $listener) {
-            ( ! str_contains($name, '.')) ?
-                $namespace = $name : list($namespace,) = explode('.', $name, 2);
+            (! str_contains($name, '.')) ?
+                $namespace = $name : list($namespace, ) = explode('.', $name, 2);
 
             return $listener->onRequestSucceed([
                 'content'   => $content,

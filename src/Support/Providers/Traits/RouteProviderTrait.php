@@ -61,7 +61,7 @@ trait RouteProviderTrait
      */
     protected function getRouteLoader($path)
     {
-        return function(Router $router) use ($path) {
+        return function (Router $router) use ($path) {
             require $path;
         };
     }
