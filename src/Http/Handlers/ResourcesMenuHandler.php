@@ -43,7 +43,7 @@ class ResourcesMenuHandler extends MenuHandler
      * Resources links.
      *
      * @param  array  $resources
-     * @return void
+     * @return \Illuminate\Support\Fluent|null
      */
     protected function resources($resources)
     {
@@ -51,7 +51,7 @@ class ResourcesMenuHandler extends MenuHandler
         $foundation = $this->container['orchestra.app'];
         $translator = $this->container['translator'];
 
-        $boot = function ($foundation, $menu, $translator) {
+        $boot = function () {
             return $this->createMenu();
         };
 
@@ -61,7 +61,7 @@ class ResourcesMenuHandler extends MenuHandler
             }
 
             if (! is_null($boot)) {
-                $menu = $boot($foundation, $this->handler, $translator);
+                $menu = $boot();
                 $boot = null;
             }
 
