@@ -17,7 +17,7 @@ class ResourcesMenuHandler extends MenuHandler
         'icon'     => null,
     ];
 
-   /**
+    /**
      * Create a handler.
      *
      * @return void
@@ -43,11 +43,12 @@ class ResourcesMenuHandler extends MenuHandler
      * Resources links.
      *
      * @param  array  $resources
+     *
      * @return \Illuminate\Support\Fluent|null
      */
     protected function resources($resources)
     {
-        $menu = null;
+        $menu       = null;
         $foundation = $this->container['orchestra.app'];
         $translator = $this->container['translator'];
 
@@ -77,6 +78,7 @@ class ResourcesMenuHandler extends MenuHandler
      * Get the title.
      *
      * @param  string  $value
+     *
      * @return string
      */
     public function getTitleAttribute($value)

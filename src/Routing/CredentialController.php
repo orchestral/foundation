@@ -72,6 +72,7 @@ class CredentialController extends AdminController implements Listener
      * Response to user log-in trigger failed validation .
      *
      * @param  \Illuminate\Support\MessageBag|array  $errors
+     *
      * @return mixed
      */
     public function userLoginHasFailedValidation($errors)
@@ -83,6 +84,7 @@ class CredentialController extends AdminController implements Listener
      * Response to user log-in trigger has failed authentication.
      *
      * @param  array  $input
+     *
      * @return mixed
      */
     public function userLoginHasFailedAuthentication(array $input)
@@ -96,6 +98,7 @@ class CredentialController extends AdminController implements Listener
      * Response to user has logged in successfully.
      *
      * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
+     *
      * @return mixed
      */
     public function userHasLoggedIn(Authenticatable $user)

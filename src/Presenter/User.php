@@ -26,8 +26,8 @@ class User extends Presenter
      */
     public function __construct(Guard $auth, FormFactory $form, TableFactory $table)
     {
-        $this->user = $auth->user();
-        $this->form = $form;
+        $this->user  = $auth->user();
+        $this->form  = $form;
         $this->table = $table;
     }
 
@@ -35,6 +35,7 @@ class User extends Presenter
      * Table View Generator for Orchestra\Model\User.
      *
      * @param  \Orchestra\Model\User  $model
+     *
      * @return \Orchestra\Contracts\Html\Table\Builder
      */
     public function table($model)
@@ -61,6 +62,7 @@ class User extends Presenter
      * Table actions View Generator for Orchestra\Model\User.
      *
      * @param  \Orchestra\Contracts\Html\Table\Builder  $table
+     *
      * @return \Orchestra\Contracts\Html\Table\Builder
      */
     public function actions(TableBuilder $table)
@@ -81,6 +83,7 @@ class User extends Presenter
      * Form View Generator for Orchestra\Model\User.
      *
      * @param  \Orchestra\Model\User  $model
+     *
      * @return \Orchestra\Contracts\Html\Form\Builder
      */
     public function form($model)
@@ -130,7 +133,7 @@ class User extends Presenter
     protected function getActionsColumn()
     {
         return function ($row) {
-            $btn = [];
+            $btn   = [];
             $btn[] = app('html')->link(
                 handles("orchestra::users/{$row->id}/edit"),
                 trans('orchestra/foundation::label.edit'),

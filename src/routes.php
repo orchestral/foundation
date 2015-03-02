@@ -64,7 +64,7 @@ Foundation::namespaced('Orchestra\Foundation\Routing', function (Router $router)
     $router->match(['GET', 'HEAD'], '/', [
         'as'     => 'orchestra.dashboard',
         'before' => 'orchestra.installable',
-        'uses'   => 'DashboardController@show'
+        'uses'   => 'DashboardController@show',
     ]);
 
     // File not found routing.

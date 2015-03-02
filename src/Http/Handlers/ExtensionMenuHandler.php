@@ -22,6 +22,7 @@ class ExtensionMenuHandler extends MenuHandler
      * Get the title.
      *
      * @param  string  $value
+     *
      * @return string
      */
     public function getTitleAttribute($value)
@@ -33,6 +34,7 @@ class ExtensionMenuHandler extends MenuHandler
      * Check authorization to display the menu.
      *
      * @param  \Orchestra\Contracts\Authorization\Authorization  $acl
+     *
      * @return bool
      */
     public function authorize(Authorization $acl)

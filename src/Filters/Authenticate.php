@@ -48,9 +48,9 @@ class Authenticate
     public function __construct(Foundation $foundation, Guard $auth, Repository $config, ResponseFactory $response)
     {
         $this->foundation = $foundation;
-        $this->auth = $auth;
-        $this->config = $config;
-        $this->response = $response;
+        $this->auth       = $auth;
+        $this->config     = $config;
+        $this->response   = $response;
     }
 
     /**
@@ -58,6 +58,7 @@ class Authenticate
      *
      * @param  \Illuminate\Routing\Route  $route
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return mixed|null
      */
     public function filter(Route $route, Request $request)

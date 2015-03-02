@@ -9,6 +9,7 @@ class UserAccessPolicy
      * Bootstrap the given application.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
+     *
      * @return void
      */
     public function bootstrap(Application $app)
@@ -22,6 +23,7 @@ class UserAccessPolicy
      * Match current user to roles.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
+     *
      * @return void
      */
     protected function matchCurrentUserToRoles(Application $app)
@@ -44,6 +46,7 @@ class UserAccessPolicy
      * Attach access policy events.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
+     *
      * @return void
      */
     protected function attachAccessPolicyEvents(Application $app)

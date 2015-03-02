@@ -1,11 +1,11 @@
 <?php
 
-return array(
-    'credential' => array(
+return [
+    'credential' => [
         'register' => '[:site] Il tuo nuovo account',
-    ),
-    'forgot'     => array(
+    ],
+    'forgot'     => [
         'request' => "[:site] Resetta la tua password",
         'reset'   => "[:site] La tua nuova password",
-    ),
-);
+    ],
+];

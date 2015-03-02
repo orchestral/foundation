@@ -40,8 +40,8 @@ class CanManage
     public function __construct(Foundation $foundation, Guard $auth, Repository $config)
     {
         $this->foundation = $foundation;
-        $this->auth = $auth;
-        $this->config = $config;
+        $this->auth       = $auth;
+        $this->config     = $config;
     }
 
     /**
@@ -50,6 +50,7 @@ class CanManage
      * @param  \Illuminate\Routing\Route  $route
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $value
+     *
      * @return mixed
      */
     public function filter(Route $route, Request $request, $value = 'orchestra')

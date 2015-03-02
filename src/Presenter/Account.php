@@ -21,6 +21,7 @@ class Account extends Presenter
      *
      * @param  \Orchestra\Model\User  $model
      * @param  string  $url
+     *
      * @return \Orchestra\Contracts\Html\Form\Builder
      */
     public function profile($model, $url)
@@ -43,6 +44,7 @@ class Account extends Presenter
      * Form view generator for user account edit password.
      *
      * @param  \Orchestra\Model\User  $model
+     *
      * @return \Orchestra\Contracts\Html\Form\Builder
      */
     public function password($model)

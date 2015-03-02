@@ -31,7 +31,7 @@ return [
 
     'publisher' => [
         'ftp'         => 'FTP Credential',
-        'description' => 'We would need to have your credential in order to run the following task.'
+        'description' => 'We would need to have your credential in order to run the following task.',
     ],
 
     'users' => [

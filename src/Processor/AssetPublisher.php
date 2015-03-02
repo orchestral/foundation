@@ -31,13 +31,14 @@ class AssetPublisher extends Processor implements Command
     public function __construct(PublisherManager $publisher, Store $session)
     {
         $this->publisher = $publisher;
-        $this->session = $session;
+        $this->session   = $session;
     }
 
     /**
      * Run publishing if possible.
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\AssetPublishing  $listener
+     *
      * @return mixed
      */
     public function executeAndRedirect(Listener $listener)
@@ -52,6 +53,7 @@ class AssetPublisher extends Processor implements Command
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\AssetPublishing  $listener
      * @param  array  $input
+     *
      * @return mixed
      */
     public function publish(Listener $listener, array $input)

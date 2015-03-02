@@ -38,8 +38,8 @@ class IsGuest
     public function __construct(Foundation $foundation, Guard $auth, Repository $config)
     {
         $this->foundation = $foundation;
-        $this->auth = $auth;
-        $this->config = $config;
+        $this->auth       = $auth;
+        $this->config     = $config;
     }
 
     /**

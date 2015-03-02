@@ -47,21 +47,21 @@ class FoundationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $facades = [
-        'Orchestra\Support\Facades\Asset' => 'Orchestra\Asset',
-        'Orchestra\Support\Facades\ACL' => 'Orchestra\ACL',
+        'Orchestra\Support\Facades\Asset'      => 'Orchestra\Asset',
+        'Orchestra\Support\Facades\ACL'        => 'Orchestra\ACL',
         'Orchestra\Support\Facades\Foundation' => 'Orchestra\Foundation',
-        'Orchestra\Support\Facades\Config' => 'Orchestra\Config',
-        'Orchestra\Support\Facades\Extension' => 'Orchestra\Extension',
-        'Orchestra\Support\Facades\Form' => 'Orchestra\Form',
-        'Orchestra\Support\Facades\Mail' => 'Orchestra\Mail',
-        'Orchestra\Support\Facades\Memory' => 'Orchestra\Memory',
-        'Orchestra\Support\Facades\Messages' => 'Orchestra\Messages',
-        'Orchestra\Support\Facades\Notifier' => 'Orchestra\Notifier',
-        'Orchestra\Support\Facades\Publisher' => 'Orchestra\Publisher',
-        'Orchestra\Support\Facades\Meta' => 'Orchestra\Meta',
-        'Orchestra\Support\Facades\Table' => 'Orchestra\Table',
-        'Orchestra\Support\Facades\Theme' => 'Orchestra\Theme',
-        'Orchestra\Support\Facades\Widget' => 'Orchestra\Widget',
+        'Orchestra\Support\Facades\Config'     => 'Orchestra\Config',
+        'Orchestra\Support\Facades\Extension'  => 'Orchestra\Extension',
+        'Orchestra\Support\Facades\Form'       => 'Orchestra\Form',
+        'Orchestra\Support\Facades\Mail'       => 'Orchestra\Mail',
+        'Orchestra\Support\Facades\Memory'     => 'Orchestra\Memory',
+        'Orchestra\Support\Facades\Messages'   => 'Orchestra\Messages',
+        'Orchestra\Support\Facades\Notifier'   => 'Orchestra\Notifier',
+        'Orchestra\Support\Facades\Publisher'  => 'Orchestra\Publisher',
+        'Orchestra\Support\Facades\Meta'       => 'Orchestra\Meta',
+        'Orchestra\Support\Facades\Table'      => 'Orchestra\Table',
+        'Orchestra\Support\Facades\Theme'      => 'Orchestra\Theme',
+        'Orchestra\Support\Facades\Widget'     => 'Orchestra\Widget',
     ];
 
     /**
@@ -83,10 +83,10 @@ class FoundationServiceProvider extends ServiceProvider
     }
 
     /**
-    * Register the service provider for foundation.
-    *
-    * @return void
-    */
+     * Register the service provider for foundation.
+     *
+     * @return void
+     */
     protected function registerFoundation()
     {
         $this->app['orchestra.installed'] = false;
@@ -104,7 +104,7 @@ class FoundationServiceProvider extends ServiceProvider
     protected function registerMeta()
     {
         $this->app->singleton('orchestra.meta', function () {
-            return new Meta;
+            return new Meta();
         });
     }
 

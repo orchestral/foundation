@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'add'    => 'Aggiungi',
     'cancel' => 'Cancel',
     'delete' => 'Elimina',
@@ -15,13 +15,13 @@ return array(
     'no-data'      => 'Nessun dato al momento',
     'no-extension' => 'Nessuna estensione disponibile al momento',
 
-    'account' => array(
+    'account' => [
         'current_password' => 'Password attuale',
         'new_password'     => 'Nuova password',
         'confirm_password' => 'Conferma password',
-    ),
+    ],
 
-    'email' => array(
+    'email' => [
         'driver'          => 'Driver',
         'from'            => 'Indirizzo del mittente',
         'host'            => 'Host',
@@ -34,9 +34,9 @@ return array(
         'queue'           => 'Speidsci via Queue',
         'domain'          => 'Domain',
         'secret'          => 'Secret Key',
-    ),
+    ],
 
-    'extensions' => array(
+    'extensions' => [
         'name'         => 'Estensione',
         'author'       => 'Di :author',
         'version'      => 'Versione :version',
@@ -44,37 +44,37 @@ return array(
         'update'       => 'Aggiorna',
         'handles'      => 'Gestisce gli URL',
 
-        'actions' => array(
+        'actions' => [
             'activate'   => 'Attiva',
             'deactivate' => 'Disattiva',
             'update'     => 'Migra e pubblica',
-        ),
+        ],
 
-        'publisher' => array(
+        'publisher' => [
             'host'            => 'Host',
             'user'            => 'Nome utente',
             'password'        => 'Password',
             'connection-type' => 'Tipo di connessione',
-        ),
-    ),
+        ],
+    ],
 
-    'search'    => array(
+    'search'    => [
         'button'  => 'Cerca',
         'filter'  => 'Filtro',
         'keyword' => 'Parola chiave...',
-    ),
+    ],
 
-    'settings' => array(
+    'settings' => [
         'application'       => 'Applicazione',
         'mail'              => 'E-mail',
         'user-registration' => 'Consenti la registrazione degli utenti',
-    ),
+    ],
 
-    'users' => array(
+    'users' => [
         'email'    => 'Indirizzo e-mail',
         'username' => 'Nome utente',
         'fullname' => 'Nome completo',
         'password' => 'Password',
         'roles'    => 'Ruoli',
-    ),
-);
+    ],
+];

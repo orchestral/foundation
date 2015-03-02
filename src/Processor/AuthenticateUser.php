@@ -25,7 +25,7 @@ class AuthenticateUser extends Processor implements Command
     public function __construct(Validator $validator, Guard $auth)
     {
         $this->validator = $validator;
-        $this->auth = $auth;
+        $this->auth      = $auth;
     }
 
     /**
@@ -33,6 +33,7 @@ class AuthenticateUser extends Processor implements Command
      *
      * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
      * @param  array  $input
+     *
      * @return mixed
      */
     public function login(Listener $listener, array $input)
@@ -60,6 +61,7 @@ class AuthenticateUser extends Processor implements Command
      * Logout a user.
      *
      * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
+     *
      * @return mixed
      */
     public function logout(Listener $listener)
@@ -73,6 +75,7 @@ class AuthenticateUser extends Processor implements Command
      * Authenticate the user.
      *
      * @param  array  $input
+     *
      * @return bool
      */
     protected function authenticate($input)
@@ -95,6 +98,7 @@ class AuthenticateUser extends Processor implements Command
      * be ignored in most cases.
      *
      * @param  \Orchestra\Model\User  $user
+     *
      * @return void
      */
     protected function verifyWhenFirstTimeLogin(Eloquent $user)

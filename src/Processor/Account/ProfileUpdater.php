@@ -11,12 +11,13 @@ class ProfileUpdater extends User implements \Orchestra\Contracts\Foundation\Com
      * Get account/profile information.
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater  $listener
+     *
      * @return mixed
      */
     public function edit(Listener $listener)
     {
         $eloquent = Auth::user();
-        $form = $this->presenter->profile($eloquent, 'orchestra::account');
+        $form     = $this->presenter->profile($eloquent, 'orchestra::account');
 
         $this->fireEvent('form', [$eloquent, $form]);
 
@@ -28,6 +29,7 @@ class ProfileUpdater extends User implements \Orchestra\Contracts\Foundation\Com
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater  $listener
      * @param  array  $input
+     *
      * @return mixed
      */
     public function update(Listener $listener, array $input)
@@ -58,6 +60,7 @@ class ProfileUpdater extends User implements \Orchestra\Contracts\Foundation\Com
      *
      * @param  \Orchestra\Model\User|\Illuminate\Database\Eloquent\Model  $user
      * @param  array  $input
+     *
      * @return void
      */
     protected function saving($user, array $input)

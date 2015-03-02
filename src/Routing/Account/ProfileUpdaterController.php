@@ -47,6 +47,7 @@ class ProfileUpdaterController extends Controller implements Listener
      * Response to show user profile changer.
      *
      * @param  array  $data
+     *
      * @return mixed
      */
     public function showProfileChanger(array $data)
@@ -60,6 +61,7 @@ class ProfileUpdaterController extends Controller implements Listener
      * Response when validation on update profile failed.
      *
      * @param  \Illuminate\Support\MessageBag|array  $errors
+     *
      * @return mixed
      */
     public function updateProfileFailedValidation($errors)
@@ -71,6 +73,7 @@ class ProfileUpdaterController extends Controller implements Listener
      * Response when update profile failed.
      *
      * @param  array  $errors
+     *
      * @return mixed
      */
     public function updateProfileFailed(array $errors)

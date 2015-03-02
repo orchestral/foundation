@@ -13,6 +13,7 @@ interface UploaderInterface
      * Get service connection instance.
      *
      * @param  object  $client
+     *
      * @return void
      */
     public function setConnection($client);
@@ -21,6 +22,7 @@ interface UploaderInterface
      * Connect to the service.
      *
      * @param  array  $config
+     *
      * @return void
      */
     public function connect($config = []);
@@ -29,6 +31,7 @@ interface UploaderInterface
      * Upload the file.
      *
      * @param  string  $name
+     *
      * @return bool
      */
     public function upload($name);

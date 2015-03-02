@@ -30,6 +30,7 @@ class ResourceLoader extends Processor implements Command
      * View list resources page.
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\ResourceLoader  $listener
+     *
      * @return mixed
      */
     public function index(Listener $listener)
@@ -53,6 +54,7 @@ class ResourceLoader extends Processor implements Command
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\ResourceLoader  $listener
      * @param  string  $request
+     *
      * @return mixed
      */
     public function show(Listener $listener, $request)
@@ -74,6 +76,7 @@ class ResourceLoader extends Processor implements Command
      * @param  string  $request
      * @param  array  $resources
      * @param  string  $name
+     *
      * @return callable
      */
     protected function getResponseCallback(Listener $listener, $request, array $resources, $name)

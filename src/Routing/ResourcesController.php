@@ -42,6 +42,7 @@ class ResourcesController extends AdminController implements Listener
      * Add a drop-in resource anywhere on Orchestra Platform.
      *
      * @param  string  $request
+     *
      * @return mixed
      */
     public function show($request)
@@ -57,6 +58,7 @@ class ResourcesController extends AdminController implements Listener
      * Response when show resources lists succeed.
      *
      * @param  array  $data
+     *
      * @return mixed
      */
     public function showResourcesList(array $data)
@@ -71,6 +73,7 @@ class ResourcesController extends AdminController implements Listener
      * Response when load resource succeed.
      *
      * @param  array  $data
+     *
      * @return mixed
      */
     public function onRequestSucceed(array $data)

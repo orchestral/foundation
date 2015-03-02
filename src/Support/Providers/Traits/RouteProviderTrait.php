@@ -23,6 +23,7 @@ trait RouteProviderTrait
      *
      * @param  string  $path
      * @param  string|null  $namespace
+     *
      * @return void
      */
     protected function loadBackendRoutesFrom($path, $namespace = null)
@@ -38,6 +39,7 @@ trait RouteProviderTrait
      *
      * @param  string  $path
      * @param  string|null  $namespace
+     *
      * @return void
      */
     protected function loadFrontendRoutesFrom($path, $namespace = null)
@@ -57,6 +59,7 @@ trait RouteProviderTrait
      * Build route generator callback.
      *
      * @param  string  $path
+     *
      * @return \Closure
      */
     protected function getRouteLoader($path)

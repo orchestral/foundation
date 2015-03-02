@@ -37,7 +37,7 @@ class SupportServiceProvider extends ServiceProvider
     protected function registerPublisher()
     {
         $this->app->singleton('orchestra.publisher.ftp', function () {
-            return new FtpClient;
+            return new FtpClient();
         });
 
         $this->app->singleton('orchestra.publisher', function ($app) {
@@ -53,7 +53,7 @@ class SupportServiceProvider extends ServiceProvider
     protected function registerRoleEloquent()
     {
         $this->app->bind('orchestra.role', function () {
-            return new Role;
+            return new Role();
         });
     }
 
@@ -65,7 +65,7 @@ class SupportServiceProvider extends ServiceProvider
     protected function registerUserEloquent()
     {
         $this->app->bind('orchestra.user', function () {
-            return new User;
+            return new User();
         });
     }
 

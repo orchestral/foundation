@@ -77,6 +77,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @param  string|null  $namespace
      * @param  \Closure|null  $callback
+     *
      * @return void
      */
     public function namespaced($namespace, Closure $callback)
@@ -97,6 +98,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @param  string  $name
      * @param  string  $default
+     *
      * @return \Orchestra\Contracts\Extension\RouteGenerator
      */
     public function route($name, $default = '/')
@@ -137,6 +139,7 @@ class Foundation extends RouteManager implements FoundationContract
      * Run booting on installed application.
      *
      * @return \Orchestra\Contracts\Memory\Provider
+     *
      * @throws \Exception
      */
     protected function bootInstalledApplication()
@@ -193,7 +196,7 @@ class Foundation extends RouteManager implements FoundationContract
      */
     protected function createAdminMenu()
     {
-        $menu = $this->menu();
+        $menu     = $this->menu();
         $handlers = [
             'Orchestra\Foundation\Http\Handlers\UserMenuHandler',
             'Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler',
@@ -229,6 +232,7 @@ class Foundation extends RouteManager implements FoundationContract
      * Register base application components.
      *
      * @param  \Orchestra\Contracts\Memory\Provider  $memory
+     *
      * @return void
      */
     protected function registerComponents(Provider $memory)
@@ -247,7 +251,7 @@ class Foundation extends RouteManager implements FoundationContract
         if (in_array($name, ['orchestra'])) {
             return $this->app->make('Orchestra\Extension\RouteGenerator', [
                 $this->app['config']->get('orchestra/foundation::handles', $default),
-                $this->app['request']
+                $this->app['request'],
             ]);
         }
 
@@ -259,6 +263,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @param  string   $method
      * @param  array    $parameters
+     *
      * @return mixed
      */
     public function __call($method, $parameters)

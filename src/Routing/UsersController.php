@@ -63,6 +63,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      * GET (:orchestra)/users/$id/edit
      *
      * @param  int|string  $id
+     *
      * @return mixed
      */
     public function edit($id)
@@ -88,6 +89,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      * PUT (:orchestra)/users/1
      *
      * @param  int|string  $id
+     *
      * @return mixed
      */
     public function update($id)
@@ -101,6 +103,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      * GET (:orchestra)/$id/delete
      *
      * @param  int|string  $id
+     *
      * @return mixed
      */
     public function delete($id)
@@ -114,6 +117,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      * DELETE (:orchestra)/$id
      *
      * @param  int|string  $id
+     *
      * @return mixed
      */
     public function destroy($id)
@@ -125,6 +129,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      * Response when list users page succeed.
      *
      * @param  array  $data
+     *
      * @return mixed
      */
     public function showUsers(array $data)
@@ -138,6 +143,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      * Response when create user page succeed.
      *
      * @param  array  $data
+     *
      * @return mixed
      */
     public function showUserCreator(array $data)
@@ -149,6 +155,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      * Response when edit user page succeed.
      *
      * @param  array  $data
+     *
      * @return mixed
      */
     public function showUserChanger(array $data)
@@ -162,6 +169,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      * Response when storing user failed on validation.
      *
      * @param  \Illuminate\Support\MessageBag|array  $errors
+     *
      * @return mixed
      */
     public function createUserFailedValidation($errors)
@@ -173,6 +181,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      * Response when storing user failed.
      *
      * @param  array  $errors
+     *
      * @return mixed
      */
     public function createUserFailed(array $errors)
@@ -199,6 +208,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * @param  \Illuminate\Support\MessageBag|array  $errors
      * @param  string|int  $id
+     *
      * @return mixed
      */
     public function updateUserFailedValidation($errors, $id)
@@ -210,6 +220,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      * Response when updating user failed.
      *
      * @param  array  $errors
+     *
      * @return mixed
      */
     public function updateUserFailed(array $errors)
@@ -235,6 +246,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      * Response when destroying user failed.
      *
      * @param  array  $errors
+     *
      * @return mixed
      */
     public function userDeletionFailed(array $errors)

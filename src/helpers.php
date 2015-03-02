@@ -5,6 +5,7 @@ if (! function_exists('orchestra')) {
      * Return orchestra.app instance.
      *
      * @param  string|null  $service
+     *
      * @return mixed
      */
     function orchestra($service = null)
@@ -23,7 +24,9 @@ if (! function_exists('memorize')) {
      *
      * @param  string   $key
      * @param  string   $default
+     *
      * @return mixed
+     *
      * @see    \Orchestra\Foundation\Kernel::memory()
      */
     function memorize($key, $default = null)
@@ -38,6 +41,7 @@ if (! function_exists('handles')) {
      *
      * @param  string   $name
      * @param  array    $options
+     *
      * @return string
      */
     function handles($name, array $options = [])
@@ -52,6 +56,7 @@ if (! function_exists('resources')) {
      *
      * @param  string   $name
      * @param  array    $options
+     *
      * @return string
      */
     function resources($name, array $options = [])
@@ -68,6 +73,7 @@ if (! function_exists('get_meta')) {
      *
      * @param  string   $key
      * @param  mixed    $default
+     *
      * @return string
      */
     function get_meta($key, $default = null)
@@ -82,6 +88,7 @@ if (! function_exists('set_meta')) {
      *
      * @param  string   $key
      * @param  mixed    $value
+     *
      * @return string
      */
     function set_meta($key, $value = null)

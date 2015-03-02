@@ -22,7 +22,7 @@ class Extension extends Presenter
      */
     public function __construct(ExtensionContract $extension, FormFactory $form)
     {
-        $this->form = $form;
+        $this->form      = $form;
         $this->extension = $extension;
     }
 
@@ -31,6 +31,7 @@ class Extension extends Presenter
      *
      * @param  \Illuminate\Support\Fluent  $model
      * @param  string  $name
+     *
      * @return \Orchestra\Contracts\Html\Form\Builder
      */
     public function configure($model, $name)

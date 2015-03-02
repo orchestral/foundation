@@ -76,6 +76,7 @@ class PublisherManager extends Manager
      * Add a process to be queue.
      *
      * @param  string  $queue
+     *
      * @return bool
      */
     public function queue($queue)

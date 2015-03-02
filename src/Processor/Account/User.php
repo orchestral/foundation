@@ -24,6 +24,7 @@ abstract class User extends Processor
      *
      * @param  \Orchestra\Model\User|\Illuminate\Database\Eloquent\Model  $user
      * @param  array  $input
+     *
      * @return bool
      */
     protected function validateCurrentUser($user, array $input)
@@ -32,10 +33,11 @@ abstract class User extends Processor
     }
 
     /**
-     * Fire Event related to eloquent process
+     * Fire Event related to eloquent process.
      *
      * @param  string  $type
      * @param  array   $parameters
+     *
      * @return void
      */
     protected function fireEvent($type, array $parameters = [])

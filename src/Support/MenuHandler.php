@@ -41,7 +41,7 @@ abstract class MenuHandler
     public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->handler = $container->make('orchestra.platform.menu');
+        $this->handler   = $container->make('orchestra.platform.menu');
     }
 
     /**
@@ -64,12 +64,13 @@ abstract class MenuHandler
      *  Handle get attributes.
      *
      * @param  string  $name
+     *
      * @return mixed
      */
     public function getAttribute($name)
     {
         $methods = ['get'.ucfirst($name).'Attribute', 'get'.ucfirst($name)];
-        $value = Arr::get($this->menu, $name);
+        $value   = Arr::get($this->menu, $name);
 
         foreach ($methods as $method) {
             if (method_exists($this, $method)) {
@@ -84,6 +85,7 @@ abstract class MenuHandler
      * Get the URL.
      *
      * @param  string  $value
+     *
      * @return string
      */
     public function getLinkAttribute($value)
@@ -107,6 +109,7 @@ abstract class MenuHandler
      * Attach icon to menu.
      *
      * @param  \Illuminate\Support\Fluent|null  $menu
+     *
      * @return void
      */
     protected function attachIcon(Fluent $menu = null)
@@ -135,6 +138,7 @@ abstract class MenuHandler
      *
      * @param  string  $name
      * @param  array   $parameters
+     *
      * @return mixed
      */
     public function __call($name, $parameters)

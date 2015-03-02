@@ -30,13 +30,15 @@ class VerifyCsrfToken
      *
      * @param  \Illuminate\Routing\Route  $route
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return mixed
+     *
      * @throws \Illuminate\Session\TokenMismatchException
-    */
+     */
     public function filter(Route $route, Request $request)
     {
         if (! $this->tokensMatch($request)) {
-            throw new TokenMismatchException;
+            throw new TokenMismatchException();
         }
     }
 
@@ -44,6 +46,7 @@ class VerifyCsrfToken
      * Determine if the session and input CSRF tokens match.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return bool
      */
     protected function tokensMatch($request)
