@@ -8,6 +8,7 @@ class LoadExpresso
      * Bootstrap the given application.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
+     *
      * @return void
      */
     public function bootstrap(Application $app)
@@ -23,6 +24,7 @@ class LoadExpresso
      * Extends blade compiler.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
+     *
      * @return void
      */
     protected function addBladeExtensions(Application $app)
@@ -49,6 +51,7 @@ class LoadExpresso
      * Add "navbar" macro for "orchestra.decorator" service location.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
+     *
      * @return void
      */
     protected function addDecoratorExtensions(Application $app)
@@ -62,6 +65,7 @@ class LoadExpresso
      * Add "title" macros for "html" service location.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
+     *
      * @return void
      */
     protected function addHtmlExtensions(Application $app)

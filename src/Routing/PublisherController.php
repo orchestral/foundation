@@ -59,7 +59,7 @@ class PublisherController extends AdminController implements Listener
      */
     public function publish()
     {
-        $input = Input::only(['host', 'user', 'password']);
+        $input        = Input::only(['host', 'user', 'password']);
         $input['ssl'] = (Input::get('connection-type', 'sftp') === 'sftp');
 
         return $this->processor->publish($this, $input);
@@ -69,6 +69,7 @@ class PublisherController extends AdminController implements Listener
      * Response to publishing asset failed.
      *
      * @param  array  $errors
+     *
      * @return mixed
      */
     public function publishingHasFailed(array $errors)

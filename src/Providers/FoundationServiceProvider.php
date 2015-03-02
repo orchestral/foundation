@@ -47,11 +47,11 @@ class FoundationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $facades = [
-        'Orchestra\Support\Facades\Config' => 'Orchestra\Config',
+        'Orchestra\Support\Facades\Config'    => 'Orchestra\Config',
         'Orchestra\Support\Facades\Extension' => 'Orchestra\Extension',
-        'Orchestra\Support\Facades\Mail' => 'Orchestra\Mail',
+        'Orchestra\Support\Facades\Mail'      => 'Orchestra\Mail',
         'Orchestra\Support\Facades\Publisher' => 'Orchestra\Publisher',
-        'Orchestra\Support\Facades\Widget' => 'Orchestra\Widget',
+        'Orchestra\Support\Facades\Widget'    => 'Orchestra\Widget',
     ];
 
     /**
@@ -73,10 +73,10 @@ class FoundationServiceProvider extends ServiceProvider
     }
 
     /**
-    * Register the service provider for foundation.
-    *
-    * @return void
-    */
+     * Register the service provider for foundation.
+     *
+     * @return void
+     */
     protected function registerFoundation()
     {
         $this->app['orchestra.installed'] = false;
@@ -94,7 +94,7 @@ class FoundationServiceProvider extends ServiceProvider
     protected function registerMeta()
     {
         $this->app->singleton('orchestra.meta', function () {
-            return new Meta;
+            return new Meta();
         });
     }
 

@@ -9,6 +9,7 @@ class UserAccessPolicy
      * Bootstrap the given application.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
+     *
      * @return void
      */
     public function bootstrap(Application $app)
@@ -22,16 +23,17 @@ class UserAccessPolicy
      * Match current user to roles.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
+     *
      * @return void
      */
     protected function matchCurrentUserToRoles(Application $app)
     {
-        $app['events']->listen('orchestra.auth: roles', function ($user, $roles) {
+        $app['events']->listen('orchestra.auth: roles', function ($user) {
             // When user is null, we should expect the roles is not available.
             // Therefore, returning null would propagate any other event listeners
             // (if any) to try resolve the roles.
             if (is_null($user)) {
-                return null;
+                return;
             }
 
             $roles = $user->getRoles();
@@ -44,6 +46,7 @@ class UserAccessPolicy
      * Attach access policy events.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
+     *
      * @return void
      */
     protected function attachAccessPolicyEvents(Application $app)

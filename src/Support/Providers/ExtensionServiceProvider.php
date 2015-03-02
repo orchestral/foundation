@@ -12,14 +12,14 @@ class ExtensionServiceProvider extends ServiceProvider
     protected $defer = true;
 
     /**
-     * Available orchestra extensions
+     * Available orchestra extensions.
      *
      * @var array
      */
     protected $extensions = [];
 
     /**
-     * Register the service provider
+     * Register the service provider.
      *
      * @return void
      */

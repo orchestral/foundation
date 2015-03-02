@@ -47,6 +47,7 @@ class PasswordUpdaterController extends Controller implements Listener
      * Response to show user password.
      *
      * @param  array  $data
+     *
      * @return mixed
      */
     public function showPasswordChanger(array $data)
@@ -60,6 +61,7 @@ class PasswordUpdaterController extends Controller implements Listener
      * Response when validation on change password failed.
      *
      * @param  \Illuminate\Support\MessageBag|array  $errors
+     *
      * @return mixed
      */
     public function updatePasswordFailedValidation($errors)
@@ -83,6 +85,7 @@ class PasswordUpdaterController extends Controller implements Listener
      * Response when update password failed.
      *
      * @param  array  $errors
+     *
      * @return mixed
      */
     public function updatePasswordFailed(array $errors)

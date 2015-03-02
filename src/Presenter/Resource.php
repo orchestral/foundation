@@ -19,6 +19,7 @@ class Resource extends Presenter
      * Table View Generator for Orchestra\Resources.
      *
      * @param  array  $model
+     *
      * @return \Orchestra\Contracts\Html\Table\Builder
      */
     public function table($model)

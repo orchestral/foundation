@@ -27,6 +27,7 @@ class Ftp implements UploaderInterface
      *
      * @param  \Illuminate\Foundation\Application  $app
      * @param  \Orchestra\Support\Ftp\Client  $client
+     *
      * @throws \Orchestra\Support\Ftp\ServerException
      */
     public function __construct($app, FtpClient $client)
@@ -60,6 +61,7 @@ class Ftp implements UploaderInterface
      * Set service connection instance.
      *
      * @param  object  $client
+     *
      * @return void
      */
     public function setConnection($client)
@@ -71,6 +73,7 @@ class Ftp implements UploaderInterface
      * Connect to the service.
      *
      * @param  array  $config
+     *
      * @return bool
      */
     public function connect($config = [])
@@ -84,6 +87,7 @@ class Ftp implements UploaderInterface
      * Make a directory.
      *
      * @param  string  $path
+     *
      * @return bool
      */
     public function makeDirectory($path)
@@ -96,6 +100,7 @@ class Ftp implements UploaderInterface
      *
      * @param  string  $path
      * @param  int     $mode
+     *
      * @return bool
      */
     public function permission($path, $mode = 0755)
@@ -108,6 +113,7 @@ class Ftp implements UploaderInterface
      *
      * @param  string  $path
      * @param  int     $mode
+     *
      * @return bool
      */
     public function recursivePermission($path, $mode = 0755)
@@ -128,6 +134,7 @@ class Ftp implements UploaderInterface
      *
      * @param  string  $path
      * @param  int     $mode
+     *
      * @return bool
      */
     protected function recursiveFilePermission($path, $mode = 0755)
@@ -157,7 +164,9 @@ class Ftp implements UploaderInterface
      *
      * @param  string  $name
      * @param  bool    $recursively
+     *
      * @return bool
+     *
      * @throws \RuntimeException
      */
     public function upload($name, $recursively = false)
@@ -165,7 +174,7 @@ class Ftp implements UploaderInterface
         list($path, $basePath, $recursively, $folderExist) = $this->checkDestination($name, $recursively);
 
         try {
-            $self = $this;
+            $self         = $this;
             $basePathName = "{$basePath}{$name}/";
 
             $callback = function () use ($self, $folderExist, $basePathName) {
@@ -195,6 +204,7 @@ class Ftp implements UploaderInterface
      *
      * @param  string  $name
      * @param  bool    $recursively
+     *
      * @return array
      */
     protected function checkDestination($name, $recursively = false)
@@ -213,7 +223,7 @@ class Ftp implements UploaderInterface
         // folder instead.
         if ($this->app['files']->isDirectory($folder = "{$basePath}{$name}/")) {
             $recursively = true;
-            $path = $folder;
+            $path        = $folder;
         } else {
             $folderExist = false;
         }
@@ -222,7 +232,7 @@ class Ftp implements UploaderInterface
         // change the permission on the vendor folder instead of
         // public/packages.
         if (! $recursively && Str::contains($name, '/')) {
-            list($vendor,) = explode('/', $name);
+            list($vendor, ) = explode('/', $name);
 
             if ($this->app['files']->isDirectory($folder = "{$basePath}{$vendor}/")) {
                 $path = $folder;
@@ -239,6 +249,7 @@ class Ftp implements UploaderInterface
      * @param  bool  $recursively
      * @param  int  $mode
      * @param  \Closure  $callback
+     *
      * @return void
      */
     protected function changePermission($path, $recursively, $mode = 0755, Closure $callback = null)
@@ -258,6 +269,7 @@ class Ftp implements UploaderInterface
      * Get base path for FTP.
      *
      * @param  string  $path
+     *
      * @return string
      */
     public function basePath($path)

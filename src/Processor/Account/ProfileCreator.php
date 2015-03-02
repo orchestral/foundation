@@ -17,12 +17,13 @@ class ProfileCreator extends User implements Command
      * View registration page.
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator  $listener
+     *
      * @return mixed
      */
     public function create(Listener $listener)
     {
         $eloquent = Foundation::make('orchestra.user');
-        $form = $this->presenter->profile($eloquent, 'orchestra::register');
+        $form     = $this->presenter->profile($eloquent, 'orchestra::register');
 
         $form->extend(function ($form) {
             $form->submit = 'orchestra/foundation::title.register';
@@ -38,6 +39,7 @@ class ProfileCreator extends User implements Command
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator  $listener
      * @param  array  $input
+     *
      * @return mixed
      */
     public function store(Listener $listener, array $input)
@@ -69,6 +71,7 @@ class ProfileCreator extends User implements Command
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator  $listener
      * @param  \Orchestra\Model\User  $user
      * @param  string  $password
+     *
      * @return mixed
      */
     protected function notifyCreatedUser(Listener $listener, Eloquent $user, $password)
@@ -104,6 +107,7 @@ class ProfileCreator extends User implements Command
      * @param  \Orchestra\Model\User  $user
      * @param  array  $input
      * @param  string  $password
+     *
      * @return void
      */
     protected function saving(Eloquent $user, array $input, $password)
@@ -118,7 +122,7 @@ class ProfileCreator extends User implements Command
         DB::transaction(function () use ($user) {
             $user->save();
             $user->roles()->sync([
-                Config::get('orchestra/foundation::roles.member', 2)
+                Config::get('orchestra/foundation::roles.member', 2),
             ]);
         });
 

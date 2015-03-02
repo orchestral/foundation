@@ -26,6 +26,7 @@ class IsRegistrable
      * Run the request filter.
      *
      * @return mixed
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function filter()

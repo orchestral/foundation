@@ -14,12 +14,13 @@ class PasswordUpdater extends User implements Command
      * Get password information.
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater  $listener
+     *
      * @return mixed
      */
     public function edit(Listener $listener)
     {
         $eloquent = Auth::user();
-        $form = $this->presenter->password($eloquent);
+        $form     = $this->presenter->password($eloquent);
 
         return $listener->showPasswordChanger(['eloquent' => $eloquent, 'form' => $form]);
     }
@@ -29,6 +30,7 @@ class PasswordUpdater extends User implements Command
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater  $listener
      * @param  array  $input
+     *
      * @return mixed
      */
     public function update(Listener $listener, array $input)

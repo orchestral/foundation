@@ -20,6 +20,7 @@ class Setting extends Presenter
      * Form View Generator for Setting Page.
      *
      * @param  \Illuminate\Support\Fluent  $model
+     *
      * @return \Orchestra\Contracts\Html\Form\Builder
      */
     public function form($model)
@@ -36,6 +37,7 @@ class Setting extends Presenter
      * Form view generator for application configuration.
      *
      * @param  \Orchestra\Contracts\Html\Form\Grid  $form
+     *
      * @return void
      */
     protected function application(FormGrid $form)
@@ -63,6 +65,7 @@ class Setting extends Presenter
      *
      * @param  \Orchestra\Contracts\Html\Form\Grid  $form
      * @param  \Illuminate\Support\Fluent  $model
+     *
      * @return void
      */
     protected function mailer(FormGrid $form, $model)

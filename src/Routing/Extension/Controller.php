@@ -21,6 +21,7 @@ abstract class Controller extends AdminController implements Extension
      *
      * @param  string  $vendor
      * @param  string|null  $package
+     *
      * @return \Illuminate\Support\Fluent
      */
     protected function getExtension($vendor, $package = null)

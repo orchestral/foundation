@@ -28,7 +28,7 @@ class PasswordBroker extends Processor implements Command
     public function __construct(Validator $validator, Password $password)
     {
         $this->validator = $validator;
-        $this->password = $password;
+        $this->password  = $password;
     }
 
     /**
@@ -36,6 +36,7 @@ class PasswordBroker extends Processor implements Command
      *
      * @param  \Orchestra\Contracts\Auth\Listener\PasswordResetLink  $listener
      * @param  array  $input
+     *
      * @return mixed
      */
     public function store(PasswordResetLink $listener, array $input)
@@ -47,8 +48,8 @@ class PasswordBroker extends Processor implements Command
         }
 
         $memory = Foundation::memory();
-        $site  = $memory->get('site.name', 'Orchestra Platform');
-        $data  = ['email' => $input['email']];
+        $site   = $memory->get('site.name', 'Orchestra Platform');
+        $data   = ['email' => $input['email']];
 
         $response = $this->password->sendResetLink($data, function ($mail) use ($site) {
             $mail->subject(trans('orchestra/foundation::email.forgot.request', ['site' => $site]));
@@ -66,6 +67,7 @@ class PasswordBroker extends Processor implements Command
      *
      * @param  \Orchestra\Contracts\Auth\Listener\PasswordReset  $listener
      * @param  array  $input
+     *
      * @return mixed
      */
     public function update(PasswordReset $listener, array $input)

@@ -36,6 +36,7 @@ abstract class BaseController extends Controller
      * GET (:orchestra) return 404
      *
      * @param  array  $parameters
+     *
      * @return mixed
      */
     public function missingMethod($parameters = [])

@@ -32,13 +32,14 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
     {
         $this->presenter = $presenter;
         $this->validator = $validator;
-        $this->memory = $memory;
+        $this->memory    = $memory;
     }
 
     /**
      * View setting page.
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\SettingUpdater  $listener
+     *
      * @return mixed
      */
     public function edit(SettingUpdateListener $listener)
@@ -77,6 +78,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\SettingUpdater  $listener
      * @param  array  $input
+     *
      * @return mixed
      */
     public function update(SettingUpdateListener $listener, array $input)
@@ -125,6 +127,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
      * Migrate Orchestra Platform components.
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\SystemUpdater  $listener
+     *
      * @return mixed
      */
     public function migrate(SystemUpdateListener $listener)
@@ -140,6 +143,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
      *
      * @param  mixed   $input
      * @param  string  $alternative
+     *
      * @return mixed
      */
     private function getValue($input, $alternative)

@@ -10,7 +10,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
 {
     /**
      * Construct Forgot Password Controller with some pre-define
-     * configuration
+     * configuration.
      *
      * @param \Orchestra\Foundation\Processor\Account\PasswordBroker  $processor
      */
@@ -67,6 +67,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      * GET (:orchestra)/forgot/reset/(:hash)
      *
      * @param  string  $token
+     *
      * @return mixed
      */
     public function show($token)
@@ -94,6 +95,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      * Response when request password failed on validation.
      *
      * @param  \Illuminate\Support\MessageBag|array  $errors
+     *
      * @return mixed
      */
     public function resetLinkFailedValidation($errors)
@@ -109,6 +111,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      * Response when request reset password failed.
      *
      * @param  string  $response
+     *
      * @return mixed
      */
     public function resetLinkFailed($response)
@@ -122,6 +125,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      * Response when request reset password succeed.
      *
      * @param  string  $response
+     *
      * @return mixed
      */
     public function resetLinkSent($response)
@@ -135,6 +139,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      * Response when reset password failed.
      *
      * @param  string  $response
+     *
      * @return mixed
      */
     public function passwordResetHasFailed($response)
@@ -149,6 +154,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      * Response when reset password succeed.
      *
      * @param  string  $response
+     *
      * @return mixed
      */
     public function passwordHasReset($response)

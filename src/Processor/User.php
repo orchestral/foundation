@@ -37,17 +37,18 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\UserViewer  $listener
      * @param  array  $input
+     *
      * @return mixed
      */
     public function index(UserViewerListener $listener, array $input = [])
     {
         $searchKeyword = Arr::get($input, 'q', '');
-        $searchRoles = Arr::get($input, 'roles', []);
+        $searchRoles   = Arr::get($input, 'roles', []);
 
         // Get Users (with roles) and limit it to only 30 results for
         // pagination. Don't you just love it when pagination simply works.
         $eloquent = Foundation::make('orchestra.user')->search($searchKeyword, $searchRoles);
-        $roles = Foundation::make('orchestra.role')->lists('name', 'id');
+        $roles    = Foundation::make('orchestra.role')->lists('name', 'id');
 
         // Build users table HTML using a schema liked code structure.
         $table = $this->presenter->table($eloquent);
@@ -72,12 +73,13 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      * View create user page.
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\UserCreator  $listener
+     *
      * @return mixed
      */
     public function create(UserCreatorListener $listener)
     {
         $eloquent = Foundation::make('orchestra.user');
-        $form = $this->presenter->form($eloquent, 'create');
+        $form     = $this->presenter->form($eloquent, 'create');
 
         $this->fireEvent('form', [$eloquent, $form]);
 
@@ -89,12 +91,13 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\UserUpdater  $listener
      * @param  string|int  $id
+     *
      * @return mixed
      */
     public function edit(UserUpdaterListener $listener, $id)
     {
         $eloquent = Foundation::make('orchestra.user')->findOrFail($id);
-        $form = $this->presenter->form($eloquent, 'update');
+        $form     = $this->presenter->form($eloquent, 'update');
 
         $this->fireEvent('form', [$eloquent, $form]);
 
@@ -106,6 +109,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\UserCreator  $listener
      * @param  array   $input
+     *
      * @return mixed
      */
     public function store(UserCreatorListener $listener, array $input)
@@ -118,7 +122,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
 
         $user = Foundation::make('orchestra.user');
 
-        $user->status = Eloquent::UNVERIFIED;
+        $user->status   = Eloquent::UNVERIFIED;
         $user->password = $input['password'];
 
         try {
@@ -136,6 +140,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\UserUpdater  $listener
      * @param  string|int  $id
      * @param  array  $input
+     *
      * @return mixed
      */
     public function update(UserUpdaterListener $listener, $id, array $input)
@@ -169,6 +174,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\UserRemover  $listener
      * @param  string|int  $id
+     *
      * @return mixed
      */
     public function destroy(UserRemoverListener $listener, $id)
@@ -201,6 +207,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      * @param  \Orchestra\Model\User  $user
      * @param  array  $input
      * @param  string  $type
+     *
      * @return bool
      */
     protected function saving(Eloquent $user, $input = [], $type = 'create')
@@ -230,6 +237,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      *
      * @param  string  $type
      * @param  array   $parameters
+     *
      * @return void
      */
     protected function fireEvent($type, array $parameters = [])

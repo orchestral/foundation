@@ -51,7 +51,7 @@ return [
         'status'      => 'Status',
 
         'writableStorage' => [
-            'name' => "Writable to :path",
+            'name'     => "Writable to :path",
             'solution' => "Change the directory permission to 0777, however it might cause a security issue if this folder is accessible from the web.",
         ],
         'writableAsset' => [

@@ -31,6 +31,7 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      * @param  \Orchestra\Extension\Processor\Activator  $activator
      * @param  string  $vendor
      * @param  string|null  $package
+     *
      * @return mixed
      */
     public function activate(ActivatorProcessor $activator, $vendor, $package = null)
@@ -46,6 +47,7 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      * @param  \Orchestra\Extension\Processor\Migrator  $migrator
      * @param  string  $vendor
      * @param  string|null  $package
+     *
      * @return mixed
      */
     public function migrate(MigratorProcessor $migrator, $vendor, $package = null)
@@ -61,6 +63,7 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      * @param  \Orchestra\Extension\Processor\Deactivator  $deactivator
      * @param  string  $vendor
      * @param  string|null  $package
+     *
      * @return mixed
      */
     public function deactivate(DeactivatorProcessor $deactivator, $vendor, $package = null)
@@ -73,6 +76,7 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      *
      * @param  \Illuminate\Support\Fluent  $extension
      * @param  array  $errors
+     *
      * @return mixed
      */
     public function activationHasFailed(Fluent $extension, array $errors)
@@ -84,6 +88,7 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      * Response when extension activation has succeed.
      *
      * @param  \Illuminate\Support\Fluent  $extension
+     *
      * @return mixed
      */
     public function activationHasSucceed(Fluent $extension)
@@ -97,6 +102,7 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      * Response when extension deactivation has succeed.
      *
      * @param  \Illuminate\Support\Fluent  $extension
+     *
      * @return mixed
      */
     public function deactivationHasSucceed(Fluent $extension)
@@ -111,6 +117,7 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      *
      * @param  \Illuminate\Support\Fluent $extension
      * @param  array $errors
+     *
      * @return mixed
      */
     public function migrationHasFailed(Fluent $extension, array $errors)
@@ -122,6 +129,7 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      * Response when extension migration has succeed.
      *
      * @param  \Illuminate\Support\Fluent $extension
+     *
      * @return mixed
      */
     public function migrationHasSucceed(Fluent $extension)
@@ -135,6 +143,7 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      * Queue publishing asset to publisher.
      *
      * @param  \Illuminate\Support\Fluent  $extension
+     *
      * @return mixed
      */
     protected function queueToPublisher(Fluent $extension)

@@ -38,6 +38,7 @@ class ConfigureController extends Controller implements Listener
      *
      * @param  string  $vendor
      * @param  string|null  $package
+     *
      * @return mixed
      */
     public function configure($vendor, $package = null)
@@ -54,6 +55,7 @@ class ConfigureController extends Controller implements Listener
      *
      * @param  string  $vendor
      * @param  string|null  $package
+     *
      * @return mixed
      */
     public function update($vendor, $package = null)
@@ -67,6 +69,7 @@ class ConfigureController extends Controller implements Listener
      * Response for extension configuration.
      *
      * @param  array  $data
+     *
      * @return mixed
      */
     public function showConfigurationChanger(array $data)
@@ -84,6 +87,7 @@ class ConfigureController extends Controller implements Listener
      *
      * @param  \Illuminate\Support\MessageBag|array  $errors
      * @param  string  $id
+     *
      * @return mixed
      */
     public function updateConfigurationFailedValidation($errors, $id)
@@ -95,6 +99,7 @@ class ConfigureController extends Controller implements Listener
      * Response when update extension configuration succeed.
      *
      * @param  \Illuminate\Support\Fluent  $extension
+     *
      * @return mixed
      */
     public function configurationUpdated(Fluent $extension)

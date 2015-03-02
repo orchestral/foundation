@@ -31,6 +31,7 @@ trait TimezoneTrait
      * return based on default timezone.
      *
      * @param  mixed  $datetime
+     *
      * @return \Carbon\Carbon
      */
     public function toLocalTime($datetime)
@@ -56,6 +57,7 @@ trait TimezoneTrait
      * return based on default timezone.
      *
      * @param  mixed  $datetime
+     *
      * @return \Carbon\Carbon
      */
     public function fromLocalTime($datetime)
@@ -80,6 +82,7 @@ trait TimezoneTrait
      *
      * @param  mixed   $datetime
      * @param  string  $timezone
+     *
      * @return \Carbon\Carbon
      */
     public function convertToDateTime($datetime, $timezone = null)

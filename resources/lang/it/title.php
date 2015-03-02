@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'home'     => 'Home',
     'login'    => 'Login',
     'logout'   => 'Logout',
@@ -10,33 +10,33 @@ return array(
     'forgot-password' => 'Password dimenticata',
     'reset-password'  => 'Resetta password',
 
-    'account' => array(
+    'account' => [
         'profile'  => 'Modifica profilo',
         'password' => 'Modifica password',
-    ),
+    ],
 
-    'extensions' => array(
+    'extensions' => [
         'list'      => 'Estensioni',
         'configure' => 'Configura estensione',
-    ),
+    ],
 
-    'resources' => array(
+    'resources' => [
         'list'        => 'Risorse',
         'list-detail' => 'Lista delle risorse disponibili',
-    ),
+    ],
 
-    'settings' => array(
+    'settings' => [
         'list'    => 'Impostazioni',
-    ),
+    ],
 
-    'publisher' => array(
+    'publisher' => [
         'ftp'         => 'Credenziali FTP',
-        'description' => 'Abbiamo bisogno delle tue credenziali per poter eseguire la seguente azione.'
-    ),
+        'description' => 'Abbiamo bisogno delle tue credenziali per poter eseguire la seguente azione.',
+    ],
 
-    'users' => array(
+    'users' => [
         'list'   => 'Utenti',
         'create' => 'Aggiungi utente',
         'update' => 'Modifica utente',
-    ),
-);
+    ],
+];

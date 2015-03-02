@@ -28,6 +28,7 @@ class ProfileDashboard extends Processor implements Command
      * View dashboard.
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileDashboard  $listener
+     *
      * @return mixed
      */
     public function show(Listener $listener)
