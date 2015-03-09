@@ -1,4 +1,7 @@
-#Javie
+# Bootstrap
+/components/bootstrap/*
+
+# Javie
 /components/javie/*
 !/components/javie/javie.js
 !/components/javie/javie.min.js

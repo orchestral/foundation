@@ -31,29 +31,6 @@
         </exec>
     </target>
 
-    <target name="twbs" description="Copy Twitter Bootstrap Files">
-        <delete dir="${basedir}/resources/public/vendor/bootstrap/css"/>
-        <delete dir="${basedir}/resources/public/vendor/bootstrap/fonts"/>
-        <delete dir="${basedir}/resources/public/vendor/bootstrap/js"/>
-
-        <mkdir dir="${basedir}/resources/public/vendor/bootstrap/css"/>
-        <mkdir dir="${basedir}/resources/public/vendor/bootstrap/fonts"/>
-        <mkdir dir="${basedir}/resources/public/vendor/bootstrap/js"/>
-
-        <copy todir="${basedir}/resources/public/vendor/bootstrap/css">
-            <fileset dir="${basedir}/vendor/twbs/bootstrap/dist/css">
-                <exclude name="bootstrap-theme.css"/>
-                <exclude name="bootstrap.css"/>
-            </fileset>
-        </copy>
-        <copy todir="${basedir}/resources/public/vendor/bootstrap/fonts">
-            <fileset dir="${basedir}/vendor/twbs/bootstrap/dist/fonts"/>
-        </copy>
-        <copy todir="${basedir}/resources/public/vendor/bootstrap/js">
-            <fileset dir="${basedir}/vendor/twbs/bootstrap/dist/js"/>
-        </copy>
-    </target>
-
     <target name="lint" description="Perform syntax check of sourcecode files">
         <apply executable="php" failonerror="false">
         <arg value="-l" />
@@ -180,6 +157,6 @@
     <target name="build" depends="update,chmod,generate"/>
     <target name="chmod" depends="chmod-component-dir,chmod-component-file"/>
     <target name="generate" depends="clean,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpunit,phpcb"/>
-    <target name="update" depends="composer-update,composer-dumpautoload,twbs"/>
+    <target name="update" depends="composer-update,composer-dumpautoload"/>
     <target name="quick-build" depends="composer-dumpautoload,chmod,generate"/>
 </project>

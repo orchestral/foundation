@@ -4,11 +4,19 @@ var gulp = require('gulp'),
     csso = require('gulp-minify-css'),
     less = require('gulp-less'),
     rename = require('gulp-rename'),
-    uglify = require('gulp-uglify');
+    uglify = require('gulp-uglify'),
+    underscore = require('underscore'),
+    dir;
+
+dir = {
+    asset: 'resources/assets',
+    bower: 'resources/components',
+    web: 'resources/public'
+};
 
 // Less
 gulp.task('css', function () {
-    return gulp.src('resources/assets/less/orchestra.less')
+    return gulp.src(dir.asset+'/less/orchestra.less')
         .pipe(less())
         .pipe(csso())
         .pipe(gulp.dest('resources/public/css'));
@@ -16,9 +24,9 @@ gulp.task('css', function () {
 
 // Coffee
 gulp.task('js', function () {
-    return gulp.src('resources/assets/coffee/orchestra.coffee')
+    return gulp.src(dir.asset+'/coffee/orchestra.coffee')
         .pipe(coffee().on('error', gutil.log))
-        .pipe(gulp.dest('resources/public/js'));
+        .pipe(gulp.dest(dir.web+'/js'));
 });
 
 // Minify JavaScript
@@ -30,21 +38,28 @@ gulp.task('uglify', function () {
         }
     };
 
-    return gulp.src('resources/public/js/orchestra.js')
+    return gulp.src(dir.web+'/js/orchestra.js')
         .pipe(rename({suffix: '.min'}))
         .pipe(uglify(options))
-        .pipe(gulp.dest('resources/public/js'))
+        .pipe(gulp.dest(dir.web+'/js'))
+});
+
+gulp.task('copy', function () {
+    var copy = [
+        [dir.bower+'/bootstrap/dist/**/*', dir.web+'/vendor/bootstrap']
+    ];
+
+    underscore.each(copy, function (file) {
+        gulp.src(file[0]).pipe(gulp.dest(file[1]));
+    });
 });
 
 // Add file watch
 gulp.task('watch', function () {
-    gulp.watch('resources/assets/less/orchestra.less', ['css']);
-    gulp.watch('resources/assets/coffee/orchestra.coffee', ['js']);
-    gulp.watch('resources/public/css/orchestra.js', ['uglify']);
+    gulp.watch(dir.asset+'/less/orchestra.less', ['css']);
+    gulp.watch(dir.asset+'/coffee/orchestra.coffee', ['js']);
+    gulp.watch(dir.web+'/css/orchestra.js', ['uglify']);
 });
 
 // Default task.
-gulp.task('default', ['css', 'js', 'uglify', 'watch']);
-
-// Run default without watch.
-gulp.task('run', ['css', 'js', 'uglify']);
+gulp.task('default', ['css', 'copy', 'js', 'uglify']);

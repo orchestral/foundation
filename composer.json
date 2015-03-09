@@ -42,8 +42,7 @@
 	"require-dev": {
 		"mockery/mockery": "0.9.*",
 		"orchestra/resources": "3.1.*",
-		"orchestra/testing": "3.1.*",
-		"twbs/bootstrap": "~3@stable"
+		"orchestra/testing": "3.1.*"
 	},
 	"extra": {
 		"branch-alias": {

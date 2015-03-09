@@ -8,12 +8,13 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "bootstrap": "~3.3.2",
     "javie": "~1.2.0",
     "jquery": "~1.10.2",
-    "underscore": "~1.6.0",
-    "select2": "~3.4.8"
+    "select2": "~3.4.8",
+    "underscore": "~1.6.0"
   },
-  "install" : {
+  "install": {
     "path": "resources/public/components",
     "sources": {
       "jquery": [
