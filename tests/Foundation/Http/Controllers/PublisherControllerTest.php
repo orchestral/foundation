@@ -1,0 +1,130 @@
+<?php namespace Orchestra\Foundation\Http\Controllers\TestCase;
+
+use Mockery as m;
+use Orchestra\Testing\TestCase;
+use Illuminate\Support\Facades\View;
+
+class PublisherControllerTest extends TestCase
+{
+    /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        View::shouldReceive('share')->once()->with('errors', m::any());
+    }
+
+    /**
+     * Teardown the test environment.
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        m::close();
+    }
+
+    /**
+     * Test GET /admin/publisher
+     *
+     * @test
+     */
+    public function testGetIndexAction()
+    {
+        $this->getProcessorMock()->shouldReceive('executeAndRedirect')->once()
+            ->with(m::type('\Orchestra\Foundation\Http\Controllers\PublisherController'))
+            ->andReturnUsing(function ($listener) {
+                return $listener->redirectToCurrentPublisher();
+            });
+
+        $this->call('GET', 'admin/publisher');
+        $this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
+    }
+
+    /**
+     * Test GET /admin/publisher/ftp
+     *
+     * @test
+     */
+    public function testGetFtpAction()
+    {
+        View::shouldReceive('make')->once()
+            ->with('orchestra/foundation::publisher.ftp', [], [])->andReturn('get.ftp');
+
+        $this->call('GET', 'admin/publisher/ftp');
+        $this->assertResponseOk();
+    }
+
+    /**
+     * Test POST /admin/publisher/ftp
+     *
+     * @test
+     */
+    public function testPostFtpAction()
+    {
+        $input = $this->getInput();
+        $input['connection-type'] = 'ftp';
+
+        $this->getProcessorMock()->shouldReceive('publish')->once()
+            ->with(m::type('\Orchestra\Foundation\Http\Controllers\PublisherController'), m::type('Array'))
+            ->andReturnUsing(function ($listener) {
+                return $listener->publishingHasSucceed();
+            });
+
+        $this->call('POST', 'admin/publisher/ftp', $input);
+        $this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
+    }
+
+    /**
+     * Test POST /admin/publisher/ftp when FTP connect failed.
+     *
+     * @test
+     */
+    public function testPostFtpActionWhenFtpConnectFailed()
+    {
+        $input = $this->getInput();
+        $input['connection-type'] = 'ftp';
+
+        $this->getProcessorMock()->shouldReceive('publish')->once()
+            ->with(m::type('\Orchestra\Foundation\Http\Controllers\PublisherController'), m::type('Array'))
+            ->andReturnUsing(function ($listener) {
+                return $listener->publishingHasFailed(['error' => 'failed']);
+            });
+
+        $this->call('POST', 'admin/publisher/ftp', $input);
+        $this->assertRedirectedTo(handles('orchestra::publisher/ftp'));
+    }
+
+    /**
+     * Get processor mock.
+     *
+     * @return \Orchestra\Foundation\Processor\AssetPublisher
+     */
+    protected function getProcessorMock()
+    {
+        $processor = m::mock('\Orchestra\Foundation\Processor\AssetPublisher', [
+            m::mock('\Orchestra\Foundation\Publisher\PublisherManager'),
+            m::mock('\Illuminate\Session\Store')
+        ]);
+
+        $this->app->instance('Orchestra\Foundation\Processor\AssetPublisher', $processor);
+
+        return $processor;
+    }
+
+    /**
+     * Get request input.
+     *
+     * @return array
+     */
+    protected function getInput()
+    {
+        return [
+            'host'     => 'localhost',
+            'username' => 'foo',
+            'password' => 'foobar',
+        ];
+    }
+}

@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Routing\TestCase;
+<?php namespace Orchestra\Foundation\Processor\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Fluent;
