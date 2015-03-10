@@ -1,26 +1,2 @@
 # Bootstrap
 /components/bootstrap/*
-
-# Javie
-/components/javie/*
-!/components/javie/javie.js
-!/components/javie/javie.min.js
-
-# jQuery
-/components/jquery/*
-!/components/jquery/jquery.js
-!/components/jquery/jquery.min.js
-!/components/jquery/jquery.min.map
-
-# Select2
-/components/select2/*
-!/components/select2/select2-spinner.gif
-!/components/select2/select2.css
-!/components/select2/select2.min.js
-!/components/select2/select2.png
-!/components/select2/select2x2.png
-!/components/select2/spinner.gif
-
-# Underscore
-/components/underscore/*
-!/components/underscore/underscore.js
