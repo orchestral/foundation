@@ -49,8 +49,8 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
 
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp');
-        $session->shouldReceive('get')->once()->with('orchestra.ftp', array())->andReturn(array('foo'));
-        $client->shouldReceive('setUp')->once()->with(array('foo'))->andReturnNull()
+        $session->shouldReceive('get')->once()->with('orchestra.ftp', [])->andReturn(['foo']);
+        $client->shouldReceive('setUp')->once()->with(['foo'])->andReturnNull()
             ->shouldReceive('connect')->once()->andReturn(true);
 
         $stub = new PublisherManager($app);
@@ -78,14 +78,14 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator')->makePartial();
         $app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
 
-        $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', array())->andReturn(array('a', 'b'))
+        $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', [])->andReturn(['a', 'b'])
             ->shouldReceive('get')->times(2)->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp')
-            ->shouldReceive('put')->once()->with('orchestra.publisher.queue', array('b'))->andReturnNull();
-        $session->shouldReceive('get')->once()->with('orchestra.ftp', array())->andReturn(array('manager-foo'));
+            ->shouldReceive('put')->once()->with('orchestra.publisher.queue', ['b'])->andReturnNull();
+        $session->shouldReceive('get')->once()->with('orchestra.ftp', [])->andReturn(['manager-foo']);
         $messages->shouldReceive('add')->once()->with('success', m::any())->andReturnNull()
             ->shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
         $translator->shouldReceive('trans')->andReturn('foo');
-        $client->shouldReceive('setUp')->once()->with(array('manager-foo'))->andReturnNull()
+        $client->shouldReceive('setUp')->once()->with(['manager-foo'])->andReturnNull()
             ->shouldReceive('connect')->once()->andReturn(true)
             ->shouldReceive('permission')->with($path.'/packages/', 0777)->andReturn(true)
             ->shouldReceive('permission')->with($path.'/packages/', 0755)->andReturn(true)
@@ -111,13 +111,13 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
         $app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
 
-        $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', array())
-                ->andReturn(array('foo', 'foobar'))
+        $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', [])
+                ->andReturn(['foo', 'foobar'])
             ->shouldReceive('put')->once()->with('orchestra.publisher.queue', m::any())
                 ->andReturnNull();
 
         $stub = new PublisherManager($app);
-        $this->assertTrue($stub->queue(array('foo', 'bar')));
+        $this->assertTrue($stub->queue(['foo', 'bar']));
     }
 
     /**
@@ -130,7 +130,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
         $app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
 
-        $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', array())->andReturn('foo');
+        $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', [])->andReturn('foo');
 
         $stub = new PublisherManager($app);
         $this->assertEquals('foo', $stub->queued());

@@ -158,7 +158,7 @@ class ProfileUpdaterTest extends TestCase
         $listener->shouldReceive('updateProfileFailed')->once()->with(m::type('Array'))->andReturn('profile.failed');
 
         Auth::shouldReceive('user')->once()->andReturn($user);
-        DB::shouldReceive('transaction')->once()->with(m::type('Closure'))->andThrow('\Exception');;
+        DB::shouldReceive('transaction')->once()->with(m::type('Closure'))->andThrow('\Exception');
 
         $this->assertEquals('profile.failed', $stub->update($listener, $input));
     }

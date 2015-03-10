@@ -39,21 +39,21 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $input = array(
+        $input = [
             'site_name'     => 'Orchestra Platform',
             'email_address' => 'admin@orchestraplatform.com',
             'email_driver'  => 'mail',
             'email_port'    => 25,
-        );
+        ];
 
-        $rules = array(
-            'site_name'     => array('required'),
-            'email_address' => array('required', 'email'),
-            'email_driver'  => array('required', 'in:mail,smtp,sendmail,mailgun,mandrill'),
-            'email_port'    => array('numeric'),
-        );
+        $rules = [
+            'site_name'     => ['required'],
+            'email_address' => ['required', 'email'],
+            'email_driver'  => ['required', 'in:mail,smtp,sendmail,mailgun,mandrill'],
+            'email_port'    => ['numeric'],
+        ];
 
-        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
 
         $stub       = new Setting($factory, $events);
@@ -74,25 +74,25 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $input = array(
+        $input = [
             'site_name'      => 'Orchestra Platform',
             'email_address'  => 'admin@orchestraplatform.com',
             'email_driver'   => 'smtp',
             'email_port'     => 25,
             'email_username' => 'admin@orchestraplatform.com',
             'email_password' => '123456',
-        );
+        ];
 
-        $rules = array(
-            'site_name'      => array('required'),
-            'email_address'  => array('required', 'email'),
-            'email_driver'   => array('required', 'in:mail,smtp,sendmail,mailgun,mandrill'),
-            'email_port'     => array('numeric'),
-            'email_username' => array('required'),
-            'email_host'     => array('required'),
-        );
+        $rules = [
+            'site_name'      => ['required'],
+            'email_address'  => ['required', 'email'],
+            'email_driver'   => ['required', 'in:mail,smtp,sendmail,mailgun,mandrill'],
+            'email_port'     => ['numeric'],
+            'email_username' => ['required'],
+            'email_host'     => ['required'],
+        ];
 
-        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
 
         $stub       = new Setting($factory, $events);
@@ -113,23 +113,23 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $input = array(
+        $input = [
             'site_name'      => 'Orchestra Platform',
             'email_address'  => 'admin@orchestraplatform.com',
             'email_driver'   => 'sendmail',
             'email_port'     => 25,
             'email_sendmail' => '/usr/bin/sendmail -t',
-        );
+        ];
 
-        $rules = array(
-            'site_name'      => array('required'),
-            'email_address'  => array('required', 'email'),
-            'email_driver'   => array('required', 'in:mail,smtp,sendmail,mailgun,mandrill'),
-            'email_port'     => array('numeric'),
-            'email_sendmail' => array('required'),
-        );
+        $rules = [
+            'site_name'      => ['required'],
+            'email_address'  => ['required', 'email'],
+            'email_driver'   => ['required', 'in:mail,smtp,sendmail,mailgun,mandrill'],
+            'email_port'     => ['numeric'],
+            'email_sendmail' => ['required'],
+        ];
 
-        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
 
         $stub       = new Setting($factory, $events);
@@ -150,25 +150,25 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $input = array(
+        $input = [
             'site_name'     => 'Orchestra Platform',
             'email_address' => 'admin@orchestraplatform.com',
             'email_driver'  => 'mailgun',
             'email_port'     => 25,
             'email_secret'  => 'auniquetoken',
             'email_domain'  => 'orchestraplatform.com',
-        );
+        ];
 
-        $rules = array(
-            'site_name'     => array('required'),
-            'email_address' => array('required', 'email'),
-            'email_driver'  => array('required', 'in:mail,smtp,sendmail,mailgun,mandrill'),
-            'email_port'     => array('numeric'),
-            'email_secret'  => array('required'),
-            'email_domain'  => array('required'),
-        );
+        $rules = [
+            'site_name'     => ['required'],
+            'email_address' => ['required', 'email'],
+            'email_driver'  => ['required', 'in:mail,smtp,sendmail,mailgun,mandrill'],
+            'email_port'     => ['numeric'],
+            'email_secret'  => ['required'],
+            'email_domain'  => ['required'],
+        ];
 
-        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
 
         $stub       = new Setting($factory, $events);
@@ -189,23 +189,23 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $input = array(
+        $input = [
             'site_name'     => 'Orchestra Platform',
             'email_address' => 'admin@orchestraplatform.com',
             'email_driver'  => 'mandrill',
             'email_port'    => 25,
             'email_secret'  => 'auniquetoken',
-        );
+        ];
 
-        $rules = array(
-            'site_name'     => array('required'),
-            'email_address' => array('required', 'email'),
-            'email_driver'  => array('required', 'in:mail,smtp,sendmail,mailgun,mandrill'),
-            'email_port'    => array('numeric'),
-            'email_secret'  => array('required'),
-        );
+        $rules = [
+            'site_name'     => ['required'],
+            'email_address' => ['required', 'email'],
+            'email_driver'  => ['required', 'in:mail,smtp,sendmail,mailgun,mandrill'],
+            'email_port'    => ['numeric'],
+            'email_secret'  => ['required'],
+        ];
 
-        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
 
         $stub       = new Setting($factory, $events);

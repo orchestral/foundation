@@ -76,7 +76,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
     {
         $orchestra = $this->app['orchestra.app'];
 
-        $orchestra->shouldReceive('handles')->once()->with('app::foo', array())->andReturn('foo');
+        $orchestra->shouldReceive('handles')->once()->with('app::foo', [])->andReturn('foo');
 
         $this->assertEquals('foo', handles('app::foo'));
     }
@@ -91,7 +91,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
         $orchestra = $this->app['orchestra.app'];
 
         $orchestra->shouldReceive('handles')->once()
-            ->with('orchestra::resources/foo', array())->andReturn('foo');
+            ->with('orchestra::resources/foo', [])->andReturn('foo');
 
         $this->assertEquals('foo', resources('foo'));
     }

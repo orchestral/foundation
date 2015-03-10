@@ -39,10 +39,10 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $input = array('email' => 'admin@orchestraplatform.com', 'password' => '123');
-        $rules = array('email' => array('required', 'email'));
+        $input = ['email' => 'admin@orchestraplatform.com', 'password' => '123'];
+        $rules = ['email' => ['required', 'email']];
 
-        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
 
         $stub       = new AuthenticateUser($factory, $events);
         $validation = $stub->with($input);
@@ -61,10 +61,10 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $input = array('email' => 'admin@orchestraplatform.com', 'password' => '123');
-        $rules = array('email' => array('required', 'email'), 'password' => array('required'));
+        $input = ['email' => 'admin@orchestraplatform.com', 'password' => '123'];
+        $rules = ['email' => ['required', 'email'], 'password' => ['required']];
 
-        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
 
         $stub       = new AuthenticateUser($factory, $events);
         $validation = $stub->on('login')->with($input);

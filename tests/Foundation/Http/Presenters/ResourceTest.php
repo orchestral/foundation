@@ -52,10 +52,10 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     {
         $app   = $this->app;
         $model = new Fluent;
-        $value = (object) array(
+        $value = (object) [
             'id'   => 'foo',
             'name' => 'Foobar'
-        );
+        ];
 
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
 

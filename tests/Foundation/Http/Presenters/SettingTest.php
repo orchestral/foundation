@@ -51,9 +51,9 @@ class SettingTest extends \PHPUnit_Framework_TestCase
     public function testFormMethod()
     {
         $app   = $this->app;
-        $model = new Fluent(array(
+        $model = new Fluent([
             'email_password' => 123456,
-        ));
+        ]);
 
         $app['Illuminate\Contracts\View\Factory'] = m::mock('\Illuminate\View\Factory');
 

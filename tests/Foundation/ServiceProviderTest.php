@@ -2,7 +2,6 @@
 
 use Mockery as m;
 use Orchestra\Testing\TestCase;
-use Illuminate\Foundation\Application;
 use Orchestra\Foundation\Providers\SupportServiceProvider;
 use Orchestra\Foundation\Providers\FoundationServiceProvider;
 use Orchestra\Foundation\Providers\ConsoleSupportServiceProvider;
