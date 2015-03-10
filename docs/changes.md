@@ -5,7 +5,7 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
-## v3.0.5 {$v3-0-5}
+## v3.0.5 {#v3-0-5}
 
 * Fixes unable to resolve `Illuminate\Contracts\Auth\Authenticatable` through IoC Container when using `php artisan route:list`.
 
