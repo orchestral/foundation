@@ -21,7 +21,7 @@ class UsersControllerTest extends TestCase
         View::shouldReceive('addNamespace');
         View::shouldReceive('share')->once()->with('errors', m::any());
 
-        $this->app['Illuminate\Contracts\Auth\Guard'] = $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $this->app['Illuminate\Contracts\Auth\Guard']           = $auth           = m::mock('\Illuminate\Contracts\Auth\Guard');
         $this->app['Illuminate\Contracts\Auth\Authenticatable'] = $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $auth->shouldReceive('user')->andReturn($user);

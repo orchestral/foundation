@@ -21,7 +21,7 @@ class UseBackendThemeTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandleMethod()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $events  = m::mock('\Illuminate\Contracts\Events\Dispatcher');
         $request = m::mock('\Illuminate\Http\Request');
 
         $events->shouldReceive('fire')->once()->with('orchestra.started: admin')->andReturnNull()

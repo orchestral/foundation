@@ -22,11 +22,11 @@ class CanManageTest extends \PHPUnit_Framework_TestCase
     public function testFilterMethodWhenCanManage()
     {
         $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
-        $config = m::mock('\Illuminate\Contracts\Config\Repository');
-        $acl = m::mock('\Orchestra\Contracts\Auth\Acl\Acl');
+        $auth       = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $config     = m::mock('\Illuminate\Contracts\Config\Repository');
+        $acl        = m::mock('\Orchestra\Contracts\Auth\Acl\Acl');
 
-        $route = m::mock('\Illuminate\Routing\Route');
+        $route   = m::mock('\Illuminate\Routing\Route');
         $request = m::mock('\Illuminate\Http\Request');
 
         $foundation->shouldReceive('acl')->once()->andReturn($acl)
@@ -49,11 +49,11 @@ class CanManageTest extends \PHPUnit_Framework_TestCase
     public function testFilterMethodWhenCantManage()
     {
         $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
-        $config = m::mock('\Illuminate\Contracts\Config\Repository');
-        $acl = m::mock('\Orchestra\Contracts\Auth\Acl\Acl');
+        $auth       = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $config     = m::mock('\Illuminate\Contracts\Config\Repository');
+        $acl        = m::mock('\Orchestra\Contracts\Auth\Acl\Acl');
 
-        $route = m::mock('\Illuminate\Routing\Route');
+        $route   = m::mock('\Illuminate\Routing\Route');
         $request = m::mock('\Illuminate\Http\Request');
 
         $foundation->shouldReceive('acl')->once()->andReturn($acl);

@@ -24,10 +24,10 @@ class AdminControllerTest extends \PHPUnit_Framework_TestCase
 
         $beforeFilter = [
             [
-                'original' => 'orchestra.installable',
-                'filter' => 'orchestra.installable',
+                'original'   => 'orchestra.installable',
+                'filter'     => 'orchestra.installable',
                 'parameters' => [],
-                'options' => [],
+                'options'    => [],
             ],
         ];
 

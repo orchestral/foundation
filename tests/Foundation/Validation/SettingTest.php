@@ -20,7 +20,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $events  = m::mock('\Illuminate\Contracts\Events\Dispatcher');
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
 
         $stub = new Setting($factory, $events);
@@ -35,8 +35,8 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidation()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [
@@ -70,8 +70,8 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnSmtp()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [
@@ -109,8 +109,8 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnSendmail()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [
@@ -146,26 +146,26 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnMailgun()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [
-            'site_name'     => 'Orchestra Platform',
-            'email_address' => 'admin@orchestraplatform.com',
-            'email_driver'  => 'mailgun',
+            'site_name'      => 'Orchestra Platform',
+            'email_address'  => 'admin@orchestraplatform.com',
+            'email_driver'   => 'mailgun',
             'email_port'     => 25,
-            'email_secret'  => 'auniquetoken',
-            'email_domain'  => 'orchestraplatform.com',
+            'email_secret'   => 'auniquetoken',
+            'email_domain'   => 'orchestraplatform.com',
         ];
 
         $rules = [
-            'site_name'     => ['required'],
-            'email_address' => ['required', 'email'],
-            'email_driver'  => ['required', 'in:mail,smtp,sendmail,mailgun,mandrill'],
+            'site_name'      => ['required'],
+            'email_address'  => ['required', 'email'],
+            'email_driver'   => ['required', 'in:mail,smtp,sendmail,mailgun,mandrill'],
             'email_port'     => ['numeric'],
-            'email_secret'  => ['required'],
-            'email_domain'  => ['required'],
+            'email_secret'   => ['required'],
+            'email_domain'   => ['required'],
         ];
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
@@ -185,8 +185,8 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnMandrill()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [

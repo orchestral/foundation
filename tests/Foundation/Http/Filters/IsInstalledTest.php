@@ -22,8 +22,8 @@ class IsInstalledTest extends \PHPUnit_Framework_TestCase
     public function testFilterMethodWhenInstalled()
     {
         $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
-        $config = m::mock('\Illuminate\Contracts\Config\Repository');
+        $auth       = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $config     = m::mock('\Illuminate\Contracts\Config\Repository');
 
         $foundation->shouldReceive('installed')->once()->andReturn(true)
             ->shouldReceive('handles')->once()->with('orchestra::login')->andReturn('http://localhost/admin/login');
@@ -44,8 +44,8 @@ class IsInstalledTest extends \PHPUnit_Framework_TestCase
     public function testFilterMethodWhenNotInstalled()
     {
         $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
-        $config = m::mock('\Illuminate\Contracts\Config\Repository');
+        $auth       = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $config     = m::mock('\Illuminate\Contracts\Config\Repository');
 
         $foundation->shouldReceive('installed')->once()->andReturn(false);
 

@@ -53,7 +53,7 @@ class SettingsControllerTest extends TestCase
      */
     public function testGetIndexAction()
     {
-        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
+        $memory            = m::mock('\Orchestra\Memory\Provider')->makePartial();
         list($presenter, ) = $this->bindDependencies();
 
         $memory->shouldReceive('get')->times(14)->andReturn('');
@@ -92,7 +92,7 @@ class SettingsControllerTest extends TestCase
             'email_queue'      => 'no',
         ];
 
-        $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
+        $memory            = m::mock('\Orchestra\Memory\Provider')->makePartial();
         list(, $validator) = $this->bindDependencies();
 
         $memory->shouldReceive('put')->times(14)->andReturnNull()

@@ -22,7 +22,7 @@ class IsRegistrableTest extends \PHPUnit_Framework_TestCase
     public function testFilterMethodCanBeRegistered()
     {
         $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $memory     = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         $foundation->shouldReceive('memory')->once()->andReturn($memory);
         $memory->shouldReceive('get')->once()->with('site.registrable', false)->andReturn(false);
@@ -41,7 +41,7 @@ class IsRegistrableTest extends \PHPUnit_Framework_TestCase
     public function testFilterMethodCantBeRegistered()
     {
         $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $memory     = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         $foundation->shouldReceive('memory')->once()->andReturn($memory);
         $memory->shouldReceive('get')->once()->with('site.registrable', false)->andReturn(true);

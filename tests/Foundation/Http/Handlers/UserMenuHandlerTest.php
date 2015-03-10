@@ -14,10 +14,10 @@ class UserMenuHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreatingMenuWithAuthorizedUser()
     {
-        $app = new Container();
-        $app['orchestra.app'] = $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $app['orchestra.platform.menu'] = $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
-        $app['translator'] = $translator = m::mock('\Illuminate\Translator\Translator');
+        $app                                                    = new Container();
+        $app['orchestra.app']                                   = $foundation                                   = m::mock('\Orchestra\Contracts\Foundation\Foundation');
+        $app['orchestra.platform.menu']                         = $menu                         = m::mock('\Orchestra\Widget\Handlers\Menu');
+        $app['translator']                                      = $translator                                      = m::mock('\Illuminate\Translator\Translator');
         $app['Orchestra\Contracts\Authorization\Authorization'] = $acl = m::mock('\Orchestra\Contracts\Authorization\Authorization');
 
         $acl->shouldReceive('can')->with('manage-users')->once()->andReturn(true);
@@ -39,8 +39,8 @@ class UserMenuHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreatingMenuWithoutAuthorizedUser()
     {
-        $app = new Container();
-        $app['orchestra.platform.menu'] = $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
+        $app                                                    = new Container();
+        $app['orchestra.platform.menu']                         = $menu                         = m::mock('\Orchestra\Widget\Handlers\Menu');
         $app['Orchestra\Contracts\Authorization\Authorization'] = $acl = m::mock('\Orchestra\Contracts\Authorization\Authorization');
 
         $acl->shouldReceive('can')->with('manage-users')->once()->andReturn(false);
