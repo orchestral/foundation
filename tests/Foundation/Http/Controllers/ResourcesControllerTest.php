@@ -21,8 +21,7 @@ class ResourcesControllerTest extends TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application   $app
-     * @return void
+     * @param \Illuminate\Foundation\Application $app
      */
     protected function getEnvironmentSetUp($app)
     {
@@ -56,7 +55,7 @@ class ResourcesControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/resources
+     * Test GET /admin/resources.
      *
      * @test
      */
@@ -76,7 +75,7 @@ class ResourcesControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/resources/laravel
+     * Test GET /admin/resources/laravel.
      *
      * @test
      */
@@ -95,8 +94,6 @@ class ResourcesControllerTest extends TestCase
         $this->assertResponseOk();
     }
 
-
-
     /**
      * Get processor mock.
      *
@@ -106,7 +103,7 @@ class ResourcesControllerTest extends TestCase
     {
         $processor = m::mock('\Orchestra\Foundation\Processor\ResourceLoader', [
             m::mock('\Orchestra\Foundation\Http\Presenters\Resource'),
-            m::mock('\Orchestra\Resources\Factory')
+            m::mock('\Orchestra\Resources\Factory'),
         ]);
 
         $this->app->instance('Orchestra\Foundation\Processor\ResourceLoader', $processor);

@@ -28,6 +28,6 @@ class LoadFoundationTest extends \PHPUnit_Framework_TestCase
 
         $foundation->shouldReceive('boot')->once()->andReturnNull();
 
-        (new LoadFoundation)->bootstrap($app);
+        (new LoadFoundation())->bootstrap($app);
     }
 }

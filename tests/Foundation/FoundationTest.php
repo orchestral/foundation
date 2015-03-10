@@ -48,7 +48,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get installable mocks setup
+     * Get installable mocks setup.
      *
      * @return \Mockery
      */
@@ -90,7 +90,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
             ->with('orchestra.started: admin', 'Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler')->andReturnNull()
             ->shouldReceive('listen')->once()
             ->with('orchestra.ready: admin', 'Orchestra\Foundation\AdminMenuHandler')->andReturnNull()
-            ->shouldReceive('fire')->once()->with('orchestra.started', array($memoryProvider))->andReturnNull();
+            ->shouldReceive('fire')->once()->with('orchestra.started', [$memoryProvider])->andReturnNull();
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
         $request->shouldReceive('root')->andReturn('http://localhost')
             ->shouldReceive('secure')->andReturn(false);
@@ -99,7 +99,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get un-installable mocks setup
+     * Get un-installable mocks setup.
      *
      * @return \Mockery
      */
@@ -133,7 +133,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
         $request->shouldReceive('root')->andReturn('http://localhost')
             ->shouldReceive('secure')->andReturn(false);
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
-        $event->shouldReceive('fire')->once()->with('orchestra.started', array($memoryProvider))->andReturnNull();
+        $event->shouldReceive('fire')->once()->with('orchestra.started', [$memoryProvider])->andReturnNull();
 
         return $app;
     }

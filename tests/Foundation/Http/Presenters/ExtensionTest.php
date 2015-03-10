@@ -20,7 +20,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app = new Container;
+        $this->app = new Container();
 
         $this->app['orchestra.app'] = m::mock('\Orchestra\Contracts\Foundation\Foundation');
         $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
@@ -50,7 +50,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormMethod()
     {
-        $model = new Fluent;
+        $model = new Fluent();
         $app   = $this->app;
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
 
@@ -80,6 +80,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
                 ->with('orchestra.extension: foo/bar', m::type('Closure'))
                 ->andReturnUsing(function ($t, $c) use ($grid) {
                     $c($grid);
+
                     return 'foo';
                 });
 

@@ -38,10 +38,10 @@ class MetaTest extends \PHPUnit_Framework_TestCase
         $refl = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
         $items->setAccessible(true);
-        $items->setValue($stub, array(
+        $items->setValue($stub, [
             'title'       => 'Hello World',
             'description' => 'Just another Hello World',
-        ));
+        ]);
 
         $this->assertEquals('Hello World', $stub->get('title'));
         $this->assertNull($stub->get('title.foo'));
@@ -63,7 +63,7 @@ class MetaTest extends \PHPUnit_Framework_TestCase
         $stub->set('title', 'Foo');
         $stub->set('foo.bar', 'Foobar');
 
-        $expected = array('title' => 'Foo', 'foo' => array('bar' => 'Foobar'));
+        $expected = ['title' => 'Foo', 'foo' => ['bar' => 'Foobar']];
         $this->assertEquals($expected, $stub->all());
     }
 
@@ -84,11 +84,11 @@ class MetaTest extends \PHPUnit_Framework_TestCase
         $refl = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
         $items->setAccessible(true);
-        $items->setValue($stub, array(
+        $items->setValue($stub, [
             'title'       => 'Hello World',
             'description' => 'Just another Hello World',
             'hello'       => null,
-        ));
+        ]);
 
         $this->assertTrue($stub->has('title'));
         $this->assertFalse($stub->has('title.foo'));
@@ -112,15 +112,15 @@ class MetaTest extends \PHPUnit_Framework_TestCase
         $refl = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
         $items->setAccessible(true);
-        $items->setValue($stub, array(
+        $items->setValue($stub, [
             'title'       => 'Hello World',
             'description' => 'Just another Hello World',
             'hello'       => null,
-            'foo'         => array(
+            'foo'         => [
                 'hello' => 'foo',
                 'bar'   => 'foobar',
-            ),
-        ));
+            ],
+        ]);
 
         $stub->forget('title');
         $stub->forget('hello');
@@ -129,6 +129,6 @@ class MetaTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($stub->has('title'));
         $this->assertTrue($stub->has('description'));
         $this->assertFalse($stub->has('hello'));
-        $this->assertEquals(array('hello' => 'foo'), $stub->get('foo'));
+        $this->assertEquals(['hello' => 'foo'], $stub->get('foo'));
     }
 }

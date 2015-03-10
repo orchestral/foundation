@@ -43,7 +43,7 @@ class PresenterTest extends \PHPUnit_Framework_TestCase
                 return "foobar/{$s}";
             });
 
-        $stub = new PresenterStub;
+        $stub = new PresenterStub();
         $this->assertEquals('foobar/hello', $stub->handles('hello'));
     }
 
@@ -60,7 +60,7 @@ class PresenterTest extends \PHPUnit_Framework_TestCase
         $form->shouldReceive('layout')->once()
             ->with('orchestra/foundation::components.form')->andReturnNull();
 
-        $stub = new PresenterStub;
+        $stub = new PresenterStub();
         $stub->setupForm($form);
     }
 }

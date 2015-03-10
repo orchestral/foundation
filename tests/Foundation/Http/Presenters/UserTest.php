@@ -21,7 +21,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app = new Container;
+        $this->app = new Container();
 
         $this->app['app'] = $this->app;
         $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
@@ -64,13 +64,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $grid   = m::mock('\Orchestra\Contracts\Html\Table\Grid');
         $column = m::mock('\Orchestra\Contracts\Html\Table\Column');
 
-        $value  = (object) array(
+        $value  = (object) [
             'fullname' => 'Foo',
-            'roles'    => array(
-                (object) array('id' => 1, 'name' => 'Administrator'),
-                (object) array('id' => 2, 'name' => 'Member'),
-            ),
-        );
+            'roles'    => [
+                (object) ['id' => 1, 'name' => 'Administrator'],
+                (object) ['id' => 2, 'name' => 'Member'],
+            ],
+        ];
 
         $auth->shouldReceive('user')->once()->andReturn($user);
 
@@ -81,6 +81,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('value')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($column, $value) {
                     $c($value);
+
                     return $column;
                 });
         $grid->shouldReceive('with')->once()->with($model)->andReturnNull()
@@ -92,6 +93,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 ->with('orchestra.users', m::type('Closure'))
                 ->andReturnUsing(function ($t, $c) use ($grid) {
                     $c($grid);
+
                     return 'foo';
                 });
 
@@ -129,10 +131,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $user->id = 2;
 
-        $value  = (object) array(
+        $value  = (object) [
             'id'   => 1,
             'name' => 'Foo',
-        );
+        ];
 
         $auth->shouldReceive('user')->once()->andReturn($user);
 
@@ -144,11 +146,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('attributes')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($column, $value) {
                     $c($value);
+
                     return $column;
                 })
             ->shouldReceive('value')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($column, $value) {
                     $c($value);
+
                     return $column;
                 });
         $grid->shouldReceive('column')->once()->with('action')->andReturn($column);
@@ -156,6 +160,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $builder->shouldReceive('extend')->once()->with(m::type('Closure'))
             ->andReturnUsing(function ($c) use ($grid) {
                 $c($grid);
+
                 return 'foo';
             });
 
@@ -196,12 +201,12 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $app['Orchestra\Contracts\Html\Form\Control'] = $control;
         $app['orchestra.role'] = m::mock('\Orchestra\Model\Role');
 
-        $value = (object) array(
-            'roles' => new Collection(array(
-                new Fluent(array('id' => 1, 'name' => 'Administrator')),
-                new Fluent(array('id' => 2, 'name' => 'Member')),
-            )),
-        );
+        $value = (object) [
+            'roles' => new Collection([
+                new Fluent(['id' => 1, 'name' => 'Administrator']),
+                new Fluent(['id' => 2, 'name' => 'Member']),
+            ]),
+        ];
 
         $model->shouldReceive('hasGetMutator')->andReturn(false);
 
@@ -213,6 +218,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('options')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($control) {
                     $c();
+
                     return $control;
                 })
             ->shouldReceive('attributes')->once()->with(m::type('Array'))->andReturnSelf()
@@ -234,13 +240,12 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 ->with('orchestra.users', m::any())
                 ->andReturnUsing(function ($f, $c) use ($grid) {
                     $c($grid);
+
                     return 'foo';
                 });
 
-
         $app['orchestra.role']->shouldReceive('lists')->once()
                 ->with('name', 'id')->andReturn('roles');
-
 
         $stub->form($model);
     }

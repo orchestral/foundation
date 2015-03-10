@@ -7,8 +7,7 @@ class LoadUserMetaDataTest extends TestCase
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application   $app
-     * @return void
+     * @param \Illuminate\Foundation\Application $app
      */
     protected function getEnvironmentSetUp($app)
     {
@@ -16,8 +15,6 @@ class LoadUserMetaDataTest extends TestCase
 
         $app->make('Orchestra\Foundation\Bootstrap\LoadUserMetaData')->bootstrap($app);
     }
-
-
 
     /**
      * Test instance of `orchestra.memory`.

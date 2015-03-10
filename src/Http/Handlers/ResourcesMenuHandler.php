@@ -50,7 +50,6 @@ class ResourcesMenuHandler extends MenuHandler
     {
         $menu       = null;
         $foundation = $this->container['orchestra.app'];
-        $translator = $this->container['translator'];
 
         $boot = function () {
             return $this->createMenu();

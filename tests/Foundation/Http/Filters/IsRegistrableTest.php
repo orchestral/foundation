@@ -5,7 +5,6 @@ use Orchestra\Foundation\Http\Filters\IsRegistrable;
 
 class IsRegistrableTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Teardown the test environment.
      */

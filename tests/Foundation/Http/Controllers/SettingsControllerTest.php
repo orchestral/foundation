@@ -43,18 +43,18 @@ class SettingsControllerTest extends TestCase
         App::instance('Orchestra\Foundation\Http\Presenters\Setting', $presenter);
         App::instance('Orchestra\Foundation\Validation\Setting', $validator);
 
-        return array($presenter, $validator);
+        return [$presenter, $validator];
     }
 
     /**
-     * Test GET /admin/settings
+     * Test GET /admin/settings.
      *
      * @test
      */
     public function testGetIndexAction()
     {
         $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
-        list($presenter,) = $this->bindDependencies();
+        list($presenter, ) = $this->bindDependencies();
 
         $memory->shouldReceive('get')->times(14)->andReturn('');
         $presenter->shouldReceive('form')->once()->andReturn('edit.settings');
@@ -69,13 +69,13 @@ class SettingsControllerTest extends TestCase
     }
 
     /**
-     * Test POST /admin/settings
+     * Test POST /admin/settings.
      *
      * @test
      */
     public function testPostIndexAction()
     {
-        $input = array(
+        $input = [
             'site_name'        => 'Orchestra Platform',
             'site_description' => '',
             'site_registrable' => 'yes',
@@ -90,7 +90,7 @@ class SettingsControllerTest extends TestCase
             'email_encryption' => 'ssl',
             'email_sendmail'   => '/usr/bin/sendmail -t',
             'email_queue'      => 'no',
-        );
+        ];
 
         $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
         list(, $validator) = $this->bindDependencies();
@@ -103,7 +103,7 @@ class SettingsControllerTest extends TestCase
 
         $this->app->instance('Orchestra\Contracts\Memory\Provider', $memory);
 
-        Foundation::shouldReceive('handles')->once()->with('orchestra::settings', array())->andReturn('settings');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::settings', [])->andReturn('settings');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/settings', $input);
@@ -117,7 +117,7 @@ class SettingsControllerTest extends TestCase
      */
     public function testPostIndexActionGivenValidationError()
     {
-        $input = array(
+        $input = [
             'site_name'        => 'Orchestra Platform',
             'site_description' => '',
             'site_registrable' => 'yes',
@@ -132,7 +132,7 @@ class SettingsControllerTest extends TestCase
             'email_encryption' => 'ssl',
             'email_sendmail'   => '/usr/bin/sendmail -t',
             'email_queue'      => 'no',
-        );
+        ];
 
         list(, $validator) = $this->bindDependencies();
 
@@ -141,7 +141,7 @@ class SettingsControllerTest extends TestCase
             ->shouldReceive('fails')->once()->andReturn(true)
             ->shouldReceive('getMessageBag')->once()->andReturn([]);
 
-        Foundation::shouldReceive('handles')->once()->with('orchestra::settings', array())->andReturn('settings');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::settings', [])->andReturn('settings');
 
         $this->call('POST', 'admin/settings', $input);
         $this->assertRedirectedTo('settings');
@@ -149,7 +149,7 @@ class SettingsControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/settings/migrate
+     * Test GET /admin/settings/migrate.
      *
      * @test
      */
@@ -163,7 +163,7 @@ class SettingsControllerTest extends TestCase
 
         Foundation::shouldReceive('make')->once()->with('orchestra.publisher.asset')->andReturn($asset);
         Foundation::shouldReceive('make')->once()->with('orchestra.publisher.migrate')->andReturn($migrate);
-        Foundation::shouldReceive('handles')->once()->with('orchestra::settings', array())->andReturn('settings');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::settings', [])->andReturn('settings');
 
         $this->call('GET', 'admin/settings/migrate');
         $this->assertRedirectedTo('settings');

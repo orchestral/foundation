@@ -81,7 +81,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
 
         $this->config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
         $this->auth->shouldReceive('guest')->once()->andReturn(false)
-            ->shouldReceive('user')->once()->andReturn((object) array('id' => 1));
+            ->shouldReceive('user')->once()->andReturn((object) ['id' => 1]);
         $this->memory->shouldReceive('get')->once()->with('timezone.1', 'UTC')->andReturn('Asia/Kuala_Lumpur');
 
         $stub = $this->toLocalTime(new Carbon('2012-01-01 00:00:00'));
@@ -126,7 +126,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
 
         $this->config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
         $this->auth->shouldReceive('guest')->once()->andReturn(false)
-            ->shouldReceive('user')->once()->andReturn((object) array('id' => 1));
+            ->shouldReceive('user')->once()->andReturn((object) ['id' => 1]);
         $this->memory->shouldReceive('get')->once()->with('timezone.1', 'UTC')->andReturn('Asia/Kuala_Lumpur');
 
         $stub = $this->fromLocalTime('2012-01-01 08:00:00');

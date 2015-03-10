@@ -21,15 +21,15 @@ class ResourcesMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.platform.menu'] = $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
         $app['translator'] = $translator = m::mock('\Illuminate\Translator\Translator');
 
-        $foo = new Fluent(array(
+        $foo = new Fluent([
             'name'    => 'Foo',
             'visible' => true,
-        ));
+        ]);
 
-        $bar = new Fluent(array(
+        $bar = new Fluent([
             'name'    => 'Bar',
             'visible' => false,
-        ));
+        ]);
 
         $resources->shouldReceive('all')->once()->andReturn(compact('foo', 'bar'));
 
@@ -62,15 +62,15 @@ class ResourcesMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.platform.menu'] = $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
         $app['translator'] = $translator = m::mock('\Illuminate\Translator\Translator');
 
-        $foo = new Fluent(array(
+        $foo = new Fluent([
             'name'    => 'Foo',
             'visible' => false,
-        ));
+        ]);
 
-        $bar = new Fluent(array(
+        $bar = new Fluent([
             'name'    => 'Bar',
             'visible' => false,
-        ));
+        ]);
 
         $resources->shouldReceive('all')->once()->andReturn(compact('foo', 'bar'));
 

@@ -1,14 +1,14 @@
 before_commands:
-    - 'composer install --prefer-source --no-interaction --dev'
+    - 'composer install --prefer-source --no-interaction'
 filter:
     paths:
         - 'src/*'
     excluded_paths:
         - 'build/*'
-        - 'public/*'
-        - 'src/config/*'
-        - 'src/lang/*'
-        - 'src/views/*'
+        - 'resources/config/*'
+        - 'resources/lang/*'
+        - 'resources/public/*'
+        - 'resources/views/*'
         - 'vendor/*'
         - 'tests/*'
 tools:

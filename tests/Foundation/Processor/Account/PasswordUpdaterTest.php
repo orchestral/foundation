@@ -61,7 +61,6 @@ class PasswordUpdaterTest extends TestCase
 
         $stub = new PasswordUpdater($presenter, $validator);
 
-
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id'])
             ->shouldReceive('getAttribute')->once()->with('password')->andReturn('old.password')
             ->shouldReceive('setAttribute')->once()->with('password', $input['new_password'])->andReturnNull()
@@ -165,7 +164,7 @@ class PasswordUpdaterTest extends TestCase
 
         Auth::shouldReceive('user')->once()->andReturn($user);
         Hash::shouldReceive('check')->once()->with($input['current_password'], 'old.password')->andReturn(true);
-        DB::shouldReceive('transaction')->once()->with(m::type('Closure'))->andThrow('\Exception');;
+        DB::shouldReceive('transaction')->once()->with(m::type('Closure'))->andThrow('\Exception');
 
         $this->assertEquals('password.failed', $stub->update($listener, $input));
     }

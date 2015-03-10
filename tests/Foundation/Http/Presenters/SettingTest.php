@@ -20,7 +20,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app = new Container;
+        $this->app = new Container();
 
         $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
         $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
@@ -51,9 +51,9 @@ class SettingTest extends \PHPUnit_Framework_TestCase
     public function testFormMethod()
     {
         $app   = $this->app;
-        $model = new Fluent(array(
+        $model = new Fluent([
             'email_password' => 123456,
-        ));
+        ]);
 
         $app['Illuminate\Contracts\View\Factory'] = m::mock('\Illuminate\View\Factory');
 
@@ -97,6 +97,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
                 ->with('orchestra.settings', m::type('Closure'))
                 ->andReturnUsing(function ($n, $c) use ($grid) {
                     $c($grid);
+
                     return 'foo';
                 });
 

@@ -25,7 +25,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app    = new Container;
+        $this->app    = new Container();
         $this->client = m::mock('\Orchestra\Support\Ftp\Client');
     }
 
@@ -43,6 +43,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
      * Get Session mock.
      *
      * @access private
+     *
      * @return Mockery
      */
     private function getSessionMock()
@@ -50,7 +51,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
         $session = m::mock('\Illuminate\Session\Store')->makePartial();
 
         $session->shouldReceive('get')->once()
-            ->with('orchestra.ftp', array())->andReturn(array('ftpconfig'));
+            ->with('orchestra.ftp', [])->andReturn(['ftpconfig']);
 
         return $session;
     }
@@ -67,7 +68,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
 
         $app['session'] = $this->getSessionMock();
 
-        $client->shouldReceive('setUp')->once()->with(array('ftpconfig'))->andReturnNull()
+        $client->shouldReceive('setUp')->once()->with(['ftpconfig'])->andReturnNull()
             ->shouldReceive('connect')->once()->andReturn(false)
             ->shouldReceive('connected')->once()->andReturn(true);
 
@@ -93,7 +94,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
 
         $app['session'] = $this->getSessionMock();
 
-        $client->shouldReceive('setUp')->once()->with(array('ftpconfig'))->andReturnNull()
+        $client->shouldReceive('setUp')->once()->with(['ftpconfig'])->andReturnNull()
             ->shouldReceive('connect')->once()->andReturn(false)
             ->shouldReceive('connected')->once()->andReturn(false);
 
@@ -115,8 +116,8 @@ class FtpTest extends \PHPUnit_Framework_TestCase
 
         $app['session'] = $session = $this->getSessionMock();
 
-        $session->shouldReceive('put')->once()->with('orchestra.ftp', array())->andReturnNull();
-        $client->shouldReceive('setUp')->once()->with(array('ftpconfig'))->andReturnNull()
+        $session->shouldReceive('put')->once()->with('orchestra.ftp', [])->andReturnNull();
+        $client->shouldReceive('setUp')->once()->with(['ftpconfig'])->andReturnNull()
             ->shouldReceive('connect')->once()->andThrow('\Orchestra\Support\Ftp\ServerException');
 
         new Ftp($app, $client);
@@ -137,15 +138,15 @@ class FtpTest extends \PHPUnit_Framework_TestCase
         $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem')->makePartial();
         $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory')->makePartial();
 
-        $client->shouldReceive('setUp')->once()->with(array('ftpconfig'))->andReturnNull()
+        $client->shouldReceive('setUp')->once()->with(['ftpconfig'])->andReturnNull()
             ->shouldReceive('connect')->once()->andReturn(true)
             ->shouldReceive('permission')->once()->with($path.'/packages/laravel/framework/', 0777)->andReturnNull()
             ->shouldReceive('permission')->once()->with($path.'/packages/laravel/framework/', 0755)->andReturnNull()
-            ->shouldReceive('allFiles')->twice()->with($path.'/packages/laravel/framework/')->andReturn(array(
+            ->shouldReceive('allFiles')->twice()->with($path.'/packages/laravel/framework/')->andReturn([
                 '/..',
                 '/.',
                 'recursive-foobar',
-            ))
+            ])
             ->shouldReceive('permission')->once()->with('recursive-foobar', 0777)->andReturnNull()
             ->shouldReceive('allFiles')->once()->with('recursive-foobar')->andThrow('\RuntimeException');
         $file->shouldReceive('isDirectory')->once()->with($path.'/packages/laravel/framework/')->andReturn(true);
@@ -171,7 +172,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
         $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem')->makePartial();
         $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Extension\Factory')->makePartial();
 
-        $client->shouldReceive('setUp')->once()->with(array('ftpconfig'))->andReturnNull()
+        $client->shouldReceive('setUp')->once()->with(['ftpconfig'])->andReturnNull()
             ->shouldReceive('connect')->once()->andReturn(true)
             ->shouldReceive('permission')->once()->with($path.'/packages/laravel/', 0777)->andReturnNull()
             ->shouldReceive('permission')->once()->with($path.'/packages/laravel/', 0755)->andReturnNull()

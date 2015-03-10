@@ -39,19 +39,19 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $input = array(
+        $input = [
             'email'    => 'admin@orchestraplatform.com',
             'fullname' => 'Administrator',
             'roles'    => 1,
-        );
+        ];
 
-        $rules = array(
-            'email'    => array('required', 'email'),
-            'fullname' => array('required'),
-            'roles'    => array('required'),
-        );
+        $rules = [
+            'email'    => ['required', 'email'],
+            'fullname' => ['required'],
+            'roles'    => ['required'],
+        ];
 
-        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
 
         $events->shouldReceive('fire')->once()->with('orchestra.validate: users', m::any())->andReturnNull()
             ->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturnNull();
@@ -73,21 +73,21 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $input = array(
+        $input = [
             'email'    => 'admin@orchestraplatform.com',
             'fullname' => 'Administrator',
             'roles'    => 1,
             'password' => '123456',
-        );
+        ];
 
-        $rules = array(
-            'email'    => array('required', 'email'),
-            'fullname' => array('required'),
-            'roles'    => array('required'),
-            'password' => array('required'),
-        );
+        $rules = [
+            'email'    => ['required', 'email'],
+            'fullname' => ['required'],
+            'roles'    => ['required'],
+            'password' => ['required'],
+        ];
 
-        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
         $events->shouldReceive('fire')->once()->with('orchestra.validate: users', m::any())->andReturnNull()
             ->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturnNull();
 

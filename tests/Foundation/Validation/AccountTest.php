@@ -39,17 +39,17 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $input = array(
+        $input = [
             'email'    => 'admin@orchestraplatform.com',
             'fullname' => 'Administrator',
-        );
+        ];
 
-        $rules = array(
-            'email'    => array('required', 'email'),
-            'fullname' => array('required'),
-        );
+        $rules = [
+            'email'    => ['required', 'email'],
+            'fullname' => ['required'],
+        ];
 
-        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
         $events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturnNull();
 
         $stub       = new Account($factory, $events);
@@ -69,17 +69,17 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $input = array(
+        $input = [
             'email'    => 'admin@orchestraplatform.com',
             'fullname' => 'Administrator',
-        );
+        ];
 
-        $rules = array(
-            'email'    => array('required', 'email', 'unique:users,email'),
-            'fullname' => array('required'),
-        );
+        $rules = [
+            'email'    => ['required', 'email', 'unique:users,email'],
+            'fullname' => ['required'],
+        ];
 
-        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
         $events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturnNull()
             ->shouldReceive('fire')->once()->with('orchestra.validate: user.account.register', m::any())->andReturnNull();
 
@@ -101,19 +101,19 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $input = array(
+        $input = [
             'current_password' => '123456',
             'new_password'     => 'qwerty',
             'confirm_password' => 'qwerty',
-        );
+        ];
 
-        $rules = array(
-            'current_password' => array('required'),
-            'new_password'     => array('required', 'different:current_password'),
-            'confirm_password' => array('same:new_password'),
-        );
+        $rules = [
+            'current_password' => ['required'],
+            'new_password'     => ['required', 'different:current_password'],
+            'confirm_password' => ['same:new_password'],
+        ];
 
-        $factory->shouldReceive('make')->once()->with($input, $rules, array())->andReturn($validator);
+        $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
 
         $stub       = new Account($factory, $events);
         $validation = $stub->on('changePassword')->with($input);

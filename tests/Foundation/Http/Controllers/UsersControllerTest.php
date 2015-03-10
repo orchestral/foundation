@@ -50,11 +50,11 @@ class UsersControllerTest extends TestCase
         App::instance('Orchestra\Foundation\Http\Presenters\User', $presenter);
         App::instance('Orchestra\Foundation\Validation\User', $validator);
 
-        return array($presenter, $validator);
+        return [$presenter, $validator];
     }
 
     /**
-     * Test GET /admin/users
+     * Test GET /admin/users.
      *
      * @test
      */
@@ -66,22 +66,22 @@ class UsersControllerTest extends TestCase
 
         list($presenter, ) = $this->bindDependencies();
 
-        $user->shouldReceive('search')->once()->with('', array())->andReturn($user);
-        $role->shouldReceive('lists')->once()->with('name', 'id')->andReturn(array());
+        $user->shouldReceive('search')->once()->with('', [])->andReturn($user);
+        $role->shouldReceive('lists')->once()->with('name', 'id')->andReturn([]);
         $presenter->shouldReceive('table')->once()->andReturn($table)
             ->shouldReceive('actions')->once()->with($table)->andReturn('list.users');
 
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Foundation::shouldReceive('make')->once()->with('orchestra.role')->andReturn($role);
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::users.index', m::type('Array'), array())->andReturn('foo');
+            ->with('orchestra/foundation::users.index', m::type('Array'), [])->andReturn('foo');
 
         $this->call('GET', 'admin/users');
         $this->assertResponseOk();
     }
 
     /**
-     * Test GET /admin/users/create
+     * Test GET /admin/users/create.
      *
      * @test
      */
@@ -91,16 +91,16 @@ class UsersControllerTest extends TestCase
 
         $presenter->shouldReceive('form')->once()->andReturn('form.users');
 
-        Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn(array());
+        Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn([]);
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::users.edit', m::type('Array'), array())->andReturn('foo');
+            ->with('orchestra/foundation::users.edit', m::type('Array'), [])->andReturn('foo');
 
         $this->call('GET', 'admin/users/create');
         $this->assertResponseOk();
     }
 
     /**
-     * Test GET /admin/users/(:any)/edit
+     * Test GET /admin/users/(:any)/edit.
      *
      * @test
      */
@@ -116,25 +116,25 @@ class UsersControllerTest extends TestCase
 
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::users.edit', m::type('Array'), array())->andReturn('foo');
+            ->with('orchestra/foundation::users.edit', m::type('Array'), [])->andReturn('foo');
 
         $this->call('GET', 'admin/users/foo/edit');
         $this->assertResponseOk();
     }
 
     /**
-     * Test POST /admin/users
+     * Test POST /admin/users.
      *
      * @test
      */
     public function testPostStoreAction()
     {
-        $input = array(
+        $input = [
             'email'    => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => array(1),
-        );
+            'roles'    => [1],
+        ];
 
         list(, $validator) = $this->bindDependencies();
 
@@ -152,7 +152,7 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('fails')->once()->andReturnNull();
 
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
-        Foundation::shouldReceive('handles')->once()->with('orchestra::users', array())->andReturn('users');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::users', [])->andReturn('users');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
@@ -170,12 +170,12 @@ class UsersControllerTest extends TestCase
      */
     public function testPostStoreActionGivenDatabaseError()
     {
-        $input = array(
+        $input = [
             'email'    => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => array(1),
-        );
+            'roles'    => [1],
+        ];
 
         list(, $validator) = $this->bindDependencies();
 
@@ -193,7 +193,7 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('fails')->once()->andReturnNull();
 
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
-        Foundation::shouldReceive('handles')->once()->with('orchestra::users', array())->andReturn('users');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::users', [])->andReturn('users');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
@@ -211,12 +211,12 @@ class UsersControllerTest extends TestCase
      */
     public function testPostStoreActionGivenValidationError()
     {
-        $input = array(
+        $input = [
             'email'    => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => array(1),
-        );
+            'roles'    => [1],
+        ];
 
         list(, $validator) = $this->bindDependencies();
 
@@ -225,7 +225,7 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('getMessageBag')->once()->andReturn([])
             ->shouldReceive('fails')->once()->andReturn(true);
 
-        Foundation::shouldReceive('handles')->once()->with('orchestra::users/create', array())->andReturn('users/create');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::users/create', [])->andReturn('users/create');
 
         $this->call('POST', 'admin/users', $input);
         $this->assertRedirectedTo('users/create');
@@ -233,19 +233,19 @@ class UsersControllerTest extends TestCase
     }
 
     /**
-     * Test PUT /admin/users/(:any)
+     * Test PUT /admin/users/(:any).
      *
      * @test
      */
     public function testPutUpdateAction()
     {
-        $input = array(
+        $input = [
             'id'       => 'foo',
             'email'    => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => array(1),
-        );
+            'roles'    => [1],
+        ];
 
         list(, $validator) = $this->bindDependencies();
 
@@ -264,7 +264,7 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('fails')->once()->andReturnNull();
 
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
-        Foundation::shouldReceive('handles')->once()->with('orchestra::users', array())->andReturn('users');
+        Foundation::shouldReceive('handles')->once()->with('orchestra::users', [])->andReturn('users');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         DB::shouldReceive('transaction')->once()
             ->with(m::type('Closure'))->andReturnUsing(function ($c) {
@@ -283,13 +283,13 @@ class UsersControllerTest extends TestCase
      */
     public function testPutUpdateActionGivenInvalidUserId()
     {
-        $input = array(
+        $input = [
             'id'       => 'foo',
             'email'    => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => array(1),
-        );
+            'roles'    => [1],
+        ];
 
         $this->call('PUT', 'admin/users/foobar', $input);
     }
@@ -301,13 +301,13 @@ class UsersControllerTest extends TestCase
      */
     public function testPutUpdateActionGivenDatabaseError()
     {
-        $input = array(
+        $input = [
             'id'       => 'foo',
             'email'    => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => array(1),
-        );
+            'roles'    => [1],
+        ];
 
         list(, $validator) = $this->bindDependencies();
 
@@ -328,7 +328,7 @@ class UsersControllerTest extends TestCase
         Foundation::shouldReceive('make')->once()
             ->with('orchestra.user')->andReturn($builder);
         Foundation::shouldReceive('handles')->once()
-            ->with('orchestra::users', array())->andReturn('users');
+            ->with('orchestra::users', [])->andReturn('users');
         Messages::shouldReceive('add')->once()
             ->with('error', m::any())->andReturnNull();
         DB::shouldReceive('transaction')->once()
@@ -347,13 +347,13 @@ class UsersControllerTest extends TestCase
      */
     public function testPutUpdateActionGivenValidationError()
     {
-        $input = array(
+        $input = [
             'id'       => 'foo',
             'email'    => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => array(1),
-        );
+            'roles'    => [1],
+        ];
 
         list(, $validator) = $this->bindDependencies();
 
@@ -363,7 +363,7 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('fails')->once()->andReturn(true);
 
         Foundation::shouldReceive('handles')->once()
-            ->with('orchestra::users/foo/edit', array())->andReturn('users/foo/edit');
+            ->with('orchestra::users/foo/edit', [])->andReturn('users/foo/edit');
 
         $this->call('PUT', 'admin/users/foo', $input);
         $this->assertRedirectedTo('users/foo/edit');
@@ -371,7 +371,7 @@ class UsersControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/users/(:any)/delete
+     * Test GET /admin/users/(:any)/delete.
      *
      * @test
      */
@@ -379,9 +379,9 @@ class UsersControllerTest extends TestCase
     {
         $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
         $user    = m::mock('\Orchestra\Model\User');
-        $auth    = (object) array(
+        $auth    = (object) [
             'id' => 'foobar',
-        );
+        ];
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foo')
@@ -390,7 +390,7 @@ class UsersControllerTest extends TestCase
         Foundation::shouldReceive('make')->once()
             ->with('orchestra.user')->andReturn($builder);
         Foundation::shouldReceive('handles')->once()
-            ->with('orchestra::users', array())->andReturn('users');
+            ->with('orchestra::users', [])->andReturn('users');
         Messages::shouldReceive('add')->once()
             ->with('success', m::any())->andReturnNull();
         Auth::shouldReceive('user')->once()->andReturn($auth);
@@ -414,9 +414,9 @@ class UsersControllerTest extends TestCase
     {
         $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
         $user    = m::mock('\Orchestra\Model\User');
-        $auth    = (object) array(
+        $auth    = (object) [
             'id' => 'foobar',
-        );
+        ];
 
         $builder->shouldReceive('findOrFail')->once()->with('foobar')->andReturn($user);
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foobar');
@@ -436,9 +436,9 @@ class UsersControllerTest extends TestCase
     {
         $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
         $user    = m::mock('\Orchestra\Model\User');
-        $auth    = (object) array(
+        $auth    = (object) [
             'id' => 'foobar',
-        );
+        ];
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foo')
@@ -447,7 +447,7 @@ class UsersControllerTest extends TestCase
         Foundation::shouldReceive('make')->once()
             ->with('orchestra.user')->andReturn($builder);
         Foundation::shouldReceive('handles')->once()
-            ->with('orchestra::users', array())->andReturn('users');
+            ->with('orchestra::users', [])->andReturn('users');
         Messages::shouldReceive('add')->once()
             ->with('error', m::any())->andReturnNull();
         Auth::shouldReceive('user')->once()->andReturn($auth);
