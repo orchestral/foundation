@@ -25,7 +25,6 @@ class AdminMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $app = new Container();
         $app['orchestra.platform.menu'] = $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
 
-
         $stub = new AdminMenuHandler($app);
         $stub->handle();
     }

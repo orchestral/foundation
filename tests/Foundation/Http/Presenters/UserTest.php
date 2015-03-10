@@ -21,7 +21,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app = new Container;
+        $this->app = new Container();
 
         $this->app['app'] = $this->app;
         $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
@@ -81,6 +81,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('value')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($column, $value) {
                     $c($value);
+
                     return $column;
                 });
         $grid->shouldReceive('with')->once()->with($model)->andReturnNull()
@@ -92,6 +93,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 ->with('orchestra.users', m::type('Closure'))
                 ->andReturnUsing(function ($t, $c) use ($grid) {
                     $c($grid);
+
                     return 'foo';
                 });
 
@@ -144,11 +146,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('attributes')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($column, $value) {
                     $c($value);
+
                     return $column;
                 })
             ->shouldReceive('value')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($column, $value) {
                     $c($value);
+
                     return $column;
                 });
         $grid->shouldReceive('column')->once()->with('action')->andReturn($column);
@@ -156,6 +160,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $builder->shouldReceive('extend')->once()->with(m::type('Closure'))
             ->andReturnUsing(function ($c) use ($grid) {
                 $c($grid);
+
                 return 'foo';
             });
 
@@ -213,6 +218,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('options')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($control) {
                     $c();
+
                     return $control;
                 })
             ->shouldReceive('attributes')->once()->with(m::type('Array'))->andReturnSelf()
@@ -234,13 +240,12 @@ class UserTest extends \PHPUnit_Framework_TestCase
                 ->with('orchestra.users', m::any())
                 ->andReturnUsing(function ($f, $c) use ($grid) {
                     $c($grid);
+
                     return 'foo';
                 });
 
-
         $app['orchestra.role']->shouldReceive('lists')->once()
                 ->with('name', 'id')->andReturn('roles');
-
 
         $stub->form($model);
     }

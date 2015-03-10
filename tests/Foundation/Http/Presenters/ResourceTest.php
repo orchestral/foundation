@@ -20,7 +20,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app = new Container;
+        $this->app = new Container();
 
         $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
         $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
@@ -51,10 +51,10 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
     public function testTableMethod()
     {
         $app   = $this->app;
-        $model = new Fluent;
+        $model = new Fluent();
         $value = (object) [
             'id'   => 'foo',
-            'name' => 'Foobar'
+            'name' => 'Foobar',
         ];
 
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
@@ -77,6 +77,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
                 ->with('orchestra.resources: list', m::type('Closure'))
                 ->andReturnUsing(function ($t, $c) use ($grid) {
                     $c($grid);
+
                     return 'foo';
                 });
 

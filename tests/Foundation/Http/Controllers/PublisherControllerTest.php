@@ -27,7 +27,7 @@ class PublisherControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/publisher
+     * Test GET /admin/publisher.
      *
      * @test
      */
@@ -44,7 +44,7 @@ class PublisherControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/publisher/ftp
+     * Test GET /admin/publisher/ftp.
      *
      * @test
      */
@@ -58,7 +58,7 @@ class PublisherControllerTest extends TestCase
     }
 
     /**
-     * Test POST /admin/publisher/ftp
+     * Test POST /admin/publisher/ftp.
      *
      * @test
      */
@@ -106,7 +106,7 @@ class PublisherControllerTest extends TestCase
     {
         $processor = m::mock('\Orchestra\Foundation\Processor\AssetPublisher', [
             m::mock('\Orchestra\Foundation\Publisher\PublisherManager'),
-            m::mock('\Illuminate\Session\Store')
+            m::mock('\Illuminate\Session\Store'),
         ]);
 
         $this->app->instance('Orchestra\Foundation\Processor\AssetPublisher', $processor);

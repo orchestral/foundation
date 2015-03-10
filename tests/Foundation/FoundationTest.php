@@ -48,7 +48,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get installable mocks setup
+     * Get installable mocks setup.
      *
      * @return \Mockery
      */
@@ -99,7 +99,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get un-installable mocks setup
+     * Get un-installable mocks setup.
      *
      * @return \Mockery
      */

@@ -20,7 +20,7 @@ class AdminControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFilters()
     {
-        $stub = new StubAdminController;
+        $stub = new StubAdminController();
 
         $beforeFilter = [
             [
@@ -28,7 +28,7 @@ class AdminControllerTest extends \PHPUnit_Framework_TestCase
                 'filter' => 'orchestra.installable',
                 'parameters' => [],
                 'options' => [],
-            ]
+            ],
         ];
 
         $this->assertEquals($beforeFilter, $stub->getBeforeFilters());

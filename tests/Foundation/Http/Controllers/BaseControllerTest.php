@@ -38,7 +38,7 @@ class BaseControllerTest extends TestCase
      */
     public function testMissingMethodAction()
     {
-        $app = new Container;
+        $app = new Container();
         $factory = m::mock('\Illuminate\Contracts\View\Factory');
         $view = m::mock('\Illuminate\Contracts\View\View');
         $redirector = m::mock('\Illuminate\Routing\Redirector');
@@ -55,7 +55,7 @@ class BaseControllerTest extends TestCase
 
         $this->assertFalse($_SERVER['StubBaseController@setupFilters']);
 
-        $stub = new StubBaseController;
+        $stub = new StubBaseController();
 
         $this->assertEquals($view, $stub->missingMethod([]));
         $this->assertTrue($_SERVER['StubBaseController@setupFilters']);
@@ -66,8 +66,6 @@ class StubBaseController extends BaseController
 {
     /**
      * Setup controller filters.
-     *
-     * @return void
      */
     protected function setupFilters()
     {

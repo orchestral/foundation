@@ -27,7 +27,7 @@ class DashboardControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin
+     * Test GET /admin.
      *
      * @test
      */
@@ -46,7 +46,7 @@ class DashboardControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/missing
+     * Test GET /admin/missing.
      *
      * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */

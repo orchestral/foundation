@@ -68,7 +68,7 @@ class ServiceProviderTest extends TestCase
     }
 
     /**
-     * Get value of Orchestra\Foundation\Providers\FoundationServiceProvider::provides()
+     * Get value of Orchestra\Foundation\Providers\FoundationServiceProvider::provides().
      *
      * @return array
      */
@@ -82,7 +82,7 @@ class ServiceProviderTest extends TestCase
     }
 
     /**
-     * Get value of Orchestra\Foundation\Providers\SupportServiceProvider::provides()
+     * Get value of Orchestra\Foundation\Providers\SupportServiceProvider::provides().
      *
      * @return array.
      */
@@ -97,7 +97,7 @@ class ServiceProviderTest extends TestCase
     }
 
     /**
-     * Get value of Orchestra\Foundation\Providers\ConsoleSupportServiceProvider::provides()
+     * Get value of Orchestra\Foundation\Providers\ConsoleSupportServiceProvider::provides().
      *
      * @return array
      */

@@ -29,7 +29,7 @@ class ProfileCreatorControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/register
+     * Test GET /admin/register.
      *
      * @test
      */
@@ -49,7 +49,7 @@ class ProfileCreatorControllerTest extends TestCase
     }
 
     /**
-     * Test POST /admin/register
+     * Test POST /admin/register.
      *
      * @test
      */

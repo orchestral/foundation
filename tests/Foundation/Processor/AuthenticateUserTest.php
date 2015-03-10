@@ -119,8 +119,6 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('logged.out', $stub->logout($listener));
     }
 
-
-
     /**
      * Get sample input.
      *

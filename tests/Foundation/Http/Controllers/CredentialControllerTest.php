@@ -44,7 +44,7 @@ class CredentialControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/login
+     * Test GET /admin/login.
      *
      * @test
      */
@@ -60,7 +60,7 @@ class CredentialControllerTest extends TestCase
     }
 
     /**
-     * Test POST /admin/login
+     * Test POST /admin/login.
      *
      * @test
      */
@@ -142,7 +142,7 @@ class CredentialControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/logout
+     * Test GET /admin/logout.
      *
      * @test
      */
@@ -161,7 +161,7 @@ class CredentialControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/logout?redirect=home
+     * Test GET /admin/logout?redirect=home.
      *
      * @test
      */
@@ -188,7 +188,7 @@ class CredentialControllerTest extends TestCase
     {
         $processor = m::mock('\Orchestra\Foundation\Processor\AuthenticateUser', [
             m::mock('\Orchestra\Foundation\Validation\AuthenticateUser'),
-            m::mock('\Illuminate\Contracts\Auth\Guard')
+            m::mock('\Illuminate\Contracts\Auth\Guard'),
         ]);
 
         $this->app->instance('Orchestra\Foundation\Processor\AuthenticateUser', $processor);

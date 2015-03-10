@@ -25,7 +25,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app    = new Container;
+        $this->app    = new Container();
         $this->client = m::mock('\Orchestra\Support\Ftp\Client');
     }
 
@@ -43,6 +43,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
      * Get Session mock.
      *
      * @access private
+     *
      * @return Mockery
      */
     private function getSessionMock()

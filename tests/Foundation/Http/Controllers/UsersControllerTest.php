@@ -54,7 +54,7 @@ class UsersControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/users
+     * Test GET /admin/users.
      *
      * @test
      */
@@ -81,7 +81,7 @@ class UsersControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/users/create
+     * Test GET /admin/users/create.
      *
      * @test
      */
@@ -100,7 +100,7 @@ class UsersControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/users/(:any)/edit
+     * Test GET /admin/users/(:any)/edit.
      *
      * @test
      */
@@ -123,7 +123,7 @@ class UsersControllerTest extends TestCase
     }
 
     /**
-     * Test POST /admin/users
+     * Test POST /admin/users.
      *
      * @test
      */
@@ -233,7 +233,7 @@ class UsersControllerTest extends TestCase
     }
 
     /**
-     * Test PUT /admin/users/(:any)
+     * Test PUT /admin/users/(:any).
      *
      * @test
      */
@@ -371,7 +371,7 @@ class UsersControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/users/(:any)/delete
+     * Test GET /admin/users/(:any)/delete.
      *
      * @test
      */

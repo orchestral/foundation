@@ -29,7 +29,7 @@ class ProfileUpdaterControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/account
+     * Test GET /admin/account.
      *
      * @test
      */
@@ -49,7 +49,7 @@ class ProfileUpdaterControllerTest extends TestCase
     }
 
     /**
-     * Test POST /admin/account
+     * Test POST /admin/account.
      *
      * @test
      */

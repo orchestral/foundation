@@ -49,7 +49,7 @@ class ExtensionsControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/extensions
+     * Test GET /admin/extensions.
      *
      * @test
      */
@@ -65,7 +65,7 @@ class ExtensionsControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/extensions/activate/(:name)
+     * Test GET /admin/extensions/activate/(:name).
      *
      * @test
      */
@@ -112,7 +112,7 @@ class ExtensionsControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/extensions/activate/(:name)
+     * Test GET /admin/extensions/activate/(:name).
      *
      * @test
      */
@@ -143,7 +143,7 @@ class ExtensionsControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/extensions/configure/(:name)
+     * Test GET /admin/extensions/configure/(:name).
      *
      * @test
      */
@@ -186,7 +186,7 @@ class ExtensionsControllerTest extends TestCase
     }
 
     /**
-     * Test POST /admin/extensions/configure/(:name)
+     * Test POST /admin/extensions/configure/(:name).
      *
      * @test
      */
@@ -267,7 +267,7 @@ class ExtensionsControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/extensions/update/(:name)
+     * Test GET /admin/extensions/update/(:name).
      *
      * @test
      */

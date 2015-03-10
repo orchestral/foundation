@@ -13,7 +13,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $app = new Container;
+        $app = new Container();
 
         $app['orchestra.app'] = m::mock('\Orchestra\Contracts\Foundation\Foundation');
         $app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
@@ -47,7 +47,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $fieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
         $control  = m::mock('\Orchestra\Contracts\Html\Form\Control');
 
-        $model = new Fluent;
+        $model = new Fluent();
         $stub  = new Account($form);
 
         $control->shouldReceive('label')->twice()->andReturnSelf();
@@ -62,6 +62,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
                 ->with('orchestra.account', m::type('Closure'))
                 ->andReturnUsing(function ($f, $c) use ($grid) {
                     $c($grid);
+
                     return 'foo';
                 });
 
@@ -81,8 +82,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $control  = m::mock('\Orchestra\Contracts\Html\Form\Control');
         $form     = m::mock('\Orchestra\Contracts\Html\Form\Factory');
 
-
-        $model = new Fluent;
+        $model = new Fluent();
         $stub  = new Account($form);
 
         $control->shouldReceive('label')->times(3)->andReturnSelf();
@@ -97,6 +97,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
                 ->with('orchestra.account: password', m::type('Closure'))
                 ->andReturnUsing(function ($f, $c) use ($grid) {
                     $c($grid);
+
                     return 'foo';
                 });
 

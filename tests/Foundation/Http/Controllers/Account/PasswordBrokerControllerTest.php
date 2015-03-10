@@ -27,7 +27,7 @@ class PasswordBrokerControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/forgot
+     * Test GET /admin/forgot.
      *
      * @test
      */
@@ -42,7 +42,7 @@ class PasswordBrokerControllerTest extends TestCase
     }
 
     /**
-     * Test POST /admin/forgot
+     * Test POST /admin/forgot.
      *
      * @test
      */
@@ -90,7 +90,7 @@ class PasswordBrokerControllerTest extends TestCase
     }
 
     /**
-     * Test POST /admin/forgot when validation fails
+     * Test POST /admin/forgot when validation fails.
      *
      * @test
      */
@@ -114,7 +114,7 @@ class PasswordBrokerControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/forgot/reset
+     * Test GET /admin/forgot/reset.
      *
      * @test
      */
@@ -131,7 +131,7 @@ class PasswordBrokerControllerTest extends TestCase
         $this->assertResponseOk();
     }
 
-     /**
+    /**
      * Test GET /admin/forgot/reset given token is null.
      *
      * @expectedException \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
@@ -142,7 +142,7 @@ class PasswordBrokerControllerTest extends TestCase
     }
 
     /**
-     * Test POST /admin/forgot/reset
+     * Test POST /admin/forgot/reset.
      *
      * @test
      */

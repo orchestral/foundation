@@ -47,7 +47,7 @@ class SettingsControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/settings
+     * Test GET /admin/settings.
      *
      * @test
      */
@@ -69,7 +69,7 @@ class SettingsControllerTest extends TestCase
     }
 
     /**
-     * Test POST /admin/settings
+     * Test POST /admin/settings.
      *
      * @test
      */
@@ -149,7 +149,7 @@ class SettingsControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/settings/migrate
+     * Test GET /admin/settings/migrate.
      *
      * @test
      */
