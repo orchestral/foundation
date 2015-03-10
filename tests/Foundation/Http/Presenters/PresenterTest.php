@@ -1,9 +1,9 @@
-<?php namespace Orchestra\Foundation\Presenter\TestCase;
+<?php namespace Orchestra\Foundation\Http\Presenters\TestCase;
 
 use Mockery as m;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
-use Orchestra\Foundation\Presenter\Presenter;
+use Orchestra\Foundation\Http\Presenters\Presenter;
 
 class PresenterTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,7 +24,7 @@ class PresenterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Presenter\AbstractablePresenter::handles()
+     * Test Orchestra\Foundation\Http\Presenters\Presenter::handles()
      * method.
      *
      * @test
@@ -39,16 +39,16 @@ class PresenterTest extends \PHPUnit_Framework_TestCase
         $app->shouldReceive('make')->once()->with('orchestra.app')->andReturn($orchestra);
 
         $orchestra->shouldReceive('handles')->with(m::type('String'), m::type('Array'))
-                ->andReturnUsing(function ($s) {
-                    return "foobar/{$s}";
-                });
+            ->andReturnUsing(function ($s) {
+                return "foobar/{$s}";
+            });
 
         $stub = new PresenterStub;
         $this->assertEquals('foobar/hello', $stub->handles('hello'));
     }
 
     /**
-     * Test Orchestra\Foundation\Presenter\AbstractablePresenter::setupForm()
+     * Test Orchestra\Foundation\Http\Presenters\Presenter::setupForm()
      * method.
      *
      * @test

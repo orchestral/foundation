@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Presenter;
+<?php namespace Orchestra\Foundation\Http\Presenters;
 
 use Illuminate\Contracts\Auth\Guard;
 use Orchestra\Contracts\Html\Form\Fieldset;

@@ -2,15 +2,15 @@
 
 use Illuminate\Support\Facades\Event;
 use Orchestra\Foundation\Processor\Processor;
-use Orchestra\Foundation\Presenter\Account as Presenter;
 use Orchestra\Foundation\Validation\Account as Validator;
+use Orchestra\Foundation\Http\Presenters\Account as Presenter;
 
 abstract class User extends Processor
 {
     /**
      * Create a new processor instance.
      *
-     * @param  \Orchestra\Foundation\Presenter\Account  $presenter
+     * @param  \Orchestra\Foundation\Http\Presenters\Account  $presenter
      * @param  \Orchestra\Foundation\Validation\Account  $validator
      */
     public function __construct(Presenter $presenter, Validator $validator)

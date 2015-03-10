@@ -1,10 +1,10 @@
-<?php namespace Orchestra\Foundation\Presenter\TestCase;
+<?php namespace Orchestra\Foundation\Http\Presenters\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Fluent;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
-use Orchestra\Foundation\Presenter\Account;
+use Orchestra\Foundation\Http\Presenters\Account;
 
 class AccountTest extends \PHPUnit_Framework_TestCase
 {
@@ -34,7 +34,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Presenter\Account::profileForm()
+     * Test Orchestra\Foundation\Https\Presenters\Account::profileForm()
      * method.
      *
      * @test
@@ -69,7 +69,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Presenter\Account::passwordForm()
+     * Test Orchestra\Foundation\Https\Presenters\Account::passwordForm()
      * method.
      *
      * @test

@@ -28,7 +28,7 @@ class ProfileCreatorTest extends TestCase
     public function testCreateMethod()
     {
         $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
-        $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
+        $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $user      = m::mock('\Orchestra\Model\User');
         $form      = m::mock('\Orchestra\Contracts\Html\Form\Builder');
@@ -58,7 +58,7 @@ class ProfileCreatorTest extends TestCase
     public function testStoreMethod()
     {
         $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
-        $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
+        $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
         $receipt   = m::mock('\Orchestra\Contracts\Notification\Receipt');
@@ -107,7 +107,7 @@ class ProfileCreatorTest extends TestCase
     public function testStoreMethodGivenFailedNotification()
     {
         $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
-        $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
+        $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
         $receipt   = m::mock('\Orchestra\Contracts\Notification\Receipt');
@@ -156,7 +156,7 @@ class ProfileCreatorTest extends TestCase
     public function testStoreMethodGivenFailedSavingToDB()
     {
         $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
-        $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
+        $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
         $user      = m::mock('\Orchestra\Model\User');
@@ -188,7 +188,7 @@ class ProfileCreatorTest extends TestCase
     public function testStoreMethodGivenFailedValidation()
     {
         $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
-        $presenter = m::mock('\Orchestra\Foundation\Presenter\Account');
+        $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
 

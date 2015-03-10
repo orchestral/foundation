@@ -1,10 +1,10 @@
-<?php namespace Orchestra\Foundation\Presenter\TestCase;
+<?php namespace Orchestra\Foundation\Http\Presenters\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Fluent;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
-use Orchestra\Foundation\Presenter\Resource;
+use Orchestra\Foundation\Http\Presenters\Resource;
 
 class ResourceTest extends \PHPUnit_Framework_TestCase
 {

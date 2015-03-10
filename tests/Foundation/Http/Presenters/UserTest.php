@@ -1,11 +1,11 @@
-<?php namespace Orchestra\Foundation\Presenter\TestCase;
+<?php namespace Orchestra\Foundation\Http\Presenters\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Collection;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
-use Orchestra\Foundation\Presenter\User;
+use Orchestra\Foundation\Http\Presenters\User;
 
 class UserTest extends \PHPUnit_Framework_TestCase
 {
@@ -45,7 +45,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Presenter\User::table() method.
+     * Test Orchestra\Foundation\Http\Presenters\User::table() method.
      *
      * @test
      */
@@ -109,7 +109,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Presenter\User::actions()
+     * Test Orchestra\Foundation\Http\Presenters\User::actions()
      * method.
      *
      * @test
@@ -175,7 +175,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Presenter\User::form() method.
+     * Test Orchestra\Foundation\Http\Presenters\User::form() method.
      *
      * @test
      */

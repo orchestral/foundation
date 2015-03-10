@@ -37,10 +37,10 @@ class SettingsControllerTest extends TestCase
      */
     protected function bindDependencies()
     {
-        $presenter = m::mock('\Orchestra\Foundation\Presenter\Setting');
+        $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Setting');
         $validator = m::mock('\Orchestra\Foundation\Validation\Setting');
 
-        App::instance('Orchestra\Foundation\Presenter\Setting', $presenter);
+        App::instance('Orchestra\Foundation\Http\Presenters\Setting', $presenter);
         App::instance('Orchestra\Foundation\Validation\Setting', $validator);
 
         return array($presenter, $validator);

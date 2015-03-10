@@ -44,10 +44,10 @@ class UsersControllerTest extends TestCase
      */
     protected function bindDependencies()
     {
-        $presenter = m::mock('\Orchestra\Foundation\Presenter\User');
+        $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\User');
         $validator = m::mock('\Orchestra\Foundation\Validation\User');
 
-        App::instance('Orchestra\Foundation\Presenter\User', $presenter);
+        App::instance('Orchestra\Foundation\Http\Presenters\User', $presenter);
         App::instance('Orchestra\Foundation\Validation\User', $validator);
 
         return array($presenter, $validator);

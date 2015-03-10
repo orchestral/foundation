@@ -48,9 +48,9 @@ class ResourcesControllerTest extends TestCase
      */
     protected function bindDependencies()
     {
-        $presenter = m::mock('\Orchestra\Foundation\Presenter\Resource');
+        $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Resource');
 
-        App::instance('Orchestra\Foundation\Presenter\Resource', $presenter);
+        App::instance('Orchestra\Foundation\Http\Presenters\Resource', $presenter);
 
         return $presenter;
     }
@@ -105,7 +105,7 @@ class ResourcesControllerTest extends TestCase
     protected function getProcessorMock()
     {
         $processor = m::mock('\Orchestra\Foundation\Processor\ResourceLoader', [
-            m::mock('\Orchestra\Foundation\Presenter\Resource'),
+            m::mock('\Orchestra\Foundation\Http\Presenters\Resource'),
             m::mock('\Orchestra\Resources\Factory')
         ]);
 

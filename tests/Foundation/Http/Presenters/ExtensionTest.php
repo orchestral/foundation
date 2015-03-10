@@ -1,10 +1,10 @@
-<?php namespace Orchestra\Foundation\Presenter\TestCase;
+<?php namespace Orchestra\Foundation\Http\Presenters\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Fluent;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
-use Orchestra\Foundation\Presenter\Extension;
+use Orchestra\Foundation\Http\Presenters\Extension;
 
 class ExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -43,7 +43,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Presenter\Extension::form()
+     * Test Orchestra\Foundation\Http\Presenters\Extension::form()
      * method.
      *
      * @test

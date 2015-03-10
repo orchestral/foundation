@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Presenter;
+<?php namespace Orchestra\Foundation\Http\Presenters;
 
 use Orchestra\Contracts\Html\Table\Grid as TableGrid;
 use Orchestra\Contracts\Html\Table\Factory as TableFactory;
