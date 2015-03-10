@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Routing\TestCase;
+<?php namespace Orchestra\Foundation\Processor\TestCase;
 
 use Mockery as m;
 use Illuminate\Support\Fluent;
@@ -23,7 +23,7 @@ class ResourceLoaderTest extends \PHPUnit_Framework_TestCase
     public function testShowAllMethod()
     {
         $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\ResourceLoader');
-        $presenter = m::mock('\Orchestra\Foundation\Presenter\Resource');
+        $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Resource');
         $resources = m::mock('\Orchestra\Resources\Factory');
 
         $data = [
@@ -49,7 +49,7 @@ class ResourceLoaderTest extends \PHPUnit_Framework_TestCase
     public function testRequestMethod()
     {
         $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\ResourceLoader');
-        $presenter = m::mock('\Orchestra\Foundation\Presenter\Resource');
+        $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Resource');
         $resources = m::mock('\Orchestra\Resources\Factory');
 
         $data = [

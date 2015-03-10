@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Orchestra\Resources\Factory;
-use Orchestra\Foundation\Presenter\Resource as Presenter;
+use Orchestra\Foundation\Http\Presenters\Resource as Presenter;
 use Orchestra\Contracts\Foundation\Command\ResourceLoader as Command;
 use Orchestra\Contracts\Foundation\Listener\ResourceLoader as Listener;
 
@@ -17,7 +17,7 @@ class ResourceLoader extends Processor implements Command
     /**
      * Create a new processor instance.
      *
-     * @param  \Orchestra\Foundation\Presenter\Resource  $presenter
+     * @param  \Orchestra\Foundation\Http\Presenters\Resource  $presenter
      * @param  \Orchestra\Resources\Factory  $resources
      */
     public function __construct(Presenter $presenter, Factory $resources)

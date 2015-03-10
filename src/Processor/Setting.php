@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Contracts\Memory\Provider;
 use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Presenter\Setting as Presenter;
 use Orchestra\Foundation\Validation\Setting as Validator;
+use Orchestra\Foundation\Http\Presenters\Setting as Presenter;
 use Orchestra\Contracts\Foundation\Command\SystemUpdater as SystemUpdateCommand;
 use Orchestra\Contracts\Foundation\Listener\SystemUpdater as SystemUpdateListener;
 use Orchestra\Contracts\Foundation\Command\SettingUpdater as SettingUpdateCommand;
@@ -24,7 +24,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
     /**
      * Create a new processor instance.
      *
-     * @param  \Orchestra\Foundation\Presenter\Setting  $presenter
+     * @param  \Orchestra\Foundation\Http\Presenters\Setting  $presenter
      * @param  \Orchestra\Foundation\Validation\Setting  $validator
      * @param  \Orchestra\Contracts\Memory\Provider  $memory
      */

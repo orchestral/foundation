@@ -3,7 +3,7 @@
 use Illuminate\Routing\Router;
 use Orchestra\Support\Facades\Foundation;
 
-Foundation::namespaced('Orchestra\Foundation\Routing', function (Router $router) {
+Foundation::namespaced('Orchestra\Foundation\Http\Controllers', function (Router $router) {
     // Route to account/profile.
     $router->get('account', 'Account\ProfileUpdaterController@edit');
     $router->post('account', 'Account\ProfileUpdaterController@update');

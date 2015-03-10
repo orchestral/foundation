@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Event;
 use Orchestra\Support\Facades\Extension;
 use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Processor\Processor;
-use Orchestra\Foundation\Presenter\Extension as Presenter;
 use Orchestra\Foundation\Validation\Extension as Validator;
 use Orchestra\Contracts\Extension\Command\Configure as Command;
+use Orchestra\Foundation\Http\Presenters\Extension as Presenter;
 use Orchestra\Contracts\Extension\Listener\Configure as Listener;
 
 class Configure extends Processor implements Command
@@ -15,7 +15,7 @@ class Configure extends Processor implements Command
     /**
      * Create a new processor instance.
      *
-     * @param  \Orchestra\Foundation\Presenter\Extension  $presenter
+     * @param  \Orchestra\Foundation\Http\Presenters\Extension  $presenter
      * @param  \Orchestra\Foundation\Validation\Extension  $validator
      */
     public function __construct(Presenter $presenter, Validator $validator)

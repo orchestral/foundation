@@ -5,6 +5,14 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+## v3.0.6 {#v3-0-6}
+
+* Move `Orchestra\Foundation\Filters` namespace to `Orchestra\Foundation\Http\Filters` namespace.
+* Move `Orchestra\Foundation\Middleware` namespace to `Orchestra\Foundation\Http\Middleware` namespace.
+* Move `Orchestra\Foundation\Presenter` namespace to `Orchestra\Foundation\Http\Presenters` namespace.
+* Move `Orchestra\Foundation\Routing` namespace to `Orchestra\Foundation\Http\Controllers` namespace.
+* Handle Twitter Bootstrap via Bower.
+
 ## v3.0.5 {#v3-0-5}
 
 * Fixes unable to resolve `Illuminate\Contracts\Auth\Authenticatable` through IoC Container when using `php artisan route:list`.
