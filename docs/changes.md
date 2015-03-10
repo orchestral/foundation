@@ -5,7 +5,7 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
-## v3.0.5 {#v3-0-6}
+## v3.0.6 {#v3-0-6}
 
 * Move `Orchestra\Foundation\Filters` namespace to `Orchestra\Foundation\Http\Filters` namespace.
 * Move `Orchestra\Foundation\Middleware` namespace to `Orchestra\Foundation\Http\Middleware` namespace.
