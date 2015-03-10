@@ -149,7 +149,7 @@ class ExtensionsControllerTest extends TestCase
      */
     public function testGetConfigureAction()
     {
-        $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $memory            = m::mock('\Orchestra\Contracts\Memory\Provider');
         list($presenter, ) = $this->bindDependencies();
 
         $memory->shouldReceive('get')->once()
@@ -197,7 +197,7 @@ class ExtensionsControllerTest extends TestCase
             '_token'  => 'somesessiontoken',
         ];
 
-        $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $memory            = m::mock('\Orchestra\Contracts\Memory\Provider');
         list(, $validator) = $this->bindDependencies();
 
         $memory->shouldReceive('get')->once()

@@ -29,7 +29,7 @@ class ProfileUpdaterTest extends TestCase
         $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $user     = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $stub = new ProfileUpdater($presenter, $validator);
 

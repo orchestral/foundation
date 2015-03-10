@@ -15,11 +15,11 @@ class ResourcesMenuHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreatingMenuWithResources()
     {
-        $app = new Container();
-        $app['orchestra.resources'] = $resources = m::mock('\Orchestra\Resources\Factory');
-        $app['orchestra.app'] = $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
+        $app                            = new Container();
+        $app['orchestra.resources']     = $resources     = m::mock('\Orchestra\Resources\Factory');
+        $app['orchestra.app']           = $foundation           = m::mock('\Orchestra\Contracts\Foundation\Foundation');
         $app['orchestra.platform.menu'] = $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
-        $app['translator'] = $translator = m::mock('\Illuminate\Translator\Translator');
+        $app['translator']              = $translator              = m::mock('\Illuminate\Translator\Translator');
 
         $foo = new Fluent([
             'name'    => 'Foo',
@@ -56,11 +56,11 @@ class ResourcesMenuHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreatingMenuWithoutResources()
     {
-        $app = new Container();
-        $app['orchestra.resources'] = $resources = m::mock('\Orchestra\Resources\Factory');
-        $app['orchestra.app'] = $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
+        $app                            = new Container();
+        $app['orchestra.resources']     = $resources     = m::mock('\Orchestra\Resources\Factory');
+        $app['orchestra.app']           = $foundation           = m::mock('\Orchestra\Contracts\Foundation\Foundation');
         $app['orchestra.platform.menu'] = $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
-        $app['translator'] = $translator = m::mock('\Illuminate\Translator\Translator');
+        $app['translator']              = $translator              = m::mock('\Illuminate\Translator\Translator');
 
         $foo = new Fluent([
             'name'    => 'Foo',
@@ -87,10 +87,10 @@ class ResourcesMenuHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreatingMenuWithoutBoundDependencies()
     {
-        $app = new Container();
-        $app['orchestra.app'] = $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
+        $app                            = new Container();
+        $app['orchestra.app']           = $foundation           = m::mock('\Orchestra\Contracts\Foundation\Foundation');
         $app['orchestra.platform.menu'] = $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
-        $app['translator'] = $translator = m::mock('\Illuminate\Translator\Translator');
+        $app['translator']              = $translator              = m::mock('\Illuminate\Translator\Translator');
 
         $stub = new ResourcesMenuHandler($app);
         $this->assertFalse($stub->authorize());

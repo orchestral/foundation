@@ -20,7 +20,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $events  = m::mock('\Illuminate\Contracts\Events\Dispatcher');
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
 
         $stub = new Account($factory, $events);
@@ -35,8 +35,8 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidation()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [
@@ -65,8 +65,8 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnRegister()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [
@@ -97,8 +97,8 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnChangePassword()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [

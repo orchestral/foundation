@@ -12,7 +12,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $events  = m::mock('\Illuminate\Contracts\Events\Dispatcher');
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
 
         $stub = new Extension($factory, $events);

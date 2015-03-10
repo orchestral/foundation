@@ -16,7 +16,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $app = new Container();
 
         $app['orchestra.app'] = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
+        $app['translator']    = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $app['orchestra.app']->shouldReceive('handles');
         $app['translator']->shouldReceive('trans');

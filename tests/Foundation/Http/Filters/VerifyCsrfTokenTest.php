@@ -22,9 +22,9 @@ class VerifyCsrfTokenTest extends \PHPUnit_Framework_TestCase
     public function testFilterMethodWithInvalidToken()
     {
         $encrypter = m::mock('\Illuminate\Contracts\Encryption\Encrypter');
-        $session = m::mock('\Illuminate\Session\SessionInterface');
-        $route = m::mock('\Illuminate\Routing\Route');
-        $request = m::mock('\Illuminate\Http\Request');
+        $session   = m::mock('\Illuminate\Session\SessionInterface');
+        $route     = m::mock('\Illuminate\Routing\Route');
+        $request   = m::mock('\Illuminate\Http\Request');
 
         $request->shouldReceive('session')->once()->andReturn($session)
             ->shouldReceive('input')->once()->with('_token')->andReturn('b');
@@ -44,9 +44,9 @@ class VerifyCsrfTokenTest extends \PHPUnit_Framework_TestCase
     public function testFilterMethodWithValidToken()
     {
         $encrypter = m::mock('\Illuminate\Contracts\Encryption\Encrypter');
-        $session = m::mock('\Illuminate\Session\SessionInterface');
-        $route = m::mock('\Illuminate\Routing\Route');
-        $request = m::mock('\Illuminate\Http\Request');
+        $session   = m::mock('\Illuminate\Session\SessionInterface');
+        $route     = m::mock('\Illuminate\Routing\Route');
+        $request   = m::mock('\Illuminate\Http\Request');
 
         $request->shouldReceive('session')->once()->andReturn($session)
             ->shouldReceive('input')->once()->with('_token')->andReturn('a');
@@ -66,9 +66,9 @@ class VerifyCsrfTokenTest extends \PHPUnit_Framework_TestCase
     public function testFilterMethodWithValidTokenUsingHeaders()
     {
         $encrypter = m::mock('\Illuminate\Contracts\Encryption\Encrypter');
-        $session = m::mock('\Illuminate\Session\SessionInterface');
-        $route = m::mock('\Illuminate\Routing\Route');
-        $request = m::mock('\Illuminate\Http\Request');
+        $session   = m::mock('\Illuminate\Session\SessionInterface');
+        $route     = m::mock('\Illuminate\Routing\Route');
+        $request   = m::mock('\Illuminate\Http\Request');
 
         $request->shouldReceive('session')->once()->andReturn($session)
             ->shouldReceive('header')->once()->with('X-CSRF-TOKEN')->andReturn('a')
@@ -89,9 +89,9 @@ class VerifyCsrfTokenTest extends \PHPUnit_Framework_TestCase
     public function testFilterMethodWithValidTokenUsingEncryptedHeaders()
     {
         $encrypter = m::mock('\Illuminate\Contracts\Encryption\Encrypter');
-        $session = m::mock('\Illuminate\Session\SessionInterface');
-        $route = m::mock('\Illuminate\Routing\Route');
-        $request = m::mock('\Illuminate\Http\Request');
+        $session   = m::mock('\Illuminate\Session\SessionInterface');
+        $route     = m::mock('\Illuminate\Routing\Route');
+        $request   = m::mock('\Illuminate\Http\Request');
 
         $request->shouldReceive('session')->once()->andReturn($session)
             ->shouldReceive('header')->once()->with('X-XSRF-TOKEN')->andReturn('foobar')

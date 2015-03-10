@@ -193,10 +193,10 @@ class PasswordBrokerTest extends TestCase
     protected function getUpdateInput()
     {
         return [
-            'email' => 'email@orchestraplatform.com',
-            'password' => '123456',
+            'email'                 => 'email@orchestraplatform.com',
+            'password'              => '123456',
             'password_confirmation' => '123456',
-            'token' => 'auniquetoken',
+            'token'                 => 'auniquetoken',
         ];
     }
 }

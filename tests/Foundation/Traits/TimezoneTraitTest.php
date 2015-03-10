@@ -34,7 +34,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
     public function testToLocalTimeGivenDateAsString()
     {
         $this->config = m::mock('\Illuminate\Contracts\Config\Repository');
-        $this->auth = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $this->auth   = m::mock('\Illuminate\Contracts\Auth\Guard');
         $this->memory = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         $this->config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
@@ -55,7 +55,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
     public function testToLocalTimeReturnProperDateTimeWhenIsGuest()
     {
         $this->config = m::mock('\Illuminate\Contracts\Config\Repository');
-        $this->auth = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $this->auth   = m::mock('\Illuminate\Contracts\Auth\Guard');
         $this->memory = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         $this->config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
@@ -76,7 +76,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
     public function testToLocalTimeReturnProperDateTimeWhenIsUser()
     {
         $this->config = m::mock('\Illuminate\Contracts\Config\Repository');
-        $this->auth = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $this->auth   = m::mock('\Illuminate\Contracts\Auth\Guard');
         $this->memory = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         $this->config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
@@ -100,7 +100,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
     public function testFromLocalTimeReturnProperDateTimeWhenIsGuest()
     {
         $this->config = m::mock('\Illuminate\Contracts\Config\Repository');
-        $this->auth = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $this->auth   = m::mock('\Illuminate\Contracts\Auth\Guard');
         $this->memory = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         $this->config->shouldReceive('get')->once()->with('app.timezone', 'UTC')->andReturn('UTC');
@@ -121,7 +121,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
     public function testFromLocalTimeReturnProperDateTimeWhenIsUser()
     {
         $this->config = m::mock('\Illuminate\Contracts\Config\Repository');
-        $this->auth = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $this->auth   = m::mock('\Illuminate\Contracts\Auth\Guard');
         $this->memory = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         $this->config->shouldReceive('get')->with('app.timezone', 'UTC')->andReturn('UTC');
@@ -144,7 +144,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
     public function testConvertToDateTimeMethodWhenTimezoneIsNull()
     {
         $this->config = m::mock('\Illuminate\Contracts\Config\Repository');
-        $this->auth = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $this->auth   = m::mock('\Illuminate\Contracts\Auth\Guard');
         $this->memory = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         $stub = $this->convertToDateTime('2012-01-01 08:00:00');

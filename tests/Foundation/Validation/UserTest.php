@@ -20,7 +20,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $events  = m::mock('\Illuminate\Contracts\Events\Dispatcher');
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
 
         $stub = new User($factory, $events);
@@ -35,8 +35,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidation()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [
@@ -69,8 +69,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnCreate()
     {
-        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [

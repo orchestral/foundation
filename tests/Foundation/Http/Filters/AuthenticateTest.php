@@ -22,11 +22,11 @@ class AuthenticateTest extends \PHPUnit_Framework_TestCase
     public function testFilterMethodWhenAjaxRequest()
     {
         $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
-        $config = m::mock('\Illuminate\Contracts\Config\Repository');
-        $response = m::mock('\Illuminate\Contracts\Routing\ResponseFactory');
+        $auth       = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $config     = m::mock('\Illuminate\Contracts\Config\Repository');
+        $response   = m::mock('\Illuminate\Contracts\Routing\ResponseFactory');
 
-        $route = m::mock('\Illuminate\Routing\Route');
+        $route   = m::mock('\Illuminate\Routing\Route');
         $request = m::mock('\Illuminate\Http\Request');
 
         $auth->shouldReceive('guest')->once()->andReturn(true);
@@ -46,11 +46,11 @@ class AuthenticateTest extends \PHPUnit_Framework_TestCase
     public function testFilterMethodWhenHtmlRequest()
     {
         $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
-        $config = m::mock('\Illuminate\Contracts\Config\Repository');
-        $response = m::mock('\Illuminate\Contracts\Routing\ResponseFactory');
+        $auth       = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $config     = m::mock('\Illuminate\Contracts\Config\Repository');
+        $response   = m::mock('\Illuminate\Contracts\Routing\ResponseFactory');
 
-        $route = m::mock('\Illuminate\Routing\Route');
+        $route   = m::mock('\Illuminate\Routing\Route');
         $request = m::mock('\Illuminate\Http\Request');
 
         $auth->shouldReceive('guest')->once()->andReturn(true);
@@ -72,11 +72,11 @@ class AuthenticateTest extends \PHPUnit_Framework_TestCase
     public function testFilterMethodIsNotGuest()
     {
         $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
-        $config = m::mock('\Illuminate\Contracts\Config\Repository');
-        $response = m::mock('\Illuminate\Contracts\Routing\ResponseFactory');
+        $auth       = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $config     = m::mock('\Illuminate\Contracts\Config\Repository');
+        $response   = m::mock('\Illuminate\Contracts\Routing\ResponseFactory');
 
-        $route = m::mock('\Illuminate\Routing\Route');
+        $route   = m::mock('\Illuminate\Routing\Route');
         $request = m::mock('\Illuminate\Http\Request');
 
         $auth->shouldReceive('guest')->once()->andReturn(false);

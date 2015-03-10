@@ -21,7 +21,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new Application(__DIR__);
 
-        $this->app['translator'] = $trans = m::mock('\Illuminate\Translation\Translator')->makePartial();
+        $this->app['translator']    = $trans    = m::mock('\Illuminate\Translation\Translator')->makePartial();
         $this->app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
 
         Facade::clearResolvedInstances();
