@@ -1,7 +1,7 @@
-<?php namespace Orchestra\Foundation\Filters\TestCase;
+<?php namespace Orchestra\Foundation\Http\Filters\TestCase;
 
 use Mockery as m;
-use Orchestra\Foundation\Filters\CanManage;
+use Orchestra\Foundation\Http\Filters\CanManage;
 
 class CanManageTest extends \PHPUnit_Framework_TestCase
 {

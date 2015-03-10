@@ -1,7 +1,7 @@
-<?php namespace Orchestra\Foundation\Filters\TestCase;
+<?php namespace Orchestra\Foundation\Http\Filters\TestCase;
 
 use Mockery as m;
-use Orchestra\Foundation\Filters\IsRegistrable;
+use Orchestra\Foundation\Http\Filters\IsRegistrable;
 
 class IsRegistrableTest extends \PHPUnit_Framework_TestCase
 {

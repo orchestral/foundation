@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Filters;
+<?php namespace Orchestra\Foundation\Http\Filters;
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;

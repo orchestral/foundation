@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Middleware;
+<?php namespace Orchestra\Foundation\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -32,32 +32,32 @@ class UseBackendTheme
      */
     public function handle($request, Closure $next)
     {
-        $this->beforeHandle();
+        $this->beforeSendingThroughPipeline();
 
         $response = $next($request);
 
-        $this->afterHandle();
+        $this->afterSendingThroughPipeline();
 
         return $response;
     }
 
     /**
-     * Before handle.
+     * Before sending through pipeline.
      *
      * @return void
      */
-    protected function beforeHandle()
+    protected function beforeSendingThroughPipeline()
     {
         $this->dispatcher->fire('orchestra.started: admin');
         $this->dispatcher->fire('orchestra.ready: admin');
     }
 
     /**
-     * After handle.
+     * After sending through pipeline.
      *
      * @return void
      */
-    protected function afterHandle()
+    protected function afterSendingThroughPipeline()
     {
         $this->dispatcher->fire('orchestra.done: admin');
     }

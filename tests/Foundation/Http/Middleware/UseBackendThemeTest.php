@@ -1,7 +1,7 @@
-<?php namespace Orchestra\Foundation\Middleware\TestCase;
+<?php namespace Orchestra\Foundation\Http\Middleware\TestCase;
 
 use Mockery as m;
-use Orchestra\Foundation\Middleware\UseBackendTheme;
+use Orchestra\Foundation\Http\Middleware\UseBackendTheme;
 
 class UseBackendThemeTest extends \PHPUnit_Framework_TestCase
 {

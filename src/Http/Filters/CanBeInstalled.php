@@ -1,9 +1,9 @@
-<?php namespace Orchestra\Foundation\Filters;
+<?php namespace Orchestra\Foundation\Http\Filters;
 
+use Illuminate\Http\RedirectResponse;
 use Orchestra\Contracts\Foundation\Foundation;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class IsRegistrable
+class CanBeInstalled
 {
     /**
      * The application implementation.
@@ -26,13 +26,11 @@ class IsRegistrable
      * Run the request filter.
      *
      * @return mixed
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function filter()
     {
-        if (! $this->foundation->memory()->get('site.registrable', false)) {
-            throw new NotFoundHttpException('User registration is not allowed.');
+        if (! $this->foundation->installed()) {
+            return new RedirectResponse($this->foundation->handles('orchestra::install'));
         }
     }
 }
