@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+## v3.0.7@dev {#v3-0-7}
+
+* Allow `#{{ $foo = 'bar' }}` to be translated to `<?php $foo = 'bar'; ?>`.
+
 ## v3.0.6 {#v3-0-6}
 
 * Move `Orchestra\Foundation\Filters` namespace to `Orchestra\Foundation\Http\Filters` namespace.
