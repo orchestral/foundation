@@ -36,7 +36,7 @@ class PresenterTest extends \PHPUnit_Framework_TestCase
 
         Container::setInstance($app);
 
-        $app->shouldReceive('make')->once()->with('orchestra.app')->andReturn($orchestra);
+        $app->shouldReceive('make')->once()->with('orchestra.app', [])->andReturn($orchestra);
 
         $orchestra->shouldReceive('handles')->with(m::type('String'), m::type('Array'))
             ->andReturnUsing(function ($s) {
