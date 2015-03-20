@@ -42,6 +42,7 @@ class LoadExpresso
             }
 
             $view = preg_replace('/(\s*)(<\?\s)/', '$1<?php ', $view);
+            $view = preg_replace('/#\{\{\s*(.+?)\s*\}\}/s', '<?php $1; ?>', $view);
 
             return $view;
         });
