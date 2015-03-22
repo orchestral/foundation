@@ -5,9 +5,11 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
-## v3.0.7@dev {#v3-0-7}
+## v3.0.7 {#v3-0-7}
 
 * Allow `#{{ $foo = 'bar' }}` to be translated to `<?php $foo = 'bar'; ?>`.
+* Add missing `Add User` page title.
+* Tweak JavaScript for Settings page to be loaded from separate partial.
 
 ## v3.0.6 {#v3-0-6}
 
