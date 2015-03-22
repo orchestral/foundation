@@ -54,18 +54,20 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
      */
     private function getInstallableContainerSetup()
     {
-        $app                        = $this->app;
-        $app['env']                 = 'production';
+        $app        = $this->app;
+        $request    = m::mock('\Illuminate\Http\Request');
+        $acl        = $app['orchestra.acl'];
+        $config     = $app['config'];
+        $event      = $app['events'];
+        $mailer     = $app['orchestra.mail'];
+        $memory     = $app['orchestra.memory'];
+        $notifier   = $app['orchestra.notifier'];
+        $translator = $app['translator'];
+        $widget     = $app['orchestra.widget'];
+
+        $app['env'] = 'production';
         $app['orchestra.installed'] = false;
-        $app['request']             = $request             = m::mock('\Illuminate\Http\Request');
-        $acl                        = $app['orchestra.acl'];
-        $config                     = $app['config'];
-        $event                      = $app['events'];
-        $mailer                     = $app['orchestra.mail'];
-        $memory                     = $app['orchestra.memory'];
-        $notifier                   = $app['orchestra.notifier'];
-        $translator                 = $app['translator'];
-        $widget                     = $app['orchestra.widget'];
+        $app['request'] = $request;
 
         $memoryProvider = m::mock('\Orchestra\Memory\Provider');
 
@@ -105,17 +107,19 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
      */
     private function getUnInstallableContainerSetup()
     {
-        $app                        = $this->app;
-        $app['env']                 = 'production';
+        $app      = $this->app;
+        $request  = m::mock('\Illuminate\Http\Request');
+        $acl      = $app['orchestra.acl'];
+        $config   = $app['config'];
+        $event    = $app['events'];
+        $mailer   = $app['orchestra.mail'];
+        $memory   = $app['orchestra.memory'];
+        $notifier = $app['orchestra.notifier'];
+        $widget   = $app['orchestra.widget'];
+
+        $app['env'] = 'production';
+        $app['request'] = $request;
         $app['orchestra.installed'] = false;
-        $app['request']             = $request             = m::mock('\Illuminate\Http\Request');
-        $acl                        = $app['orchestra.acl'];
-        $config                     = $app['config'];
-        $event                      = $app['events'];
-        $mailer                     = $app['orchestra.mail'];
-        $memory                     = $app['orchestra.memory'];
-        $notifier                   = $app['orchestra.notifier'];
-        $widget                     = $app['orchestra.widget'];
 
         $memoryProvider = m::mock('\Orchestra\Memory\Provider');
 
