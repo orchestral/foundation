@@ -148,6 +148,8 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function showUserCreator(array $data)
     {
+        set_meta('title', trans('orchestra/foundation::title.users.create'));
+
         return view('orchestra/foundation::users.edit', $data);
     }
 
