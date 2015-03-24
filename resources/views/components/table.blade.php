@@ -1,6 +1,4 @@
-<?php $attributes['table'] = app('html')->decorate($attributes['table'], [
-	'class' => 'table table-striped'
-]); ?>
+#{{ $attributes['table'] = app('html')->decorate($attributes['table'], ['class' => 'table table-striped']) }}
 
 <table{!! app('html')->attributes($attributes['table']) !!}>
 	<thead>

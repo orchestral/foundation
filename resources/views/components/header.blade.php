@@ -1,7 +1,5 @@
-<?php
-
-$title       = get_meta('title');
-$description = get_meta('description'); ?>
+#{{ $title = get_meta('title') }}
+#{{ $description = get_meta('description') }}
 
 <div class="{!! get_meta('header::class', 'page-header') !!}">
 	<div class="container">
@@ -21,4 +19,4 @@ $description = get_meta('description'); ?>
 	</div>
 </div>
 
-<?php set_meta('header::class', 'page-header'); ?>
+#{{ set_meta('header::class', 'page-header') }}

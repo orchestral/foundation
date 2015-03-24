@@ -1,6 +1,4 @@
-<?php
-
-use Illuminate\Support\Fluent; ?>
+#{{ use Illuminate\Support\Fluent; }}
 
 <table class="table table-striped">
 	<thead>
@@ -16,13 +14,12 @@ use Illuminate\Support\Fluent; ?>
 		</tr>
 		@else
 		@foreach ($extensions as $name => $extension)
-			<?php $extension = new Fluent($extension); ?>
+			#{{ $extension = new Fluent($extension) }}
 		<tr>
 			<td>
 				<strong>
-					<?php
-					$active  = app('orchestra.extension')->activated($name);
-					$started = app('orchestra.extension')->started($name); ?>
+					#{{ $active = app('orchestra.extension')->activated($name) }}
+					#{{ $started = app('orchestra.extension')->started($name) }}
 
 					@if (! ($started))
 						{{ $extension->name }}

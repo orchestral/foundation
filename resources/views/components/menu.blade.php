@@ -19,7 +19,7 @@
 					<li class="divider"></li>
 					@endunless
 					@foreach ($item->childs as $child)
-						<?php $grands = $child->childs; ?>
+						#{{ $grands = $child->childs }}
 						<li class="{!! (! empty($grands) ? "dropdown-submenu" : "normal") !!}">
 							<a href="{!! $child->link !!}">
 								{!! $child->title !!}

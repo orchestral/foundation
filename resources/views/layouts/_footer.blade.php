@@ -24,9 +24,7 @@ $asset->script('select2', 'packages/orchestra/foundation/components/select2/sele
 
 <script>
 jQuery(function onPageReady($) { 'use strict';
-	var dispatcher = Javie.make('event');
-
-	dispatcher.fire("orchestra.ready: {!! app('request')->path() !!}");
+	Javie.make('event').fire("orchestra.ready: {!! app('request')->path() !!}");
 });
 </script>
 

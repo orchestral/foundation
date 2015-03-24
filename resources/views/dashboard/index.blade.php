@@ -9,7 +9,7 @@
 		->content(view('orchestra/foundation::components.miniprofile')); ?>
 
 	@foreach ($panes as $id => $pane)
-		<?php $attributes = app('html')->decorate($pane->attributes, ['class' => 'panel']); ?>
+		#{{ $attributes = app('html')->decorate($pane->attributes, ['class' => 'panel']) }}
 		<div{!! app('html')->attributes($attributes) !!}>
 		@if (! empty($pane->html))
 		{!! $pane->html !!}
