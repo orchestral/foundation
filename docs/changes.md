@@ -5,17 +5,21 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
-## v3.0.8 {#v3-0-8}
+### v3.0.9 {#v3-0-9}
+
+* Add validation rules for `password` and `password_confirmation` for `Orchestra\Foundation\Validation\Account::onRegister()`, useful when validation user creating when password is available.
+
+### v3.0.8 {#v3-0-8}
 
 * Allow to use available `password` from input when available during user registration instead of always creating random password.
 
-## v3.0.7 {#v3-0-7}
+### v3.0.7 {#v3-0-7}
 
 * Allow `#{{ $foo = 'bar' }}` to be translated to `<?php $foo = 'bar'; ?>`.
 * Add missing `Add User` page title.
 * Tweak JavaScript for Settings page to be loaded from separate partial.
 
-## v3.0.6 {#v3-0-6}
+### v3.0.6 {#v3-0-6}
 
 * Move `Orchestra\Foundation\Filters` namespace to `Orchestra\Foundation\Http\Filters` namespace.
 * Move `Orchestra\Foundation\Middleware` namespace to `Orchestra\Foundation\Http\Middleware` namespace.
@@ -23,21 +27,21 @@ title: Foundation Change Log
 * Move `Orchestra\Foundation\Routing` namespace to `Orchestra\Foundation\Http\Controllers` namespace.
 * Handle Twitter Bootstrap via Bower.
 
-## v3.0.5 {#v3-0-5}
+### v3.0.5 {#v3-0-5}
 
 * Fixes unable to resolve `Illuminate\Contracts\Auth\Authenticatable` through IoC Container when using `php artisan route:list`.
 
-## v3.0.4 {#v3-0-4}
+### v3.0.4 {#v3-0-4}
 
 * Rework `Orchestra\Foundation\Filters\VerifyCsrfToken` to accept `X-CSRF-TOKEN` (raw token) as well as `X-XSRF-TOKEN` (encrypted token).
 * Push foundation menu handlers to `orchestra.started: admin` instead of `orchestra.ready: admin` to support Laravel Framework changes to middleware handling in v5.0.6.
 
-## v3.0.3 {#v3-0-3}
+### v3.0.3 {#v3-0-3}
 
 * Fixes `Orchestra\Foundation\Support\Providers\RouteServiceProvider` to be able to run `setRootControllerNamespace()` and `loadCachedRoutes()` during booting process.
 * Add `Orchestra\Foundation\Support\Providers\ExtensionRouteServiceProvider` for extensions or modules routing.
 
-## v3.0.2 {#v3-0-2}
+### v3.0.2 {#v3-0-2}
 
 * Refactor `Orchestra\Foundation\Support\Providers\RouteServiceProvider::loadFrontendRoutesFrom()` to utilize `Orchestra\Foundation\Foundation::group()` instead of `Illuminate\Routing\Router::group()`.
 * Add `Orchestra\Foundation\Support\Providers\RouteServiceProvider::afterExtensionLoaded()` helper method.
