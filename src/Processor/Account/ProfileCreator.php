@@ -2,6 +2,7 @@
 
 use Exception;
 use Orchestra\Support\Str;
+use Illuminate\Support\Arr;
 use Orchestra\Notifier\Message;
 use Illuminate\Support\Facades\DB;
 use Orchestra\Model\User as Eloquent;
@@ -44,7 +45,7 @@ class ProfileCreator extends User implements Command
      */
     public function store(Listener $listener, array $input)
     {
-        $password = Str::random(5);
+        $password = Arr::get($input, 'password', Str::random(5));
 
         $validation = $this->validator->on('register')->with($input);
 
