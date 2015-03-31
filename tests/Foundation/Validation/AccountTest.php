@@ -75,8 +75,10 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         ];
 
         $rules = [
-            'email'    => ['required', 'email', 'unique:users,email'],
-            'fullname' => ['required'],
+            'email'                 => ['required', 'email', 'unique:users,email'],
+            'fullname'              => ['required'],
+            'password'              => ['sometimes', 'required'],
+            'password_confirmation' => ['sometimes', 'same:password'],
         ];
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
@@ -102,15 +104,15 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [
-            'current_password' => '123456',
-            'new_password'     => 'qwerty',
-            'confirm_password' => 'qwerty',
+            'current_password'      => '123456',
+            'new_password'          => 'qwerty',
+            'password_confirmation' => 'qwerty',
         ];
 
         $rules = [
-            'current_password' => ['required'],
-            'new_password'     => ['required', 'different:current_password'],
-            'confirm_password' => ['same:new_password'],
+            'current_password'      => ['required'],
+            'new_password'          => ['required', 'different:current_password'],
+            'password_confirmation' => ['same:new_password'],
         ];
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
