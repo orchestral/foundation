@@ -33,7 +33,7 @@ class Account extends Validator
         $this->rules = array_replace($this->rules, [
             'email'                 => ['required', 'email', 'unique:users,email'],
             'password'              => ['sometimes', 'required'],
-            'password_confirmation' => ['sometimes', 'match:password'],
+            'password_confirmation' => ['sometimes', 'same:password'],
         ]);
 
         $this->events[] = 'orchestra.validate: user.account.register';
