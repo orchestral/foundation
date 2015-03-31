@@ -30,7 +30,11 @@ class Account extends Validator
      */
     protected function onRegister()
     {
-        $this->rules['email'] = ['required', 'email', 'unique:users,email'];
+        $this->rules = array_replace($this->rules, [
+            'email'                 => ['required', 'email', 'unique:users,email'],
+            'password'              => ['sometimes', 'required'],
+            'password_confirmation' => ['sometimes', 'same:password'],
+        ]);
 
         $this->events[] = 'orchestra.validate: user.account.register';
     }
@@ -43,9 +47,9 @@ class Account extends Validator
     protected function onChangePassword()
     {
         $this->rules = [
-            'current_password' => ['required'],
-            'new_password'     => ['required', 'different:current_password'],
-            'confirm_password' => ['same:new_password'],
+            'current_password'      => ['required'],
+            'new_password'          => ['required', 'different:current_password'],
+            'password_confirmation' => ['same:new_password'],
         ];
 
         $this->events = [];
