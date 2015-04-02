@@ -1,4 +1,4 @@
-#{{ $user = app('auth')->user() }}
+#{{ $user = auth()->user() }}
 
 <div class="dark-blue rounded-top box">
 	<div class="box-padding pull-center">

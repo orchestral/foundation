@@ -1,4 +1,4 @@
-#{{ $user = app('auth')->user() }}
+#{{ $user = auth()->user() }}
 
 @if (get_meta('navigation::usernav', true))
 <ul class="nav navbar-nav navbar-right">
