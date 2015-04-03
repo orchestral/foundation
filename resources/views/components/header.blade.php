@@ -1,7 +1,4 @@
-<?php
-
-$title       = get_meta('title');
-$description = get_meta('description'); ?>
+#{{ $description = get_meta('description') }}
 
 <div class="{!! get_meta('header::class', 'page-header') !!}">
 	<div class="container">
@@ -13,7 +10,7 @@ $description = get_meta('description'); ?>
 		</div>
 		@endif
 
-		<h2>{!! $title or '' !!}
+		<h2>@get_meta('title', '')
 			@if (! empty($description))
 			<small>{!! $description or '' !!}</small>
 			@endif
@@ -21,4 +18,4 @@ $description = get_meta('description'); ?>
 	</div>
 </div>
 
-<?php set_meta('header::class', 'page-header'); ?>
+@set_meta('header::class', 'page-header')

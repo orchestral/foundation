@@ -17,7 +17,7 @@
 	</div>
 </header>
 
-@unless (app('auth')->check())
+@unless (auth()->check())
 @push('orchestra.footer')
 <script>
 jQuery(function ($) {

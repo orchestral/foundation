@@ -1,4 +1,4 @@
-<?php is_array($user) && $user = new Illuminate\Support\Fluent($user); ?>
+#{{ is_array($user) && $user = new Illuminate\Support\Fluent($user) }}
 
 Hello {{ $user->fullname }}
 

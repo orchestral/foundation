@@ -1,7 +1,3 @@
-<?php
-
-use Illuminate\Support\Fluent; ?>
-
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -16,15 +12,14 @@ use Illuminate\Support\Fluent; ?>
 		</tr>
 		@else
 		@foreach ($extensions as $name => $extension)
-			<?php $extension = new Fluent($extension); ?>
+			#{{ $extension = new Illuminate\Support\Fluent($extension) }}
 		<tr>
 			<td>
 				<strong>
-					<?php
-					$active  = app('orchestra.extension')->activated($name);
-					$started = app('orchestra.extension')->started($name); ?>
+					#{{ $active  = app('orchestra.extension')->activated($name) }}
+					#{{ $started = app('orchestra.extension')->started($name) }}
 
-					@if (! ($started))
+					@if (! $started)
 						{{ $extension->name }}
 					@else
 						<a href="{!! handles("orchestra::extensions/{$name}/configure") !!}">
@@ -33,7 +28,7 @@ use Illuminate\Support\Fluent; ?>
 					@endif
 				</strong>
 				<div class="pull-right btn-group">
-					@if (! ($started || $active))
+					@if (! $started || $active)
 						<a href="{!! handles("orchestra::extensions/{$name}/activate", ['csrf' => true]) !!}" class="btn btn-primary btn-mini">
 							{{ trans('orchestra/foundation::label.extensions.actions.activate') }}
 						</a>
@@ -51,7 +46,7 @@ use Illuminate\Support\Fluent; ?>
 				</p>
 
 				<span class="meta">
-					{{ trans('orchestra/foundation::label.extensions.version', ['version' => $extension->version ]) }} |
+					{{ trans('orchestra/foundation::label.extensions.version', ['version' => $extension->version]) }} |
 					{!! trans('orchestra/foundation::label.extensions.author', ['author' => sprintf('<a href="%s" target="_blank">%s</a>', $extension->url ?: '#', $extension->author)]) !!}
 				</span>
 			</td>

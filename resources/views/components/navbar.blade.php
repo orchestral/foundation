@@ -1,9 +1,4 @@
-<?php
-
-$attributes = app('html')->decorate($navbar->attributes ?: [], [
-	'class' => 'navbar',
-	'role' => 'navigation'
-]); ?>
+#{{ $attributes = app('html')->decorate($navbar->attributes ?: [], ['class' => 'navbar', 'role' => 'navigation']) }}
 
 <nav{!! app('html')->attributes($attributes) !!}>
 	<div class="navbar-header">

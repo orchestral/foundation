@@ -1,6 +1,6 @@
 @extends('orchestra/foundation::layouts.main')
 
-<?php $label = ['class' => 'three columns control-label']; ?>
+#{{ $label = ['class' => 'three columns control-label'] }}
 
 @section('content')
 <div class="row">
