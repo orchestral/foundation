@@ -1,6 +1,6 @@
 @extends('orchestra/foundation::layouts.main')
 
-#{{ set_meta('header::add-button', true) }}
+@set_meta('header::add-button', true)
 
 @section('content')
 <div class="row">

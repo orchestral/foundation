@@ -10,17 +10,14 @@
 <![endif]-->
 <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300,500" rel="stylesheet" type="text/css">
 
-<?php
-
-$asset = app('orchestra.asset')->container('orchestra/foundation::header');
-
-$asset->style('select2', 'packages/orchestra/foundation/components/select2/select2.css');
-$asset->style('jquery-ui', 'packages/orchestra/foundation/vendor/delta/theme/jquery-ui.css');
-$asset->style('bootstrap', 'packages/orchestra/foundation/vendor/bootstrap/css/bootstrap.min.css');
-$asset->style('orchestra', 'packages/orchestra/foundation/css/orchestra.css', array('bootstrap', 'select2'));
-$asset->script('underscore', 'packages/orchestra/foundation/components/underscore/underscore.js');
-$asset->script('jquery', 'packages/orchestra/foundation/components/jquery/jquery.min.js');
-$asset->script('javie', 'packages/orchestra/foundation/components/javie/javie.min.js', array('jquery', 'underscore')); ?>
+#{{ $asset = app('orchestra.asset')->container('orchestra/foundation::header') }}
+#{{ $asset->style('select2', 'packages/orchestra/foundation/components/select2/select2.css') }}
+#{{ $asset->style('jquery-ui', 'packages/orchestra/foundation/vendor/delta/theme/jquery-ui.css') }}
+#{{ $asset->style('bootstrap', 'packages/orchestra/foundation/vendor/bootstrap/css/bootstrap.min.css') }}
+#{{ $asset->style('orchestra', 'packages/orchestra/foundation/css/orchestra.css', array('bootstrap', 'select2')) }}
+#{{ $asset->script('underscore', 'packages/orchestra/foundation/components/underscore/underscore.js') }}
+#{{ $asset->script('jquery', 'packages/orchestra/foundation/components/jquery/jquery.min.js') }}
+#{{ $asset->script('javie', 'packages/orchestra/foundation/components/javie/javie.min.js', array('jquery', 'underscore')) }}
 
 {!! $asset->styles() !!}
 {!! $asset->scripts() !!}

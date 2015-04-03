@@ -1,5 +1,4 @@
-#{{ use Illuminate\Support\Fluent; }}
-#{{ is_array($user) && $user = new Fluent($user) }}
+#{{ is_array($user) && $user = new Illuminate\Support\Fluent($user) }}
 
 Hello {{ $user->fullname }}
 

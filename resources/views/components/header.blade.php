@@ -1,4 +1,3 @@
-#{{ $title = get_meta('title') }}
 #{{ $description = get_meta('description') }}
 
 <div class="{!! get_meta('header::class', 'page-header') !!}">
@@ -11,7 +10,7 @@
 		</div>
 		@endif
 
-		<h2>{!! $title or '' !!}
+		<h2>@get_meta('title', '')
 			@if (! empty($description))
 			<small>{!! $description or '' !!}</small>
 			@endif
@@ -19,4 +18,8 @@
 	</div>
 </div>
 
+<<<<<<< HEAD
 #{{ set_meta('header::class', 'page-header') }}
+=======
+@set_meta('header::class', 'page-header')
+>>>>>>> 3.0
