@@ -33,12 +33,12 @@ class LoadExpresso
 
         $compiler->extend(function ($view) {
             $expression = [
-                'decorator' => '$1<?php echo app("orchestra.decorator")->render($2); ?>',
+                'decorator'   => '$1<?php echo app("orchestra.decorator")->render($2); ?>',
                 'placeholder' => '$1<?php $__ps = app("orchestra.widget")->make("placeholder.".$2); '
                                 .'foreach ($__ps as $__p) { echo value($__p->value ?:""); } ?>',
                 'get_meta' => '$1<?php get_meta($2); ?>',
                 'set_meta' => '$1<?php set_meta($2); ?>',
-                'title' => '$1<?php echo app("html")->title($2); ?>',
+                'title'    => '$1<?php echo app("html")->title($2); ?>',
             ];
 
             foreach ($expression as $name => $replacement) {
