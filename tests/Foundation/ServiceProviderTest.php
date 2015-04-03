@@ -143,8 +143,9 @@ class ServiceProviderTest extends TestCase
             'command.asset.publish',
             'view.publisher',
             'command.view.publish',
-            'orchestra.view.command.detect',
             'orchestra.view.command.activate',
+            'orchestra.view.command.detect',
+            'orchestra.view.command.optimize',
         ];
     }
 }
