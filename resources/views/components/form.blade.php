@@ -1,7 +1,10 @@
-{!! app('form')->open(array_merge($form, ['class' => 'form-horizontal'])) !!}
+@inject('formbuilder', 'form')
+@inject('htmlbuilder', 'html')
+
+{!! $formbuilder->open(array_merge($form, ['class' => 'form-horizontal'])) !!}
 
 @if ($token)
-{!! app('form')->token() !!}
+{!! $formbuilder->token() !!}
 @endif
 
 @foreach ($hiddens as $hidden)
@@ -9,14 +12,14 @@
 @endforeach
 
 @foreach ($fieldsets as $fieldset)
-	<fieldset{!! app('html')->attributes($fieldset->attributes ?: []) !!}>
+	<fieldset{!! $htmlbuilder->attributes($fieldset->attributes ?: []) !!}>
 		@if ($fieldset->name)
 		<legend>{!! $fieldset->name or '' !!}</legend>
 		@endif
 
 		@foreach ($fieldset->controls() as $control)
 		<div class="form-group{!! $errors->has($control->name) ? ' has-error' : '' !!}">
-			{!! app('form')->label($control->name, $control->label, ['class' => 'three columns control-label']) !!}
+			{!! $formbuilder->label($control->name, $control->label, ['class' => 'three columns control-label']) !!}
 
 			<div class="nine columns">
 				<div>{!! $control->getField($row, $control, []) !!}</div>
@@ -46,4 +49,4 @@
 	</div>
 </fieldset>
 
-{!! app('form')->close() !!}
+{!! $formbuilder->close() !!}

@@ -1,3 +1,5 @@
+@inject('formbuilder', 'form')
+
 <div id="cancel_password_container">
 	<a href="#" id="cancel_password_button" class="btn btn-mini btn-info">
 		{{ trans('orchestra/foundation::label.cancel') }}
@@ -9,5 +11,5 @@
 	<a href="#" id="change_password_button" class="btn btn-mini btn-warning">
 		{{ trans('orchestra/foundation::label.email.change_password') }}
 	</a>
-	{!! app('form')->hidden('change_password', 'no') !!}
+	{!! $formbuilder->hidden('change_password', 'no') !!}
 </div>

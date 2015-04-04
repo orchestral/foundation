@@ -1,10 +1,11 @@
-#{{ $attributes['table'] = app('html')->decorate($attributes['table'], ['class' => 'table table-striped']) }}
+@inject('htmlbuilder', 'html')
+#{{ $attributes['table'] = $htmlbuilder->decorate($attributes['table'], ['class' => 'table table-striped']) }}
 
-<table{!! app('html')->attributes($attributes['table']) !!}>
+<table{!! $htmlbuilder->attributes($attributes['table']) !!}>
 	<thead>
 		<tr>
 			@foreach ($columns as $col)
-			<th{!! app('html')->attributes($col->headers ?: []) !!}>
+			<th{!! $htmlbuilder->attributes($col->headers ?: []) !!}>
 				{!! $col->label !!}
 			</th>
 			@endforeach
@@ -12,9 +13,9 @@
 	</thead>
 	<tbody>
 		@foreach ($rows as $row)
-		<tr{!! app('html')->attributes(call_user_func($attributes['row'], $row) ?: []) !!}>
+		<tr{!! $htmlbuilder->attributes(call_user_func($attributes['row'], $row) ?: []) !!}>
 			@foreach ($columns as $col)
-			<td{!! app('html')->attributes(call_user_func($col->attributes, $row)) !!}>
+			<td{!! $htmlbuilder->attributes(call_user_func($col->attributes, $row)) !!}>
 				{!! $col->getValue($row) !!}
 			</td>
 			@endforeach

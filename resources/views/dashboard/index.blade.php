@@ -1,5 +1,7 @@
 @extends('orchestra/foundation::layouts.main')
 
+@inject('htmlbuilder', 'html')
+
 @section('content')
 <div class="row">
 	@if (count($panes) > 0)
@@ -9,8 +11,8 @@
 		->content(view('orchestra/foundation::components.miniprofile')); ?>
 
 	@foreach ($panes as $id => $pane)
-		#{{ $attributes = app('html')->decorate($pane->attributes, ['class' => 'panel']) }}
-		<div{!! app('html')->attributes($attributes) !!}>
+		#{{ $attributes = $htmlbuilder->decorate($pane->attributes, ['class' => 'panel']) }}
+		<div{!! $htmlbuilder->attributes($attributes) !!}>
 		@if (! empty($pane->html))
 		{!! $pane->html !!}
 		@else
