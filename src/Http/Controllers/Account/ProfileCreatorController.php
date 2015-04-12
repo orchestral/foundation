@@ -102,7 +102,7 @@ class ProfileCreatorController extends AdminController implements Listener
      */
     public function profileCreatedWithoutNotification()
     {
-        messages('success', trans("orchestra/foundation::response.users.create"));
+        messages('success', trans('orchestra/foundation::response.users.create'));
         messages('error', trans('orchestra/foundation::response.credential.register.email-fail'));
 
         return Redirect::intended(handles('orchestra::login'));
@@ -115,7 +115,7 @@ class ProfileCreatorController extends AdminController implements Listener
      */
     public function profileCreated()
     {
-        messages('success', trans("orchestra/foundation::response.users.create"));
+        messages('success', trans('orchestra/foundation::response.users.create'));
         messages('success', trans('orchestra/foundation::response.credential.register.email-send'));
 
         return Redirect::intended(handles('orchestra::login'));
