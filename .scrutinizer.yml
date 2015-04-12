@@ -5,10 +5,7 @@ filter:
         - 'src/*'
     excluded_paths:
         - 'build/*'
-        - 'resources/config/*'
-        - 'resources/lang/*'
-        - 'resources/public/*'
-        - 'resources/views/*'
+        - 'resources/*'
         - 'vendor/*'
         - 'tests/*'
 tools:
