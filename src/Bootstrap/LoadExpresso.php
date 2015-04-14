@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Foundation\Bootstrap;
 
+use Illuminate\Pagination\Paginator;
+use Orchestra\Support\Str;
 use Illuminate\Contracts\Foundation\Application;
 
 class LoadExpresso
@@ -75,21 +77,68 @@ class LoadExpresso
      */
     protected function addHtmlExtensions(Application $app)
     {
-        $html = $app['html'];
+        $app['html']->macro('title', $this->buildHtmlTitleCallback($app));
+    }
 
-        $html->macro('title', function ($pageTitle = null) use ($html) {
-            $siteTitle = $title = memorize('site.name');
-            $pageTitle = $pageTitle ?: trim(get_meta('title', ''));
-            $format    = memorize('site.format.title', ':pageTitle &mdash; :siteTitle');
+    /**
+     * Build HTML::title() callback.
+     *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     *
+     * @return callable
+     */
+    protected function buildHtmlTitleCallback(Application $app)
+    {
+        return function ($title = null) use ($app) {
+            $title = $title ?: trim(get_meta('title', ''));
+            $page  = Paginator::resolveCurrentPage();
 
-            if (! empty($pageTitle)) {
-                $title = strtr($format, [
-                    ':siteTitle' => $siteTitle,
-                    ':pageTitle' => $pageTitle,
-                ]);
-            }
+            $data = [
+                'site' => ['name'  => memorize('site.name')],
+                'page' => ['title' => $title, 'number' => $page],
+            ];
 
-            return $html->create('title', $title);
-        });
+            $data['site']['name'] = $this->getHtmlTitleFormatForSite($data);
+
+            $output = $this->getHtmlTitleFormatForPage($data);
+
+            return $app['html']->create('title', trim($output));
+        };
+    }
+
+    /**
+     * Get HTML::title() format for site.
+     *
+     * @param  array  $data
+     *
+     * @return mixed
+     */
+    protected function getHtmlTitleFormatForSite($data)
+    {
+        if ((int) $data['page']['number'] < 2) {
+            return $data['site']['name'];
+        }
+
+        $format = memorize('site.format.title.site', '{site.name} (Page {page.number})');
+
+        return Str::replace($format, $data);
+    }
+
+    /**
+     * Get HTML::title() format for page.
+     *
+     * @param  array  $data
+     *
+     * @return mixed
+     */
+    protected function getHtmlTitleFormatForPage(array $data)
+    {
+        if (empty($data['page']['title'])) {
+            return $data['site']['name'];
+        }
+
+        $format = memorize('site.format.title.page', '{page.title} &mdash; {site.name}');
+
+        return Str::replace($format, $data);
     }
 }
