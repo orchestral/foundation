@@ -16,7 +16,7 @@
 		<tr>
 			<td>
 				<strong>
-					#{{ $active  = app('orchestra.extension')->activated($name) }}
+					#{{ $activated = app('orchestra.extension')->activated($name) }}
 					#{{ $started = app('orchestra.extension')->started($name) }}
 
 					@if (! $started)
@@ -28,7 +28,7 @@
 					@endif
 				</strong>
 				<div class="pull-right btn-group">
-					@if (! $started || $active)
+					@if (! ($started || $activated))
 						<a href="{!! handles("orchestra::extensions/{$name}/activate", ['csrf' => true]) !!}" class="btn btn-primary btn-mini">
 							{{ trans('orchestra/foundation::label.extensions.actions.activate') }}
 						</a>

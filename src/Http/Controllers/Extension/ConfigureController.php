@@ -77,7 +77,7 @@ class ConfigureController extends Controller implements Listener
         $name = $data['extension']->name;
 
         set_meta('title', Foundation::memory()->get("extensions.available.{$name}.name", $name));
-        set_meta('description', trans("orchestra/foundation::title.extensions.configure"));
+        set_meta('description', trans('orchestra/foundation::title.extensions.configure'));
 
         return view('orchestra/foundation::extensions.configure', $data);
     }
@@ -104,7 +104,7 @@ class ConfigureController extends Controller implements Listener
      */
     public function configurationUpdated(Fluent $extension)
     {
-        $message = trans("orchestra/foundation::response.extensions.configure", $extension->getAttributes());
+        $message = trans('orchestra/foundation::response.extensions.configure', $extension->getAttributes());
 
         return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
     }

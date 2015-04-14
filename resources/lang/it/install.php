@@ -41,7 +41,7 @@ return [
         'requirement' => 'Controlla i requisiti',
         'account'     => 'Crea un amministratore',
         'application' => "Informazioni dell'applicazione",
-        'done'        => "Fatto",
+        'done'        => 'Fatto',
     ],
 
     'system'   => [
@@ -51,17 +51,17 @@ return [
         'status'      => 'Stato',
 
         'writableStorage' => [
-            'name'     => "Permessi di scrittura su :path",
-            'solution' => "Cambia i permessi della cartella a 0777, tuttavia potrebbe causare problemi di sicurezza se la cartella è accessibile dal web.",
+            'name'     => 'Permessi di scrittura su :path',
+            'solution' => 'Cambia i permessi della cartella a 0777, tuttavia potrebbe causare problemi di sicurezza se la cartella è accessibile dal web.',
         ],
         'writableAsset' => [
-            'name'     => "Permessi di scrittura su :path",
+            'name'     => 'Permessi di scrittura su :path',
             'solution' => "Cambia i permessi della cartella a 0777. Una volta completata l'installazione, riporta i permessi a 0755.",
         ],
     ],
 
     'user' => [
         'created'   => "L'utente è stato creato, ora puoi eseguire il login alla pagina di amministrazione",
-        'duplicate' => "Impossibile installare quando esiste già un utente registrato.",
+        'duplicate' => 'Impossibile installare quando esiste già un utente registrato.',
     ],
 ];

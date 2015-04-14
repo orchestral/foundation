@@ -36,7 +36,7 @@ class Application extends BaseApplication implements DeferrableServiceContainer
      */
     public function databasePath()
     {
-        return $this->basePath.'/resources/database';
+        return $this->databasePath ?: $this->basePath.'/resources/database';
     }
 
     /**
@@ -66,7 +66,7 @@ class Application extends BaseApplication implements DeferrableServiceContainer
      */
     public function storagePath()
     {
-        return $this->basePath.'/storage';
+        return $this->storagePath ?: $this->basePath.'/storage';
     }
 
     /**

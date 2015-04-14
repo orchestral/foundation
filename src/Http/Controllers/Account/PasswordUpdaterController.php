@@ -52,7 +52,7 @@ class PasswordUpdaterController extends Controller implements Listener
      */
     public function showPasswordChanger(array $data)
     {
-        set_meta('title', trans("orchestra/foundation::title.account.password"));
+        set_meta('title', trans('orchestra/foundation::title.account.password'));
 
         return view('orchestra/foundation::account.password', $data);
     }

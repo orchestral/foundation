@@ -39,7 +39,7 @@ class CredentialController extends AdminController implements Listener
      */
     public function index()
     {
-        set_meta('title', trans("orchestra/foundation::title.login"));
+        set_meta('title', trans('orchestra/foundation::title.login'));
 
         return view('orchestra/foundation::credential.login');
     }

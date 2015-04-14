@@ -176,7 +176,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function createUserFailedValidation($errors)
     {
-        return $this->redirectWithErrors(handles("orchestra::users/create"), $errors);
+        return $this->redirectWithErrors(handles('orchestra::users/create'), $errors);
     }
 
     /**
@@ -200,7 +200,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function userCreated()
     {
-        $message = trans("orchestra/foundation::response.users.create");
+        $message = trans('orchestra/foundation::response.users.create');
 
         return $this->redirectWithMessage(handles('orchestra::users'), $message);
     }
@@ -239,7 +239,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function userUpdated()
     {
-        $message = trans("orchestra/foundation::response.users.update");
+        $message = trans('orchestra/foundation::response.users.update');
 
         return $this->redirectWithMessage(handles('orchestra::users'), $message);
     }

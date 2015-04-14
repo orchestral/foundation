@@ -51,12 +51,12 @@ return [
         'status'      => 'Status',
 
         'writableStorage' => [
-            'name'     => "Writable to :path",
-            'solution' => "Change the directory permission to 0777, however it might cause a security issue if this folder is accessible from the web.",
+            'name'     => 'Writable to :path',
+            'solution' => 'Change the directory permission to 0777, however it might cause a security issue if this folder is accessible from the web.',
         ],
         'writableAsset' => [
-            'name'     => "Writable to :path",
-            'solution' => "Change the directory permission to 0777. Once installation is completed, please revert the permission to 0755.",
+            'name'     => 'Writable to :path',
+            'solution' => 'Change the directory permission to 0777. Once installation is completed, please revert the permission to 0755.',
         ],
     ],
 

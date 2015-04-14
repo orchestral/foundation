@@ -84,8 +84,8 @@ class LoadExpresso
 
             if (! empty($pageTitle)) {
                 $title = strtr($format, [
-                    ":siteTitle" => $siteTitle,
-                    ":pageTitle" => $pageTitle,
+                    ':siteTitle' => $siteTitle,
+                    ':pageTitle' => $pageTitle,
                 ]);
             }
 

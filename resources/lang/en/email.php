@@ -5,7 +5,7 @@ return [
         'register' => '[:site] Your New Account',
     ],
     'forgot'     => [
-        'request' => "[:site] Reset Your Password",
-        'reset'   => "[:site] Your New Password",
+        'request' => '[:site] Reset Your Password',
+        'reset'   => '[:site] Your New Password',
     ],
 ];

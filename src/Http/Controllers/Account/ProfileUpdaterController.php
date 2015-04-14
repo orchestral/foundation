@@ -52,7 +52,7 @@ class ProfileUpdaterController extends Controller implements Listener
      */
     public function showProfileChanger(array $data)
     {
-        set_meta('title', trans("orchestra/foundation::title.account.profile"));
+        set_meta('title', trans('orchestra/foundation::title.account.profile'));
 
         return view('orchestra/foundation::account.index', $data);
     }
