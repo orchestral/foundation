@@ -119,7 +119,7 @@ class LoadExpresso
             return $data['site']['name'];
         }
 
-        $format = memorize('site.format.title.site', '{site.name} (Page {page.number})');
+        $format = get_meta('html::title.format.site', '{site.name} (Page {page.number})');
 
         return Str::replace($format, $data);
     }
@@ -137,7 +137,7 @@ class LoadExpresso
             return $data['site']['name'];
         }
 
-        $format = memorize('site.format.title.page', '{page.title} &mdash; {site.name}');
+        $format = get_meta('html::title.format.page', '{page.title} &mdash; {site.name}');
 
         return Str::replace($format, $data);
     }
