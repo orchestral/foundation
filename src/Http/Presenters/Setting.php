@@ -77,6 +77,7 @@ class Setting extends Presenter
                     'mail'     => 'Mail',
                     'smtp'     => 'SMTP',
                     'sendmail' => 'Sendmail',
+                    'ses'      => 'Amazon SES',
                     'mailgun'  => 'Mailgun',
                     'mandrill' => 'Mandrill',
                 ]);
@@ -100,11 +101,22 @@ class Setting extends Presenter
             $fieldset->control('input:text', 'email_encryption')
                 ->label(trans('orchestra/foundation::label.email.encryption'));
 
+            $fieldset->control('input:text', 'email_key')
+                ->label(trans('orchestra/foundation::label.email.key'));
+
             $fieldset->control('input:text', 'email_secret')
                 ->label(trans('orchestra/foundation::label.email.secret'));
 
             $fieldset->control('input:text', 'email_domain')
                 ->label(trans('orchestra/foundation::label.email.domain'));
+
+            $fieldset->control('select', 'email_region')
+                ->label(trans('orchestra/foundation::label.email.region'))
+                ->options([
+                    'us-east-1',
+                    'us-west-2',
+                    'eu-west-1',
+                ]);
 
             $fieldset->control('input:text', 'email_sendmail')
                 ->label(trans('orchestra/foundation::label.email.command'));

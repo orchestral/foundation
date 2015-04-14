@@ -12,7 +12,7 @@ class Setting extends Validator
     protected $rules = [
         'site_name'     => ['required'],
         'email_address' => ['required', 'email'],
-        'email_driver'  => ['required', 'in:mail,smtp,sendmail,mailgun,mandrill'],
+        'email_driver'  => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
         'email_port'    => ['numeric'],
     ];
 
@@ -65,5 +65,17 @@ class Setting extends Validator
     protected function onMandrill()
     {
         $this->rules['email_secret'] = ['required'];
+    }
+
+    /**
+     * On update email using SES driver scenario.
+     *
+     * @return void
+     */
+    protected function onSes()
+    {
+        $this->rules['email_key'] = ['required'];
+        $this->rules['email_secret'] = ['required'];
+        $this->rules['email_region'] = ['required', 'in:us-east-1,us-west-2,eu-west-1'];
     }
 }

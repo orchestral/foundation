@@ -49,7 +49,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $rules = [
             'site_name'     => ['required'],
             'email_address' => ['required', 'email'],
-            'email_driver'  => ['required', 'in:mail,smtp,sendmail,mailgun,mandrill'],
+            'email_driver'  => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
             'email_port'    => ['numeric'],
         ];
 
@@ -86,7 +86,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $rules = [
             'site_name'      => ['required'],
             'email_address'  => ['required', 'email'],
-            'email_driver'   => ['required', 'in:mail,smtp,sendmail,mailgun,mandrill'],
+            'email_driver'   => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
             'email_port'     => ['numeric'],
             'email_username' => ['required'],
             'email_host'     => ['required'],
@@ -124,7 +124,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $rules = [
             'site_name'      => ['required'],
             'email_address'  => ['required', 'email'],
-            'email_driver'   => ['required', 'in:mail,smtp,sendmail,mailgun,mandrill'],
+            'email_driver'   => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
             'email_port'     => ['numeric'],
             'email_sendmail' => ['required'],
         ];
@@ -162,7 +162,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $rules = [
             'site_name'      => ['required'],
             'email_address'  => ['required', 'email'],
-            'email_driver'   => ['required', 'in:mail,smtp,sendmail,mailgun,mandrill'],
+            'email_driver'   => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
             'email_port'     => ['numeric'],
             'email_secret'   => ['required'],
             'email_domain'   => ['required'],
@@ -200,7 +200,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $rules = [
             'site_name'     => ['required'],
             'email_address' => ['required', 'email'],
-            'email_driver'  => ['required', 'in:mail,smtp,sendmail,mailgun,mandrill'],
+            'email_driver'  => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
             'email_port'    => ['numeric'],
             'email_secret'  => ['required'],
         ];
@@ -210,6 +210,47 @@ class SettingTest extends \PHPUnit_Framework_TestCase
 
         $stub       = new Setting($factory, $events);
         $validation = $stub->on('mandrill')->with($input);
+
+        $this->assertEquals($validator, $validation);
+    }
+
+    /**
+     * Test Orchestra\Foundation\Validation\Setting on SES
+     * setting.
+     *
+     * @test
+     */
+    public function testValidationOnSes()
+    {
+        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
+
+        $input = [
+            'site_name'     => 'Orchestra Platform',
+            'email_address' => 'admin@orchestraplatform.com',
+            'email_driver'  => 'ses',
+            'email_port'    => 25,
+            'email_key'     => 'auniquekey',
+            'email_secret'  => 'auniquetoken',
+            'email_region'  => 'us-east-1',
+        ];
+
+        $rules = [
+            'site_name'     => ['required'],
+            'email_address' => ['required', 'email'],
+            'email_driver'  => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
+            'email_port'    => ['numeric'],
+            'email_key'     => ['required'],
+            'email_secret'  => ['required'],
+            'email_region'  => ['required', 'in:us-east-1,us-west-2,eu-west-1'],
+        ];
+
+        $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
+        $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
+
+        $stub       = new Setting($factory, $events);
+        $validation = $stub->on('ses')->with($input);
 
         $this->assertEquals($validator, $validation);
     }

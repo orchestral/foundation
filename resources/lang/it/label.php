@@ -32,8 +32,10 @@ return [
         'change_password' => 'Cambia password',
         'command'         => 'Comando sendmail',
         'queue'           => 'Speidsci via Queue',
-        'domain'          => 'Domain',
+        'key'             => 'API Key',
         'secret'          => 'Secret Key',
+        'domain'          => 'Domain',
+        'region'          => 'API Region',
     ],
 
     'extensions' => [

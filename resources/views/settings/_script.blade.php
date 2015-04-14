@@ -1,7 +1,7 @@
 <script>
 jQuery(function onSettingPageReady($) { 'use strict';
   var dispatcher, email_driver, email_password, change_container,
-    cancel_container, change_button, cancel_button, hidden_password;
+    cancel_container, change_button, cancel_button, hidden_password, get_container;
 
   hidden_password = $('input[name="change_password"]');
   change_button = $('#change_password_button');
@@ -12,6 +12,10 @@ jQuery(function onSettingPageReady($) { 'use strict';
   email_driver = $('select[name="email_driver"]');
   email_password = $('#email_password').hide();
 
+  get_container = function (node) {
+    return $(node).parent().parent().parent();
+  };
+
   // Listen to email.driver changed event.
   dispatcher.listen('setting.changed: email.driver', function listen_to_email_driver_changes (e, self) {
     var value, smtp;
@@ -19,29 +23,34 @@ jQuery(function onSettingPageReady($) { 'use strict';
     value = self.value ? self.value : '';
     smtp  = ['email_host', 'email_port', 'email_address', 'email_username', 'email_password', 'email_encryption'];
 
-    $('input[name^="email_"]').parent().parent().parent().hide();
-    $('input[name="email_queue"]').parent().parent().parent().hide();
+    get_container('input[name^="email_"]').hide();
+    get_container('input[name="email_queue"]').hide();
 
     switch (value) {
       case 'smtp' :
         $.each(smtp, function(index, name) {
-          $('input[name="'+name+'"]').parent().parent().parent().show();
+          get_container('input[name="'+name+'"]').show();
         });
 
         break;
       case 'sendmail' :
-        $('input[name^="email_address"]').parent().parent().parent().show();
-        $('input[name^="email_sendmail"]').parent().parent().parent().show();
+        get_container('input[name^="email_address"]').show();
+        get_container('input[name^="email_sendmail"]').show();
+        break;
+      case 'ses':
+        get_container('input[name^="email_key"]').show();
+        get_container('input[name^="email_secret"]').show();
+        get_container('input[name^="email_region"]').show();
         break;
       case 'mailgun':
-        $('input[name^="email_secret"]').parent().parent().parent().show();
-        $('input[name^="email_domain"]').parent().parent().parent().show();
+        get_container('input[name^="email_secret"]').show();
+        get_container('input[name^="email_domain"]').show();
         break;
       case 'mandrill':
-        $('input[name^="email_secret"]').parent().parent().parent().show();
+        get_container('input[name^="email_secret"]').show();
         break;
       default :
-        $('input[name^="email_address"]').parent().parent().parent().show();
+        get_container('input[name^="email_address"]').show();
         break;
     }
   });
