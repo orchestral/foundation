@@ -65,7 +65,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
             'email_key'        => $memory->get('email.key', ''),
             'email_secret'     => $memory->get('email.secret', ''),
             'email_domain'     => $memory->get('email.domain', ''),
-            'email_region'     => $memory->get('email.domain', ''),
+            'email_region'     => $memory->get('email.region', ''),
         ]);
 
         $form = $this->presenter->form($eloquent);
@@ -120,7 +120,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
         $memory->put('email.key', $this->getValue($input['email_domain'], "services.{$driver}.key"));
         $memory->put('email.secret', $this->getValue($input['email_secret'], "services.{$driver}.secret"));
         $memory->put('email.domain', $this->getValue($input['email_domain'], "services.{$driver}.domain"));
-        $memory->put('email.region', $this->getValue($input['email_domain'], "services.{$driver}.region"));
+        $memory->put('email.region', $this->getValue($input['email_region'], "services.{$driver}.region"));
 
         Event::fire('orchestra.saved: settings', [$memory, $input]);
 

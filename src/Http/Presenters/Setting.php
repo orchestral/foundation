@@ -115,7 +115,7 @@ class Setting extends Presenter
                 ->options([
                     'us-east-1',
                     'us-west-2',
-                    'eu-east-1',
+                    'eu-west-1',
                 ]);
 
             $fieldset->control('input:text', 'email_sendmail')
