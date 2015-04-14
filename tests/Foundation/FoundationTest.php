@@ -21,12 +21,12 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
     {
         $app = new Application(__DIR__);
 
-        $app['orchestra.acl']       = m::mock('\Orchestra\Contracts\Auth\Acl\Acl');
+        $app['orchestra.acl']       = m::mock('\Orchestra\Contracts\Authorization\Authorization');
         $app['orchestra.extension'] = m::mock('\Orchestra\Contracts\Extension\Factory');
         $app['orchestra.mail']      = m::mock('\Orchestra\Notifier\Mailer')->makePartial();
-        $app['orchestra.memory']    = m::mock('\Orchestra\Memory\MemoryManager')->makePartial();
-        $app['orchestra.notifier']  = m::mock('\Orchestra\Notifier\NotifierManager')->makePartial();
-        $app['orchestra.widget']    = m::mock('\Orchestra\Widget\Handlers\Menu')->makePartial();
+        $app['orchestra.memory']    = m::mock('\Orchestra\Memory\MemoryManager', [$app]);
+        $app['orchestra.notifier']  = m::mock('\Orchestra\Notifier\NotifierManager', [$app]);
+        $app['orchestra.widget']    = m::mock('\Orchestra\Widget\Handlers\Menu');
         $app['config']              = m::mock('\Illuminate\Contracts\Config\Repository');
         $app['events']              = m::mock('\Illuminate\Contracts\Events\Dispatcher');
         $app['translator']          = m::mock('\Illuminate\Translation\Translator')->makePartial();
@@ -69,7 +69,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.installed'] = false;
         $app['request'] = $request;
 
-        $memoryProvider = m::mock('\Orchestra\Memory\Provider');
+        $memoryProvider = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         $memoryProvider->shouldReceive('get')->once()->with('site.name')->andReturn('Orchestra');
 
@@ -121,7 +121,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
         $app['request'] = $request;
         $app['orchestra.installed'] = false;
 
-        $memoryProvider = m::mock('\Orchestra\Memory\Provider');
+        $memoryProvider = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         $memoryProvider->shouldReceive('get')->once()->with('site.name')->andReturnNull()
             ->shouldReceive('put')->once()->with('site.name', 'Orchestra Platform')->andReturnNull();
@@ -231,7 +231,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
         $request->shouldReceive('root')->andReturn('http://localhost')
             ->shouldReceive('secure')->andReturn(false);
 
-        $appRoute = m::mock('\Orchestra\Extension\RouteGenerator')->makePartial();
+        $appRoute = m::mock('\Orchestra\Contracts\Extension\RouteGenerator');
 
         $config->shouldReceive('get')->once()
             ->with('orchestra/foundation::handles', '/')->andReturn('admin');

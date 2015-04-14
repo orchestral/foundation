@@ -22,7 +22,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
         $this->app = new Application(__DIR__);
 
         $this->app['translator']    = $trans    = m::mock('\Illuminate\Translation\Translator')->makePartial();
-        $this->app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
+        $this->app['orchestra.app'] = $orchestra = m::mock('\Orchestra\Contracts\Foundation\Foundation');
 
         Facade::clearResolvedInstances();
         Container::setInstance($this->app);
@@ -47,10 +47,10 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function testOrchestraMethod()
     {
-        $this->app['orchestra.platform.memory'] = m::mock('\Orchestra\Memory\Provider');
+        $this->app['orchestra.platform.memory'] = m::mock('\Orchestra\Contracts\Memory\Provider');
 
-        $this->assertInstanceOf('\Orchestra\Foundation\Foundation', orchestra());
-        $this->assertInstanceOf('\Orchestra\Memory\Provider', orchestra('memory'));
+        $this->assertInstanceOf('\Orchestra\Contracts\Foundation\Foundation', orchestra());
+        $this->assertInstanceOf('\Orchestra\Contracts\Memory\Provider', orchestra('memory'));
     }
 
     /**
@@ -60,7 +60,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
      */
     public function testMemorizeMethod()
     {
-        $this->app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Memory\Provider')->makePartial();
+        $this->app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         $memory->shouldReceive('get')->once()->with('site.name', null)->andReturn('Orchestra');
 

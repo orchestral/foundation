@@ -29,11 +29,7 @@ class MetaTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetMethod()
     {
-        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
-        $auth   = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
-        $memory = m::mock('\Orchestra\Memory\Provider');
-
-        $stub = new Meta($auth, $config, $memory);
+        $stub = new Meta();
 
         $refl  = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
@@ -55,11 +51,7 @@ class MetaTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetMethod()
     {
-        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
-        $auth   = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
-        $memory = m::mock('\Orchestra\Memory\Provider');
-
-        $stub = new Meta($auth, $config, $memory);
+        $stub = new Meta();
         $stub->set('title', 'Foo');
         $stub->set('foo.bar', 'Foobar');
 
@@ -75,11 +67,7 @@ class MetaTest extends \PHPUnit_Framework_TestCase
      */
     public function testHasMethod()
     {
-        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
-        $auth   = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
-        $memory = m::mock('\Orchestra\Memory\Provider');
-
-        $stub = new Meta($auth, $config, $memory);
+        $stub = new Meta();
 
         $refl  = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
@@ -103,11 +91,7 @@ class MetaTest extends \PHPUnit_Framework_TestCase
      */
     public function testForgetMethod()
     {
-        $config = m::mock('\Illuminate\Config\Repository')->makePartial();
-        $auth   = m::mock('\Illuminate\Auth\AuthManager')->makePartial();
-        $memory = m::mock('\Orchestra\Memory\Provider');
-
-        $stub = new Meta($auth, $config, $memory);
+        $stub = new Meta();
 
         $refl  = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
