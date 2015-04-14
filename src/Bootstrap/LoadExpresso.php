@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Bootstrap;
 
-use Illuminate\Pagination\Paginator;
 use Orchestra\Support\Str;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Contracts\Foundation\Application;
 
 class LoadExpresso
