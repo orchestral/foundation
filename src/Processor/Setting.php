@@ -62,8 +62,10 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
             'email_encryption' => $memory->get('email.encryption', ''),
             'email_sendmail'   => $memory->get('email.sendmail', ''),
             'email_queue'      => ($memory->get('email.queue', false) ? 'yes' : 'no'),
+            'email_key'        => $memory->get('email.key', ''),
             'email_secret'     => $memory->get('email.secret', ''),
             'email_domain'     => $memory->get('email.domain', ''),
+            'email_region'     => $memory->get('email.domain', ''),
         ]);
 
         $form = $this->presenter->form($eloquent);
@@ -115,8 +117,10 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
         $memory->put('email.encryption', $this->getValue($input['email_encryption'], 'mail.encryption'));
         $memory->put('email.sendmail', $this->getValue($input['email_sendmail'], 'mail.sendmail'));
         $memory->put('email.queue', ($input['email_queue'] === 'yes'));
+        $memory->put('email.key', $this->getValue($input['email_domain'], "services.{$driver}.key"));
         $memory->put('email.secret', $this->getValue($input['email_secret'], "services.{$driver}.secret"));
         $memory->put('email.domain', $this->getValue($input['email_domain'], "services.{$driver}.domain"));
+        $memory->put('email.region', $this->getValue($input['email_domain'], "services.{$driver}.region"));
 
         Event::fire('orchestra.saved: settings', [$memory, $input]);
 
