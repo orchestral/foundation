@@ -41,6 +41,7 @@ jQuery(function onSettingPageReady($) { 'use strict';
         get_container('input[name^="email_key"]').show();
         get_container('input[name^="email_secret"]').show();
         get_container('input[name^="email_region"]').show();
+        break;
       case 'mailgun':
         get_container('input[name^="email_secret"]').show();
         get_container('input[name^="email_domain"]').show();

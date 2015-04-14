@@ -32,8 +32,10 @@ return [
         'change_password' => 'Change Password',
         'command'         => 'Sendmail Command',
         'queue'           => 'Mail via Queue',
-        'domain'          => 'Domain',
+        'key'             => 'API Key',
         'secret'          => 'Secret Key',
+        'domain'          => 'Domain',
+        'region'          => 'API Region',
     ],
 
     'extensions' => [
