@@ -71,16 +71,15 @@ class LoadExpressoTest extends TestCase
         $this->app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         Meta::shouldReceive('get')->once()->with('title', '')->andReturn('');
+        Meta::shouldReceive('get')->once()
+            ->with('html::title.format.site', '{site.name} (Page {page.number})')
+            ->andReturn('{site.name} (Page {page.number})');
 
         Paginator::currentPageResolver(function () {
             return 5;
         });
 
-        $memory->shouldReceive('get')->once()
-                ->with('site.name', '')->andReturn('Foo')
-            ->shouldReceive('get')->once()
-                ->with('site.format.title.site', '{site.name} (Page {page.number})')
-                ->andReturn('{site.name} (Page {page.number})');
+        $memory->shouldReceive('get')->once()->with('site.name', '')->andReturn('Foo');
 
         $this->assertEquals('<title>Foo (Page 5)</title>', $this->app['html']->title());
     }
@@ -100,12 +99,12 @@ class LoadExpressoTest extends TestCase
         });
 
         Meta::shouldReceive('get')->once()->with('title', '')->andReturn('Foobar');
+        Meta::shouldReceive('get')->once()
+            ->with('html::title.format.page', '{page.title} &mdash; {site.name}')
+            ->andReturn('{page.title} &mdash; {site.name}');
 
         $memory->shouldReceive('get')->once()
-                ->with('site.name', '')->andReturn('Foo')
-            ->shouldReceive('get')->once()
-                ->with('site.format.title.page', '{page.title} &mdash; {site.name}')
-                ->andReturn('{page.title} &mdash; {site.name}');
+                ->with('site.name', '')->andReturn('Foo');
 
         $this->assertEquals('<title>Foobar &mdash; Foo</title>', $this->app['html']->title());
     }
@@ -124,14 +123,16 @@ class LoadExpressoTest extends TestCase
             return 5;
         });
 
-        $memory->shouldReceive('get')->once()
-            ->with('site.name', '')->andReturn('Foo')
-            ->shouldReceive('get')->once()
-            ->with('site.format.title.site', '{site.name} (Page {page.number})')
-            ->andReturn('{site.name} (Page {page.number})')
-            ->shouldReceive('get')->once()
-            ->with('site.format.title.page', '{page.title} &mdash; {site.name}')
+
+        Meta::shouldReceive('get')->once()
+            ->with('html::title.format.site', '{site.name} (Page {page.number})')
+            ->andReturn('{site.name} (Page {page.number})');
+        Meta::shouldReceive('get')->once()
+            ->with('html::title.format.page', '{page.title} &mdash; {site.name}')
             ->andReturn('{page.title} &mdash; {site.name}');
+
+        $memory->shouldReceive('get')->once()
+            ->with('site.name', '')->andReturn('Foo');
 
         $this->assertEquals('<title>Foobar &mdash; Foo (Page 5)</title>', $this->app['html']->title('Foobar'));
     }
