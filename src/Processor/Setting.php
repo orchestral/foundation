@@ -117,7 +117,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
         $memory->put('email.encryption', $this->getValue($input['email_encryption'], 'mail.encryption'));
         $memory->put('email.sendmail', $this->getValue($input['email_sendmail'], 'mail.sendmail'));
         $memory->put('email.queue', ($input['email_queue'] === 'yes'));
-        $memory->put('email.key', $this->getValue($input['email_domain'], "services.{$driver}.key"));
+        $memory->put('email.key', $this->getValue($input['email_key'], "services.{$driver}.key"));
         $memory->put('email.secret', $this->getValue($input['email_secret'], "services.{$driver}.secret"));
         $memory->put('email.domain', $this->getValue($input['email_domain'], "services.{$driver}.domain"));
         $memory->put('email.region', $this->getValue($input['email_region'], "services.{$driver}.region"));
