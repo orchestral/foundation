@@ -92,7 +92,7 @@ class SettingsControllerTest extends TestCase
             'email_queue'      => 'no',
         ];
 
-        $memory            = m::mock('\Orchestra\Contracts\Memory\Provider')->makePartial();
+        $memory            = m::mock('\Orchestra\Contracts\Memory\Provider');
         list(, $validator) = $this->bindDependencies();
 
         $memory->shouldReceive('put')->times(16)->andReturnNull()
