@@ -49,7 +49,7 @@ class ExtensionServiceProviderTest extends \PHPUnit_Framework_TestCase
     public function testBootMethod()
     {
         $app = new Container();
-        $app['orchestra.extension.finder'] = $finder = m::mock('\Orchestra\Extension\Finder');
+        $app['orchestra.extension.finder'] = $finder = m::mock('\Orchestra\Contracts\Extension\Finder');
 
         $finder->shouldReceive('addPath')->once()->with('app::Extensions/*/*')->andReturnNull()
             ->shouldReceive('registerExtension')->once()->with('forum', 'base::modules/forum')->andReturnNull();

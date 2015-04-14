@@ -23,7 +23,7 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
     {
         $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
         $publisher = m::mock('\Orchestra\Foundation\Publisher\PublisherManager');
-        $session   = m::mock('\Illuminate\Session\Store');
+        $session   = m::mock('\Illuminate\Session\SessionInterface');
 
         $stub = new AssetPublisher($publisher, $session);
 
@@ -44,7 +44,7 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
     {
         $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
         $publisher = m::mock('\Orchestra\Foundation\Publisher\PublisherManager');
-        $session   = m::mock('\Illuminate\Session\Store');
+        $session   = m::mock('\Illuminate\Session\SessionInterface');
 
         $input = $this->getInput();
 
@@ -70,7 +70,7 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
     {
         $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
         $publisher = m::mock('\Orchestra\Foundation\Publisher\PublisherManager');
-        $session   = m::mock('\Illuminate\Session\Store');
+        $session   = m::mock('\Illuminate\Session\SessionInterface');
 
         $input = $this->getInput();
 

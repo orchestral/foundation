@@ -199,7 +199,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $control  = m::mock('\Orchestra\Contracts\Html\Form\Control');
 
         $app['Orchestra\Contracts\Html\Form\Control'] = $control;
-        $app['orchestra.role']                        = m::mock('\Orchestra\Model\Role');
+        $app['orchestra.role'] = m::mock('\Orchestra\Model\Role');
 
         $value = (object) [
             'roles' => new Collection([
