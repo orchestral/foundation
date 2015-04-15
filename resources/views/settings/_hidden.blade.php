@@ -4,7 +4,7 @@
   </a>
 </div>
 <div id="{{ $action }}_container">
-  <span>{!! str_repeat('*', strlen($model->get($action))) !!}</span>
+  <span>{!! str_repeat('*', strlen($model->get($field))) !!}</span>
   &nbsp;&nbsp;
   <a href="#" id="{{ $action }}_button" class="btn btn-mini btn-warning">
     {{ trans("orchestra/foundation::label.email.{$action}") }}
