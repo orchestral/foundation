@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Tests\Validation;
 
+use Illuminate\Support\Fluent;
 use Mockery as m;
 use Orchestra\Foundation\Validation\Setting;
 
@@ -94,6 +95,13 @@ class SettingTest extends \PHPUnit_Framework_TestCase
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
+        $validator->shouldReceive('sometimes')->once()
+            ->with('email_password', 'required', m::type('Closure'))
+            ->andReturnUsing(function ($f, $r, $c) {
+                $i = new Fluent(['enable_change_password' => 'yes', 'email_password' => '123456']);
+
+                return $c($i);
+            });
 
         $stub       = new Setting($factory, $events);
         $validation = $stub->on('smtp')->with($input);
@@ -164,12 +172,18 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_address'  => ['required', 'email'],
             'email_driver'   => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
             'email_port'     => ['numeric'],
-            'email_secret'   => ['required'],
             'email_domain'   => ['required'],
         ];
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
+        $validator->shouldReceive('sometimes')->once()
+            ->with('email_secret', 'required', m::type('Closure'))
+            ->andReturnUsing(function ($f, $r, $c) {
+                $i = new Fluent(['enable_change_secret' => 'yes', 'email_secret' => 'auniquetoken']);
+
+                return $c($i);
+            });
 
         $stub       = new Setting($factory, $events);
         $validation = $stub->on('mailgun')->with($input);
@@ -202,11 +216,17 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_address' => ['required', 'email'],
             'email_driver'  => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
             'email_port'    => ['numeric'],
-            'email_secret'  => ['required'],
         ];
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
+        $validator->shouldReceive('sometimes')->once()
+            ->with('email_secret', 'required', m::type('Closure'))
+            ->andReturnUsing(function ($f, $r, $c) {
+                $i = new Fluent(['enable_change_secret' => 'yes', 'email_secret' => 'auniquetoken']);
+
+                return $c($i);
+            });
 
         $stub       = new Setting($factory, $events);
         $validation = $stub->on('mandrill')->with($input);
@@ -242,12 +262,18 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_driver'  => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
             'email_port'    => ['numeric'],
             'email_key'     => ['required'],
-            'email_secret'  => ['required'],
             'email_region'  => ['required', 'in:us-east-1,us-west-2,eu-west-1'],
         ];
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
         $events->shouldReceive('fire')->once()->with('orchestra.validate: settings', m::any())->andReturnNull();
+        $validator->shouldReceive('sometimes')->once()
+            ->with('email_secret', 'required', m::type('Closure'))
+            ->andReturnUsing(function ($f, $r, $c) {
+                $i = new Fluent(['enable_change_secret' => 'yes', 'email_secret' => 'auniquetoken']);
+
+                return $c($i);
+            });
 
         $stub       = new Setting($factory, $events);
         $validation = $stub->on('ses')->with($input);

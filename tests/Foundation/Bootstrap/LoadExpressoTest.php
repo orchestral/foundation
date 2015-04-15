@@ -84,7 +84,6 @@ class LoadExpressoTest extends TestCase
         $this->assertEquals('<title>Foo (Page 5)</title>', $this->app['html']->title());
     }
 
-
     /**
      * Test HTML::title() macro with page title.
      *
@@ -122,7 +121,6 @@ class LoadExpressoTest extends TestCase
         Paginator::currentPageResolver(function () {
             return 5;
         });
-
 
         Meta::shouldReceive('get')->once()
             ->with('html::title.format.site', '{site.name} (Page {page.number})')

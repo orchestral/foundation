@@ -96,7 +96,11 @@ class Setting extends Presenter
 
             $fieldset->control('input:password', 'email_password')
                 ->label(trans('orchestra/foundation::label.email.password'))
-                ->help(view('orchestra/foundation::settings.email-password', compact('model')));
+                ->help(view('orchestra/foundation::settings._hidden', [
+                    'model'  => $model,
+                    'action' => 'change_password',
+                    'field'  => 'email_password',
+                ]));
 
             $fieldset->control('input:text', 'email_encryption')
                 ->label(trans('orchestra/foundation::label.email.encryption'));
@@ -104,8 +108,13 @@ class Setting extends Presenter
             $fieldset->control('input:text', 'email_key')
                 ->label(trans('orchestra/foundation::label.email.key'));
 
-            $fieldset->control('input:text', 'email_secret')
-                ->label(trans('orchestra/foundation::label.email.secret'));
+            $fieldset->control('input:password', 'email_secret')
+                ->label(trans('orchestra/foundation::label.email.secret'))
+                ->help(view('orchestra/foundation::settings._hidden', [
+                    'model'  => $model,
+                    'action' => 'change_secret',
+                    'field'  => 'email_secret',
+                ]));
 
             $fieldset->control('input:text', 'email_domain')
                 ->label(trans('orchestra/foundation::label.email.domain'));
@@ -113,9 +122,9 @@ class Setting extends Presenter
             $fieldset->control('select', 'email_region')
                 ->label(trans('orchestra/foundation::label.email.region'))
                 ->options([
-                    'us-east-1',
-                    'us-west-2',
-                    'eu-west-1',
+                    'us-east-1' => 'us-east-1',
+                    'us-west-2' => 'us-east-1',
+                    'eu-west-1' => 'eu-west-1',
                 ]);
 
             $fieldset->control('input:text', 'email_sendmail')

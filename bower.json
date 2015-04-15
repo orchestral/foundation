@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "bootstrap": "~3.3.2",
+    "bootstrap": "~3.3.4",
     "javie": "~1.2.0",
     "jquery": "~1.10.2",
     "select2": "~3.4.8",

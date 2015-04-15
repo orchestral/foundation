@@ -78,7 +78,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $emailControl->shouldReceive('label')->times(13)->andReturnSelf()
             ->shouldReceive('attributes')->once()->andReturnSelf()
             ->shouldReceive('options')->times(3)->andReturnSelf()
-            ->shouldReceive('help')->once()->with('email.password.help');
+            ->shouldReceive('help')->twice()->with('email.password.help');
 
         $grid->shouldReceive('setup')->once()
                 ->with($stub, 'orchestra::settings', $model)->andReturnNull()
@@ -101,8 +101,8 @@ class SettingTest extends \PHPUnit_Framework_TestCase
                     return 'foo';
                 });
 
-        $app['Illuminate\Contracts\View\Factory']->shouldReceive('make')->once()
-            ->with('orchestra/foundation::settings.email-password', compact('model'), [])
+        $app['Illuminate\Contracts\View\Factory']->shouldReceive('make')->twice()
+            ->with('orchestra/foundation::settings._hidden', m::type('Array'), [])
             ->andReturn('email.password.help');
 
         $this->assertEquals('foo', $stub->form($model));
