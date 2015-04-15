@@ -24,7 +24,7 @@ class CanManageTest extends \PHPUnit_Framework_TestCase
         $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
         $auth       = m::mock('\Illuminate\Contracts\Auth\Guard');
         $config     = m::mock('\Illuminate\Contracts\Config\Repository');
-        $acl        = m::mock('\Orchestra\Contracts\Auth\Acl\Acl');
+        $acl        = m::mock('\Orchestra\Contracts\Authorization\Authorization');
 
         $route   = m::mock('\Illuminate\Routing\Route');
         $request = m::mock('\Illuminate\Http\Request');
@@ -51,7 +51,7 @@ class CanManageTest extends \PHPUnit_Framework_TestCase
         $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
         $auth       = m::mock('\Illuminate\Contracts\Auth\Guard');
         $config     = m::mock('\Illuminate\Contracts\Config\Repository');
-        $acl        = m::mock('\Orchestra\Contracts\Auth\Acl\Acl');
+        $acl        = m::mock('\Orchestra\Contracts\Authorization\Authorization');
 
         $route   = m::mock('\Illuminate\Routing\Route');
         $request = m::mock('\Illuminate\Http\Request');

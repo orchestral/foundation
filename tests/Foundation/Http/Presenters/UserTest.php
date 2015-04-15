@@ -24,7 +24,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->app = new Container();
 
         $this->app['app']           = $this->app;
-        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
+        $this->app['orchestra.app'] = m::mock('\Orchestra\Contracts\Foundation\Foundation');
         $this->app['translator']    = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $this->app['orchestra.app']->shouldReceive('handles');
@@ -199,7 +199,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $control  = m::mock('\Orchestra\Contracts\Html\Form\Control');
 
         $app['Orchestra\Contracts\Html\Form\Control'] = $control;
-        $app['orchestra.role']                        = m::mock('\Orchestra\Model\Role');
+        $app['orchestra.role'] = m::mock('\Orchestra\Model\Role');
 
         $value = (object) [
             'roles' => new Collection([

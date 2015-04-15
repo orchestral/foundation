@@ -22,7 +22,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new Container();
 
-        $this->app['orchestra.app'] = m::mock('\Orchestra\Foundation\Foundation')->makePartial();
+        $this->app['orchestra.app'] = m::mock('\Orchestra\Contracts\Foundation\Foundation');
         $this->app['translator']    = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $this->app['orchestra.app']->shouldReceive('handles');
@@ -55,7 +55,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_password' => 123456,
         ]);
 
-        $app['Illuminate\Contracts\View\Factory'] = m::mock('\Illuminate\View\Factory');
+        $app['Illuminate\Contracts\View\Factory'] = m::mock('\Illuminate\Contracts\View\Factory');
 
         $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $grid = m::mock('\Orchestra\Contracts\Html\Form\Grid');

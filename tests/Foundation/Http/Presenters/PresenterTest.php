@@ -55,7 +55,7 @@ class PresenterTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetupFormMethod()
     {
-        $form = m::mock('\Orchestra\Html\Form\Grid')->makePartial();
+        $form = m::mock('\Orchestra\Contracts\Html\Form\Grid');
 
         $form->shouldReceive('layout')->once()
             ->with('orchestra/foundation::components.form')->andReturnNull();
