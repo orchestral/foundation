@@ -103,7 +103,6 @@ class SettingTest extends \PHPUnit_Framework_TestCase
                 return $c($i);
             });
 
-
         $stub       = new Setting($factory, $events);
         $validation = $stub->on('smtp')->with($input);
 
@@ -228,7 +227,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
 
                 return $c($i);
             });
-        
+
         $stub       = new Setting($factory, $events);
         $validation = $stub->on('mandrill')->with($input);
 
