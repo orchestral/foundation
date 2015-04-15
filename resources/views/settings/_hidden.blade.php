@@ -1,15 +1,15 @@
 <div id="cancel_{{ $action }}_container">
-  <a href="#" id="cancel_{{ $action }}_button" class="btn btn-mini btn-info cancel_email_hidden_button">
-    {{ trans('orchestra/foundation::label.cancel') }}
-  </a>
+	<a href="#" id="cancel_{{ $action }}_button" class="btn btn-mini btn-info cancel_email_hidden_button">
+		{{ trans('orchestra/foundation::label.cancel') }}
+	</a>
 </div>
 <div id="{{ $action }}_container">
-  <span>{!! str_repeat('*', strlen($model->get($field))) !!}</span>
-  &nbsp;&nbsp;
-  <a href="#" id="{{ $action }}_button" class="btn btn-mini btn-warning">
-    {{ trans("orchestra/foundation::label.email.{$action}") }}
-  </a>
-  {!! app('form')->hidden("enable_{$action}", 'no') !!}
+	<span>{!! str_repeat('*', strlen($model->get($field))) !!}</span>
+	&nbsp;&nbsp;
+	<a href="#" id="{{ $action }}_button" class="btn btn-mini btn-warning">
+		{{ trans("orchestra/foundation::label.email.{$action}") }}
+	</a>
+	{!! app('form')->hidden("enable_{$action}", 'no') !!}
 </div>
 
 @push('orchestra.footer')
