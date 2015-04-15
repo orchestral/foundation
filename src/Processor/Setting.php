@@ -106,8 +106,12 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
             'name'    => $input['site_name'],
         ]);
 
-        if ((empty($input['email_password']) && $input['change_password'] === 'no')) {
+        if ((empty($input['email_password']) && $input['enable_change_password'] === 'no')) {
             $input['email_password'] = $memory->get('email.password');
+        }
+
+        if ((empty($input['email_secret']) && $input['enable_change_secret'] === 'no')) {
+            $input['email_secret'] = $memory->get('email.secret');
         }
 
         $memory->put('email.host', $this->getValue($input['email_host'], 'mail.host'));
