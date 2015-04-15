@@ -86,17 +86,20 @@ class SettingsControllerTest extends TestCase
             'email_port'              => 25,
             'email_username'          => 'email@orchestraplatform.com',
             'email_password'          => '',
-            'enable_change_password'  => 'no',
             'email_encryption'        => 'ssl',
             'email_sendmail'          => '/usr/bin/sendmail -t',
+            'email_secret'            => '',
             'email_queue'             => 'no',
+            'enable_change_password'  => 'no',
+            'enable_change_secret'    => 'no',
         ];
 
         $memory            = m::mock('\Orchestra\Contracts\Memory\Provider');
         list(, $validator) = $this->bindDependencies();
 
         $memory->shouldReceive('put')->times(16)->andReturnNull()
-            ->shouldReceive('get')->once()->with('email.password')->andReturn('foo');
+            ->shouldReceive('get')->once()->with('email.password')->andReturn('foo')
+            ->shouldReceive('get')->once()->with('email.secret')->andReturn('foo');
         $validator->shouldReceive('on')->once()->with('smtp')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(false);
@@ -122,16 +125,18 @@ class SettingsControllerTest extends TestCase
             'site_description' => '',
             'site_registrable' => 'yes',
 
-            'email_driver'     => 'smtp',
-            'email_address'    => 'email@orchestraplatform.com',
-            'email_host'       => 'orchestraplatform.com',
-            'email_port'       => 25,
-            'email_username'   => 'email@orchestraplatform.com',
-            'email_password'   => '',
-            'change_password'  => 'no',
-            'email_encryption' => 'ssl',
-            'email_sendmail'   => '/usr/bin/sendmail -t',
-            'email_queue'      => 'no',
+            'email_driver'            => 'smtp',
+            'email_address'           => 'email@orchestraplatform.com',
+            'email_host'              => 'orchestraplatform.com',
+            'email_port'              => 25,
+            'email_username'          => 'email@orchestraplatform.com',
+            'email_password'          => '',
+            'email_encryption'        => 'ssl',
+            'email_sendmail'          => '/usr/bin/sendmail -t',
+            'email_secret'            => '',
+            'email_queue'             => 'no',
+            'enable_change_password'  => 'no',
+            'enable_change_secret'    => 'no',
         ];
 
         list(, $validator) = $this->bindDependencies();

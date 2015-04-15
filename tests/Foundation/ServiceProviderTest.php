@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
+use Orchestra\Foundation\Providers\ArtisanServiceProvider;
 use Orchestra\Testing\TestCase;
 use Orchestra\Foundation\Providers\SupportServiceProvider;
 use Orchestra\Foundation\Providers\FoundationServiceProvider;
@@ -56,6 +57,7 @@ class ServiceProviderTest extends TestCase
         $foundation = new FoundationServiceProvider($this->app);
         $site       = new SupportServiceProvider($this->app);
         $console    = new ConsoleSupportServiceProvider($this->app);
+        $artisan    = new ArtisanServiceProvider($this->app);
 
         $this->assertEquals($this->getFoundationProvides(), $foundation->provides());
         $this->assertFalse($foundation->isDeferred());
@@ -65,6 +67,9 @@ class ServiceProviderTest extends TestCase
 
         $this->assertEquals($this->getConsoleSupportProvides(), $console->provides());
         $this->assertTrue($console->isDeferred());
+
+        $this->assertInstanceOf('\Orchestra\Config\Console\ConfigCacheCommand', $this->app['command.config.cache']);
+        $this->assertTrue($artisan->isDeferred());
     }
 
     /**
