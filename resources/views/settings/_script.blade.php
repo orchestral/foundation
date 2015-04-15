@@ -24,6 +24,7 @@ jQuery(function onSettingPageReady($) { 'use strict';
     smtp  = ['email_host', 'email_port', 'email_address', 'email_username', 'email_password', 'email_encryption'];
 
     get_container('input[name^="email_"]').hide();
+    get_container('select[name^="email_region"]').hide();
     get_container('input[name="email_queue"]').hide();
 
     switch (value) {
@@ -40,7 +41,7 @@ jQuery(function onSettingPageReady($) { 'use strict';
       case 'ses':
         get_container('input[name^="email_key"]').show();
         get_container('input[name^="email_secret"]').show();
-        get_container('input[name^="email_region"]').show();
+        get_container('select[name^="email_region"]').show();
         break;
       case 'mailgun':
         get_container('input[name^="email_secret"]').show();
