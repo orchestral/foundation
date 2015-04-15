@@ -97,9 +97,9 @@ class Setting extends Presenter
             $fieldset->control('input:password', 'email_password')
                 ->label(trans('orchestra/foundation::label.email.password'))
                 ->help(view('orchestra/foundation::settings._hidden', [
-                    'model' => $model,
+                    'model'  => $model,
                     'action' => 'change_password',
-                    'field' => 'email_password'
+                    'field'  => 'email_password',
                 ]));
 
             $fieldset->control('input:text', 'email_encryption')
@@ -111,9 +111,9 @@ class Setting extends Presenter
             $fieldset->control('input:password', 'email_secret')
                 ->label(trans('orchestra/foundation::label.email.secret'))
                 ->help(view('orchestra/foundation::settings._hidden', [
-                    'model' => $model,
+                    'model'  => $model,
                     'action' => 'change_secret',
-                    'field' => 'email_secret'
+                    'field'  => 'email_secret',
                 ]));
 
             $fieldset->control('input:text', 'email_domain')

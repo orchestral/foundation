@@ -80,16 +80,16 @@ class SettingsControllerTest extends TestCase
             'site_description' => '',
             'site_registrable' => 'yes',
 
-            'email_driver'     => 'smtp',
-            'email_address'    => 'email@orchestraplatform.com',
-            'email_host'       => 'orchestraplatform.com',
-            'email_port'       => 25,
-            'email_username'   => 'email@orchestraplatform.com',
-            'email_password'   => '',
-            'change_password'  => 'no',
-            'email_encryption' => 'ssl',
-            'email_sendmail'   => '/usr/bin/sendmail -t',
-            'email_queue'      => 'no',
+            'email_driver'            => 'smtp',
+            'email_address'           => 'email@orchestraplatform.com',
+            'email_host'              => 'orchestraplatform.com',
+            'email_port'              => 25,
+            'email_username'          => 'email@orchestraplatform.com',
+            'email_password'          => '',
+            'enable_change_password'  => 'no',
+            'email_encryption'        => 'ssl',
+            'email_sendmail'          => '/usr/bin/sendmail -t',
+            'email_queue'             => 'no',
         ];
 
         $memory            = m::mock('\Orchestra\Contracts\Memory\Provider');

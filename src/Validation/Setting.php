@@ -74,7 +74,7 @@ class Setting extends Validator
      */
     protected function onSes()
     {
-        $this->rules['email_key'] = ['required'];
+        $this->rules['email_key']    = ['required'];
         $this->rules['email_secret'] = ['required'];
         $this->rules['email_region'] = ['required', 'in:us-east-1,us-west-2,eu-west-1'];
     }
