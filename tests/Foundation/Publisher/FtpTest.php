@@ -169,7 +169,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
 
         $app['session'] = $this->getSessionMock();
         $app['path.public'] = $path = '/var/foo/public';
-        $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem')->makePartial();
+        $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem');
         $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Contracts\Extension\Factory');
 
         $client->shouldReceive('setUp')->once()->with(['ftpconfig'])->andReturnNull()
