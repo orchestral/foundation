@@ -30,6 +30,7 @@ return [
         'password'        => 'Password',
         'encryption'      => 'Encryption',
         'change_password' => 'Change Password',
+        'change_secret'   => 'Change API Secret',
         'command'         => 'Sendmail Command',
         'queue'           => 'Mail via Queue',
         'key'             => 'API Key',
