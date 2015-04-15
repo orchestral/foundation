@@ -5,6 +5,13 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.11 {#v3-0-11}
+
+* Add option to include page number to HTML::title().
+* Add support to configure sending mail using Amazon SES API.
+* Hide API Secret configuration (act similar to password) for security purpose.
+* Improves Setting validations for email password and email secret when relevant.
+
 ### v3.0.10 {#v3-0-10}
 
 * Add `@set_meta` and `@get_meta` blade helper.
