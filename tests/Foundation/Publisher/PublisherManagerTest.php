@@ -47,17 +47,14 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $app['session'] = $session = m::mock('\Illuminate\Session\SessionInterface');
         $app['orchestra.publisher.ftp'] = $client = m::mock('\Orchestra\Support\Ftp\Client');
         $app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $app['orchestra.publisher.ftp'] = m::mock('\Orchestra\Contracts\Publisher\Uploader');
 
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp');
-        $session->shouldReceive('get')->once()->with('orchestra.ftp', [])->andReturn(['foo']);
-        $client->shouldReceive('setUp')->once()->with(['foo'])->andReturnNull()
-            ->shouldReceive('connect')->once()->andReturn(true);
 
         $stub = new PublisherManager($app);
         $ftp  = $stub->driver();
 
-        $this->assertInstanceOf('\Orchestra\Foundation\Publisher\Ftp', $ftp);
-        $this->assertInstanceOf('\Orchestra\Support\Ftp\Client', $ftp->getConnection());
+        $this->assertInstanceOf('\Orchestra\Contracts\Publisher\Uploader', $ftp);
     }
 
     /**
@@ -69,32 +66,19 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $app['session'] = $session = m::mock('\Illuminate\Session\SessionInterface');
         $app['orchestra.messages'] = $messages = m::mock('\Orchestra\Contracts\Messages\MessageBag');
-        $app['path.public'] = $path = '/var/foo/public';
-        $app['files'] = $file = m::mock('\Illuminate\Filesystem\Filesystem');
-        $app['orchestra.extension'] = $extension = m::mock('\Orchestra\Contracts\Extension\Factory');
-        $app['orchestra.publisher.ftp'] = $client = m::mock('\Orchestra\Support\Ftp\Client');
+        $app['orchestra.publisher.ftp'] = $client = m::mock('\Orchestra\Contracts\Publisher\Uploader');
         $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator')->makePartial();
         $app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', [])->andReturn(['a', 'b'])
             ->shouldReceive('get')->times(2)->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp')
             ->shouldReceive('put')->once()->with('orchestra.publisher.queue', ['b'])->andReturnNull();
-        $session->shouldReceive('get')->once()->with('orchestra.ftp', [])->andReturn(['manager-foo']);
         $messages->shouldReceive('add')->once()->with('success', m::any())->andReturnNull()
             ->shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
         $translator->shouldReceive('trans')->andReturn('foo');
-        $client->shouldReceive('setUp')->once()->with(['manager-foo'])->andReturnNull()
-            ->shouldReceive('connect')->once()->andReturn(true)
-            ->shouldReceive('permission')->with($path.'/packages/', 0777)->andReturn(true)
-            ->shouldReceive('permission')->with($path.'/packages/', 0755)->andReturn(true)
-            ->shouldReceive('makeDirectory')->with($path.'/packages/a/')->andReturn(true)
-            ->shouldReceive('makeDirectory')->with($path.'/packages/b/')->andReturn(true);
-        $file->shouldReceive('isDirectory')->once()->with($path.'/packages/a/')->andReturn(false)
-            ->shouldReceive('isDirectory')->once()->with($path.'/packages/b/')->andReturn(false);
-        $extension->shouldReceive('activate')->once()->with('a')->andReturnNull()
-            ->shouldReceive('activate')->once()->with('b')->andThrow('\Exception');
+        $client->shouldReceive('upload')->with('a')->andReturnNull()
+            ->shouldReceive('upload')->with('b')->andThrow('\Exception');
 
         $stub = new PublisherManager($app);
 

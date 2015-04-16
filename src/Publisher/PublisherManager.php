@@ -8,7 +8,7 @@ class PublisherManager extends Manager
     /**
      * Memory Provider instance.
      *
-     * @var \Orchestra\Memory\Provider
+     * @var \Orchestra\Contracts\Memory\Provider
      */
     protected $memory;
 
@@ -23,13 +23,16 @@ class PublisherManager extends Manager
     }
 
     /**
-     * Create an instance of the Ftp driver.
+     * Create a new driver instance.
      *
-     * @return \Orchestra\Foundation\Publisher\Ftp
+     * @param  string  $driver
+     * @return mixed
+     *
+     * @throws \InvalidArgumentException
      */
-    protected function createFtpDriver()
+    protected function createDriver($driver)
     {
-        return new Ftp($this->app, $this->app['orchestra.publisher.ftp']);
+        return $this->app->make("orchestra.publisher.{$driver}");
     }
 
     /**

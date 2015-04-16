@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Processor\TestCase;
 
 use Mockery as m;
+use Illuminate\Container\Container;
 use Orchestra\Foundation\Processor\AssetPublisher;
 
 class AssetPublisherTest extends \PHPUnit_Framework_TestCase
@@ -70,6 +71,7 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
     {
         $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
         $publisher = m::mock('\Orchestra\Foundation\Publisher\PublisherManager');
+        $uploader  = m::mock('\Orchestra\Contracts\Publisher\Uploader');
         $session   = m::mock('\Illuminate\Session\Store');
 
         $input = $this->getInput();
@@ -77,7 +79,7 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
         $stub = new AssetPublisher($publisher, $session);
 
         $publisher->shouldReceive('queued')->once()->andReturn(['laravel/framework'])
-            ->shouldReceive('connect')->once()->andThrow('\Orchestra\Support\Ftp\ServerException');
+            ->shouldReceive('connect')->once()->andThrow('\Orchestra\Contracts\Publisher\ServerException');
         $session->shouldReceive('forget')->once()->with('orchestra.ftp')->andReturnNull();
         $listener->shouldReceive('publishingHasFailed')->once()->andReturn(['error' => 'failed']);
 

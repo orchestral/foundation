@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Illuminate\Session\Store;
-use Orchestra\Support\Ftp\ServerException;
+use Orchestra\Contracts\Publisher\ServerException;
 use Orchestra\Foundation\Publisher\PublisherManager;
 use Orchestra\Contracts\Foundation\Command\AssetPublisher as Command;
 use Orchestra\Contracts\Foundation\Listener\AssetPublishing as Listener;

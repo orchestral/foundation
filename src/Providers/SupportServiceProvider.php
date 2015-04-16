@@ -3,7 +3,6 @@
 use Orchestra\Model\Role;
 use Orchestra\Model\User;
 use Illuminate\Support\ServiceProvider;
-use Orchestra\Support\Ftp\Client as FtpClient;
 use Orchestra\Foundation\Publisher\PublisherManager;
 
 class SupportServiceProvider extends ServiceProvider
@@ -36,10 +35,6 @@ class SupportServiceProvider extends ServiceProvider
      */
     protected function registerPublisher()
     {
-        $this->app->singleton('orchestra.publisher.ftp', function () {
-            return new FtpClient();
-        });
-
         $this->app->singleton('orchestra.publisher', function ($app) {
             return new PublisherManager($app);
         });
@@ -77,8 +72,7 @@ class SupportServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'orchestra.publisher', 'orchestra.publisher.ftp',
-            'orchestra.role', 'orchestra.user',
+            'orchestra.publisher', 'orchestra.role', 'orchestra.user',
         ];
     }
 }

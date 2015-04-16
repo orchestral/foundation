@@ -28,9 +28,6 @@ class ServiceProviderTest extends TestCase
     {
         $stub = $this->app->make('orchestra.publisher');
         $this->assertInstanceOf('\Orchestra\Foundation\Publisher\PublisherManager', $stub);
-
-        $stub = $this->app->make('orchestra.publisher.ftp');
-        $this->assertInstanceOf('\Orchestra\Support\Ftp\Client', $stub);
     }
 
     /**
@@ -95,7 +92,6 @@ class ServiceProviderTest extends TestCase
     {
         return [
             'orchestra.publisher',
-            'orchestra.publisher.ftp',
             'orchestra.role',
             'orchestra.user',
         ];
