@@ -2,15 +2,11 @@
 
 use Exception;
 use Illuminate\Support\Manager;
+use Orchestra\Memory\ContainerTrait;
 
 class PublisherManager extends Manager
 {
-    /**
-     * Memory Provider instance.
-     *
-     * @var \Orchestra\Contracts\Memory\Provider
-     */
-    protected $memory;
+    use ContainerTrait;
 
     /**
      * {@inheritdoc}
@@ -18,8 +14,6 @@ class PublisherManager extends Manager
     public function __construct($app)
     {
         parent::__construct($app);
-
-        $this->memory = $app['orchestra.platform.memory'];
     }
 
     /**

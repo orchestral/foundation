@@ -51,7 +51,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
 
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp');
 
-        $stub = new PublisherManager($app);
+        $stub = (new PublisherManager($app))->attach($memory);
         $ftp  = $stub->driver();
 
         $this->assertInstanceOf('\Orchestra\Contracts\Publisher\Uploader', $ftp);
@@ -80,7 +80,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $client->shouldReceive('upload')->with('a')->andReturnNull()
             ->shouldReceive('upload')->with('b')->andThrow('\Exception');
 
-        $stub = new PublisherManager($app);
+        $stub = (new PublisherManager($app))->attach($memory);
 
         $this->assertTrue($stub->execute());
     }
@@ -100,7 +100,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('put')->once()->with('orchestra.publisher.queue', m::any())
                 ->andReturnNull();
 
-        $stub = new PublisherManager($app);
+        $stub = (new PublisherManager($app))->attach($memory);
         $this->assertTrue($stub->queue(['foo', 'bar']));
     }
 
@@ -116,7 +116,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
 
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', [])->andReturn('foo');
 
-        $stub = new PublisherManager($app);
+        $stub = (new PublisherManager($app))->attach($memory);
         $this->assertEquals('foo', $stub->queued());
     }
 }
