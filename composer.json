@@ -44,6 +44,9 @@
 		"orchestra/resources": "3.0.*",
 		"orchestra/testing": "3.0.*"
 	},
+	"suggest": {
+		"orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.0)."
+	},
 	"extra": {
 		"branch-alias": {
 			"dev-master": "3.1-dev"
