@@ -32,7 +32,7 @@ class IsGuest
      * Create a new filter instance.
      *
      * @param  \Orchestra\Contracts\Foundation\Foundation  $foundation
-     * @param  \Illuminate\Contracts\Auth\Guard         $auth
+     * @param  \Illuminate\Contracts\Auth\Guard  $auth
      * @param  \Illuminate\Contracts\Config\Repository  $config
      */
     public function __construct(Foundation $foundation, Guard $auth, Repository $config)
