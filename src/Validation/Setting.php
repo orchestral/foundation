@@ -72,6 +72,7 @@ class Setting extends Validator
      * Extend on update email using smtp driver scenario.
      *
      * @param  \Illuminate\Contracts\Validation\Validator  $resolver
+     *
      * @return void
      */
     protected function extendSmtp(ValidatorResolver $resolver)
@@ -83,6 +84,7 @@ class Setting extends Validator
      * Extend on update email using mailgun driver scenario.
      *
      * @param  \Illuminate\Contracts\Validation\Validator  $resolver
+     *
      * @return void
      */
     protected function extendMailgun(ValidatorResolver $resolver)
@@ -94,6 +96,7 @@ class Setting extends Validator
      * Extend on update email using mandrill driver scenario.
      *
      * @param  \Illuminate\Contracts\Validation\Validator  $resolver
+     *
      * @return void
      */
     protected function extendMandrill(ValidatorResolver $resolver)
@@ -105,6 +108,7 @@ class Setting extends Validator
      * Extend on update email using SES driver scenario.
      *
      * @param  \Illuminate\Contracts\Validation\Validator  $resolver
+     *
      * @return void
      */
     protected function extendSes(ValidatorResolver $resolver)
