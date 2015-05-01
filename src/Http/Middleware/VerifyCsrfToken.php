@@ -2,9 +2,9 @@
 
 use Illuminate\Contracts\Encryption\Encrypter;
 use Orchestra\Contracts\Foundation\Foundation;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Verifier;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
-class VerifyCsrfToken extends Verifier
+class VerifyCsrfToken extends BaseVerifier
 {
     /**
      * The application implementation.
