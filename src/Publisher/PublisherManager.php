@@ -20,6 +20,7 @@ class PublisherManager extends Manager
      * Create a new driver instance.
      *
      * @param  string  $driver
+     *
      * @return mixed
      *
      * @throws \InvalidArgumentException

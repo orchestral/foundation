@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Http\Middleware; 
+<?php namespace Orchestra\Foundation\Http\Middleware;
 
 class CanManage extends Can
 {
@@ -6,6 +6,7 @@ class CanManage extends Can
      * Check authorization.
      *
      * @param  string  $action
+     *
      * @return bool
      */
     protected function authorize($action = null)

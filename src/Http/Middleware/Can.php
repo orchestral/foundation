@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Http\Middleware; 
+<?php namespace Orchestra\Foundation\Http\Middleware;
 
 use Closure;
 use Orchestra\Contracts\Auth\Guard;
@@ -67,6 +67,7 @@ class Can
      * Check authorization.
      *
      * @param  string  $action
+     *
      * @return bool
      */
     protected function authorize($action = null)
