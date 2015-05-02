@@ -9,14 +9,6 @@ class PublisherManager extends Manager
     use ContainerTrait;
 
     /**
-     * {@inheritdoc}
-     */
-    public function __construct($app)
-    {
-        parent::__construct($app);
-    }
-
-    /**
      * Create a new driver instance.
      *
      * @param  string  $driver
