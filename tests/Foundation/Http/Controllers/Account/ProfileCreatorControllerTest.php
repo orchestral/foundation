@@ -19,16 +19,6 @@ class ProfileCreatorControllerTest extends TestCase
     }
 
     /**
-     * Teardown the test environment.
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        m::close();
-    }
-
-    /**
      * Test GET /admin/register.
      *
      * @test

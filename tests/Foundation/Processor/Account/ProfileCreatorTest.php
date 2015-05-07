@@ -10,16 +10,6 @@ use Orchestra\Foundation\Processor\Account\ProfileCreator;
 class ProfileCreatorTest extends TestCase
 {
     /**
-     * Teardown the test environment.
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        m::close();
-    }
-
-    /**
      * Test Orchestra\Foundation\Processor\Account\ProfileCreator::create()
      * method.
      *

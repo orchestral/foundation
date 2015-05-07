@@ -9,21 +9,14 @@ use Illuminate\Contracts\Auth\PasswordBroker;
 
 class PasswordBrokerControllerTest extends TestCase
 {
+    /**
+     * Setup the test environment.
+     */
     public function setUp()
     {
         parent::setUp();
 
         View::shouldReceive('share')->with('errors', m::any());
-    }
-
-    /**
-     * Teardown the test environment.
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        m::close();
     }
 
     /**

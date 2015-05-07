@@ -26,8 +26,6 @@ class BaseControllerTest extends TestCase
         parent::tearDown();
 
         unset($_SERVER['StubBaseController@setupFilters']);
-
-        m::close();
     }
 
     /**

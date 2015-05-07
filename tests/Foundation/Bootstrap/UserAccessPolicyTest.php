@@ -6,16 +6,6 @@ use Orchestra\Testing\TestCase;
 class UserAccessPolicyTest extends TestCase
 {
     /**
-     * Teardown the test environment.
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        m::close();
-    }
-
-    /**
      * Test Orchestra\Foundation\Bootstrap\UserAccessPolicy::bootstrap()
      * method.
      *

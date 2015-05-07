@@ -20,16 +20,6 @@ class LoadExpressoTest extends TestCase
     }
 
     /**
-     * Teardown the test environment.
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        m::close();
-    }
-
-    /**
      * Test Blade::extend() is registered.
      *
      * @test

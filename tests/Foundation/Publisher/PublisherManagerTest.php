@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\Publisher\TestCase;
 
 use Mockery as m;
-use Illuminate\Support\Facades\Facade;
 use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Facade;
 use Orchestra\Foundation\Publisher\PublisherManager;
 
 class PublisherManagerTest extends \PHPUnit_Framework_TestCase

@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Tests\Validation;
 
-use Illuminate\Support\Fluent;
 use Mockery as m;
+use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Validation\Setting;
 
 class SettingTest extends \PHPUnit_Framework_TestCase

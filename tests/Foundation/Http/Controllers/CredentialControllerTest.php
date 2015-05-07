@@ -20,16 +20,6 @@ class CredentialControllerTest extends TestCase
     }
 
     /**
-     * Teardown the test environment.
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        m::close();
-    }
-
-    /**
      * Bind dependencies.
      *
      * @return array
