@@ -1,8 +1,5 @@
-code-browser/*
 coverage/*
-docs/*
 logs/*
-pdepend/*
 !code-browser/.gitignore
 !coverage/.gitignore
 !logs/.gitignore
