@@ -15,7 +15,6 @@
 /.travis.yml            export-ignore
 /gulpfile.js            export-ignore
 /bower.json             export-ignore
-/build.xml              export-ignore
 /package.json           export-ignore
 /public/.gitignore      export-ignore
 /phpunit.xml            export-ignore
