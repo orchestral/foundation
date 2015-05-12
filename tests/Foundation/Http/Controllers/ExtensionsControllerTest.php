@@ -22,9 +22,6 @@ class ExtensionsControllerTest extends TestCase
         parent::setUp();
 
         $this->disableMiddlewareForAllTests();
-
-        #View::shouldReceive('addNamespace');
-        #View::shouldReceive('share')->once()->with('errors', m::any());
     }
 
     /**

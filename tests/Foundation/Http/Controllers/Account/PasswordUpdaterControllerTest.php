@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 class PasswordUpdaterControllerTest extends TestCase
 {
     use WithoutMiddleware;
+
     /**
      * Setup the test environment.
      */
