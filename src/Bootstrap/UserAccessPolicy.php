@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Bootstrap;
 
 use Orchestra\Model\Role;
+use Orchestra\Model\User;
 use Illuminate\Contracts\Foundation\Application;
 
 class UserAccessPolicy
@@ -28,7 +29,7 @@ class UserAccessPolicy
      */
     protected function matchCurrentUserToRoles(Application $app)
     {
-        $app['events']->listen('orchestra.auth: roles', function ($user) {
+        $app['events']->listen('orchestra.auth: roles', function (User $user) {
             // When user is null, we should expect the roles is not available.
             // Therefore, returning null would propagate any other event listeners
             // (if any) to try resolve the roles.
