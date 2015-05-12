@@ -2,6 +2,7 @@
 
 use Closure;
 use Orchestra\Contracts\Auth\Guard;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Config\Repository;
 use Orchestra\Contracts\Foundation\Foundation;
 
