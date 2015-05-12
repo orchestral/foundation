@@ -5,9 +5,11 @@ use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PasswordUpdaterControllerTest extends TestCase
 {
+    use WithoutMiddleware;
     /**
      * Setup the test environment.
      */
@@ -15,7 +17,7 @@ class PasswordUpdaterControllerTest extends TestCase
     {
         parent::setUp();
 
-        View::shouldReceive('share')->once()->with('errors', m::any());
+        $this->disableMiddlewareForAllTests();
     }
 
     /**

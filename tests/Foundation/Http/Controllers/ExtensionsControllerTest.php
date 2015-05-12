@@ -8,9 +8,12 @@ use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Extension;
 use Orchestra\Support\Facades\Publisher;
 use Orchestra\Support\Facades\Foundation;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ExtensionsControllerTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /**
      * Setup the test environment.
      */
@@ -18,8 +21,10 @@ class ExtensionsControllerTest extends TestCase
     {
         parent::setUp();
 
-        View::shouldReceive('addNamespace');
-        View::shouldReceive('share')->once()->with('errors', m::any());
+        $this->disableMiddlewareForAllTests();
+
+        #View::shouldReceive('addNamespace');
+        #View::shouldReceive('share')->once()->with('errors', m::any());
     }
 
     /**

@@ -6,9 +6,12 @@ use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class CredentialControllerTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /**
      * Setup the test environment.
      */
@@ -16,7 +19,7 @@ class CredentialControllerTest extends TestCase
     {
         parent::setUp();
 
-        View::shouldReceive('share')->once()->with('errors', m::any());
+        $this->disableMiddlewareForAllTests();
     }
 
     /**

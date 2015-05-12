@@ -3,9 +3,12 @@
 use Mockery as m;
 use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\View;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class DashboardControllerTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /**
      * Setup the test environment.
      */
@@ -13,7 +16,7 @@ class DashboardControllerTest extends TestCase
     {
         parent::setUp();
 
-        View::shouldReceive('share')->once()->with('errors', m::any());
+        $this->disableMiddlewareForAllTests();
     }
 
     /**

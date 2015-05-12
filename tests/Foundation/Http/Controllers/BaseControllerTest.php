@@ -4,16 +4,21 @@ use Mockery as m;
 use Orchestra\Testing\TestCase;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Orchestra\Foundation\Http\Controllers\BaseController;
 
 class BaseControllerTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /**
      * Setup the test environment.
      */
     public function setUp()
     {
         parent::setUp();
+
+        $this->disableMiddlewareForAllTests();
 
         $_SERVER['StubBaseController@setupFilters'] = false;
     }

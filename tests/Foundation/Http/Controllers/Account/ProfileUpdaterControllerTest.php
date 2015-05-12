@@ -5,9 +5,12 @@ use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ProfileUpdaterControllerTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /**
      * Setup the test environment.
      */
@@ -15,7 +18,7 @@ class ProfileUpdaterControllerTest extends TestCase
     {
         parent::setUp();
 
-        View::shouldReceive('share')->once()->with('errors', m::any());
+        $this->disableMiddlewareForAllTests();
     }
 
     /**

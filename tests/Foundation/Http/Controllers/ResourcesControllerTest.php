@@ -5,9 +5,12 @@ use Illuminate\Support\Fluent;
 use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ResourcesControllerTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /**
      * Setup the test environment.
      */
@@ -15,7 +18,7 @@ class ResourcesControllerTest extends TestCase
     {
         parent::setUp();
 
-        View::shouldReceive('share')->once()->with('errors', m::any());
+        $this->disableMiddlewareForAllTests();
     }
 
     /**

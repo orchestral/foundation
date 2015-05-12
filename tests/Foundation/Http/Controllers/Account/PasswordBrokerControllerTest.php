@@ -6,9 +6,12 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
 use Illuminate\Contracts\Auth\PasswordBroker;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PasswordBrokerControllerTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /**
      * Setup the test environment.
      */
@@ -16,7 +19,7 @@ class PasswordBrokerControllerTest extends TestCase
     {
         parent::setUp();
 
-        View::shouldReceive('share')->with('errors', m::any());
+        $this->disableMiddlewareForAllTests();
     }
 
     /**
