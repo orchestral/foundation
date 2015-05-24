@@ -58,6 +58,13 @@ class FoundationServiceProvider extends ServiceProvider
     ];
 
     /**
+     * The application's middleware stack.
+     *
+     * @var array
+     */
+    protected $middleware = [];
+
+    /**
      * The application's route middleware.
      *
      * @var array
