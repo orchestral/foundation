@@ -21,9 +21,10 @@ class LoginAsTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandleMethodWithoutRedirect()
     {
-        $acl     = m::mock('\Orchestra\Contracts\Authorization\Authorization');
-        $auth    = m::mock('\Orchestra\Contracts\Auth\Guard');
-        $request = m::mock('\Illuminate\Http\Request');
+        $acl      = m::mock('\Orchestra\Contracts\Authorization\Authorization');
+        $auth     = m::mock('\Orchestra\Contracts\Auth\Guard');
+        $request  = m::mock('\Illuminate\Http\Request');
+        $response = m::mock('\Illuminate\Contracts\Routing\ResponseFactory');
 
         $request->shouldReceive('input')->once()->with('_as')->andReturnNull();
         $acl->shouldReceive('can')->once()->with('manage orchestra')->andReturn(false);
@@ -32,7 +33,7 @@ class LoginAsTest extends \PHPUnit_Framework_TestCase
             return 'foo';
         };
 
-        $stub = new LoginAs($acl, $auth);
+        $stub = new LoginAs($acl, $auth, $response);
 
         $this->assertEquals('foo', $stub->handle($request, $next));
     }
@@ -48,18 +49,21 @@ class LoginAsTest extends \PHPUnit_Framework_TestCase
         $acl     = m::mock('\Orchestra\Contracts\Authorization\Authorization');
         $auth    = m::mock('\Orchestra\Contracts\Auth\Guard');
         $request = m::mock('\Illuminate\Http\Request');
+        $response = m::mock('\Illuminate\Contracts\Routing\ResponseFactory');
+        $redirect = m::mock('\Illuminate\Http\RedirectResponse');
 
         $request->shouldReceive('input')->once()->with('_as')->andReturn(5)
             ->shouldReceive('url')->once()->andReturn('http://localhost');
         $acl->shouldReceive('can')->once()->with('manage orchestra')->andReturn(true);
         $auth->shouldReceive('loginUsingId')->once()->with(5)->andReturnNull();
+        $response->shouldReceive('redirectTo')->once()->with('http://localhost')->andReturn($redirect);
 
         $next = function ($request) {
             return 'foo';
         };
 
-        $stub = new LoginAs($acl, $auth);
+        $stub = new LoginAs($acl, $auth, $response);
 
-        $this->assertInstanceOf('\Illuminate\Http\RedirectResponse', $stub->handle($request, $next));
+        $this->assertEquals($redirect, $stub->handle($request, $next));
     }
 }
