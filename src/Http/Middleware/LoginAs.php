@@ -2,7 +2,7 @@
 
 use Closure;
 use Orchestra\Contracts\Auth\Guard;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Orchestra\Contracts\Authorization\Authorization;
 
 class LoginAs
@@ -22,15 +22,24 @@ class LoginAs
     protected $auth;
 
     /**
+     * The response factory implementation.
+     *
+     * @var \Illuminate\Contracts\Routing\ResponseFactory
+     */
+    protected $response;
+
+    /**
      * Construct a new middleware.
      *
      * @param  \Orchestra\Contracts\Authorization\Authorization  $acl
      * @param  \Orchestra\Contracts\Auth\Guard  $auth
+     * @param  \Illuminate\Contracts\Routing\ResponseFactory  $response
      */
-    public function __construct(Authorization $acl, Guard $auth)
+    public function __construct(Authorization $acl, Guard $auth, ResponseFactory $response)
     {
-        $this->acl  = $acl;
-        $this->auth = $auth;
+        $this->acl      = $acl;
+        $this->auth     = $auth;
+        $this->response = $response;
     }
 
     /**
@@ -48,7 +57,7 @@ class LoginAs
         if ($this->authorize() && ! is_null($as)) {
             $this->auth->loginUsingId($as);
 
-            return new RedirectResponse($request->url());
+            return $this->response->redirectTo($request->url());
         }
 
         return $next($request);

@@ -2,9 +2,9 @@
 
 use Closure;
 use Orchestra\Contracts\Auth\Guard;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Config\Repository;
 use Orchestra\Contracts\Foundation\Foundation;
+use Illuminate\Contracts\Routing\ResponseFactory;
 
 class Can
 {
@@ -30,13 +30,21 @@ class Can
     protected $config;
 
     /**
+     * The response factory implementation.
+     *
+     * @var \Illuminate\Contracts\Routing\ResponseFactory
+     */
+    protected $response;
+
+    /**
      * Create a new filter instance.
      *
      * @param  \Orchestra\Contracts\Foundation\Foundation  $foundation
      * @param  \Orchestra\Contracts\Auth\Guard  $auth
      * @param  \Illuminate\Contracts\Config\Repository  $config
+     * @param  \Illuminate\Contracts\Routing\ResponseFactory  $response
      */
-    public function __construct(Foundation $foundation, Guard $auth, Repository $config)
+    public function __construct(Foundation $foundation, Guard $auth, Repository $config, ResponseFactory $response)
     {
         $this->foundation = $foundation;
         $this->auth       = $auth;
@@ -55,10 +63,7 @@ class Can
     public function handle($request, Closure $next, $action = null)
     {
         if (! $this->authorize($action)) {
-            $type = ($this->auth->guest() ? 'guest' : 'user');
-            $url  = $this->config->get("orchestra/foundation::routes.{$type}");
-
-            return new RedirectResponse($this->foundation->handles($url));
+            return $this->responseOnUnauthorized($request);
         }
 
         return $next($request);
@@ -78,5 +83,24 @@ class Can
         }
 
         return $this->foundation->acl()->can($action);
+    }
+
+    /**
+     * Response on authorized request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return mixed
+     */
+    protected function responseOnUnauthorized($request)
+    {
+        if ($request->ajax()) {
+            return $this->response->make('Unauthorized', 401);
+        }
+
+        $type = ($this->auth->guest() ? 'guest' : 'user');
+        $url  = $this->config->get("orchestra/foundation::routes.{$type}");
+
+        return $this->response->redirectTo($this->foundation->handles($url));
     }
 }
