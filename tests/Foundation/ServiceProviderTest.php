@@ -109,6 +109,7 @@ class ServiceProviderTest extends TestCase
             'command.migrate.make',
             'seeder',
             'command.seed',
+            'command.seeder.make',
             'composer',
             'command.queue.table',
             'command.queue.failed',
