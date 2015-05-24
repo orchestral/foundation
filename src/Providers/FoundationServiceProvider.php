@@ -1,13 +1,15 @@
 <?php namespace Orchestra\Foundation\Providers;
 
+use Illuminate\Routing\Router;
 use Orchestra\Foundation\Meta;
 use Orchestra\Foundation\Foundation;
 use Orchestra\Support\Providers\ServiceProvider;
 use Orchestra\Support\Providers\Traits\AliasesProviderTrait;
+use Orchestra\Support\Providers\Traits\MiddlewareProviderTrait;
 
 class FoundationServiceProvider extends ServiceProvider
 {
-    use AliasesProviderTrait;
+    use AliasesProviderTrait, MiddlewareProviderTrait;
 
     /**
      * List of core aliases.
@@ -69,7 +71,7 @@ class FoundationServiceProvider extends ServiceProvider
 
         $this->registerCoreContainerAliases();
 
-        $this->registerEvents();
+        $this->registerEventListeners();
     }
 
     /**
@@ -103,7 +105,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerEvents()
+    protected function registerEventListeners()
     {
         $this->app['router']->after(function () {
             $this->app['events']->fire('orchestra.done');
@@ -117,17 +119,27 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->bootCoreComponent();
+
+        $this->app['events']->fire('orchestra.ready');
+    }
+
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    protected function bootCoreComponent()
+    {
         $path = realpath(__DIR__.'/../../');
 
         $this->addConfigComponent('orchestra/foundation', 'orchestra/foundation', $path.'/resources/config');
         $this->addLanguageComponent('orchestra/foundation', 'orchestra/foundation', $path.'/resources/lang');
         $this->addViewComponent('orchestra/foundation', 'orchestra/foundation', $path.'/resources/views');
 
-        if (! $this->app->routesAreCached()) {
+        if (!$this->app->routesAreCached()) {
             require "{$path}/src/routes.php";
         }
-
-        $this->app['events']->fire('orchestra.ready');
     }
 
     /**
