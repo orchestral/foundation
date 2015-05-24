@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Providers;
 
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Routing\Router;
 use Orchestra\Foundation\Meta;
 use Orchestra\Foundation\Foundation;
@@ -54,6 +55,21 @@ class FoundationServiceProvider extends ServiceProvider
         'Orchestra\Support\Facades\Mail'      => 'Orchestra\Mail',
         'Orchestra\Support\Facades\Publisher' => 'Orchestra\Publisher',
         'Orchestra\Support\Facades\Widget'    => 'Orchestra\Widget',
+    ];
+
+    /**
+     * The application's route middleware.
+     *
+     * @var array
+     */
+    protected $routeMiddleware = [
+        'orchestra.auth'        => 'Orchestra\Foundation\Http\Filters\Authenticate',
+        'orchestra.csrf'        => 'Orchestra\Foundation\Http\Filters\VerifyCsrfToken',
+        'orchestra.guest'       => 'Orchestra\Foundation\Http\Filters\IsGuest',
+        'orchestra.installable' => 'Orchestra\Foundation\Http\Filters\CanBeInstalled',
+        'orchestra.installed'   => 'Orchestra\Foundation\Http\Filters\IsInstalled',
+        'orchestra.manage'      => 'Orchestra\Foundation\Http\Filters\CanManage',
+        'orchestra.registrable' => 'Orchestra\Foundation\Http\Filters\IsRegistrable',
     ];
 
     /**
@@ -115,10 +131,15 @@ class FoundationServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application events.
      *
+     * @param  \Illuminate\Routing\Router  $router
+     * @param  \Illuminate\Contracts\Http\Kernel  $kernel
+     *
      * @return void
      */
-    public function boot()
+    public function boot(Router $router, Kernel $kernel)
     {
+        $this->registerRouteMiddleware($router, $kernel);
+
         $this->bootCoreComponent();
 
         $this->app['events']->fire('orchestra.ready');
