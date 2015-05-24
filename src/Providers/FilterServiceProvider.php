@@ -18,4 +18,14 @@ class FilterServiceProvider extends ServiceProvider
         'orchestra.manage'      => 'Orchestra\Foundation\Http\Filters\CanManage',
         'orchestra.registrable' => 'Orchestra\Foundation\Http\Filters\IsRegistrable',
     ];
+
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
 }
