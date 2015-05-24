@@ -28,7 +28,7 @@ class ProfileCreatorController extends AdminController implements Listener
      */
     protected function setupFilters()
     {
-        $this->beforeFilter('orchestra.registrable');
+        $this->middleware('orchestra.registrable');
     }
 
     /**

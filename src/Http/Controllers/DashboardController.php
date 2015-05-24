@@ -26,7 +26,7 @@ class DashboardController extends AdminController implements Listener
     protected function setupFilters()
     {
         // User has to be authenticated before using this controller.
-        $this->beforeFilter('orchestra.auth', ['only' => ['show']]);
+        $this->middleware('orchestra.auth', ['only' => ['show']]);
     }
 
     /**

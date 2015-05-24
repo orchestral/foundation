@@ -70,13 +70,13 @@ class FoundationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $routeMiddleware = [
-        'orchestra.auth'        => 'Orchestra\Foundation\Http\Filters\Authenticate',
-        'orchestra.csrf'        => 'Orchestra\Foundation\Http\Filters\VerifyCsrfToken',
-        'orchestra.guest'       => 'Orchestra\Foundation\Http\Filters\IsGuest',
-        'orchestra.installable' => 'Orchestra\Foundation\Http\Filters\CanBeInstalled',
-        'orchestra.installed'   => 'Orchestra\Foundation\Http\Filters\IsInstalled',
-        'orchestra.manage'      => 'Orchestra\Foundation\Http\Filters\CanManage',
-        'orchestra.registrable' => 'Orchestra\Foundation\Http\Filters\IsRegistrable',
+        'orchestra.auth'        => 'Orchestra\Foundation\Http\Middleware\Authenticate',
+        'orchestra.csrf'        => 'Orchestra\Foundation\Http\Middleware\VerifyCsrfToken',
+        'orchestra.guest'       => 'Orchestra\Foundation\Http\Middleware\IsGuest',
+        'orchestra.installable' => 'Orchestra\Foundation\Http\Middleware\CanBeInstalled',
+        'orchestra.installed'   => 'Orchestra\Foundation\Http\Middleware\IsInstalled',
+        'orchestra.manage'      => 'Orchestra\Foundation\Http\Middleware\CanManage',
+        'orchestra.registrable' => 'Orchestra\Foundation\Http\Middleware\IsRegistrable',
     ];
 
     /**

@@ -26,9 +26,9 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
      */
     protected function setupFilters()
     {
-        $this->beforeFilter('orchestra.auth');
-        $this->beforeFilter('orchestra.manage');
-        $this->beforeFilter('orchestra.csrf', ['only' => 'migrate']);
+        $this->middleware('orchestra.auth');
+        $this->middleware('orchestra.manage');
+        $this->middleware('orchestra.csrf', ['only' => 'migrate']);
     }
 
     /**

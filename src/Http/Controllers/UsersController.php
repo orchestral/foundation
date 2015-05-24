@@ -28,9 +28,9 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     protected function setupFilters()
     {
-        $this->beforeFilter('orchestra.auth');
-        $this->beforeFilter('orchestra.manage:users');
-        $this->beforeFilter('orchestra.csrf', ['only' => 'delete']);
+        $this->middleware('orchestra.auth');
+        $this->middleware('orchestra.manage:users');
+        $this->middleware('orchestra.csrf', ['only' => 'delete']);
     }
 
     /**

@@ -12,7 +12,7 @@ abstract class Controller extends AdminController implements User
      */
     protected function setupFilters()
     {
-        $this->beforeFilter('orchestra.auth');
+        $this->middleware('orchestra.auth');
     }
 
     /**
