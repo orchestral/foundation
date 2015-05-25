@@ -1,6 +1,8 @@
 <?php namespace Orchestra\Foundation\Http\Middleware;
 
-class IsInstalled extends Can
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+class CanRegisterUser extends Can
 {
     /**
      * Check authorization.
@@ -11,7 +13,7 @@ class IsInstalled extends Can
      */
     protected function authorize($action = null)
     {
-        return ! $this->foundation->installed();
+        return $this->foundation->memory()->get('site.registrable', false);
     }
 
     /**
@@ -20,16 +22,11 @@ class IsInstalled extends Can
      * @param  \Illuminate\Http\Request  $request
      *
      * @return mixed
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     protected function responseOnUnauthorized($request)
     {
-        if ($request->ajax()) {
-            return $this->response->make('Unauthorized', 401);
-        }
-
-        $type = ($this->auth->guest() ? 'guest' : 'user');
-        $url  = $this->config->get("orchestra/foundation::routes.{$type}");
-
-        return $this->response->redirectTo($this->foundation->handles($url));
+        throw new NotFoundHttpException('User registration is not allowed.');
     }
 }

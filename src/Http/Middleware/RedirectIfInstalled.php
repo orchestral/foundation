@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Http\Middleware;
 
-class IsGuest extends Can
+class RedirectIfInstalled extends Can
 {
     /**
      * Check authorization.
@@ -11,7 +11,7 @@ class IsGuest extends Can
      */
     protected function authorize($action = null)
     {
-        return $this->auth->guest();
+        return ! $this->foundation->installed();
     }
 
     /**
@@ -27,7 +27,8 @@ class IsGuest extends Can
             return $this->response->make('Unauthorized', 401);
         }
 
-        $url = $this->config->get('orchestra/foundation::routes.user');
+        $type = ($this->auth->guest() ? 'guest' : 'user');
+        $url  = $this->config->get("orchestra/foundation::routes.{$type}");
 
         return $this->response->redirectTo($this->foundation->handles($url));
     }
