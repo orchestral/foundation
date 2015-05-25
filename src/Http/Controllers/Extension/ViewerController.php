@@ -24,8 +24,8 @@ class ViewerController extends Controller implements Listener
      */
     protected function setupFilters()
     {
-        $this->beforeFilter('orchestra.auth');
-        $this->beforeFilter('orchestra.manage');
+        $this->middleware('orchestra.auth');
+        $this->middleware('orchestra.manage');
     }
 
     /**

@@ -6,9 +6,12 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class SettingsControllerTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /**
      * Setup the test environment.
      */
@@ -16,8 +19,7 @@ class SettingsControllerTest extends TestCase
     {
         parent::setUp();
 
-        View::shouldReceive('addNamespace');
-        View::shouldReceive('share')->once()->with('errors', m::any());
+        $this->disableMiddlewareForAllTests();
     }
 
     /**

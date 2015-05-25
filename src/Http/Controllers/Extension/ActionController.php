@@ -18,9 +18,9 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      */
     protected function setupFilters()
     {
-        $this->beforeFilter('orchestra.auth');
-        $this->beforeFilter('orchestra.manage');
-        $this->beforeFilter('orchestra.csrf');
+        $this->middleware('orchestra.auth');
+        $this->middleware('orchestra.manage');
+        $this->middleware('orchestra.csrf');
     }
 
     /**

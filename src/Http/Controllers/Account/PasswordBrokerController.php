@@ -28,7 +28,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      */
     protected function setupFilters()
     {
-        $this->beforeFilter('orchestra.guest');
+        $this->middleware('orchestra.guest');
     }
 
     /**

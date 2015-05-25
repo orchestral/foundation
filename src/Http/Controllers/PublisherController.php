@@ -24,7 +24,7 @@ class PublisherController extends AdminController implements Listener
      */
     protected function setupFilters()
     {
-        $this->beforeFilter('orchestra.auth');
+        $this->middleware('orchestra.auth');
     }
 
     /**

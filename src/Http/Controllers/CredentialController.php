@@ -27,7 +27,7 @@ class CredentialController extends AdminController implements Listener
      */
     protected function setupFilters()
     {
-        $this->beforeFilter('orchestra.guest', ['only' => ['index', 'login']]);
+        $this->middleware('orchestra.guest', ['only' => ['index', 'login']]);
     }
 
     /**

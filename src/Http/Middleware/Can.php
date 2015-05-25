@@ -49,6 +49,7 @@ class Can
         $this->foundation = $foundation;
         $this->auth       = $auth;
         $this->config     = $config;
+        $this->response   = $response;
     }
 
     /**

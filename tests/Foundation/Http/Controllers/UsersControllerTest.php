@@ -8,9 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class UsersControllerTest extends TestCase
 {
+    use WithoutMiddleware;
+
     /**
      * Setup the test environment.
      */
@@ -18,8 +21,7 @@ class UsersControllerTest extends TestCase
     {
         parent::setUp();
 
-        View::shouldReceive('addNamespace');
-        View::shouldReceive('share')->once()->with('errors', m::any());
+        $this->disableMiddlewareForAllTests();
 
         $this->app['Illuminate\Contracts\Auth\Guard'] = $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
         $this->app['Illuminate\Contracts\Auth\Authenticatable'] = $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
