@@ -46,7 +46,9 @@
 	},
 	"suggest": {
 		"orchestra/ftp-updater": "Allow Extension with asset to be updated/uploaded environment without SSH support (~3.1).",
-		"orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.1)."
+		"orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.1).",
+		"orchestra/studio": "Allow additional code generator for Orchestra Platform (~3.1).",
+		"orchestra/testing": "Allow better unit testing support for Orchestra Platform (~3.1)."
 	},
 	"extra": {
 		"branch-alias": {
