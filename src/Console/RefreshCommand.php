@@ -73,7 +73,7 @@ class RefreshCommand extends Command
         $extensions = $this->memory->get('extensions.active', []);
 
         foreach ($extensions as $extension => $config) {
-            $this->call('extension:refresh', ['name' => $extension]);
+            $this->call('extension:refresh', ['name' => $extension, '--force' => true]);
         }
     }
 
@@ -87,6 +87,7 @@ class RefreshCommand extends Command
         if ($this->laravel->environment('production') || $this->option('cache')) {
             $this->call('config:cache');
             $this->call('route:cache');
+            $this->call('orchestra:optimize', ['--force' => true]);
         }
     }
 
