@@ -5,14 +5,14 @@ use Orchestra\Contracts\Memory\Provider;
 use Orchestra\Contracts\Foundation\Foundation;
 use Symfony\Component\Console\Input\InputOption;
 
-class RefreshCommand extends Command
+class AssembleCommand extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'orchestra:refresh';
+    protected $name = 'orchestra:assemble';
 
     /**
      * The console command description.

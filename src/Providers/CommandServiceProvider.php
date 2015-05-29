@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Providers;
 
-use Orchestra\Foundation\Console\Commands\RefreshCommand;
+use Orchestra\Foundation\Console\Commands\AssembleCommand;
 use Orchestra\Support\Providers\CommandServiceProvider as ServiceProvider;
 
 class CommandServiceProvider extends ServiceProvider
@@ -11,7 +11,7 @@ class CommandServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        'Refresh' => 'orchestra.command.refresh',
+        'Assemble' => 'orchestra.commands.assemble',
     ];
 
     /**
@@ -19,10 +19,10 @@ class CommandServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerRefreshCommand()
+    protected function registerAssembleCommand()
     {
-        $this->app->singleton('orchestra.command.refresh', function ($app) {
-            return new RefreshCommand($app['orchestra.app'], $app['orchestra.platform.memory']);
+        $this->app->singleton('orchestra.commands.assemble', function ($app) {
+            return new AssembleCommand($app['orchestra.app'], $app['orchestra.platform.memory']);
         });
     }
 }

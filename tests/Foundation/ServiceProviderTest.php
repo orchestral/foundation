@@ -129,7 +129,7 @@ class ServiceProviderTest extends TestCase
             'orchestra.commands.extension.refresh',
             'orchestra.commands.extension.reset',
             'orchestra.commands.memory',
-            'orchestra.command.refresh',
+            'orchestra.commands.assemble',
             'orchestra.commands.optimize',
             'orchestra.optimize',
             'command.asset.publish',
