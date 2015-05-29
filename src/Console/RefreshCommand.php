@@ -45,6 +45,8 @@ class RefreshCommand extends Command
     {
         $this->foundation = $foundation;
         $this->memory     = $memory;
+
+        parent::__construct();
     }
 
     /**

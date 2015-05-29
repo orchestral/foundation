@@ -1,8 +1,6 @@
 <?php namespace Orchestra\Foundation\Providers;
 
 use Illuminate\Routing\Router;
-use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Contracts\Events\Dispatcher;
 use Orchestra\Support\Providers\Traits\MiddlewareProviderTrait;
 use Orchestra\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -36,13 +34,13 @@ class RouteServiceProvider extends ServiceProvider
      * Bootstrap the application events.
      *
      * @param  \Illuminate\Routing\Router  $router
-     * @param  \Illuminate\Contracts\Http\Kernel  $kernel
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $events
      *
      * @return void
      */
-    public function boot(Router $router, Kernel $kernel, Dispatcher $events)
+    public function boot(Router $router)
     {
+        $kernel = $this->app['Illuminate\Contracts\Http\Kernel'];
+
         $this->registerRouteMiddleware($router, $kernel);
 
         if ($this->app->routesAreCached()) {
@@ -51,7 +49,7 @@ class RouteServiceProvider extends ServiceProvider
             $this->loadRoutes();
         }
 
-        $events->fire('orchestra.done');
+        $this->app['events']->fire('orchestra.done');
     }
 
     /**
