@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Providers;
 
-use Orchestra\Foundation\Console\RefreshCommand;
+use Orchestra\Foundation\Console\Commands\RefreshCommand;
 use Orchestra\Support\Providers\CommandServiceProvider as ServiceProvider;
 
 class CommandServiceProvider extends ServiceProvider

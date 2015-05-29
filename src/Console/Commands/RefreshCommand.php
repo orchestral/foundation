@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Console;
+<?php namespace Orchestra\Foundation\Console\Commands;
 
 use Illuminate\Console\Command;
 use Orchestra\Contracts\Memory\Provider;
@@ -56,11 +56,15 @@ class RefreshCommand extends Command
      */
     public function handle()
     {
+        $this->setupApplication();
+
         $this->refreshApplication();
+
+        $this->optimizeApplication();
     }
 
     /**
-     * Refresh application.
+     * Refresh application for Orchestra Platform.
      *
      * @return void
      */
@@ -78,7 +82,17 @@ class RefreshCommand extends Command
     }
 
     /**
-     * Optimize application.
+     * Setup application for Orchestra Platform.
+     *
+     * @return void
+     */
+    protected function setupApplication()
+    {
+        $this->call('publish:assets', ['package' => 'orchestra/foundation']);
+    }
+
+    /**
+     * Optimize application for Orchestra Platform.
      *
      * @return void
      */
@@ -87,8 +101,9 @@ class RefreshCommand extends Command
         if ($this->laravel->environment('production') || $this->option('cache')) {
             $this->call('config:cache');
             $this->call('route:cache');
-            $this->call('orchestra:optimize', ['--force' => true]);
         }
+
+        $this->call('orchestra:optimize');
     }
 
     /**
