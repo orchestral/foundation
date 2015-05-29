@@ -1,16 +1,13 @@
 <?php namespace Orchestra\Foundation\Providers;
 
-use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Routing\Router;
 use Orchestra\Foundation\Meta;
 use Orchestra\Foundation\Foundation;
 use Orchestra\Support\Providers\ServiceProvider;
 use Orchestra\Support\Providers\Traits\AliasesProviderTrait;
-use Orchestra\Support\Providers\Traits\MiddlewareProviderTrait;
 
 class FoundationServiceProvider extends ServiceProvider
 {
-    use AliasesProviderTrait, MiddlewareProviderTrait;
+    use AliasesProviderTrait;
 
     /**
      * List of core aliases.
@@ -55,28 +52,6 @@ class FoundationServiceProvider extends ServiceProvider
         'Orchestra\Support\Facades\Mail'      => 'Orchestra\Mail',
         'Orchestra\Support\Facades\Publisher' => 'Orchestra\Publisher',
         'Orchestra\Support\Facades\Widget'    => 'Orchestra\Widget',
-    ];
-
-    /**
-     * The application's middleware stack.
-     *
-     * @var array
-     */
-    protected $middleware = [];
-
-    /**
-     * The application's route middleware.
-     *
-     * @var array
-     */
-    protected $routeMiddleware = [
-        'orchestra.auth'        => 'Orchestra\Foundation\Http\Middleware\Authenticate',
-        'orchestra.csrf'        => 'Orchestra\Foundation\Http\Middleware\VerifyCsrfToken',
-        'orchestra.guest'       => 'Orchestra\Foundation\Http\Middleware\RedirectIfAuthenticated',
-        'orchestra.installable' => 'Orchestra\Foundation\Http\Middleware\CanBeInstalled',
-        'orchestra.installed'   => 'Orchestra\Foundation\Http\Middleware\RedirectIfInstalled',
-        'orchestra.manage'      => 'Orchestra\Foundation\Http\Middleware\CanManage',
-        'orchestra.registrable' => 'Orchestra\Foundation\Http\Middleware\CanRegisterUser',
     ];
 
     /**
@@ -138,36 +113,15 @@ class FoundationServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application events.
      *
-     * @param  \Illuminate\Routing\Router  $router
-     * @param  \Illuminate\Contracts\Http\Kernel  $kernel
-     *
      * @return void
      */
-    public function boot(Router $router, Kernel $kernel)
-    {
-        $this->registerRouteMiddleware($router, $kernel);
-
-        $this->bootCoreComponent();
-
-        $this->app['events']->fire('orchestra.ready');
-    }
-
-    /**
-     * Bootstrap the application events.
-     *
-     * @return void
-     */
-    protected function bootCoreComponent()
+    public function boot()
     {
         $path = realpath(__DIR__.'/../../');
 
-        $this->addConfigComponent('orchestra/foundation', 'orchestra/foundation', $path.'/resources/config');
-        $this->addLanguageComponent('orchestra/foundation', 'orchestra/foundation', $path.'/resources/lang');
-        $this->addViewComponent('orchestra/foundation', 'orchestra/foundation', $path.'/resources/views');
-
-        if (!$this->app->routesAreCached()) {
-            require "{$path}/src/routes.php";
-        }
+        $this->addConfigComponent('orchestra/foundation', 'orchestra/foundation', "{$path}/resources/config");
+        $this->addLanguageComponent('orchestra/foundation', 'orchestra/foundation', "{$path}/resources/lang");
+        $this->addViewComponent('orchestra/foundation', 'orchestra/foundation', "{$path}/resources/views");
     }
 
     /**

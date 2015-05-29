@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.12 {#v3-0-12}
+
+* Fixes description for `us-west-2` SES region.
+
 ### v3.0.11 {#v3-0-11}
 
 * Add option to include page number to HTML::title().
