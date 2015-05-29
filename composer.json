@@ -45,7 +45,9 @@
 		"orchestra/testing": "3.0.*"
 	},
 	"suggest": {
-		"orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.0)."
+		"orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.0).",
+		"orchestra/studio": "Allow additional code generator for Orchestra Platform (~3.0).",
+		"orchestra/testing": "Allow better unit testing support for Orchestra Platform (~3.0)."
 	},
 	"extra": {
 		"branch-alias": {
