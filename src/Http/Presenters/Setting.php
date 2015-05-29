@@ -123,7 +123,7 @@ class Setting extends Presenter
                 ->label(trans('orchestra/foundation::label.email.region'))
                 ->options([
                     'us-east-1' => 'us-east-1',
-                    'us-west-2' => 'us-east-1',
+                    'us-west-2' => 'us-west-2',
                     'eu-west-1' => 'eu-west-1',
                 ]);
 
