@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Fluent;
 use Orchestra\Support\Facades\Publisher;
+use Orchestra\Foundation\Jobs\RefreshRouteCache;
 use Orchestra\Extension\Processor\Migrator as MigratorProcessor;
 use Orchestra\Extension\Processor\Activator as ActivatorProcessor;
 use Orchestra\Extension\Processor\Deactivator as DeactivatorProcessor;
@@ -93,6 +94,8 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      */
     public function activationHasSucceed(Fluent $extension)
     {
+        $this->dispatch(new RefreshRouteCache());
+
         $message = trans('orchestra/foundation::response.extensions.activate', $extension->getAttributes());
 
         return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
@@ -107,6 +110,8 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      */
     public function deactivationHasSucceed(Fluent $extension)
     {
+        $this->dispatch(new RefreshRouteCache());
+        
         $message = trans('orchestra/foundation::response.extensions.deactivate', $extension->getAttributes());
 
         return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
