@@ -3,7 +3,13 @@
 use Closure;
 use Exception;
 use Orchestra\Http\RouteManager;
+use Orchestra\Extension\RouteGenerator;
 use Orchestra\Contracts\Memory\Provider;
+use Orchestra\Foundation\Http\Handlers\UserMenuHandler;
+use Orchestra\Foundation\Http\Middleware\UseBackendTheme;
+use Orchestra\Foundation\Http\Handlers\SettingMenuHandler;
+use Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler;
+use Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler;
 use Orchestra\Contracts\Foundation\Foundation as FoundationContract;
 
 class Foundation extends RouteManager implements FoundationContract
@@ -88,7 +94,7 @@ class Foundation extends RouteManager implements FoundationContract
             $attributes['namespace'] = $namespace;
         }
 
-        $attributes['middleware'] = ['Orchestra\Foundation\Http\Middleware\UseBackendTheme'];
+        $attributes['middleware'] = [UseBackendTheme::class];
 
         $this->group('orchestra/foundation', 'orchestra', $attributes, $callback);
     }
@@ -198,10 +204,10 @@ class Foundation extends RouteManager implements FoundationContract
     {
         $menu     = $this->menu();
         $handlers = [
-            'Orchestra\Foundation\Http\Handlers\UserMenuHandler',
-            'Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler',
-            'Orchestra\Foundation\Http\Handlers\SettingMenuHandler',
-            'Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler',
+            UserMenuHandler::class,
+            ExtensionMenuHandler::class,
+            SettingMenuHandler::class,
+            ResourcesMenuHandler::class,
         ];
 
         $menu->add('home')
@@ -212,7 +218,7 @@ class Foundation extends RouteManager implements FoundationContract
             $this->app['events']->listen('orchestra.started: admin', $handler);
         }
 
-        $this->app['events']->listen('orchestra.ready: admin', 'Orchestra\Foundation\AdminMenuHandler');
+        $this->app['events']->listen('orchestra.ready: admin', AdminMenuHandler::class);
     }
 
     /**
@@ -249,7 +255,7 @@ class Foundation extends RouteManager implements FoundationContract
         // Orchestra Platform routing is managed by `orchestra/foundation::handles`
         // and can be manage using configuration.
         if (in_array($name, ['orchestra'])) {
-            return $this->app->make('Orchestra\Extension\RouteGenerator', [
+            return $this->app->make(RouteGenerator::class, [
                 $this->app['config']->get('orchestra/foundation::handles', $default),
                 $this->app['request'],
             ]);

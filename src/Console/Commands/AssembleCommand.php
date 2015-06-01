@@ -98,12 +98,18 @@ class AssembleCommand extends Command
      */
     protected function optimizeApplication()
     {
-        if ($this->laravel->environment('production') || $this->option('cache')) {
+        $this->call('config:clear');
+        $this->call('route:clear');
+        $this->call('clear-compiled');
+
+        if ($this->laravel->environment('production') && ! $this->option('no-cache')) {
             $this->call('config:cache');
             $this->call('route:cache');
         }
 
-        $this->call('orchestra:optimize');
+        if (! $this->option('no-optimize')) {
+            $this->call('orchestra:optimize');
+        }
     }
 
     /**
@@ -114,7 +120,8 @@ class AssembleCommand extends Command
     protected function getOptions()
     {
         return [
-            ['cache', null, InputOption::VALUE_NONE, 'Force to run route and config caching.'],
+            ['no-cache', null, InputOption::VALUE_NONE, 'Avoid running route and config caching.'],
+            ['no-optimize', null, InputOption::VALUE_NONE, 'Avoid running class optimization.'],
         ];
     }
 }

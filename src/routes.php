@@ -45,7 +45,6 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', function (Router
 
     // Route to users.
     $router->resource('users', 'UsersController', ['except' => ['show']]);
-    $router->match(['GET', 'HEAD', 'DELETE'], 'users/{user}/delete', 'UsersController@delete');
 
     // Route for settings
     $router->get('settings', 'SettingsController@edit');

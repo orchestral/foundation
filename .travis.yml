@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 5.4
   - 5.5
   - 5.6
   - 7.0
@@ -29,11 +28,11 @@ after_script:
 
 matrix:
   include:
-    - php: 5.4
+    - php: 5.5
       env: setup=lowest
-    - php: 5.4
+    - php: 5.5
       env: setup=stable
-    - php: 5.4
+    - php: 5.5
       env: setup=coveralls coverage=yes
   allow_failures:
     - env: setup=lowest

@@ -60,15 +60,15 @@ class UsersController extends AdminController implements UserCreator, UserRemove
     /**
      * Edit the user.
      *
-     * GET (:orchestra)/users/$id/edit
+     * GET (:orchestra)/users/$users/edit
      *
-     * @param  int|string  $id
+     * @param  int|string  $users
      *
      * @return mixed
      */
-    public function edit($id)
+    public function edit($users)
     {
-        return $this->processor->edit($this, $id);
+        return $this->processor->edit($this, $users);
     }
 
     /**
@@ -86,43 +86,43 @@ class UsersController extends AdminController implements UserCreator, UserRemove
     /**
      * Update the user.
      *
-     * PUT (:orchestra)/users/1
+     * PUT (:orchestra)/users/$users
      *
-     * @param  int|string  $id
+     * @param  int|string  $users
      *
      * @return mixed
      */
-    public function update($id)
+    public function update($users)
     {
-        return $this->processor->update($this, $id, Input::all());
+        return $this->processor->update($this, $users, Input::all());
     }
 
     /**
      * Request to delete a user.
      *
-     * GET (:orchestra)/$id/delete
+     * GET (:orchestra)/$users/delete
      *
-     * @param  int|string  $id
+     * @param  int|string  $users
      *
      * @return mixed
      */
-    public function delete($id)
+    public function delete($users)
     {
-        return $this->destroy($id);
+        return $this->destroy($users);
     }
 
     /**
      * Request to delete a user.
      *
-     * DELETE (:orchestra)/$id
+     * DELETE (:orchestra)/$users
      *
-     * @param  int|string  $id
+     * @param  int|string  $users
      *
      * @return mixed
      */
-    public function destroy($id)
+    public function destroy($users)
     {
-        return $this->processor->destroy($this, $id);
+        return $this->processor->destroy($this, $users);
     }
 
     /**
