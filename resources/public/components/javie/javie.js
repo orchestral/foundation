@@ -110,7 +110,7 @@
       if (_.isUndefined(base)) {
         return null;
       } else {
-        return base[0];
+        return base;
       }
     };
 
