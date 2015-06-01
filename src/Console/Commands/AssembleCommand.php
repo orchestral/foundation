@@ -98,7 +98,11 @@ class AssembleCommand extends Command
      */
     protected function optimizeApplication()
     {
-        if ($this->laravel->environment('production') || $this->option('no-cache')) {
+        $this->call('config:clear');
+        $this->call('route:clear');
+        $this->call('clear-compiled');
+
+        if ($this->laravel->environment('production') && ! $this->option('no-cache')) {
             $this->call('config:cache');
             $this->call('route:cache');
         }
