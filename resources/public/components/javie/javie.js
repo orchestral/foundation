@@ -70,33 +70,38 @@
 
     Application.prototype.on = function(name, callback) {
       var dispatcher;
-      dispatcher = this.instances['event'];
+      dispatcher = this.make('event');
       dispatcher.listen(name, callback);
       return this;
     };
 
     Application.prototype.trigger = function(name, options) {
       var dispatcher;
-      dispatcher = this.instances['event'];
+      dispatcher = this.make('event');
       dispatcher.fire(name, options);
       return this;
     };
 
     Application.prototype.bind = function(name, instance) {
-      this.instances[name] = instance;
+      this.instances[name] = [instance, false, null];
       return this;
     };
 
     Application.prototype.make = function(name) {
-      var base, options;
+      var base, options, resolved, resolving;
       options = array_make(arguments);
       name = options.shift();
       base = this.resolve(name);
-      if (_.isFunction(base)) {
-        return base.apply(root, options);
-      } else {
-        return base;
+      resolving = base[0];
+      if (base[1] === true && base[2] === true) {
+        return resolving;
       }
+      resolved = _.isFunction(resolving) ? resolving.apply(root, options) : resolving;
+      if (base[1] === true) {
+        this.instances[name][0] = resolved;
+        this.instances[name][2] = true;
+      }
+      return resolved;
     };
 
     Application.prototype.resolve = function(name) {
@@ -105,8 +110,13 @@
       if (_.isUndefined(base)) {
         return null;
       } else {
-        return base;
+        return base[0];
       }
+    };
+
+    Application.prototype.singleton = function(name, instance) {
+      this.instances[name] = [instance, true, false];
+      return this;
     };
 
     Application.prototype.when = function(environment, callback) {
@@ -949,11 +959,9 @@
 
   javie = root.Javie;
 
-  javie.bind('underscore', function() {
-    return root._;
-  });
+  javie.singleton('underscore', root._);
 
-  javie.bind('event', function() {
+  javie.singleton('event', function() {
     return new javie.EventDispatcher;
   });
 
