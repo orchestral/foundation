@@ -111,7 +111,7 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
     public function deactivationHasSucceed(Fluent $extension)
     {
         $this->dispatch(new RefreshRouteCache());
-        
+
         $message = trans('orchestra/foundation::response.extensions.deactivate', $extension->getAttributes());
 
         return $this->redirectWithMessage(handles('orchestra::extensions'), $message);

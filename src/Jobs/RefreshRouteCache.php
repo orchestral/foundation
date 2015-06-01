@@ -1,4 +1,4 @@
-<?php namespace Orchestra\Foundation\Jobs; 
+<?php namespace Orchestra\Foundation\Jobs;
 
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Console\Kernel;
