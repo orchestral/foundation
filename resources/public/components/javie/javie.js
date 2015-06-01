@@ -64,11 +64,27 @@
         config = {};
         config[key] = value;
       }
-      return this.config = _.defaults(config, this.config);
+      this.config = _.defaults(config, this.config);
+      return this;
+    };
+
+    Application.prototype.on = function(name, callback) {
+      var dispatcher;
+      dispatcher = this.instances['event'];
+      dispatcher.listen(name, callback);
+      return this;
+    };
+
+    Application.prototype.trigger = function(name, options) {
+      var dispatcher;
+      dispatcher = this.instances['event'];
+      dispatcher.fire(name, options);
+      return this;
     };
 
     Application.prototype.bind = function(name, instance) {
-      return this.instances[name] = instance;
+      this.instances[name] = instance;
+      return this;
     };
 
     Application.prototype.make = function(name) {
@@ -78,17 +94,19 @@
       base = this.resolve(name);
       if (_.isFunction(base)) {
         return base.apply(root, options);
+      } else {
+        return base;
       }
-      return base;
     };
 
     Application.prototype.resolve = function(name) {
       var base;
       base = this.instances[name];
       if (_.isUndefined(base)) {
-        base = null;
+        return null;
+      } else {
+        return base;
       }
-      return base;
     };
 
     Application.prototype.when = function(environment, callback) {
@@ -169,47 +187,49 @@
       };
     };
 
-    EventDispatcher.prototype.listen = function(id, cb) {
+    EventDispatcher.prototype.listen = function(id, callback) {
       var response;
-      if (_.isFunction(cb) === false) {
+      if (_.isFunction(callback) === false) {
         throw new Error("Callback is not a function");
       }
       response = {
         id: id,
-        cb: cb
+        callback: callback
       };
       if (events[id] == null) {
         events[id] = [];
       }
-      events[id].push(cb);
+      events[id].push(callback);
       return response;
     };
 
-    EventDispatcher.prototype.listener = function(id, cb) {
-      return this.listen(id, cb);
+    EventDispatcher.prototype.listener = function(id, callback) {
+      return this.listen(id, callback);
     };
 
     EventDispatcher.prototype.fire = function(id, options) {
-      var me, response, runEachEvent;
+      var me, responses, run_each_events;
       me = this;
-      response = [];
+      responses = [];
       if (id == null) {
         throw new Error("Event ID [" + id + "] is not available");
       }
       if (events[id] == null) {
         return null;
       }
-      runEachEvent = function(cb, key) {
-        return response.push(cb.apply(me, options || []));
+      run_each_events = function(callback, key) {
+        var applied;
+        applied = callback.apply(me, options || []);
+        return responses.push(applied);
       };
-      _.each(events[id], runEachEvent);
-      return response;
+      _.each(events[id], run_each_events);
+      return responses;
     };
 
     EventDispatcher.prototype.first = function(id, options) {
-      var first, me, response, runEachEvent;
+      var first, me, responses, run_each_events;
       me = this;
-      response = [];
+      responses = [];
       if (id == null) {
         throw new Error("Event ID [" + id + "] is not available");
       }
@@ -217,30 +237,34 @@
         return null;
       }
       first = events[id].slice(0, 1);
-      runEachEvent = function(cb, key) {
-        return response.push(cb.apply(me, options || []));
+      run_each_events = function(callback, key) {
+        var applied;
+        applied = callback.apply(me, options || []);
+        return responses.push(applied);
       };
-      _.each(first, runEachEvent);
-      return response[0];
+      _.each(first, run_each_events);
+      return responses[0];
     };
 
     EventDispatcher.prototype.until = function(id, options) {
-      var me, response, runEachEvent;
+      var me, responses, run_each_events;
       me = this;
-      response = null;
+      responses = null;
       if (id == null) {
         throw new Error("Event ID [" + id + "] is not available");
       }
       if (events[id] == null) {
         return null;
       }
-      runEachEvent = function(cb, key) {
-        if (response == null) {
-          return response.push(cb.apply(me, options || []));
+      run_each_events = function(callback, key) {
+        var applied;
+        applied = callback.apply(me, options || []);
+        if (responses == null) {
+          return responses.push(applied);
         }
       };
-      _.each(events[id], runEachEvent);
-      return response;
+      _.each(events[id], run_each_events);
+      return responses;
     };
 
     EventDispatcher.prototype.flush = function(id) {
@@ -251,25 +275,25 @@
     };
 
     EventDispatcher.prototype.forget = function(handler) {
-      var cb, id, loopEachEvent, me;
+      var id, loop_each_events, me, ref;
       me = this;
       id = handler.id;
-      cb = handler.cb;
+      ref = handler.callback;
       if (!_.isString(id)) {
         throw new Error("Event ID [" + id + "] is not provided");
       }
-      if (!_.isFunction(cb)) {
+      if (!_.isFunction(callback)) {
         throw new Error('Callback is not a function');
       }
       if (events[id] == null) {
         throw new Error("Event ID [" + id + "] is not available");
       }
-      loopEachEvent = function(callback, key) {
-        if (callback === cb) {
+      loop_each_events = function(callback, key) {
+        if (ref === callback) {
           return events[id].splice(key, 1);
         }
       };
-      _.each(events[id], loopEachEvent);
+      _.each(events[id], loop_each_events);
       return true;
     };
 
@@ -936,8 +960,9 @@
   javie.bind('profiler', function(name) {
     if (name != null) {
       return new javie.Profiler(name);
+    } else {
+      return javie.Profiler;
     }
-    return javie.Profiler;
   });
 
   javie.bind('log', function() {
@@ -947,8 +972,9 @@
   javie.bind('request', function(name) {
     if (name != null) {
       return new javie.Request(name);
+    } else {
+      return javie.Request;
     }
-    return javie.Request;
   });
 
 }).call(this);
