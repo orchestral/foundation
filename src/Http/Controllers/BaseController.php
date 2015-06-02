@@ -2,11 +2,12 @@
 
 use Orchestra\Routing\Controller;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Orchestra\Routing\Traits\ControllerResponseTrait;
 
 abstract class BaseController extends Controller
 {
-    use ControllerResponseTrait;
+    use ControllerResponseTrait, DispatchesJobs;
 
     /**
      * Processor instance.
