@@ -114,8 +114,9 @@ class User extends Presenter
                     ->value(function ($row) {
                         // get all the user roles from objects
                         $roles = [];
+                        $pivots = $row->roles()->get();
 
-                        foreach ($row->roles as $row) {
+                        foreach ($pivots as $row) {
                             $roles[] = $row->id;
                         }
 

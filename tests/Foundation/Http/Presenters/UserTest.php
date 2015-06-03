@@ -201,12 +201,14 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $app['Orchestra\Contracts\Html\Form\Control'] = $control;
         $app['orchestra.role'] = m::mock('\Orchestra\Model\Role');
 
-        $value = (object) [
-            'roles' => new Collection([
-                new Fluent(['id' => 1, 'name' => 'Administrator']),
-                new Fluent(['id' => 2, 'name' => 'Member']),
-            ]),
-        ];
+        $value = m::mock('stdClass');
+
+        $roles = new Collection([
+            new Fluent(['id' => 1, 'name' => 'Administrator']),
+            new Fluent(['id' => 2, 'name' => 'Member']),
+        ]);
+
+        $value->shouldReceive('roles->get')->once()->andReturn($roles);
 
         $model->shouldReceive('hasGetMutator')->andReturn(false);
 
