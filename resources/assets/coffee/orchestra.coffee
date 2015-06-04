@@ -16,10 +16,11 @@ setup_button_group = ($) ->
   buttons.each (i, item) ->
     button = $ item
     button.on 'click', ->
+      self = $ @
       buttons.removeClass 'active'
-      hidden.val $(@).val()
+      hidden.val self.val()
 
-      set_active button
+      set_active self
       return
 
     set_active button

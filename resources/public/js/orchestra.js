@@ -23,9 +23,11 @@
       var button;
       button = $(item);
       button.on('click', function() {
+        var self;
+        self = $(this);
         buttons.removeClass('active');
-        hidden.val($(this).val());
-        set_active(button);
+        hidden.val(self.val());
+        set_active(self);
       });
       set_active(button);
     });
