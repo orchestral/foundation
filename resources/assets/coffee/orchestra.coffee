@@ -9,53 +9,65 @@ setup_button_group = ($) ->
   hidden = $ "input[name='#{name}']", form
   buttons = $ 'button', group
 
+  set_active = (button) ->
+    button.addClass 'active' if button.val() is hidden.val()
+    return
+
   buttons.each (i, item) ->
     button = $ item
-    set_active = ->
-      button.addClass 'active' if button.val() is hidden.val()
-      true
     button.on 'click', ->
       buttons.removeClass 'active'
       hidden.val $(@).val()
 
-      set_active()
+      set_active button
+      return
 
-    set_active()
+    set_active button
+    return
 
-  true
+  return
 
 setup_helper = ($) ->
-  $('input[type="date"]').datepicker { dateFormat: "yy-mm-dd" }
-  $('select.form-control[role!="agreement"], .navbar-form > select[role!="agreement"]').select2().removeClass 'form-control'
-  $('*[role="tooltip"]').tooltip()
-  true
+  $ 'input[type="date"]'
+    .datepicker { dateFormat: "yy-mm-dd" }
+  $ 'select.form-control[role!="agreement"], .navbar-form > select[role!="agreement"]'
+    .select2()
+    .removeClass 'form-control'
+  $ '*[role="tooltip"]'
+    .tooltip()
+  return
 
 setup_pagination = ($) ->
-  $('div.pagination > ul').each (i, item) ->
-    $(item).addClass('pagination').parent().removeClass 'pagination'
-    true
-  true
+  $ 'div.pagination > ul'
+    .each (i, item) ->
+      $ item
+        .addClass 'pagination'
+        .parent()
+        .removeClass 'pagination'
+      return
+  return
 
 setup_agreement = ($) ->
   switchers = $ 'select[role="agreement"]'
-  switchers.removeClass 'form-control'
-  switchers.each (i, item) ->
-    switcher = $ item
-    switcher.toggleSwitch
-      highlight: switcher.data 'highlight'
-      width: 25
-      change: (e, target) ->
-        Javie.trigger 'switcher.change', [switcher, e]
-        true
+  switchers
+    .removeClass 'form-control'
+    .each (i, item) ->
+      switcher = $ item
+      switcher.toggleSwitch
+        highlight: switcher.data 'highlight'
+        width: 25
+        change: (e, target) ->
+          Javie.trigger 'switcher.change', [switcher, e]
+          return
 
-    switcher.css 'display', 'none'
-    true
-  true
+      switcher.css 'display', 'none'
+      return
+  return
 
 jQuery ($) ->
   setup_agreement $
   setup_button_group $
   setup_helper $
   setup_pagination $
-  true
+  return
 
