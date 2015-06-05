@@ -8,29 +8,29 @@
   jQuery = root.jQuery;
 
   setup_button_group = function($) {
-    var buttons, form, group, hidden, name;
+    var buttons, form, group, hidden, name, set_active;
     group = $(this);
     form = group.parents('form').eq(0);
     name = group.attr('data-toggle-name');
     hidden = $("input[name='" + name + "']", form);
     buttons = $('button', group);
+    set_active = function(button) {
+      if (button.val() === hidden.val()) {
+        button.addClass('active');
+      }
+    };
     buttons.each(function(i, item) {
-      var button, set_active;
+      var button;
       button = $(item);
-      set_active = function() {
-        if (button.val() === hidden.val()) {
-          button.addClass('active');
-        }
-        return true;
-      };
       button.on('click', function() {
+        var self;
+        self = $(this);
         buttons.removeClass('active');
-        hidden.val($(this).val());
-        return set_active();
+        hidden.val(self.val());
+        set_active(self);
       });
-      return set_active();
+      set_active(button);
     });
-    return true;
   };
 
   setup_helper = function($) {
@@ -39,22 +39,18 @@
     });
     $('select.form-control[role!="agreement"], .navbar-form > select[role!="agreement"]').select2().removeClass('form-control');
     $('*[role="tooltip"]').tooltip();
-    return true;
   };
 
   setup_pagination = function($) {
     $('div.pagination > ul').each(function(i, item) {
       $(item).addClass('pagination').parent().removeClass('pagination');
-      return true;
     });
-    return true;
   };
 
   setup_agreement = function($) {
     var switchers;
     switchers = $('select[role="agreement"]');
-    switchers.removeClass('form-control');
-    switchers.each(function(i, item) {
+    switchers.removeClass('form-control').each(function(i, item) {
       var switcher;
       switcher = $(item);
       switcher.toggleSwitch({
@@ -62,13 +58,10 @@
         width: 25,
         change: function(e, target) {
           Javie.trigger('switcher.change', [switcher, e]);
-          return true;
         }
       });
       switcher.css('display', 'none');
-      return true;
     });
-    return true;
   };
 
   jQuery(function($) {
@@ -76,7 +69,6 @@
     setup_button_group($);
     setup_helper($);
     setup_pagination($);
-    return true;
   });
 
 }).call(this);
