@@ -11,7 +11,7 @@ title: Foundation Change Log
 
 ### v3.0.11 {#v3-0-11}
 
-* Add option to include page number to HTML::title().
+* Add option to include page number to `HTML::title()`.
 * Add support to configure sending mail using Amazon SES API.
 * Hide API Secret configuration (act similar to password) for security purpose.
 * Improves Setting validations for email password and email secret when relevant.

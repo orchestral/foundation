@@ -59,7 +59,7 @@ class RouteServiceProvider extends ServiceProvider
             $this->loadRoutes();
         }
 
-        $this->app['events']->fire('orchestra.done');
+        $this->app['events']->fire('orchestra.ready');
     }
 
     /**
