@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Providers\TestCase;
 
 use Mockery as m;
-use Illuminate\Container\Container;
+use Orchestra\Foundation\Application;
 use Orchestra\Foundation\Providers\FoundationServiceProvider;
 
 class FoundationServiceProviderTest extends \PHPUnit_Framework_TestCase
@@ -23,12 +23,12 @@ class FoundationServiceProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterEventsOnAfter()
     {
-        $app = new Container();
+        $app = m::mock('\Orchestra\Foundation\Application[terminating]');
         $app['events'] = $events = m::mock('\Illuminate\Contracts\Events\Dispatcher[fire]');
         $app['router'] = $router = m::mock('\Illuminate\Routing\Router');
         $events->shouldReceive('fire')->once()->with('orchestra.done')->andReturnNull();
 
-        $router->shouldReceive('after')->once()->with(m::type('Closure'))
+        $app->shouldReceive('terminating')->once()->with(m::type('Closure'))
             ->andReturnUsing(function ($c) {
                 $c();
             });
