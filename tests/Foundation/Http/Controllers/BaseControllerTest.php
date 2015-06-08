@@ -67,10 +67,7 @@ class BaseControllerTest extends TestCase
 
 class StubBaseController extends BaseController
 {
-    /**
-     * Setup controller filters.
-     */
-    protected function setupFilters()
+    protected function setupMiddleware()
     {
         $_SERVER['StubBaseController@setupFilters'] = true;
     }

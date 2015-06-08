@@ -32,7 +32,7 @@ class AdminControllerTest extends \PHPUnit_Framework_TestCase
 
 class StubAdminController extends AdminController
 {
-    protected function setupFilters()
+    protected function setupMiddleware()
     {
         //
     }

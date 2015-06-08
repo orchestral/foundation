@@ -13,11 +13,11 @@ use Orchestra\Contracts\Extension\Listener\Deactivator as DeactivatorListener;
 class ActionController extends Controller implements ActivatorListener, DeactivatorListener, MigratorListener
 {
     /**
-     * Setup controller filters.
+     * Setup controller middleware.
      *
      * @return void
      */
-    protected function setupFilters()
+    protected function setupMiddleware()
     {
         $this->middleware('orchestra.auth');
         $this->middleware('orchestra.manage');

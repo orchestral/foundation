@@ -21,15 +21,15 @@ abstract class BaseController extends Controller
      */
     public function __construct()
     {
-        $this->setupFilters();
+        $this->setupMiddleware();
     }
 
     /**
-     * Setup controller filters.
+     * Setup controller middleware.
      *
      * @return void
      */
-    abstract protected function setupFilters();
+    abstract protected function setupMiddleware();
 
     /**
      * Show missing pages.
