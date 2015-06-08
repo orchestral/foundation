@@ -21,7 +21,18 @@ abstract class BaseController extends Controller
      */
     public function __construct()
     {
+        $this->setupFilters();
         $this->setupMiddleware();
+    }
+
+    /**
+     * Setup controller filters.
+     *
+     * @return void
+     */
+    protected function setupFilters()
+    {
+        //
     }
 
     /**
