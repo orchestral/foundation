@@ -19,13 +19,12 @@ class DashboardController extends AdminController implements Listener
     }
 
     /**
-     * Setup controller filters.
+     * Setup controller middleware.
      *
      * @return void
      */
-    protected function setupFilters()
+    protected function setupMiddleware()
     {
-        // User has to be authenticated before using this controller.
         $this->middleware('orchestra.auth', ['only' => ['show']]);
     }
 

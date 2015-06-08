@@ -6,11 +6,11 @@ use Orchestra\Foundation\Http\Controllers\AdminController;
 abstract class Controller extends AdminController implements User
 {
     /**
-     * Setup controller filters.
+     * Setup controller middleware.
      *
      * @return void
      */
-    protected function setupFilters()
+    protected function setupMiddleware()
     {
         $this->middleware('orchestra.auth');
     }
