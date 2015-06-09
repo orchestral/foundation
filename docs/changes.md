@@ -3,6 +3,20 @@ title: Foundation Change Log
 
 ---
 
+## Version 3.1 {#v3-1}
+
+### v3.1.0 {#v3-1-0}
+
+* Update support to Laravel Framework v5.1.
+* Add `Orchestra\Foundation\Console\Commands\AssembleCommand`.
+* Convert all filter to middleware (include `composer require "orchestra/bequest=~3.0"` if you need to deprecated filter support).
+* Deprecate `Orchestra\Foundation\Http\Controllers\BaseController::setupFilters()` and add new abstract method `Orchestra\Foundation\Http\Controllers\BaseController::setupMiddleware()`.
+* Add `Orchestra\Foundation\Jobs\RefreshRouteCache`, allows extension routes to be recached after activation/deactivation.
+* Remove most of redundant alias which is now registered in the application `app.aliases` config.
+* Add `Orchestra\Foundation\Providers\RouteServiceProvider`.
+* Remove FTP updating support (include `composer require "orchestra/ftp-updater=~3.0"` if you need it).
+* Remove deprecated `Orchestra\Foundation\MenuHandler::get{Name}()`, use `Orchestra\Foundation\MenuHandler::get{Name}Attribute()` helper instead.
+
 ## Version 3.0 {#v3-0}
 
 ### v3.0.12 {#v3-0-12}
