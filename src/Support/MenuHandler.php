@@ -24,7 +24,7 @@ abstract class MenuHandler
         'title'    => null,
         'link'     => '#',
         'icon'     => null,
-        'extends'  => [],
+        'with'     => [],
     ];
 
     /**
@@ -149,10 +149,10 @@ abstract class MenuHandler
      */
     protected function attachNestedMenu($id)
     {
-        $extends = isset($this->menu['extends']) ? $this->menu['extends'] : [];
+        $with = isset($this->menu['with']) ? $this->menu['with'] : [];
 
-        foreach ((array) $extends as $child) {
-            $this->container->make($child)->setAttribute('parent', "^:{$id}")->handle();
+        foreach ((array) $with as $class) {
+            $this->container->make($class)->setAttribute('parent', "^:{$id}")->handle();
         }
     }
 
