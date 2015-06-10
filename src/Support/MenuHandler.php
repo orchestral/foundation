@@ -24,6 +24,7 @@ abstract class MenuHandler
         'title'    => null,
         'link'     => '#',
         'icon'     => null,
+        'extends'  => [],
     ];
 
     /**
@@ -55,13 +56,16 @@ abstract class MenuHandler
             return ;
         }
 
-        $menu = $this->createMenu();
+        $id   = $this->getAttribute('id');
+        $menu = $this->createMenu($id);
+
+        $this->attachNestedMenu($id);
 
         $this->attachIcon($menu);
     }
 
     /**
-     *  Handle get attributes.
+     * Handle get attributes.
      *
      * @param  string  $name
      *
@@ -70,7 +74,7 @@ abstract class MenuHandler
     public function getAttribute($name)
     {
         $methods = ['get'.ucfirst($name).'Attribute', 'get'.ucfirst($name)];
-        $value   = Arr::get($this->menu, $name);
+        $value   = isset($this->menu[$name]) ? $this->menu[$name] : null;
 
         foreach ($methods as $method) {
             if (method_exists($this, $method)) {
@@ -79,6 +83,21 @@ abstract class MenuHandler
         }
 
         return $value;
+    }
+
+    /**
+     * Set attribute.
+     *
+     * @param  string  $name
+     * @param  mixed   $value
+     *
+     * @return $this
+     */
+    public function setAttribute($name, $value)
+    {
+        $this->menu[$name] = $value;
+
+        return $this;
     }
 
     /**
@@ -96,11 +115,13 @@ abstract class MenuHandler
     /**
      * Create a new menu.
      *
+     * @param  string  $id
+     *
      * @return \Illuminate\Support\Fluent|null
      */
-    protected function createMenu()
+    protected function createMenu($id)
     {
-        return $this->handler->add($this->getAttribute('id'), $this->getAttribute('position'))
+        return $this->handler->add($id, $this->getAttribute('position'))
                     ->title($this->getAttribute('title'))
                     ->link($this->getAttribute('link'));
     }
@@ -116,6 +137,22 @@ abstract class MenuHandler
     {
         if (! is_null($menu) && ! is_null($icon = $this->getAttribute('icon'))) {
             $menu->icon($icon);
+        }
+    }
+
+    /**
+     * Attach nested menu.
+     *
+     * @param  string  $id
+     *
+     * @return void
+     */
+    protected function attachNestedMenu($id)
+    {
+        $extends = isset($this->menu['extends']) ? $this->menu['extends'] : [];
+
+        foreach ((array) $extends as $child) {
+            $this->container->make($child)->setAttribute('parent', "^:{$id}")->handle();
         }
     }
 
