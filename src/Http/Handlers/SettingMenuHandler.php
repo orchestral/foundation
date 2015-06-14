@@ -39,6 +39,6 @@ class SettingMenuHandler extends MenuHandler
      */
     public function authorize(Authorization $acl)
     {
-        return $acl->can('manage-orchestra');
+        return $acl->canIf('manage-orchestra');
     }
 }
