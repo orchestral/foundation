@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Foundation\Support;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Fluent;
 use Illuminate\Contracts\Container\Container;
 
