@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.1 {#v3-1-1}
+
+* Add support for menu nesting with `Orchestra\Foundation\Support\MenuHandler`.
+
 ### v3.1.0 {#v3-1-0}
 
 * Update support to Laravel Framework v5.1.
@@ -18,6 +22,12 @@ title: Foundation Change Log
 * Remove deprecated `Orchestra\Foundation\MenuHandler::get{Name}()`, use `Orchestra\Foundation\MenuHandler::get{Name}Attribute()` helper instead.
 
 ## Version 3.0 {#v3-0}
+
+### v3.0.13 {#v3-0-13}
+
+* Add support for menu nesting with `Orchestra\Foundation\Support\MenuHandler`.
+* Assets:
+  - Update Javie v1.3.2.
 
 ### v3.0.12 {#v3-0-12}
 

@@ -52,7 +52,7 @@ class ResourcesMenuHandler extends MenuHandler
         $foundation = $this->container['orchestra.app'];
 
         $boot = function () {
-            return $this->createMenu();
+            return $this->createMenu($this->getAttribute('id'));
         };
 
         foreach ($resources as $name => $option) {
