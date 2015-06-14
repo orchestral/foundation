@@ -115,12 +115,16 @@ abstract class MenuHandler
     /**
      * Create a new menu.
      *
-     * @param  string  $id
+     * @param  string|null  $id
      *
      * @return \Illuminate\Support\Fluent|null
      */
-    protected function createMenu($id)
+    protected function createMenu($id = null)
     {
+        if (is_null($id)) {
+            $id = $this->getAttribute('id');
+        }
+
         return $this->handler->add($id, $this->getAttribute('position'))
                     ->title($this->getAttribute('title'))
                     ->link($this->getAttribute('link'));
