@@ -22,12 +22,12 @@ if (! function_exists('memorize')) {
     /**
      * Return memory configuration associated to the request.
      *
-     * @param  string   $key
-     * @param  string   $default
+     * @param  string  $key
+     * @param  string  $default
      *
      * @return mixed
      *
-     * @see    \Orchestra\Foundation\Kernel::memory()
+     * @see \Orchestra\Foundation\Foundation::memory()
      */
     function memorize($key, $default = null)
     {
@@ -39,8 +39,8 @@ if (! function_exists('handles')) {
     /**
      * Return handles configuration for a package/app.
      *
-     * @param  string   $name
-     * @param  array    $options
+     * @param  string  $name
+     * @param  array   $options
      *
      * @return string
      */
@@ -54,8 +54,8 @@ if (! function_exists('resources')) {
     /**
      * Return resources route.
      *
-     * @param  string   $name
-     * @param  array    $options
+     * @param  string  $name
+     * @param  array   $options
      *
      * @return string
      */
@@ -71,8 +71,8 @@ if (! function_exists('get_meta')) {
     /**
      * Get meta.
      *
-     * @param  string   $key
-     * @param  mixed    $default
+     * @param  string  $key
+     * @param  mixed   $default
      *
      * @return string
      */
@@ -86,8 +86,8 @@ if (! function_exists('set_meta')) {
     /**
      * Set meta.
      *
-     * @param  string   $key
-     * @param  mixed    $value
+     * @param  string  $key
+     * @param  mixed   $value
      *
      * @return string
      */
