@@ -19,6 +19,12 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.13 {#v3-0-13}
+
+* Add support for menu nesting with `Orchestra\Foundation\Support\MenuHandler`.
+* Assets:
+  - Update Javie v1.3.2.
+
 ### v3.0.12 {#v3-0-12}
 
 * Fixes description for `us-west-2` SES region.
