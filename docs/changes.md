@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.1 {#v3-1-1}
+
+* Add support for menu nesting with `Orchestra\Foundation\Support\MenuHandler`.
+
 ### v3.1.0 {#v3-1-0}
 
 * Update support to Laravel Framework v5.1.
