@@ -63,13 +63,11 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the routes for the application.
-     *
-     * @param  \Illuminate\Routing\Router  $router
+     * Load the application routes.
      *
      * @return void
      */
-    public function map(Router $router)
+    protected function loadRoutes()
     {
         $path = realpath(__DIR__.'/../../');
 
