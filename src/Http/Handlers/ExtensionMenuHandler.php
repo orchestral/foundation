@@ -39,6 +39,6 @@ class ExtensionMenuHandler extends MenuHandler
      */
     public function authorize(Authorization $acl)
     {
-        return ($this->container->bound('orchestra.extension') && $acl->can('manage-orchestra'));
+        return ($this->container->bound('orchestra.extension') && $acl->canIf('manage-orchestra'));
     }
 }

@@ -20,7 +20,7 @@ class SettingMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $app['translator'] = $translator = m::mock('\Illuminate\Translator\Translator');
         $app['Orchestra\Contracts\Authorization\Authorization'] = $acl = m::mock('\Orchestra\Contracts\Authorization\Authorization');
 
-        $acl->shouldReceive('can')->with('manage-orchestra')->once()->andReturn(true);
+        $acl->shouldReceive('canIf')->with('manage-orchestra')->once()->andReturn(true);
         $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.settings.list')->andReturn('settings');
         $foundation->shouldReceive('handles')->once()->with('orchestra::settings')->andReturn('admin/settings');
         $menu->shouldReceive('add')->once()->andReturnSelf()
@@ -43,7 +43,7 @@ class SettingMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.platform.menu'] = $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
         $app['Orchestra\Contracts\Authorization\Authorization'] = $acl = m::mock('\Orchestra\Contracts\Authorization\Authorization');
 
-        $acl->shouldReceive('can')->with('manage-orchestra')->once()->andReturn(false);
+        $acl->shouldReceive('canIf')->with('manage-orchestra')->once()->andReturn(false);
 
         $stub = new SettingMenuHandler($app);
         $this->assertNull($stub->handle());

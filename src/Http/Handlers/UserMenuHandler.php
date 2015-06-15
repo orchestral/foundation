@@ -39,6 +39,6 @@ class UserMenuHandler extends MenuHandler
      */
     public function authorize(Authorization $acl)
     {
-        return $acl->can('manage-users');
+        return $acl->canIf('manage-users');
     }
 }
