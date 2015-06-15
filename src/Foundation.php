@@ -24,7 +24,7 @@ class Foundation extends RouteManager implements FoundationContract
     /**
      * Get acl services.
      *
-     * @var \Orchestra\Contracts\Authorization\Authorization
+     * @return \Orchestra\Contracts\Authorization\Authorization
      */
     public function acl()
     {
