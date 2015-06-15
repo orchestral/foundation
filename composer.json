@@ -33,7 +33,7 @@
 		"orchestra/notifier": "~3.1.0",
 		"orchestra/optimize": "~3.1.0",
 		"orchestra/publisher": "~3.1.0",
-		"orchestra/support": "~3.1.0",
+		"orchestra/support": "~3.1.1",
 		"orchestra/translation": "~3.1.0",
 		"orchestra/view": "~3.1.0",
 		"orchestra/widget": "~3.1.0",
