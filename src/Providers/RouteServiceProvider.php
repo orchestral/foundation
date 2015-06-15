@@ -49,7 +49,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $kernel = $this->app[Kernel::class];
+        $kernel = $this->app->make(Kernel::class);
 
         $this->registerRouteMiddleware($router, $kernel);
 
@@ -59,7 +59,7 @@ class RouteServiceProvider extends ServiceProvider
             $this->loadRoutes();
         }
 
-        $this->app['events']->fire('orchestra.ready');
+        $this->app->make('events')->fire('orchestra.ready');
     }
 
     /**

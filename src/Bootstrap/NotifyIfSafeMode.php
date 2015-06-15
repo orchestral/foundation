@@ -14,8 +14,8 @@ class NotifyIfSafeMode
      */
     public function bootstrap(Application $app)
     {
-        if ($app['orchestra.extension.mode']->check()) {
-            $app['orchestra.messages']->extend(function (MessageBag $messages) {
+        if ($app->make('orchestra.extension.mode')->check()) {
+            $app->make('orchestra.messages')->extend(function (MessageBag $messages) {
                 $messages->add('info', trans('orchestra/foundation::response.safe-mode'));
             });
         }

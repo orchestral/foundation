@@ -13,7 +13,7 @@ class ArtisanServiceProvider extends ServiceProvider
     protected function registerConfigCacheCommand()
     {
         $this->app->singleton('command.config.cache', function ($app) {
-            return new ConfigCacheCommand($app['files']);
+            return new ConfigCacheCommand($app->make('files'));
         });
     }
 }

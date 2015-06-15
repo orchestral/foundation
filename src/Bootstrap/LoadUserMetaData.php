@@ -15,7 +15,7 @@ class LoadUserMetaData
      */
     public function bootstrap(Application $app)
     {
-        $app['orchestra.memory']->extend('user', function ($app, $name) {
+        $app->make('orchestra.memory')->extend('user', function ($app, $name) {
             $handler = new UserMetaRepository($name, [], $app);
 
             return new UserMetaProvider($handler);

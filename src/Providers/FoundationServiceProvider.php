@@ -106,7 +106,7 @@ class FoundationServiceProvider extends ServiceProvider
     protected function registerEventListeners()
     {
         $this->app->terminating(function () {
-            $this->app['events']->fire('orchestra.done');
+            $this->app->make('events')->fire('orchestra.done');
         });
     }
 
