@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Processor\TestCase;
 
 use Mockery as m;
-use Illuminate\Container\Container;
 use Orchestra\Foundation\Processor\AssetPublisher;
 
 class AssetPublisherTest extends \PHPUnit_Framework_TestCase

@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Providers\TestCase;
 
 use Mockery as m;
-use Orchestra\Foundation\Application;
 use Orchestra\Foundation\Providers\FoundationServiceProvider;
 
 class FoundationServiceProviderTest extends \PHPUnit_Framework_TestCase

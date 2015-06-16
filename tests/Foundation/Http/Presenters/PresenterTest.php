@@ -6,7 +6,6 @@ use Orchestra\Foundation\Http\Presenters\Presenter;
 
 class PresenterTest extends TestCase
 {
-
     /**
      * Teardown the test environment.
      */
