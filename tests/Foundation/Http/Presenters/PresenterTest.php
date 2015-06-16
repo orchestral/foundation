@@ -1,19 +1,11 @@
 <?php namespace Orchestra\Foundation\Http\Presenters\TestCase;
 
 use Mockery as m;
-use Illuminate\Container\Container;
-use Illuminate\Support\Facades\Facade;
+use Orchestra\Testing\TestCase;
 use Orchestra\Foundation\Http\Presenters\Presenter;
 
-class PresenterTest extends \PHPUnit_Framework_TestCase
+class PresenterTest extends TestCase
 {
-    /**
-     * Setup the test environment.
-     */
-    public function setUp()
-    {
-        Facade::clearResolvedInstances();
-    }
 
     /**
      * Teardown the test environment.
@@ -21,6 +13,8 @@ class PresenterTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         m::close();
+
+        parent::tearDown();
     }
 
     /**
@@ -31,12 +25,9 @@ class PresenterTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandlesMethod()
     {
-        $app       = m::mock('\Illuminate\Container\Container', '\Illuminate\Contracts\Foundation\Application');
-        $orchestra = m::mock('\Orchestra\Foundation\Foundation[handles]', [$app]);
+        $orchestra = m::mock('\Orchestra\Foundation\Foundation[handles]', [$this->app]);
 
-        Container::setInstance($app);
-
-        $app->shouldReceive('make')->once()->with('orchestra.app', [])->andReturn($orchestra);
+        $this->app->instance('orchestra.app', $orchestra);
 
         $orchestra->shouldReceive('handles')->with(m::type('String'), m::type('Array'))
             ->andReturnUsing(function ($s) {
