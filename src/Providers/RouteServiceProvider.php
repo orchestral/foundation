@@ -53,9 +53,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->registerRouteMiddleware($router, $kernel);
 
-        if ($this->app->routesAreCached()) {
-            $this->loadCachedRoutes();
-        } else {
+        if (! $this->app->routesAreCached()) {
             $this->loadRoutes();
         }
 
