@@ -49,27 +49,23 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $kernel = $this->app[Kernel::class];
+        $kernel = $this->app->make(Kernel::class);
 
         $this->registerRouteMiddleware($router, $kernel);
 
-        if ($this->app->routesAreCached()) {
-            $this->loadCachedRoutes();
-        } else {
+        if (! $this->app->routesAreCached()) {
             $this->loadRoutes();
         }
 
-        $this->app['events']->fire('orchestra.ready');
+        $this->app->make('events')->fire('orchestra.ready');
     }
 
     /**
-     * Define the routes for the application.
-     *
-     * @param  \Illuminate\Routing\Router  $router
+     * Load the application routes.
      *
      * @return void
      */
-    public function map(Router $router)
+    protected function loadRoutes()
     {
         $path = realpath(__DIR__.'/../../');
 

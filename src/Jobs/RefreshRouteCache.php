@@ -1,16 +1,11 @@
 <?php namespace Orchestra\Foundation\Jobs;
 
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Foundation\Application;
 
-class RefreshRouteCache extends Job implements SelfHandling, ShouldQueue
+class RefreshRouteCache extends Job implements SelfHandling
 {
-    use InteractsWithQueue, SerializesModels;
-
     /**
      * Execute the job.
      *
@@ -25,6 +20,8 @@ class RefreshRouteCache extends Job implements SelfHandling, ShouldQueue
             return;
         }
 
-        $kernel->call('route:cache');
+        $app->terminating(function () use ($kernel) {
+            $kernel->call('route:cache');
+        });
     }
 }

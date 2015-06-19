@@ -3,6 +3,7 @@
 use Orchestra\Model\Role;
 use Orchestra\Model\User;
 use Illuminate\Contracts\Foundation\Application;
+use Orchestra\Model\Observer\Role as RoleObserver;
 
 class UserAccessPolicy
 {
@@ -29,7 +30,7 @@ class UserAccessPolicy
      */
     protected function matchCurrentUserToRoles(Application $app)
     {
-        $app['events']->listen('orchestra.auth: roles', function (User $user = null) {
+        $app->make('events')->listen('orchestra.auth: roles', function (User $user = null) {
             // When user is null, we should expect the roles is not available.
             // Therefore, returning null would propagate any other event listeners
             // (if any) to try resolve the roles.
@@ -54,10 +55,10 @@ class UserAccessPolicy
     {
         // Orchestra Platform should be able to watch any changes to Role model
         // and sync the information to "orchestra.acl".
-        Role::observe($app->make('Orchestra\Model\Observer\Role'));
+        Role::observe($app->make(RoleObserver::class));
 
         // Orchestra Platform should be able to determine admin and member roles
         // dynamically.
-        Role::setDefaultRoles($app['config']->get('orchestra/foundation::roles'));
+        Role::setDefaultRoles($app->make('config')->get('orchestra/foundation::roles'));
     }
 }

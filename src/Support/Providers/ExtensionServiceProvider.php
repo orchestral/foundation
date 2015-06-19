@@ -35,7 +35,7 @@ class ExtensionServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $finder = $this->app['orchestra.extension.finder'];
+        $finder = $this->app->make('orchestra.extension.finder');
 
         foreach ($this->extensions as $name => $path) {
             if (is_numeric($name)) {

@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
-use Mockery as m;
 use Orchestra\Testing\TestCase;
 use Orchestra\Foundation\Providers\ArtisanServiceProvider;
 use Orchestra\Foundation\Providers\SupportServiceProvider;

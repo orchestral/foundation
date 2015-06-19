@@ -31,7 +31,7 @@ class LoadExpresso
      */
     protected function addBladeExtensions(Application $app)
     {
-        $compiler = $app['view']->getEngineResolver()->resolve('blade')->getCompiler();
+        $compiler = $app->make('view')->getEngineResolver()->resolve('blade')->getCompiler();
 
         $compiler->extend(function ($view) {
             $expression = [
@@ -63,8 +63,8 @@ class LoadExpresso
      */
     protected function addDecoratorExtensions(Application $app)
     {
-        $app['orchestra.decorator']->macro('navbar', function ($navbar) use ($app) {
-            return $app['view']->make('orchestra/foundation::components.navbar', compact('navbar'));
+        $app->make('orchestra.decorator')->macro('navbar', function ($navbar) use ($app) {
+            return $app->make('view')->make('orchestra/foundation::components.navbar', compact('navbar'));
         });
     }
 
@@ -77,7 +77,7 @@ class LoadExpresso
      */
     protected function addHtmlExtensions(Application $app)
     {
-        $app['html']->macro('title', $this->buildHtmlTitleCallback($app));
+        $app->make('html')->macro('title', $this->buildHtmlTitleCallback($app));
     }
 
     /**
@@ -102,7 +102,7 @@ class LoadExpresso
 
             $output = $this->getHtmlTitleFormatForPage($data);
 
-            return $app['html']->create('title', trim($output));
+            return $app->make('html')->create('title', trim($output));
         };
     }
 

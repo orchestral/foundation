@@ -36,7 +36,7 @@ class SupportServiceProvider extends ServiceProvider
     protected function registerPublisher()
     {
         $this->app->singleton('orchestra.publisher', function ($app) {
-            $memory = $app['orchestra.platform.memory'];
+            $memory = $app->make('orchestra.platform.memory');
 
             return (new PublisherManager($app))->attach($memory);
         });

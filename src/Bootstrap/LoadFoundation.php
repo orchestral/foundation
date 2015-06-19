@@ -13,6 +13,6 @@ class LoadFoundation
      */
     public function bootstrap(Application $app)
     {
-        $app['orchestra.app']->boot();
+        $app->make('orchestra.app')->boot();
     }
 }

@@ -5,6 +5,13 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.2 {#v3-1-2}
+
+* Improved performances by reducing call within `Illuminate\Container\Container`.
+* Utilize `Orchestra\Authorization\Authorization::canIf()` helper.
+* Simplify `Orchestra\Foundation\Providers\RouteServiceProvider`.
+* Avoid sending `Orchestra\Foundation\Jobs\RefreshRouteCache` to queue and instead execute it immediately.
+
 ### v3.1.1 {#v3-1-1}
 
 * Add support for menu nesting with `Orchestra\Foundation\Support\MenuHandler`.

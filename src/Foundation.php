@@ -24,11 +24,11 @@ class Foundation extends RouteManager implements FoundationContract
     /**
      * Get acl services.
      *
-     * @var \Orchestra\Contracts\Authorization\Authorization
+     * @return \Orchestra\Contracts\Authorization\Authorization
      */
     public function acl()
     {
-        return $this->app['orchestra.platform.acl'];
+        return $this->app->make('orchestra.platform.acl');
     }
 
     /**
@@ -61,21 +61,21 @@ class Foundation extends RouteManager implements FoundationContract
     /**
      * Get memory services.
      *
-     * @var \Orchestra\Contracts\Memory\Provider
+     * @return \Orchestra\Contracts\Memory\Provider
      */
     public function memory()
     {
-        return $this->app['orchestra.platform.memory'];
+        return $this->app->make('orchestra.platform.memory');
     }
 
     /**
      * Get menu services.
      *
-     * @var \Orchestra\Widget\MenuWidgetHandler
+     * @return \Orchestra\Widget\MenuWidgetHandler
      */
     public function menu()
     {
-        return $this->app['orchestra.platform.menu'];
+        return $this->app->make('orchestra.platform.menu');
     }
 
     /**
@@ -138,7 +138,7 @@ class Foundation extends RouteManager implements FoundationContract
 
         $this->registerComponents($memory);
 
-        $this->app['events']->fire('orchestra.started', [$memory]);
+        $this->app->make('events')->fire('orchestra.started', [$memory]);
     }
 
     /**
@@ -152,7 +152,7 @@ class Foundation extends RouteManager implements FoundationContract
     {
         // Initiate Memory class from App, this to allow advanced user
         // to use other implementation if there is a need for it.
-        $memory = $this->app['orchestra.memory']->make();
+        $memory = $this->app->make('orchestra.memory')->make();
 
         if (is_null($memory->get('site.name'))) {
             throw new Exception('Installation is not completed');
@@ -183,7 +183,7 @@ class Foundation extends RouteManager implements FoundationContract
         // In any case where Exception is catched, we can be assure that
         // Installation is not done/completed, in this case we should
         // use runtime/in-memory setup
-        $memory = $this->app['orchestra.memory']->make('runtime.orchestra');
+        $memory = $this->app->make('orchestra.memory')->make('runtime.orchestra');
         $memory->put('site.name', 'Orchestra Platform');
 
         $this->menu()->add('install')
@@ -202,7 +202,9 @@ class Foundation extends RouteManager implements FoundationContract
      */
     protected function createAdminMenu()
     {
-        $menu     = $this->menu();
+        $menu   = $this->menu();
+        $events = $this->app->make('events');
+
         $handlers = [
             UserMenuHandler::class,
             ExtensionMenuHandler::class,
@@ -211,14 +213,14 @@ class Foundation extends RouteManager implements FoundationContract
         ];
 
         $menu->add('home')
-            ->title($this->app['translator']->get('orchestra/foundation::title.home'))
+            ->title($this->app->make('translator')->get('orchestra/foundation::title.home'))
             ->link($this->handles('orchestra::/'));
 
         foreach ($handlers as $handler) {
-            $this->app['events']->listen('orchestra.started: admin', $handler);
+            $events->listen('orchestra.started: admin', $handler);
         }
 
-        $this->app['events']->listen('orchestra.ready: admin', AdminMenuHandler::class);
+        $events->listen('orchestra.ready: admin', AdminMenuHandler::class);
     }
 
     /**
@@ -228,10 +230,10 @@ class Foundation extends RouteManager implements FoundationContract
      */
     protected function registerBaseServices()
     {
-        $this->app->instance('orchestra.platform.menu', $this->app['orchestra.widget']->make('menu.orchestra'));
-        $this->app->instance('orchestra.platform.acl', $this->app['orchestra.acl']->make('orchestra'));
+        $this->app->instance('orchestra.platform.menu', $this->app->make('orchestra.widget')->make('menu.orchestra'));
+        $this->app->instance('orchestra.platform.acl', $this->app->make('orchestra.acl')->make('orchestra'));
 
-        $this->app->instance('app.menu', $this->app['orchestra.widget']->make('menu.app'));
+        $this->app->instance('app.menu', $this->app->make('orchestra.widget')->make('menu.app'));
     }
 
     /**
@@ -243,8 +245,8 @@ class Foundation extends RouteManager implements FoundationContract
      */
     protected function registerComponents(Provider $memory)
     {
-        $this->app['orchestra.notifier']->setDefaultDriver('orchestra');
-        $this->app['orchestra.mail']->attach($memory);
+        $this->app->make('orchestra.notifier')->setDefaultDriver('orchestra');
+        $this->app->make('orchestra.mail')->attach($memory);
     }
 
     /**
@@ -256,8 +258,8 @@ class Foundation extends RouteManager implements FoundationContract
         // and can be manage using configuration.
         if (in_array($name, ['orchestra'])) {
             return $this->app->make(RouteGenerator::class, [
-                $this->app['config']->get('orchestra/foundation::handles', $default),
-                $this->app['request'],
+                $this->app->make('config')->get('orchestra/foundation::handles', $default),
+                $this->app->make('request'),
             ]);
         }
 
