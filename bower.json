@@ -9,10 +9,10 @@
   "private": true,
   "dependencies": {
     "bootstrap": "~3.3.4",
-    "javie": "^1.3.2",
+    "javie": "^2.0.0",
     "jquery": "~1.10.2",
     "select2": "~3.4.8",
-    "underscore": "~1.6.0"
+    "underscore": "^1.6.0"
   },
   "install": {
     "path": "resources/public/components",
