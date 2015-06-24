@@ -50,6 +50,16 @@
 		"orchestra/studio": "Allow additional code generator for Orchestra Platform (~3.1).",
 		"orchestra/testing": "Allow better unit testing support for Orchestra Platform (~3.1)."
 	},
+	"scripts": {
+		"test": [
+			"./vendor/bin/phpunit"
+		],
+		"update-frontend": [
+			"bower update",
+			"bower-installer",
+			"gulp"
+		]
+	},
 	"extra": {
 		"branch-alias": {
 			"dev-master": "3.2-dev"

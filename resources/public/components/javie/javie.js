@@ -5,7 +5,7 @@
  *
  * @package Javie
  * @require underscore, console, jQuery/Zepto
- * @version 2.0.x-dev
+ * @version 2.0.2
  * @author  Mior Muhammad Zaki <https://github.com/crynobone>
  * @license MIT License
  * ========================================================================
@@ -58,17 +58,13 @@ app.singleton('log.writer', function () {
 app.bind('profiler', function () {
   var name = arguments[0] === undefined ? null : arguments[0];
 
-  if (name != null) return (0, _modulesProfilerProfilerEs62['default'])(name);
-
-  return _modulesProfilerProfilerEs62['default'];
+  return name != null ? new _modulesProfilerProfilerEs62['default'](name) : _modulesProfilerProfilerEs62['default'];
 });
 
 app.bind('request', function () {
   var name = arguments[0] === undefined ? null : arguments[0];
 
-  if (name != null) return (0, _modulesRequestRequestEs62['default'])(name);
-
-  return _modulesRequestRequestEs62['default'];
+  return name != null ? new _modulesRequestRequestEs62['default'](name) : _modulesRequestRequestEs62['default'];
 });
 
 window.Javie = app;
@@ -318,7 +314,7 @@ var Dispatcher = (function () {
   _createClass(Dispatcher, [{
     key: "clone",
     value: function clone(id) {
-      return clonable = {
+      return {
         to: function to(_to) {
           return events[_to] = _vendorUnderscore2["default"].clone(events[id]);
         }
@@ -794,7 +790,10 @@ var Handler = (function () {
       dataType: 'json',
       id: '',
       object: null,
-      headers: {}
+      headers: {},
+      beforeSend: function beforeSend() {},
+      onComplete: function onComplete() {},
+      onError: function onError() {}
     };
   }
 
@@ -889,7 +888,7 @@ var Handler = (function () {
       var object = this.get('object');
       var query = this.get('query');
 
-      if (_.isObject(data)) {
+      if (!_.isObject(data)) {
         data = api(object).serialize() + '&' + query;
         if (data == '?&') data = '';
       }
@@ -928,7 +927,10 @@ var Handler = (function () {
     value: function fireEvent(type, name, args) {
       dispatcher.fire('Request.' + type, args);
       dispatcher.fire('Request.' + type + ': ' + name, args);
-      this.config[type].apply(this, args);
+
+      var callback = this.config[type];
+
+      if (_.isFunction(callback)) callback.apply(this, args);
     }
   }]);
 
