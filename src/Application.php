@@ -26,7 +26,7 @@ class Application extends BaseApplication implements DeferrableServiceContainer
      */
     public function configPath()
     {
-        return $this->basePath.'/resources/config';
+        return $this->basePath.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'config';
     }
 
     /**
@@ -36,37 +36,7 @@ class Application extends BaseApplication implements DeferrableServiceContainer
      */
     public function databasePath()
     {
-        return $this->databasePath ?: $this->basePath.'/resources/database';
-    }
-
-    /**
-     * Get the path to the language files.
-     *
-     * @return string
-     */
-    public function langPath()
-    {
-        return $this->basePath.'/resources/lang';
-    }
-
-    /**
-     * Get the path to the public / web directory.
-     *
-     * @return string
-     */
-    public function publicPath()
-    {
-        return $this->basePath.'/public';
-    }
-
-    /**
-     * Get the path to the storage directory.
-     *
-     * @return string
-     */
-    public function storagePath()
-    {
-        return $this->storagePath ?: $this->basePath.'/storage';
+        return $this->databasePath ?: $this->basePath.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'database';
     }
 
     /**
