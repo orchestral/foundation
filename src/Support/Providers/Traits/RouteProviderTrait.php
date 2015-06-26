@@ -77,6 +77,6 @@ trait RouteProviderTrait
      */
     protected function afterExtensionLoaded($callback)
     {
-        $this->app->make('events')->listen('orchestra.extension: booted', $callback);
+        $this->app->make('orchestra.extension')->after($callback);
     }
 }
