@@ -5,6 +5,17 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.3 {#v3-1-3}
+
+* Simplify `Orchestra\Foundation\Application` and use `DIRECTORY_SEPARATOR` constant.
+* Use `Orchestra\Http\Traits\PassThroughTrait` in `Orchestra\Foundation\Http\Middleware\VerifyCsrfToken`.
+* Avoid reloading cached routes as application `RouteServiceProvider` should already done this.
+* Use `Orchestra\Extension\Factory::after()` in `Orchestra\Foundation\Support\Providers\Traits\RouteProviderTrait`.
+* Update assets:
+  - Javie v2.0.2
+  - Underscore v1.8.3
+  - Bootstrap v3.3.5
+
 ### v3.1.2 {#v3-1-2}
 
 * Improved performances by reducing call within `Illuminate\Container\Container`.
