@@ -12,7 +12,8 @@
     "javie": "^2.0.0",
     "jquery": "~1.10.2",
     "select2": "~3.4.8",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "vue": "~0.12.4"
   },
   "install": {
     "path": "resources/public/components",
@@ -29,6 +30,10 @@
         "resources/components/select2/select2.css",
         "resources/components/select2/select2.png",
         "resources/components/select2/select2x2.png"
+      ],
+      "vue": [
+        "resources/components/vue/dist/vue.js",
+        "resources/components/vue/dist/vue.min.js"
       ]
     }
   }
