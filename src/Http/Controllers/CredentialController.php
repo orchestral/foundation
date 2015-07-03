@@ -104,7 +104,7 @@ class CredentialController extends AdminController implements AuthenticateListen
 
         messages('error', $messages);
 
-        return $this->redirectWithErrors(handles('orchestra::login', $errors);
+        return $this->redirectWithErrors(handles('orchestra::login'), $errors);
     }
 
     /**
