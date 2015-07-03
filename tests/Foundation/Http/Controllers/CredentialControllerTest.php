@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Orchestra\Foundation\Processor\Throttles\Without;
 
 class CredentialControllerTest extends TestCase
 {
@@ -85,7 +86,7 @@ class CredentialControllerTest extends TestCase
         $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $authenticate->shouldReceive('login')->once()
-            ->with(m::type('\Orchestra\Foundation\Http\Controllers\CredentialController'), m::type('Array'))
+            ->with(m::type('\Orchestra\Foundation\Http\Controllers\CredentialController'), m::type('Array'), m::type(Without::class))
             ->andReturnUsing(function ($listener, $input) use ($user) {
                 return $listener->userLoginHasFailedAuthentication($input);
             });
@@ -113,7 +114,7 @@ class CredentialControllerTest extends TestCase
         list($authenticate, $deauthenticate) = $this->getMockedProcessor();
 
         $authenticate->shouldReceive('login')->once()
-            ->with(m::type('\Orchestra\Foundation\Http\Controllers\CredentialController'), m::type('Array'))
+            ->with(m::type('\Orchestra\Foundation\Http\Controllers\CredentialController'), m::type('Array'), m::type(Without::class))
             ->andReturnUsing(function ($listener) {
                 return $listener->userLoginHasFailedValidation([]);
             });
@@ -173,6 +174,7 @@ class CredentialControllerTest extends TestCase
      */
     protected function getMockedProcessor()
     {
+        $throttles  = new Without();
         $validation = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $auth       = m::mock('\Orchestra\Contracts\Auth\Guard');
 
@@ -181,6 +183,7 @@ class CredentialControllerTest extends TestCase
 
         $this->app->instance('Orchestra\Foundation\Processor\AuthenticateUser', $authenticate);
         $this->app->instance('Orchestra\Foundation\Processor\DeauthenticateUser', $deauthenticate);
+        $this->app->instance('Orchestra\Contracts\Auth\Command\ThrottlesLogins', $throttles);
 
         return [$authenticate, $deauthenticate];
     }

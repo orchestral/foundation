@@ -45,12 +45,12 @@ class CredentialController extends AdminController implements AuthenticateListen
      *
      * @return mixed
      */
-    public function login(Request $request, AuthenticateUser $authenticate)
+    public function login(Request $request, AuthenticateUser $authenticate, ThrottlesCommand $throttles)
     {
         $input = $request->all();
         $input['_ip'] = $request->ip();
 
-        return $authenticate->login($this, $input);
+        return $authenticate->login($this, $input, $throttles);
     }
 
     /**
