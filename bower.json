@@ -13,11 +13,40 @@
     "jquery": "~1.10.2",
     "select2": "~3.4.8",
     "underscore": "^1.6.0",
-    "vue": "~0.12.4"
+    "vue": "~0.12.4",
+    "font-awesome": "~4.3.0"
   },
   "install": {
     "path": "resources/public/components",
     "sources": {
+      "font-awesome": {
+        "mapping": [
+          {
+            "resources/components/font-awesome/css/font-awesome.css": "css/font-awesome.css"
+          },
+          {
+            "resources/components/font-awesome/css/font-awesome.min.css": "css/font-awesome.min.css"
+          },
+          {
+            "resources/components/font-awesome/fonts/fontawesome-webfont.eot": "fonts/fontawesome-webfont.eot"
+          },
+          {
+            "resources/components/font-awesome/fonts/fontawesome-webfont.svg": "fonts/fontawesome-webfont.svg"
+          },
+          {
+            "resources/components/font-awesome/fonts/fontawesome-webfont.ttf": "fonts/fontawesome-webfont.ttf"
+          },
+          {
+            "resources/components/font-awesome/fonts/fontawesome-webfont.woff": "fonts/fontawesome-webfont.woff"
+          },
+          {
+            "resources/components/font-awesome/fonts/fontawesome-webfont.woff2": "fonts/fontawesome-webfont.woff2"
+          },
+          {
+            "resources/components/font-awesome/fonts/FontAwesome.otf": "fonts/FontAwesome.otf"
+          }
+        ]
+      },
       "jquery": [
         "resources/components/jquery/jquery.js",
         "resources/components/jquery/jquery.min.js",
