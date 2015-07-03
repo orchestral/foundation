@@ -23,20 +23,6 @@ class CredentialControllerTest extends TestCase
     }
 
     /**
-     * Bind dependencies.
-     *
-     * @return array
-     */
-    protected function bindValidation()
-    {
-        $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
-
-        $this->app->instance('Orchestra\Foundation\Validation\AuthenticateUser', $validator);
-
-        return $validator;
-    }
-
-    /**
      * Test GET /admin/login.
      *
      * @test
@@ -65,10 +51,11 @@ class CredentialControllerTest extends TestCase
             'remember' => 'yes',
         ];
 
-        $processor = $this->getProcessorMock();
-        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        list($authenticate, $deauthenticate) = $this->getMockedProcessor();
 
-        $processor->shouldReceive('login')->once()
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+
+        $authenticate->shouldReceive('login')->once()
             ->andReturnUsing(function ($listener) use ($user) {
                 return $listener->userHasLoggedIn($user);
             });
@@ -93,10 +80,11 @@ class CredentialControllerTest extends TestCase
             'remember' => 'yes',
         ];
 
-        $processor = $this->getProcessorMock();
-        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        list($authenticate, $deauthenticate) = $this->getMockedProcessor();
 
-        $processor->shouldReceive('login')->once()
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+
+        $authenticate->shouldReceive('login')->once()
             ->with(m::type('\Orchestra\Foundation\Http\Controllers\CredentialController'), m::type('Array'))
             ->andReturnUsing(function ($listener, $input) use ($user) {
                 return $listener->userLoginHasFailedAuthentication($input);
@@ -122,7 +110,9 @@ class CredentialControllerTest extends TestCase
             'remember' => 'yes',
         ];
 
-        $this->getProcessorMock()->shouldReceive('login')->once()
+        list($authenticate, $deauthenticate) = $this->getMockedProcessor();
+
+        $authenticate->shouldReceive('login')->once()
             ->with(m::type('\Orchestra\Foundation\Http\Controllers\CredentialController'), m::type('Array'))
             ->andReturnUsing(function ($listener) {
                 return $listener->userLoginHasFailedValidation([]);
@@ -141,7 +131,9 @@ class CredentialControllerTest extends TestCase
      */
     public function testDeleteLoginAction()
     {
-        $this->getProcessorMock()->shouldReceive('logout')->once()
+        list($authenticate, $deauthenticate) = $this->getMockedProcessor();
+
+        $deauthenticate->shouldReceive('logout')->once()
             ->with(m::type('\Orchestra\Foundation\Http\Controllers\CredentialController'))
             ->andReturnUsing(function ($listener) {
                 return $listener->userHasLoggedOut();
@@ -160,7 +152,9 @@ class CredentialControllerTest extends TestCase
      */
     public function testDeleteLoginActionWithRedirection()
     {
-        $this->getProcessorMock()->shouldReceive('logout')->once()
+        list($authenticate, $deauthenticate) = $this->getMockedProcessor();
+
+        $deauthenticate->shouldReceive('logout')->once()
             ->with(m::type('\Orchestra\Foundation\Http\Controllers\CredentialController'))
             ->andReturnUsing(function ($listener) {
                 return $listener->userHasLoggedOut();
@@ -177,15 +171,17 @@ class CredentialControllerTest extends TestCase
      *
      * @return \Orchestra\Foundation\Processor\AuthenticateUser
      */
-    protected function getProcessorMock()
+    protected function getMockedProcessor()
     {
-        $processor = m::mock('\Orchestra\Foundation\Processor\AuthenticateUser', [
-            m::mock('\Orchestra\Foundation\Validation\AuthenticateUser'),
-            m::mock('\Illuminate\Contracts\Auth\Guard'),
-        ]);
+        $validation = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
+        $auth       = m::mock('\Orchestra\Contracts\Auth\Guard');
 
-        $this->app->instance('Orchestra\Foundation\Processor\AuthenticateUser', $processor);
+        $authenticate = m::mock('\Orchestra\Foundation\Processor\AuthenticateUser', [$validation, $auth]);
+        $deauthenticate = m::mock('\Orchestra\Foundation\Processor\DeauthenticateUser', [$auth]);
 
-        return $processor;
+        $this->app->instance('Orchestra\Foundation\Processor\AuthenticateUser', $authenticate);
+        $this->app->instance('Orchestra\Foundation\Processor\DeauthenticateUser', $deauthenticate);
+
+        return [$authenticate, $deauthenticate];
     }
 }

@@ -1,21 +1,34 @@
 <?php namespace Orchestra\Foundation\Http\Controllers;
 
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Orchestra\Foundation\Processor\AuthenticateUser as Processor;
-use Orchestra\Contracts\Auth\Listener\AuthenticateUser as Listener;
+use Orchestra\Foundation\Processor\AuthenticateUser;
+use Orchestra\Foundation\Processor\DeauthenticateUser;
+use Orchestra\Contracts\Auth\Listener\AuthenticateUser as AuthenticateListener;
+use Orchestra\Contracts\Auth\Listener\ThrottlesLogins as ThrottlesLoginsListener;
+use Orchestra\Contracts\Auth\Listener\DeauthenticateUser as DeauthenticateListener;
 
-class CredentialController extends AdminController implements Listener
+class CredentialController extends AdminController implements AuthenticateListener, DeauthenticateListener, ThrottlesLoginsListener
 {
+    /**
+     * Authenticate user processor.
+     *
+     * @var  \Orchestra\Contracts\Auth\Command\AuthenticateUser
+     */
+    protected $authenticate;
+
     /**
      * Authentication/Credential controller routing.
      *
-     * @param \Orchestra\Foundation\Processor\AuthenticateUser  $processor
+     * @param \Orchestra\Foundation\Processor\AuthenticateUser  $authenticate
+     * @param \Orchestra\Foundation\Processor\DeauthenticateUser  $deauthenticate
      */
-    public function __construct(Processor $processor)
+    public function __construct(AuthenticateUser $authenticate, DeauthenticateUser $deauthenticate)
     {
-        $this->processor = $processor;
+        $this->authenticate   = $authenticate;
+        $this->deauthenticate = $deauthenticate;
 
         parent::__construct();
     }
@@ -53,7 +66,7 @@ class CredentialController extends AdminController implements Listener
      */
     public function login()
     {
-        return $this->processor->login($this, Input::all());
+        return $this->authenticate->login($this, Input::all());
     }
 
     /**
@@ -65,7 +78,7 @@ class CredentialController extends AdminController implements Listener
      */
     public function logout()
     {
-        return $this->processor->logout($this);
+        return $this->deauthenticate->logout($this);
     }
 
     /**
@@ -92,6 +105,27 @@ class CredentialController extends AdminController implements Listener
         $message = trans('orchestra/foundation::response.credential.invalid-combination');
 
         return $this->redirectWithMessage(handles('orchestra::login'), $message, 'error')->withInput();
+    }
+
+    /**
+     * Redirect the user after determining they are locked out.
+     *
+     * @param  \Illuminate\Support\MessageBag|array  $errors
+     * @param  int  $seconds
+     *
+     * @return mixed
+     */
+    public function sendLockoutResponse($errors, $seconds)
+    {
+        $messages = "Too many login attempts. Please try again in {$seconds} seconds.";
+
+        if (Lang::has('passwords.throttle')) {
+            $messages = trans('passwords.throttle', ['seconds' => $seconds]);
+        }
+
+        return $this->redirectWithMessage(handles('orchestra::login', $messages, 'error'))
+                    ->withErrors($errors)
+                    ->withInput();
     }
 
     /**

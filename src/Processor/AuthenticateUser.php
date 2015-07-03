@@ -1,26 +1,19 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Illuminate\Support\Arr;
-use Illuminate\Contracts\Auth\Guard;
+use Orchestra\Contracts\Auth\Guard;
 use Orchestra\Model\User as Eloquent;
 use Orchestra\Contracts\Auth\Command\AuthenticateUser as Command;
 use Orchestra\Foundation\Validation\AuthenticateUser as Validator;
 use Orchestra\Contracts\Auth\Listener\AuthenticateUser as Listener;
 
-class AuthenticateUser extends Processor implements Command
+class AuthenticateUser extends Authenticate implements Command
 {
-    /**
-     * The auth guard implementation.
-     *
-     * @var \Illuminate\Contracts\Auth\Guard
-     */
-    protected $auth;
-
     /**
      * Create a new processor instance.
      *
      * @param  \Orchestra\Foundation\Validation\AuthenticateUser  $validator
-     * @param  \Illuminate\Contracts\Auth\Guard  $auth
+     * @param  \Orchestra\Contracts\Auth\Guard  $auth
      */
     public function __construct(Validator $validator, Guard $auth)
     {
@@ -50,25 +43,11 @@ class AuthenticateUser extends Processor implements Command
             return $listener->userLoginHasFailedAuthentication($input);
         }
 
-        $user = $this->auth->getUser();
+        $user = $this->getUser();
 
         $this->verifyWhenFirstTimeLogin($user);
 
         return $listener->userHasLoggedIn($user);
-    }
-
-    /**
-     * Logout a user.
-     *
-     * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
-     *
-     * @return mixed
-     */
-    public function logout(Listener $listener)
-    {
-        $this->auth->logout();
-
-        return $listener->userHasLoggedOut();
     }
 
     /**
