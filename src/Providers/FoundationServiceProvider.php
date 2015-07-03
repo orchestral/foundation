@@ -2,7 +2,10 @@
 
 use Orchestra\Foundation\Meta;
 use Orchestra\Foundation\Foundation;
+use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Support\Providers\ServiceProvider;
+use Orchestra\Contracts\Auth\Command\ThrottlesLogins;
+use Orchestra\Foundation\Processor\Throttles\Without;
 use Orchestra\Support\Providers\Traits\AliasesProviderTrait;
 
 class FoundationServiceProvider extends ServiceProvider
@@ -65,6 +68,8 @@ class FoundationServiceProvider extends ServiceProvider
 
         $this->registerMeta();
 
+        $this->registerThrottlesLogins();
+
         $this->registerFacadesAliases();
 
         $this->registerCoreContainerAliases();
@@ -81,7 +86,7 @@ class FoundationServiceProvider extends ServiceProvider
     {
         $this->app['orchestra.installed'] = false;
 
-        $this->app->singleton('orchestra.app', function ($app) {
+        $this->app->singleton('orchestra.app', function (Application $app) {
             return new Foundation($app);
         });
     }
@@ -96,6 +101,16 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app->singleton('orchestra.meta', function () {
             return new Meta();
         });
+    }
+
+    /**
+     * Register the service provider for foundation.
+     *
+     * @return void
+     */
+    protected function registerThrottlesLogins()
+    {
+        $this->app->bind(ThrottlesLogins::class, Without::class);
     }
 
     /**

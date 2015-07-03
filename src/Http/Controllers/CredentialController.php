@@ -1,16 +1,18 @@
 <?php namespace Orchestra\Foundation\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Foundation\Processor\AuthenticateUser;
 use Orchestra\Foundation\Processor\DeauthenticateUser;
+use Orchestra\Contracts\Auth\Command\ThrottlesLogins as ThrottlesCommand;
+use Orchestra\Contracts\Auth\Listener\ThrottlesLogins as ThrottlesListener;
 use Orchestra\Contracts\Auth\Listener\AuthenticateUser as AuthenticateListener;
-use Orchestra\Contracts\Auth\Listener\ThrottlesLogins as ThrottlesLoginsListener;
 use Orchestra\Contracts\Auth\Listener\DeauthenticateUser as DeauthenticateListener;
 
-class CredentialController extends AdminController implements AuthenticateListener, DeauthenticateListener, ThrottlesLoginsListener
+class CredentialController extends AdminController implements AuthenticateListener, DeauthenticateListener, ThrottlesListener
 {
     /**
      * Setup controller middleware.
@@ -43,9 +45,12 @@ class CredentialController extends AdminController implements AuthenticateListen
      *
      * @return mixed
      */
-    public function login(AuthenticateUser $authenticate)
+    public function login(Request $request, AuthenticateUser $authenticate)
     {
-        return $authenticate->login($this, Input::all());
+        $input = $request->all();
+        $input['_ip'] = $request->ip();
+
+        return $authenticate->login($this, $input);
     }
 
     /**
@@ -96,13 +101,7 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     public function sendLockoutResponse($errors, $seconds)
     {
-        $messages = "Too many login attempts. Please try again in {$seconds} seconds.";
-
-        if (Lang::has('passwords.throttle')) {
-            $messages = trans('passwords.throttle', ['seconds' => $seconds]);
-        }
-
-        messages('error', $messages);
+        messages('error', trans('passwords.throttle', ['seconds' => $seconds]));
 
         return $this->redirectWithErrors(handles('orchestra::login'), $errors);
     }

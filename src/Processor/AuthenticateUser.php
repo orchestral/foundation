@@ -6,6 +6,8 @@ use Orchestra\Model\User as Eloquent;
 use Orchestra\Contracts\Auth\Command\AuthenticateUser as Command;
 use Orchestra\Foundation\Validation\AuthenticateUser as Validator;
 use Orchestra\Contracts\Auth\Listener\AuthenticateUser as Listener;
+use Orchestra\Contracts\Auth\Command\ThrottlesLogins as ThrottlesCommand;
+use Orchestra\Contracts\Auth\Listener\ThrottlesLogins as ThrottlesListener;
 
 class AuthenticateUser extends Authenticate implements Command
 {
@@ -27,10 +29,11 @@ class AuthenticateUser extends Authenticate implements Command
      *
      * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
      * @param  array  $input
+     * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
      *
      * @return mixed
      */
-    public function login(Listener $listener, array $input)
+    public function login(Listener $listener, array $input, ThrottlesCommand $throttles = null)
     {
         $validation = $this->validator->on('login')->with($input);
 
@@ -40,13 +43,15 @@ class AuthenticateUser extends Authenticate implements Command
             return $listener->userLoginHasFailedValidation($validation->getMessageBag());
         }
 
-        if (! $this->authenticate($input)) {
-            return $listener->userLoginHasFailedAuthentication($input);
+        if ($this->hasTooManyAttempts($input, $throttles)) {
+            return $this->handleUserHasTooManyAttempts($listener, $input, $throttles);
         }
 
-        return $listener->userHasLoggedIn(
-            $this->verifyWhenFirstTimeLogin($this->getUser())
-        );
+        if ($this->authenticate($input)) {
+            return $this->handleUserWasAuthenticated($listener, $input, $throttles);
+        }
+
+        return $this->handleUserFailedAuthentication($listener, $input, $throttles);
     }
 
     /**
@@ -65,6 +70,68 @@ class AuthenticateUser extends Authenticate implements Command
         // We should now attempt to login the user using Auth class. If this
         // failed simply return false.
         return $this->auth->attempt($data, $remember);
+    }
+
+    /**
+     * Send the response after the user was authenticated.
+     *
+     * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
+     * @param  array  $input
+     * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
+     * @return mixed
+     */
+    protected function handleUserWasAuthenticated(Listener $listener, array $input, ThrottlesCommand $throttles = null)
+    {
+        if ($throttles) {
+            $throttles->clearLoginAttempts($input);
+        }
+
+        return $listener->userHasLoggedIn($this->verifyWhenFirstTimeLogin($this->getUser()));
+    }
+
+    /**
+     * Send the response after the user has too many attempts.
+     *
+     * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
+     * @param  array  $input
+     * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
+     * @return mixed
+     */
+    protected function handleUserHasTooManyAttempts(Listener $listener, array $input, ThrottlesCommand $throttles = null)
+    {
+        $seconds = $throttles->getSecondsBeforeNextAttempts($input);
+
+        return $listener->sendLockoutResponse($throttles, $seconds);
+    }
+
+    /**
+     * Send the response after the user failed authentication.
+     *
+     * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
+     * @param  array  $input
+     * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
+     * @return mixed
+     */
+    protected function handleUserFailedAuthentication(Listener $listener, array $input, ThrottlesCommand $throttles = null)
+    {
+        if ($throttles) {
+            $throttles->incrementLoginAttempts($input);
+        }
+
+        return $listener->userLoginHasFailedAuthentication($input);
+    }
+
+    /**
+     * Check if user has too many attempts.
+     *
+     * @param  array  $input
+     * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
+     *
+     * @return bool
+     */
+    protected function hasTooManyAttempts(array $input, ThrottlesCommand $throttles = null)
+    {
+        return ($throttles && $throttles->hasTooManyLoginAttempts($input));
     }
 
     /**
