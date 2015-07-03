@@ -13,27 +13,6 @@ use Orchestra\Contracts\Auth\Listener\DeauthenticateUser as DeauthenticateListen
 class CredentialController extends AdminController implements AuthenticateListener, DeauthenticateListener, ThrottlesLoginsListener
 {
     /**
-     * Authenticate user processor.
-     *
-     * @var  \Orchestra\Contracts\Auth\Command\AuthenticateUser
-     */
-    protected $authenticate;
-
-    /**
-     * Authentication/Credential controller routing.
-     *
-     * @param \Orchestra\Foundation\Processor\AuthenticateUser  $authenticate
-     * @param \Orchestra\Foundation\Processor\DeauthenticateUser  $deauthenticate
-     */
-    public function __construct(AuthenticateUser $authenticate, DeauthenticateUser $deauthenticate)
-    {
-        $this->authenticate   = $authenticate;
-        $this->deauthenticate = $deauthenticate;
-
-        parent::__construct();
-    }
-
-    /**
      * Setup controller middleware.
      *
      * @return void
@@ -64,9 +43,9 @@ class CredentialController extends AdminController implements AuthenticateListen
      *
      * @return mixed
      */
-    public function login()
+    public function login(AuthenticateUser $authenticate)
     {
-        return $this->authenticate->login($this, Input::all());
+        return $authenticate->login($this, Input::all());
     }
 
     /**
@@ -76,9 +55,9 @@ class CredentialController extends AdminController implements AuthenticateListen
      *
      * @return mixed
      */
-    public function logout()
+    public function logout(DeauthenticateUser $deauthenticate)
     {
-        return $this->deauthenticate->logout($this);
+        return $deauthenticate->logout($this);
     }
 
     /**
