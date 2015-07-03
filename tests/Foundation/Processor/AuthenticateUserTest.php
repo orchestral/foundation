@@ -39,7 +39,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('save')->once()->andReturnNull();
         $listener->shouldReceive('userHasLoggedIn')->once()->andReturn('logged.in');
 
-        $stub = new AuthenticateUser($validator, $auth);
+        $stub = new AuthenticateUser($auth, $validator);
 
         $this->assertEquals('logged.in', $stub->login($listener, $input));
     }
@@ -66,7 +66,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $listener->shouldReceive('userLoginHasFailedAuthentication')->once()
                 ->with(m::type('Array'))->andReturn('login.authentication.failed');
 
-        $stub = new AuthenticateUser($validator, $auth);
+        $stub = new AuthenticateUser($auth, $validator);
 
         $this->assertEquals('login.authentication.failed', $stub->login($listener, $input));
     }
@@ -93,7 +93,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $listener->shouldReceive('userLoginHasFailedValidation')->once()
                 ->with(m::type('Array'))->andReturn('login.validation.failed');
 
-        $stub = new AuthenticateUser($validator, $auth);
+        $stub = new AuthenticateUser($auth, $validator);
 
         $this->assertEquals('login.validation.failed', $stub->login($listener, $input));
     }

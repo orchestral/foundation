@@ -1,5 +1,7 @@
 <?php namespace Orchestra\Foundation\Processor;
 
+use Orchestra\Contracts\Auth\Guard;
+
 abstract class Authenticate extends Processor
 {
     /**
@@ -8,6 +10,16 @@ abstract class Authenticate extends Processor
      * @var \Orchestra\Contracts\Auth\Guard
      */
     protected $auth;
+
+    /**
+     * Create a new processor instance.
+     *
+     * @param  \Orchestra\Contracts\Auth\Guard  $auth
+     */
+    public function __construct(Guard $auth)
+    {
+        $this->auth = $auth;
+    }
 
     /**
      * Get user.

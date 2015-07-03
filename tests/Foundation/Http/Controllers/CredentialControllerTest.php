@@ -176,7 +176,7 @@ class CredentialControllerTest extends TestCase
         $validation = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $auth       = m::mock('\Orchestra\Contracts\Auth\Guard');
 
-        $authenticate = m::mock('\Orchestra\Foundation\Processor\AuthenticateUser', [$validation, $auth]);
+        $authenticate = m::mock('\Orchestra\Foundation\Processor\AuthenticateUser', [$auth, $validation]);
         $deauthenticate = m::mock('\Orchestra\Foundation\Processor\DeauthenticateUser', [$auth]);
 
         $this->app->instance('Orchestra\Foundation\Processor\AuthenticateUser', $authenticate);

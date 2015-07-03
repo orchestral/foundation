@@ -12,13 +12,14 @@ class AuthenticateUser extends Authenticate implements Command
     /**
      * Create a new processor instance.
      *
-     * @param  \Orchestra\Foundation\Validation\AuthenticateUser  $validator
      * @param  \Orchestra\Contracts\Auth\Guard  $auth
+     * @param  \Orchestra\Foundation\Validation\AuthenticateUser  $validator
      */
-    public function __construct(Validator $validator, Guard $auth)
+    public function __construct(Guard $auth, Validator $validator)
     {
+        parent::__construct($auth);
+
         $this->validator = $validator;
-        $this->auth      = $auth;
     }
 
     /**
