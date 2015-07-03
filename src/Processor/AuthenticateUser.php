@@ -44,11 +44,9 @@ class AuthenticateUser extends Authenticate implements Command
             return $listener->userLoginHasFailedAuthentication($input);
         }
 
-        $user = $this->getUser();
-
-        $this->verifyWhenFirstTimeLogin($user);
-
-        return $listener->userHasLoggedIn($user);
+        return $listener->userHasLoggedIn(
+            $this->verifyWhenFirstTimeLogin($this->getUser())
+        );
     }
 
     /**
@@ -66,11 +64,7 @@ class AuthenticateUser extends Authenticate implements Command
 
         // We should now attempt to login the user using Auth class. If this
         // failed simply return false.
-        if (! $this->auth->attempt($data, $remember)) {
-            return false;
-        }
-
-        return true;
+        return $this->auth->attempt($data, $remember);
     }
 
     /**
@@ -79,12 +73,14 @@ class AuthenticateUser extends Authenticate implements Command
      *
      * @param  \Orchestra\Model\User  $user
      *
-     * @return void
+     * @return \Orchestra\Model\User
      */
     protected function verifyWhenFirstTimeLogin(Eloquent $user)
     {
         if ((int) $user->getAttribute('status') === Eloquent::UNVERIFIED) {
             $user->activate()->save();
         }
+
+        return $user;
     }
 }
