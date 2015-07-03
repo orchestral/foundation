@@ -4,8 +4,8 @@ use Orchestra\Foundation\Meta;
 use Orchestra\Foundation\Foundation;
 use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Support\Providers\ServiceProvider;
+use Orchestra\Foundation\Processor\Throttles\Basic;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins;
-use Orchestra\Foundation\Processor\Throttles\Without;
 use Orchestra\Support\Providers\Traits\AliasesProviderTrait;
 
 class FoundationServiceProvider extends ServiceProvider
@@ -110,7 +110,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function registerThrottlesLogins()
     {
-        $this->app->bind(ThrottlesLogins::class, Without::class);
+        $this->app->bind(ThrottlesLogins::class, Basic::class);
     }
 
     /**
