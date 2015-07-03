@@ -102,9 +102,9 @@ class CredentialController extends AdminController implements AuthenticateListen
             $messages = trans('passwords.throttle', ['seconds' => $seconds]);
         }
 
-        return $this->redirectWithMessage(handles('orchestra::login', $messages, 'error'))
-                    ->withErrors($errors)
-                    ->withInput();
+        messages('error', $messages);
+
+        return $this->redirectWithErrors(handles('orchestra::login', $errors);
     }
 
     /**
