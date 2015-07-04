@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Auth;
 
+use Illuminate\Support\Arr;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins as Command;
 
