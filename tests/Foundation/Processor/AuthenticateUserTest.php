@@ -24,7 +24,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $auth      = m::mock('\Orchestra\Contracts\Auth\Guard');
         $user      = m::mock('\Orchestra\Model\User, \Illuminate\Contracts\Auth\Authenticatable');
 
         $input = $this->getInput();
@@ -39,7 +39,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('save')->once()->andReturnNull();
         $listener->shouldReceive('userHasLoggedIn')->once()->andReturn('logged.in');
 
-        $stub = new AuthenticateUser($validator, $auth);
+        $stub = new AuthenticateUser($auth, $validator);
 
         $this->assertEquals('logged.in', $stub->login($listener, $input));
     }
@@ -55,7 +55,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $auth      = m::mock('\Orchestra\Contracts\Auth\Guard');
 
         $input = $this->getInput();
 
@@ -66,7 +66,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $listener->shouldReceive('userLoginHasFailedAuthentication')->once()
                 ->with(m::type('Array'))->andReturn('login.authentication.failed');
 
-        $stub = new AuthenticateUser($validator, $auth);
+        $stub = new AuthenticateUser($auth, $validator);
 
         $this->assertEquals('login.authentication.failed', $stub->login($listener, $input));
     }
@@ -82,7 +82,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $auth      = m::mock('\Orchestra\Contracts\Auth\Guard');
 
         $input = $this->getInput();
 
@@ -93,30 +93,9 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $listener->shouldReceive('userLoginHasFailedValidation')->once()
                 ->with(m::type('Array'))->andReturn('login.validation.failed');
 
-        $stub = new AuthenticateUser($validator, $auth);
+        $stub = new AuthenticateUser($auth, $validator);
 
         $this->assertEquals('login.validation.failed', $stub->login($listener, $input));
-    }
-
-    /**
-     * Test Orchestra\Foundation\Processor\AuthenticateUser::logout()
-     * method.
-     *
-     * @test
-     */
-    public function testLogoutMethod()
-    {
-        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
-        $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
-        $auth      = m::mock('\Illuminate\Contracts\Auth\Guard');
-
-        $stub = new AuthenticateUser($validator, $auth);
-
-        $auth->shouldReceive('logout')->once()->andReturnNull();
-
-        $listener->shouldReceive('userHasLoggedOut')->once()->andReturn('logged.out');
-
-        $this->assertEquals('logged.out', $stub->logout($listener));
     }
 
     /**

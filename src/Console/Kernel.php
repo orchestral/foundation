@@ -10,20 +10,20 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected $bootstrappers = [
-        'Illuminate\Foundation\Bootstrap\DetectEnvironment',
-        'Orchestra\Config\Bootstrap\LoadConfiguration',
-        'Illuminate\Foundation\Bootstrap\ConfigureLogging',
-        'Illuminate\Foundation\Bootstrap\HandleExceptions',
-        'Illuminate\Foundation\Bootstrap\RegisterFacades',
-        'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
-        'Illuminate\Foundation\Bootstrap\RegisterProviders',
-        'Illuminate\Foundation\Bootstrap\BootProviders',
+        \Illuminate\Foundation\Bootstrap\DetectEnvironment::class,
+        \Orchestra\Config\Bootstrap\LoadConfiguration::class,
+        \Illuminate\Foundation\Bootstrap\ConfigureLogging::class,
+        \Illuminate\Foundation\Bootstrap\HandleExceptions::class,
+        \Illuminate\Foundation\Bootstrap\RegisterFacades::class,
+        \Illuminate\Foundation\Bootstrap\SetRequestForConsole::class,
+        \Illuminate\Foundation\Bootstrap\RegisterProviders::class,
+        \Illuminate\Foundation\Bootstrap\BootProviders::class,
 
-        'Orchestra\Foundation\Bootstrap\LoadFoundation',
-        'Orchestra\Foundation\Bootstrap\UserAccessPolicy',
-        'Orchestra\Extension\Bootstrap\LoadExtension',
-        'Orchestra\Foundation\Bootstrap\LoadUserMetaData',
-        'Orchestra\View\Bootstrap\LoadCurrentTheme',
-        'Orchestra\Foundation\Bootstrap\LoadExpresso',
+        \Orchestra\Foundation\Bootstrap\LoadFoundation::class,
+        \Orchestra\Foundation\Bootstrap\UserAccessPolicy::class,
+        \Orchestra\Extension\Bootstrap\LoadExtension::class,
+        \Orchestra\Foundation\Bootstrap\LoadUserMetaData::class,
+        \Orchestra\View\Bootstrap\LoadCurrentTheme::class,
+        \Orchestra\Foundation\Bootstrap\LoadExpresso::class,
     ];
 }

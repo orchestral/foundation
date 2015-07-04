@@ -1,31 +1,26 @@
 <?php namespace Orchestra\Foundation\Processor;
 
 use Illuminate\Support\Arr;
-use Illuminate\Contracts\Auth\Guard;
+use Orchestra\Contracts\Auth\Guard;
 use Orchestra\Model\User as Eloquent;
 use Orchestra\Contracts\Auth\Command\AuthenticateUser as Command;
 use Orchestra\Foundation\Validation\AuthenticateUser as Validator;
 use Orchestra\Contracts\Auth\Listener\AuthenticateUser as Listener;
+use Orchestra\Contracts\Auth\Command\ThrottlesLogins as ThrottlesCommand;
 
-class AuthenticateUser extends Processor implements Command
+class AuthenticateUser extends Authenticate implements Command
 {
-    /**
-     * The auth guard implementation.
-     *
-     * @var \Illuminate\Contracts\Auth\Guard
-     */
-    protected $auth;
-
     /**
      * Create a new processor instance.
      *
+     * @param  \Orchestra\Contracts\Auth\Guard  $auth
      * @param  \Orchestra\Foundation\Validation\AuthenticateUser  $validator
-     * @param  \Illuminate\Contracts\Auth\Guard  $auth
      */
-    public function __construct(Validator $validator, Guard $auth)
+    public function __construct(Guard $auth, Validator $validator)
     {
+        parent::__construct($auth);
+
         $this->validator = $validator;
-        $this->auth      = $auth;
     }
 
     /**
@@ -33,10 +28,11 @@ class AuthenticateUser extends Processor implements Command
      *
      * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
      * @param  array  $input
+     * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
      *
      * @return mixed
      */
-    public function login(Listener $listener, array $input)
+    public function login(Listener $listener, array $input, ThrottlesCommand $throttles = null)
     {
         $validation = $this->validator->on('login')->with($input);
 
@@ -46,29 +42,15 @@ class AuthenticateUser extends Processor implements Command
             return $listener->userLoginHasFailedValidation($validation->getMessageBag());
         }
 
-        if (! $this->authenticate($input)) {
-            return $listener->userLoginHasFailedAuthentication($input);
+        if ($this->hasTooManyAttempts($input, $throttles)) {
+            return $this->handleUserHasTooManyAttempts($listener, $input, $throttles);
         }
 
-        $user = $this->auth->getUser();
+        if ($this->authenticate($input)) {
+            return $this->handleUserWasAuthenticated($listener, $input, $throttles);
+        }
 
-        $this->verifyWhenFirstTimeLogin($user);
-
-        return $listener->userHasLoggedIn($user);
-    }
-
-    /**
-     * Logout a user.
-     *
-     * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
-     *
-     * @return mixed
-     */
-    public function logout(Listener $listener)
-    {
-        $this->auth->logout();
-
-        return $listener->userHasLoggedOut();
+        return $this->handleUserFailedAuthentication($listener, $input, $throttles);
     }
 
     /**
@@ -86,11 +68,72 @@ class AuthenticateUser extends Processor implements Command
 
         // We should now attempt to login the user using Auth class. If this
         // failed simply return false.
-        if (! $this->auth->attempt($data, $remember)) {
-            return false;
+        return $this->auth->attempt($data, $remember);
+    }
+
+    /**
+     * Send the response after the user was authenticated.
+     *
+     * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
+     * @param  array  $input
+     * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
+     *
+     * @return mixed
+     */
+    protected function handleUserWasAuthenticated(Listener $listener, array $input, ThrottlesCommand $throttles = null)
+    {
+        if ($throttles) {
+            $throttles->clearLoginAttempts($input);
         }
 
-        return true;
+        return $listener->userHasLoggedIn($this->verifyWhenFirstTimeLogin($this->getUser()));
+    }
+
+    /**
+     * Send the response after the user has too many attempts.
+     *
+     * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
+     * @param  array  $input
+     * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
+     *
+     * @return mixed
+     */
+    protected function handleUserHasTooManyAttempts(Listener $listener, array $input, ThrottlesCommand $throttles = null)
+    {
+        $throttles->incrementLoginAttempts($input);
+
+        return $listener->sendLockoutResponse($input, $throttles->getSecondsBeforeNextAttempts($input));
+    }
+
+    /**
+     * Send the response after the user failed authentication.
+     *
+     * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
+     * @param  array  $input
+     * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
+     *
+     * @return mixed
+     */
+    protected function handleUserFailedAuthentication(Listener $listener, array $input, ThrottlesCommand $throttles = null)
+    {
+        if ($throttles) {
+            $throttles->incrementLoginAttempts($input);
+        }
+
+        return $listener->userLoginHasFailedAuthentication($input);
+    }
+
+    /**
+     * Check if user has too many attempts.
+     *
+     * @param  array  $input
+     * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
+     *
+     * @return bool
+     */
+    protected function hasTooManyAttempts(array $input, ThrottlesCommand $throttles = null)
+    {
+        return ($throttles && $throttles->hasTooManyLoginAttempts($input));
     }
 
     /**
@@ -99,12 +142,14 @@ class AuthenticateUser extends Processor implements Command
      *
      * @param  \Orchestra\Model\User  $user
      *
-     * @return void
+     * @return \Orchestra\Model\User
      */
     protected function verifyWhenFirstTimeLogin(Eloquent $user)
     {
         if ((int) $user->getAttribute('status') === Eloquent::UNVERIFIED) {
             $user->activate()->save();
         }
+
+        return $user;
     }
 }
