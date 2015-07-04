@@ -32,15 +32,14 @@ class BasicThrottle extends ThrottlesLogins implements Command
      */
     public function hasTooManyLoginAttempts(array $input)
     {
-        $tries     = $this->getLoginAttempts($input);
-        $lockedOut = $this->cache->has($this->getLoginLockExpirationKey($input));
+        $lockedOut = $this->cache->has($expiration = $this->getLoginLockExpirationKey($input));
 
         $attempts  = Arr::get(static::$config, 'attempts', 5);
         $lockedFor = Arr::get(static::$config, 'locked_for', 60);
 
-        if ($tries > $attempts || $lockedOut) {
+        if ($this->getLoginAttempts($input) > $attempts || $lockedOut) {
             if (! $lockedOut) {
-                $this->cache->put($this->getLoginLockExpirationKey($input), time() + $lockedFor, 1);
+                $this->cache->put($expiration, time() + $lockedFor, 1);
             }
 
             return true;

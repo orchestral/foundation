@@ -38,7 +38,7 @@ class WithoutThrottle extends ThrottlesLogins implements Command
      */
     public function getSecondsBeforeNextAttempts(array $input)
     {
-        return Arr::get(static::$config, 'attempts', 60);
+        return Arr::get(static::$config, 'locked_for', 60);
     }
 
     /**

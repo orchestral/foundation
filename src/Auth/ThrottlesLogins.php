@@ -35,7 +35,7 @@ abstract class ThrottlesLogins
      */
     protected function getLoginAttemptsKey(array $input)
     {
-        $key = implode('', Arr::only($input, ['username', '_ip']));
+        $key = implode('', Arr::only($input, ['email', '_ip']));
 
         return sprintf('login:attempts:%s', md5($key));
     }
@@ -49,7 +49,7 @@ abstract class ThrottlesLogins
      */
     protected function getLoginLockExpirationKey(array $input)
     {
-        $key = implode('', Arr::only($input, ['username', '_ip']));
+        $key = implode('', Arr::only($input, ['email', '_ip']));
 
         return sprintf('login:expiration:%s', md5($key));
     }
