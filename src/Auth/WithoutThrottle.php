@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Auth;
 
+use Illuminate\Support\Arr;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins as Command;
 
 class WithoutThrottle extends ThrottlesLogins implements Command
@@ -37,7 +38,7 @@ class WithoutThrottle extends ThrottlesLogins implements Command
      */
     public function getSecondsBeforeNextAttempts(array $input)
     {
-        return 60;
+        return Arr::get(static::$config, 'attempts', 60);
     }
 
     /**
