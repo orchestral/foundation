@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Orchestra\Foundation\Processor\Throttles\Without;
+use Orchestra\Foundation\Auth\WithoutThrottle;
 
 class CredentialControllerTest extends TestCase
 {
@@ -86,7 +86,7 @@ class CredentialControllerTest extends TestCase
         $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $authenticate->shouldReceive('login')->once()
-            ->with(m::type('\Orchestra\Foundation\Http\Controllers\CredentialController'), m::type('Array'), m::type(Without::class))
+            ->with(m::type('\Orchestra\Foundation\Http\Controllers\CredentialController'), m::type('Array'), m::type(WithoutThrottle::class))
             ->andReturnUsing(function ($listener, $input) use ($user) {
                 return $listener->userLoginHasFailedAuthentication($input);
             });
@@ -114,7 +114,7 @@ class CredentialControllerTest extends TestCase
         list($authenticate, $deauthenticate) = $this->getMockedProcessor();
 
         $authenticate->shouldReceive('login')->once()
-            ->with(m::type('\Orchestra\Foundation\Http\Controllers\CredentialController'), m::type('Array'), m::type(Without::class))
+            ->with(m::type('\Orchestra\Foundation\Http\Controllers\CredentialController'), m::type('Array'), m::type(WithoutThrottle::class))
             ->andReturnUsing(function ($listener) {
                 return $listener->userLoginHasFailedValidation([]);
             });
@@ -174,7 +174,7 @@ class CredentialControllerTest extends TestCase
      */
     protected function getMockedProcessor()
     {
-        $throttles  = new Without();
+        $throttles  = new WithoutThrottle();
         $validation = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
         $auth       = m::mock('\Orchestra\Contracts\Auth\Guard');
 

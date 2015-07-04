@@ -1,9 +1,10 @@
-<?php namespace Orchestra\Foundation\Processor\Throttles;
+<?php namespace Orchestra\Foundation\Auth;
 
+use Illuminate\Support\Arr;
 use Illuminate\Contracts\Cache\Repository as Cache;
-use Orchestra\Contracts\Auth\Command\ThrottlesLogins;
+use Orchestra\Contracts\Auth\Command\ThrottlesLogins as Command;
 
-class Basic extends Processor implements ThrottlesLogins
+class BasicThrottle extends ThrottlesLogins implements Command
 {
     /**
      * The cache repository implementation.
@@ -19,7 +20,7 @@ class Basic extends Processor implements ThrottlesLogins
      */
     public function __construct(Cache $cache)
     {
-        $this->cache = $cache;
+        $this->cache  = $cache;
     }
 
     /**
@@ -31,12 +32,14 @@ class Basic extends Processor implements ThrottlesLogins
      */
     public function hasTooManyLoginAttempts(array $input)
     {
-        $attempts  = $this->getLoginAttempts($input);
-        $lockedOut = $this->cache->has($this->getLoginLockExpirationKey($input));
+        $lockedOut = $this->cache->has($expiration = $this->getLoginLockExpirationKey($input));
 
-        if ($attempts > 5 || $lockedOut) {
+        $attempts  = Arr::get(static::$config, 'attempts', 5);
+        $lockedFor = Arr::get(static::$config, 'locked_for', 60);
+
+        if ($this->getLoginAttempts($input) > $attempts || $lockedOut) {
             if (! $lockedOut) {
-                $this->cache->put($this->getLoginLockExpirationKey($input), time() + 60, 1);
+                $this->cache->put($expiration, time() + $lockedFor, 1);
             }
 
             return true;

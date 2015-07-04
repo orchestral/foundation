@@ -1,8 +1,9 @@
-<?php namespace Orchestra\Foundation\Processor\Throttles;
+<?php namespace Orchestra\Foundation\Auth;
 
-use Orchestra\Contracts\Auth\Command\ThrottlesLogins;
+use Illuminate\Support\Arr;
+use Orchestra\Contracts\Auth\Command\ThrottlesLogins as Command;
 
-class Without extends Processor implements ThrottlesLogins
+class WithoutThrottle extends ThrottlesLogins implements Command
 {
     /**
      * Determine if the user has too many failed login attempts.
@@ -37,7 +38,7 @@ class Without extends Processor implements ThrottlesLogins
      */
     public function getSecondsBeforeNextAttempts(array $input)
     {
-        return 60;
+        return Arr::get(static::$config, 'locked_for', 60);
     }
 
     /**
