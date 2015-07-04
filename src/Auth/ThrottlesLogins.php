@@ -1,8 +1,8 @@
-<?php namespace Orchestra\Foundation\Processor\Throttles;
+<?php namespace Orchestra\Foundation\Auth;
 
 use Illuminate\Support\Arr;
 
-abstract class Processor
+abstract class ThrottlesLogins
 {
     /**
      * Get the login attempts cache key.

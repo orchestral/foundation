@@ -75,4 +75,12 @@ return [
 
     ],
 
+    /*
+    |----------------------------------------------------------------------
+    | Login Throttles for Orchestra Platform
+    |----------------------------------------------------------------------
+    */
+
+    'throttle' => Orchestra\Foundation\Auth\WithoutThrottle::class,
+
 ];

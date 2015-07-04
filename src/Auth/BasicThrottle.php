@@ -1,9 +1,9 @@
-<?php namespace Orchestra\Foundation\Processor\Throttles;
+<?php namespace Orchestra\Foundation\Auth;
 
 use Illuminate\Contracts\Cache\Repository as Cache;
-use Orchestra\Contracts\Auth\Command\ThrottlesLogins;
+use Orchestra\Contracts\Auth\Command\ThrottlesLogins as Command;
 
-class Basic extends Processor implements ThrottlesLogins
+class BasicThrottle extends ThrottlesLogins implements Command
 {
     /**
      * The cache repository implementation.

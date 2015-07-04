@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Providers\TestCase;
 
 use Mockery as m;
+use Orchestra\Foundation\Auth\WithoutThrottle;
 use Orchestra\Foundation\Providers\FoundationServiceProvider;
 
 class FoundationServiceProviderTest extends \PHPUnit_Framework_TestCase
@@ -23,9 +24,13 @@ class FoundationServiceProviderTest extends \PHPUnit_Framework_TestCase
     public function testRegisterEventsOnAfter()
     {
         $app = m::mock('\Orchestra\Foundation\Application[terminating]');
+        $app['config'] = $config = m::mock('\Illuminate\Contracts\Config\Repository');
         $app['events'] = $events = m::mock('\Illuminate\Contracts\Events\Dispatcher[fire]');
         $app['router'] = $router = m::mock('\Illuminate\Routing\Router');
         $events->shouldReceive('fire')->once()->with('orchestra.done')->andReturnNull();
+
+        $config->shouldReceive('get')->once()->with('orchestra/foundation::throttle', WithoutThrottle::class)
+            ->andReturn(WithoutThrottle::class);
 
         $app->shouldReceive('terminating')->once()->with(m::type('Closure'))
             ->andReturnUsing(function ($c) {
