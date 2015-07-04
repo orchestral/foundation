@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Foundation\Processor;
 
-use Orchestra\Contracts\Auth\Guard;
 use Orchestra\Contracts\Auth\Command\DeauthenticateUser as Command;
 use Orchestra\Contracts\Auth\Listener\DeauthenticateUser as Listener;
 

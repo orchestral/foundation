@@ -7,7 +7,6 @@ use Orchestra\Contracts\Auth\Command\AuthenticateUser as Command;
 use Orchestra\Foundation\Validation\AuthenticateUser as Validator;
 use Orchestra\Contracts\Auth\Listener\AuthenticateUser as Listener;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins as ThrottlesCommand;
-use Orchestra\Contracts\Auth\Listener\ThrottlesLogins as ThrottlesListener;
 
 class AuthenticateUser extends Authenticate implements Command
 {
@@ -78,6 +77,7 @@ class AuthenticateUser extends Authenticate implements Command
      * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
      * @param  array  $input
      * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
+     *
      * @return mixed
      */
     protected function handleUserWasAuthenticated(Listener $listener, array $input, ThrottlesCommand $throttles = null)
@@ -95,6 +95,7 @@ class AuthenticateUser extends Authenticate implements Command
      * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
      * @param  array  $input
      * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
+     *
      * @return mixed
      */
     protected function handleUserHasTooManyAttempts(Listener $listener, array $input, ThrottlesCommand $throttles = null)
@@ -110,6 +111,7 @@ class AuthenticateUser extends Authenticate implements Command
      * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
      * @param  array  $input
      * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
+     *
      * @return mixed
      */
     protected function handleUserFailedAuthentication(Listener $listener, array $input, ThrottlesCommand $throttles = null)

@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -48,6 +47,7 @@ class CredentialController extends AdminController implements AuthenticateListen
     public function login(Request $request, AuthenticateUser $authenticate, ThrottlesCommand $throttles)
     {
         $input = $request->all();
+
         $input['_ip'] = $request->ip();
 
         return $authenticate->login($this, $input, $throttles);
