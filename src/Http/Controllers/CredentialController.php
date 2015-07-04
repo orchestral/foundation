@@ -101,7 +101,7 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     public function sendLockoutResponse($input, $seconds)
     {
-        $message = trans('passwords.throttle', ['seconds' => $seconds]);
+        $message = trans('auth.throttle', ['seconds' => $seconds]);
 
         return $this->redirectWithMessage(handles('orchestra::login'), $message, 'error')->withInput();
     }

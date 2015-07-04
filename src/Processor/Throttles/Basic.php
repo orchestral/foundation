@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Processor\Throttles;
 
 use Illuminate\Contracts\Cache\Repository as Cache;
-use Illuminate\Contracts\Config\Repository as Config;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins;
 
 class Basic extends Processor implements ThrottlesLogins
@@ -16,13 +15,11 @@ class Basic extends Processor implements ThrottlesLogins
     /**
      * Construct a new processor.
      *
-     * @param  \Orchestra\Contracts\Config\Repository  $config
      * @param  \Illuminate\Contracts\Cache\Repository  $cache
      */
-    public function __construct(Config $config, Cache $cache)
+    public function __construct(Cache $cache)
     {
-        $this->config = $config;
-        $this->cache  = $cache;
+        $this->cache = $cache;
     }
 
     /**
