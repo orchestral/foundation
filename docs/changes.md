@@ -5,6 +5,13 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.4 {#v3-1-4}
+
+* Add login throttles using `Orchestra\Foundation\Auth\BasicThrottle`.
+* Add new assets:
+  - Font Awesome v4.3.0
+  - Vue v0.12.4
+
 ### v3.1.3 {#v3-1-3}
 
 * Simplify `Orchestra\Foundation\Application` and use `DIRECTORY_SEPARATOR` constant.
