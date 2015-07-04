@@ -5,6 +5,28 @@ use Illuminate\Support\Arr;
 abstract class ThrottlesLogins
 {
     /**
+     * The configurations.
+     *
+     * @var array
+     */
+    protected static $config = [
+        'attempts'   => 5,
+        'locked_for' => 60,
+    ];
+
+    /**
+     * Set configuration.
+     *
+     * @param  array  $config
+     *
+     * @return void
+     */
+    public static function setConfig(array $config)
+    {
+        static::$config = array_merge(static::$config, $config);
+    }
+
+    /**
      * Get the login attempts cache key.
      *
      * @param  array  $input

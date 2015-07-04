@@ -81,6 +81,43 @@ return [
     |----------------------------------------------------------------------
     */
 
-    'throttle' => Orchestra\Foundation\Auth\WithoutThrottle::class,
+    'throttle' => [
 
+        /*
+        |------------------------------------------------------------------
+        | Default Resolver
+        |------------------------------------------------------------------
+        |
+        | The default for handling login throttles, by default we use the
+        | default `BasicThrottle` which is identical Laravel offering.
+        | However you can disable it by changing to `WithoutThrottle`.
+        |
+        */
+
+        'resolver' => Orchestra\Foundation\Auth\BasicThrottle::class,
+
+        /*
+        |------------------------------------------------------------------
+        | Max attempts
+        |------------------------------------------------------------------
+        |
+        | Define the max attempts allowed before authentication is disabled
+        | for the given user.
+        |
+        */
+
+        'attempts' => 5,
+
+        /*
+        |------------------------------------------------------------------
+        | Locked for (in seconds)
+        |------------------------------------------------------------------
+        |
+        | Define number of seconds for the login throttles to disabled
+        | user authentication after exceeding max attempts.
+        |
+        */
+
+        'locked_for' => 60,
+    ],
 ];

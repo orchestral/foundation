@@ -1,8 +1,8 @@
 <?php namespace Orchestra\Foundation\Providers;
 
+use Orchestra\Foundation\Auth\BasicThrottle;
 use Orchestra\Foundation\Meta;
 use Orchestra\Foundation\Foundation;
-use Orchestra\Foundation\Auth\WithoutThrottle;
 use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Support\Providers\ServiceProvider;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins;
@@ -110,9 +110,12 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function registerThrottlesLogins()
     {
-        $config = $this->app->make('config');
+        $config    = $this->app->make('config')->get('orchestra/foundation::throttle', []);
+        $throttles = isset($config['resolver']) ? $config['resolver'] : BasicThrottle::class;
 
-        $this->app->bind(ThrottlesLogins::class, $config->get('orchestra/foundation::throttle', WithoutThrottle::class));
+        $this->app->bind(ThrottlesLogins::class, $throttles);
+
+        BasicThrottle::setConfig($config);
     }
 
     /**
