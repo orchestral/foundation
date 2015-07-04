@@ -99,7 +99,7 @@ class CredentialController extends AdminController implements AuthenticateListen
      *
      * @return mixed
      */
-    public function sendLockoutResponse($input, $seconds)
+    public function sendLockoutResponse(array $input, $seconds)
     {
         $message = trans('auth.throttle', ['seconds' => $seconds]);
 
