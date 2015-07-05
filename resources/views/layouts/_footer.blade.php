@@ -20,8 +20,8 @@
 @placeholder("orchestra.layout: footer")
 
 <script>
-jQuery(function onPageReady($) { 'use strict';
-	Javie.trigger("orchestra.ready: {!! app('request')->path() !!}");
+jQuery(function on_page_ready($) { 'use strict';
+  Javie.trigger("orchestra.ready: {!! app('request')->path() !!}");
 });
 </script>
 

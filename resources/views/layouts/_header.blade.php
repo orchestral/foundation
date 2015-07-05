@@ -23,7 +23,7 @@
 {!! $asset->scripts() !!}
 
 <script>
-Javie.detectEnvironment(function () {}
+Javie.detectEnvironment(function () {
   return "{!! app('env') !!}";
 });
 </script>
