@@ -1,69 +1,69 @@
 {
-	"name": "orchestra/foundation",
-	"description": "Orchestra Platform Foundation",
-	"homepage": "http://orchestraplatform.com/docs/latest/",
-	"keywords": ["orchestra-platform", "orchestral", "laravel", "administrator", "admin", "user-management"],
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Mior Muhammad Zaki",
-			"email": "crynobone@gmail.com",
-			"homepage": "https://github.com/crynobone"
-		}
-	],
-	"autoload": {
-		"psr-4": {
-			"Orchestra\\Foundation\\" : "src/"
-		},
-		"files": [
-			"src/helpers.php"
-		]
-	},
-	"require": {
-		"php": ">=5.5.9",
-		"laravel/framework": "~5.1.0",
-		"orchestra/asset": "~3.1.0",
-		"orchestra/auth": "~3.1.3",
-		"orchestra/extension": "~3.1.4",
-		"orchestra/html": "~3.1.1",
-		"orchestra/kernel": "~3.1.5",
-		"orchestra/memory": "~3.1.0",
-		"orchestra/messages": "~3.1.0",
-		"orchestra/model": "~3.1.0",
-		"orchestra/notifier": "~3.1.0",
-		"orchestra/optimize": "~3.1.0",
-		"orchestra/publisher": "~3.1.0",
-		"orchestra/support": "~3.1.1",
-		"orchestra/translation": "~3.1.0",
-		"orchestra/view": "~3.1.0",
-		"orchestra/widget": "~3.1.0",
-		"predis/predis": "~1.0"
-	},
-	"require-dev": {
-		"mockery/mockery": "^0.9.1",
-		"orchestra/resources": "~3.1.0",
-		"orchestra/testing": "~3.1.0"
-	},
-	"suggest": {
-		"orchestra/ftp-updater": "Allow Extension with asset to be updated/uploaded environment without SSH support (~3.1).",
-		"orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.1).",
-		"orchestra/studio": "Allow additional code generator for Orchestra Platform (~3.1).",
-		"orchestra/testing": "Allow better unit testing support for Orchestra Platform (~3.1)."
-	},
-	"scripts": {
-		"test": [
-			"./vendor/bin/phpunit"
-		],
-		"update-frontend": [
-			"bower update",
-			"bower-installer",
-			"gulp"
-		]
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "3.2-dev"
-		}
-	},
-	"minimum-stability": "dev"
+    "name": "orchestra/foundation",
+    "description": "Orchestra Platform Foundation",
+    "homepage": "http://orchestraplatform.com/docs/latest/",
+    "keywords": ["orchestra-platform", "orchestral", "laravel", "administrator", "admin", "user-management"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mior Muhammad Zaki",
+            "email": "crynobone@gmail.com",
+            "homepage": "https://github.com/crynobone"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Orchestra\\Foundation\\" : "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/framework": "~5.1.0",
+        "orchestra/asset": "~3.1.0",
+        "orchestra/auth": "~3.1.3",
+        "orchestra/extension": "~3.1.4",
+        "orchestra/html": "~3.1.1",
+        "orchestra/kernel": "~3.1.5",
+        "orchestra/memory": "~3.1.0",
+        "orchestra/messages": "~3.1.0",
+        "orchestra/model": "~3.1.0",
+        "orchestra/notifier": "~3.1.0",
+        "orchestra/optimize": "~3.1.0",
+        "orchestra/publisher": "~3.1.0",
+        "orchestra/support": "~3.1.1",
+        "orchestra/translation": "~3.1.0",
+        "orchestra/view": "~3.1.0",
+        "orchestra/widget": "~3.1.0",
+        "predis/predis": "~1.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^0.9.1",
+        "orchestra/resources": "~3.1.0",
+        "orchestra/testing": "~3.1.0"
+    },
+    "suggest": {
+        "orchestra/ftp-updater": "Allow Extension with asset to be updated/uploaded environment without SSH support (~3.1).",
+        "orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.1).",
+        "orchestra/studio": "Allow additional code generator for Orchestra Platform (~3.1).",
+        "orchestra/testing": "Allow better unit testing support for Orchestra Platform (~3.1)."
+    },
+    "scripts": {
+        "test": [
+            "./vendor/bin/phpunit"
+        ],
+        "update-frontend": [
+            "bower update",
+            "bower-installer",
+            "gulp"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.2-dev"
+        }
+    },
+    "minimum-stability": "dev"
 }
