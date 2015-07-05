@@ -1,8 +1,7 @@
 <script>
 jQuery(function onSettingPageReady($) { 'use strict';
-  var dispatcher, email_driver, get_container;
+  var email_driver, get_container;
 
-  dispatcher = Javie.make('event');
   email_driver = $('select[name="email_driver"]');
 
   get_container = function (node) {
@@ -10,7 +9,7 @@ jQuery(function onSettingPageReady($) { 'use strict';
   };
 
   // Listen to email.driver changed event.
-  dispatcher.listen('setting.changed: email.driver', function listen_to_email_driver_changes (e, self) {
+  Javie.on('setting.changed: email.driver', function listen_to_email_driver_changes (e, self) {
     var value, smtp;
 
     value = self.value ? self.value : '';
@@ -51,7 +50,7 @@ jQuery(function onSettingPageReady($) { 'use strict';
 
   // bind onChange event to publish an event.
   email_driver.on('change', function on_change_email_driver (e) {
-    dispatcher.fire('setting.changed: email.driver', [e, this]);
+    Javie.trigger('setting.changed: email.driver', [e, this]);
   });
 
   // lets trigger an onChange event.

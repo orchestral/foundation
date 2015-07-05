@@ -21,9 +21,7 @@
 
 <script>
 jQuery(function onPageReady($) { 'use strict';
-	var dispatcher = Javie.make('event');
-
-	dispatcher.fire("orchestra.ready: {!! app('request')->path() !!}");
+	Javie.trigger("orchestra.ready: {!! app('request')->path() !!}");
 });
 </script>
 

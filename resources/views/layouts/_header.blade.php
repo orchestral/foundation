@@ -23,7 +23,9 @@
 {!! $asset->scripts() !!}
 
 <script>
-Javie.ENV = "{!! app('env') !!}";
+Javie.detectEnvironment(function () {}
+  return "{!! app('env') !!}";
+});
 </script>
 
 @placeholder("orchestra.layout: header")

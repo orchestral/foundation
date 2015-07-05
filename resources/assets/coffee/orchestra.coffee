@@ -1,7 +1,6 @@
 root = @
 Javie = root.Javie
 jQuery = root.jQuery
-Dispatcher = Javie.make('event')
 
 setup_button_group = ($) ->
 	group = $(@)
@@ -47,7 +46,7 @@ setup_agreement = ($) ->
 			highlight: switcher.data("highlight")
 			width: 25
 			change: (e, target) ->
-				Dispatcher.fire('switcher.change', [switcher, e])
+				Javie.trigger('switcher.change', [switcher, e])
 				true
 		)
 		switcher.css('display', 'none')

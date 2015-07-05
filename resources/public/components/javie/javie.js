@@ -5,984 +5,1036 @@
  *
  * @package Javie
  * @require underscore, console, jQuery/Zepto
- * @version 1.2.0
+ * @version 2.0.2
  * @author  Mior Muhammad Zaki <https://github.com/crynobone>
  * @license MIT License
  * ========================================================================
  */
 
-(function() {
-  var Application, array_make, root, _;
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+'use strict';
 
-  root = this;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-  _ = root._;
+var _vendorUnderscore = require('./vendor/underscore');
 
-  if (!_ && (typeof require !== "undefined" && require !== null)) {
-    _ = require('underscore');
+var _vendorUnderscore2 = _interopRequireDefault(_vendorUnderscore);
+
+var _ApplicationEs6 = require('./Application.es6');
+
+var _ApplicationEs62 = _interopRequireDefault(_ApplicationEs6);
+
+var _modulesEventsEventsEs6 = require('./modules/events/Events.es6');
+
+var _modulesEventsEventsEs62 = _interopRequireDefault(_modulesEventsEventsEs6);
+
+var _modulesLogLogEs6 = require('./modules/log/Log.es6');
+
+var _modulesLogLogEs62 = _interopRequireDefault(_modulesLogLogEs6);
+
+var _modulesProfilerProfilerEs6 = require('./modules/profiler/Profiler.es6');
+
+var _modulesProfilerProfilerEs62 = _interopRequireDefault(_modulesProfilerProfilerEs6);
+
+var _modulesRequestRequestEs6 = require('./modules/request/Request.es6');
+
+var _modulesRequestRequestEs62 = _interopRequireDefault(_modulesRequestRequestEs6);
+
+var app = new _ApplicationEs62['default']();
+
+app.singleton('underscore', _vendorUnderscore2['default']);
+
+app.singleton('event', function () {
+  return new _modulesEventsEventsEs62['default']();
+});
+
+app.singleton('log', function () {
+  return _modulesLogLogEs62['default'];
+});
+app.singleton('log.writer', function () {
+  return new _modulesLogLogEs62['default']();
+});
+
+app.bind('profiler', function () {
+  var name = arguments[0] === undefined ? null : arguments[0];
+
+  return name != null ? new _modulesProfilerProfilerEs62['default'](name) : _modulesProfilerProfilerEs62['default'];
+});
+
+app.bind('request', function () {
+  var name = arguments[0] === undefined ? null : arguments[0];
+
+  return name != null ? new _modulesRequestRequestEs62['default'](name) : _modulesRequestRequestEs62['default'];
+});
+
+window.Javie = app;
+
+},{"./Application.es6":2,"./modules/events/Events.es6":4,"./modules/log/Log.es6":5,"./modules/profiler/Profiler.es6":6,"./modules/request/Request.es6":7,"./vendor/underscore":9}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _helpers = require('./helpers');
+
+var Util = _interopRequireWildcard(_helpers);
+
+var _ = require('./vendor/underscore');
+
+var Container = (function () {
+  function Container(name, instance) {
+    var shared = arguments[2] === undefined ? false : arguments[2];
+    var resolved = arguments[3] === undefined ? false : arguments[3];
+
+    _classCallCheck(this, Container);
+
+    this.name = name;
+    this.instance = instance;
+    this.shared = shared;
+    this.resolved = resolved;
   }
 
-  if (!_) {
-    throw new Error("underscore.js is missing");
-  }
+  _createClass(Container, [{
+    key: 'resolving',
+    value: function resolving() {
+      var options = arguments[0] === undefined ? [] : arguments[0];
 
-  array_make = function(args) {
-    return Array.prototype.slice.call(args);
-  };
+      if (this.isShared() && this.isResolved()) return this.instance;
 
-  Application = (function() {
-    function Application() {}
+      var resolved = this.instance;
 
-    Application.prototype.config = {};
+      if (_.isFunction(resolved)) resolved = resolved.apply(this, options);
 
-    Application.prototype.environment = 'production';
-
-    Application.prototype.instances = {};
-
-    Application.prototype.detectEnvironment = function(environment) {
-      if (_.isFunction(environment) === true) {
-        environment = environment.apply(root);
+      if (this.isShared()) {
+        this.instance = resolved;
+        this.resolved = true;
       }
+
+      return resolved;
+    }
+  }, {
+    key: 'isResolved',
+    value: function isResolved() {
+      return this.resolved;
+    }
+  }, {
+    key: 'isShared',
+    value: function isShared() {
+      return this.shared;
+    }
+  }]);
+
+  return Container;
+})();
+
+var Application = (function () {
+  function Application() {
+    var environment = arguments[0] === undefined ? 'production' : arguments[0];
+
+    _classCallCheck(this, Application);
+
+    this.config = {};
+    this.environment = environment;
+    this.instances = {};
+  }
+
+  _createClass(Application, [{
+    key: 'detectEnvironment',
+    value: function detectEnvironment(environment) {
+      if (_.isFunction(environment)) environment = environment.apply(this);
+
       return this.environment = environment;
-    };
-
-    Application.prototype.env = function() {
+    }
+  }, {
+    key: 'env',
+    value: function env() {
       return this.environment;
-    };
+    }
+  }, {
+    key: 'get',
+    value: function get(key) {
+      var defaults = arguments[1] === undefined ? null : arguments[1];
 
-    Application.prototype.get = function(key, alt) {
-      if (typeof this.config[key] !== 'undefined') {
-        return this.config[key];
-      }
-      return alt != null ? alt : alt = null;
-    };
+      if (typeof this.config[key] !== 'undefined') return this.config[key];
 
-    Application.prototype.put = function(key, value) {
-      var config;
-      config = key;
+      return defaults;
+    }
+  }, {
+    key: 'put',
+    value: function put(key, value) {
+      var config = key;
+
       if (!_.isObject(config)) {
         config = {};
         config[key] = value;
       }
+
       this.config = _.defaults(config, this.config);
-      return this;
-    };
 
-    Application.prototype.on = function(name, callback) {
-      var dispatcher;
-      dispatcher = this.make('event');
-      dispatcher.listen(name, callback);
       return this;
-    };
+    }
+  }, {
+    key: 'on',
+    value: function on(name, callback) {
+      var events = this.make('event');
+      events.listen(name, callback);
 
-    Application.prototype.trigger = function(name, options) {
-      var dispatcher;
-      dispatcher = this.make('event');
-      dispatcher.fire(name, options);
       return this;
-    };
+    }
+  }, {
+    key: 'trigger',
+    value: function trigger(name) {
+      var options = arguments[1] === undefined ? [] : arguments[1];
 
-    Application.prototype.bind = function(name, instance) {
-      this.instances[name] = [instance, false, null];
+      var events = this.make('event');
+      events.fire(name, options);
+
       return this;
-    };
+    }
+  }, {
+    key: 'bind',
+    value: function bind(name, instance) {
+      this.instances[name] = new Container(name, instance);
 
-    Application.prototype.make = function(name) {
-      var base, options, resolved, resolving;
-      options = array_make(arguments);
+      return this;
+    }
+  }, {
+    key: 'make',
+    value: function make(name) {
+      var options = Util.array_make(arguments);
       name = options.shift();
-      base = this.resolve(name);
-      resolving = base[0];
-      if (base[1] === true && base[2] === true) {
-        return resolving;
-      }
-      resolved = _.isFunction(resolving) ? resolving.apply(root, options) : resolving;
-      if (base[1] === true) {
-        this.instances[name][0] = resolved;
-        this.instances[name][2] = true;
-      }
-      return resolved;
-    };
 
-    Application.prototype.resolve = function(name) {
-      var base;
-      base = this.instances[name];
-      if (_.isUndefined(base)) {
-        return null;
-      } else {
-        return base;
-      }
-    };
+      if (this.instances[name] instanceof Container) return this.instances[name].resolving(options);
+    }
+  }, {
+    key: 'singleton',
+    value: function singleton(name, instance) {
+      this.instances[name] = new Container(name, instance, true);
 
-    Application.prototype.singleton = function(name, instance) {
-      this.instances[name] = [instance, true, false];
       return this;
-    };
+    }
+  }, {
+    key: 'when',
+    value: function when(environment, callback) {
+      var env = this.environment;
 
-    Application.prototype.when = function(environment, callback) {
-      var env;
-      if (this.ENV != null) {
-        env = this.ENV;
-      }
-      if (this.environment != null) {
-        env = this.environment;
-      }
-      if (env === environment || environment === '*') {
-        return this.run(callback);
-      }
-    };
+      if (env === environment || environment == '*') return this.run(callback);
+    }
+  }, {
+    key: 'run',
+    value: function run(callback) {
+      if (_.isFunction(callback)) return callback.call(this);
+    }
+  }]);
 
-    Application.prototype.run = function(callback) {
-      if (_.isFunction(callback)) {
-        return callback.call(this);
-      }
-    };
+  return Application;
+})();
 
-    return Application;
+exports['default'] = Application;
+module.exports = exports['default'];
 
-  })();
+},{"./helpers":3,"./vendor/underscore":9}],3:[function(require,module,exports){
+"use strict";
 
-  root.Javie = new Application;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.array_make = array_make;
+exports.microtime = microtime;
 
-}).call(this);
+function array_make(args) {
+  return Array.prototype.slice.call(args);
+}
 
+function microtime() {
+  var seconds = arguments[0] === undefined ? true : arguments[0];
 
-/*
- * ==========================================================
- * Javie.EventDispatcher
- * ==========================================================
- *
- * Event Dispatcher Helper for Client-side JavaScript
- * and Node.js
- *
- * @package Javie
- * @class   Event
- * @require underscore
- * @version 1.2.0
- * @since   0.1.0
- * @author  Mior Muhammad Zaki <https://github.com/crynobone>
- * @license MIT License
- * ==========================================================
- */
+  var time = new Date().getTime();
+  var ms = parseInt(time / 1000, 10);
+  var sec = (time - ms * 1000) / 1000 + " sec";
 
-(function() {
-  var EventDispatcher, EventRepository, dispatcher, events, root, _;
+  return seconds ? ms : sec;
+}
 
-  dispatcher = null;
+},{}],4:[function(require,module,exports){
+"use strict";
 
-  events = {};
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-  root = typeof exports !== "undefined" && exports !== null ? exports : this;
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-  _ = root._;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-  if (!_ && (typeof require !== "undefined" && require !== null)) {
-    _ = require('underscore');
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _vendorUnderscore = require("../../vendor/underscore");
+
+var _vendorUnderscore2 = _interopRequireDefault(_vendorUnderscore);
+
+var dispatcher = null;
+var events = {};
+
+var Payload = (function () {
+  function Payload(id, callback) {
+    _classCallCheck(this, Payload);
+
+    this.id = id;
+    this.callback = callback;
   }
 
-  if (!_) {
-    throw new Error("underscore.js is missing");
+  _createClass(Payload, [{
+    key: "getId",
+    value: function getId() {
+      return this.id;
+    }
+  }, {
+    key: "getCallback",
+    value: function getCallback() {
+      return this.callback;
+    }
+  }]);
+
+  return Payload;
+})();
+
+var Dispatcher = (function () {
+  function Dispatcher() {
+    _classCallCheck(this, Dispatcher);
   }
 
-  EventDispatcher = (function() {
-    function EventDispatcher() {}
-
-    EventDispatcher.prototype.clone = function(id) {
-      var clonable;
-      return clonable = {
-        to: function(cloneTo) {
-          events[cloneTo] = _.clone(events[id]);
-          return true;
+  _createClass(Dispatcher, [{
+    key: "clone",
+    value: function clone(id) {
+      return {
+        to: function to(_to) {
+          return events[_to] = _vendorUnderscore2["default"].clone(events[id]);
         }
       };
-    };
+    }
+  }, {
+    key: "listen",
+    value: function listen(id, callback) {
+      if (!_vendorUnderscore2["default"].isFunction(callback)) throw new Error("Callback is not a function.");
 
-    EventDispatcher.prototype.listen = function(id, callback) {
-      var response;
-      if (_.isFunction(callback) === false) {
-        throw new Error("Callback is not a function");
-      }
-      response = {
-        id: id,
-        callback: callback
-      };
-      if (events[id] == null) {
-        events[id] = [];
-      }
+      var response = new Payload(id, callback);
+
+      if (!_vendorUnderscore2["default"].isArray(events[id])) events[id] = [];
+
       events[id].push(callback);
+
       return response;
-    };
+    }
+  }, {
+    key: "fire",
+    value: function fire(id) {
+      var options = arguments[1] === undefined ? [] : arguments[1];
 
-    EventDispatcher.prototype.listener = function(id, callback) {
-      return this.listen(id, callback);
-    };
+      if (id == null) throw new Error("Event ID [" + id + "] is not available.");
 
-    EventDispatcher.prototype.fire = function(id, options) {
-      var me, responses, run_each_events;
-      me = this;
-      responses = [];
-      if (id == null) {
-        throw new Error("Event ID [" + id + "] is not available");
-      }
-      if (events[id] == null) {
-        return null;
-      }
-      run_each_events = function(callback, key) {
-        var applied;
-        applied = callback.apply(me, options || []);
-        return responses.push(applied);
-      };
-      _.each(events[id], run_each_events);
-      return responses;
-    };
+      return this.dispatch(events[id], options);
+    }
+  }, {
+    key: "first",
+    value: function first(id, options) {
+      if (id == null) throw new Error("Event ID [" + id + "] is not available.");
 
-    EventDispatcher.prototype.first = function(id, options) {
-      var first, me, responses, run_each_events;
-      me = this;
-      responses = [];
-      if (id == null) {
-        throw new Error("Event ID [" + id + "] is not available");
-      }
-      if (events[id] == null) {
-        return null;
-      }
-      first = events[id].slice(0, 1);
-      run_each_events = function(callback, key) {
-        var applied;
-        applied = callback.apply(me, options || []);
-        return responses.push(applied);
-      };
-      _.each(first, run_each_events);
-      return responses[0];
-    };
+      var first = events[id].slice(0, 1);
+      var responses = this.dispatch(first, options);
 
-    EventDispatcher.prototype.until = function(id, options) {
-      var me, responses, run_each_events;
-      me = this;
-      responses = null;
-      if (id == null) {
-        throw new Error("Event ID [" + id + "] is not available");
-      }
-      if (events[id] == null) {
-        return null;
-      }
-      run_each_events = function(callback, key) {
-        var applied;
-        applied = callback.apply(me, options || []);
-        if (responses == null) {
-          return responses.push(applied);
+      return responses.shift();
+    }
+  }, {
+    key: "until",
+    value: function until(id, options) {
+      if (id == null) throw new Error("Event ID [" + id + "] is not available.");
+
+      var responses = this.dispatch(events[id], options, true);
+
+      return responses.length < 1 ? null : responses.shift();
+    }
+  }, {
+    key: "flush",
+    value: function flush(id) {
+      if (!_vendorUnderscore2["default"].isNull(events[id])) events[id] = null;
+    }
+  }, {
+    key: "forget",
+    value: function forget(handler) {
+      var me = this;
+
+      if (!handler instanceof Payload) throw new Error("Invalid payload for Event ID [" + id + "]");
+
+      var id = handler.getId();
+      var ref = handler.getCallback();
+
+      if (!_vendorUnderscore2["default"].isArray(events[id])) throw new Error("Event ID [" + id + "] is not available.");
+
+      _vendorUnderscore2["default"].each(events[id], function (callback, key) {
+        if (ref == callback) {
+          events[id].splice(key, 1);
         }
-      };
-      _.each(events[id], run_each_events);
-      return responses;
-    };
+      });
+    }
+  }, {
+    key: "dispatch",
+    value: function dispatch(queued) {
+      var _this = this;
 
-    EventDispatcher.prototype.flush = function(id) {
-      if (!_.isUndefined(events[id])) {
-        events[id] = null;
-      }
-      return true;
-    };
+      var options = arguments[1] === undefined ? [] : arguments[1];
+      var halt = arguments[2] === undefined ? false : arguments[2];
 
-    EventDispatcher.prototype.forget = function(handler) {
-      var id, loop_each_events, me, ref;
-      me = this;
-      id = handler.id;
-      ref = handler.callback;
-      if (!_.isString(id)) {
-        throw new Error("Event ID [" + id + "] is not provided");
-      }
-      if (!_.isFunction(callback)) {
-        throw new Error('Callback is not a function');
-      }
-      if (events[id] == null) {
-        throw new Error("Event ID [" + id + "] is not available");
-      }
-      loop_each_events = function(callback, key) {
-        if (ref === callback) {
-          return events[id].splice(key, 1);
+      var responses = [];
+
+      if (!_vendorUnderscore2["default"].isArray(queued)) return null;
+
+      _vendorUnderscore2["default"].each(queued, function (callback, key) {
+        if (halt == false || responses.length == 0) {
+          var applied = callback.apply(_this, options);
+          responses.push(applied);
         }
-      };
-      _.each(events[id], loop_each_events);
-      return true;
-    };
+      });
 
-    return EventDispatcher;
-
-  })();
-
-  EventRepository = (function() {
-    function EventRepository() {
-      return EventRepository.make();
+      return responses;
     }
+  }]);
 
-    EventRepository.make = function() {
-      return dispatcher != null ? dispatcher : dispatcher = new EventDispatcher;
-    };
+  return Dispatcher;
+})();
 
-    return EventRepository;
+var Events = (function () {
+  function Events() {
+    _classCallCheck(this, Events);
 
-  })();
-
-  if (typeof exports !== "undefined" && exports !== null) {
-    if ((typeof module !== "undefined" && module !== null) && module.exports) {
-      module.exports = EventRepository;
-    }
-    exports.EventDispatcher = EventRepository;
-  } else {
-    if (root.Javie == null) {
-      root.Javie = {};
-    }
-    root.Javie.Events = EventRepository;
-    root.Javie.EventDispatcher = EventRepository;
+    return Events.make();
   }
 
-}).call(this);
+  _createClass(Events, null, [{
+    key: "make",
+    value: function make() {
+      if (dispatcher == null) dispatcher = new Dispatcher();
 
-
-/*
- * ==========================================================
- * Javie.Logger
- * ==========================================================
- *
- * Logger Helper for Client-side JavaScript and Node.js
- *
- * @package Javie
- * @class   Logger
- * @require console
- * @version 1.2.0
- * @since   0.1.0
- * @author  Mior Muhammad Zaki <https://github.com/crynobone>
- * @license MIT License
- * ==========================================================
- */
-
-(function() {
-  var Logger, LoggerRepository, array_make, dispatch, enabled, level, logger, post, root;
-
-  root = typeof exports !== "undefined" && exports !== null ? exports : this;
-
-  logger = null;
-
-  enabled = false;
-
-  level = {
-    ERROR: 'error',
-    WARNING: 'warning',
-    INFO: 'info',
-    DEBUG: 'debug',
-    LOG: 'log'
-  };
-
-  array_make = function(args) {
-    return Array.prototype.slice.call(args);
-  };
-
-  dispatch = function(type, message) {
-    if (!enabled) {
-      return false;
+      return dispatcher;
     }
-    return post(type, message);
-  };
+  }]);
 
-  post = function(type, message) {
-    var c;
-    c = console;
-    switch (type) {
-      case 'info':
-        c.info(message);
-        return true;
-      case 'debug' && (c.debug != null):
-        c.debug(message);
-        return true;
-      case 'warning':
-        c.warn(message);
-        return true;
-      case 'error' && (c.error != null):
-        c.error(message);
-        return true;
-      case 'log':
-        c.log(message);
-        return true;
-      default:
-        c.log("[" + (type.toUpperCase()) + "]", message);
-        return true;
-    }
-  };
+  return Events;
+})();
 
-  Logger = (function() {
-    function Logger() {}
+exports["default"] = Events;
+module.exports = exports["default"];
 
-    Logger.prototype.logs = [];
+},{"../../vendor/underscore":9}],5:[function(require,module,exports){
+'use strict';
 
-    Logger.prototype.dispatch = function(type, message) {
-      var result;
-      result = dispatch(type, message);
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _helpers = require('../../helpers');
+
+var Util = _interopRequireWildcard(_helpers);
+
+var writer = null;
+var enabled = false;
+var level = {
+  ERROR: 'error',
+  WARNING: 'warning',
+  INFO: 'info',
+  DEBUG: 'debug',
+  LOG: 'log'
+};
+
+function _dispatch(type, message) {
+  if (enabled) return post(type, message);
+}
+
+function post(type, message) {
+  var c = console;
+
+  switch (type) {
+    case 'info':
+      c.info(message);
+      return true;
+    case 'debug' && c.debug != null:
+      c.debug(message);
+      return true;
+    case 'warning':
+      c.warn(message);
+      return true;
+    case 'error' && c.error != null:
+      c.error(message);
+      return true;
+    case 'log':
+      c.log(message);
+      return true;
+    default:
+      c.log('[' + type.toUpperCase() + ']', message);
+      return true;
+  }
+}
+
+var Writer = (function () {
+  function Writer() {
+    _classCallCheck(this, Writer);
+
+    this.logs = [];
+  }
+
+  _createClass(Writer, [{
+    key: 'dispatch',
+    value: function dispatch(type, message) {
+      var result = _dispatch(type, message);
       message.unshift(type);
       this.logs.push(message);
+
       return result;
-    };
-
-    Logger.prototype.info = function() {
-      return this.dispatch(level.INFO, array_make(arguments));
-    };
-
-    Logger.prototype.debug = function() {
-      return this.dispatch(level.DEBUG, array_make(arguments));
-    };
-
-    Logger.prototype.warning = function() {
-      return this.dispatch(level.WARNING, array_make(arguments));
-    };
-
-    Logger.prototype.log = function() {
-      return this.dispatch(level.LOG, array_make(arguments));
-    };
-
-    Logger.prototype.post = function(type, message) {
+    }
+  }, {
+    key: 'info',
+    value: function info() {
+      return this.dispatch(level.INFO, Util.array_make(arguments));
+    }
+  }, {
+    key: 'debug',
+    value: function debug() {
+      return this.dispatch(level.DEBUG, Util.array_make(arguments));
+    }
+  }, {
+    key: 'warning',
+    value: function warning() {
+      return this.dispatch(level.WARNING, Util.array_make(arguments));
+    }
+  }, {
+    key: 'log',
+    value: function log() {
+      return this.dispatch(level.LOG, Util.array_make(arguments));
+    }
+  }, {
+    key: 'post',
+    value: function post(type, message) {
       return this.dispatch(type, [message]);
-    };
-
-    return Logger;
-
-  })();
-
-  LoggerRepository = (function() {
-    function LoggerRepository() {
-      return LoggerRepository.make();
     }
+  }]);
 
-    LoggerRepository.make = function() {
-      return logger != null ? logger : logger = new Logger;
-    };
+  return Writer;
+})();
 
-    LoggerRepository.enable = function() {
-      return enabled = true;
-    };
+var Log = (function () {
+  function Log() {
+    _classCallCheck(this, Log);
 
-    LoggerRepository.disable = function() {
-      return enabled = false;
-    };
-
-    LoggerRepository.status = function() {
-      return enabled;
-    };
-
-    return LoggerRepository;
-
-  })();
-
-  if (typeof exports !== "undefined" && exports !== null) {
-    if ((typeof module !== "undefined" && module !== null) && module.exports) {
-      module.exports = LoggerRepository;
-    }
-    root.Logger = LoggerRepository;
-  } else {
-    if (root.Javie == null) {
-      root.Javie = {};
-    }
-    root.Javie.Logger = LoggerRepository;
+    return Log.make();
   }
 
-}).call(this);
+  _createClass(Log, null, [{
+    key: 'make',
+    value: function make() {
+      if (writer == null) writer = new Writer();
 
-
-/*
- * ==========================================================
- * Javie.Profiler
- * ==========================================================
- *
- * Profiler Helper for Client-side JavaScript and Node.js
- *
- * @package Javie
- * @class   Profiler
- * @require console
- * @version 1.2.0
- * @since   0.1.0
- * @author  Mior Muhammad Zaki <https://github.com/crynobone>
- * @license MIT License
- * ==========================================================
- */
-
-(function() {
-  var Profiler, ProfilerRepository, enabled, microtime, profilers, root, schema;
-
-  profilers = {};
-
-  enabled = false;
-
-  root = typeof exports !== "undefined" && exports !== null ? exports : this;
-
-  schema = function(id, type, start) {
-    if (id == null) {
-      id = '';
+      return writer;
     }
-    if (type == null) {
-      type = '';
+  }, {
+    key: 'enable',
+    value: function enable() {
+      enabled = true;
     }
-    if (start == null) {
-      start = microtime(true);
+  }, {
+    key: 'disable',
+    value: function disable() {
+      enabled = false;
     }
-    return {
-      id: id,
-      type: type,
-      start: start,
-      end: null,
-      total: null,
-      message: ''
-    };
-  };
-
-  microtime = function(seconds) {
-    var ms, sec, time;
-    time = new Date().getTime();
-    ms = parseInt(time / 1000, 10);
-    sec = "" + ((time - (ms * 1000)) / 1000) + " sec";
-    if (seconds === true) {
-      return ms;
-    } else {
-      return sec;
+  }, {
+    key: 'status',
+    value: function status() {
+      return enabled;
     }
-  };
+  }]);
 
-  Profiler = (function() {
-    Profiler.prototype.logs = null;
+  return Log;
+})();
 
-    Profiler.prototype.pair = null;
+exports['default'] = Log;
+module.exports = exports['default'];
 
-    Profiler.prototype.started = null;
+},{"../../helpers":3}],6:[function(require,module,exports){
+'use strict';
 
-    function Profiler() {
-      this.logs = [];
-      this.pair = {};
-      this.started = microtime(true);
-    }
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
 
-    Profiler.prototype.time = function(id, message) {
-      var key, log;
-      if (id == null) {
-        id = this.logs.length;
-      }
-      if (enabled === false) {
-        return null;
-      }
-      log = schema('time', id);
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _helpers = require('../../helpers');
+
+var Util = _interopRequireWildcard(_helpers);
+
+var profilers = {};
+var enabled = false;
+
+var Schema = function Schema(id, type) {
+  var start = arguments[2] === undefined ? null : arguments[2];
+
+  _classCallCheck(this, Schema);
+
+  if (start == null) start = Util.microtime();
+
+  this.id = id;
+  this.type = type;
+  this.start = start;
+  this.end = null;
+  this.total = null;
+  this.message = '';
+};
+
+var Handler = (function () {
+  function Handler(name) {
+    _classCallCheck(this, Handler);
+
+    this.name = name;
+    this.logs = [];
+    this.pair = {};
+    this.started = Util.microtime();
+  }
+
+  _createClass(Handler, [{
+    key: 'time',
+    value: function time(id, message) {
+      if (!enabled) return null;
+
+      if (id == null) id = this.logs.length;
+
+      var log = new Schema(id, 'time');
       log.message = message.toString();
-      key = this.pair["time" + id];
-      if (typeof key !== 'undefined') {
+
+      var key = this.pair['time' + id];
+
+      if (typeof key != 'undefined') {
         this.logs[key] = log;
       } else {
         this.logs.push(log);
-        this.pair["time" + id] = this.logs.length - 1;
+        this.pair['time' + id] = this.logs.length - 1;
       }
-      console.time(id);
-      return id;
-    };
 
-    Profiler.prototype.timeEnd = function(id, message) {
-      var end, key, log, start, total;
-      if (id == null) {
-        id = this.logs.length;
-      }
-      if (enabled === false) {
-        return null;
-      }
-      key = this.pair["time" + id];
-      if (typeof key !== 'undefined') {
+      console.time(id);
+
+      return id;
+    }
+  }, {
+    key: 'timeEnd',
+    value: function timeEnd(id, message) {
+      if (!enabled) return null;
+
+      if (id == null) id = this.logs.length;
+
+      var key = this.pair['time' + id];
+      var log = null;
+
+      if (typeof key != 'undefined') {
         console.timeEnd(id);
         log = this.logs[key];
       } else {
-        log = schema('time', id, this.started);
-        if (typeof message !== 'undefined') {
-          log.message = message;
-        }
+        log = new Schema(id, 'time', this.started);
+        if (typeof message != 'undefined') log.message = message;
+
         this.logs.push(log);
         key = this.logs.length - 1;
       }
-      end = log.end = microtime(true);
-      start = log.start;
-      total = end - start;
+
+      var end = log.end = Util.microtime();
+      var start = log.start;
+      var total = end - start;
       log.total = total;
       this.logs[key] = log;
+
       return total;
-    };
+    }
+  }, {
+    key: 'trace',
+    value: function trace() {
+      if (enable) console.trace();
+    }
+  }, {
+    key: 'output',
+    value: function output() {
+      var auto = arguments[0] === undefined ? false : arguments[0];
 
-    Profiler.prototype.trace = function() {
-      if (enabled) {
-        console.trace();
-      }
-      return true;
-    };
+      if (auto) enabled = true;
 
-    Profiler.prototype.output = function(auto) {
-      var log, sec, _i, _len, _ref;
-      if (auto === true) {
-        enabled = true;
-      }
-      if (enabled === false) {
-        return false;
-      }
-      _ref = this.logs;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        log = _ref[_i];
-        if (log.type === 'time') {
-          sec = Math.floor(log.total * 1000);
+      if (!enabled) return null;
+
+      this.logs.forEach(function (log) {
+        if (log.type == 'time') {
+          var sec = Math.floor(log.total * 1000);
           console.log('%s: %s - %dms', log.id, log.message, sec);
         } else {
           console.log(log.id, log.message);
         }
-      }
-      return true;
-    };
-
-    return Profiler;
-
-  })();
-
-  ProfilerRepository = (function() {
-    function ProfilerRepository(name) {
-      return ProfilerRepository.make(name);
-    }
-
-    ProfilerRepository.make = function(name) {
-      if (!((name != null) || name !== '')) {
-        name = 'default';
-      }
-      return profilers[name] != null ? profilers[name] : profilers[name] = new Profiler;
-    };
-
-    ProfilerRepository.enable = function() {
-      return enabled = true;
-    };
-
-    ProfilerRepository.disable = function() {
-      return enabled = false;
-    };
-
-    ProfilerRepository.status = function() {
-      return enabled;
-    };
-
-    return ProfilerRepository;
-
-  })();
-
-  if (typeof exports !== "undefined" && exports !== null) {
-    if ((typeof module !== "undefined" && module !== null) && module.exports) {
-      module.exports = ProfilerRepository;
-    }
-    exports.Profiler = ProfilerRepository;
-  } else {
-    if (root.Javie == null) {
-      root.Javie = {};
-    }
-    root.Javie.Profiler = ProfilerRepository;
-  }
-
-}).call(this);
-
-
-/*
- * ==========================================================
- * Javie.Request
- * ==========================================================
- *
- * Request Helper for Client-side JavaScript
- *
- * @package Javie
- * @class   Request
- * @require underscore, jQuery/Zepto
- * @version 1.1.3
- * @since   0.1.1
- * @author  Mior Muhammad Zaki <https://github.com/crynobone>
- * @license MIT
- * ==========================================================
- */
-
-(function() {
-  var Request, RequestRepository, api, dispatcher, find_request, json_parse, requests, root, _;
-
-  root = typeof exports !== "undefined" && exports !== null ? exports : this;
-
-  requests = {};
-
-  dispatcher = null;
-
-  if (typeof root.Javie === 'undefined') {
-    throw new Error("Javie is missing");
-  }
-
-  if (typeof root.Javie.EventDispatcher === 'undefined') {
-    throw new Error("Javie.EventDispatcher is missing");
-  }
-
-  dispatcher = root.Javie.EventDispatcher.make();
-
-  _ = root._;
-
-  if (!_ && (typeof require !== "undefined" && require !== null)) {
-    _ = require('underscore');
-  }
-
-  if (!_) {
-    throw new Error("underscore.js is missing");
-  }
-
-  api = root.$;
-
-  if (typeof api === 'undefined' || api === null) {
-    throw new Error("Required jQuery or Zepto object is missing");
-  }
-
-  find_request = function(name) {
-    var child, child_name, parent, request;
-    request = null;
-    if (!_.isUndefined(requests[name])) {
-      parent = requests[name];
-      if (parent.executed === true) {
-        child_name = _.uniqueId("" + name + "_");
-        child = new Request;
-        dispatcher.clone("Request.onError: " + name).to("Request.onError: " + child_name);
-        dispatcher.clone("Request.onComplete: " + name).to("Request.onComplete: " + child_name);
-        dispatcher.clone("Request.beforeSend: " + name).to("Request.beforeSend: " + child_name);
-        child.put(parent.config);
-        request = child;
-      }
-      request = parent;
-    } else {
-      request = new Request;
-      request.config = _.defaults(request.config, RequestRepository.config);
-      request.put({
-        'name': name
       });
-      requests[name] = request;
     }
-    return request;
-  };
+  }]);
 
-  json_parse = function(data) {
-    var e;
-    if (_.isString(data) === true) {
-      try {
-        data = api.parseJSON(data);
-      } catch (_error) {
-        e = _error;
-      }
+  return Handler;
+})();
+
+var Profiler = (function () {
+  function Profiler(name) {
+    _classCallCheck(this, Profiler);
+
+    return Profiler.make(name);
+  }
+
+  _createClass(Profiler, null, [{
+    key: 'make',
+    value: function make() {
+      var name = arguments[0] === undefined ? 'default' : arguments[0];
+
+      if (profilers[name] == null) profilers[name] = new Handler(name);
+
+      return profilers[name];
     }
-    return data;
-  };
+  }, {
+    key: 'enable',
+    value: function enable() {
+      enabled = true;
+    }
+  }, {
+    key: 'disable',
+    value: function disable() {
+      enabled = false;
+    }
+  }, {
+    key: 'status',
+    value: function status() {
+      return enabled;
+    }
+  }]);
 
-  Request = (function() {
-    function Request() {}
+  return Profiler;
+})();
 
-    Request.prototype.executed = false;
+exports['default'] = Profiler;
+module.exports = exports['default'];
 
-    Request.prototype.response = null;
+},{"../../helpers":3}],7:[function(require,module,exports){
+'use strict';
 
-    Request.prototype.config = {
-      'name': '',
-      'type': 'GET',
-      'uri': '',
-      'query': '',
-      'data': '',
-      'dataType': 'json',
-      'id': '',
-      'object': null
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _eventsEventsEs6 = require('../events/Events.es6');
+
+var _eventsEventsEs62 = _interopRequireDefault(_eventsEventsEs6);
+
+var _helpers = require('../../helpers');
+
+var Util = _interopRequireWildcard(_helpers);
+
+var dispatcher = _eventsEventsEs62['default'].make();
+var requests = {};
+var _ = require('../../vendor/underscore');
+var api = require('../../vendor/jquery');
+
+function json_parse(data) {
+  if (_.isString(data)) {
+    try {
+      data = api.parseJSON(data);
+    } catch (e) {
+      data = null;
+    }
+  }
+
+  return data;
+}
+
+var Handler = (function () {
+  function Handler() {
+    _classCallCheck(this, Handler);
+
+    this.executed = false;
+    this.response = null;
+    this.config = {
+      name: '',
+      type: 'GET',
+      uri: '',
+      query: '',
+      data: '',
+      dataType: 'json',
+      id: '',
+      object: null,
+      headers: {},
+      beforeSend: function beforeSend() {},
+      onComplete: function onComplete() {},
+      onError: function onError() {}
     };
+  }
 
-    Request.prototype.get = function(key, alt) {
-      if (typeof this.config[key] !== 'undefined') {
-        return this.config[key];
-      }
-      return alt != null ? alt : alt = null;
-    };
+  _createClass(Handler, [{
+    key: 'get',
+    value: function get(key) {
+      var defaults = arguments[1] === undefined ? null : arguments[1];
 
-    Request.prototype.put = function(key, value) {
-      var config;
-      config = key;
+      if (!_.isUndefined(this.config[key])) return this.config[key];
+
+      return defaults;
+    }
+  }, {
+    key: 'put',
+    value: function put(key, value) {
+      var config = key;
+
       if (!_.isObject(key)) {
         config = {};
         config[key] = value;
       }
-      return this.config = _.defaults(config, this.config);
-    };
 
-    Request.prototype.to = function(url, object, data_type) {
-      var id, queries, request_method, segment, type, uri;
-      this.put({
-        'dataType': data_type != null ? data_type : data_type = 'json'
-      });
-      request_method = ['POST', 'GET', 'PUT', 'DELETE'];
-      if (_.isUndefined(url)) {
-        throw new Error("Missing required url parameter");
-      }
-      if (object == null) {
-        object = root.document;
-      }
-      this.put({
-        'object': object
-      });
-      segment = url.split(' ');
-      if (segment.length === 1) {
+      this.config = _.defaults(config, this.config);
+
+      return this;
+    }
+  }, {
+    key: 'addHeader',
+    value: function addHeader(key, value) {
+      var headers = this.get('headers', {});
+      headers[key] = value;
+      this.put({ headers: headers });
+
+      return this;
+    }
+  }, {
+    key: 'to',
+    value: function to(url, object) {
+      var dataType = arguments[2] === undefined ? 'json' : arguments[2];
+      var headers = arguments[3] === undefined ? {} : arguments[3];
+
+      var supported = ['POST', 'GET', 'PUT', 'DELETED'];
+
+      if (_.isUndefined(url)) throw new Error('Missing required URL parameter.');
+
+      if (object == null) object = window.document;
+
+      var segment = url.split(' ');
+      var uri = url;
+      var type = this.get('type', 'POST');
+      var query = this.get('query', '');
+
+      if (segment.length == 1) {
         uri = segment[0];
       } else {
-        if (_.indexOf(request_method, segment[0]) !== -1) {
-          type = segment[0];
-        }
-        uri = segment[1];
-        if (type !== 'GET') {
-          queries = uri.split('?');
-          if (queries.length > 1) {
-            url = queries[0];
-            this.put({
-              'query': queries[1]
-            });
-          }
-        }
-        uri = uri.replace(':baseUrl', this.get('baseUrl', ''));
-        this.put({
-          'type': type,
-          'uri': uri
-        });
-      }
-      id = api(this.get('object')).attr('id');
-      if (typeof id !== 'undefined') {
-        this.put({
-          'id': "#" + id
-        });
-      }
-      return this;
-    };
+        if (_.indexOf(supported, segment[0]) > -1) type = segment[0];
 
-    Request.prototype.execute = function(data) {
-      var me, name, request;
-      me = this;
-      name = this.get('name');
-      if (!_.isObject(data)) {
-        data = "" + (api(this.get('object')).serialize()) + "&" + (this.get('query'));
-        if (data === '?&') {
-          data = '';
+        uri = segment[1];
+      }
+
+      if (type != 'GET') {
+        var queries = uri.split('?');
+
+        if (queries.length > 1) {
+          uri = queries[0];
+          query = queries[1];
         }
       }
+
+      uri = uri.replace(':baseUrl', this.get('baseUrl', ''));
+
+      this.put({
+        dataType: dataType,
+        object: object,
+        query: query,
+        type: type,
+        uri: uri,
+        headers: headers
+      });
+
+      var id = api(object).attr('id');
+
+      if (typeof id != 'undefined') this.put({ id: '#' + id });
+
+      return this;
+    }
+  }, {
+    key: 'execute',
+    value: function execute(data) {
+      var me = this;
+      var name = this.get('name');
+      var object = this.get('object');
+      var query = this.get('query');
+
+      if (!_.isObject(data)) {
+        data = api(object).serialize() + '&' + query;
+        if (data == '?&') data = '';
+      }
+
       this.executed = true;
-      dispatcher.fire('Request.beforeSend', [this]);
-      dispatcher.fire("Request.beforeSend: " + name, [this]);
-      this.config['beforeSend'](this);
-      request = {
-        'type': this.get('type'),
-        'dataType': this.get('dataType'),
-        'url': this.get('uri'),
-        'data': data,
-        'complete': function(xhr) {
-          var status;
+
+      var payload = {
+        type: this.get('type'),
+        dataType: this.get('dataType'),
+        url: this.get('uri'),
+        data: data,
+        headers: this.get('headers', {}),
+        beforeSend: function beforeSend(xhr) {
+          me.fireEvent('beforeSend', name, [me, xhr]);
+        },
+        complete: function complete(xhr) {
           data = json_parse(xhr.responseText);
           status = xhr.status;
           me.response = xhr;
-          if (!_.isUndefined(data) && data.hasOwnProperty('errors')) {
-            dispatcher.fire('Request.onError', [data.errors, status, me]);
-            dispatcher.fire("Request.onError: " + name, [data.errors, status, me]);
-            me.config['onError'](data.errors, status, me);
+
+          if (!_.isUndefined(data) && data.hasOwnProperty('error')) {
+            me.fireEvent('onError', name, [data.errors, status, me, xhr]);
             data.errors = null;
           }
-          dispatcher.fire('Request.onComplete', [data, status, me]);
-          dispatcher.fire("Request.onComplete: " + name, [data, status, me]);
-          me.config['onComplete'](data, status, me);
-          return true;
+
+          me.fireEvent('onComplete', name, [data, status, me, xhr]);
         }
       };
-      api.ajax(request);
+
+      api.ajax(payload);
+
       return this;
-    };
-
-    return Request;
-
-  })();
-
-  RequestRepository = (function() {
-    function RequestRepository(name) {
-      return RequestRepository.make(name);
     }
+  }, {
+    key: 'fireEvent',
+    value: function fireEvent(type, name, args) {
+      dispatcher.fire('Request.' + type, args);
+      dispatcher.fire('Request.' + type + ': ' + name, args);
 
-    RequestRepository.make = function(name) {
-      if (!_.isString(name)) {
-        name = 'default';
-      }
-      return find_request(name);
-    };
+      var callback = this.config[type];
 
-    RequestRepository.config = {
-      'baseUrl': null,
-      'onError': function(data, status) {},
-      'beforeSend': function(data, status) {},
-      'onComplete': function(data, status) {}
-    };
+      if (_.isFunction(callback)) callback.apply(this, args);
+    }
+  }]);
 
-    RequestRepository.get = function(key, alt) {
-      if (alt == null) {
-        alt = null;
-      }
-      if (_.isUndefined(this.config[key])) {
-        return alt;
-      }
-      return this.config[key];
-    };
+  return Handler;
+})();
 
-    RequestRepository.put = function(key, value) {
-      var config;
-      config = key;
+var Request = (function () {
+  function Request(name) {
+    _classCallCheck(this, Request);
+
+    return Request.make(name);
+  }
+
+  _createClass(Request, null, [{
+    key: 'make',
+    value: function make() {
+      var name = arguments[0] === undefined ? 'default' : arguments[0];
+
+      return Request.find(name);
+    }
+  }, {
+    key: 'get',
+    value: function get(key) {
+      var defaults = arguments[1] === undefined ? null : arguments[1];
+
+      if (!_.isUndefined(Request.config[key])) return Request.config[key];
+
+      return defaults;
+    }
+  }, {
+    key: 'put',
+    value: function put(key, value) {
+      var config = key;
+
       if (!_.isObject(key)) {
         config = {};
         config[key] = value;
       }
-      return this.config = _.defaults(config, this.config);
-    };
 
-    return RequestRepository;
-
-  })();
-
-  if (typeof exports !== "undefined" && exports !== null) {
-    if ((typeof module !== "undefined" && module !== null) && module.exports) {
-      module.exports = RequestRepository;
+      Request.config = _.defaults(config, Request.config);
     }
-    root.Request = RequestRepository;
-  } else {
-    root.Javie.Request = RequestRepository;
-  }
+  }, {
+    key: 'find',
+    value: function find(name) {
+      var request = null;
 
-}).call(this);
+      if (_.isUndefined(requests[name])) {
+        request = new Handler();
+        request.config = _.defaults(request.config, Request.config);
+        request.put({ name: name });
 
-(function() {
-  var javie, root;
+        return requests[name] = request;
+      }
 
-  root = this;
+      request = requests[name];
 
-  javie = root.Javie;
+      if (!request.executed) return request;
 
-  javie.singleton('underscore', root._);
+      var key = _.uniqueId(name + '_');
+      var child = new Handler();
 
-  javie.singleton('event', function() {
-    return new javie.EventDispatcher;
-  });
+      dispatcher.clone('Request.onError: ' + name).to('Request.onError: ' + name);
+      dispatcher.clone('Request.onComplete: ' + name).to('Request.onComplete: ' + name);
+      dispatcher.clone('Request.beforeSend: ' + name).to('Request.beforeSend: ' + name);
 
-  javie.bind('profiler', function(name) {
-    if (name != null) {
-      return new javie.Profiler(name);
-    } else {
-      return javie.Profiler;
+      child.put(parent.config);
+
+      return child;
     }
-  });
+  }, {
+    key: 'config',
+    value: {
+      baseUrl: null,
+      onError: function onError(data, status) {},
+      beforeSend: function beforeSend(data, status) {},
+      onComplete: function onComplete(data, status) {}
+    },
+    enumerable: true
+  }]);
 
-  javie.bind('log', function() {
-    return new javie.Logger;
-  });
+  return Request;
+})();
 
-  javie.bind('request', function(name) {
-    if (name != null) {
-      return new javie.Request(name);
-    } else {
-      return javie.Request;
-    }
-  });
+exports['default'] = Request;
+module.exports = exports['default'];
 
-}).call(this);
+},{"../../helpers":3,"../../vendor/jquery":8,"../../vendor/underscore":9,"../events/Events.es6":4}],8:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = jQuery;
+module.exports = exports["default"];
+
+},{}],9:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = _;
+module.exports = exports["default"];
+
+},{}]},{},[1]);
+
+//# sourceMappingURL=javie.js.map

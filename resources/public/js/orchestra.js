@@ -1,13 +1,11 @@
 (function() {
-  var Dispatcher, Javie, jQuery, root, setup_agreement, setup_button_group, setup_helper, setup_pagination;
+  var Javie, jQuery, root, setup_agreement, setup_button_group, setup_helper, setup_pagination;
 
   root = this;
 
   Javie = root.Javie;
 
   jQuery = root.jQuery;
-
-  Dispatcher = Javie.make('event');
 
   setup_button_group = function($) {
     var buttons, form, group, hidden, name;
@@ -63,7 +61,7 @@
         highlight: switcher.data("highlight"),
         width: 25,
         change: function(e, target) {
-          Dispatcher.fire('switcher.change', [switcher, e]);
+          Javie.trigger('switcher.change', [switcher, e]);
           return true;
         }
       });
