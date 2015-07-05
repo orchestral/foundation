@@ -89,9 +89,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('listen')->once()
             ->with('orchestra.started: admin', 'Orchestra\Foundation\Http\Handlers\SettingMenuHandler')->andReturnNull()
             ->shouldReceive('listen')->once()
-            ->with('orchestra.started: admin', 'Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler')->andReturnNull()
-            ->shouldReceive('listen')->once()
-            ->with('orchestra.ready: admin', 'Orchestra\Foundation\AdminMenuHandler')->andReturnNull()
+                ->with('orchestra.ready: admin', 'Orchestra\Foundation\AdminMenuHandler')->andReturnNull()
             ->shouldReceive('fire')->once()->with('orchestra.started', [$memoryProvider])->andReturnNull();
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
         $request->shouldReceive('root')->andReturn('http://localhost')

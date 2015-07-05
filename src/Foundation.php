@@ -9,7 +9,6 @@ use Orchestra\Foundation\Http\Handlers\UserMenuHandler;
 use Orchestra\Foundation\Http\Middleware\UseBackendTheme;
 use Orchestra\Foundation\Http\Handlers\SettingMenuHandler;
 use Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler;
-use Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler;
 use Orchestra\Contracts\Foundation\Foundation as FoundationContract;
 
 class Foundation extends RouteManager implements FoundationContract
@@ -209,7 +208,6 @@ class Foundation extends RouteManager implements FoundationContract
             UserMenuHandler::class,
             ExtensionMenuHandler::class,
             SettingMenuHandler::class,
-            ResourcesMenuHandler::class,
         ];
 
         $menu->add('home')
