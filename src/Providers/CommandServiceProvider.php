@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Providers;
 
+use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Foundation\Console\Commands\AssembleCommand;
 use Orchestra\Support\Providers\CommandServiceProvider as ServiceProvider;
 
@@ -21,7 +22,7 @@ class CommandServiceProvider extends ServiceProvider
      */
     protected function registerAssembleCommand()
     {
-        $this->app->singleton('orchestra.commands.assemble', function ($app) {
+        $this->app->singleton('orchestra.commands.assemble', function (Application $app) {
             $foundation = $app->make('orchestra.app');
 
             return new AssembleCommand($foundation, $foundation->memory());

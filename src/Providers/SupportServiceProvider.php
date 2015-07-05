@@ -3,6 +3,7 @@
 use Orchestra\Model\Role;
 use Orchestra\Model\User;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Foundation\Publisher\PublisherManager;
 
 class SupportServiceProvider extends ServiceProvider
@@ -35,7 +36,7 @@ class SupportServiceProvider extends ServiceProvider
      */
     protected function registerPublisher()
     {
-        $this->app->singleton('orchestra.publisher', function ($app) {
+        $this->app->singleton('orchestra.publisher', function (Application $app) {
             $memory = $app->make('orchestra.platform.memory');
 
             return (new PublisherManager($app))->attach($memory);
