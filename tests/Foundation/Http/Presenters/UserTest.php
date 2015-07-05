@@ -155,7 +155,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
                     return $column;
                 });
-        $grid->shouldReceive('column')->once()->with('action')->andReturn($column);
+        $grid->shouldReceive('column')->once()->with('actions')->andReturn($column);
 
         $builder->shouldReceive('extend')->once()->with(m::type('Closure'))
             ->andReturnUsing(function ($c) use ($grid) {
