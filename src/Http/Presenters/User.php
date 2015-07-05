@@ -47,6 +47,8 @@ class User extends Presenter
 
             $table->layout('orchestra/foundation::components.table');
 
+            $this->prependTableColumns($model, $table);
+
             // Add columns
             $table->column('fullname')
                 ->label(trans('orchestra/foundation::label.users.fullname'))
@@ -55,6 +57,8 @@ class User extends Presenter
 
             $table->column('email')
                 ->label(trans('orchestra/foundation::label.users.email'));
+
+            $this->appendTableColumns($model, $table);
         });
     }
 
@@ -68,7 +72,7 @@ class User extends Presenter
     public function actions(TableBuilder $table)
     {
         return $table->extend(function (TableGrid $table) {
-            $table->column('action')
+            $table->column('actions')
                 ->label('')
                 ->escape(false)
                 ->headers(['class' => 'th-action'])
@@ -77,6 +81,32 @@ class User extends Presenter
                 })
                 ->value($this->getActionsColumn());
         });
+    }
+
+    /**
+     * Append Table Columns.
+     *
+     * @param  \Orchestra\Model\User  $model
+     * @param  \Orchestra\Contracts\Html\Table\Grid  $table
+     *
+     * @return void
+     */
+    protected function appendTableColumns($model, TableGrid $table)
+    {
+        //
+    }
+
+    /**
+     * Prepend Table Columns.
+     *
+     * @param  \Orchestra\Model\User  $model
+     * @param  \Orchestra\Contracts\Html\Table\Grid  $table
+     *
+     * @return void
+     */
+    protected function prependTableColumns($model, TableGrid $table)
+    {
+        //
     }
 
     /**
