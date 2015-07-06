@@ -77,7 +77,10 @@ class AssembleCommand extends Command
         $extensions = $this->memory->get('extensions.active', []);
 
         foreach ($extensions as $extension => $config) {
-            $this->call('extension:refresh', ['name' => $extension, '--force' => true]);
+            $options = ['name' => $extension, '--force' => true];
+
+            $this->call('extension:refresh', $options);
+            $this->call('extension:update', $options);
         }
     }
 

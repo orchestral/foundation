@@ -5,6 +5,14 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.5 {#v3-1-5}
+
+* Publish extension assets and migrations during `php artisan orchestra:assemble`.
+* Add `appendTableColumns()` and `prependTableColumns()` to `Orchestra\Foundation\Http\Presenters\User`.
+* Tweak `resources/views/components/messages.php`.
+* Add assets:
+  - Vue 0.12.6
+
 ### v3.1.4 {#v3-1-4}
 
 * Add login throttles using `Orchestra\Foundation\Auth\BasicThrottle`.
