@@ -82,21 +82,6 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test resources() method.
-     *
-     * @test
-     */
-    public function testResourcesMethod()
-    {
-        $orchestra = $this->app['orchestra.app'];
-
-        $orchestra->shouldReceive('handles')->once()
-            ->with('orchestra::resources/foo', [])->andReturn('foo');
-
-        $this->assertEquals('foo', resources('foo'));
-    }
-
-    /**
      * Test get_meta() method.
      *
      * @test

@@ -50,23 +50,6 @@ if (! function_exists('handles')) {
     }
 }
 
-if (! function_exists('resources')) {
-    /**
-     * Return resources route.
-     *
-     * @param  string  $name
-     * @param  array   $options
-     *
-     * @return string
-     */
-    function resources($name, array $options = [])
-    {
-        $name = ltrim($name, '/');
-
-        return app('orchestra.app')->handles("orchestra::resources/{$name}", $options);
-    }
-}
-
 if (! function_exists('get_meta')) {
     /**
      * Get meta.
