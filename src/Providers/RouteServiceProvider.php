@@ -69,6 +69,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         $path = realpath(__DIR__.'/../../');
 
-        require "{$path}/src/routes.php";
+        $this->afterExtensionLoaded(function () use ($path) {
+            require "{$path}/src/routes.php";
+        });
     }
 }
