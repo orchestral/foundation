@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Http\Controllers\TestCase;
 
 use Mockery as m;
-use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;

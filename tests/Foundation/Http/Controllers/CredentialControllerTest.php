@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Http\Controllers\TestCase;
 
 use Mockery as m;
-use Orchestra\Testing\TestCase;
 use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;

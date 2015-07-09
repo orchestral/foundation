@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\TestCase;
 
+use Mockery as m;
 use Orchestra\Testing\TestCase;
 use Orchestra\Foundation\Providers\ArtisanServiceProvider;
 use Orchestra\Foundation\Providers\SupportServiceProvider;
@@ -8,6 +9,11 @@ use Orchestra\Foundation\Providers\ConsoleSupportServiceProvider;
 
 class ServiceProviderTest extends TestCase
 {
+    public function tearDown()
+    {
+        m::close();
+    }
+
     /**
      * Test instance of `orchestra.publisher`.
      *
@@ -15,6 +21,9 @@ class ServiceProviderTest extends TestCase
      */
     public function testInstanceOfOrchestraPublisher()
     {
+        $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $this->app->instance('orchestra.platform.memory', $memory);
+
         $stub = $this->app->make('orchestra.publisher');
         $this->assertInstanceOf('\Orchestra\Foundation\Publisher\PublisherManager', $stub);
     }
