@@ -19,11 +19,6 @@
             "src/helpers.php"
         ]
     },
-    "autoload-dev": {
-        "classmap": [
-            "tests/Foundation"
-        ]
-    },
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "~5.2.0",

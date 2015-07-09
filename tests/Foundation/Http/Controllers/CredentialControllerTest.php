@@ -1,12 +1,13 @@
 <?php namespace Orchestra\Foundation\Http\Controllers\TestCase;
 
 use Mockery as m;
+use Orchestra\Testing\TestCase;
 use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Orchestra\Foundation\Auth\WithoutThrottle;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class CredentialControllerTest extends TestCase
 {

@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Http\Controllers\TestCase;
 
 use Mockery as m;
+use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\View;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 

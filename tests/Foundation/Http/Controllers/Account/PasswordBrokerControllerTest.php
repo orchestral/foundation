@@ -1,12 +1,12 @@
 <?php namespace Orchestra\Foundation\Http\Controllers\Account\TestCase;
 
 use Mockery as m;
+use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Orchestra\Foundation\Http\Controllers\TestCase\TestCase;
 
 class PasswordBrokerControllerTest extends TestCase
 {
