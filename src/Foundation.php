@@ -55,7 +55,7 @@ class Foundation extends RouteManager implements FoundationContract
      */
     public function installed()
     {
-        return $this->app['orchestra.installed'];
+        return $this->app->make('orchestra.installed');
     }
 
     /**
@@ -166,7 +166,7 @@ class Foundation extends RouteManager implements FoundationContract
         // In any event where Memory failed to load, we should set
         // Installation status to false routing for installation is
         // enabled.
-        $this->app['orchestra.installed'] = true;
+        $this->app->instance('orchestra.installed', true);
 
         $this->createAdminMenu();
 
@@ -190,7 +190,7 @@ class Foundation extends RouteManager implements FoundationContract
             ->title('Install')
             ->link($this->handles('orchestra::install'));
 
-        $this->app['orchestra.installed'] = false;
+        $this->app->instance('orchestra.installed', false);
 
         return $memory;
     }
