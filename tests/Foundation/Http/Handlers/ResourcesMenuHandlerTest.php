@@ -8,6 +8,14 @@ use Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler;
 class ResourcesMenuHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Teardown the test environment.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
+    /**
      * Test Orchestra\Foundation\Http\Handlers\ResourcesMenuHandler::handle()
      * method with resources.
      *
