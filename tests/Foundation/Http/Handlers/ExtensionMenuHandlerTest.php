@@ -7,6 +7,14 @@ use Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler;
 class ExtensionMenuHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Teardown the test environment.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
+    /**
      * Test Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler::handle()
      * method with authorized user.
      *
