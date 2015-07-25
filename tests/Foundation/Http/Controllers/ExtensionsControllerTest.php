@@ -24,13 +24,6 @@ class ExtensionsControllerTest extends TestCase
         $this->disableMiddlewareForAllTests();
     }
 
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        m::close();
-    }
-
     /**
      * Bind dependencies.
      *
