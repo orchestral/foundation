@@ -17,6 +17,20 @@ abstract class ExtensionRouteServiceProvider extends ServiceProvider
     protected $namespace;
 
     /**
+     * The application or extension group namespace.
+     *
+     * @var string|null
+     */
+    protected $routeGroup = 'app';
+
+    /**
+     * The fallback route prefix.
+     *
+     * @var string
+     */
+    protected $routePrefix = '/';
+
+    /**
      * {@inheritdoc}
      */
     public function boot(Router $router)
