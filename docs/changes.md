@@ -5,9 +5,10 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
-### v3.1.6 {#v3-1-5}
+### v3.1.6 {#v3-1-6}
 
 * Dispatch `Orchestra\Foundation\Jobs\RefreshRouteCache` after configuring an extension.
+* Add `Orchestra\Foundation\Foundation::mode()` to fetch current request mode (e.g: safe or normal).
 * Allow safe mode to persist between request via `?_mode=safe` http query string.
 * Use new `Orchestra\Contracts\Extension\StatusChecker` contracts.
 * Update assets:
