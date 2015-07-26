@@ -45,7 +45,7 @@ class NotifyIfSafeModeTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $app['orchestra.extension.mode'] = $mode = m::mock('\Orchestra\Contracts\Extension\SafeMode');
+        $app['orchestra.extension.status'] = $mode = m::mock('\Orchestra\Contracts\Extension\StatusChecker');
         $app['orchestra.messages'] = $messages = m::mock('\Orchestra\Contracts\Messages\MessageBag');
         $app['translator'] = $translator = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
@@ -55,7 +55,7 @@ class NotifyIfSafeModeTest extends \PHPUnit_Framework_TestCase
                 })
             ->shouldReceive('add')->once()->with('info', m::type('String'))->andReturnNull();
 
-        $mode->shouldReceive('check')->once()->andReturn(true);
+        $mode->shouldReceive('is')->once()->with('safe')->andReturn(true);
 
         (new NotifyIfSafeMode())->bootstrap($app);
     }

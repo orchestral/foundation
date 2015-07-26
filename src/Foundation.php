@@ -28,11 +28,11 @@ class Foundation extends RouteManager implements FoundationContract
     protected $config;
 
     /**
-     * Application mode.
+     * Application status/mode implementation.
      *
-     * @var string
+     * @var \Orchestra\Contracts\Extension\StatusChecker
      */
-    protected $mode;
+    protected $status;
 
     /**
      * Construct a new instance.
@@ -44,6 +44,7 @@ class Foundation extends RouteManager implements FoundationContract
         parent::__construct($app);
 
         $this->config = $app->make('config');
+        $this->status = $app->make('orchestra.extension.status');
     }
 
     /**
@@ -90,11 +91,7 @@ class Foundation extends RouteManager implements FoundationContract
      */
     public function mode()
     {
-        if (is_null($this->mode)) {
-            $this->mode = $this->config->get('orchestra/extension::mode', 'normal');
-        }
-
-        return $this->mode;
+        return $this->status->mode();
     }
 
     /**
