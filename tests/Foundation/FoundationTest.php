@@ -156,9 +156,6 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
         $stub = new Foundation($app);
         $stub->boot();
 
-        $memory = $app['orchestra.memory'];
-
-
         $this->assertTrue($app['orchestra.installed']);
         $this->assertEquals($app['orchestra.widget'], $stub->menu());
         $this->assertEquals($app['orchestra.acl'], $stub->acl());
