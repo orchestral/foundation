@@ -5,12 +5,20 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.6 {#v3-1-5}
+
+* Dispatch `Orchestra\Foundation\Jobs\RefreshRouteCache` after configuring an extension.
+* Allow safe mode to persist between request via `?_mode=safe` http query string.
+* Use new `Orchestra\Contracts\Extension\StatusChecker` contracts.
+* Update assets:
+  - Vue 0.12.8
+
 ### v3.1.5 {#v3-1-5}
 
 * Publish extension assets and migrations during `php artisan orchestra:assemble`.
 * Add `appendTableColumns()` and `prependTableColumns()` to `Orchestra\Foundation\Http\Presenters\User`.
 * Tweak `resources/views/components/messages.php`.
-* Add assets:
+* Update assets:
   - Vue 0.12.6
 
 ### v3.1.4 {#v3-1-4}
