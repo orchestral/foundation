@@ -91,7 +91,8 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('listen')->once()
                 ->with('orchestra.ready: admin', 'Orchestra\Foundation\AdminMenuHandler')->andReturnNull()
             ->shouldReceive('fire')->once()->with('orchestra.started', [$memoryProvider])->andReturnNull();
-        $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
+        $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin')
+            ->shouldReceive('get')->with('orchestra/extension::mode', 'normal')->andReturn('normal');
         $request->shouldReceive('root')->andReturn('http://localhost')
             ->shouldReceive('secure')->andReturn(false);
 
@@ -134,7 +135,8 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('add->title->link')->once()->with('http://localhost/admin/install')->andReturn($widget);
         $request->shouldReceive('root')->andReturn('http://localhost')
             ->shouldReceive('secure')->andReturn(false);
-        $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
+        $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin')
+            ->shouldReceive('get')->with('orchestra/extension::mode', 'normal')->andReturn('normal');
         $event->shouldReceive('fire')->once()->with('orchestra.started', [$memoryProvider])->andReturnNull();
 
         return $app;
@@ -144,6 +146,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
      * Test Orchestra\Foundation\Foundation::boot() method.
      *
      * @test
+     * @group foo
      */
     public function testBootMethod()
     {
@@ -196,8 +199,8 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
 
         $appRoute = m::mock('\Orchestra\Contracts\Extension\RouteGenerator');
 
-        $config->shouldReceive('get')->once()
-            ->with('orchestra/foundation::handles', '/')->andReturn('admin');
+        $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin')
+            ->shouldReceive('get')->once()->with('orchestra/extension::mode', 'normal')->andReturn('normal');
 
         $appRoute->shouldReceive('to')->once()->with('/')->andReturn('/')
             ->shouldReceive('to')->once()->with('info?foo=bar')->andReturn('info?foo=bar');
@@ -231,8 +234,9 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
 
         $appRoute = m::mock('\Orchestra\Contracts\Extension\RouteGenerator');
 
-        $config->shouldReceive('get')->once()
-            ->with('orchestra/foundation::handles', '/')->andReturn('admin');
+        $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin')
+            ->shouldReceive('get')->once()->with('orchestra/extension::mode', 'normal')->andReturn('normal');
+
         $request->shouldReceive('path')->twice()->andReturn('/');
         $appRoute->shouldReceive('is')->once()->with('/')->andReturn(true)
             ->shouldReceive('is')->once()->with('info?foo=bar')->andReturn(true);

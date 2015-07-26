@@ -3,6 +3,7 @@
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\Input;
 use Orchestra\Support\Facades\Foundation;
+use Orchestra\Foundation\Jobs\RefreshRouteCache;
 use Orchestra\Contracts\Extension\Listener\Configure as Listener;
 use Orchestra\Foundation\Processor\Extension\Configure as Processor;
 
@@ -104,6 +105,8 @@ class ConfigureController extends Controller implements Listener
      */
     public function configurationUpdated(Fluent $extension)
     {
+        $this->dispatch(new RefreshRouteCache());
+
         $message = trans('orchestra/foundation::response.extensions.configure', $extension->getAttributes());
 
         return $this->redirectWithMessage(handles('orchestra::extensions'), $message);

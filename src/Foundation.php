@@ -21,6 +21,32 @@ class Foundation extends RouteManager implements FoundationContract
     protected $booted = false;
 
     /**
+     * The config repository implementation.
+     *
+     * @var \Illuminate\Contracts\Config\Repository
+     */
+    protected $config;
+
+    /**
+     * Application mode.
+     *
+     * @var string
+     */
+    protected $mode;
+
+    /**
+     * Construct a new instance.
+     *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     */
+    public function __construct(Application $app)
+    {
+        parent::__construct($app);
+
+        $this->config = $app->make('config');
+    }
+
+    /**
      * Get acl services.
      *
      * @return \Orchestra\Contracts\Authorization\Authorization
@@ -55,6 +81,20 @@ class Foundation extends RouteManager implements FoundationContract
     public function installed()
     {
         return $this->app->make('orchestra.installed');
+    }
+
+    /**
+     * Get application mode.
+     *
+     * @return
+     */
+    public function mode()
+    {
+        if (is_null($this->mode)) {
+            $this->mode = $this->config->get('orchestra/extension::mode', 'normal');
+        }
+
+        return $this->mode;
     }
 
     /**
@@ -256,7 +296,7 @@ class Foundation extends RouteManager implements FoundationContract
         // and can be manage using configuration.
         if (in_array($name, ['orchestra'])) {
             return $this->app->make(RouteGenerator::class, [
-                $this->app->make('config')->get('orchestra/foundation::handles', $default),
+                $this->config->get('orchestra/foundation::handles', $default),
                 $this->app->make('request'),
             ]);
         }
