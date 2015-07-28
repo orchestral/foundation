@@ -3,6 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="{{ memorize('site.description', 'Orchestra Platform') }}">
 <meta name="author" content="{{ memorize('site.author', 'Orchestra Platform') }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 <!--[if lt IE 9]>
