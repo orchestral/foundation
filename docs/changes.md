@@ -65,6 +65,18 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.14 {#v3-0-14}
+
+* Allow meta `description` and `author` to be configurable.
+* Add meta to share CSRF token.
+* Make it easier to extends user table by extending `Orchestra\Foundation\Http\Presenters\User`.
+* Move `Orchestra\Foundation\Support\Providers\Traits\RouteProviderTrait` properties to implementing class.
+* Assets:
+  - Added Font Awesome v4.3.0
+  - Update Twitter Bootstrap v3.3.5
+  - Update Javie v2.0.2
+  - Update Underscore.js v1.8.3
+
 ### v3.0.13 {#v3-0-13}
 
 * Add support for menu nesting with `Orchestra\Foundation\Support\MenuHandler`.
