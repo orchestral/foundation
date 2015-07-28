@@ -5,20 +5,6 @@ use Illuminate\Routing\Router;
 trait RouteProviderTrait
 {
     /**
-     * The application or extension group namespace.
-     *
-     * @var string|null
-     */
-    protected $routeGroup = 'app';
-
-    /**
-     * The fallback route prefix.
-     *
-     * @var string
-     */
-    protected $routePrefix = '/';
-
-    /**
      * Load the backend routes file for the application.
      *
      * @param  string  $path
