@@ -17,7 +17,7 @@
 {!! $asset->styles() !!}
 {!! $asset->scripts() !!}
 
-@placeholder("orchestra.layout: footer")
+@placeholder('orchestra.layout: footer')
 
 <script>
 jQuery(function on_page_ready($) { 'use strict';
