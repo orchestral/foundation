@@ -5,6 +5,12 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.7 {#v3-1-7}
+
+* Allow meta `description` and `author` to be configurable.
+* Add meta to share CSRF token.
+* Move `Orchestra\Foundation\Support\Providers\Traits\RouteProviderTrait` properties to implementing class.
+
 ### v3.1.6 {#v3-1-6}
 
 * Dispatch `Orchestra\Foundation\Jobs\RefreshRouteCache` after configuring an extension.
