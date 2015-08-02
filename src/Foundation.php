@@ -254,8 +254,6 @@ class Foundation extends RouteManager implements FoundationContract
         foreach ($handlers as $handler) {
             $events->listen('orchestra.started: admin', $handler);
         }
-
-        $events->listen('orchestra.ready: admin', AdminMenuHandler::class);
     }
 
     /**
