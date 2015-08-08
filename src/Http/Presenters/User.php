@@ -43,7 +43,7 @@ class User extends Presenter
         return $this->table->of('orchestra.users', function (TableGrid $table) use ($model) {
             // attach Model and set pagination option to true
             $table->with($model);
-            $table->sortable();
+            $table->sortable(['only' => 'fullname', 'email']);
 
             $table->layout('orchestra/foundation::components.table');
 
