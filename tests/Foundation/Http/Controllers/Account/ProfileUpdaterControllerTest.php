@@ -146,8 +146,8 @@ class ProfileUpdaterControllerTest extends TestCase
     protected function getInput()
     {
         return [
-            'id'       => '1',
-            'email'    => 'email@orchestraplatform.com',
+            'id' => '1',
+            'email' => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
         ];
     }

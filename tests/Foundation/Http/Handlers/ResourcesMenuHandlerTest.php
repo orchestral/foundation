@@ -30,12 +30,12 @@ class ResourcesMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $app['translator'] = $translator = m::mock('\Illuminate\Translator\Translator');
 
         $foo = new Fluent([
-            'name'    => 'Foo',
+            'name' => 'Foo',
             'visible' => true,
         ]);
 
         $bar = new Fluent([
-            'name'    => 'Bar',
+            'name' => 'Bar',
             'visible' => false,
         ]);
 
@@ -71,12 +71,12 @@ class ResourcesMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $app['translator'] = $translator = m::mock('\Illuminate\Translator\Translator');
 
         $foo = new Fluent([
-            'name'    => 'Foo',
+            'name' => 'Foo',
             'visible' => false,
         ]);
 
         $bar = new Fluent([
-            'name'    => 'Bar',
+            'name' => 'Bar',
             'visible' => false,
         ]);
 

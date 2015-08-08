@@ -57,7 +57,7 @@ class PublisherControllerTest extends TestCase
      */
     public function testPostFtpAction()
     {
-        $input                    = $this->getInput();
+        $input = $this->getInput();
         $input['connection-type'] = 'ftp';
 
         $this->getProcessorMock()->shouldReceive('publish')->once()
@@ -77,7 +77,7 @@ class PublisherControllerTest extends TestCase
      */
     public function testPostFtpActionWhenFtpConnectFailed()
     {
-        $input                    = $this->getInput();
+        $input = $this->getInput();
         $input['connection-type'] = 'ftp';
 
         $this->getProcessorMock()->shouldReceive('publish')->once()
@@ -115,7 +115,7 @@ class PublisherControllerTest extends TestCase
     protected function getInput()
     {
         return [
-            'host'     => 'localhost',
+            'host' => 'localhost',
             'username' => 'foo',
             'password' => 'foobar',
         ];

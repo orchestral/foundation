@@ -17,12 +17,12 @@ class PasswordBrokerTest extends TestCase
      */
     public function testStoreMethod()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordResetLink');
+        $listener = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordResetLink');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $password  = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
-        $memory    = m::mock('\Orchestra\Contracts\Memory\Provider');
-        $message   = m::mock('\Illuminate\Mailer\Message');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $password = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
+        $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $message = m::mock('\Illuminate\Mailer\Message');
 
         $input = $this->getStoreInput();
 
@@ -54,11 +54,11 @@ class PasswordBrokerTest extends TestCase
      */
     public function testStoreMethodGivenInvalidUser()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordResetLink');
+        $listener = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordResetLink');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $password  = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
-        $memory    = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $password = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
+        $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
 
         $input = $this->getStoreInput();
 
@@ -87,10 +87,10 @@ class PasswordBrokerTest extends TestCase
      */
     public function testStoreMethodGivenFailedValidation()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordResetLink');
+        $listener = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordResetLink');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $password  = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $password = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
 
         $input = $this->getStoreInput();
 
@@ -112,10 +112,10 @@ class PasswordBrokerTest extends TestCase
      */
     public function testUpdateMethod()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordReset');
+        $listener = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordReset');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
-        $password  = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
-        $user      = m::mock('\Orchestra\Model\User');
+        $password = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
+        $user = m::mock('\Orchestra\Model\User');
 
         $input = $this->getUpdateInput();
 
@@ -145,9 +145,9 @@ class PasswordBrokerTest extends TestCase
      */
     public function testUpdateMethodGivenFailed()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordReset');
+        $listener = m::mock('\Orchestra\Contracts\Auth\Listener\PasswordReset');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
-        $password  = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
+        $password = m::mock('\Illuminate\Contracts\Auth\PasswordBroker');
 
         $input = $this->getUpdateInput();
 
@@ -183,10 +183,10 @@ class PasswordBrokerTest extends TestCase
     protected function getUpdateInput()
     {
         return [
-            'email'                 => 'email@orchestraplatform.com',
-            'password'              => '123456',
+            'email' => 'email@orchestraplatform.com',
+            'password' => '123456',
             'password_confirmation' => '123456',
-            'token'                 => 'auniquetoken',
+            'token' => 'auniquetoken',
         ];
     }
 }

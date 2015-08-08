@@ -20,7 +20,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance()
     {
-        $events  = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
 
         $stub = new Account($factory, $events);
@@ -35,24 +35,24 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidation()
     {
-        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [
-            'email'    => 'admin@orchestraplatform.com',
+            'email' => 'admin@orchestraplatform.com',
             'fullname' => 'Administrator',
         ];
 
         $rules = [
-            'email'    => ['required', 'email'],
+            'email' => ['required', 'email'],
             'fullname' => ['required'],
         ];
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
         $events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturnNull();
 
-        $stub       = new Account($factory, $events);
+        $stub = new Account($factory, $events);
         $validation = $stub->with($input);
 
         $this->assertEquals($validator, $validation);
@@ -65,19 +65,19 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnRegister()
     {
-        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [
-            'email'    => 'admin@orchestraplatform.com',
+            'email' => 'admin@orchestraplatform.com',
             'fullname' => 'Administrator',
         ];
 
         $rules = [
-            'email'                 => ['required', 'email', 'unique:users,email'],
-            'fullname'              => ['required'],
-            'password'              => ['sometimes', 'required'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'fullname' => ['required'],
+            'password' => ['sometimes', 'required'],
             'password_confirmation' => ['sometimes', 'same:password'],
         ];
 
@@ -85,7 +85,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $events->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturnNull()
             ->shouldReceive('fire')->once()->with('orchestra.validate: user.account.register', m::any())->andReturnNull();
 
-        $stub       = new Account($factory, $events);
+        $stub = new Account($factory, $events);
         $validation = $stub->on('register')->with($input);
 
         $this->assertEquals($validator, $validation);
@@ -99,25 +99,25 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnChangePassword()
     {
-        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [
-            'current_password'      => '123456',
-            'new_password'          => 'qwerty',
+            'current_password' => '123456',
+            'new_password' => 'qwerty',
             'password_confirmation' => 'qwerty',
         ];
 
         $rules = [
-            'current_password'      => ['required'],
-            'new_password'          => ['required', 'different:current_password'],
+            'current_password' => ['required'],
+            'new_password' => ['required', 'different:current_password'],
             'password_confirmation' => ['same:new_password'],
         ];
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
 
-        $stub       = new Account($factory, $events);
+        $stub = new Account($factory, $events);
         $validation = $stub->on('changePassword')->with($input);
 
         $this->assertEquals($validator, $validation);

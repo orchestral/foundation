@@ -52,7 +52,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp');
 
         $stub = (new PublisherManager($app))->attach($memory);
-        $ftp  = $stub->driver();
+        $ftp = $stub->driver();
 
         $this->assertInstanceOf('\Orchestra\Contracts\Publisher\Uploader', $ftp);
     }

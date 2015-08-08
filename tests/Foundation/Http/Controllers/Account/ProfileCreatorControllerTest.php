@@ -151,7 +151,7 @@ class ProfileCreatorControllerTest extends TestCase
     protected function getInput()
     {
         return [
-            'email'    => 'email@orchestraplatform.com',
+            'email' => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
         ];
     }

@@ -55,17 +55,17 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
      */
     private function getInstallableContainerSetup()
     {
-        $app        = $this->app;
-        $request    = m::mock('\Illuminate\Http\Request');
-        $acl        = $app['orchestra.acl'];
-        $config     = $app['config'];
-        $event      = $app['events'];
-        $mailer     = $app['orchestra.mail'];
-        $memory     = $app['orchestra.memory'];
-        $notifier   = $app['orchestra.notifier'];
-        $status     = $app['orchestra.extension.status'];
+        $app = $this->app;
+        $request = m::mock('\Illuminate\Http\Request');
+        $acl = $app['orchestra.acl'];
+        $config = $app['config'];
+        $event = $app['events'];
+        $mailer = $app['orchestra.mail'];
+        $memory = $app['orchestra.memory'];
+        $notifier = $app['orchestra.notifier'];
+        $status = $app['orchestra.extension.status'];
         $translator = $app['translator'];
-        $widget     = $app['orchestra.widget'];
+        $widget = $app['orchestra.widget'];
 
         $app['env'] = 'production';
         $app['orchestra.installed'] = false;
@@ -109,16 +109,16 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
      */
     private function getUnInstallableContainerSetup()
     {
-        $app      = $this->app;
-        $request  = m::mock('\Illuminate\Http\Request');
-        $acl      = $app['orchestra.acl'];
-        $config   = $app['config'];
-        $event    = $app['events'];
-        $mailer   = $app['orchestra.mail'];
-        $memory   = $app['orchestra.memory'];
+        $app = $this->app;
+        $request = m::mock('\Illuminate\Http\Request');
+        $acl = $app['orchestra.acl'];
+        $config = $app['config'];
+        $event = $app['events'];
+        $mailer = $app['orchestra.mail'];
+        $memory = $app['orchestra.memory'];
         $notifier = $app['orchestra.notifier'];
-        $status   = $app['orchestra.extension.status'];
-        $widget   = $app['orchestra.widget'];
+        $status = $app['orchestra.extension.status'];
+        $widget = $app['orchestra.widget'];
 
         $app['env'] = 'production';
         $app['request'] = $request;
@@ -153,7 +153,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
      */
     public function testBootMethod()
     {
-        $app  = $this->getInstallableContainerSetup();
+        $app = $this->getInstallableContainerSetup();
         $stub = new Foundation($app);
         $stub->boot();
 
@@ -190,11 +190,11 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandlesMethod()
     {
-        $app       = $this->app;
-        $config    = $app['config'];
+        $app = $this->app;
+        $config = $app['config'];
         $extension = $app['orchestra.extension'];
-        $status    = $app['orchestra.extension.status'];
-        $url       = $app['url'];
+        $status = $app['orchestra.extension.status'];
+        $url = $app['url'];
 
         $app['request'] = $request = m::mock('\Illuminate\Http\Request');
 
@@ -225,10 +225,10 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsMethod()
     {
-        $app       = $this->app;
-        $config    = $app['config'];
+        $app = $this->app;
+        $config = $app['config'];
         $extension = $app['orchestra.extension'];
-        $status    = $app['orchestra.extension.status'];
+        $status = $app['orchestra.extension.status'];
 
         $app['request'] = $request = m::mock('\Illuminate\Http\Request');
 

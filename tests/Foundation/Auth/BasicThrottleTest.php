@@ -18,7 +18,7 @@ class BasicThrottleTest extends \PHPUnit_Framework_TestCase
         $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $input = [
             'email' => 'admin@orchestraplatform.com',
-            '_ip'   => '127.0.0.1'
+            '_ip' => '127.0.0.1',
         ];
 
         $key = implode('', $input);
@@ -35,7 +35,7 @@ class BasicThrottleTest extends \PHPUnit_Framework_TestCase
         $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $input = [
             'email' => 'admin@orchestraplatform.com',
-            '_ip'   => '127.0.0.1'
+            '_ip' => '127.0.0.1',
         ];
 
         $key = implode('', $input);
@@ -52,7 +52,7 @@ class BasicThrottleTest extends \PHPUnit_Framework_TestCase
         $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $input = [
             'email' => 'admin@orchestraplatform.com',
-            '_ip'   => '127.0.0.1'
+            '_ip' => '127.0.0.1',
         ];
 
         $key = implode('', $input);
@@ -69,7 +69,7 @@ class BasicThrottleTest extends \PHPUnit_Framework_TestCase
         $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $input = [
             'email' => 'admin@orchestraplatform.com',
-            '_ip'   => '127.0.0.1'
+            '_ip' => '127.0.0.1',
         ];
 
         $key = implode('', $input);
@@ -86,10 +86,10 @@ class BasicThrottleTest extends \PHPUnit_Framework_TestCase
         $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $input = [
             'email' => 'admin@orchestraplatform.com',
-            '_ip'   => '127.0.0.1'
+            '_ip' => '127.0.0.1',
         ];
 
-        $key   = implode('', $input);
+        $key = implode('', $input);
         $limit = time() + 60;
 
         $stub = new BasicThrottle($cache);

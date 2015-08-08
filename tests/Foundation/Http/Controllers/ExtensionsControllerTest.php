@@ -191,7 +191,7 @@ class ExtensionsControllerTest extends TestCase
     {
         $input = [
             'handles' => 'foo',
-            '_token'  => 'somesessiontoken',
+            '_token' => 'somesessiontoken',
         ];
 
         $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
@@ -229,7 +229,7 @@ class ExtensionsControllerTest extends TestCase
     {
         $input = [
             'handles' => 'foo',
-            '_token'  => 'somesessiontoken',
+            '_token' => 'somesessiontoken',
         ];
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
@@ -246,7 +246,7 @@ class ExtensionsControllerTest extends TestCase
     {
         $input = [
             'handles' => 'foo',
-            '_token'  => 'somesessiontoken',
+            '_token' => 'somesessiontoken',
         ];
 
         list(, $validator) = $this->bindDependencies();
