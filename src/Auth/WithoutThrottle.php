@@ -18,18 +18,6 @@ class WithoutThrottle extends ThrottlesLogins implements Command
     }
 
     /**
-     * Get the login attempts for the user.
-     *
-     * @param  array  $input
-     *
-     * @return int
-     */
-    public function getLoginAttempts(array $input)
-    {
-        return 0;
-    }
-
-    /**
      * Get total seconds before doing another login attempts for the user.
      *
      * @param  array  $input
@@ -46,11 +34,11 @@ class WithoutThrottle extends ThrottlesLogins implements Command
      *
      * @param  array  $input
      *
-     * @return int
+     * @return void
      */
     public function incrementLoginAttempts(array $input)
     {
-        return 1;
+        //
     }
 
     /**

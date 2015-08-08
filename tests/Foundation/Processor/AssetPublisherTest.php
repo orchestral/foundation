@@ -21,9 +21,9 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
      */
     public function testExecuteAndRedirectMethod()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
         $publisher = m::mock('\Orchestra\Foundation\Publisher\PublisherManager');
-        $session   = m::mock('\Illuminate\Session\Store');
+        $session = m::mock('\Illuminate\Session\Store');
 
         $stub = new AssetPublisher($publisher, $session);
 
@@ -42,9 +42,9 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
      */
     public function testPublishMethod()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
         $publisher = m::mock('\Orchestra\Foundation\Publisher\PublisherManager');
-        $session   = m::mock('\Illuminate\Session\Store');
+        $session = m::mock('\Illuminate\Session\Store');
 
         $input = $this->getInput();
 
@@ -68,10 +68,10 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
      */
     public function testPublishMethodGivenConnectionFailed()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
         $publisher = m::mock('\Orchestra\Foundation\Publisher\PublisherManager');
-        $uploader  = m::mock('\Orchestra\Contracts\Publisher\Uploader');
-        $session   = m::mock('\Illuminate\Session\Store');
+        $uploader = m::mock('\Orchestra\Contracts\Publisher\Uploader');
+        $session = m::mock('\Illuminate\Session\Store');
 
         $input = $this->getInput();
 
@@ -93,10 +93,10 @@ class AssetPublisherTest extends \PHPUnit_Framework_TestCase
     protected function getInput()
     {
         return [
-            'host'     => 'localhost',
+            'host' => 'localhost',
             'username' => 'foo',
             'password' => 'foobar',
-            'ssl'      => false,
+            'ssl' => false,
         ];
     }
 }

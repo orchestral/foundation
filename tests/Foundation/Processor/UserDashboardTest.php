@@ -22,7 +22,7 @@ class UserDashboardTest extends \PHPUnit_Framework_TestCase
     public function testShowMethod()
     {
         $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileDashboard');
-        $widget   = m::mock('\Orchestra\Widget\WidgetManager');
+        $widget = m::mock('\Orchestra\Widget\WidgetManager');
 
         $stub = new ProfileDashboard($widget);
 

@@ -23,7 +23,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         $this->app = new Container();
 
         $this->app['orchestra.app'] = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $this->app['translator']    = m::mock('\Illuminate\Translation\Translator')->makePartial();
+        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $this->app['orchestra.app']->shouldReceive('handles');
         $this->app['translator']->shouldReceive('trans');
@@ -50,16 +50,16 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormMethod()
     {
-        $model       = new Fluent();
-        $app         = $this->app;
+        $model = new Fluent();
+        $app = $this->app;
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
 
-        $form      = m::mock('\Orchestra\Contracts\Html\Form\Factory');
+        $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $extension = m::mock('\Orchestra\Contracts\Extension\Factory');
 
-        $grid     = m::mock('\Orchestra\Contracts\Html\Form\Grid');
+        $grid = m::mock('\Orchestra\Contracts\Html\Form\Grid');
         $fieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
-        $control  = m::mock('\Orchestra\Contracts\Html\Form\Control');
+        $control = m::mock('\Orchestra\Contracts\Html\Form\Control');
 
         $stub = new Extension($extension, $form);
 

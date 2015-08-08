@@ -52,8 +52,8 @@ class UsersControllerTest extends TestCase
      */
     public function testGetIndexAction()
     {
-        $user  = m::mock('\Orchestra\Model\User');
-        $role  = m::mock('\Orchestra\Model\Role');
+        $user = m::mock('\Orchestra\Model\User');
+        $role = m::mock('\Orchestra\Model\Role');
         $table = m::mock('\Orchestra\Contracts\Html\Table\Builder');
 
         list($presenter, ) = $this->bindDependencies();
@@ -99,7 +99,7 @@ class UsersControllerTest extends TestCase
     public function testGetEditAction()
     {
         $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
-        $user    = m::mock('\Orchestra\Model\User');
+        $user = m::mock('\Orchestra\Model\User');
 
         list($presenter, ) = $this->bindDependencies();
 
@@ -122,10 +122,10 @@ class UsersControllerTest extends TestCase
     public function testPostStoreAction()
     {
         $input = [
-            'email'    => 'email@orchestraplatform.com',
+            'email' => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => [1],
+            'roles' => [1],
         ];
 
         list(, $validator) = $this->bindDependencies();
@@ -163,10 +163,10 @@ class UsersControllerTest extends TestCase
     public function testPostStoreActionGivenDatabaseError()
     {
         $input = [
-            'email'    => 'email@orchestraplatform.com',
+            'email' => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => [1],
+            'roles' => [1],
         ];
 
         list(, $validator) = $this->bindDependencies();
@@ -204,10 +204,10 @@ class UsersControllerTest extends TestCase
     public function testPostStoreActionGivenValidationError()
     {
         $input = [
-            'email'    => 'email@orchestraplatform.com',
+            'email' => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => [1],
+            'roles' => [1],
         ];
 
         list(, $validator) = $this->bindDependencies();
@@ -232,17 +232,17 @@ class UsersControllerTest extends TestCase
     public function testPutUpdateAction()
     {
         $input = [
-            'id'       => 'foo',
-            'email'    => 'email@orchestraplatform.com',
+            'id' => 'foo',
+            'email' => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => [1],
+            'roles' => [1],
         ];
 
         list(, $validator) = $this->bindDependencies();
 
         $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
-        $user    = m::mock('\Orchestra\Model\User');
+        $user = m::mock('\Orchestra\Model\User');
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
         $user->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
@@ -276,11 +276,11 @@ class UsersControllerTest extends TestCase
     public function testPutUpdateActionGivenInvalidUserId()
     {
         $input = [
-            'id'       => 'foo',
-            'email'    => 'email@orchestraplatform.com',
+            'id' => 'foo',
+            'email' => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => [1],
+            'roles' => [1],
         ];
 
         $this->call('PUT', 'admin/users/foobar', $input);
@@ -294,17 +294,17 @@ class UsersControllerTest extends TestCase
     public function testPutUpdateActionGivenDatabaseError()
     {
         $input = [
-            'id'       => 'foo',
-            'email'    => 'email@orchestraplatform.com',
+            'id' => 'foo',
+            'email' => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => [1],
+            'roles' => [1],
         ];
 
         list(, $validator) = $this->bindDependencies();
 
         $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
-        $user    = m::mock('\Orchestra\Model\User');
+        $user = m::mock('\Orchestra\Model\User');
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
         $user->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
@@ -340,11 +340,11 @@ class UsersControllerTest extends TestCase
     public function testPutUpdateActionGivenValidationError()
     {
         $input = [
-            'id'       => 'foo',
-            'email'    => 'email@orchestraplatform.com',
+            'id' => 'foo',
+            'email' => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
             'password' => '123456',
-            'roles'    => [1],
+            'roles' => [1],
         ];
 
         list(, $validator) = $this->bindDependencies();
@@ -370,8 +370,8 @@ class UsersControllerTest extends TestCase
     public function testGetDeleteAction()
     {
         $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
-        $user    = m::mock('\Orchestra\Model\User');
-        $auth    = (object) [
+        $user = m::mock('\Orchestra\Model\User');
+        $auth = (object) [
             'id' => 'foobar',
         ];
 
@@ -405,8 +405,8 @@ class UsersControllerTest extends TestCase
     public function testGetDeleteActionWhenDeletingOwnAccount()
     {
         $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
-        $user    = m::mock('\Orchestra\Model\User');
-        $auth    = (object) [
+        $user = m::mock('\Orchestra\Model\User');
+        $auth = (object) [
             'id' => 'foobar',
         ];
 
@@ -427,8 +427,8 @@ class UsersControllerTest extends TestCase
     public function testGetDeleteActionGivenDatabaseError()
     {
         $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
-        $user    = m::mock('\Orchestra\Model\User');
-        $auth    = (object) [
+        $user = m::mock('\Orchestra\Model\User');
+        $auth = (object) [
             'id' => 'foobar',
         ];
 

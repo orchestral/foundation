@@ -21,11 +21,11 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoginMethod()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
+        $listener = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $auth      = m::mock('\Orchestra\Contracts\Auth\Guard');
-        $user      = m::mock('\Orchestra\Model\User, \Illuminate\Contracts\Auth\Authenticatable');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $auth = m::mock('\Orchestra\Contracts\Auth\Guard');
+        $user = m::mock('\Orchestra\Model\User, \Illuminate\Contracts\Auth\Authenticatable');
 
         $input = $this->getInput();
 
@@ -52,10 +52,10 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoginMethodGivenFailedAuthentication()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
+        $listener = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $auth      = m::mock('\Orchestra\Contracts\Auth\Guard');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $auth = m::mock('\Orchestra\Contracts\Auth\Guard');
 
         $input = $this->getInput();
 
@@ -79,10 +79,10 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoginMethodGivenFailedValidation()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
+        $listener = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
         $validator = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $auth      = m::mock('\Orchestra\Contracts\Auth\Guard');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $auth = m::mock('\Orchestra\Contracts\Auth\Guard');
 
         $input = $this->getInput();
 
@@ -106,7 +106,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
     protected function getInput()
     {
         return [
-            'email'    => 'hello@orchestraplatform.com',
+            'email' => 'hello@orchestraplatform.com',
             'password' => '123456',
             'remember' => 'yes',
         ];

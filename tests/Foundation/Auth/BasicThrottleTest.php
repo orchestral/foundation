@@ -15,131 +15,87 @@ class BasicThrottleTest extends \PHPUnit_Framework_TestCase
 
     public function testHasTooManyLoginAttemptsMethod()
     {
-        $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
+        $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $input = [
             'email' => 'admin@orchestraplatform.com',
-            '_ip'   => '127.0.0.1'
+            '_ip' => '127.0.0.1',
         ];
 
-        $key = md5(implode('', $input));
+        $key = implode('', $input);
 
         $stub = new BasicThrottle($cache);
 
-        $cache->shouldReceive('get')->once()
-                ->with("login:attempts:{$key}")
-                ->andReturn(1)
-            ->shouldReceive('has')->once()
-                ->with("login:expiration:{$key}")
-                ->andReturn(false);
+        $cache->shouldReceive('tooManyAttempts')->once()->with($key, 5, 1)->andReturn(false);
 
         $this->assertFalse($stub->hasTooManyLoginAttempts($input));
     }
 
     public function testHasTooManyLoginAttemptsMethodWhenLocked()
     {
-        $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
+        $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $input = [
             'email' => 'admin@orchestraplatform.com',
-            '_ip'   => '127.0.0.1'
+            '_ip' => '127.0.0.1',
         ];
 
-        $key = md5(implode('', $input));
+        $key = implode('', $input);
 
         $stub = new BasicThrottle($cache);
 
-        $cache->shouldReceive('get')->once()
-                ->with("login:attempts:{$key}")
-                ->andReturn(10)
-            ->shouldReceive('has')->once()
-                ->with("login:expiration:{$key}")
-                ->andReturn(false)
-            ->shouldReceive('put')->once()
-                ->with("login:expiration:{$key}", m::type('int'), 1)
-                ->andReturnNull();
+        $cache->shouldReceive('tooManyAttempts')->once()->with($key, 5, 1)->andReturn(true);
 
         $this->assertTrue($stub->hasTooManyLoginAttempts($input));
     }
 
-    public function testGetLoginAttemptsMethod()
-    {
-        $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
-        $input = [
-            'email' => 'admin@orchestraplatform.com',
-            '_ip'   => '127.0.0.1'
-        ];
-
-        $key = md5(implode('', $input));
-
-        $stub = new BasicThrottle($cache);
-
-        $cache->shouldReceive('get')->once()
-                ->with("login:attempts:{$key}")
-                ->andReturn(1);
-
-        $this->assertEquals(1, $stub->getLoginAttempts($input));
-    }
-
     public function testGetSecondsBeforeNextAttemptsMethod()
     {
-        $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
+        $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $input = [
             'email' => 'admin@orchestraplatform.com',
-            '_ip'   => '127.0.0.1'
+            '_ip' => '127.0.0.1',
         ];
 
-        $key   = md5(implode('', $input));
-        $limit = time() + 60;
+        $key = implode('', $input);
 
         $stub = new BasicThrottle($cache);
 
-        $cache->shouldReceive('get')->once()
-                ->with("login:expiration:{$key}")
-                ->andReturn($limit);
+        $cache->shouldReceive('availableIn')->once()->with($key)->andReturn(50);
 
-        $this->assertLessThan($limit, $stub->getSecondsBeforeNextAttempts($input));
+        $this->assertEquals(50, $stub->getSecondsBeforeNextAttempts($input));
     }
 
     public function testIncrementLoginAttemptsMethod()
     {
-        $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
+        $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $input = [
             'email' => 'admin@orchestraplatform.com',
-            '_ip'   => '127.0.0.1'
+            '_ip' => '127.0.0.1',
         ];
 
-        $key = md5(implode('', $input));
+        $key = implode('', $input);
 
         $stub = new BasicThrottle($cache);
 
-        $cache->shouldReceive('add')->once()
-                ->with("login:attempts:{$key}", 1, 1)
-                ->andReturnNull()
-            ->shouldReceive('increment')->once()
-                ->with("login:attempts:{$key}")
-                ->andReturn(1);
+        $cache->shouldReceive('hit')->once()->with($key)->andReturnNull();
 
-        $this->assertEquals(1, $stub->incrementLoginAttempts($input));
+        $this->assertNull($stub->incrementLoginAttempts($input));
     }
 
     public function testClearLoginAttemptsMethod()
     {
-        $cache = m::mock('\Illuminate\Contracts\Cache\Repository');
+        $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $input = [
             'email' => 'admin@orchestraplatform.com',
-            '_ip'   => '127.0.0.1'
+            '_ip' => '127.0.0.1',
         ];
 
-        $key   = md5(implode('', $input));
+        $key = implode('', $input);
         $limit = time() + 60;
 
         $stub = new BasicThrottle($cache);
 
-        $cache->shouldReceive('forget')->once()
-                ->with("login:attempts:{$key}")
-                ->andReturn($limit)
-            ->shouldReceive('forget')->once()
-                ->with("login:expiration:{$key}")
-                ->andReturn($limit);
+        $cache->shouldReceive('clear')->once()
+                ->with($key)->andReturnNull();
 
         $this->assertNull($stub->clearLoginAttempts($input));
     }

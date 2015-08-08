@@ -23,7 +23,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $this->app = new Container();
 
         $this->app['orchestra.app'] = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $this->app['translator']    = m::mock('\Illuminate\Translation\Translator')->makePartial();
+        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $this->app['orchestra.app']->shouldReceive('handles');
         $this->app['translator']->shouldReceive('trans');
@@ -50,17 +50,17 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
      */
     public function testTableMethod()
     {
-        $app   = $this->app;
+        $app = $this->app;
         $model = new Fluent();
         $value = (object) [
-            'id'   => 'foo',
+            'id' => 'foo',
             'name' => 'Foobar',
         ];
 
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
 
-        $table  = m::mock('\Orchestra\Contracts\Html\Table\Factory');
-        $grid   = m::mock('\Orchestra\Contracts\Html\Table\Grid');
+        $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
+        $grid = m::mock('\Orchestra\Contracts\Html\Table\Grid');
         $column = m::mock('\Orchestra\Contracts\Html\Table\Column');
 
         $stub = new Resource($table);

@@ -23,7 +23,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $this->app = new Container();
 
         $this->app['orchestra.app'] = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $this->app['translator']    = m::mock('\Illuminate\Translation\Translator')->makePartial();
+        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $this->app['orchestra.app']->shouldReceive('handles');
         $this->app['translator']->shouldReceive('trans');
@@ -50,7 +50,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormMethod()
     {
-        $app   = $this->app;
+        $app = $this->app;
         $model = new Fluent([
             'email_password' => 123456,
         ]);
@@ -61,10 +61,10 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $grid = m::mock('\Orchestra\Contracts\Html\Form\Grid');
 
         $siteFieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
-        $siteControl  = m::mock('\Orchestra\Contracts\Html\Form\Control');
+        $siteControl = m::mock('\Orchestra\Contracts\Html\Form\Control');
 
         $emailFieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
-        $emailControl  = m::mock('\Orchestra\Contracts\Html\Form\Control');
+        $emailControl = m::mock('\Orchestra\Contracts\Html\Form\Control');
 
         $stub = new Setting($form);
 

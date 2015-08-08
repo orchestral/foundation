@@ -11,13 +11,6 @@ class WithoutThrottleTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($stub->hasTooManyLoginAttempts([]));
     }
 
-    public function testGetLoginAttemptsMethod()
-    {
-        $stub = new WithoutThrottle();
-
-        $this->assertEquals(0, $stub->getLoginAttempts([]));
-    }
-
     public function testGetSecondsBeforeNextAttemptsMethod()
     {
         $stub = new WithoutThrottle();
@@ -29,7 +22,7 @@ class WithoutThrottleTest extends \PHPUnit_Framework_TestCase
     {
         $stub = new WithoutThrottle();
 
-        $this->assertEquals(1, $stub->incrementLoginAttempts([]));
+        $this->assertNull($stub->incrementLoginAttempts([]));
     }
 
     public function testClearLoginAttemptsMethod()

@@ -16,7 +16,7 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $app = new Container();
 
         $app['orchestra.app'] = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $app['translator']    = m::mock('\Illuminate\Translation\Translator')->makePartial();
+        $app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $app['orchestra.app']->shouldReceive('handles');
         $app['translator']->shouldReceive('trans');
@@ -43,12 +43,12 @@ class AccountTest extends \PHPUnit_Framework_TestCase
     {
         $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
 
-        $grid     = m::mock('\Orchestra\Contracts\Html\Form\Grid');
+        $grid = m::mock('\Orchestra\Contracts\Html\Form\Grid');
         $fieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
-        $control  = m::mock('\Orchestra\Contracts\Html\Form\Control');
+        $control = m::mock('\Orchestra\Contracts\Html\Form\Control');
 
         $model = new Fluent();
-        $stub  = new Account($form);
+        $stub = new Account($form);
 
         $control->shouldReceive('label')->twice()->andReturnSelf();
         $fieldset->shouldReceive('control')->twice()->with('input:text', m::any())->andReturn($control);
@@ -77,13 +77,13 @@ class AccountTest extends \PHPUnit_Framework_TestCase
      */
     public function testPasswordFormMethod()
     {
-        $grid     = m::mock('\Orchestra\Contracts\Html\Form\Grid');
+        $grid = m::mock('\Orchestra\Contracts\Html\Form\Grid');
         $fieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
-        $control  = m::mock('\Orchestra\Contracts\Html\Form\Control');
-        $form     = m::mock('\Orchestra\Contracts\Html\Form\Factory');
+        $control = m::mock('\Orchestra\Contracts\Html\Form\Control');
+        $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
 
         $model = new Fluent();
-        $stub  = new Account($form);
+        $stub = new Account($form);
 
         $control->shouldReceive('label')->times(3)->andReturnSelf();
         $fieldset->shouldReceive('control')->times(3)->with('input:password', m::any())->andReturn($control);

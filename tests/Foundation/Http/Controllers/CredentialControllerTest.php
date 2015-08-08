@@ -47,7 +47,7 @@ class CredentialControllerTest extends TestCase
     public function testPostLoginAction()
     {
         $input = [
-            'email'    => 'hello@orchestraplatform.com',
+            'email' => 'hello@orchestraplatform.com',
             'password' => '123456',
             'remember' => 'yes',
         ];
@@ -76,7 +76,7 @@ class CredentialControllerTest extends TestCase
     public function testPostLoginActionGivenFailedAuthentication()
     {
         $input = [
-            'email'    => 'hello@orchestraplatform.com',
+            'email' => 'hello@orchestraplatform.com',
             'password' => '123456',
             'remember' => 'yes',
         ];
@@ -106,7 +106,7 @@ class CredentialControllerTest extends TestCase
     public function testPostLoginActionGivenFailedValidation()
     {
         $input = [
-            'email'    => 'hello@orchestraplatform.com',
+            'email' => 'hello@orchestraplatform.com',
             'password' => '123456',
             'remember' => 'yes',
         ];
@@ -174,9 +174,9 @@ class CredentialControllerTest extends TestCase
      */
     protected function getMockedProcessor()
     {
-        $throttles  = new WithoutThrottle();
+        $throttles = new WithoutThrottle();
         $validation = m::mock('\Orchestra\Foundation\Validation\AuthenticateUser');
-        $auth       = m::mock('\Orchestra\Contracts\Auth\Guard');
+        $auth = m::mock('\Orchestra\Contracts\Auth\Guard');
 
         $authenticate = m::mock('\Orchestra\Foundation\Processor\AuthenticateUser', [$auth, $validation]);
         $deauthenticate = m::mock('\Orchestra\Foundation\Processor\DeauthenticateUser', [$auth]);

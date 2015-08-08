@@ -27,30 +27,34 @@ abstract class ThrottlesLogins
     }
 
     /**
-     * Get the login attempts cache key.
+     * Get the maximum number of login attempts for delaying further attempts.
      *
-     * @param  array  $input
-     *
-     * @return string
+     * @return int
      */
-    protected function getLoginAttemptsKey(array $input)
+    protected function maxLoginAttempts()
     {
-        $key = implode('', Arr::only($input, ['email', '_ip']));
-
-        return sprintf('login:attempts:%s', md5($key));
+        return Arr::get(static::$config, 'attempts', 5);
     }
 
     /**
-     * Get the login lock cache key.
+     * The number of seconds to delay further login attempts.
+     *
+     * @return int
+     */
+    protected function lockoutTime()
+    {
+        return Arr::get(static::$config, 'locked_for', 60);
+    }
+
+    /**
+     * Get the login key.
      *
      * @param  array  $input
      *
      * @return string
      */
-    protected function getLoginLockExpirationKey(array $input)
+    protected function getLoginKey(array $input)
     {
-        $key = implode('', Arr::only($input, ['email', '_ip']));
-
-        return sprintf('login:expiration:%s', md5($key));
+        return implode('', Arr::only($input, ['email', '_ip']));
     }
 }

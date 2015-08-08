@@ -16,10 +16,10 @@ class ProfileUpdaterTest extends TestCase
      */
     public function testEditMethod()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $stub = new ProfileUpdater($presenter, $validator);
 
@@ -40,11 +40,11 @@ class ProfileUpdaterTest extends TestCase
      */
     public function testUpdateMethod()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $input = $this->getInput();
 
@@ -75,10 +75,10 @@ class ProfileUpdaterTest extends TestCase
      */
     public function testUpdateMethodGivenUserMissmatched()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $input = $this->getInput();
 
@@ -100,11 +100,11 @@ class ProfileUpdaterTest extends TestCase
      */
     public function testUpdateMethodGivenValidationFailed()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $input = $this->getInput();
 
@@ -130,11 +130,11 @@ class ProfileUpdaterTest extends TestCase
      */
     public function testUpdateMethodGivenSavingFailed()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $input = $this->getInput();
 
@@ -161,8 +161,8 @@ class ProfileUpdaterTest extends TestCase
     protected function getInput()
     {
         return [
-            'id'       => '1',
-            'email'    => 'email@orchestraplatform.com',
+            'id' => '1',
+            'email' => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
         ];
     }

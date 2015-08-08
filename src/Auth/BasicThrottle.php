@@ -1,26 +1,26 @@
 <?php namespace Orchestra\Foundation\Auth;
 
 use Illuminate\Support\Arr;
-use Illuminate\Contracts\Cache\Repository as Cache;
+use Illuminate\Cache\RateLimiter;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins as Command;
 
 class BasicThrottle extends ThrottlesLogins implements Command
 {
     /**
-     * The cache repository implementation.
+     * The cache limiter implementation.
      *
      * @var \Illuminate\Contracts\Cache\Repository
      */
-    protected $cache;
+    protected $cacheLimiter;
 
     /**
      * Construct a new processor.
      *
-     * @param  \Illuminate\Contracts\Cache\Repository  $cache
+     * @param  \Illuminate\Cache\RateLimiter  $cacheLimiter
      */
-    public function __construct(Cache $cache)
+    public function __construct(RateLimiter $cacheLimiter)
     {
-        $this->cache  = $cache;
+        $this->cacheLimiter = $cacheLimiter;
     }
 
     /**
@@ -32,32 +32,11 @@ class BasicThrottle extends ThrottlesLogins implements Command
      */
     public function hasTooManyLoginAttempts(array $input)
     {
-        $lockedOut = $this->cache->has($expiration = $this->getLoginLockExpirationKey($input));
-
-        $attempts  = Arr::get(static::$config, 'attempts', 5);
-        $lockedFor = Arr::get(static::$config, 'locked_for', 60);
-
-        if ($this->getLoginAttempts($input) > $attempts || $lockedOut) {
-            if (! $lockedOut) {
-                $this->cache->put($expiration, time() + $lockedFor, 1);
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Get the login attempts for the user.
-     *
-     * @param  array  $input
-     *
-     * @return int
-     */
-    public function getLoginAttempts(array $input)
-    {
-        return $this->cache->get($this->getLoginAttemptsKey($input)) ?: 0;
+        return $this->cacheLimiter->tooManyAttempts(
+            $this->getLoginKey($input),
+            $this->maxLoginAttempts(),
+            $this->lockoutTime() / 60
+        );
     }
 
     /**
@@ -69,7 +48,7 @@ class BasicThrottle extends ThrottlesLogins implements Command
      */
     public function getSecondsBeforeNextAttempts(array $input)
     {
-        return (int) $this->cache->get($this->getLoginLockExpirationKey($input)) - time();
+        return (int) $this->cacheLimiter->availableIn($this->getLoginKey($input));
     }
 
     /**
@@ -77,13 +56,11 @@ class BasicThrottle extends ThrottlesLogins implements Command
      *
      * @param  array  $input
      *
-     * @return int
+     * @return void
      */
     public function incrementLoginAttempts(array $input)
     {
-        $this->cache->add($key = $this->getLoginAttemptsKey($input), 1, 1);
-
-        return (int) $this->cache->increment($key);
+        $this->cacheLimiter->hit($this->getLoginKey($input));
     }
 
     /**
@@ -95,8 +72,6 @@ class BasicThrottle extends ThrottlesLogins implements Command
      */
     public function clearLoginAttempts(array $input)
     {
-        $this->cache->forget($this->getLoginAttemptsKey($input));
-
-        $this->cache->forget($this->getLoginLockExpirationKey($input));
+        $this->cacheLimiter->clear($this->getLoginKey($input));
     }
 }

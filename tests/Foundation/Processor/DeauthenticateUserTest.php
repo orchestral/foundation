@@ -22,7 +22,7 @@ class DeauthenticateUserTest extends \PHPUnit_Framework_TestCase
     public function testLogoutMethod()
     {
         $listener = m::mock('\Orchestra\Contracts\Auth\Listener\DeauthenticateUser');
-        $auth     = m::mock('\Orchestra\Contracts\Auth\Guard');
+        $auth = m::mock('\Orchestra\Contracts\Auth\Guard');
 
         $stub = new DeauthenticateUser($auth);
 

@@ -169,9 +169,9 @@ class PasswordUpdaterControllerTest extends TestCase
     protected function getInput()
     {
         return [
-            'id'               => '1',
+            'id' => '1',
             'current_password' => '123456',
-            'new_password'     => 'qwerty',
+            'new_password' => 'qwerty',
         ];
     }
 }
