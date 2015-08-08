@@ -56,7 +56,7 @@ class BasicThrottle extends ThrottlesLogins implements Command
      *
      * @param  array  $input
      *
-     * @return int
+     * @return void
      */
     public function incrementLoginAttempts(array $input)
     {
