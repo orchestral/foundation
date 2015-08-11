@@ -1,6 +1,5 @@
 <?php namespace Orchestra\Foundation\Http\Controllers;
 
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
