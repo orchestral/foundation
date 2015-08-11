@@ -78,11 +78,11 @@ class AuthenticateUser extends Processor implements Command
      *
      * @return bool
      */
-    protected function authenticate($input)
+    protected function authenticate(array $input)
     {
-        $data = Arr::only($input, ['email', 'password']);
-
         $remember = (isset($input['remember']) && $input['remember'] === 'yes');
+
+        $data = Arr::except($input, ['remember']);
 
         // We should now attempt to login the user using Auth class. If this
         // failed simply return false.

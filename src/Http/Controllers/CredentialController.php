@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Http\Controllers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -53,7 +54,9 @@ class CredentialController extends AdminController implements Listener
      */
     public function login()
     {
-        return $this->processor->login($this, Input::all());
+        $input = Arr::only(Input::all(), ['email', 'password', 'remember']);
+
+        return $this->processor->login($this, $input);
     }
 
     /**
