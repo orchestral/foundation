@@ -31,11 +31,11 @@ class MetaTest extends \PHPUnit_Framework_TestCase
     {
         $stub = new Meta();
 
-        $refl  = new \ReflectionObject($stub);
+        $refl = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
         $items->setAccessible(true);
         $items->setValue($stub, [
-            'title'       => 'Hello World',
+            'title' => 'Hello World',
             'description' => 'Just another Hello World',
         ]);
 
@@ -69,13 +69,13 @@ class MetaTest extends \PHPUnit_Framework_TestCase
     {
         $stub = new Meta();
 
-        $refl  = new \ReflectionObject($stub);
+        $refl = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
         $items->setAccessible(true);
         $items->setValue($stub, [
-            'title'       => 'Hello World',
+            'title' => 'Hello World',
             'description' => 'Just another Hello World',
-            'hello'       => null,
+            'hello' => null,
         ]);
 
         $this->assertTrue($stub->has('title'));
@@ -93,16 +93,16 @@ class MetaTest extends \PHPUnit_Framework_TestCase
     {
         $stub = new Meta();
 
-        $refl  = new \ReflectionObject($stub);
+        $refl = new \ReflectionObject($stub);
         $items = $refl->getProperty('items');
         $items->setAccessible(true);
         $items->setValue($stub, [
-            'title'       => 'Hello World',
+            'title' => 'Hello World',
             'description' => 'Just another Hello World',
-            'hello'       => null,
-            'foo'         => [
+            'hello' => null,
+            'foo' => [
                 'hello' => 'foo',
-                'bar'   => 'foobar',
+                'bar' => 'foobar',
             ],
         ]);
 

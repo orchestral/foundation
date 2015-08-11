@@ -54,7 +54,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('connect')->once()->andReturn(true);
 
         $stub = new PublisherManager($app);
-        $ftp  = $stub->driver();
+        $ftp = $stub->driver();
 
         $this->assertInstanceOf('\Orchestra\Foundation\Publisher\Ftp', $ftp);
         $this->assertInstanceOf('\Orchestra\Support\Ftp\Client', $ftp->getConnection());

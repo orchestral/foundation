@@ -20,7 +20,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance()
     {
-        $events  = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
 
         $stub = new User($factory, $events);
@@ -35,20 +35,20 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidation()
     {
-        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [
-            'email'    => 'admin@orchestraplatform.com',
+            'email' => 'admin@orchestraplatform.com',
             'fullname' => 'Administrator',
-            'roles'    => 1,
+            'roles' => 1,
         ];
 
         $rules = [
-            'email'    => ['required', 'email'],
+            'email' => ['required', 'email'],
             'fullname' => ['required'],
-            'roles'    => ['required'],
+            'roles' => ['required'],
         ];
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
@@ -56,7 +56,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $events->shouldReceive('fire')->once()->with('orchestra.validate: users', m::any())->andReturnNull()
             ->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturnNull();
 
-        $stub       = new User($factory, $events);
+        $stub = new User($factory, $events);
         $validation = $stub->with($input);
 
         $this->assertEquals($validator, $validation);
@@ -69,21 +69,21 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnCreate()
     {
-        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = [
-            'email'    => 'admin@orchestraplatform.com',
+            'email' => 'admin@orchestraplatform.com',
             'fullname' => 'Administrator',
-            'roles'    => 1,
+            'roles' => 1,
             'password' => '123456',
         ];
 
         $rules = [
-            'email'    => ['required', 'email'],
+            'email' => ['required', 'email'],
             'fullname' => ['required'],
-            'roles'    => ['required'],
+            'roles' => ['required'],
             'password' => ['required'],
         ];
 
@@ -91,7 +91,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $events->shouldReceive('fire')->once()->with('orchestra.validate: users', m::any())->andReturnNull()
             ->shouldReceive('fire')->once()->with('orchestra.validate: user.account', m::any())->andReturnNull();
 
-        $stub       = new User($factory, $events);
+        $stub = new User($factory, $events);
         $validation = $stub->on('create')->with($input);
 
         $this->assertEquals($validator, $validation);

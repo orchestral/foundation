@@ -23,9 +23,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $this->app = new Container();
 
-        $this->app['app']           = $this->app;
+        $this->app['app'] = $this->app;
         $this->app['orchestra.app'] = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $this->app['translator']    = m::mock('\Illuminate\Translation\Translator')->makePartial();
+        $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $this->app['orchestra.app']->shouldReceive('handles');
         $this->app['translator']->shouldReceive('trans');
@@ -51,22 +51,22 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testTableMethod()
     {
-        $app   = $this->app;
+        $app = $this->app;
         $model = m::mock('\Orchestra\Model\User');
 
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,raw]');
 
-        $auth  = m::mock('\Illuminate\Contracts\Auth\Guard');
-        $user  = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
-        $form  = m::mock('\Orchestra\Contracts\Html\Form\Factory');
+        $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
 
-        $grid   = m::mock('\Orchestra\Contracts\Html\Table\Grid');
+        $grid = m::mock('\Orchestra\Contracts\Html\Table\Grid');
         $column = m::mock('\Orchestra\Contracts\Html\Table\Column');
 
-        $value  = (object) [
+        $value = (object) [
             'fullname' => 'Foo',
-            'roles'    => [
+            'roles' => [
                 (object) ['id' => 1, 'name' => 'Administrator'],
                 (object) ['id' => 2, 'name' => 'Member'],
             ],
@@ -120,19 +120,19 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->app;
 
-        $auth  = m::mock('\Illuminate\Contracts\Auth\Guard');
-        $user  = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
-        $form  = m::mock('\Orchestra\Contracts\Html\Form\Factory');
+        $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
 
         $builder = m::mock('\Orchestra\Contracts\Html\Table\Builder');
-        $grid    = m::mock('\Orchestra\Contracts\Html\Table\Grid');
-        $column  = m::mock('\Orchestra\Contracts\Html\Table\Column');
+        $grid = m::mock('\Orchestra\Contracts\Html\Table\Grid');
+        $column = m::mock('\Orchestra\Contracts\Html\Table\Column');
 
         $user->id = 2;
 
-        $value  = (object) [
-            'id'   => 1,
+        $value = (object) [
+            'id' => 1,
             'name' => 'Foo',
         ];
 
@@ -186,17 +186,17 @@ class UserTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormMethod()
     {
-        $app   = $this->app;
+        $app = $this->app;
         $model = m::mock('\Orchestra\Model\User');
 
-        $auth  = m::mock('\Illuminate\Contracts\Auth\Guard');
-        $user  = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
-        $form  = m::mock('\Orchestra\Contracts\Html\Form\Factory');
+        $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
 
-        $grid     = m::mock('\Orchestra\Contracts\Html\Form\Grid');
+        $grid = m::mock('\Orchestra\Contracts\Html\Form\Grid');
         $fieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
-        $control  = m::mock('\Orchestra\Contracts\Html\Form\Control');
+        $control = m::mock('\Orchestra\Contracts\Html\Form\Control');
 
         $app['Orchestra\Contracts\Html\Form\Control'] = $control;
         $app['orchestra.role'] = m::mock('\Orchestra\Model\Role');

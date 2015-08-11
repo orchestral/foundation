@@ -20,7 +20,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance()
     {
-        $events  = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
         $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
 
         $stub = new AuthenticateUser($factory, $events);
@@ -35,8 +35,8 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidation()
     {
-        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = ['email' => 'admin@orchestraplatform.com', 'password' => '123'];
@@ -44,7 +44,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
 
-        $stub       = new AuthenticateUser($factory, $events);
+        $stub = new AuthenticateUser($factory, $events);
         $validation = $stub->with($input);
 
         $this->assertEquals($validator, $validation);
@@ -57,8 +57,8 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidationOnLogin()
     {
-        $events    = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $factory   = m::mock('\Illuminate\Contracts\Validation\Factory');
+        $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $factory = m::mock('\Illuminate\Contracts\Validation\Factory');
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = ['email' => 'admin@orchestraplatform.com', 'password' => '123'];
@@ -66,7 +66,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
 
-        $stub       = new AuthenticateUser($factory, $events);
+        $stub = new AuthenticateUser($factory, $events);
         $validation = $stub->on('login')->with($input);
 
         $this->assertEquals($validator, $validation);

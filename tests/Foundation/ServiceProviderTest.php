@@ -55,9 +55,9 @@ class ServiceProviderTest extends TestCase
     public function testListOfProvides()
     {
         $foundation = new FoundationServiceProvider($this->app);
-        $site       = new SupportServiceProvider($this->app);
-        $console    = new ConsoleSupportServiceProvider($this->app);
-        $artisan    = new ArtisanServiceProvider($this->app);
+        $site = new SupportServiceProvider($this->app);
+        $console = new ConsoleSupportServiceProvider($this->app);
+        $artisan = new ArtisanServiceProvider($this->app);
 
         $this->assertEquals($this->getFoundationProvides(), $foundation->provides());
         $this->assertFalse($foundation->isDeferred());

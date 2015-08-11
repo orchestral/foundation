@@ -27,7 +27,7 @@ class UserAccessPolicyTest extends TestCase
 
         $this->assertEquals(['Guest'], $this->app['auth']->roles());
 
-        $user     = m::mock('\Orchestra\Model\User[getRoles]');
+        $user = m::mock('\Orchestra\Model\User[getRoles]');
         $user->id = 1;
 
         $user->shouldReceive('getRoles')->once()->andReturn([

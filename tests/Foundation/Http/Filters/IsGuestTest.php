@@ -22,8 +22,8 @@ class IsGuestTest extends \PHPUnit_Framework_TestCase
     public function testFilterWhenIsGuest()
     {
         $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $auth       = m::mock('\Illuminate\Contracts\Auth\Guard');
-        $config     = m::mock('\Illuminate\Contracts\Config\Repository');
+        $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $config = m::mock('\Illuminate\Contracts\Config\Repository');
 
         $auth->shouldReceive('check')->once()->andReturn(true);
         $config->shouldReceive('get')->once()->with('orchestra/foundation::routes.user')->andReturn('orchestra::/');
@@ -43,8 +43,8 @@ class IsGuestTest extends \PHPUnit_Framework_TestCase
     public function testFilterWhenIsNotGuest()
     {
         $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $auth       = m::mock('\Illuminate\Contracts\Auth\Guard');
-        $config     = m::mock('\Illuminate\Contracts\Config\Repository');
+        $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
+        $config = m::mock('\Illuminate\Contracts\Config\Repository');
 
         $auth->shouldReceive('check')->once()->andReturn(false);
 

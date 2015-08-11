@@ -27,11 +27,11 @@ class ProfileCreatorTest extends TestCase
      */
     public function testCreateMethod()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $user      = m::mock('\Orchestra\Model\User');
-        $form      = m::mock('\Orchestra\Contracts\Html\Form\Builder');
+        $user = m::mock('\Orchestra\Model\User');
+        $form = m::mock('\Orchestra\Contracts\Html\Form\Builder');
 
         $stub = new ProfileCreator($presenter, $validator);
 
@@ -57,14 +57,14 @@ class ProfileCreatorTest extends TestCase
      */
     public function testStoreMethod()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $receipt   = m::mock('\Orchestra\Contracts\Notification\Receipt');
-        $memory    = m::mock('\Orchestra\Contracts\Memory\Provider');
-        $user      = m::mock('\Orchestra\Model\User');
-        $role      = m::mock('\Orchestra\Model\Role');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $receipt = m::mock('\Orchestra\Contracts\Notification\Receipt');
+        $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $user = m::mock('\Orchestra\Model\User');
+        $role = m::mock('\Orchestra\Model\Role');
 
         $input = $this->getInput();
 
@@ -106,14 +106,14 @@ class ProfileCreatorTest extends TestCase
      */
     public function testStoreMethodGivenFailedNotification()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $receipt   = m::mock('\Orchestra\Contracts\Notification\Receipt');
-        $memory    = m::mock('\Orchestra\Contracts\Memory\Provider');
-        $user      = m::mock('\Orchestra\Model\User');
-        $role      = m::mock('\Orchestra\Model\Role');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $receipt = m::mock('\Orchestra\Contracts\Notification\Receipt');
+        $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $user = m::mock('\Orchestra\Model\User');
+        $role = m::mock('\Orchestra\Model\Role');
 
         $input = $this->getInput();
 
@@ -155,11 +155,11 @@ class ProfileCreatorTest extends TestCase
      */
     public function testStoreMethodGivenFailedSavingToDB()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $user      = m::mock('\Orchestra\Model\User');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $user = m::mock('\Orchestra\Model\User');
 
         $input = $this->getInput();
 
@@ -187,10 +187,10 @@ class ProfileCreatorTest extends TestCase
      */
     public function testStoreMethodGivenFailedValidation()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = $this->getInput();
 
@@ -214,7 +214,7 @@ class ProfileCreatorTest extends TestCase
     protected function getInput()
     {
         return [
-            'email'    => 'email@orchestraplatform.com',
+            'email' => 'email@orchestraplatform.com',
             'fullname' => 'Administrator',
         ];
     }

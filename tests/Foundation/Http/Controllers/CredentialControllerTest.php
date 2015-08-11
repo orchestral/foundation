@@ -67,13 +67,13 @@ class CredentialControllerTest extends TestCase
     public function testPostLoginAction()
     {
         $input = [
-            'email'    => 'hello@orchestraplatform.com',
+            'email' => 'hello@orchestraplatform.com',
             'password' => '123456',
             'remember' => 'yes',
         ];
 
         $processor = $this->getProcessorMock();
-        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $processor->shouldReceive('login')->once()
             ->andReturnUsing(function ($listener) use ($user) {
@@ -95,13 +95,13 @@ class CredentialControllerTest extends TestCase
     public function testPostLoginActionGivenFailedAuthentication()
     {
         $input = [
-            'email'    => 'hello@orchestraplatform.com',
+            'email' => 'hello@orchestraplatform.com',
             'password' => '123456',
             'remember' => 'yes',
         ];
 
         $processor = $this->getProcessorMock();
-        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $processor->shouldReceive('login')->once()
             ->with(m::type('\Orchestra\Foundation\Http\Controllers\CredentialController'), m::type('Array'))
@@ -124,7 +124,7 @@ class CredentialControllerTest extends TestCase
     public function testPostLoginActionGivenFailedValidation()
     {
         $input = [
-            'email'    => 'hello@orchestraplatform.com',
+            'email' => 'hello@orchestraplatform.com',
             'password' => '123456',
             'remember' => 'yes',
         ];

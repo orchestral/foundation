@@ -25,7 +25,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->app    = new Container();
+        $this->app = new Container();
         $this->client = m::mock('\Orchestra\Support\Ftp\Client');
     }
 
@@ -63,7 +63,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructMethod()
     {
-        $app    = $this->app;
+        $app = $this->app;
         $client = $this->client;
 
         $app['session'] = $this->getSessionMock();
@@ -89,7 +89,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructMethodWhenConnectionIsNotSet()
     {
-        $app    = $this->app;
+        $app = $this->app;
         $client = $this->client;
 
         $app['session'] = $this->getSessionMock();
@@ -111,7 +111,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructMethodThrowsServerException()
     {
-        $app    = $this->app;
+        $app = $this->app;
         $client = $this->client;
 
         $app['session'] = $session = $this->getSessionMock();
@@ -130,7 +130,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
      */
     public function testUploadMethod()
     {
-        $app    = $this->app;
+        $app = $this->app;
         $client = $this->client;
 
         $app['session'] = $this->getSessionMock();
@@ -164,7 +164,7 @@ class FtpTest extends \PHPUnit_Framework_TestCase
      */
     public function testUploadMethodChmodVendorFolder()
     {
-        $app    = $this->app;
+        $app = $this->app;
         $client = $this->client;
 
         $app['session'] = $this->getSessionMock();

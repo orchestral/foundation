@@ -21,8 +21,8 @@ class LoginAsTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandleMethodWithoutRedirect()
     {
-        $acl     = m::mock('\Orchestra\Contracts\Authorization\Authorization');
-        $auth    = m::mock('\Orchestra\Contracts\Auth\Guard');
+        $acl = m::mock('\Orchestra\Contracts\Authorization\Authorization');
+        $auth = m::mock('\Orchestra\Contracts\Auth\Guard');
         $request = m::mock('\Illuminate\Http\Request');
 
         $request->shouldReceive('input')->once()->with('_as')->andReturnNull();
@@ -45,8 +45,8 @@ class LoginAsTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandleMethodWithRedirect()
     {
-        $acl     = m::mock('\Orchestra\Contracts\Authorization\Authorization');
-        $auth    = m::mock('\Orchestra\Contracts\Auth\Guard');
+        $acl = m::mock('\Orchestra\Contracts\Authorization\Authorization');
+        $auth = m::mock('\Orchestra\Contracts\Auth\Guard');
         $request = m::mock('\Illuminate\Http\Request');
 
         $request->shouldReceive('input')->once()->with('_as')->andReturn(5)

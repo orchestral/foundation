@@ -31,7 +31,7 @@ class PresenterTest extends \PHPUnit_Framework_TestCase
      */
     public function testHandlesMethod()
     {
-        $app       = m::mock('\Illuminate\Container\Container', '\Illuminate\Contracts\Foundation\Application');
+        $app = m::mock('\Illuminate\Container\Container', '\Illuminate\Contracts\Foundation\Application');
         $orchestra = m::mock('\Orchestra\Foundation\Foundation[handles]', [$app]);
 
         Container::setInstance($app);

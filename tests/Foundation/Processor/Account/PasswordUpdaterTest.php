@@ -27,10 +27,10 @@ class PasswordUpdaterTest extends TestCase
      */
     public function testEditMethod()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $stub = new PasswordUpdater($presenter, $validator);
 
@@ -51,11 +51,11 @@ class PasswordUpdaterTest extends TestCase
      */
     public function testUpdateMethod()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $user      = m::mock('\Orchestra\Model\User, \Illuminate\Contracts\Auth\Authenticatable');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $user = m::mock('\Orchestra\Model\User, \Illuminate\Contracts\Auth\Authenticatable');
 
         $input = $this->getInput();
 
@@ -88,10 +88,10 @@ class PasswordUpdaterTest extends TestCase
      */
     public function testUpdateMethodGivenUserMissmatched()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $input = $this->getInput();
 
@@ -113,11 +113,11 @@ class PasswordUpdaterTest extends TestCase
      */
     public function testUpdateMethodGivenValidationFailed()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $user      = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');
 
         $input = $this->getInput();
 
@@ -144,11 +144,11 @@ class PasswordUpdaterTest extends TestCase
      */
     public function testUpdateMethodGivenSavingFailed()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $user      = m::mock('\Orchestra\Model\User, \Illuminate\Contracts\Auth\Authenticatable');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $user = m::mock('\Orchestra\Model\User, \Illuminate\Contracts\Auth\Authenticatable');
 
         $input = $this->getInput();
 
@@ -177,11 +177,11 @@ class PasswordUpdaterTest extends TestCase
      */
     public function testUpdateMethodGivenCurrentPasswordMissmatch()
     {
-        $listener  = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater');
+        $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater');
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
-        $resolver  = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $user      = m::mock('\Orchestra\Model\User, \Illuminate\Contracts\Auth\Authenticatable');
+        $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
+        $user = m::mock('\Orchestra\Model\User, \Illuminate\Contracts\Auth\Authenticatable');
 
         $input = $this->getInput();
 
@@ -208,9 +208,9 @@ class PasswordUpdaterTest extends TestCase
     protected function getInput()
     {
         return [
-            'id'               => '1',
+            'id' => '1',
             'current_password' => '123456',
-            'new_password'     => 'qwerty',
+            'new_password' => 'qwerty',
         ];
     }
 }

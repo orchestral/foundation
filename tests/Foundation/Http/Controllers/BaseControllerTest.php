@@ -38,11 +38,11 @@ class BaseControllerTest extends TestCase
      */
     public function testMissingMethodAction()
     {
-        $app        = new Container();
-        $factory    = m::mock('\Illuminate\Contracts\View\Factory');
-        $view       = m::mock('\Illuminate\Contracts\View\View');
+        $app = new Container();
+        $factory = m::mock('\Illuminate\Contracts\View\Factory');
+        $view = m::mock('\Illuminate\Contracts\View\View');
         $redirector = m::mock('\Illuminate\Routing\Redirector');
-        $response   = m::mock('\Illuminate\Routing\ResponseFactory', [$factory, $redirector]);
+        $response = m::mock('\Illuminate\Routing\ResponseFactory', [$factory, $redirector]);
 
         $app['Illuminate\Contracts\Routing\ResponseFactory'] = $response;
 
