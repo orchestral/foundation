@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Auth;
 
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 
 abstract class ThrottlesLogins
 {
@@ -14,6 +15,15 @@ abstract class ThrottlesLogins
         'locked_for' => 60,
     ];
 
+    protected $loginKey = 'email';
+
+    /**
+     * The HTTP Requesr object.
+     *
+     * @var \Illuminate\Http\Request
+     */
+    protected $request;
+
     /**
      * Set configuration.
      *
@@ -24,6 +34,34 @@ abstract class ThrottlesLogins
     public static function setConfig(array $config)
     {
         static::$config = array_merge(static::$config, $config);
+    }
+
+    /**
+     * Set HTTP Request object.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     *
+     * @return $this
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+
+        return $this;
+    }
+
+    /**
+     * Set user login key.
+     *
+     * @param  string  $key
+     *
+     * @return $this
+     */
+    public function setLoginKey($key)
+    {
+        $this->loginKey = $key;
+
+        return $this;
     }
 
     /**
@@ -49,12 +87,13 @@ abstract class ThrottlesLogins
     /**
      * Get the login key.
      *
-     * @param  array  $input
-     *
      * @return string
      */
-    protected function getLoginKey(array $input)
+    protected function getUniqueLoginKey()
     {
-        return implode('', Arr::only($input, ['email', '_ip']));
+        $key = $this->request->input($this->loginKey);
+        $ip  = $this->request->ip();
+
+        return $key.$ip;
     }
 }

@@ -8,11 +8,9 @@ class WithoutThrottle extends ThrottlesLogins implements Command
     /**
      * Determine if the user has too many failed login attempts.
      *
-     * @param  array  $input
-     *
      * @return bool
      */
-    public function hasTooManyLoginAttempts(array $input)
+    public function hasTooManyLoginAttempts()
     {
         return false;
     }
@@ -20,11 +18,9 @@ class WithoutThrottle extends ThrottlesLogins implements Command
     /**
      * Get total seconds before doing another login attempts for the user.
      *
-     * @param  array  $input
-     *
      * @return int
      */
-    public function getSecondsBeforeNextAttempts(array $input)
+    public function getSecondsBeforeNextAttempts()
     {
         return Arr::get(static::$config, 'locked_for', 60);
     }
@@ -32,11 +28,9 @@ class WithoutThrottle extends ThrottlesLogins implements Command
     /**
      * Increment the login attempts for the user.
      *
-     * @param  array  $input
-     *
      * @return void
      */
-    public function incrementLoginAttempts(array $input)
+    public function incrementLoginAttempts()
     {
         //
     }
@@ -44,11 +38,9 @@ class WithoutThrottle extends ThrottlesLogins implements Command
     /**
      * Clear the login locks for the given user credentials.
      *
-     * @param  array  $input
-     *
      * @return void
      */
-    public function clearLoginAttempts(array $input)
+    public function clearLoginAttempts()
     {
         //
     }

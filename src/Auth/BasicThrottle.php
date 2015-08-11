@@ -26,14 +26,12 @@ class BasicThrottle extends ThrottlesLogins implements Command
     /**
      * Determine if the user has too many failed login attempts.
      *
-     * @param  array  $input
-     *
      * @return bool
      */
-    public function hasTooManyLoginAttempts(array $input)
+    public function hasTooManyLoginAttempts()
     {
         return $this->cacheLimiter->tooManyAttempts(
-            $this->getLoginKey($input),
+            $this->getUniqueLoginKey(),
             $this->maxLoginAttempts(),
             $this->lockoutTime() / 60
         );
@@ -46,32 +44,28 @@ class BasicThrottle extends ThrottlesLogins implements Command
      *
      * @return int
      */
-    public function getSecondsBeforeNextAttempts(array $input)
+    public function getSecondsBeforeNextAttempts()
     {
-        return (int) $this->cacheLimiter->availableIn($this->getLoginKey($input));
+        return (int) $this->cacheLimiter->availableIn($this->getUniqueLoginKey());
     }
 
     /**
      * Increment the login attempts for the user.
      *
-     * @param  array  $input
-     *
      * @return void
      */
-    public function incrementLoginAttempts(array $input)
+    public function incrementLoginAttempts()
     {
-        $this->cacheLimiter->hit($this->getLoginKey($input));
+        $this->cacheLimiter->hit($this->getUniqueLoginKey());
     }
 
     /**
      * Clear the login locks for the given user credentials.
      *
-     * @param  array  $input
-     *
      * @return void
      */
-    public function clearLoginAttempts(array $input)
+    public function clearLoginAttempts()
     {
-        $this->cacheLimiter->clear($this->getLoginKey($input));
+        $this->cacheLimiter->clear($this->getUniqueLoginKey());
     }
 }

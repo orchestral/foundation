@@ -3,9 +3,10 @@
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Orchestra\Contracts\Foundation\Command\Account\ProfileUpdater as Command;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater as Listener;
 
-class ProfileUpdater extends User implements \Orchestra\Contracts\Foundation\Command\Account\ProfileUpdater
+class ProfileUpdater extends User implements Command
 {
     /**
      * Get account/profile information.
@@ -40,7 +41,7 @@ class ProfileUpdater extends User implements \Orchestra\Contracts\Foundation\Com
             return $listener->abortWhenUserMismatched();
         }
 
-        $validation = $this->validator->with($input);
+        $validation = $this->validator->on('update')->with($input);
 
         if ($validation->fails()) {
             return $listener->updateProfileFailedValidation($validation->getMessageBag());
