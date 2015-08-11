@@ -11,6 +11,7 @@ class AuthenticateUser extends Validator
      */
     protected $rules = [
         'email' => ['required', 'email'],
+        'fullname' => ['sometimes', 'required'],
     ];
 
     /**
