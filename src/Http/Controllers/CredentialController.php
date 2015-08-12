@@ -46,9 +46,9 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     public function login(Request $request, AuthenticateUser $authenticate, ThrottlesCommand $throttles)
     {
-        $input = $request->all();
+        $input = $request->only(['email', 'password', 'remember']);
 
-        $input['_ip'] = $request->ip();
+        $throttles->setRequest($request)->setLoginKey('email');
 
         return $authenticate->login($this, $input, $throttles);
     }

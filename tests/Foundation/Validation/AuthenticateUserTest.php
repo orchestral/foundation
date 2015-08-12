@@ -40,7 +40,7 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = ['email' => 'admin@orchestraplatform.com', 'password' => '123'];
-        $rules = ['email' => ['required', 'email']];
+        $rules = ['email' => ['required', 'email'], 'fullname' => ['sometimes', 'required']];
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
 
@@ -62,7 +62,11 @@ class AuthenticateUserTest extends \PHPUnit_Framework_TestCase
         $validator = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $input = ['email' => 'admin@orchestraplatform.com', 'password' => '123'];
-        $rules = ['email' => ['required', 'email'], 'password' => ['required']];
+        $rules = [
+            'email' => ['required', 'email'],
+            'fullname' => ['sometimes', 'required'],
+            'password' => ['required'],
+        ];
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
 

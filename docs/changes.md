@@ -5,6 +5,14 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.8 {#v3-1-8}
+
+* Utilize new `Illuminate\Cache\RateLimiter` on login throttles, require a bump Laravel Framework `~5.1.9`.
+* Allow login key to be customize between application instead of a hardcoded default using `"email"`.
+* Add `Orchestra\Foundation\Http\Presenters\User::getSortableFields()` to allow filtering which fields can be sorted when displaying users table.
+* Update assets:
+  - Vue 0.12.10
+
 ### v3.1.7 {#v3-1-7}
 
 * Allow meta `description` and `author` to be configurable.

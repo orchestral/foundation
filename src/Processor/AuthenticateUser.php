@@ -42,7 +42,7 @@ class AuthenticateUser extends Authenticate implements Command
             return $listener->userLoginHasFailedValidation($validation->getMessageBag());
         }
 
-        if ($this->hasTooManyAttempts($input, $throttles)) {
+        if ($this->hasTooManyAttempts($throttles)) {
             return $this->handleUserHasTooManyAttempts($listener, $input, $throttles);
         }
 
@@ -60,11 +60,11 @@ class AuthenticateUser extends Authenticate implements Command
      *
      * @return bool
      */
-    protected function authenticate($input)
+    protected function authenticate(array $input)
     {
-        $data = Arr::only($input, ['email', 'password']);
-
         $remember = (isset($input['remember']) && $input['remember'] === 'yes');
+
+        $data = Arr::except($input, ['remember']);
 
         // We should now attempt to login the user using Auth class. If this
         // failed simply return false.
@@ -126,14 +126,13 @@ class AuthenticateUser extends Authenticate implements Command
     /**
      * Check if user has too many attempts.
      *
-     * @param  array  $input
      * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
      *
      * @return bool
      */
-    protected function hasTooManyAttempts(array $input, ThrottlesCommand $throttles = null)
+    protected function hasTooManyAttempts(ThrottlesCommand $throttles = null)
     {
-        return ($throttles && $throttles->hasTooManyLoginAttempts($input));
+        return ($throttles && $throttles->hasTooManyLoginAttempts());
     }
 
     /**

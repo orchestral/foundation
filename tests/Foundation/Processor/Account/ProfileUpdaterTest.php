@@ -54,7 +54,8 @@ class ProfileUpdaterTest extends TestCase
             ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
             ->shouldReceive('save')->once()->andReturnNull();
-        $validator->shouldReceive('with')->once()->with($input)->andReturn($resolver);
+        $validator->shouldReceive('on')->once()->with('update')->andReturnSelf()
+            ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
         $resolver->shouldReceive('fails')->once()->andReturn(false);
         $listener->shouldReceive('profileUpdated')->once()->andReturn('profile.updated');
 
@@ -111,7 +112,8 @@ class ProfileUpdaterTest extends TestCase
         $stub = new ProfileUpdater($presenter, $validator);
 
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id']);
-        $validator->shouldReceive('with')->once()->with($input)->andReturn($resolver);
+        $validator->shouldReceive('on')->once()->with('update')->andReturnSelf()
+            ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
         $resolver->shouldReceive('fails')->once()->andReturn(true)
             ->shouldReceive('getMessageBag')->once()->andReturn([]);
         $listener->shouldReceive('updateProfileFailedValidation')->once()
@@ -143,7 +145,8 @@ class ProfileUpdaterTest extends TestCase
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id'])
             ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull();
-        $validator->shouldReceive('with')->once()->with($input)->andReturn($resolver);
+        $validator->shouldReceive('on')->once()->with('update')->andReturnSelf()
+            ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
         $resolver->shouldReceive('fails')->once()->andReturn(false);
         $listener->shouldReceive('updateProfileFailed')->once()->with(m::type('Array'))->andReturn('profile.failed');
 
