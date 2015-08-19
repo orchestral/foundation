@@ -12,7 +12,7 @@ if (! function_exists('assetic')) {
     {
         try {
             return elixir($file);
-        } catch (InvalidArgumentException $e) {
+        } catch (Exception $e) {
             return $file;
         }
     }
