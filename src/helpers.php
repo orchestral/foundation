@@ -1,5 +1,23 @@
 <?php
 
+
+if (! function_exists('assetic')) {
+    /**
+     * Get the path to a versioned Elixir file or fallback to original file.
+     *
+     * @param  string  $file
+     * @return string
+     */
+    function assetic($file)
+    {
+        try {
+            return elixir($file);
+        } catch (InvalidArgumentException $e) {
+            return $file;
+        }
+    }
+}
+
 if (! function_exists('orchestra')) {
     /**
      * Return orchestra.app instance.
