@@ -6,6 +6,7 @@ if (! function_exists('assetic')) {
      * Get the path to a versioned Elixir file or fallback to original file.
      *
      * @param  string  $file
+     *
      * @return string
      */
     function assetic($file)
@@ -15,6 +16,53 @@ if (! function_exists('assetic')) {
         } catch (Exception $e) {
             return $file;
         }
+    }
+}
+
+if (! function_exists('get_meta')) {
+    /**
+     * Get meta.
+     *
+     * @param  string  $key
+     * @param  mixed   $default
+     *
+     * @return string
+     */
+    function get_meta($key, $default = null)
+    {
+        return app('orchestra.meta')->get($key, $default);
+    }
+}
+
+if (! function_exists('handles')) {
+    /**
+     * Return handles configuration for a package/app.
+     *
+     * @param  string  $name
+     * @param  array   $options
+     *
+     * @return string
+     */
+    function handles($name, array $options = [])
+    {
+        return app('orchestra.app')->handles($name, $options);
+    }
+}
+
+if (! function_exists('memorize')) {
+    /**
+     * Return memory configuration associated to the request.
+     *
+     * @param  string  $key
+     * @param  string  $default
+     *
+     * @return mixed
+     *
+     * @see \Orchestra\Foundation\Foundation::memory()
+     */
+    function memorize($key, $default = null)
+    {
+        return app('orchestra.platform.memory')->get($key, $default);
     }
 }
 
@@ -36,38 +84,6 @@ if (! function_exists('orchestra')) {
     }
 }
 
-if (! function_exists('memorize')) {
-    /**
-     * Return memory configuration associated to the request.
-     *
-     * @param  string  $key
-     * @param  string  $default
-     *
-     * @return mixed
-     *
-     * @see \Orchestra\Foundation\Foundation::memory()
-     */
-    function memorize($key, $default = null)
-    {
-        return app('orchestra.platform.memory')->get($key, $default);
-    }
-}
-
-if (! function_exists('handles')) {
-    /**
-     * Return handles configuration for a package/app.
-     *
-     * @param  string  $name
-     * @param  array   $options
-     *
-     * @return string
-     */
-    function handles($name, array $options = [])
-    {
-        return app('orchestra.app')->handles($name, $options);
-    }
-}
-
 if (! function_exists('resources')) {
     /**
      * Return resources route.
@@ -82,21 +98,6 @@ if (! function_exists('resources')) {
         $name = ltrim($name, '/');
 
         return app('orchestra.app')->handles("orchestra::resources/{$name}", $options);
-    }
-}
-
-if (! function_exists('get_meta')) {
-    /**
-     * Get meta.
-     *
-     * @param  string  $key
-     * @param  mixed   $default
-     *
-     * @return string
-     */
-    function get_meta($key, $default = null)
-    {
-        return app('orchestra.meta')->get($key, $default);
     }
 }
 
