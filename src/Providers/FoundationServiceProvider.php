@@ -66,7 +66,7 @@ class FoundationServiceProvider extends ServiceProvider
     {
         $this->registerFoundation();
 
-        $this->registerMeta();
+        $this->registerMetaContainer();
 
         $this->registerThrottlesLogins();
 
@@ -92,11 +92,11 @@ class FoundationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the service provider for site.
+     * Register the service provider for meta container.
      *
      * @return void
      */
-    protected function registerMeta()
+    protected function registerMetaContainer()
     {
         $this->app->singleton('orchestra.meta', function () {
             return new Meta();
