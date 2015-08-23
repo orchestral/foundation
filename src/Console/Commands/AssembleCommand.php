@@ -3,16 +3,17 @@
 use Illuminate\Console\Command;
 use Orchestra\Contracts\Memory\Provider;
 use Orchestra\Contracts\Foundation\Foundation;
-use Symfony\Component\Console\Input\InputOption;
 
 class AssembleCommand extends Command
 {
     /**
-     * The console command name.
+     * The console command signature.
      *
      * @var string
      */
-    protected $name = 'orchestra:assemble';
+    protected $signature = 'orchestra:assemble
+        {--no-cache : Avoid running route and config caching.}
+        {--no-optimize : Avoid running class optimization.}';
 
     /**
      * The console command description.
@@ -113,18 +114,5 @@ class AssembleCommand extends Command
         if (! $this->option('no-optimize')) {
             $this->call('orchestra:optimize');
         }
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [
-            ['no-cache', null, InputOption::VALUE_NONE, 'Avoid running route and config caching.'],
-            ['no-optimize', null, InputOption::VALUE_NONE, 'Avoid running class optimization.'],
-        ];
     }
 }
