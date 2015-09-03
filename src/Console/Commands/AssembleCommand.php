@@ -75,7 +75,7 @@ class AssembleCommand extends Command
             return;
         }
 
-        $this->call('extension:detect');
+        $this->call('extension:detect', ['--quiet' => true]);
 
         $extensions = $this->memory->get('extensions.active', []);
 
