@@ -5,6 +5,14 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.9 {#v3-1-9}
+
+* Add `assetic()` helper as an alternative to `elixir()` helper.
+* Detect updated extension when running orchestra:assemble command.
+* Add basic action html template for emails.
+* Update assets:
+  - Vue 0.12.12
+
 ### v3.1.8 {#v3-1-8}
 
 * Utilize new `Illuminate\Cache\RateLimiter` on login throttles, require a bump Laravel Framework `~5.1.9`.
