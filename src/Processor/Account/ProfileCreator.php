@@ -90,7 +90,7 @@ class ProfileCreator extends User implements Command
             'user'     => ($user instanceof Arrayable ? $user->toArray() : $user),
         ];
 
-        $subject = trans('orchestra/foundation::emails.credential.register', ['site' => $site]);
+        $subject = trans('orchestra/foundation::email.credential.register', ['site' => $site]);
         $message = Message::create('emails.auth.register', $data, $subject);
 
         $receipt = $user->notify($message);
