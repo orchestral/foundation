@@ -75,6 +75,8 @@ class AssembleCommand extends Command
             return;
         }
 
+        $this->call('extension:detect');
+
         $extensions = $this->memory->get('extensions.active', []);
 
         foreach ($extensions as $extension => $config) {
