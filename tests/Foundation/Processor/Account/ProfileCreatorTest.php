@@ -78,6 +78,8 @@ class ProfileCreatorTest extends TestCase
         $listener->shouldReceive('profileCreated')->once()->andReturn('profile.created');
 
         Config::shouldReceive('get')->once()->with('orchestra/foundation::roles.member', 2)->andReturn(2);
+        Config::shouldReceive('get')->once()->with('auth.register.email', 'emails.auth.register')
+            ->andReturn('emails.auth.register');
         DB::shouldReceive('transaction')->once()->with(m::type('Closure'))
             ->andReturnUsing(function ($c) {
                 return $c();
@@ -127,6 +129,8 @@ class ProfileCreatorTest extends TestCase
         $listener->shouldReceive('profileCreatedWithoutNotification')->once()->andReturn('profile.created.without.notification');
 
         Config::shouldReceive('get')->once()->with('orchestra/foundation::roles.member', 2)->andReturn(2);
+        Config::shouldReceive('get')->once()->with('auth.register.email', 'emails.auth.register')
+            ->andReturn('emails.auth.register');
         DB::shouldReceive('transaction')->once()->with(m::type('Closure'))
             ->andReturnUsing(function ($c) {
                 return $c();
