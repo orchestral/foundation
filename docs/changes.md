@@ -8,7 +8,7 @@ title: Foundation Change Log
 ### v3.1.9 {#v3-1-9}
 
 * Add `assetic()` helper as an alternative to `elixir()` helper.
-* Detect updated extension when running orchestra:assemble command.
+* Detect updated extension when running `orchestra:assemble` command.
 * Add basic action html template for emails.
 * Update assets:
   - Vue 0.12.12
