@@ -1,5 +1,10 @@
 <?php namespace Orchestra\Foundation\Console\Commands;
 
+use PhpParser\Lexer;
+use PhpParser\Parser;
+use ClassPreloader\ClassPreloader;
+use ClassPreloader\Exceptions\SkipFileException;
+use PhpParser\PrettyPrinter\Standard as PrettyPrinter;
 use Illuminate\Foundation\Console\OptimizeCommand as Command;
 
 class OptimizeCommand extends Command
