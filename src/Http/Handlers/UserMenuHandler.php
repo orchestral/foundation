@@ -27,7 +27,7 @@ class UserMenuHandler extends MenuHandler
      */
     public function getTitleAttribute($value)
     {
-        return $this->container['translator']->trans($value);
+        return $this->container->make('translator')->trans($value);
     }
 
     /**
