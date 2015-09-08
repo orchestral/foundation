@@ -12,7 +12,7 @@ if (! function_exists('assetic')) {
     function assetic($file)
     {
         try {
-            return asset(elixir($file));
+            return elixir($file);
         } catch (Exception $e) {
             return asset($file);
         }
