@@ -5,6 +5,14 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.10 {#v3-1-10}
+
+* Add `Orchestra\Foundation\Console\Commands\OptimizeCommand`.
+* Wrap `assetic()` method to generate URL using `asset()`.
+* Fixes password confirmation key used on edit password form.
+* Assets:
+  - Update Vue v0.12.13.
+
 ### v3.1.9 {#v3-1-9}
 
 * Add `assetic()` helper as an alternative to `elixir()` helper.
