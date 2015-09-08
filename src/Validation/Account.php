@@ -47,9 +47,9 @@ class Account extends Validator
     protected function onChangePassword()
     {
         $this->rules = [
-            'current_password'      => ['required'],
-            'new_password'          => ['required', 'different:current_password'],
-            'password_confirmation' => ['same:new_password'],
+            'current_password' => ['required'],
+            'new_password'     => ['required', 'different:current_password'],
+            'confirm_password' => ['same:new_password'],
         ];
 
         $this->events = [];
