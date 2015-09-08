@@ -106,13 +106,13 @@ class AccountTest extends \PHPUnit_Framework_TestCase
         $input = [
             'current_password' => '123456',
             'new_password' => 'qwerty',
-            'password_confirmation' => 'qwerty',
+            'confirm_password' => 'qwerty',
         ];
 
         $rules = [
             'current_password' => ['required'],
             'new_password' => ['required', 'different:current_password'],
-            'password_confirmation' => ['same:new_password'],
+            'confirm_password' => ['same:new_password'],
         ];
 
         $factory->shouldReceive('make')->once()->with($input, $rules, [])->andReturn($validator);
