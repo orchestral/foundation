@@ -13,7 +13,7 @@ jQuery(function onSettingPageReady($) { 'use strict';
     var value, smtp;
 
     value = self.value ? self.value : '';
-    smtp  = ['email_host', 'email_port', 'email_address', 'email_username', 'email_password', 'email_encryption'];
+    smtp  = ['email_host', 'email_port', 'email_username', 'email_password', 'email_encryption'];
 
     get_container('input[name^="email_"]').hide();
     get_container('select[name^="email_region"]').hide();
@@ -24,10 +24,8 @@ jQuery(function onSettingPageReady($) { 'use strict';
         $.each(smtp, function(index, name) {
           get_container('input[name="'+name+'"]').show();
         });
-
         break;
       case 'sendmail' :
-        get_container('input[name^="email_address"]').show();
         get_container('input[name^="email_sendmail"]').show();
         break;
       case 'ses':
@@ -42,10 +40,9 @@ jQuery(function onSettingPageReady($) { 'use strict';
       case 'mandrill':
         get_container('input[name^="email_secret"]').show();
         break;
-      default :
-        get_container('input[name^="email_address"]').show();
-        break;
     }
+
+    get_container('input[name^="email_address"]').show();
   });
 
   // bind onChange event to publish an event.
