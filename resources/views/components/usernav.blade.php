@@ -1,4 +1,4 @@
-#{{ $user = auth()->user() }}
+@inject('user', Illuminate\Contracts\Auth\Authenticatable::class)
 
 @if (get_meta('navigation::usernav', true))
 <ul class="nav navbar-nav navbar-right">

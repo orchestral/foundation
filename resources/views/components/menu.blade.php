@@ -10,14 +10,14 @@
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{!! $item->get('title') !!}</a>
 				<ul class="dropdown-menu">
-					@unless ($item->get('link') == '#' && ! empty($item->get('link')))
+					@if ($item->hasLink())
 					<li>
 						<a href="{!! $item->get('link') !!}">
 							{!! $item->get('title') !!}
 						</a>
 					</li>
 					<li class="divider"></li>
-					@endunless
+					@endif
 					@foreach ($item->get('childs') as $child)
 						#{{ $grands = $child->get('childs') }}
 						<li class="{!! (! empty($grands) ? "dropdown-submenu" : "normal") !!}">
