@@ -2,7 +2,7 @@
 
 <div class="{!! get_meta('header::class', 'page-header') !!}">
 	<div class="container">
-		@if (get_meta('header::add-button'))
+		@if(get_meta('header::add-button'))
 		<div class="pull-right">
 			<a href="{!! URL::current() !!}/create" class="btn btn-primary">
 				{{ trans('orchestra/foundation::label.add') }}
@@ -11,7 +11,7 @@
 		@endif
 
 		<h2>@get_meta('title', '')
-			@if (! empty($description))
+			@if(! empty($description))
 			<small>{!! $description or '' !!}</small>
 			@endif
 		</h2>

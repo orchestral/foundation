@@ -1,12 +1,12 @@
 @inject('user', 'Illuminate\Contracts\Auth\Authenticatable')
 
-@if (get_meta('navigation::usernav', true))
+@if(get_meta('navigation::usernav', true))
 <ul class="nav navbar-nav navbar-right">
 	<li class="dropdown" id="user-menu">
 		<a href="#user-menu" rel="user-menu" class="dropdown-toggle" data-toggle="dropdown">
 			<i class="icon-user"></i> {{ ! is_null($user) ? $user->fullname : trans('orchestra/foundation::title.login') }}
 		</a>
-		@unless (is_null($user))
+		@unless(is_null($user))
 		<ul class="dropdown-menu">
 			<li>
 				<a href="{!! handles('orchestra::account') !!}">

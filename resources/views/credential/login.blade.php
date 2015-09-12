@@ -35,7 +35,7 @@
 						<button type="submit" class="btn btn-primary">
 							{{ trans('orchestra/foundation::title.login') }}
 						</button>
-						@if (memorize('site.registrable', false))
+						@if(memorize('site.registrable', false))
 						<a href="{!! handles('orchestra::register') !!}" class="btn btn-link">
 							{{ trans('orchestra/foundation::title.register') }}
 						</a>
