@@ -1,35 +1,35 @@
 <ul class="nav navbar-nav" role="menu">
 	@foreach ($menu as $item)
-		@if (1 > count($item->childs))
+		@if (1 > count($item->get('childs')))
 			<li>
-				<a href="{!! $item->link !!}">
-					{!! $item->title !!}
+				<a href="{!! $item->get('link') !!}">
+					{!! $item->get('title') !!}
 				</a>
 			</li>
 		@else
 			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{!! $item->title !!}</a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{!! $item->get('title') !!}</a>
 				<ul class="dropdown-menu">
-					@unless ($item->link == '#' && ! empty($item->link))
+					@unless ($item->get('link') == '#' && ! empty($item->get('link')))
 					<li>
-						<a href="{!! $item->link !!}">
-							{!! $item->title !!}
+						<a href="{!! $item->get('link') !!}">
+							{!! $item->get('title') !!}
 						</a>
 					</li>
 					<li class="divider"></li>
 					@endunless
-					@foreach ($item->childs as $child)
-						#{{ $grands = $child->childs }}
+					@foreach ($item->get('childs') as $child)
+						#{{ $grands = $child->get('childs') }}
 						<li class="{!! (! empty($grands) ? "dropdown-submenu" : "normal") !!}">
-							<a href="{!! $child->link !!}">
-								{!! $child->title !!}
+							<a href="{!! $child->get('link') !!}">
+								{!! $child->get('title') !!}
 							</a>
-							@if (! empty($child->childs))
+							@if (! empty($child->get('childs')))
 							<ul class="dropdown-menu">
-								@foreach ($child->childs as $grand)
+								@foreach ($child->get('childs') as $grand)
 								<li>
-									<a href="{!! $grand->link !!}">
-										{!! $grand->title !!}
+									<a href="{!! $grand->get('link') !!}">
+										{!! $grand->get('title') !!}
 									</a>
 								</li>
 								@endforeach
