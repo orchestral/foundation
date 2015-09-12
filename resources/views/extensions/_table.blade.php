@@ -1,4 +1,4 @@
-@inject('factory', Orchestra\Contracts\Extension\Factory::class)
+@inject('factory', 'Orchestra\Contracts\Extension\Factory')
 
 <table class="table table-striped">
 	<thead>
