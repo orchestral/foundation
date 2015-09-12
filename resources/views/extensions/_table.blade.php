@@ -1,3 +1,5 @@
+@inject('factory', Orchestra\Contracts\Extension\Factory::class)
+
 <table class="table table-striped">
 	<thead>
 		<tr>
@@ -16,8 +18,8 @@
 		<tr>
 			<td>
 				<strong>
-					#{{ $activated = app('orchestra.extension')->activated($name) }}
-					#{{ $started = app('orchestra.extension')->started($name) }}
+					#{{ $activated = $factory->activated($name) }}
+					#{{ $started = $factory->started($name) }}
 
 					@if (! $started)
 						{{ $extension->name }}

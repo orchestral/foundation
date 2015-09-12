@@ -21,13 +21,13 @@
 @push('orchestra.footer')
 <script>
 jQuery(function ($) {
-	$('a[rel="user-menu"]').on('click', function (e) {
-		e.preventDefault();
+  $('a[rel="user-menu"]').on('click', function (e) {
+    e.preventDefault();
 
-		window.location.href = "{{ handles('orchestra::login') }}";
+    window.location.href = "{{ handles('orchestra::login') }}";
 
-		return false;
-	});
+    return false;
+  });
 });
 </script>
 @endpush
