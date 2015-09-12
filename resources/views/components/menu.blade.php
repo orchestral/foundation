@@ -1,7 +1,7 @@
 #{{ $active = null }}
 <ul class="nav navbar-nav" role="menu">
 	@foreach($menu as $item)
-		#{{ $parent }}
+		#{{ $parent = $item->get('id') }}
 		@if(1 > count($item->get('childs')))
 			<li data-menu="{{ $parent }}">
 				#{{ $active = $item->active() ? $parent : $active }}
