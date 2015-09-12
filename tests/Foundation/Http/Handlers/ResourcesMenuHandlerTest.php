@@ -45,7 +45,8 @@ class ResourcesMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $foundation->shouldReceive('handles')->once()->with('orchestra::resources')->andReturn('admin/resources');
         $menu->shouldReceive('add')->once()->with('resources', '>:extensions')->andReturnSelf()
             ->shouldReceive('title')->once()->with('resources')->andReturnSelf()
-            ->shouldReceive('link')->once()->with('admin/resources')->andReturnNull();
+            ->shouldReceive('link')->once()->with('admin/resources')->andReturnSelf()
+            ->shouldReceive('handles')->once()->with('orchestra::resources')->andReturnNull();
 
         $foundation->shouldReceive('handles')->once()->with('orchestra::resources/foo')->andReturn('foo-resource');
         $menu->shouldReceive('add')->once()->with('foo', '^:resources')->andReturnSelf()

@@ -34,7 +34,8 @@ class ExtensionMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $foundation->shouldReceive('handles')->once()->with('orchestra::extensions')->andReturn('admin/extensions');
         $menu->shouldReceive('add')->once()->andReturnSelf()
             ->shouldReceive('title')->once()->with('extensions')->andReturnSelf()
-            ->shouldReceive('link')->once()->with('admin/extensions')->andReturnNull();
+            ->shouldReceive('link')->once()->with('admin/extensions')->andReturnSelf()
+            ->shouldReceive('handles')->once()->with('orchestra::extensions')->andReturnNull();
 
         $stub = new ExtensionMenuHandler($app);
         $this->assertNull($stub->handle());

@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Support;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Fluent;
 use Illuminate\Contracts\Container\Container;
 
@@ -124,7 +125,8 @@ abstract class MenuHandler
 
         return $this->handler->add($id, $this->getAttribute('position'))
                     ->title($this->getAttribute('title'))
-                    ->link($this->getAttribute('link'));
+                    ->link($this->getAttribute('link'))
+                    ->handles(Arr::get($this->menu, 'link'));
     }
 
     /**
