@@ -9,7 +9,7 @@
 	<a href="#" id="{{ $action }}_button" class="btn btn-mini btn-warning">
 		{{ trans("orchestra/foundation::label.email.{$action}") }}
 	</a>
-	{!! app('form')->hidden("enable_{$action}", 'no') !!}
+	{!! Form::hidden("enable_{$action}", 'no') !!}
 </div>
 
 @push('orchestra.footer')

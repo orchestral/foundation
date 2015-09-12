@@ -5,6 +5,14 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.11 {#v3-1-11}
+
+* Reworks on backend menu to support generating current active menu.
+* Improves views overall implementation, ensure readability is optimized.
+* Fixes email address not shown on certain mail transport.
+* Assets:
+  - Update Vue v0.12.14.
+
 ### v3.1.10 {#v3-1-10}
 
 * Add `Orchestra\Foundation\Console\Commands\OptimizeCommand`.

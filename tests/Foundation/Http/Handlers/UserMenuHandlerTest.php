@@ -33,7 +33,8 @@ class UserMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $foundation->shouldReceive('handles')->once()->with('orchestra::users')->andReturn('admin/users');
         $menu->shouldReceive('add')->once()->andReturnSelf()
             ->shouldReceive('title')->once()->with('users')->andReturnSelf()
-            ->shouldReceive('link')->once()->with('admin/users')->andReturnNull();
+            ->shouldReceive('link')->once()->with('admin/users')->andReturnSelf()
+            ->shouldReceive('handles')->once()->with('orchestra::users')->andReturnNull();
 
         $stub = new UserMenuHandler($app);
         $this->assertNull($stub->handle());

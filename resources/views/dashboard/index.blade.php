@@ -1,25 +1,24 @@
 @extends('orchestra/foundation::layouts.main')
 
-@inject('htmlbuilder', 'html')
-
 @section('content')
 <div class="row">
-	@if (count($panes) > 0)
+	@if(count($panes) > 0)
 
 	<?php $panes->add('mini-profile', '<')->title('Mini Profile')
 		->attributes(['class' => 'three columns widget'])
 		->content(view('orchestra/foundation::components.miniprofile')); ?>
 
-	@foreach ($panes as $id => $pane)
-		#{{ $attributes = $htmlbuilder->decorate($pane->attributes, ['class' => 'panel']) }}
-		<div{!! $htmlbuilder->attributes($attributes) !!}>
-		@if (! empty($pane->html))
-		{!! $pane->html !!}
+	@foreach($panes as $id => $pane)
+		<div{!! HTML::attributes(
+			HTML::decorate($pane->get('attributes'), ['class' => 'panel'])
+		) !!}>
+		@if(! empty($pane->get('html')))
+		{!! $pane->get('html') !!}
 		@else
 		<div class="panel-heading">
-			{!! $pane->title !!}
+			{!! $pane->get('title') !!}
 		</div>
-		{!! $pane->content !!}
+		{!! $pane->get('content') !!}
 		@endif
 		</div>
 	@endforeach

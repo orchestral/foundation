@@ -1,8 +1,8 @@
 
 <div class="list-group">
-	@foreach ($resources['list'] as $name => $resource)
-	@unless (false === value($resource->visible))
-	#{{ $current = orchestra()->is("orchestra::resources/{$name}*") }}
+	@foreach($resources['list'] as $name => $resource)
+	@unless(false === value($resource->visible))
+	#{{ $current = Foundation::is("orchestra::resources/{$name}*") }}
 	<a href="{!! resources($name) !!}" class="list-group-item {!! $current ? 'active' : '' !!}">
 		{{ $resource->name }}
 		<span class="glyphicon glyphicon-chevron-right pull-right"></span>

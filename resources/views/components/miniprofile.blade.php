@@ -1,4 +1,4 @@
-#{{ $user = auth()->user() }}
+@inject('user', 'Illuminate\Contracts\Auth\Authenticatable')
 
 <div class="dark-blue rounded-top box">
 	<div class="box-padding pull-center">

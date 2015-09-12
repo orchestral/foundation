@@ -33,7 +33,8 @@ class SettingMenuHandlerTest extends \PHPUnit_Framework_TestCase
         $foundation->shouldReceive('handles')->once()->with('orchestra::settings')->andReturn('admin/settings');
         $menu->shouldReceive('add')->once()->andReturnSelf()
             ->shouldReceive('title')->once()->with('settings')->andReturnSelf()
-            ->shouldReceive('link')->once()->with('admin/settings')->andReturnNull();
+            ->shouldReceive('link')->once()->with('admin/settings')->andReturnSelf()
+            ->shouldReceive('handles')->once()->with('orchestra::settings')->andReturnNull();
 
         $stub = new SettingMenuHandler($app);
         $this->assertNull($stub->handle());
