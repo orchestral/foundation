@@ -52,6 +52,8 @@
 	@endforeach
 </ul>
 
+#{{ ($active == 'home' && ! Foundation::is('orchestra::/')) && $active = null }}
+
 @push('orchestra.footer')
 @unless(is_null($active))
 <script>
