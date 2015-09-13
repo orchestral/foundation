@@ -7,9 +7,9 @@
 
 <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 <!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <script src="{!! asset('packages/orchestra/foundation/components/html5shiv/html5shiv.min.js') !!}"></script>
 <![endif]-->
-<link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300,500" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300,500" rel="stylesheet" type="text/css">
 
 #{{ $asset = app('orchestra.asset')->container('orchestra/foundation::header') }}
 #{{ $asset->style('select2', 'packages/orchestra/foundation/components/select2/select2.css') }}
