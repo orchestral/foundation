@@ -10,6 +10,7 @@
   "dependencies": {
     "bootstrap": "~3.3.4",
     "font-awesome": "~4.3.0",
+    "html5shiv": "~3.7.3",
     "javie": "^2.0.0",
     "jquery": "~1.10.2",
     "select2": "~3.4.8",
@@ -47,6 +48,9 @@
           }
         ]
       },
+      "html5shiv": [
+        "resources/components/html5shiv/dist/html5shiv.min.js"
+      ],
       "jquery": [
         "resources/components/jquery/jquery.js",
         "resources/components/jquery/jquery.min.js",
