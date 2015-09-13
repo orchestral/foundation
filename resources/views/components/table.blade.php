@@ -1,6 +1,4 @@
-#{{ $attributes['table'] = HTML::decorate($attributes['table'], ['class' => 'table table-striped']) }}
-
-<table{!! HTML::attributes($attributes['table']) !!}>
+<table{!! HTML::attributable($attributes['table'], ['class' => 'table table-striped']) !!}>
 	<thead>
 		<tr>
 			@foreach($columns as $col)

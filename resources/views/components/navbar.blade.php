@@ -1,6 +1,4 @@
-#{{ $attributes = HTML::decorate($navbar->get('attributes') ?: [], ['class' => 'navbar', 'role' => 'navigation']) }}
-
-<nav{!! HTML::attributes($attributes) !!}>
+<nav{!! HTML::attributable($navbar->get('attributes') ?: [], ['class' => 'navbar', 'role' => 'navigation']) !!}>
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".{!! $navbar->id !!}-responsive-collapse">
 			<span class="icon-bar"></span>

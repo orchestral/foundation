@@ -25,10 +25,10 @@
 					@foreach($item->get('childs') as $child)
 						#{{ $grands = $child->get('childs') }}
 						#{{ $active = $child->active() ? $parent : $active }}
-						<li{!! HTML::attributes(HTML::decorate(
+						<li{!! HTML::attributable(
 								['class' => $child->active() ? 'active' : ''],
 								['class' => ! empty($grands) ? 'dropdown-submenu' : 'normal']
-							)) !!}>
+							) !!}>
 							<a href="{{ $child->get('link') }}">
 								{!! $child->get('title') !!}
 							</a>
