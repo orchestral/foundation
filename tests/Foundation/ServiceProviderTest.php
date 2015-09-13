@@ -60,6 +60,9 @@ class ServiceProviderTest extends TestCase
         $this->assertEquals($this->getSupportProvides(), $site->provides());
         $this->assertTrue($site->isDeferred());
 
+        $this->assertTrue($this->app->environment('testing'));
+        $this->assertFalse($this->app->environment('production'));
+
         $this->assertEquals($this->getConsoleSupportProvides(), $console->provides());
         $this->assertTrue($console->isDeferred());
 
