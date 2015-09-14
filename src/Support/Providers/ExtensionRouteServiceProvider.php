@@ -49,15 +49,6 @@ abstract class ExtensionRouteServiceProvider extends ServiceProvider
      */
     protected $subscribe = [];
 
-
-
-    /**
-     * The subscriber classes to register.
-     *
-     * @var array
-     */
-    protected $subscribe = [];
-
     /**
      * The application's or extension's middleware stack.
      *
