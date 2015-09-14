@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.13 {#v3-1-13}
+
+* Fixes missing `Orchestra\Foundation\Support\Providers\ExtensionRouteServiceProvider::$routeMiddleware`.
+
 ### v3.1.12 {#v3-1-12}
 
 * Improve extension (with routes) service provider support.
