@@ -5,9 +5,9 @@ use Illuminate\Routing\Router;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Contracts\Events\Dispatcher;
 use Orchestra\Support\Providers\Traits\EventProviderTrait;
+use Orchestra\Support\Providers\Traits\PackageProviderTrait;
 use Orchestra\Support\Providers\Traits\MiddlewareProviderTrait;
 use Orchestra\Foundation\Support\Providers\Traits\RouteProviderTrait;
-use Orchestra\Foundation\Support\Providers\Traits\PackageProviderTrait;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 abstract class ExtensionRouteServiceProvider extends ServiceProvider
