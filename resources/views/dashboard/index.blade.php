@@ -9,9 +9,7 @@
 		->content(view('orchestra/foundation::components.miniprofile')); ?>
 
 	@foreach($panes as $id => $pane)
-		<div{!! HTML::attributes(
-			HTML::decorate($pane->get('attributes'), ['class' => 'panel'])
-		) !!}>
+		<div{!! HTML::attributable($pane->get('attributes'), ['class' => 'panel']) !!}>
 		@if(! empty($pane->get('html')))
 		{!! $pane->get('html') !!}
 		@else

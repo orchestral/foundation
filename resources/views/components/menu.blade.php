@@ -12,10 +12,10 @@
 		@else
 			<li data-menu="{{ $parent }}" class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{!! $item->get('title') !!}</a>
+				#{{ $active = $item->active() ? $parent : $active }}
 				<ul class="dropdown-menu">
 					@if($item->hasLink())
 					<li>
-						#{{ $active = $item->active() ? $parent : $active }}
 						<a href="{{ $item->get('link') }}">
 							{!! $item->get('title') !!}
 						</a>
@@ -25,10 +25,10 @@
 					@foreach($item->get('childs') as $child)
 						#{{ $grands = $child->get('childs') }}
 						#{{ $active = $child->active() ? $parent : $active }}
-						<li{!! HTML::attributes(HTML::decorate(
+						<li{!! HTML::attributable(
 								['class' => $child->active() ? 'active' : ''],
 								['class' => ! empty($grands) ? 'dropdown-submenu' : 'normal']
-							)) !!}>
+							) !!}>
 							<a href="{{ $child->get('link') }}">
 								{!! $child->get('title') !!}
 							</a>
@@ -36,7 +36,7 @@
 							<ul class="dropdown-menu">
 								@foreach($child->get('childs') as $grand)
 								#{{ $active = $grand->active() ? $parent : $active }}
-								<li{{ HTML::attributes(['class' => $grand->active() ? 'active' : '']) }}>
+								<li{!! HTML::attributes(['class' => $grand->active() ? 'active' : '']) !!}>
 									<a href="{{ $grand->get('link') }}">
 										{!! $grand->get('title') !!}
 									</a>

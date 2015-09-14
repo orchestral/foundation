@@ -5,21 +5,30 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.12 {#v3-1-12}
+
+* Improve extension (with routes) service provider support.
+* Utilize `Orchestra\Html\HtmlBuilder::attributable()` helper.
+* Fixes google fonts to be loaded via HTTPS URL to allow Orchestra Platform to be used either using SSL or without.
+* Add `.editorconfig`.
+* Add assets:
+  - html5shiv v3.7.3.
+
 ### v3.1.11 {#v3-1-11}
 
 * Reworks on backend menu to support generating current active menu.
 * Improves views overall implementation, ensure readability is optimized.
 * Fixes email address not shown on certain mail transport.
-* Assets:
-  - Update Vue v0.12.14.
+* Update assets:
+  - Vue v0.12.14.
 
 ### v3.1.10 {#v3-1-10}
 
 * Add `Orchestra\Foundation\Console\Commands\OptimizeCommand`.
 * Wrap `assetic()` method to generate URL using `asset()`.
 * Fixes password confirmation key used on edit password form.
-* Assets:
-  - Update Vue v0.12.13.
+* Update assets:
+  - Vue v0.12.13.
 
 ### v3.1.9 {#v3-1-9}
 
@@ -103,13 +112,22 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.16 {#v3-0-16}
+
+* Fixes google fonts to be loaded via HTTPS URL to allow Orchestra Platform to be used either using SSL or without.
+* Add `.editorconfig`.
+* Add assets:
+  - html5shiv v3.7.3.
+* Update assets:
+  - Vue v0.12.14.
+
 ### v3.0.15 {#v3-0-15}
 
 * Filter only relevant input fields for `Orchestra\Foundation\Http\Controllers\CredentialController::login()`.
 * Fixes password confirmation key used on edit password form.
 * Tweak validations.
-* Assets:
-  - Update Vue v0.12.13.
+* Update assets:
+  - Vue v0.12.13.
 
 ### v3.0.14 {#v3-0-14}
 
