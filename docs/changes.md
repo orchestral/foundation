@@ -5,13 +5,22 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.16 {#v3-0-16}
+
+* Fixes google fonts to be loaded via HTTPS URL to allow Orchestra Platform to be used either using SSL or without.
+* Add `.editorconfig`.
+* Add assets:
+  - html5shiv v3.7.3.
+* Update assets:
+  - Vue v0.12.14.
+
 ### v3.0.15 {#v3-0-15}
 
 * Filter only relevant input fields for `Orchestra\Foundation\Http\Controllers\CredentialController::login()`.
 * Fixes password confirmation key used on edit password form.
 * Tweak validations.
-* Assets:
-  - Update Vue v0.12.13.
+* Update assets:
+  - Vue v0.12.13.
 
 ### v3.0.14 {#v3-0-14}
 
