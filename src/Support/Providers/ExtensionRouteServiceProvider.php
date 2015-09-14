@@ -2,12 +2,17 @@
 
 use RuntimeException;
 use Illuminate\Routing\Router;
+use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Contracts\Events\Dispatcher;
+use Orchestra\Support\Providers\Traits\EventProviderTrait;
+use Orchestra\Support\Providers\Traits\MiddlewareProviderTrait;
 use Orchestra\Foundation\Support\Providers\Traits\RouteProviderTrait;
+use Orchestra\Foundation\Support\Providers\Traits\PackageProviderTrait;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 abstract class ExtensionRouteServiceProvider extends ServiceProvider
 {
-    use RouteProviderTrait;
+    use EventProviderTrait, MiddlewareProviderTrait, PackageProviderTrait, RouteProviderTrait;
 
     /**
      * The application or extension namespace.
@@ -31,9 +36,59 @@ abstract class ExtensionRouteServiceProvider extends ServiceProvider
     protected $routePrefix = '/';
 
     /**
+     * The event handler mappings for the application.
+     *
+     * @var array
+     */
+    protected $listen = [];
+
+    /**
+     * The subscriber classes to register.
+     *
+     * @var array
+     */
+    protected $subscribe = [];
+
+    /**
+     * The application's middleware stack.
+     *
+     * @var array
+     */
+    protected $middleware = [];
+
+    /**
      * {@inheritdoc}
      */
     public function boot(Router $router)
+    {
+        $events = $this->app->make(Dispatcher::class);
+        $kernel = $this->app->make(Kernel::class);
+
+        $this->registerEventListeners($events);
+        $this->registerRouteMiddleware($router, $kernel);
+
+        $this->bootExtensionComponents();
+        $this->bootExtensionRouting();
+    }
+
+    /**
+     * Boot extension components.
+     *
+     * @return void
+     */
+    protected function bootExtensionComponents()
+    {
+        //
+    }
+
+    /**
+     * Boot extension routing.
+     *
+     * @param  string  $path
+     *
+     * @return void
+     */
+    protected function bootExtensionRouting()
     {
         if (! $this->app->routesAreCached()) {
             $this->loadRoutes();
