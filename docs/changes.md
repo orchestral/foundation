@@ -5,6 +5,11 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.14 {#v3-1-14}
+
+* Add `Orchestra\Foundation\Support\Providers\ModuleServiceProvider` to replace `Orchestra\Foundation\Support\Providers\ExtensionRouteServiceProvider`.
+* Add basic alert html template for emails.
+
 ### v3.1.13 {#v3-1-13}
 
 * Fixes missing `Orchestra\Foundation\Support\Providers\ExtensionRouteServiceProvider::$routeMiddleware`.
