@@ -14,7 +14,7 @@ trait RouteProviderTrait
      */
     protected function loadBackendRoutesFrom($path, $namespace = null)
     {
-        $foundation = $this->app['orchestra.app'];
+        $foundation = $this->app->make('orchestra.app');
         $namespace  = $namespace ?: $this->namespace;
 
         $foundation->namespaced($namespace, $this->getRouteLoader($path));
@@ -30,7 +30,7 @@ trait RouteProviderTrait
      */
     protected function loadFrontendRoutesFrom($path, $namespace = null)
     {
-        $foundation = $this->app['orchestra.app'];
+        $foundation = $this->app->make('orchestra.app');
         $namespace  = $namespace ?: $this->namespace;
         $attributes = [];
 
@@ -63,6 +63,6 @@ trait RouteProviderTrait
      */
     protected function afterExtensionLoaded($callback)
     {
-        $this->app['events']->listen('orchestra.extension: booted', $callback);
+        $this->app->make('events')->listen('orchestra.extension: booted', $callback);
     }
 }
