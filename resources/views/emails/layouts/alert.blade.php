@@ -14,7 +14,7 @@
                 <div class="content">
                     <table class="main" width="100%" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td class="alert alert-@get_meta('email::alert')">
+                            <td class="alert alert-@get_meta('email::alert', 'good')">
                                 @yield('title')
                             </td>
                         </tr>
