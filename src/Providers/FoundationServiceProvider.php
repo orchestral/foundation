@@ -37,7 +37,6 @@ class FoundationServiceProvider extends ServiceProvider
         'orchestra.messages'         => ['Orchestra\Messages\MessageBag', 'Orchestra\Contracts\Messages\MessageBag'],
         'orchestra.notifier'         => 'Orchestra\Notifier\NotifierManager',
         'orchestra.publisher'        => 'Orchestra\Foundation\Publisher\PublisherManager',
-        'orchestra.resources'        => 'Orchestra\Resources\Factory',
         'orchestra.meta'             => 'Orchestra\Foundation\Meta',
         'orchestra.table'            => ['Orchestra\Html\Table\Factory', 'Orchestra\Contracts\Html\Table\Factory'],
         'orchestra.theme'            => 'Orchestra\View\Theme\ThemeManager',
@@ -49,13 +48,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $facades = [
-        'Orchestra\Support\Facades\Config'    => 'Orchestra\Config',
-        'Orchestra\Support\Facades\Extension' => 'Orchestra\Extension',
-        'Orchestra\Support\Facades\Mail'      => 'Orchestra\Mail',
-        'Orchestra\Support\Facades\Publisher' => 'Orchestra\Publisher',
-        'Orchestra\Support\Facades\Widget'    => 'Orchestra\Widget',
-    ];
+    protected $facades = [];
 
     /**
      * Register the service provider.
