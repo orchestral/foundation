@@ -5,23 +5,23 @@ return [
 
     'account' => [
         'password' => [
-            'invalid' => 'Current password does not match our record, please try again',
-            'update'  => 'Your password has been updated',
+            'invalid' => 'Current password does not match our record, please try again.',
+            'update'  => 'Your password has been updated.',
         ],
         'profile' => [
-            'update' => 'Your profile has been updated',
+            'update' => 'Your profile has been updated.',
         ],
     ],
 
     'credential' => [
-        'invalid-combination' => 'Invalid user and password combination',
-        'logged-in'           => 'You have been logged in',
-        'logged-out'          => 'You have been logged out',
-        'unauthorized'        => 'You are not authorized to access this action',
+        'invalid-combination' => 'Invalid user and password combination.',
+        'logged-in'           => 'You have been logged in.',
+        'logged-out'          => 'You have been logged out.',
+        'unauthorized'        => 'You are not authorized to access this action.',
         'register'            => [
-            'email-fail'    => 'Unable to send User Registration Confirmation e-mail',
-            'email-send'    => 'User Registration Confirmation e-mail has been sent to your inbox',
-            'existing-user' => 'This e-mail address is already associated with another user',
+            'email-fail'    => 'Unable to send User Registration Confirmation e-mail.',
+            'email-send'    => 'User Registration Confirmation e-mail has been sent to your inbox.',
+            'existing-user' => 'This e-mail address is already associated with another user.',
         ],
     ],
 
