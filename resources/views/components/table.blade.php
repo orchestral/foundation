@@ -13,7 +13,7 @@
 		<tr{!! HTML::attributes(call_user_func($grid->header(), $row) ?: []) !!}>
 			@foreach($grid->columns() as $column)
 			<td{!! HTML::attributes(call_user_func($column->attributes, $row)) !!}>
-				{!! $col->getValue($row) !!}
+				{!! $column->getValue($row) !!}
 			</td>
 			@endforeach
 		</tr>
