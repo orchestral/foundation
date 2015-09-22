@@ -5,6 +5,14 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.15 {#v3-1-15}
+
+* Fixed invalid variable used in `Orchestra\Foundation\Support\MenuHandler` for creating nested menu handler.
+* Update table and form components generator views.
+* Improves response language text.
+* Update assets:
+  - Vue v0.12.15.
+
 ### v3.1.14 {#v3-1-14}
 
 * Add `Orchestra\Foundation\Support\Providers\ModuleServiceProvider` to replace `Orchestra\Foundation\Support\Providers\ExtensionRouteServiceProvider`.

@@ -155,7 +155,7 @@ abstract class MenuHandler
         $with = isset($this->menu['with']) ? $this->menu['with'] : [];
 
         foreach ((array) $with as $class) {
-            $this->container->make($class)->setAttribute('parent', "^:{$id}")->handle();
+            $this->container->make($class)->setAttribute('position', "^:{$id}")->handle();
         }
     }
 
