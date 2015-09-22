@@ -1,26 +1,26 @@
-<table{!! HTML::attributable($attributes['table'], ['class' => 'table table-striped']) !!}>
+<table{!! HTML::attributable($grid->attributes(), ['class' => 'table table-striped']) !!}>
 	<thead>
 		<tr>
-			@foreach($columns as $col)
-			<th{!! HTML::attributes($col->headers ?: []) !!}>
-				{!! $col->label !!}
+			@foreach($grid->columns() as $column)
+			<th{!! HTML::attributes($column->headers ?: []) !!}>
+				{!! $column->label !!}
 			</th>
 			@endforeach
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($rows as $row)
-		<tr{!! HTML::attributes(call_user_func($attributes['row'], $row) ?: []) !!}>
-			@foreach($columns as $col)
-			<td{!! HTML::attributes(call_user_func($col->attributes, $row)) !!}>
+		@foreach($grid->data() as $row)
+		<tr{!! HTML::attributes(call_user_func($grid->header(), $row) ?: []) !!}>
+			@foreach($grid->columns() as $column)
+			<td{!! HTML::attributes(call_user_func($column->attributes, $row)) !!}>
 				{!! $col->getValue($row) !!}
 			</td>
 			@endforeach
 		</tr>
 		@endforeach
-		@if(! count($rows) && $empty)
+		@if(! count($grid->data()) && $empty)
 		<tr class="norecords">
-			<td colspan="{!! count($columns) !!}">{!! $empty !!}</td>
+			<td colspan="{!! count($grid->columns()) !!}">{!! $empty !!}</td>
 		</tr>
 		@endif
 	</tbody>

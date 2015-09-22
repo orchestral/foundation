@@ -1,14 +1,14 @@
-{!! Form::open(array_merge($form, ['class' => 'form-horizontal'])) !!}
+{!! Form::open(array_merge($grid->attributes(), ['class' => 'form-horizontal'])) !!}
 
 @if($token)
-{!! Form::token() !!}
+{!! csrf_field() !!}
 @endif
 
-@foreach($hiddens as $hidden)
+@foreach($grid->hiddens() as $hidden)
 {!! $hidden !!}
 @endforeach
 
-@foreach($fieldsets as $fieldset)
+@foreach($grid->fieldsets() as $fieldset)
 	<fieldset{!! HTML::attributes($fieldset->attributes ?: []) !!}>
 		@if($fieldset->name)
 		<legend>{!! $fieldset->name or '' !!}</legend>
@@ -19,7 +19,7 @@
 			{!! Form::label($control->name, $control->label, ['class' => 'three columns control-label']) !!}
 
 			<div class="nine columns">
-				<div>{!! $control->getField($row, $control, []) !!}</div>
+				<div>{!! $control->getField($grid->data(), $control, []) !!}</div>
 				@if($control->inlineHelp)
 				<span class="help-inline">{!! $control->inlineHelp !!}</span>
 				@endif
