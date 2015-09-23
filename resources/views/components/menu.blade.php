@@ -11,7 +11,11 @@
 			</li>
 		@else
 			<li data-menu="{{ $parent }}" class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{!! $item->get('title') !!}</a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+				    {!! $item->get('title') !!}
+				    
+				    <span class="caret"></span>
+				</a>
 				#{{ $active = $item->active() ? $parent : $active }}
 				<ul class="dropdown-menu">
 					@if($item->hasLink())
