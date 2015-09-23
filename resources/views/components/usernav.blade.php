@@ -8,7 +8,9 @@
 			
 			{{ ! is_null($user) ? $user->fullname : trans('orchestra/foundation::title.login') }}
 			
+			@unless(is_null($user))
 			<span class="caret"></span>
+			@endunless
 		</a>
 		@unless(is_null($user))
 		<ul class="dropdown-menu">
