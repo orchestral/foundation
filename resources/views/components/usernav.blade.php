@@ -3,17 +3,14 @@
 @if(get_meta('navigation::usernav', true))
 <ul class="nav navbar-nav navbar-right">
 	<li class="dropdown" id="user-menu">
-	    @if(is_null($user))
-		<a href="#user-menu" rel="user-menu">
-			<i class="icon-user"></i>
+		@if(is_null($user))
+		<a href="{!! handles('orchestra::login') !!}" rel="user-menu">
 			{{ trans('orchestra/foundation::title.login') }}
 		</a>
 		@else
 		<a href="#user-menu" rel="user-menu" class="dropdown-toggle" data-toggle="dropdown">
-		    <i class="icon-user"></i>
-		    {{ $user->fullname }}
-		    <span class="caret"></span>
-	    </a>
+			<i class="icon-user"></i> {{ $user->fullname }} <span class="caret"></span>
+		</a>
 		<ul class="dropdown-menu">
 			<li>
 				<a href="{!! handles('orchestra::account') !!}">
