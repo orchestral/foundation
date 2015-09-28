@@ -54,7 +54,9 @@ class RouteServiceProvider extends ServiceProvider
         $this->registerRouteMiddleware($router, $kernel);
 
         if (! $this->app->routesAreCached()) {
-            $this->loadRoutes();
+            $this->afterExtensionLoaded(function () {
+                $this->loadRoutes();
+            });
         }
 
         $this->app->make('events')->fire('orchestra.ready');

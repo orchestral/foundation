@@ -96,7 +96,9 @@ abstract class ModuleServiceProvider extends ServiceProvider
     protected function bootExtensionRouting()
     {
         if (! $this->app->routesAreCached()) {
-            $this->loadRoutes();
+            $this->afterExtensionLoaded(function () {
+                $this->loadRoutes();
+            });
         }
     }
 
