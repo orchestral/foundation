@@ -85,6 +85,8 @@ class AssembleCommand extends Command
             $this->call('extension:refresh', $options);
             $this->call('extension:update', $options);
         }
+
+        $this->foundation->make('orchestra.extension.provider')->writeFreshManifest();
     }
 
     /**
