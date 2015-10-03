@@ -50,6 +50,16 @@ class Application extends BaseApplication implements DeferrableServiceContainer
     }
 
     /**
+     * Get the path to the cached extension.json file.
+     *
+     * @return string
+     */
+    public function getCachedExtensionServicesPath()
+    {
+        return $this->basePath().'/bootstrap/cache/extension.json';
+    }
+
+    /**
      * Flush the container of all bindings and resolved instances.
      *
      * @return void
