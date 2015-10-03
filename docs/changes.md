@@ -5,6 +5,15 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.16 {#v3-1-16}
+
+* Add `Orchestra\Foundation\Auth\ThrottlesLogins::retriesLeft()` method.
+* Only load frontend routes after extension has been loaded.
+* Add supporting command for handling extension manifest caching.
+* Tweak views to add caret for dropdown menu.
+* Update assets:
+  - Vue v0.12.16.
+
 ### v3.1.15 {#v3-1-15}
 
 * Fixed invalid variable used in `Orchestra\Foundation\Support\MenuHandler` for creating nested menu handler.

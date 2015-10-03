@@ -37,6 +37,18 @@ class BasicThrottle extends ThrottlesLogins implements Command
     }
 
     /**
+     * Determine how many retries left.
+     *
+     * @return int
+     */
+    public function retriesLeft()
+    {
+        $attempts = $this->cacheLimiter->attempts($this->getUniqueLoginKey());
+
+        return $this->maxLoginAttempts() - $attempts + 1;
+    }
+
+    /**
      * Get total seconds before doing another login attempts for the user.
      *
      * @param  array  $input

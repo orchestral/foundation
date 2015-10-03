@@ -9,7 +9,7 @@
 		</a>
 		@else
 		<a href="#user-menu" rel="user-menu" class="dropdown-toggle" data-toggle="dropdown">
-			<i class="icon-user"></i> {{ $user->fullname }} <span class="caret"></span>
+			<i class="fa fa-user"></i> {{ $user->fullname }} <span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
 			<li>
