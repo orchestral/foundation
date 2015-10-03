@@ -3,9 +3,9 @@
 use Illuminate\Events\EventServiceProvider;
 use Orchestra\Routing\RoutingServiceProvider;
 use Illuminate\Foundation\Application as BaseApplication;
-use Orchestra\Contracts\Foundation\DeferrableServiceContainer;
+use Orchestra\Contracts\Foundation\Application as ApplicationContract;
 
-class Application extends BaseApplication implements DeferrableServiceContainer
+class Application extends BaseApplication implements ApplicationContract
 {
     /**
      * Register all of the base service providers.
