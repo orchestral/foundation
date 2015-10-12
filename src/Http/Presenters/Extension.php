@@ -41,8 +41,9 @@ class Extension extends Presenter
 
             $handles      = data_get($model, 'handles', $this->extension->option($name, 'handles'));
             $configurable = data_get($model, 'configurable', true);
+            $publishing   = data_get($model, 'publishing', true);
 
-            $form->fieldset(function (Fieldset $fieldset) use ($handles, $name, $configurable) {
+            $form->fieldset(function (Fieldset $fieldset) use ($handles, $name, $configurable, $publishing) {
                 // We should only cater for custom URL handles for a route.
                 if (! is_null($handles) && $configurable !== false) {
                     $fieldset->control('input:text', 'handles')
@@ -50,16 +51,30 @@ class Extension extends Presenter
                         ->value($handles);
                 }
 
-                $fieldset->control('input:text', 'migrate')
-                    ->label(trans('orchestra/foundation::label.extensions.update'))
-                    ->field(function () use ($name) {
-                        return app('html')->link(
-                            handles("orchestra::extensions/{$name}/update", ['csrf' => true]),
-                            trans('orchestra/foundation::label.extensions.actions.update'),
-                            ['class' => 'btn btn-info']
-                        );
-                    });
+                if ($publishing === true) {
+                    $fieldset->control('input:text', 'migrate')
+                        ->label(trans('orchestra/foundation::label.extensions.update'))
+                        ->field($this->getPublishingField($name));
+                }
             });
         });
+    }
+
+    /**
+     * Get publishing field.
+     *
+     * @param  string  $name
+     *
+     * @return \Closure
+     */
+    protected function getPublishingField($name)
+    {
+        return function () use ($name) {
+            return app('html')->link(
+                handles("orchestra::extensions/{$name}/update", ['csrf' => true]),
+                trans('orchestra/foundation::label.extensions.actions.update'),
+                ['class' => 'btn btn-info']
+            );
+        };
     }
 }
