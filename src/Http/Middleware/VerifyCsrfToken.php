@@ -12,13 +12,14 @@ class VerifyCsrfToken extends BaseVerifier
     /**
      * Create a new middleware instance.
      *
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      * @param  \Illuminate\Contracts\Encryption\Encrypter  $encrypter
      * @param  \Orchestra\Contracts\Foundation\Foundation  $foundation
      */
-    public function __construct(Encrypter $encrypter, Foundation $foundation)
+    public function __construct(Application $app, Encrypter $encrypter, Foundation $foundation)
     {
         $this->foundation = $foundation;
 
-        parent::__construct($encrypter);
+        parent::__construct($app, $encrypter);
     }
 }
