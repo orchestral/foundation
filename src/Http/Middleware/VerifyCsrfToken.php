@@ -3,6 +3,7 @@
 use Orchestra\Http\Traits\PassThroughTrait;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Orchestra\Contracts\Foundation\Foundation;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
 class VerifyCsrfToken extends BaseVerifier
