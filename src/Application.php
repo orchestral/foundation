@@ -40,16 +40,6 @@ class Application extends BaseApplication implements ApplicationContract
     }
 
     /**
-     * Get the application's deferred services.
-     *
-     * @return array
-     */
-    public function getDeferredServices()
-    {
-        return $this->deferredServices;
-    }
-
-    /**
      * Get the path to the cached extension.json file.
      *
      * @return string
@@ -57,6 +47,16 @@ class Application extends BaseApplication implements ApplicationContract
     public function getCachedExtensionServicesPath()
     {
         return $this->basePath().'/bootstrap/cache/extension.json';
+    }
+
+    /**
+     * Get the application's deferred services.
+     *
+     * @return array
+     */
+    public function getDeferredServices()
+    {
+        return $this->deferredServices;
     }
 
     /**

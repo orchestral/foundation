@@ -5,6 +5,13 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.17 {#v3-1-17}
+
+* Allow to disable publishing button when it's not required.
+* Add `Orchestra\Foundation\Http\Middleware\RequireCsrfToken` for explicit `"orchestra.csrf"` route middleware.
+* Update assets:
+  - Vue v1.0.3.
+
 ### v3.1.16 {#v3-1-16}
 
 * Add `Orchestra\Foundation\Auth\ThrottlesLogins::retriesLeft()` method.
