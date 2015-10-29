@@ -7,7 +7,7 @@ use Orchestra\Foundation\Http\Middleware\CanManage;
 use Orchestra\Foundation\Http\Middleware\Authenticate;
 use Orchestra\Foundation\Http\Middleware\CanBeInstalled;
 use Orchestra\Foundation\Http\Middleware\CanRegisterUser;
-use Orchestra\Foundation\Http\Middleware\VerifyCsrfToken;
+use Orchestra\Foundation\Http\Middleware\RequireCsrfToken;
 use Orchestra\Foundation\Http\Middleware\RedirectIfInstalled;
 use Orchestra\Support\Providers\Traits\MiddlewareProviderTrait;
 use Orchestra\Foundation\Http\Middleware\RedirectIfAuthenticated;
@@ -32,7 +32,7 @@ class RouteServiceProvider extends ServiceProvider
     protected $routeMiddleware = [
         'orchestra.auth'        => Authenticate::class,
         'orchestra.can'         => Can::class,
-        'orchestra.csrf'        => VerifyCsrfToken::class,
+        'orchestra.csrf'        => RequireCsrfToken::class,
         'orchestra.guest'       => RedirectIfAuthenticated::class,
         'orchestra.installable' => CanBeInstalled::class,
         'orchestra.installed'   => RedirectIfInstalled::class,
