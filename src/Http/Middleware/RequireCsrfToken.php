@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Str;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Session\TokenMismatchException;
 
@@ -56,6 +55,6 @@ class RequireCsrfToken
             $token = $this->encrypter->decrypt($header);
         }
 
-        return Str::equals($request->session()->token(), $token);
+        return hash_equals((string) $request->session()->token(), (string) $token);
     }
 }
