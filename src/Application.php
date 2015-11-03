@@ -50,16 +50,6 @@ class Application extends BaseApplication implements ApplicationContract
     }
 
     /**
-     * Get the application's deferred services.
-     *
-     * @return array
-     */
-    public function getDeferredServices()
-    {
-        return $this->deferredServices;
-    }
-
-    /**
      * Flush the container of all bindings and resolved instances.
      *
      * @return void
