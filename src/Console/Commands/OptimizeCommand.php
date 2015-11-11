@@ -1,10 +1,7 @@
 <?php namespace Orchestra\Foundation\Console\Commands;
 
-use PhpParser\Lexer;
-use PhpParser\Parser;
-use ClassPreloader\ClassPreloader;
 use ClassPreloader\Exceptions\SkipFileException;
-use PhpParser\PrettyPrinter\Standard as PrettyPrinter;
+use ClassPreloader\Exceptions\VisitorExceptionInterface;
 use Illuminate\Foundation\Console\OptimizeCommand as Command;
 
 class OptimizeCommand extends Command
@@ -16,7 +13,7 @@ class OptimizeCommand extends Command
      */
     protected function compileClasses()
     {
-        $preloader = new ClassPreloader(new PrettyPrinter(), new Parser(new Lexer()), $this->getTraverser());
+        $preloader = $this->getClassPreloader();
 
         $path = $this->laravel->getCachedCompilePath();
 
@@ -30,7 +27,9 @@ class OptimizeCommand extends Command
             try {
                 fwrite($handle, $preloader->getCode($file, false)."\n");
             } catch (SkipFileException $ex) {
-                //
+                // Class Preloader 2.x
+            } catch (VisitorExceptionInterface $e) {
+                // Class Preloader 3.x
             }
         }
 
