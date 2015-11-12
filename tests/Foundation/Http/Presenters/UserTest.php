@@ -246,7 +246,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
                     return 'foo';
                 });
 
-        $app['orchestra.role']->shouldReceive('lists')->once()
+        $app['orchestra.role']->shouldReceive('pluck')->once()
                 ->with('name', 'id')->andReturn('roles');
 
         $stub->form($model);

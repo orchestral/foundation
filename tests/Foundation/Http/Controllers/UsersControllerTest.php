@@ -59,7 +59,7 @@ class UsersControllerTest extends TestCase
         list($presenter, ) = $this->bindDependencies();
 
         $user->shouldReceive('search')->once()->with('', [])->andReturn($user);
-        $role->shouldReceive('lists')->once()->with('name', 'id')->andReturn([]);
+        $role->shouldReceive('pluck')->once()->with('name', 'id')->andReturn([]);
         $presenter->shouldReceive('table')->once()->andReturn($table)
             ->shouldReceive('actions')->once()->with($table)->andReturn('list.users');
 
