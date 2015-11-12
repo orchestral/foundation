@@ -5,6 +5,12 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.18 {#v3-1-18}
+
+* Fixes regression bug under `Orchestra\Foundation\Console\Commands\OptimizeCommand` due to breaking BC changed in `laravel/framework` at `v5.1.24`. 
+* Update assets:
+  - Vue v1.0.7.
+  
 ### v3.1.17 {#v3-1-17}
 
 * Allow to disable publishing button when it's not required.
