@@ -149,7 +149,7 @@ class User extends Presenter
                     ->options(function () {
                         $roles = app('orchestra.role');
 
-                        return $roles->lists('name', 'id');
+                        return $roles->pluck('name', 'id');
                     })
                     ->value(function ($row) {
                         // get all the user roles from objects
