@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Support;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Fluent;
 use Illuminate\Contracts\Container\Container;
 
@@ -107,7 +108,7 @@ abstract class MenuHandler
      */
     public function getLinkAttribute($value)
     {
-        return $this->container['orchestra.app']->handles($value);
+        return $this->container->make('orchestra.app')->handles($value);
     }
 
     /**
@@ -152,10 +153,11 @@ abstract class MenuHandler
      */
     protected function attachNestedMenu($id)
     {
-        $with = isset($this->menu['with']) ? $this->menu['with'] : [];
+        $with     = isset($this->menu['with']) ? $this->menu['with'] : [];
+        $position = Str::startsWith($this->menu['position'], '^:') ? $this->menu['position'].'.' : '^:';
 
         foreach ((array) $with as $class) {
-            $this->container->make($class)->setAttribute('position', "^:{$id}")->handle();
+            $this->container->make($class)->setAttribute('position', "{$position}{$id}")->handle();
         }
     }
 
