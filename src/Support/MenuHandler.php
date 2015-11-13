@@ -154,7 +154,7 @@ abstract class MenuHandler
     protected function attachNestedMenu($id)
     {
         $with     = isset($this->menu['with']) ? $this->menu['with'] : [];
-        $parent   = isset($this->menu['position']) ? $this->menu['position'] : '';
+        $parent   = $this->getAttribute('position');
         $position = Str::startsWith($parent, '^:') ? $parent.'.' : '^:';
 
         foreach ((array) $with as $class) {
