@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Console\Commands;
 
+use ClassPreloader\Factory;
 use ClassPreloader\Exceptions\SkipFileException;
 use ClassPreloader\Exceptions\VisitorExceptionInterface;
 use Illuminate\Foundation\Console\OptimizeCommand as Command;
@@ -13,7 +14,7 @@ class OptimizeCommand extends Command
      */
     protected function compileClasses()
     {
-        $preloader = $this->getClassPreloader();
+        $preloader = (new Factory())->create(['skip' => true]);
 
         $path = $this->laravel->getCachedCompilePath();
 
