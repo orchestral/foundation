@@ -89,7 +89,6 @@ class SettingTest extends \PHPUnit_Framework_TestCase
             'email_address' => ['required', 'email'],
             'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
             'email_port' => ['numeric'],
-            'email_username' => ['required'],
             'email_host' => ['required'],
         ];
 
