@@ -33,7 +33,6 @@ class Setting extends Validator
      */
     protected function onSmtp()
     {
-        $this->rules['email_username'] = ['required'];
         $this->rules['email_host']     = ['required'];
     }
 
