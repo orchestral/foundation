@@ -189,14 +189,21 @@ var Application = (function () {
       return this;
     }
   }, {
-    key: 'trigger',
-    value: function trigger(name) {
+    key: 'emit',
+    value: function emit(name) {
       var options = arguments[1] === undefined ? [] : arguments[1];
 
       var events = this.make('event');
       events.fire(name, options);
 
       return this;
+    }
+  }, {
+    key: 'trigger',
+    value: function trigger(name) {
+      var options = arguments[1] === undefined ? [] : arguments[1];
+
+      return this.emit(name, options);
     }
   }, {
     key: 'bind',
