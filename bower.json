@@ -11,7 +11,7 @@
     "bootstrap": "~3.3.4",
     "font-awesome": "~4.3.0",
     "html5shiv": "~3.7.3",
-    "javie": "^2.0.0",
+    "javie": "^2.1.0",
     "jquery": "~1.10.2",
     "select2": "~3.4.8",
     "underscore": "^1.6.0",
