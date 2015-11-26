@@ -21,34 +21,34 @@
     },
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "~5.2.0",
-        "orchestra/asset": "~3.2.0",
-        "orchestra/auth": "~3.2.0",
-        "orchestra/contracts": "~3.2.0",
-        "orchestra/extension": "~3.2.0",
-        "orchestra/html": "~3.2.0",
-        "orchestra/kernel": "~3.2.0",
-        "orchestra/memory": "~3.2.0",
-        "orchestra/messages": "~3.2.0",
-        "orchestra/model": "~3.2.0",
-        "orchestra/notifier": "~3.2.0",
-        "orchestra/optimize": "~3.2.0",
-        "orchestra/publisher": "~3.2.0",
-        "orchestra/support": "~3.2.0",
-        "orchestra/translation": "~3.2.0",
-        "orchestra/view": "~3.2.0",
-        "orchestra/widget": "~3.2.0",
+        "laravel/framework": "~5.3.0",
+        "orchestra/asset": "~3.3.0",
+        "orchestra/auth": "~3.3.0",
+        "orchestra/contracts": "~3.3.0",
+        "orchestra/extension": "~3.3.0",
+        "orchestra/html": "~3.3.0",
+        "orchestra/kernel": "~3.3.0",
+        "orchestra/memory": "~3.3.0",
+        "orchestra/messages": "~3.3.0",
+        "orchestra/model": "~3.3.0",
+        "orchestra/notifier": "~3.3.0",
+        "orchestra/optimize": "~3.3.0",
+        "orchestra/publisher": "~3.3.0",
+        "orchestra/support": "~3.3.0",
+        "orchestra/translation": "~3.3.0",
+        "orchestra/view": "~3.3.0",
+        "orchestra/widget": "~3.3.0",
         "predis/predis": "~1.0"
     },
     "require-dev": {
         "mockery/mockery": "^0.9.1",
-        "orchestra/testing": "~3.2.0"
+        "orchestra/testing": "~3.3.0"
     },
     "suggest": {
-        "orchestra/ftp-updater": "Allow Extension with asset to be updated/uploaded environment without SSH support (~3.2).",
-        "orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.2).",
-        "orchestra/studio": "Allow additional code generator for Orchestra Platform (~3.2).",
-        "orchestra/testing": "Allow better unit testing support for Orchestra Platform (~3.2)."
+        "orchestra/ftp-updater": "Allow Extension with asset to be updated/uploaded environment without SSH support (~3.3).",
+        "orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.3).",
+        "orchestra/studio": "Allow additional code generator for Orchestra Platform (~3.3).",
+        "orchestra/testing": "Allow better unit testing support for Orchestra Platform (~3.3)."
     },
     "scripts": {
         "test": [
