@@ -5,7 +5,7 @@
  *
  * @package Javie
  * @require underscore, console, jQuery/Zepto
- * @version 2.0.2
+ * @version 2.1.0
  * @author  Mior Muhammad Zaki <https://github.com/crynobone>
  * @license MIT License
  * ========================================================================
@@ -14,84 +14,34 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _vendorUnderscore = require('./vendor/underscore');
-
-var _vendorUnderscore2 = _interopRequireDefault(_vendorUnderscore);
-
-var _ApplicationEs6 = require('./Application.es6');
-
-var _ApplicationEs62 = _interopRequireDefault(_ApplicationEs6);
-
-var _modulesEventsEventsEs6 = require('./modules/events/Events.es6');
-
-var _modulesEventsEventsEs62 = _interopRequireDefault(_modulesEventsEventsEs6);
-
-var _modulesLogLogEs6 = require('./modules/log/Log.es6');
-
-var _modulesLogLogEs62 = _interopRequireDefault(_modulesLogLogEs6);
-
-var _modulesProfilerProfilerEs6 = require('./modules/profiler/Profiler.es6');
-
-var _modulesProfilerProfilerEs62 = _interopRequireDefault(_modulesProfilerProfilerEs6);
-
-var _modulesRequestRequestEs6 = require('./modules/request/Request.es6');
-
-var _modulesRequestRequestEs62 = _interopRequireDefault(_modulesRequestRequestEs6);
-
-var app = new _ApplicationEs62['default']();
-
-app.singleton('underscore', _vendorUnderscore2['default']);
-
-app.singleton('event', function () {
-  return new _modulesEventsEventsEs62['default']();
-});
-
-app.singleton('log', function () {
-  return _modulesLogLogEs62['default'];
-});
-app.singleton('log.writer', function () {
-  return new _modulesLogLogEs62['default']();
-});
-
-app.bind('profiler', function () {
-  var name = arguments[0] === undefined ? null : arguments[0];
-
-  return name != null ? new _modulesProfilerProfilerEs62['default'](name) : _modulesProfilerProfilerEs62['default'];
-});
-
-app.bind('request', function () {
-  var name = arguments[0] === undefined ? null : arguments[0];
-
-  return name != null ? new _modulesRequestRequestEs62['default'](name) : _modulesRequestRequestEs62['default'];
-});
-
-window.Javie = app;
-
-},{"./Application.es6":2,"./modules/events/Events.es6":4,"./modules/log/Log.es6":5,"./modules/profiler/Profiler.es6":6,"./modules/request/Request.es6":7,"./vendor/underscore":9}],2:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _helpers = require('./helpers');
 
 var Util = _interopRequireWildcard(_helpers);
 
-var _ = require('./vendor/underscore');
+var _Config = require('./modules/config/Config.es6');
+
+var _Config2 = _interopRequireDefault(_Config);
+
+var _underscore = require('./vendor/underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Container = (function () {
   function Container(name, instance) {
-    var shared = arguments[2] === undefined ? false : arguments[2];
-    var resolved = arguments[3] === undefined ? false : arguments[3];
+    var shared = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+    var resolved = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
 
     _classCallCheck(this, Container);
 
@@ -104,13 +54,13 @@ var Container = (function () {
   _createClass(Container, [{
     key: 'resolving',
     value: function resolving() {
-      var options = arguments[0] === undefined ? [] : arguments[0];
+      var options = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 
       if (this.isShared() && this.isResolved()) return this.instance;
 
       var resolved = this.instance;
 
-      if (_.isFunction(resolved)) resolved = resolved.apply(this, options);
+      if (_underscore2.default.isFunction(resolved)) resolved = resolved.apply(this, options);
 
       if (this.isShared()) {
         this.instance = resolved;
@@ -136,11 +86,11 @@ var Container = (function () {
 
 var Application = (function () {
   function Application() {
-    var environment = arguments[0] === undefined ? 'production' : arguments[0];
+    var environment = arguments.length <= 0 || arguments[0] === undefined ? 'production' : arguments[0];
 
     _classCallCheck(this, Application);
 
-    this.config = {};
+    this.config = new _Config2.default();
     this.environment = environment;
     this.instances = {};
   }
@@ -148,7 +98,7 @@ var Application = (function () {
   _createClass(Application, [{
     key: 'detectEnvironment',
     value: function detectEnvironment(environment) {
-      if (_.isFunction(environment)) environment = environment.apply(this);
+      if (_underscore2.default.isFunction(environment)) environment = environment.apply(this);
 
       return this.environment = environment;
     }
@@ -160,23 +110,14 @@ var Application = (function () {
   }, {
     key: 'get',
     value: function get(key) {
-      var defaults = arguments[1] === undefined ? null : arguments[1];
+      var defaults = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
-      if (typeof this.config[key] !== 'undefined') return this.config[key];
-
-      return defaults;
+      return this.config.get(key, defaults);
     }
   }, {
     key: 'put',
     value: function put(key, value) {
-      var config = key;
-
-      if (!_.isObject(config)) {
-        config = {};
-        config[key] = value;
-      }
-
-      this.config = _.defaults(config, this.config);
+      this.config.put(key, value);
 
       return this;
     }
@@ -189,14 +130,21 @@ var Application = (function () {
       return this;
     }
   }, {
-    key: 'trigger',
-    value: function trigger(name) {
-      var options = arguments[1] === undefined ? [] : arguments[1];
+    key: 'emit',
+    value: function emit(name) {
+      var options = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
 
       var events = this.make('event');
       events.fire(name, options);
 
       return this;
+    }
+  }, {
+    key: 'trigger',
+    value: function trigger(name) {
+      var options = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
+
+      return this.emit(name, options);
     }
   }, {
     key: 'bind',
@@ -230,17 +178,84 @@ var Application = (function () {
   }, {
     key: 'run',
     value: function run(callback) {
-      if (_.isFunction(callback)) return callback.call(this);
+      if (_underscore2.default.isFunction(callback)) return callback.call(this);
     }
   }]);
 
   return Application;
 })();
 
-exports['default'] = Application;
-module.exports = exports['default'];
+exports.default = Application;
 
-},{"./helpers":3,"./vendor/underscore":9}],3:[function(require,module,exports){
+},{"./helpers":3,"./modules/config/Config.es6":4,"./vendor/underscore":10}],2:[function(require,module,exports){
+'use strict';
+
+var _underscore = require('./vendor/underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+var _Application = require('./Application.es6');
+
+var _Application2 = _interopRequireDefault(_Application);
+
+var _Config = require('./modules/config/Config.es6');
+
+var _Config2 = _interopRequireDefault(_Config);
+
+var _Events = require('./modules/events/Events.es6');
+
+var _Events2 = _interopRequireDefault(_Events);
+
+var _Log = require('./modules/log/Log.es6');
+
+var _Log2 = _interopRequireDefault(_Log);
+
+var _Profiler = require('./modules/profiler/Profiler.es6');
+
+var _Profiler2 = _interopRequireDefault(_Profiler);
+
+var _Request = require('./modules/request/Request.es6');
+
+var _Request2 = _interopRequireDefault(_Request);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var app = new _Application2.default();
+
+app.singleton('underscore', _underscore2.default);
+
+app.singleton('event', function () {
+  return new _Events2.default();
+});
+
+app.singleton('log', function () {
+  return _Log2.default;
+});
+app.singleton('log.writer', function () {
+  return new _Log2.default();
+});
+
+app.bind('config', function () {
+  var attributes = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+  return new _Config2.default(attributes);
+});
+
+app.bind('profiler', function () {
+  var name = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
+  return name != null ? new _Profiler2.default(name) : _Profiler2.default;
+});
+
+app.bind('request', function () {
+  var name = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+
+  return name != null ? new _Request2.default(name) : _Request2.default;
+});
+
+window.Javie = app;
+
+},{"./Application.es6":1,"./modules/config/Config.es6":4,"./modules/events/Events.es6":5,"./modules/log/Log.es6":6,"./modules/profiler/Profiler.es6":7,"./modules/request/Request.es6":8,"./vendor/underscore":10}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -248,13 +263,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.array_make = array_make;
 exports.microtime = microtime;
-
 function array_make(args) {
   return Array.prototype.slice.call(args);
 }
 
 function microtime() {
-  var seconds = arguments[0] === undefined ? true : arguments[0];
+  var seconds = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
 
   var time = new Date().getTime();
   var ms = parseInt(time / 1000, 10);
@@ -264,21 +278,83 @@ function microtime() {
 }
 
 },{}],4:[function(require,module,exports){
-"use strict";
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _underscore = require('../../vendor/underscore');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _underscore2 = _interopRequireDefault(_underscore);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _vendorUnderscore = require("../../vendor/underscore");
+var Configuration = (function () {
+  function Configuration() {
+    var attributes = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-var _vendorUnderscore2 = _interopRequireDefault(_vendorUnderscore);
+    _classCallCheck(this, Configuration);
+
+    this.attributes = attributes;
+  }
+
+  _createClass(Configuration, [{
+    key: 'has',
+    value: function has(key) {
+      return !_underscore2.default.isUndefined(this.attributes[key]);
+    }
+  }, {
+    key: 'get',
+    value: function get(key) {
+      var defaults = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+
+      return this.has(key) ? this.attributes[key] : defaults;
+    }
+  }, {
+    key: 'put',
+    value: function put(key, value) {
+      var config = key;
+
+      if (!_underscore2.default.isObject(key)) {
+        config = {};
+        config[key] = value;
+      }
+
+      this.attributes = _underscore2.default.defaults(config, this.attributes);
+    }
+  }, {
+    key: 'all',
+    value: function all() {
+      return this.attributes;
+    }
+  }]);
+
+  return Configuration;
+})();
+
+exports.default = Configuration;
+
+},{"../../vendor/underscore":10}],5:[function(require,module,exports){
+"use strict";
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _underscore = require("../../vendor/underscore");
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var dispatcher = null;
 var events = {};
@@ -316,18 +392,18 @@ var Dispatcher = (function () {
     value: function clone(id) {
       return {
         to: function to(_to) {
-          return events[_to] = _vendorUnderscore2["default"].clone(events[id]);
+          return events[_to] = _underscore2.default.clone(events[id]);
         }
       };
     }
   }, {
     key: "listen",
     value: function listen(id, callback) {
-      if (!_vendorUnderscore2["default"].isFunction(callback)) throw new Error("Callback is not a function.");
+      if (!_underscore2.default.isFunction(callback)) throw new Error("Callback is not a function.");
 
       var response = new Payload(id, callback);
 
-      if (!_vendorUnderscore2["default"].isArray(events[id])) events[id] = [];
+      if (!_underscore2.default.isArray(events[id])) events[id] = [];
 
       events[id].push(callback);
 
@@ -336,7 +412,7 @@ var Dispatcher = (function () {
   }, {
     key: "fire",
     value: function fire(id) {
-      var options = arguments[1] === undefined ? [] : arguments[1];
+      var options = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
 
       if (id == null) throw new Error("Event ID [" + id + "] is not available.");
 
@@ -347,8 +423,8 @@ var Dispatcher = (function () {
     value: function first(id, options) {
       if (id == null) throw new Error("Event ID [" + id + "] is not available.");
 
-      var first = events[id].slice(0, 1);
-      var responses = this.dispatch(first, options);
+      var event = events[id].slice(0, 1);
+      var responses = this.dispatch(event, options);
 
       return responses.shift();
     }
@@ -364,7 +440,7 @@ var Dispatcher = (function () {
   }, {
     key: "flush",
     value: function flush(id) {
-      if (!_vendorUnderscore2["default"].isNull(events[id])) events[id] = null;
+      if (!_underscore2.default.isNull(events[id])) events[id] = null;
     }
   }, {
     key: "forget",
@@ -376,9 +452,9 @@ var Dispatcher = (function () {
       var id = handler.getId();
       var ref = handler.getCallback();
 
-      if (!_vendorUnderscore2["default"].isArray(events[id])) throw new Error("Event ID [" + id + "] is not available.");
+      if (!_underscore2.default.isArray(events[id])) throw new Error("Event ID [" + id + "] is not available.");
 
-      _vendorUnderscore2["default"].each(events[id], function (callback, key) {
+      _underscore2.default.each(events[id], function (callback, key) {
         if (ref == callback) {
           events[id].splice(key, 1);
         }
@@ -389,14 +465,14 @@ var Dispatcher = (function () {
     value: function dispatch(queued) {
       var _this = this;
 
-      var options = arguments[1] === undefined ? [] : arguments[1];
-      var halt = arguments[2] === undefined ? false : arguments[2];
+      var options = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
+      var halt = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 
       var responses = [];
 
-      if (!_vendorUnderscore2["default"].isArray(queued)) return null;
+      if (!_underscore2.default.isArray(queued)) return null;
 
-      _vendorUnderscore2["default"].each(queued, function (callback, key) {
+      _underscore2.default.each(queued, function (callback, key) {
         if (halt == false || responses.length == 0) {
           var applied = callback.apply(_this, options);
           responses.push(applied);
@@ -429,25 +505,24 @@ var Events = (function () {
   return Events;
 })();
 
-exports["default"] = Events;
-module.exports = exports["default"];
+exports.default = Events;
 
-},{"../../vendor/underscore":9}],5:[function(require,module,exports){
+},{"../../vendor/underscore":10}],6:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _helpers = require('../../helpers');
 
 var Util = _interopRequireWildcard(_helpers);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var writer = null;
 var enabled = false;
@@ -568,31 +643,30 @@ var Log = (function () {
   return Log;
 })();
 
-exports['default'] = Log;
-module.exports = exports['default'];
+exports.default = Log;
 
-},{"../../helpers":3}],6:[function(require,module,exports){
+},{"../../helpers":3}],7:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _helpers = require('../../helpers');
 
 var Util = _interopRequireWildcard(_helpers);
 
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var profilers = {};
 var enabled = false;
 
 var Schema = function Schema(id, type) {
-  var start = arguments[2] === undefined ? null : arguments[2];
+  var start = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
 
   _classCallCheck(this, Schema);
 
@@ -676,7 +750,7 @@ var Handler = (function () {
   }, {
     key: 'output',
     value: function output() {
-      var auto = arguments[0] === undefined ? false : arguments[0];
+      var auto = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
 
       if (auto) enabled = true;
 
@@ -706,7 +780,7 @@ var Profiler = (function () {
   _createClass(Profiler, null, [{
     key: 'make',
     value: function make() {
-      var name = arguments[0] === undefined ? 'default' : arguments[0];
+      var name = arguments.length <= 0 || arguments[0] === undefined ? 'default' : arguments[0];
 
       if (profilers[name] == null) profilers[name] = new Handler(name);
 
@@ -732,41 +806,50 @@ var Profiler = (function () {
   return Profiler;
 })();
 
-exports['default'] = Profiler;
-module.exports = exports['default'];
+exports.default = Profiler;
 
-},{"../../helpers":3}],7:[function(require,module,exports){
+},{"../../helpers":3}],8:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _Events = require('../events/Events.es6');
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+var _Events2 = _interopRequireDefault(_Events);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _Config = require('../config/Config.es6');
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-var _eventsEventsEs6 = require('../events/Events.es6');
-
-var _eventsEventsEs62 = _interopRequireDefault(_eventsEventsEs6);
+var _Config2 = _interopRequireDefault(_Config);
 
 var _helpers = require('../../helpers');
 
 var Util = _interopRequireWildcard(_helpers);
 
-var dispatcher = _eventsEventsEs62['default'].make();
+var _underscore = require('../../vendor/underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+var _jquery = require('../../vendor/jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var dispatcher = _Events2.default.make();
 var requests = {};
-var _ = require('../../vendor/underscore');
-var api = require('../../vendor/jquery');
 
 function json_parse(data) {
-  if (_.isString(data)) {
+  if (_underscore2.default.isString(data)) {
     try {
-      data = api.parseJSON(data);
+      data = _jquery2.default.parseJSON(data);
     } catch (e) {
       data = null;
     }
@@ -781,7 +864,7 @@ var Handler = (function () {
 
     this.executed = false;
     this.response = null;
-    this.config = {
+    this.config = new _Config2.default({
       name: '',
       type: 'GET',
       uri: '',
@@ -794,62 +877,53 @@ var Handler = (function () {
       beforeSend: function beforeSend() {},
       onComplete: function onComplete() {},
       onError: function onError() {}
-    };
+    });
   }
 
   _createClass(Handler, [{
     key: 'get',
     value: function get(key) {
-      var defaults = arguments[1] === undefined ? null : arguments[1];
+      var defaults = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
-      if (!_.isUndefined(this.config[key])) return this.config[key];
-
-      return defaults;
+      return this.config.get(key, defaults);
     }
   }, {
     key: 'put',
     value: function put(key, value) {
-      var config = key;
-
-      if (!_.isObject(key)) {
-        config = {};
-        config[key] = value;
-      }
-
-      this.config = _.defaults(config, this.config);
+      return this.config.put(key, value);
 
       return this;
     }
   }, {
     key: 'addHeader',
     value: function addHeader(key, value) {
-      var headers = this.get('headers', {});
+      var headers = this.config.get('headers', {});
       headers[key] = value;
-      this.put({ headers: headers });
+      this.config.put({ headers: headers });
 
       return this;
     }
   }, {
     key: 'to',
     value: function to(url, object) {
-      var dataType = arguments[2] === undefined ? 'json' : arguments[2];
-      var headers = arguments[3] === undefined ? {} : arguments[3];
+      var dataType = arguments.length <= 2 || arguments[2] === undefined ? 'json' : arguments[2];
+      var headers = arguments.length <= 3 || arguments[3] === undefined ? {} : arguments[3];
 
       var supported = ['POST', 'GET', 'PUT', 'DELETED'];
 
-      if (_.isUndefined(url)) throw new Error('Missing required URL parameter.');
+      if (_underscore2.default.isUndefined(url)) throw new Error("Missing required URL parameter.");
 
       if (object == null) object = window.document;
 
       var segment = url.split(' ');
       var uri = url;
-      var type = this.get('type', 'POST');
-      var query = this.get('query', '');
+      var type = this.config.get('type', 'POST');
+      var query = this.config.get('query', '');
 
       if (segment.length == 1) {
         uri = segment[0];
       } else {
-        if (_.indexOf(supported, segment[0]) > -1) type = segment[0];
+        if (_underscore2.default.indexOf(supported, segment[0]) > -1) type = segment[0];
 
         uri = segment[1];
       }
@@ -863,9 +937,9 @@ var Handler = (function () {
         }
       }
 
-      uri = uri.replace(':baseUrl', this.get('baseUrl', ''));
+      uri = uri.replace(':baseUrl', this.config.get('baseUrl', ''));
 
-      this.put({
+      this.config.put({
         dataType: dataType,
         object: object,
         query: query,
@@ -874,9 +948,9 @@ var Handler = (function () {
         headers: headers
       });
 
-      var id = api(object).attr('id');
+      var id = (0, _jquery2.default)(object).attr('id');
 
-      if (typeof id != 'undefined') this.put({ id: '#' + id });
+      if (typeof id != 'undefined') this.config.put({ id: '#' + id });
 
       return this;
     }
@@ -884,23 +958,23 @@ var Handler = (function () {
     key: 'execute',
     value: function execute(data) {
       var me = this;
-      var name = this.get('name');
-      var object = this.get('object');
-      var query = this.get('query');
+      var name = this.config.get('name');
+      var object = this.config.get('object');
+      var query = this.config.get('query');
 
-      if (!_.isObject(data)) {
-        data = api(object).serialize() + '&' + query;
+      if (!_underscore2.default.isObject(data)) {
+        data = (0, _jquery2.default)(object).serialize() + '&' + query;
         if (data == '?&') data = '';
       }
 
       this.executed = true;
 
       var payload = {
-        type: this.get('type'),
-        dataType: this.get('dataType'),
-        url: this.get('uri'),
+        type: this.config.get('type'),
+        dataType: this.config.get('dataType'),
+        url: this.config.get('uri'),
         data: data,
-        headers: this.get('headers', {}),
+        headers: this.config.get('headers', {}),
         beforeSend: function beforeSend(xhr) {
           me.fireEvent('beforeSend', name, [me, xhr]);
         },
@@ -909,7 +983,7 @@ var Handler = (function () {
           status = xhr.status;
           me.response = xhr;
 
-          if (!_.isUndefined(data) && data.hasOwnProperty('error')) {
+          if (!_underscore2.default.isUndefined(data) && data.hasOwnProperty('error')) {
             me.fireEvent('onError', name, [data.errors, status, me, xhr]);
             data.errors = null;
           }
@@ -918,7 +992,7 @@ var Handler = (function () {
         }
       };
 
-      api.ajax(payload);
+      _jquery2.default.ajax(payload);
 
       return this;
     }
@@ -930,12 +1004,19 @@ var Handler = (function () {
 
       var callback = this.config[type];
 
-      if (_.isFunction(callback)) callback.apply(this, args);
+      if (_underscore2.default.isFunction(callback)) callback.apply(this, args);
     }
   }]);
 
   return Handler;
 })();
+
+var RequestAttributes = {
+  baseUrl: null,
+  onError: function onError(data, status) {},
+  beforeSend: function beforeSend(data, status) {},
+  onComplete: function onComplete(data, status) {}
+};
 
 var Request = (function () {
   function Request(name) {
@@ -947,16 +1028,16 @@ var Request = (function () {
   _createClass(Request, null, [{
     key: 'make',
     value: function make() {
-      var name = arguments[0] === undefined ? 'default' : arguments[0];
+      var name = arguments.length <= 0 || arguments[0] === undefined ? 'default' : arguments[0];
 
       return Request.find(name);
     }
   }, {
     key: 'get',
     value: function get(key) {
-      var defaults = arguments[1] === undefined ? null : arguments[1];
+      var defaults = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
-      if (!_.isUndefined(Request.config[key])) return Request.config[key];
+      if (!_underscore2.default.isUndefined(RequestAttributes[key])) return RequestAttributes[key];
 
       return defaults;
     }
@@ -965,21 +1046,21 @@ var Request = (function () {
     value: function put(key, value) {
       var config = key;
 
-      if (!_.isObject(key)) {
+      if (!_underscore2.default.isObject(key)) {
         config = {};
         config[key] = value;
       }
 
-      Request.config = _.defaults(config, Request.config);
+      RequestAttributes = _underscore2.default.defaults(config, RequestAttributes);
     }
   }, {
     key: 'find',
     value: function find(name) {
       var request = null;
 
-      if (_.isUndefined(requests[name])) {
+      if (_underscore2.default.isUndefined(requests[name])) {
         request = new Handler();
-        request.config = _.defaults(request.config, Request.config);
+        request.put(_underscore2.default.defaults(request.config.all(), RequestAttributes));
         request.put({ name: name });
 
         return requests[name] = request;
@@ -989,52 +1070,42 @@ var Request = (function () {
 
       if (!request.executed) return request;
 
-      var key = _.uniqueId(name + '_');
+      var key = _underscore2.default.uniqueId(name + '_');
       var child = new Handler();
 
       dispatcher.clone('Request.onError: ' + name).to('Request.onError: ' + name);
       dispatcher.clone('Request.onComplete: ' + name).to('Request.onComplete: ' + name);
       dispatcher.clone('Request.beforeSend: ' + name).to('Request.beforeSend: ' + name);
 
-      child.put(parent.config);
+      child.put(request.config);
 
       return child;
     }
-  }, {
-    key: 'config',
-    value: {
-      baseUrl: null,
-      onError: function onError(data, status) {},
-      beforeSend: function beforeSend(data, status) {},
-      onComplete: function onComplete(data, status) {}
-    },
-    enumerable: true
   }]);
 
   return Request;
 })();
 
-exports['default'] = Request;
-module.exports = exports['default'];
+exports.default = Request;
 
-},{"../../helpers":3,"../../vendor/jquery":8,"../../vendor/underscore":9,"../events/Events.es6":4}],8:[function(require,module,exports){
+},{"../../helpers":3,"../../vendor/jquery":9,"../../vendor/underscore":10,"../config/Config.es6":4,"../events/Events.es6":5}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = jQuery;
-module.exports = exports["default"];
+exports.default = jQuery;
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = _;
-module.exports = exports["default"];
+exports.default = _;
 
-},{}]},{},[1]);
+},{}]},{},[2]);
+
+//# sourceMappingURL=bundle.js.map
 
 //# sourceMappingURL=javie.js.map

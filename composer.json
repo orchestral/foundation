@@ -24,6 +24,7 @@
         "laravel/framework": "~5.2.0",
         "orchestra/asset": "~3.2.0",
         "orchestra/auth": "~3.2.0",
+        "orchestra/contracts": "~3.2.0",
         "orchestra/extension": "~3.2.0",
         "orchestra/html": "~3.2.0",
         "orchestra/kernel": "~3.2.0",
@@ -61,7 +62,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2-dev"
+            "dev-master": "3.3-dev"
         }
     },
     "minimum-stability": "dev"
