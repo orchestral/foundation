@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Bootstrap;
 
 use Orchestra\Model\Role;
-use Orchestra\Model\User;
 use Orchestra\Foundation\Listeners\UserAccess;
 use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Model\Observer\Role as RoleObserver;
