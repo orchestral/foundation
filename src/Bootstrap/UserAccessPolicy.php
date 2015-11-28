@@ -1,7 +1,7 @@
 <?php namespace Orchestra\Foundation\Bootstrap;
 
 use Orchestra\Model\Role;
-use Orchestra\Model\User;
+use Orchestra\Foundation\Listeners\UserAccess;
 use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Model\Observer\Role as RoleObserver;
 
@@ -30,18 +30,7 @@ class UserAccessPolicy
      */
     protected function matchCurrentUserToRoles(Application $app)
     {
-        $app->make('events')->listen('orchestra.auth: roles', function (User $user = null) {
-            // When user is null, we should expect the roles is not available.
-            // Therefore, returning null would propagate any other event listeners
-            // (if any) to try resolve the roles.
-            if (is_null($user)) {
-                return;
-            }
-
-            $roles = $user->getRoles();
-
-            return $roles;
-        });
+        $app->make('events')->listen('orchestra.auth: roles', UserAccess::class);
     }
 
     /**
