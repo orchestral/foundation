@@ -23,6 +23,5 @@ class UserAccess
         $roles = $user->getRoles();
 
         return $roles;
-
     }
 }
