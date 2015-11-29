@@ -5,6 +5,17 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.19 {#v3-1-19}
+
+* Add `Orchestra\Foundation\Listeners\UserAccess` so it can be shared with `orchestra/lumen`.
+* Add `acl` language files.
+* Appends parent position if working on multiple nested menu.
+* Remove `email_username` validation for SMTP Mail configuration.
+* Update assets:
+  - Vue v1.0.10.
+  - Javie v2.0.3.
+  - Twitter Bootstrap v3.3.6.
+
 ### v3.1.18 {#v3-1-18}
 
 * Fixes regression bug under `Orchestra\Foundation\Console\Commands\OptimizeCommand` due to breaking BC changed in `laravel/framework` at `v5.1.24`. 
