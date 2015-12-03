@@ -89,7 +89,9 @@ class LoadExpresso
      */
     protected function buildHtmlTitleCallback(Application $app)
     {
-        return function ($title = null) use ($app) {
+        $me = $this;
+
+        return function ($title = null) use ($app, $me) {
             $title = $title ?: trim(get_meta('title', ''));
             $page  = Paginator::resolveCurrentPage();
 
@@ -98,9 +100,9 @@ class LoadExpresso
                 'page' => ['title' => $title, 'number' => $page],
             ];
 
-            $data['site']['name'] = $this->getHtmlTitleFormatForSite($data);
+            $data['site']['name'] = $me->getHtmlTitleFormatForSite($data);
 
-            $output = $this->getHtmlTitleFormatForPage($data);
+            $output = $me->getHtmlTitleFormatForPage($data);
 
             return $app->make('html')->create('title', trim($output));
         };
