@@ -115,7 +115,7 @@ class LoadExpresso
      *
      * @return mixed
      */
-    protected function getHtmlTitleFormatForSite($data)
+    public function getHtmlTitleFormatForSite(array $data)
     {
         if ((int) $data['page']['number'] < 2) {
             return $data['site']['name'];
@@ -133,7 +133,7 @@ class LoadExpresso
      *
      * @return mixed
      */
-    protected function getHtmlTitleFormatForPage(array $data)
+    public function getHtmlTitleFormatForPage(array $data)
     {
         if (empty($data['page']['title'])) {
             return $data['site']['name'];
