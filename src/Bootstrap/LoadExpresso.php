@@ -38,6 +38,8 @@ class LoadExpresso
         });
 
         $blade->directive('placeholder', function ($expression) {
+            $expression = preg_replace('/\(\s*(.*)\)/', '$1', $expression);
+
             return "<?php \$__ps = app('orchestra.widget')->make('placeholder.".$expression."'); "
                         ."foreach (\$__ps as \$__p) { echo value(\$__p->value ?: ''); } ?>";
         });
