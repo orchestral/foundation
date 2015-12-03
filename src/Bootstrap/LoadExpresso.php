@@ -40,7 +40,7 @@ class LoadExpresso
         $blade->directive('placeholder', function ($expression) {
             $expression = preg_replace('/\(\s*(.*)\)/', '$1', $expression);
 
-            return "<?php \$__ps = app('orchestra.widget')->make('placeholder.".$expression."'); "
+            return "<?php \$__ps = app('orchestra.widget')->make('placeholder.'.{$expression}); "
                         ."foreach (\$__ps as \$__p) { echo value(\$__p->value ?: ''); } ?>";
         });
 
@@ -49,11 +49,11 @@ class LoadExpresso
         });
 
         $blade->directive('set_meta', function ($expression) {
-            return "<?php echo set_meta{$expression}; ?>";
+            return "<?php set_meta{$expression}; ?>";
         });
 
         $blade->directive('title', function ($expression) {
-            return "<?php echo echo app('html')->title{$expression}; ?>";
+            return "<?php echo app('html')->title{$expression}; ?>";
         });
 
         $blade->extend(function ($view) {
