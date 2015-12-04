@@ -17,6 +17,7 @@
 #{{ $asset->style('bootstrap', 'packages/orchestra/foundation/vendor/bootstrap/css/bootstrap.min.css') }}
 #{{ $asset->style('font-awesome', 'packages/orchestra/foundation/components/font-awesome/css/font-awesome.min.css', ['bootstrap']) }}
 #{{ $asset->style('orchestra', 'packages/orchestra/foundation/css/orchestra.css', ['bootstrap', 'select2']) }}
+#{{ $asset->script('vue', 'packages/orchestra/foundation/components/vue/vue.min.js') }}
 #{{ $asset->script('underscore', 'packages/orchestra/foundation/components/underscore/underscore.js') }}
 #{{ $asset->script('jquery', 'packages/orchestra/foundation/components/jquery/jquery.min.js') }}
 #{{ $asset->script('javie', 'packages/orchestra/foundation/components/javie/javie.min.js', ['jquery', 'underscore']) }}

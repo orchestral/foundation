@@ -1,6 +1,7 @@
 <?php namespace Orchestra\Foundation\Bootstrap;
 
 use Orchestra\Support\Str;
+use Orchestra\Html\Macros\Title;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Contracts\Foundation\Application;
 
@@ -31,22 +32,32 @@ class LoadExpresso
      */
     protected function addBladeExtensions(Application $app)
     {
-        $compiler = $app->make('view')->getEngineResolver()->resolve('blade')->getCompiler();
+        $blade = $app->make('view')->getEngineResolver()->resolve('blade')->getCompiler();
 
-        $compiler->extend(function ($view) {
-            $expression = [
-                'decorator'   => '$1<?php echo app("orchestra.decorator")->render($2); ?>',
-                'placeholder' => '$1<?php $__ps = app("orchestra.widget")->make("placeholder.".$2); '
-                                .'foreach ($__ps as $__p) { echo value($__p->value ?:""); } ?>',
-                'get_meta' => '$1<?php echo get_meta($2); ?>',
-                'set_meta' => '$1<?php set_meta($2); ?>',
-                'title'    => '$1<?php echo app("html")->title($2); ?>',
-            ];
+        $blade->directive('decorator', function ($expression) {
+            return "<?php echo app('orchestra.decorator')->render{$expression}; ?>";
+        });
 
-            foreach ($expression as $name => $replacement) {
-                $view = preg_replace('/(\s*)@'.$name.'\s?\(\s*(.*)\)/', $replacement, $view);
-            }
+        $blade->directive('placeholder', function ($expression) {
+            $expression = preg_replace('/\(\s*(.*)\)/', '$1', $expression);
 
+            return "<?php \$__ps = app('orchestra.widget')->make('placeholder.'.{$expression}); "
+                        ."foreach (\$__ps as \$__p) { echo value(\$__p->value ?: ''); } ?>";
+        });
+
+        $blade->directive('get_meta', function ($expression) {
+            return "<?php echo get_meta{$expression}; ?>";
+        });
+
+        $blade->directive('set_meta', function ($expression) {
+            return "<?php set_meta{$expression}; ?>";
+        });
+
+        $blade->directive('title', function ($expression) {
+            return "<?php echo app('html')->title{$expression}; ?>";
+        });
+
+        $blade->extend(function ($view) {
             $view = preg_replace('/(\s*)(<\?\s)/', '$1<?php ', $view);
             $view = preg_replace('/#\{\{\s*(.+?)\s*\}\}/s', '<?php $1; ?>', $view);
 
@@ -77,68 +88,15 @@ class LoadExpresso
      */
     protected function addHtmlExtensions(Application $app)
     {
-        $app->make('html')->macro('title', $this->buildHtmlTitleCallback($app));
-    }
+        $html = $app->make('html');
 
-    /**
-     * Build HTML::title() callback.
-     *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
-     *
-     * @return callable
-     */
-    protected function buildHtmlTitleCallback(Application $app)
-    {
-        return function ($title = null) use ($app) {
-            $title = $title ?: trim(get_meta('title', ''));
-            $page  = Paginator::resolveCurrentPage();
+        $html->macro('title', function ($title = null) use ($app, $html) {
+            $builder = new Title($html, memorize('site.name'), [
+                'site' => get_meta('html::title.format.site', '{site.name} (Page {page.number})'),
+                'page' => get_meta('html::title.format.page', '{page.title} &mdash; {site.name}'),
+            ]);
 
-            $data = [
-                'site' => ['name'  => memorize('site.name')],
-                'page' => ['title' => $title, 'number' => $page],
-            ];
-
-            $data['site']['name'] = $this->getHtmlTitleFormatForSite($data);
-
-            $output = $this->getHtmlTitleFormatForPage($data);
-
-            return $app->make('html')->create('title', trim($output));
-        };
-    }
-
-    /**
-     * Get HTML::title() format for site.
-     *
-     * @param  array  $data
-     *
-     * @return mixed
-     */
-    protected function getHtmlTitleFormatForSite($data)
-    {
-        if ((int) $data['page']['number'] < 2) {
-            return $data['site']['name'];
-        }
-
-        $format = get_meta('html::title.format.site', '{site.name} (Page {page.number})');
-
-        return Str::replace($format, $data);
-    }
-
-    /**
-     * Get HTML::title() format for page.
-     *
-     * @param  array  $data
-     *
-     * @return mixed
-     */
-    protected function getHtmlTitleFormatForPage(array $data)
-    {
-        if (empty($data['page']['title'])) {
-            return $data['site']['name'];
-        }
-
-        $format = get_meta('html::title.format.page', '{page.title} &mdash; {site.name}');
-
-        return Str::replace($format, $data);
+            return $builder->title($title ?: trim(get_meta('title', '')));
+        });
     }
 }

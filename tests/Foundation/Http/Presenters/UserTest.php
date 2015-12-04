@@ -54,7 +54,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $app = $this->app;
         $model = m::mock('\Orchestra\Model\User');
 
-        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,raw]');
+        $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder[create,raw]', [
+            m::mock('\Illuminate\Contracts\Routing\UrlGenerator'),
+            m::mock('\Illuminate\Contracts\View\Factory'),
+        ]);
 
         $auth = m::mock('\Illuminate\Contracts\Auth\Guard');
         $user = m::mock('\Illuminate\Contracts\Auth\Authenticatable');

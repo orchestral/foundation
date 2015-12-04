@@ -1,10 +1,9 @@
 <?php namespace Orchestra\Foundation\Jobs;
 
 use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Foundation\Application;
 
-class RefreshRouteCache extends Job implements SelfHandling
+class RefreshRouteCache extends Job
 {
     /**
      * Execute the job.
