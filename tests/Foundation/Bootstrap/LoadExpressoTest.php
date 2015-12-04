@@ -40,7 +40,13 @@ class LoadExpressoTest extends TestCase
     {
         $this->app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
 
-        Meta::shouldReceive('get')->once()->with('title', '')->andReturn('');
+        Meta::shouldReceive('get')->once()->with('title', '')->andReturn('')
+            ->shouldReceive('get')->once()
+                ->with('html::title.format.site', '{site.name} (Page {page.number})')
+                ->andReturn('{site.name} (Page {page.number})')
+            ->shouldReceive('get')->once()
+                ->with('html::title.format.page', '{page.title} &mdash; {site.name}')
+                ->andReturn('{page.title} &mdash; {site.name}');
 
         Paginator::currentPageResolver(function () {
             return 1;
@@ -60,10 +66,13 @@ class LoadExpressoTest extends TestCase
     {
         $this->app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
 
-        Meta::shouldReceive('get')->once()->with('title', '')->andReturn('');
-        Meta::shouldReceive('get')->once()
-            ->with('html::title.format.site', '{site.name} (Page {page.number})')
-            ->andReturn('{site.name} (Page {page.number})');
+        Meta::shouldReceive('get')->once()->with('title', '')->andReturn('')
+            ->shouldReceive('get')->once()
+                ->with('html::title.format.site', '{site.name} (Page {page.number})')
+                ->andReturn('{site.name} (Page {page.number})')
+            ->shouldReceive('get')->once()
+                ->with('html::title.format.page', '{page.title} &mdash; {site.name}')
+                ->andReturn('{page.title} &mdash; {site.name}');;
 
         Paginator::currentPageResolver(function () {
             return 5;
@@ -87,10 +96,13 @@ class LoadExpressoTest extends TestCase
             return 1;
         });
 
-        Meta::shouldReceive('get')->once()->with('title', '')->andReturn('Foobar');
-        Meta::shouldReceive('get')->once()
-            ->with('html::title.format.page', '{page.title} &mdash; {site.name}')
-            ->andReturn('{page.title} &mdash; {site.name}');
+        Meta::shouldReceive('get')->once()->with('title', '')->andReturn('Foobar')
+            ->shouldReceive('get')->once()
+                ->with('html::title.format.site', '{site.name} (Page {page.number})')
+                ->andReturn('{site.name} (Page {page.number})')
+            ->shouldReceive('get')->once()
+                ->with('html::title.format.page', '{page.title} &mdash; {site.name}')
+                ->andReturn('{page.title} &mdash; {site.name}');
 
         $memory->shouldReceive('get')->once()
                 ->with('site.name', '')->andReturn('Foo');
@@ -113,11 +125,11 @@ class LoadExpressoTest extends TestCase
         });
 
         Meta::shouldReceive('get')->once()
-            ->with('html::title.format.site', '{site.name} (Page {page.number})')
-            ->andReturn('{site.name} (Page {page.number})');
-        Meta::shouldReceive('get')->once()
-            ->with('html::title.format.page', '{page.title} &mdash; {site.name}')
-            ->andReturn('{page.title} &mdash; {site.name}');
+                ->with('html::title.format.site', '{site.name} (Page {page.number})')
+                ->andReturn('{site.name} (Page {page.number})')
+            ->shouldReceive('get')->once()
+                ->with('html::title.format.page', '{page.title} &mdash; {site.name}')
+                ->andReturn('{page.title} &mdash; {site.name}');
 
         $memory->shouldReceive('get')->once()
             ->with('site.name', '')->andReturn('Foo');
