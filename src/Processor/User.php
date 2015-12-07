@@ -2,7 +2,6 @@
 
 use Exception;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Orchestra\Model\User as Eloquent;
@@ -189,7 +188,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
         try {
             $this->fireEvent('deleting', [$user]);
 
-            DB::transaction(function () use ($user) {
+            $user->getConnection()->transaction(function () use ($user) {
                 $user->delete();
             });
 
@@ -221,8 +220,8 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
         $this->fireEvent($beforeEvent, [$user]);
         $this->fireEvent('saving', [$user]);
 
-        DB::transaction(function () use ($user, $input) {
-            $user->save();
+        $user->getConnection()->transaction(function () use ($user) {
+            $user->saveOrFail();
             $user->roles()->sync($input['roles']);
         });
 
