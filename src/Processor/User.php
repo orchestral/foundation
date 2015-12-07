@@ -221,7 +221,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
         $this->fireEvent('saving', [$user]);
 
         $user->getConnection()->transaction(function () use ($user) {
-            $user->saveOrFail();
+            $user->save();
             $user->roles()->sync($input['roles']);
         });
 
