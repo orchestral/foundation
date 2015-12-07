@@ -53,17 +53,13 @@ class ProfileUpdaterTest extends TestCase
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id'])
             ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
-            ->shouldReceive('save')->once()->andReturnNull();
+            ->shouldReceive('saveOrFail')->once()->andReturnNull();
         $validator->shouldReceive('on')->once()->with('update')->andReturnSelf()
             ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
         $resolver->shouldReceive('fails')->once()->andReturn(false);
         $listener->shouldReceive('profileUpdated')->once()->andReturn('profile.updated');
 
         Auth::shouldReceive('user')->once()->andReturn($user);
-        DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(function ($c) {
-                $c();
-            });
 
         $this->assertEquals('profile.updated', $stub->update($listener, $input));
     }
@@ -144,14 +140,14 @@ class ProfileUpdaterTest extends TestCase
 
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id'])
             ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
-            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull();
+            ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
+            ->shouldReceive('saveOrFail')->once()->andThrow('\Exception');
         $validator->shouldReceive('on')->once()->with('update')->andReturnSelf()
             ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
         $resolver->shouldReceive('fails')->once()->andReturn(false);
         $listener->shouldReceive('updateProfileFailed')->once()->with(m::type('Array'))->andReturn('profile.failed');
 
         Auth::shouldReceive('user')->once()->andReturn($user);
-        DB::shouldReceive('transaction')->once()->with(m::type('Closure'))->andThrow('\Exception');
 
         $this->assertEquals('profile.failed', $stub->update($listener, $input));
     }
