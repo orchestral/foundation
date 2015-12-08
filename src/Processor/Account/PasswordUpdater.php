@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Processor\Account;
 
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Orchestra\Model\User as Eloquent;
@@ -70,8 +69,6 @@ class PasswordUpdater extends User implements Command
     {
         $user->setAttribute('password', $input['new_password']);
 
-        DB::transaction(function () use ($user) {
-            $user->save();
-        });
+        $user->saveOrFail();
     }
 }

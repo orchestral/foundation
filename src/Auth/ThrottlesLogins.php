@@ -94,6 +94,6 @@ abstract class ThrottlesLogins
         $key = $this->request->input($this->loginKey);
         $ip  = $this->request->ip();
 
-        return $key.$ip;
+        return mb_strtolower($key).$ip;
     }
 }
