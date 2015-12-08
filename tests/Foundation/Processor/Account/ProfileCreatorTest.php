@@ -66,7 +66,7 @@ class ProfileCreatorTest extends TestCase
         $user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('password', m::type('String'))->andReturnNull()
-            ->shouldReceive('getConnection->transaction')->once()->with(m::type('Closure'))
+            ->shouldReceive('transaction')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) {
                     return $c();
                 });
@@ -117,7 +117,7 @@ class ProfileCreatorTest extends TestCase
         $user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('password', m::type('String'))->andReturnNull()
-            ->shouldReceive('getConnection->transaction')->once()->with(m::type('Closure'))
+            ->shouldReceive('transaction')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) {
                     return $c();
                 });
@@ -165,7 +165,7 @@ class ProfileCreatorTest extends TestCase
         $user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('password', m::type('String'))->andReturnNull()
-            ->shouldReceive('getConnection->transaction')->once()->with(m::type('Closure'))
+            ->shouldReceive('transaction')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) {
                     return $c();
                 });

@@ -136,7 +136,7 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
-            ->shouldReceive('getConnection->transaction')->once()
+            ->shouldReceive('transaction')->once()
                 ->with(m::type('Closure'))->andReturnUsing(function ($c) {
                     $c();
                 });
@@ -176,7 +176,7 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
-            ->shouldReceive('getConnection->transaction')->once()
+            ->shouldReceive('transaction')->once()
                 ->with(m::type('Closure'))->andReturnUsing(function ($c) {
                     $c();
                 });
@@ -246,7 +246,7 @@ class UsersControllerTest extends TestCase
         $user->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
-            ->shouldReceive('getConnection->transaction')->once()
+            ->shouldReceive('transaction')->once()
                 ->with(m::type('Closure'))->andReturnUsing(function ($c) {
                     $c();
                 });
@@ -307,7 +307,7 @@ class UsersControllerTest extends TestCase
         $user->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
-            ->shouldReceive('getConnection->transaction')->once()
+            ->shouldReceive('transaction')->once()
                 ->with(m::type('Closure'))->andReturnUsing(function ($c) {
                     $c();
                 });
@@ -373,7 +373,7 @@ class UsersControllerTest extends TestCase
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foo')
-            ->shouldReceive('getConnection->transaction')->once()
+            ->shouldReceive('transaction')->once()
                 ->with(m::type('Closure'))->andReturnUsing(function ($c) {
                     $c();
                 });
@@ -430,7 +430,7 @@ class UsersControllerTest extends TestCase
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foo')
-            ->shouldReceive('getConnection->transaction')->once()
+            ->shouldReceive('transaction')->once()
                 ->with(m::type('Closure'))->andReturnUsing(function ($c) {
                     $c();
                 });

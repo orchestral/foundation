@@ -30,7 +30,7 @@
         "orchestra/kernel": "~3.1.13",
         "orchestra/memory": "~3.1.0",
         "orchestra/messages": "~3.1.0",
-        "orchestra/model": "~3.1.0",
+        "orchestra/model": "~3.1.6",
         "orchestra/notifier": "~3.1.0",
         "orchestra/optimize": "~3.1.6",
         "orchestra/publisher": "~3.1.0",
