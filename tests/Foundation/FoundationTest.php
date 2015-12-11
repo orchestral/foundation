@@ -260,7 +260,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
 
         };
 
-        $middleware = ['Orchestra\Foundation\Http\Middleware\UseBackendTheme'];
+        $middleware = ['web', 'Orchestra\Foundation\Http\Middleware\UseBackendTheme'];
 
         $stub->shouldReceive('group')->times(3)
             ->with('orchestra/foundation', 'orchestra', ['middleware' => $middleware], $closure)
