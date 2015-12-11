@@ -18,29 +18,29 @@ class FoundationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $aliases = [
-        'app'                        => 'Orchestra\Foundation\Application',
-        'config'                     => 'Orchestra\Config\Repository',
+        'app'                        => ['Orchestra\Foundation\Application'],
+        'config'                     => ['Orchestra\Config\Repository'],
         'auth.driver'                => ['Orchestra\Auth\SessionGuard', 'Orchestra\Contracts\Auth\Guard'],
         'orchestra.platform.acl'     => ['Orchestra\Authorization\Authorization', 'Orchestra\Contracts\Authorization\Authorization'],
         'orchestra.platform.memory'  => ['Orchestra\Memory\Provider', 'Orchestra\Contracts\Memory\Provider'],
 
         'orchestra.acl'              => ['Orchestra\Authorization\Factory', 'Orchestra\Contracts\Authorization\Factory'],
         'orchestra.app'              => ['Orchestra\Foundation\Foundation', 'Orchestra\Contracts\Foundation\Foundation'],
-        'orchestra.asset'            => 'Orchestra\Asset\Factory',
-        'orchestra.decorator'        => 'Orchestra\View\Decorator',
-        'orchestra.extension.config' => 'Orchestra\Extension\ConfigManager',
+        'orchestra.asset'            => ['Orchestra\Asset\Factory'],
+        'orchestra.decorator'        => ['Orchestra\View\Decorator'],
+        'orchestra.extension.config' => ['Orchestra\Extension\ConfigManager'],
         'orchestra.extension.finder' => ['Orchestra\Extension\Finder', 'Orchestra\Contracts\Extension\Finder'],
         'orchestra.extension'        => ['Orchestra\Extension\Factory', 'Orchestra\Contracts\Extension\Factory'],
         'orchestra.form'             => ['Orchestra\Html\Form\Factory', 'Orchestra\Contracts\Html\Form\Factory'],
-        'orchestra.mail'             => 'Orchestra\Notifier\Mailer',
-        'orchestra.memory'           => 'Orchestra\Memory\MemoryManager',
+        'orchestra.mail'             => ['Orchestra\Notifier\Mailer'],
+        'orchestra.memory'           => ['Orchestra\Memory\MemoryManager'],
         'orchestra.messages'         => ['Orchestra\Messages\MessageBag', 'Orchestra\Contracts\Messages\MessageBag'],
-        'orchestra.notifier'         => 'Orchestra\Notifier\NotifierManager',
-        'orchestra.publisher'        => 'Orchestra\Foundation\Publisher\PublisherManager',
-        'orchestra.meta'             => 'Orchestra\Foundation\Meta',
+        'orchestra.notifier'         => ['Orchestra\Notifier\NotifierManager'],
+        'orchestra.publisher'        => ['Orchestra\Foundation\Publisher\PublisherManager'],
+        'orchestra.meta'             => ['Orchestra\Foundation\Meta'],
         'orchestra.table'            => ['Orchestra\Html\Table\Factory', 'Orchestra\Contracts\Html\Table\Factory'],
-        'orchestra.theme'            => 'Orchestra\View\Theme\ThemeManager',
-        'orchestra.widget'           => 'Orchestra\Widget\WidgetManager',
+        'orchestra.theme'            => ['Orchestra\View\Theme\ThemeManager'],
+        'orchestra.widget'           => ['Orchestra\Widget\WidgetManager'],
     ];
 
     /**
