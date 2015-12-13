@@ -120,6 +120,7 @@ class ServiceProviderTest extends TestCase
             'command.up',
             'command.view.clear',
             'command.app.name',
+            'command.auth.make',
             'command.cache.table',
             'command.console.make',
             'command.controller.make',
