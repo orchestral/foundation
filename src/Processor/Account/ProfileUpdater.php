@@ -1,7 +1,6 @@
 <?php namespace Orchestra\Foundation\Processor\Account;
 
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Orchestra\Contracts\Foundation\Command\Account\ProfileUpdater as Command;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater as Listener;
@@ -72,9 +71,7 @@ class ProfileUpdater extends User implements Command
         $this->fireEvent('updating', [$user]);
         $this->fireEvent('saving', [$user]);
 
-        DB::transaction(function () use ($user) {
-            $user->save();
-        });
+        $user->saveOrFail();
 
         $this->fireEvent('updated', [$user]);
         $this->fireEvent('saved', [$user]);

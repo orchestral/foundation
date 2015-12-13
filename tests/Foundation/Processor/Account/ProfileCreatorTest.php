@@ -66,7 +66,11 @@ class ProfileCreatorTest extends TestCase
         $user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('password', m::type('String'))->andReturnNull()
-            ->shouldReceive('save')->once()->andReturnNull()
+            ->shouldReceive('transaction')->once()->with(m::type('Closure'))
+                ->andReturnUsing(function ($c) {
+                    return $c();
+                });
+        $user->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles')->once()->andReturn($role)
             ->shouldReceive('toArray')->once()->andReturn([])
             ->shouldReceive('notify')->once()
@@ -80,10 +84,6 @@ class ProfileCreatorTest extends TestCase
         Config::shouldReceive('get')->once()->with('orchestra/foundation::roles.member', 2)->andReturn(2);
         Config::shouldReceive('get')->once()->with('auth.register.email', 'emails.auth.register')
             ->andReturn('emails.auth.register');
-        DB::shouldReceive('transaction')->once()->with(m::type('Closure'))
-            ->andReturnUsing(function ($c) {
-                return $c();
-            });
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Foundation::shouldReceive('memory')->once()->andReturn($memory);
 
@@ -117,7 +117,11 @@ class ProfileCreatorTest extends TestCase
         $user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('password', m::type('String'))->andReturnNull()
-            ->shouldReceive('save')->once()->andReturnNull()
+            ->shouldReceive('transaction')->once()->with(m::type('Closure'))
+                ->andReturnUsing(function ($c) {
+                    return $c();
+                });
+        $user->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles')->once()->andReturn($role)
             ->shouldReceive('toArray')->once()->andReturn([])
             ->shouldReceive('notify')->once()
@@ -131,10 +135,6 @@ class ProfileCreatorTest extends TestCase
         Config::shouldReceive('get')->once()->with('orchestra/foundation::roles.member', 2)->andReturn(2);
         Config::shouldReceive('get')->once()->with('auth.register.email', 'emails.auth.register')
             ->andReturn('emails.auth.register');
-        DB::shouldReceive('transaction')->once()->with(m::type('Closure'))
-            ->andReturnUsing(function ($c) {
-                return $c();
-            });
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Foundation::shouldReceive('memory')->once()->andReturn($memory);
 
@@ -164,10 +164,14 @@ class ProfileCreatorTest extends TestCase
         $resolver->shouldReceive('fails')->once()->andReturn(false);
         $user->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
-            ->shouldReceive('setAttribute')->once()->with('password', m::type('String'))->andReturnNull();
+            ->shouldReceive('setAttribute')->once()->with('password', m::type('String'))->andReturnNull()
+            ->shouldReceive('transaction')->once()->with(m::type('Closure'))
+                ->andReturnUsing(function ($c) {
+                    return $c();
+                });
+        $user->shouldReceive('save')->once()->andThrow('\Exception');
         $listener->shouldReceive('createProfileFailed')->once()->with(m::type('Array'))->andReturn('profile.failed');
 
-        DB::shouldReceive('transaction')->once()->with(m::type('Closure'))->andThrow('\Exception');
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
 
         $this->assertEquals('profile.failed', $stub->store($listener, $input));

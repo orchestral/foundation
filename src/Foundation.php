@@ -130,7 +130,7 @@ class Foundation extends RouteManager implements FoundationContract
             $attributes['namespace'] = $namespace;
         }
 
-        $attributes['middleware'] = [UseBackendTheme::class];
+        $attributes['middleware'] = ['web', UseBackendTheme::class];
 
         $this->group('orchestra/foundation', 'orchestra', $attributes, $callback);
     }

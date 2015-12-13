@@ -4,7 +4,6 @@ use Exception;
 use Orchestra\Support\Str;
 use Illuminate\Support\Arr;
 use Orchestra\Notifier\Message;
-use Illuminate\Support\Facades\DB;
 use Orchestra\Model\User as Eloquent;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Support\Facades\Foundation;
@@ -120,7 +119,7 @@ class ProfileCreator extends User implements Command
         $this->fireEvent('creating', [$user]);
         $this->fireEvent('saving', [$user]);
 
-        DB::transaction(function () use ($user) {
+        $user->transaction(function () use ($user) {
             $user->save();
             $user->roles()->sync([
                 Config::get('orchestra/foundation::roles.member', 2),

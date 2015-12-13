@@ -3,11 +3,11 @@
 use Illuminate\Routing\Router;
 use Illuminate\Contracts\Http\Kernel;
 use Orchestra\Foundation\Http\Middleware\Can;
+use Orchestra\Http\Middleware\RequireCsrfToken;
 use Orchestra\Foundation\Http\Middleware\CanManage;
 use Orchestra\Foundation\Http\Middleware\Authenticate;
 use Orchestra\Foundation\Http\Middleware\CanBeInstalled;
 use Orchestra\Foundation\Http\Middleware\CanRegisterUser;
-use Orchestra\Foundation\Http\Middleware\RequireCsrfToken;
 use Orchestra\Foundation\Http\Middleware\RedirectIfInstalled;
 use Orchestra\Support\Providers\Traits\MiddlewareProviderTrait;
 use Orchestra\Foundation\Http\Middleware\RedirectIfAuthenticated;
@@ -23,6 +23,13 @@ class RouteServiceProvider extends ServiceProvider
      * @var array
      */
     protected $middleware = [];
+
+    /**
+     * The application's route middleware groups.
+     *
+     * @var array
+     */
+    protected $middlewareGroups = [];
 
     /**
      * The application's route middleware.

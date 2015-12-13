@@ -136,9 +136,12 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
-            ->shouldReceive('save')->once()->andReturnNull()
-            ->shouldReceive('roles')->once()->andReturn($user)
-            ->shouldReceive('sync')->once()->with($input['roles'])->andReturnNull();
+            ->shouldReceive('transaction')->once()
+                ->with(m::type('Closure'))->andReturnUsing(function ($c) {
+                    $c();
+                });
+        $user->shouldReceive('save')->once()->andReturnNull()
+            ->shouldReceive('roles->sync')->once()->with($input['roles'])->andReturnNull();
         $validator->shouldReceive('on')->once()->with('create')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturnNull();
@@ -146,10 +149,6 @@ class UsersControllerTest extends TestCase
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Foundation::shouldReceive('handles')->once()->with('orchestra::users', [])->andReturn('users');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
-        DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(function ($c) {
-                $c();
-            });
 
         $this->call('POST', 'admin/users', $input);
         $this->assertRedirectedTo('users');
@@ -177,9 +176,12 @@ class UsersControllerTest extends TestCase
             ->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
-            ->shouldReceive('save')->once()->andReturnNull()
-            ->shouldReceive('roles')->once()->andReturn($user)
-            ->shouldReceive('sync')->once()->with($input['roles'])->andThrow('\Exception');
+            ->shouldReceive('transaction')->once()
+                ->with(m::type('Closure'))->andReturnUsing(function ($c) {
+                    $c();
+                });
+        $user->shouldReceive('save')->once()->andReturnNull()
+            ->shouldReceive('roles->sync')->once()->with($input['roles'])->andThrow('\Exception');
         $validator->shouldReceive('on')->once()->with('create')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturnNull();
@@ -187,10 +189,6 @@ class UsersControllerTest extends TestCase
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Foundation::shouldReceive('handles')->once()->with('orchestra::users', [])->andReturn('users');
         Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
-        DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(function ($c) {
-                $c();
-            });
 
         $this->call('POST', 'admin/users', $input);
         $this->assertRedirectedTo('users');
@@ -248,9 +246,12 @@ class UsersControllerTest extends TestCase
         $user->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
-            ->shouldReceive('save')->once()->andReturnNull()
-            ->shouldReceive('roles')->once()->andReturn($user)
-            ->shouldReceive('sync')->once()->with($input['roles'])->andReturnNull();
+            ->shouldReceive('transaction')->once()
+                ->with(m::type('Closure'))->andReturnUsing(function ($c) {
+                    $c();
+                });
+        $user->shouldReceive('save')->once()->andReturnNull()
+            ->shouldReceive('roles->sync')->once()->with($input['roles'])->andReturnNull();
         $validator->shouldReceive('on')->once()->with('update')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturnNull();
@@ -258,10 +259,6 @@ class UsersControllerTest extends TestCase
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
         Foundation::shouldReceive('handles')->once()->with('orchestra::users', [])->andReturn('users');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
-        DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(function ($c) {
-                $c();
-            });
 
         $this->call('PUT', 'admin/users/foo', $input);
         $this->assertRedirectedTo('users');
@@ -310,9 +307,12 @@ class UsersControllerTest extends TestCase
         $user->shouldReceive('setAttribute')->once()->with('password', $input['password'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('email', $input['email'])->andReturnNull()
             ->shouldReceive('setAttribute')->once()->with('fullname', $input['fullname'])->andReturnNull()
-            ->shouldReceive('save')->once()->andReturnNull()
-            ->shouldReceive('roles')->once()->andReturn($user)
-            ->shouldReceive('sync')->once()->with($input['roles'])->andThrow('\Exception');
+            ->shouldReceive('transaction')->once()
+                ->with(m::type('Closure'))->andReturnUsing(function ($c) {
+                    $c();
+                });
+        $user->shouldReceive('save')->once()->andReturnNull()
+            ->shouldReceive('roles->sync')->once()->with($input['roles'])->andThrow('\Exception');
         $validator->shouldReceive('on')->once()->with('update')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturnNull();
@@ -323,10 +323,6 @@ class UsersControllerTest extends TestCase
             ->with('orchestra::users', [])->andReturn('users');
         Messages::shouldReceive('add')->once()
             ->with('error', m::any())->andReturnNull();
-        DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(function ($c) {
-                $c();
-            });
 
         $this->call('PUT', 'admin/users/foo', $input);
         $this->assertRedirectedTo('users');
@@ -377,7 +373,11 @@ class UsersControllerTest extends TestCase
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foo')
-            ->shouldReceive('delete')->once()->andReturnNull();
+            ->shouldReceive('transaction')->once()
+                ->with(m::type('Closure'))->andReturnUsing(function ($c) {
+                    $c();
+                });
+        $user->shouldReceive('delete')->once()->andReturnNull();
 
         Foundation::shouldReceive('make')->once()
             ->with('orchestra.user')->andReturn($builder);
@@ -386,10 +386,6 @@ class UsersControllerTest extends TestCase
         Messages::shouldReceive('add')->once()
             ->with('success', m::any())->andReturnNull();
         Auth::shouldReceive('user')->once()->andReturn($auth);
-        DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(function ($c) {
-                $c();
-            });
 
         $this->call('GET', 'admin/users/foo/delete');
         $this->assertRedirectedTo('users');
@@ -434,7 +430,11 @@ class UsersControllerTest extends TestCase
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn('foo')
-            ->shouldReceive('delete')->once()->andThrow('\Exception');
+            ->shouldReceive('transaction')->once()
+                ->with(m::type('Closure'))->andReturnUsing(function ($c) {
+                    $c();
+                });
+        $user->shouldReceive('delete')->once()->andThrow('\Exception');
 
         Foundation::shouldReceive('make')->once()
             ->with('orchestra.user')->andReturn($builder);
@@ -443,10 +443,6 @@ class UsersControllerTest extends TestCase
         Messages::shouldReceive('add')->once()
             ->with('error', m::any())->andReturnNull();
         Auth::shouldReceive('user')->once()->andReturn($auth);
-        DB::shouldReceive('transaction')->once()
-            ->with(m::type('Closure'))->andReturnUsing(function ($c) {
-                $c();
-            });
 
         $this->call('GET', 'admin/users/foo/delete');
         $this->assertRedirectedTo('users');

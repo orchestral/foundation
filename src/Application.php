@@ -46,7 +46,7 @@ class Application extends BaseApplication implements ApplicationContract
      */
     public function getCachedExtensionServicesPath()
     {
-        return $this->basePath().'/bootstrap/cache/extension.json';
+        return $this->basePath().'/bootstrap/cache/extension.php';
     }
 
     /**

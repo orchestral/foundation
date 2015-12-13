@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Console\Commands;
 
+use RuntimeException;
 use ClassPreloader\Factory;
 use ClassPreloader\Exceptions\SkipFileException;
 use ClassPreloader\Exceptions\VisitorExceptionInterface;
@@ -31,6 +32,8 @@ class OptimizeCommand extends Command
                 // Class Preloader 2.x
             } catch (VisitorExceptionInterface $e) {
                 // Class Preloader 3.x
+            } catch (RuntimeException $e) {
+                // Handle when fwrite fails.
             }
         }
 
