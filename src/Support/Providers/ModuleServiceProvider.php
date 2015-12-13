@@ -57,6 +57,13 @@ abstract class ModuleServiceProvider extends ServiceProvider
     protected $middleware = [];
 
     /**
+     * The application's route middleware groups.
+     *
+     * @var array
+     */
+    protected $middlewareGroups = [];
+
+    /**
      * The application's or extension's route middleware.
      *
      * @var array

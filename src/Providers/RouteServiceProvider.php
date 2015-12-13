@@ -25,6 +25,13 @@ class RouteServiceProvider extends ServiceProvider
     protected $middleware = [];
 
     /**
+     * The application's route middleware groups.
+     *
+     * @var array
+     */
+    protected $middlewareGroups = [];
+
+    /**
      * The application's route middleware.
      *
      * @var array
