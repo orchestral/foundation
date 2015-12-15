@@ -82,7 +82,7 @@ class ProfileCreatorTest extends TestCase
         $listener->shouldReceive('profileCreated')->once()->andReturn('profile.created');
 
         Config::shouldReceive('get')->once()->with('orchestra/foundation::roles.member', 2)->andReturn(2);
-        Config::shouldReceive('get')->once()->with('auth.register.email', 'emails.auth.register')
+        Config::shouldReceive('get')->once()->with('auth.registers.email', 'emails.auth.register')
             ->andReturn('emails.auth.register');
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Foundation::shouldReceive('memory')->once()->andReturn($memory);
@@ -133,7 +133,7 @@ class ProfileCreatorTest extends TestCase
         $listener->shouldReceive('profileCreatedWithoutNotification')->once()->andReturn('profile.created.without.notification');
 
         Config::shouldReceive('get')->once()->with('orchestra/foundation::roles.member', 2)->andReturn(2);
-        Config::shouldReceive('get')->once()->with('auth.register.email', 'emails.auth.register')
+        Config::shouldReceive('get')->once()->with('auth.registers.email', 'emails.auth.register')
             ->andReturn('emails.auth.register');
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Foundation::shouldReceive('memory')->once()->andReturn($memory);
