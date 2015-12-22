@@ -5,6 +5,14 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.20 {#v3-1-20}
+
+* Utilise `Model::saveOrFail()` and `Model::transaction()` method when possible.
+* Deprecate `Orchestra\Foundation\Http\Middleware\RequireCsrfToken` and make it an alias to `Orchestra\Http\Middleware\RequireCsrfToken`.
+* Fix problems with rate limiter when receiving utf-8 characters. ([@taylorotwell](https://github.com/taylorotwell))
+* Update assets:
+  - Vue v1.0.12.
+  
 ### v3.1.19 {#v3-1-19}
 
 * Add `Orchestra\Foundation\Listeners\UserAccess` so it can be shared with `orchestra/lumen`.
