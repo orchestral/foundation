@@ -1,5 +1,6 @@
 <?php namespace Orchestra\Foundation\Console\Commands;
 
+use PDOException;
 use Illuminate\Console\Command;
 use Orchestra\Contracts\Memory\Provider;
 use Orchestra\Contracts\Foundation\Foundation;
@@ -79,14 +80,18 @@ class AssembleCommand extends Command
 
         $extensions = $this->memory->get('extensions.active', []);
 
-        foreach ($extensions as $extension => $config) {
-            $options = ['name' => $extension, '--force' => true];
+        try {
+            foreach ($extensions as $extension => $config) {
+                $options = ['name' => $extension, '--force' => true];
 
-            $this->call('extension:refresh', $options);
-            $this->call('extension:update', $options);
+                $this->call('extension:refresh', $options);
+                $this->call('extension:update', $options);
+            }
+
+            $this->foundation->make('orchestra.extension.provider')->writeFreshManifest();
+        } catch (PDOException $e) {
+            // Skip if application is unable to make connection to the database.
         }
-
-        $this->foundation->make('orchestra.extension.provider')->writeFreshManifest();
     }
 
     /**
