@@ -90,7 +90,7 @@ class ProfileCreator extends User implements Command
         ];
 
         $subject = trans('orchestra/foundation::email.credential.register', ['site' => $site]);
-        $message = Message::create(config('auth.register.email', 'emails.auth.register'), $data, $subject);
+        $message = Message::create(config('auth.registers.email', 'emails.auth.register'), $data, $subject);
 
         $receipt = $user->notify($message);
 
