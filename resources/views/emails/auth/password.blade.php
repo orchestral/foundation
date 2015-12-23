@@ -8,7 +8,7 @@
 
         <p>
             To reset your password, complete this form: {{ url(handles("orchestra::forgot/reset/{$token}")) }}.<br/>
-            This link will expire in {{ config('auth.reminder.expire', 60) }} minutes.
+            This link will expire in {{ config('auth.passwords.'.config('auth.defaults.password', 'users').'.expire', 60) }} minutes.
         </p>
     </body>
 </html>
