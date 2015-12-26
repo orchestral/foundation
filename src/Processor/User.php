@@ -65,6 +65,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
             'eloquent' => $eloquent,
             'roles'    => $roles,
             'table'    => $table,
+            'search'   => $search,
         ];
 
         return $listener->showUsers($data);
