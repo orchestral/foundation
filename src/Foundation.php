@@ -6,7 +6,6 @@ use Orchestra\Http\RouteManager;
 use Orchestra\Extension\RouteGenerator;
 use Orchestra\Contracts\Memory\Provider;
 use Orchestra\Foundation\Http\Handlers\UserMenuHandler;
-use Orchestra\Foundation\Http\Middleware\UseBackendTheme;
 use Orchestra\Foundation\Http\Handlers\SettingMenuHandler;
 use Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler;
 use Orchestra\Contracts\Foundation\Foundation as FoundationContract;

@@ -88,7 +88,7 @@ class LoadExpresso
     {
         $html = $app->make('html');
 
-        $html->macro('title', function ($title = null) use ($app, $html) {
+        $html->macro('title', function ($title = null) use ($html) {
             $builder = new Title($html, memorize('site.name'), [
                 'site' => get_meta('html::title.format.site', '{site.name} (Page {page.number})'),
                 'page' => get_meta('html::title.format.page', '{page.title} &mdash; {site.name}'),

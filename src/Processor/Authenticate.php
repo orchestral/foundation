@@ -22,6 +22,20 @@ abstract class Authenticate extends Processor
     }
 
     /**
+     * Set authentication guard.
+     *
+     * @param  \Orchestra\Contracts\Auth\Guard  $auth
+     *
+     * @return $this
+     */
+    public function setAuthGuard(Guard $auth)
+    {
+        $this->auth = $auth;
+
+        return $this;
+    }
+
+    /**
      * Get user.
      *
      * @return \Orchestra\Model\User|null
