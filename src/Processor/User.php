@@ -48,13 +48,8 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
 
         // Get Users (with roles) and limit it to only 30 results for
         // pagination. Don't you just love it when pagination simply works.
-<<<<<<< HEAD
-        $eloquent = Foundation::make('orchestra.user')->search($searchKeyword, $searchRoles);
-        $roles    = Foundation::make('orchestra.role')->pluck('name', 'id');
-=======
         $eloquent = Foundation::make('orchestra.user')->search($search['keyword'], $search['roles']);
-        $roles    = Foundation::make('orchestra.role')->lists('name', 'id');
->>>>>>> 3.1
+        $roles    = Foundation::make('orchestra.role')->pluck('name', 'id');
 
         // Build users table HTML using a schema liked code structure.
         $table = $this->presenter->table($eloquent);
