@@ -53,7 +53,7 @@
         "test": [
             "./vendor/bin/phpunit"
         ],
-        "update-frontend": [
+        "update:frontend": [
             "bower update",
             "bower-installer",
             "gulp"
