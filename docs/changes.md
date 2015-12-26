@@ -10,7 +10,7 @@ title: Foundation Change Log
 * Update support to Laravel Framework v5.2.5+.
 * Defer orchestra/foundation routes registration after extension has been loaded.
 * Improved performances by reducing call within `Illuminate\Container\Container`.
-* Utilize Orchestra\Authorization\Authorization::canIf() helper.
+* Utilize `Orchestra\Authorization\Authorization::canIf()` helper.
 * Allow login key to be customize between application instead of a hardcoded default using "email".
 * Add support for menu nesting with `Orchestra\Foundation\Support\MenuHandler`.
 * Publish extension assets and migrations during `php artisan orchestra:assemble`.
