@@ -185,6 +185,7 @@ class CredentialControllerTest extends TestCase
         $this->app->instance('Orchestra\Foundation\Processor\DeauthenticateUser', $deauthenticate);
         $this->app->instance('Orchestra\Contracts\Auth\Command\ThrottlesLogins', $throttles);
 
+
         return [$authenticate, $deauthenticate];
     }
 }

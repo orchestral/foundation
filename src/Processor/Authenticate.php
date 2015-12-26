@@ -18,7 +18,7 @@ abstract class Authenticate extends Processor
      */
     public function __construct(Guard $auth)
     {
-        $this->setAuthGuard($auth);
+        $this->auth = $auth;
     }
 
     /**
