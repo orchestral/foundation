@@ -43,7 +43,6 @@ class RouteServiceProvider extends ServiceProvider
         'orchestra.guest'       => RedirectIfAuthenticated::class,
         'orchestra.installable' => CanBeInstalled::class,
         'orchestra.installed'   => RedirectIfInstalled::class,
-        'orchestra.manage'      => CanManage::class,
         'orchestra.registrable' => CanRegisterUser::class,
     ];
 
