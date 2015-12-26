@@ -41,13 +41,20 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      */
     public function index(UserViewerListener $listener, array $input = [])
     {
-        $searchKeyword = Arr::get($input, 'q', '');
-        $searchRoles   = Arr::get($input, 'roles', []);
+        $search = [
+            'keyword' => Arr::get($input, 'q', ''),
+            'roles'   => Arr::get($input, 'roles', []),
+        ];
 
         // Get Users (with roles) and limit it to only 30 results for
         // pagination. Don't you just love it when pagination simply works.
+<<<<<<< HEAD
         $eloquent = Foundation::make('orchestra.user')->search($searchKeyword, $searchRoles);
         $roles    = Foundation::make('orchestra.role')->pluck('name', 'id');
+=======
+        $eloquent = Foundation::make('orchestra.user')->search($search['keyword'], $search['roles']);
+        $roles    = Foundation::make('orchestra.role')->lists('name', 'id');
+>>>>>>> 3.1
 
         // Build users table HTML using a schema liked code structure.
         $table = $this->presenter->table($eloquent);
