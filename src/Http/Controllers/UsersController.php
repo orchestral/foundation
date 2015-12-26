@@ -29,7 +29,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
     protected function setupMiddleware()
     {
         $this->middleware('orchestra.auth');
-        $this->middleware('orchestra.manage:users');
+        $this->middleware('orchestra.can:manage-users');
         $this->middleware('orchestra.csrf', ['only' => 'delete']);
     }
 
