@@ -29,7 +29,7 @@ class ConfigureController extends Controller implements Listener
     protected function setupMiddleware()
     {
         $this->middleware('orchestra.auth');
-        $this->middleware('orchestra.manage');
+        $this->middleware('orchestra.can:manage-orchestra');
     }
 
     /**

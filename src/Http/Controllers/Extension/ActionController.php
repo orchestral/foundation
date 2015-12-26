@@ -20,7 +20,7 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
     protected function setupMiddleware()
     {
         $this->middleware('orchestra.auth');
-        $this->middleware('orchestra.manage');
+        $this->middleware('orchestra.can:manage-orchestra');
         $this->middleware('orchestra.csrf');
     }
 

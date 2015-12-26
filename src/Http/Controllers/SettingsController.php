@@ -27,7 +27,7 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
     protected function setupMiddleware()
     {
         $this->middleware('orchestra.auth');
-        $this->middleware('orchestra.manage');
+        $this->middleware('orchestra.can:manage-orchestra');
         $this->middleware('orchestra.csrf', ['only' => 'migrate']);
     }
 
