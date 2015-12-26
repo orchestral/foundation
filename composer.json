@@ -22,6 +22,7 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "~5.1.27",
+        "laravie/html": "~5.1.5",
         "orchestra/asset": "~3.1.0",
         "orchestra/auth": "~3.1.3",
         "orchestra/contracts": "~3.1.14",
