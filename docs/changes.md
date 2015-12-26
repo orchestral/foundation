@@ -25,6 +25,7 @@ title: Foundation Change Log
 * Add `Orchestra\Foundation\Support\Providers\ModuleServiceProvider` to replace `Orchestra\Foundation\Support\Providers\ExtensionRouteServiceProvider`.
 * Add `Orchestra\Foundation\Listeners\UserAccess` so it can be shared with `orchestra/lumen`.
 * Add `acl` language files.
+* Deprecate `Orchestra\Foundation\Http\Middleware\CanManage`.
 * Remove `Orchestra\Foundation\AdminMenuHandler` class.
 * Remove `Orchestra\Foundation\Application::getDeferredServices()` method.
 * Remove `orchestra/resources` support.
