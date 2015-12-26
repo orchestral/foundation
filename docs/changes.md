@@ -5,6 +5,13 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.21 {#v3-1-21}
+
+* Add `Orchestra\Foundation\Processor\Authenticate::setAuthGuard()` method to override default auth guard.
+* Refactor user search filters.
+* Update assets:
+  - Vue v1.0.13.
+
 ### v3.1.20 {#v3-1-20}
 
 * Utilise `Model::saveOrFail()` and `Model::transaction()` method when possible.
