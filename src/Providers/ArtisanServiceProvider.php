@@ -39,7 +39,7 @@ class ArtisanServiceProvider extends ServiceProvider
      */
     protected function registerOptimizeCommand()
     {
-        $this->app->singleton('command.optimize', function ($app) {
+        $this->app->singleton('command.optimize', function (Application $app) {
             return new OptimizeCommand($app->make('composer'));
         });
     }
