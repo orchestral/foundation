@@ -5,6 +5,15 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.17 {#v3-0-17}
+
+* Add `Orchestra\Foundation\Support\Providers\ModuleServiceProvider`.
+* Simplify welcome message.
+* Update assets:
+  - Vue v0.12.16.
+  - Javie v2.0.3.
+  - Twitter Bootstrap v3.3.6.
+
 ### v3.0.16 {#v3-0-16}
 
 * Fixes google fonts to be loaded via HTTPS URL to allow Orchestra Platform to be used either using SSL or without.
