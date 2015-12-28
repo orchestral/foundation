@@ -107,6 +107,7 @@ class ServiceProviderTest extends TestCase
     {
         return [
             'command.clear-compiled',
+            'command.auth.resets.clear',
             'command.config.cache',
             'command.config.clear',
             'command.down',
