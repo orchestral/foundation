@@ -5,7 +5,12 @@ title: Foundation Change Log
 
 ## Version 3.2 {#v3-2}
 
-### v3.2.0@dev {#v3-2-0}
+### v3.2.1 {#v3-2-1}
+
+* Bump `orchestra/auth` and `orchestra/notifier` to use `v3.2.1` as minimum.
+* Use `Orchestra\Authorization\Authorization::canIf()` on `Orchestra\Foundation\Http\Middleware\LoginAs`.
+
+### v3.2.0 {#v3-2-0}
 
 * Update support to Laravel Framework v5.2.5+.
 * Defer orchestra/foundation routes registration after extension has been loaded.

@@ -27,7 +27,7 @@ class LoginAsTest extends \PHPUnit_Framework_TestCase
         $response = m::mock('\Illuminate\Contracts\Routing\ResponseFactory');
 
         $request->shouldReceive('input')->once()->with('_as')->andReturnNull();
-        $acl->shouldReceive('can')->once()->with('manage orchestra')->andReturn(false);
+        $acl->shouldReceive('canIf')->once()->with('manage orchestra')->andReturn(false);
 
         $next = function ($request) {
             return 'foo';
@@ -54,7 +54,7 @@ class LoginAsTest extends \PHPUnit_Framework_TestCase
 
         $request->shouldReceive('input')->once()->with('_as')->andReturn(5)
             ->shouldReceive('url')->once()->andReturn('http://localhost');
-        $acl->shouldReceive('can')->once()->with('manage orchestra')->andReturn(true);
+        $acl->shouldReceive('canIf')->once()->with('manage orchestra')->andReturn(true);
         $auth->shouldReceive('loginUsingId')->once()->with(5)->andReturnNull();
         $response->shouldReceive('redirectTo')->once()->with('http://localhost')->andReturn($redirect);
 
