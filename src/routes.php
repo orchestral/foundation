@@ -26,11 +26,10 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', function (Router
     }
 
     // Route to reset password.
-    $router->get('forgot', 'Account\PasswordBrokerController@create');
-    $router->post('forgot', 'Account\PasswordBrokerController@store');
-    $router->get('forgot/reset/{token}', 'Account\PasswordBrokerController@show');
-    $router->post('forgot/reset/{token}', 'Account\PasswordBrokerController@show');
-    $router->post('forgot/reset', 'Account\PasswordBrokerController@update');
+    $router->get('forgot', 'Account\PasswordBrokerController@showLinkRequestForm');
+    $router->post('forgot', 'Account\PasswordBrokerController@sendResetLinkEmail');
+    $router->get('forgot/reset/{token?}', 'Account\PasswordBrokerController@showResetForm');
+    $router->post('forgot/reset', 'Account\PasswordBrokerController@reset');
 
     // Route to asset publishing.
     $router->get('publisher', 'PublisherController@index');

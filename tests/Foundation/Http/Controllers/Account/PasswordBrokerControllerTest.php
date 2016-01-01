@@ -121,7 +121,7 @@ class PasswordBrokerControllerTest extends TestCase
         $view = m::mock('\Illuminate\Contracts\View\View');
 
         View::shouldReceive('make')->once()->with('orchestra/foundation::forgot.reset', [], [])->andReturn($view);
-        $view->shouldReceive('with')->once()->with('token', 'auniquetoken')->andReturn('foo');
+        $view->shouldReceive('with')->once()->with(['email' => null, 'token' => 'auniquetoken'])->andReturn('foo');
 
         $this->call('GET', 'admin/forgot/reset/auniquetoken');
         $this->assertResponseOk();
@@ -129,11 +129,13 @@ class PasswordBrokerControllerTest extends TestCase
 
     /**
      * Test GET /admin/forgot/reset given token is null.
-     *
-     * @expectedException \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
      */
     public function testGetEditActionGivenTokenIsNull()
     {
+        $this->getProcessorMock();
+
+        View::shouldReceive('make')->once()->with('orchestra/foundation::forgot.index', [], [])->andReturn('foo');
+
         $this->call('GET', 'admin/forgot/reset');
     }
 
