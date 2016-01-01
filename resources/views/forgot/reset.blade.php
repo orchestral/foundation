@@ -9,7 +9,7 @@
 				<div class="form-group{!! $errors->has('email') ? ' error' : '' !!}">
 					{!! Form::label('email', trans('orchestra/foundation::label.users.email'), ['class' => 'three columns control-label']) !!}
 					<div class="nine columns">
-						{!! Form::input('email', 'email', old('email'), ['required' => true, 'class' => 'form-control']) !!}
+						{!! Form::input('email', 'email', isset($email) ? $email : old('email'), ['required' => true, 'class' => 'form-control']) !!}
 						{!! $errors->first('email', '<p class="help-block">:message</p>') !!}
 					</div>
 				</div>
