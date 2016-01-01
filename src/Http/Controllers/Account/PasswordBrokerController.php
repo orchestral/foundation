@@ -1,6 +1,6 @@
 <?php namespace Orchestra\Foundation\Http\Controllers\Account;
 
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use Orchestra\Contracts\Auth\Listener\PasswordReset;
 use Orchestra\Contracts\Auth\Listener\PasswordResetLink;
 use Orchestra\Foundation\Http\Controllers\AdminController;
@@ -39,7 +39,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      *
      * @return mixed
      */
-    public function create()
+    public function showLinkRequestForm()
     {
         set_meta('title', trans('orchestra/foundation::title.forgot-password'));
 
@@ -55,9 +55,9 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      *
      * @return mixed
      */
-    public function store()
+    public function sendResetLinkEmail()
     {
-        return $this->processor->store($this, Input::all());
+        return $this->processor->store($this, Request::all());
     }
 
     /**
@@ -70,11 +70,17 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      *
      * @return mixed
      */
-    public function show($token)
+    public function showResetForm($token = null)
     {
+        if (is_null($token)) {
+            return $this->showLinkRequestForm();
+        }
+
+        $email = Request::input('email');
+
         set_meta('title', trans('orchestra/foundation::title.reset-password'));
 
-        return view('orchestra/foundation::forgot.reset')->with('token', $token);
+        return view('orchestra/foundation::forgot.reset')->with(compact('email', 'token'));
     }
 
     /**
@@ -84,9 +90,9 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      *
      * @return mixed
      */
-    public function update()
+    public function reset()
     {
-        $input = Input::only('email', 'password', 'password_confirmation', 'token');
+        $input = Request::only('email', 'password', 'password_confirmation', 'token');
 
         return $this->processor->update($this, $input);
     }
@@ -145,7 +151,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
     public function passwordResetHasFailed($response)
     {
         $message = trans($response);
-        $token   = Input::get('token');
+        $token   = Request::input('token');
 
         return $this->redirectWithMessage(handles("orchestra::forgot/reset/{$token}"), $message, 'error');
     }
