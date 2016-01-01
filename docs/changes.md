@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.22 {#v3-1-22}
+
+* Fixes user roles does not display validation errors.
+
 ### v3.1.21 {#v3-1-21}
 
 * Add `Orchestra\Foundation\Processor\Authenticate::setAuthGuard()` method to override default auth guard.
