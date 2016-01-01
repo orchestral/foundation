@@ -5,6 +5,12 @@ title: Foundation Change Log
 
 ## Version 3.2 {#v3-2}
 
+### v3.2.2 {#v3-2-2}
+
+* Fixes user roles does not display validation errors.
+* Pre-populate e-mail address when accessing password resetter page.
+* Update `Orchestra\Foundation\Http\Controllers\Account\PasswordBrokerController` to match Laravel codes.
+
 ### v3.2.1 {#v3-2-1}
 
 * Bump `orchestra/auth` and `orchestra/notifier` to use `v3.2.1` as minimum.

@@ -26,7 +26,7 @@
         "orchestra/asset": "~3.2.0",
         "orchestra/auth": "~3.2.2",
         "orchestra/contracts": "~3.2.1",
-        "orchestra/extension": "~3.2.1",
+        "orchestra/extension": "~3.2.0",
         "orchestra/html": "~3.2.1",
         "orchestra/kernel": "~3.2.0",
         "orchestra/memory": "~3.2.0",
