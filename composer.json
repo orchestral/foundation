@@ -21,7 +21,7 @@
     },
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "~5.2.6",
+        "laravel/framework": "~5.2.8",
         "laravie/html": "~5.2.1",
         "orchestra/asset": "~3.2.0",
         "orchestra/auth": "~3.2.2",
