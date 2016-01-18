@@ -37,7 +37,7 @@
     $('input[type="date"]').datepicker({
       dateFormat: "yy-mm-dd"
     });
-    $('select.form-control[role!="agreement"], .navbar-form > select[role!="agreement"]').select2().removeClass('form-control');
+    $('select[role!="native"], select.form-control[role!="agreement"], .navbar-form > select[role!="agreement"]').select2().removeClass('form-control');
     $('*[role="tooltip"]').tooltip();
   };
 
