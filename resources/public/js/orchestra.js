@@ -37,7 +37,13 @@
     $('input[type="date"]').datepicker({
       dateFormat: "yy-mm-dd"
     });
-    $('select[role!="native"], select.form-control[role!="agreement"], .navbar-form > select[role!="agreement"]').select2().removeClass('form-control');
+    $('select.form-control, .navbar-form > select').each(i, item)(function() {
+      var selector;
+      selector = $(item);
+      if (selector.is('[role!="agreement"]' || selector.is('[role!="native"]'))) {
+        return selector.select2().removeClass('form-control');
+      }
+    });
     $('*[role="tooltip"]').tooltip();
   };
 
