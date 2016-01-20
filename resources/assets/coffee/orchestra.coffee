@@ -35,7 +35,7 @@ setup_helper = ($) ->
     .each(i, item) ->
       selector = $ item
 
-      if selector.is '[role!="agreement"]' or selector.is '[role!="native"]'
+      if selector.is('[role!="agreement"]') or selector.is('[role!="native"]')
         selector
           .select2()
           .removeClass 'form-control'
