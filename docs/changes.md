@@ -5,6 +5,13 @@ title: Foundation Change Log
 
 ## Version 3.2 {#v3-2}
 
+### v3.2.3 {#v3-2-3}
+
+* Add `select[role="native"]` to preserve `<select>` output as native HTML Select instead of `Select2`.
+* Add useful CSS utilities for Vue.js cloaking. ([@adamwathan](https://github.com/adamwathan))
+* Update assets:
+  - Vue v1.0.15.
+
 ### v3.2.2 {#v3-2-2}
 
 * Fixes user roles does not display validation errors.
