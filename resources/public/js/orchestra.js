@@ -37,7 +37,7 @@
     $('input[type="date"]').datepicker({
       dateFormat: "yy-mm-dd"
     });
-    $('select.form-control, .navbar-form > select').each(i, item)(function() {
+    $('select.form-control, .navbar-form > select').each(function(i, item) {
       var selector;
       selector = $(item);
       if (selector.is('[role!="agreement"]') || selector.is('[role!="native"]')) {
