@@ -32,7 +32,7 @@ setup_helper = ($) ->
   $ 'input[type="date"]'
     .datepicker { dateFormat: "yy-mm-dd" }
   $ 'select.form-control, .navbar-form > select'
-    .each(i, item) ->
+    .each (i, item) ->
       selector = $ item
 
       if selector.is('[role!="agreement"]') or selector.is('[role!="native"]')
