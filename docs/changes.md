@@ -56,6 +56,12 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.24 {#v3-1-24}
+
+* Fixes `ReferenceError: i is not defined` on pages with `<select>`.
+* Update assets:
+  - Vue v1.0.16.
+
 ### v3.1.23 {#v3-1-23}
 
 * Add `select[role="native"]` to preserve `<select>` output as native HTML Select instead of `Select2`.
