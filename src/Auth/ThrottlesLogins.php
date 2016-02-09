@@ -69,7 +69,6 @@ abstract class ThrottlesLogins
     /**
      * Fire an event when a lockout occurs.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return void
      */
     public function fireLockoutEvent()
