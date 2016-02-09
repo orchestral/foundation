@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Lockout;
+use Illuminate\Support\Facades\Event;
 
 abstract class ThrottlesLogins
 {
@@ -63,6 +65,18 @@ abstract class ThrottlesLogins
 
         return $this;
     }
+
+    /**
+     * Fire an event when a lockout occurs.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    public function fireLockoutEvent()
+    {
+        Event::fire(new Lockout($this->request));
+    }
+
 
     /**
      * Get the maximum number of login attempts for delaying further attempts.
