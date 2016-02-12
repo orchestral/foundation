@@ -1,30 +1,19 @@
 <?php namespace Orchestra\Foundation\Http\Presenters;
 
 use Orchestra\Contracts\Html\Form\Fieldset;
-use Illuminate\Contracts\Encryption\Encrypter;
 use Orchestra\Contracts\Html\Form\Grid as FormGrid;
-use Illuminate\Contracts\Encryption\DecryptException;
 use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 
 class Setting extends Presenter
 {
     /**
-     * The encrypter implementation.
-     *
-     * @var \Illuminate\Contracts\Encryption\Encrypter
-     */
-    protected $encrypter;
-
-    /**
      * Construct a new User presenter.
      *
      * @param  \Orchestra\Contracts\Html\Form\Factory  $form
-     * @param  \Illuminate\Contracts\Encryption\Encrypter  $encrypter
      */
-    public function __construct(FormFactory $form, Encrypter $encrypter)
+    public function __construct(FormFactory $form)
     {
         $this->form = $form;
-        $this->encrypter = $encrypter;
     }
 
     /**
@@ -108,7 +97,7 @@ class Setting extends Presenter
             $fieldset->control('input:password', 'email_password')
                 ->label(trans('orchestra/foundation::label.email.password'))
                 ->help(view('orchestra/foundation::settings._hidden', [
-                    'value'  => $this->getDecryptedValue($model->get('email_password')),
+                    'value'  => $model->secureGet('email_password'),
                     'action' => 'change_password',
                     'field'  => 'email_password',
                 ]));
@@ -128,7 +117,7 @@ class Setting extends Presenter
                     return $this->getDecryptedValue($row->email_secret);
                 })
                 ->help(view('orchestra/foundation::settings._hidden', [
-                    'value'  => $this->getDecryptedValue($model->get('email_secret')),
+                    'value'  => $model->secureGet('email_secret'),
                     'action' => 'change_secret',
                     'field'  => 'email_secret',
                 ]));
@@ -155,21 +144,5 @@ class Setting extends Presenter
                     'no'  => 'No',
                 ]);
         });
-    }
-
-    /**
-     * Get decrypted configuration value.
-     *
-     * @param  string  $value
-     *
-     * @return string
-     */
-    public function getDecryptedValue($value)
-    {
-        try {
-            return $this->encrypter->decrypt($value);
-        } catch (DecryptException $e) {
-            return $value;
-        }
     }
 }

@@ -5,8 +5,6 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Contracts\Memory\Provider;
 use Orchestra\Support\Facades\Foundation;
-use Illuminate\Contracts\Encryption\Encrypter;
-use Illuminate\Contracts\Encryption\DecryptException;
 use Orchestra\Foundation\Validation\Setting as Validator;
 use Orchestra\Foundation\Http\Presenters\Setting as Presenter;
 use Orchestra\Contracts\Foundation\Command\SystemUpdater as SystemUpdateCommand;
@@ -24,26 +22,17 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
     protected $memory;
 
     /**
-     * The encrypter implementation.
-     *
-     * @var \Illuminate\Contracts\Encryption\Encrypter
-     */
-    protected $encrypter;
-
-    /**
      * Create a new processor instance.
      *
      * @param  \Orchestra\Foundation\Http\Presenters\Setting  $presenter
      * @param  \Orchestra\Foundation\Validation\Setting  $validator
      * @param  \Orchestra\Contracts\Memory\Provider  $memory
-     * @param  \\Illuminate\Contracts\Encryption\Encrypter  $encrypter
      */
-    public function __construct(Presenter $presenter, Validator $validator, Provider $memory, Encrypter $encrypter)
+    public function __construct(Presenter $presenter, Validator $validator, Provider $memory)
     {
         $this->presenter = $presenter;
         $this->validator = $validator;
         $this->memory    = $memory;
-        $this->encrypter = $encrypter;
     }
 
     /**
@@ -69,12 +58,12 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
             'email_host'       => $memory->get('email.host', ''),
             'email_port'       => $memory->get('email.port', ''),
             'email_username'   => $memory->get('email.username', ''),
-            'email_password'   => $this->getDecryptedValue($memory->get('email.password', '')),
+            'email_password'   => $memory->secureGet('email.password', ''),
             'email_encryption' => $memory->get('email.encryption', ''),
             'email_sendmail'   => $memory->get('email.sendmail', ''),
             'email_queue'      => ($memory->get('email.queue', false) ? 'yes' : 'no'),
-            'email_key'        => $this->getDecryptedValue($memory->get('email.key', '')),
-            'email_secret'     => $this->getDecryptedValue($memory->get('email.secret', '')),
+            'email_key'        => $memory->secureGet('email.key', ''),
+            'email_secret'     => $memory->secureGet('email.secret', ''),
             'email_domain'     => $memory->get('email.domain', ''),
             'email_region'     => $memory->get('email.region', ''),
         ]);
@@ -118,22 +107,22 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
         ]);
 
         if ((empty($input['email_password']) && $input['enable_change_password'] === 'no')) {
-            $input['email_password'] = $this->getDecryptedValue($memory->get('email.password'));
+            $input['email_password'] = $memory->secureGet('email.password');
         }
 
         if ((empty($input['email_secret']) && $input['enable_change_secret'] === 'no')) {
-            $input['email_secret'] = $this->getDecryptedValue($memory->get('email.secret'));
+            $input['email_secret'] = $memory->secureGet('email.secret');
         }
 
         $memory->put('email.host', $this->getValue($input['email_host'], 'mail.host'));
         $memory->put('email.port', $this->getValue($input['email_port'], 'mail.port'));
         $memory->put('email.username', $this->getValue($input['email_username'], 'mail.username'));
-        $memory->put('email.password', $this->getEncryptedValue($input['email_password'], 'mail.password'));
+        $memory->securePut('email.password', $this->getValue($input['email_password'], 'mail.password'));
         $memory->put('email.encryption', $this->getValue($input['email_encryption'], 'mail.encryption'));
         $memory->put('email.sendmail', $this->getValue($input['email_sendmail'], 'mail.sendmail'));
         $memory->put('email.queue', ($input['email_queue'] === 'yes'));
-        $memory->put('email.key', $this->getEncryptedValue($input['email_key'], "services.{$driver}.key"));
-        $memory->put('email.secret', $this->getEncryptedValue($input['email_secret'], "services.{$driver}.secret"));
+        $memory->securePut('email.key', $this->getValue($input['email_key'], "services.{$driver}.key"));
+        $memory->securePut('email.secret', $this->getValue($input['email_secret'], "services.{$driver}.secret"));
         $memory->put('email.domain', $this->getValue($input['email_domain'], "services.{$driver}.domain"));
         $memory->put('email.region', $this->getValue($input['email_region'], "services.{$driver}.region"));
 
@@ -172,36 +161,5 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
         }
 
         return $input;
-    }
-
-    /**
-     * Get decrypted configuration value.
-     *
-     * @param  string  $value
-     *
-     * @return string
-     */
-    public function getDecryptedValue($value)
-    {
-        try {
-            return $this->encrypter->decrypt($value);
-        } catch (DecryptException $e) {
-            return $value;
-        }
-    }
-
-    /**
-     * Resolve value or grab from configuration.
-     *
-     * @param  mixed   $input
-     * @param  string  $alternative
-     *
-     * @return mixed
-     */
-    private function getEncryptedValue($input, $alternative)
-    {
-        $value = $this->getValue($input, $alternative);
-
-        return $this->encrypter->encrypt($value);
     }
 }

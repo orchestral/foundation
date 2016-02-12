@@ -48,7 +48,8 @@ class SettingsControllerTest extends TestCase
         $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
         list($presenter, ) = $this->bindDependencies();
 
-        $memory->shouldReceive('get')->times(16)->andReturn('');
+        $memory->shouldReceive('get')->times(13)->andReturn('')
+            ->shouldReceive('secureGet')->times(3)->andReturn('');
         $presenter->shouldReceive('form')->once()->andReturn('edit.settings');
 
         $this->app->instance('Orchestra\Contracts\Memory\Provider', $memory);
@@ -89,9 +90,10 @@ class SettingsControllerTest extends TestCase
         $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
         list(, $validator) = $this->bindDependencies();
 
-        $memory->shouldReceive('put')->times(16)->andReturnNull()
-            ->shouldReceive('get')->once()->with('email.password')->andReturn('foo')
-            ->shouldReceive('get')->once()->with('email.secret')->andReturn('foo');
+        $memory->shouldReceive('put')->times(13)->andReturnNull()
+            ->shouldReceive('securePut')->times(3)->andReturnNull()
+            ->shouldReceive('secureGet')->once()->with('email.password')->andReturn('foo')
+            ->shouldReceive('secureGet')->once()->with('email.secret')->andReturn('foo');
         $validator->shouldReceive('on')->once()->with('smtp')->andReturn($validator)
             ->shouldReceive('with')->once()->with($input)->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(false);
