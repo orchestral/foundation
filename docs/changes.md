@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 3.0 {#v3-0}
 
+### v3.0.18 {#v3-0-18}
+
+* Encrypt private informations under Orchestra Platform Settings. 
+
 ### v3.0.17 {#v3-0-17}
 
 * Add `Orchestra\Foundation\Support\Providers\ModuleServiceProvider`.
