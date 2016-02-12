@@ -3,6 +3,7 @@
 use Orchestra\Contracts\Html\Form\Fieldset;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Orchestra\Contracts\Html\Form\Grid as FormGrid;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 
 class Setting extends Presenter
@@ -107,7 +108,7 @@ class Setting extends Presenter
             $fieldset->control('input:password', 'email_password')
                 ->label(trans('orchestra/foundation::label.email.password'))
                 ->help(view('orchestra/foundation::settings._hidden', [
-                    'model'  => $model,
+                    'value'  => $this->getDecryptedValue($model->get('email_password')),
                     'action' => 'change_password',
                     'field'  => 'email_password',
                 ]));
@@ -121,7 +122,7 @@ class Setting extends Presenter
             $fieldset->control('input:password', 'email_secret')
                 ->label(trans('orchestra/foundation::label.email.secret'))
                 ->help(view('orchestra/foundation::settings._hidden', [
-                    'model'  => $model,
+                    'value'  => $this->getDecryptedValue($model->get('email_secret')),
                     'action' => 'change_secret',
                     'field'  => 'email_secret',
                 ]));
@@ -148,5 +149,21 @@ class Setting extends Presenter
                     'no'  => 'No',
                 ]);
         });
+    }
+
+    /**
+     * Get decrypted configuration value.
+     *
+     * @param  string  $value
+     *
+     * @return string
+     */
+    public function getDecryptedValue($value)
+    {
+        try {
+            return $this->encrypter->decrypt($value);
+        } catch (DecryptException $e) {
+            return $value;
+        }
     }
 }
