@@ -101,6 +101,7 @@ class AuthenticateUser extends Authenticate implements Command
     protected function handleUserHasTooManyAttempts(Listener $listener, array $input, ThrottlesCommand $throttles = null)
     {
         $throttles->incrementLoginAttempts($input);
+        $throttles->fireLockoutEvent();
 
         return $listener->sendLockoutResponse($input, $throttles->getSecondsBeforeNextAttempts($input));
     }

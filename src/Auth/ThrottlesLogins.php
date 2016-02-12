@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Lockout;
+use Illuminate\Support\Facades\Event;
 
 abstract class ThrottlesLogins
 {
@@ -62,6 +64,16 @@ abstract class ThrottlesLogins
         $this->loginKey = $key;
 
         return $this;
+    }
+
+    /**
+     * Fire an event when a lockout occurs.
+     *
+     * @return void
+     */
+    public function fireLockoutEvent()
+    {
+        Event::fire(new Lockout($this->request));
     }
 
     /**
