@@ -1,19 +1,29 @@
 <?php namespace Orchestra\Foundation\Http\Presenters;
 
 use Orchestra\Contracts\Html\Form\Fieldset;
+use Illuminate\Contracts\Encryption\Encrypter;
 use Orchestra\Contracts\Html\Form\Grid as FormGrid;
 use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 
 class Setting extends Presenter
 {
     /**
+     * The encrypter implementation.
+     *
+     * @var \Illuminate\Contracts\Encryption\Encrypter
+     */
+    protected $encrypter;
+
+    /**
      * Construct a new User presenter.
      *
      * @param  \Orchestra\Contracts\Html\Form\Factory  $form
+     * @param  \Illuminate\Contracts\Encryption\Encrypter  $encrypter
      */
-    public function __construct(FormFactory $form)
+    public function __construct(FormFactory $form, Encrypter $encrypter)
     {
         $this->form = $form;
+        $this->encrypter = $encrypter;
     }
 
     /**
@@ -70,7 +80,9 @@ class Setting extends Presenter
      */
     protected function mailer(FormGrid $form, $model)
     {
-        $form->fieldset(trans('orchestra/foundation::label.settings.mail'), function (Fieldset $fieldset) use ($model) {
+        $encrypter = $this->encrypter;
+
+        $form->fieldset(trans('orchestra/foundation::label.settings.mail'), function (Fieldset $fieldset) use ($encrypter, $model) {
             $fieldset->control('select', 'email_driver')
                 ->label(trans('orchestra/foundation::label.email.driver'))
                 ->options([
@@ -106,10 +118,16 @@ class Setting extends Presenter
                 ->label(trans('orchestra/foundation::label.email.encryption'));
 
             $fieldset->control('input:text', 'email_key')
-                ->label(trans('orchestra/foundation::label.email.key'));
+                ->label(trans('orchestra/foundation::label.email.key'))
+                ->value(function ($row) use ($encrypter) {
+                    return $encrypter->decrypt($row->email_key);
+                });
 
             $fieldset->control('input:password', 'email_secret')
                 ->label(trans('orchestra/foundation::label.email.secret'))
+                ->value(function ($row) use ($encrypter) {
+                    return $encrypter->decrypt($row->email_secret);
+                })
                 ->help(view('orchestra/foundation::settings._hidden', [
                     'model'  => $model,
                     'action' => 'change_secret',
