@@ -108,7 +108,7 @@ class Setting extends Presenter
             $fieldset->control('input:password', 'email_password')
                 ->label(trans('orchestra/foundation::label.email.password'))
                 ->help(view('orchestra/foundation::settings._hidden', [
-                    'model'  => $model,
+                    'value'  => $this->getDecryptedValue($model->get('email_password')),
                     'action' => 'change_password',
                     'field'  => 'email_password',
                 ]));
@@ -128,7 +128,7 @@ class Setting extends Presenter
                     return $this->getDecryptedValue($row->email_secret);
                 })
                 ->help(view('orchestra/foundation::settings._hidden', [
-                    'model'  => $model,
+                    'value'  => $this->getDecryptedValue($model->get('email_secret')),
                     'action' => 'change_secret',
                     'field'  => 'email_secret',
                 ]));
