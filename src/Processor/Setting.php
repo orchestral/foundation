@@ -181,7 +181,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
      *
      * @return string
      */
-    public function getDecryptedValue($value)
+    private function getDecryptedValue($value)
     {
         try {
             return $this->encrypter->decrypt($value);
