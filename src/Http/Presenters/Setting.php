@@ -3,6 +3,7 @@
 use Orchestra\Contracts\Html\Form\Fieldset;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Orchestra\Contracts\Html\Form\Grid as FormGrid;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 
 class Setting extends Presenter
@@ -80,9 +81,7 @@ class Setting extends Presenter
      */
     protected function mailer(FormGrid $form, $model)
     {
-        $encrypter = $this->encrypter;
-
-        $form->fieldset(trans('orchestra/foundation::label.settings.mail'), function (Fieldset $fieldset) use ($encrypter, $model) {
+        $form->fieldset(trans('orchestra/foundation::label.settings.mail'), function (Fieldset $fieldset) use ($model) {
             $fieldset->control('select', 'email_driver')
                 ->label(trans('orchestra/foundation::label.email.driver'))
                 ->options([
@@ -119,14 +118,14 @@ class Setting extends Presenter
 
             $fieldset->control('input:text', 'email_key')
                 ->label(trans('orchestra/foundation::label.email.key'))
-                ->value(function ($row) use ($encrypter) {
-                    return $encrypter->decrypt($row->email_key);
+                ->value(function ($row) {
+                    return $this->getDecryptedValue($row->email_key);
                 });
 
             $fieldset->control('input:password', 'email_secret')
                 ->label(trans('orchestra/foundation::label.email.secret'))
-                ->value(function ($row) use ($encrypter) {
-                    return $encrypter->decrypt($row->email_secret);
+                ->value(function ($row) {
+                    return $this->getDecryptedValue($row->email_secret);
                 })
                 ->help(view('orchestra/foundation::settings._hidden', [
                     'model'  => $model,
@@ -156,5 +155,21 @@ class Setting extends Presenter
                     'no'  => 'No',
                 ]);
         });
+    }
+
+    /**
+     * Get decrypted configuration value.
+     *
+     * @param  string  $value
+     *
+     * @return string
+     */
+    public function getDecryptedValue($value)
+    {
+        try {
+            return $this->encrypter->decrypt($value);
+        } catch (DecryptException $e) {
+            return $value;
+        }
     }
 }
