@@ -106,16 +106,10 @@ class Setting extends Presenter
                 ->label(trans('orchestra/foundation::label.email.encryption'));
 
             $fieldset->control('input:text', 'email_key')
-                ->label(trans('orchestra/foundation::label.email.key'))
-                ->value(function ($row) {
-                    return $this->getDecryptedValue($row->email_key);
-                });
+                ->label(trans('orchestra/foundation::label.email.key'));
 
             $fieldset->control('input:password', 'email_secret')
                 ->label(trans('orchestra/foundation::label.email.secret'))
-                ->value(function ($row) {
-                    return $this->getDecryptedValue($row->email_secret);
-                })
                 ->help(view('orchestra/foundation::settings._hidden', [
                     'value'  => $model->secureGet('email_secret'),
                     'action' => 'change_secret',
