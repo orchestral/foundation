@@ -76,7 +76,6 @@ abstract class ThrottlesLogins
         Event::fire(new Lockout($this->request));
     }
 
-
     /**
      * Get the maximum number of login attempts for delaying further attempts.
      *
