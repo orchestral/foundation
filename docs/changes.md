@@ -62,6 +62,11 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.25 {#v3-1-25}
+
+* Encrypt private informations under Orchestra Platform Settings. 
+* Fixes `<select role="native">` filter. ([@quetzyg](https://github.com/quetzyg))
+
 ### v3.1.24 {#v3-1-24}
 
 * Fixes `ReferenceError: i is not defined` on pages with `<select>`.
@@ -250,6 +255,10 @@ title: Foundation Change Log
 * Remove deprecated `Orchestra\Foundation\MenuHandler::get{Name}()`, use `Orchestra\Foundation\MenuHandler::get{Name}Attribute()` helper instead.
 
 ## Version 3.0 {#v3-0}
+
+### v3.0.18 {#v3-0-18}
+
+* Encrypt private informations under Orchestra Platform Settings. 
 
 ### v3.0.17 {#v3-0-17}
 
