@@ -58,6 +58,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $app['Illuminate\Contracts\View\Factory'] = m::mock('\Illuminate\Contracts\View\Factory');
 
         $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
+        $encrypter = m::mock('\Illuminate\Contracts\Encryption\Encrypter');
         $grid = m::mock('\Orchestra\Contracts\Html\Form\Grid');
 
         $siteFieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
@@ -66,7 +67,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $emailFieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
         $emailControl = m::mock('\Orchestra\Contracts\Html\Form\Control');
 
-        $stub = new Setting($form);
+        $stub = new Setting($form, $encrypter);
 
         $siteFieldset->shouldReceive('control')->times(3)->andReturn($siteControl);
         $siteControl->shouldReceive('label')->times(3)->andReturnSelf()
@@ -78,6 +79,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $emailControl->shouldReceive('label')->times(13)->andReturnSelf()
             ->shouldReceive('attributes')->once()->andReturnSelf()
             ->shouldReceive('options')->times(3)->andReturnSelf()
+            ->shouldReceive('value')->times(2)->andReturnSelf()
             ->shouldReceive('help')->twice()->with('email.password.help');
 
         $grid->shouldReceive('setup')->once()
