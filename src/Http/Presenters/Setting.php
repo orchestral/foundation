@@ -3,7 +3,6 @@
 use Orchestra\Contracts\Html\Form\Fieldset;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Orchestra\Contracts\Html\Form\Grid as FormGrid;
-use Illuminate\Contracts\Encryption\DecryptException;
 use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 
 class Setting extends Presenter
@@ -117,16 +116,10 @@ class Setting extends Presenter
                 ->label(trans('orchestra/foundation::label.email.encryption'));
 
             $fieldset->control('input:text', 'email_key')
-                ->label(trans('orchestra/foundation::label.email.key'))
-                ->value(function ($row) {
-                    return $this->getDecryptedValue($row->email_key);
-                });
+                ->label(trans('orchestra/foundation::label.email.key'));
 
             $fieldset->control('input:password', 'email_secret')
                 ->label(trans('orchestra/foundation::label.email.secret'))
-                ->value(function ($row) {
-                    return $this->getDecryptedValue($row->email_secret);
-                })
                 ->help(view('orchestra/foundation::settings._hidden', [
                     'model'  => $model,
                     'action' => 'change_secret',
@@ -155,21 +148,5 @@ class Setting extends Presenter
                     'no'  => 'No',
                 ]);
         });
-    }
-
-    /**
-     * Get decrypted configuration value.
-     *
-     * @param  string  $value
-     *
-     * @return string
-     */
-    public function getDecryptedValue($value)
-    {
-        try {
-            return $this->encrypter->decrypt($value);
-        } catch (DecryptException $e) {
-            return $value;
-        }
     }
 }
