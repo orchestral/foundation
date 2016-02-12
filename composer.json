@@ -32,7 +32,7 @@
         "orchestra/memory": "~3.2.0",
         "orchestra/messages": "~3.2.0",
         "orchestra/model": "~3.2.0",
-        "orchestra/notifier": "~3.2.1",
+        "orchestra/notifier": "~3.2.2",
         "orchestra/optimize": "~3.2.0",
         "orchestra/publisher": "~3.2.0",
         "orchestra/support": "~3.2.0",
