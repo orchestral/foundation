@@ -5,6 +5,12 @@ title: Foundation Change Log
 
 ## Version 3.2 {#v3-2}
 
+### v3.2.5 {#v3-2-5}
+
+* Encrypt private informations under Orchestra Platform Settings. 
+* Fixes `<select role="native">` filter. ([@quetzyg](https://github.com/quetzyg))
+* Add support for `Illuminate\Auth\Events\Lockout` event.
+
 ### v3.2.4 {#v3-2-4}
 
 * Fixes `ReferenceError: i is not defined` on pages with `<select>`.
