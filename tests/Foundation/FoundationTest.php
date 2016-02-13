@@ -25,6 +25,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.extension'] = m::mock('\Orchestra\Contracts\Extension\Factory');
         $app['orchestra.extension.status'] = m::mock('\Orchestra\Contracts\Extension\StatusChecker');
         $app['orchestra.mail'] = m::mock('\Orchestra\Notifier\Mailer')->makePartial();
+        $app['encrypter'] = m::mock('\Illuminate\Contracts\Encryption\Encrypter');
         $app['orchestra.memory'] = m::mock('\Orchestra\Memory\MemoryManager', [$app]);
         $app['orchestra.notifier'] = m::mock('\Orchestra\Notifier\NotifierManager', [$app]);
         $app['orchestra.widget'] = m::mock('\Orchestra\Widget\Handlers\Menu');
