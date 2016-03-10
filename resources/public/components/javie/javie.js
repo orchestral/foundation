@@ -5,7 +5,7 @@
  *
  * @package Javie
  * @require underscore, console, jQuery/Zepto
- * @version 2.1.0
+ * @version 2.1.1
  * @author  Mior Muhammad Zaki <https://github.com/crynobone>
  * @license MIT License
  * ========================================================================
@@ -20,15 +20,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _helpers = require('./helpers');
+var _helpers = require(3);
 
 var Util = _interopRequireWildcard(_helpers);
 
-var _Config = require('./modules/config/Config.es6');
+var _Config = require(4);
 
 var _Config2 = _interopRequireDefault(_Config);
 
-var _underscore = require('./vendor/underscore');
+var _underscore = require(10);
 
 var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -187,34 +187,34 @@ var Application = (function () {
 
 exports.default = Application;
 
-},{"./helpers":3,"./modules/config/Config.es6":4,"./vendor/underscore":10}],2:[function(require,module,exports){
+},{"10":10,"3":3,"4":4}],2:[function(require,module,exports){
 'use strict';
 
-var _underscore = require('./vendor/underscore');
+var _underscore = require(10);
 
 var _underscore2 = _interopRequireDefault(_underscore);
 
-var _Application = require('./Application.es6');
+var _Application = require(1);
 
 var _Application2 = _interopRequireDefault(_Application);
 
-var _Config = require('./modules/config/Config.es6');
+var _Config = require(4);
 
 var _Config2 = _interopRequireDefault(_Config);
 
-var _Events = require('./modules/events/Events.es6');
+var _Events = require(5);
 
 var _Events2 = _interopRequireDefault(_Events);
 
-var _Log = require('./modules/log/Log.es6');
+var _Log = require(6);
 
 var _Log2 = _interopRequireDefault(_Log);
 
-var _Profiler = require('./modules/profiler/Profiler.es6');
+var _Profiler = require(7);
 
 var _Profiler2 = _interopRequireDefault(_Profiler);
 
-var _Request = require('./modules/request/Request.es6');
+var _Request = require(8);
 
 var _Request2 = _interopRequireDefault(_Request);
 
@@ -255,7 +255,7 @@ app.bind('request', function () {
 
 window.Javie = app;
 
-},{"./Application.es6":1,"./modules/config/Config.es6":4,"./modules/events/Events.es6":5,"./modules/log/Log.es6":6,"./modules/profiler/Profiler.es6":7,"./modules/request/Request.es6":8,"./vendor/underscore":10}],3:[function(require,module,exports){
+},{"1":1,"10":10,"4":4,"5":5,"6":6,"7":7,"8":8}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -286,7 +286,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _underscore = require('../../vendor/underscore');
+var _underscore = require(10);
 
 var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -339,7 +339,7 @@ var Configuration = (function () {
 
 exports.default = Configuration;
 
-},{"../../vendor/underscore":10}],5:[function(require,module,exports){
+},{"10":10}],5:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -348,7 +348,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _underscore = require("../../vendor/underscore");
+var _underscore = require(10);
 
 var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -507,7 +507,7 @@ var Events = (function () {
 
 exports.default = Events;
 
-},{"../../vendor/underscore":10}],6:[function(require,module,exports){
+},{"10":10}],6:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -516,7 +516,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _helpers = require('../../helpers');
+var _helpers = require(3);
 
 var Util = _interopRequireWildcard(_helpers);
 
@@ -645,7 +645,7 @@ var Log = (function () {
 
 exports.default = Log;
 
-},{"../../helpers":3}],7:[function(require,module,exports){
+},{"3":3}],7:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -654,7 +654,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _helpers = require('../../helpers');
+var _helpers = require(3);
 
 var Util = _interopRequireWildcard(_helpers);
 
@@ -808,7 +808,7 @@ var Profiler = (function () {
 
 exports.default = Profiler;
 
-},{"../../helpers":3}],8:[function(require,module,exports){
+},{"3":3}],8:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -817,23 +817,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Events = require('../events/Events.es6');
+var _Events = require(5);
 
 var _Events2 = _interopRequireDefault(_Events);
 
-var _Config = require('../config/Config.es6');
+var _Config = require(4);
 
 var _Config2 = _interopRequireDefault(_Config);
 
-var _helpers = require('../../helpers');
+var _helpers = require(3);
 
 var Util = _interopRequireWildcard(_helpers);
 
-var _underscore = require('../../vendor/underscore');
+var _underscore = require(10);
 
 var _underscore2 = _interopRequireDefault(_underscore);
 
-var _jquery = require('../../vendor/jquery');
+var _jquery = require(9);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -890,13 +890,18 @@ var Handler = (function () {
   }, {
     key: 'put',
     value: function put(key, value) {
-      return this.config.put(key, value);
+      this.config.put(key, value);
 
       return this;
     }
   }, {
     key: 'addHeader',
     value: function addHeader(key, value) {
+      return this.header(key, value);
+    }
+  }, {
+    key: 'header',
+    value: function header(key, value) {
       var headers = this.config.get('headers', {});
       headers[key] = value;
       this.config.put({ headers: headers });
@@ -983,7 +988,7 @@ var Handler = (function () {
           status = xhr.status;
           me.response = xhr;
 
-          if (!_underscore2.default.isUndefined(data) && data.hasOwnProperty('error')) {
+          if (_underscore2.default.has(data, 'errors')) {
             me.fireEvent('onError', name, [data.errors, status, me, xhr]);
             data.errors = null;
           }
@@ -1002,7 +1007,7 @@ var Handler = (function () {
       dispatcher.fire('Request.' + type, args);
       dispatcher.fire('Request.' + type + ': ' + name, args);
 
-      var callback = this.config[type];
+      var callback = this.config.get(type);
 
       if (_underscore2.default.isFunction(callback)) callback.apply(this, args);
     }
@@ -1073,9 +1078,9 @@ var Request = (function () {
       var key = _underscore2.default.uniqueId(name + '_');
       var child = new Handler();
 
-      dispatcher.clone('Request.onError: ' + name).to('Request.onError: ' + name);
-      dispatcher.clone('Request.onComplete: ' + name).to('Request.onComplete: ' + name);
-      dispatcher.clone('Request.beforeSend: ' + name).to('Request.beforeSend: ' + name);
+      dispatcher.clone('Request.onError: ' + name).to('Request.onError: ' + key);
+      dispatcher.clone('Request.onComplete: ' + name).to('Request.onComplete: ' + key);
+      dispatcher.clone('Request.beforeSend: ' + name).to('Request.beforeSend: ' + key);
 
       child.put(request.config);
 
@@ -1088,7 +1093,7 @@ var Request = (function () {
 
 exports.default = Request;
 
-},{"../../helpers":3,"../../vendor/jquery":9,"../../vendor/underscore":10,"../config/Config.es6":4,"../events/Events.es6":5}],9:[function(require,module,exports){
+},{"10":10,"3":3,"4":4,"5":5,"9":9}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
