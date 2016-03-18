@@ -6,11 +6,11 @@ use Orchestra\Foundation\Auth\BasicThrottle;
 use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Support\Providers\ServiceProvider;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins;
-use Orchestra\Support\Providers\Traits\AliasesProviderTrait;
+use Orchestra\Support\Providers\Traits\AliasesProvider;
 
 class FoundationServiceProvider extends ServiceProvider
 {
-    use AliasesProviderTrait;
+    use AliasesProvider;
 
     /**
      * List of core aliases.
