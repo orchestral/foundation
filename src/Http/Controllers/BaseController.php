@@ -5,11 +5,11 @@ namespace Orchestra\Foundation\Http\Controllers;
 use Orchestra\Routing\Controller;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Orchestra\Routing\Traits\ControllerResponseTrait;
+use Orchestra\Routing\Traits\ControllerResponse;
 
 abstract class BaseController extends Controller
 {
-    use ControllerResponseTrait, DispatchesJobs;
+    use ControllerResponse, DispatchesJobs;
 
     /**
      * Processor instance.

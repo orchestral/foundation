@@ -12,7 +12,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
      *
      * @var Illuminate\Foundation\Application
      */
-    private $app = null;
+    private $app;
 
     /**
      * Setup the test environment.
@@ -21,6 +21,11 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
     {
         $app = new Application(__DIR__);
 
+        $app['config'] = m::mock('\Illuminate\Contracts\Config\Repository');
+        $app['encrypter'] = m::mock('\Illuminate\Encryption\Encrypter');
+        $app['events'] = m::mock('\Illuminate\Contracts\Events\Dispatcher');
+        $app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
+        $app['url'] = m::mock('\Illuminate\Routing\UrlGenerator')->makePartial();
         $app['orchestra.acl'] = m::mock('\Orchestra\Contracts\Authorization\Authorization');
         $app['orchestra.extension'] = m::mock('\Orchestra\Contracts\Extension\Factory');
         $app['orchestra.extension.status'] = m::mock('\Orchestra\Contracts\Extension\StatusChecker');
@@ -29,10 +34,6 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
         $app['orchestra.memory'] = m::mock('\Orchestra\Memory\MemoryManager', [$app]);
         $app['orchestra.notifier'] = m::mock('\Orchestra\Notifier\NotifierManager', [$app]);
         $app['orchestra.widget'] = m::mock('\Orchestra\Widget\Handlers\Menu');
-        $app['config'] = m::mock('\Illuminate\Contracts\Config\Repository');
-        $app['events'] = m::mock('\Illuminate\Contracts\Events\Dispatcher');
-        $app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
-        $app['url'] = m::mock('\Illuminate\Routing\UrlGenerator')->makePartial();
 
         Facade::clearResolvedInstances();
         Application::setInstance($app);

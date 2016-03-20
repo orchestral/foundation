@@ -2,12 +2,12 @@
 
 namespace Orchestra\Foundation\Support\Providers;
 
-use Orchestra\Foundation\Support\Providers\Traits\RouteProviderTrait;
+use Orchestra\Foundation\Support\Providers\Traits\RouteProvider;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 abstract class RouteServiceProvider extends ServiceProvider
 {
-    use RouteProviderTrait;
+    use RouteProvider;
 
     /**
      * The application or extension namespace.

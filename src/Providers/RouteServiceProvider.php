@@ -9,14 +9,14 @@ use Orchestra\Http\Middleware\RequireCsrfToken;
 use Orchestra\Foundation\Http\Middleware\Authenticate;
 use Orchestra\Foundation\Http\Middleware\CanBeInstalled;
 use Orchestra\Foundation\Http\Middleware\CanRegisterUser;
+use Orchestra\Support\Providers\Traits\MiddlewareProvider;
 use Orchestra\Foundation\Http\Middleware\RedirectIfInstalled;
-use Orchestra\Support\Providers\Traits\MiddlewareProviderTrait;
 use Orchestra\Foundation\Http\Middleware\RedirectIfAuthenticated;
 use Orchestra\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    use MiddlewareProviderTrait;
+    use MiddlewareProvider;
 
     /**
      * The application's middleware stack.

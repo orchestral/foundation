@@ -4,11 +4,11 @@ namespace Orchestra\Foundation\Publisher;
 
 use Exception;
 use Illuminate\Support\Manager;
-use Orchestra\Memory\ContainerTrait;
+use Orchestra\Memory\Memorizable;
 
 class PublisherManager extends Manager
 {
-    use ContainerTrait;
+    use Memorizable;
 
     /**
      * Create a new driver instance.

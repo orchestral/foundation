@@ -2,10 +2,10 @@
 
 namespace Orchestra\Foundation;
 
-use Orchestra\Contracts\Support\DataContainer;
-use Orchestra\Support\Traits\DataContainerTrait;
+use Orchestra\Support\Traits\DataContainer;
+use Orchestra\Contracts\Support\DataContainer as DataContainerContract;
 
-class Meta implements DataContainer
+class Meta implements DataContainerContract
 {
-    use DataContainerTrait;
+    use DataContainer;
 }
