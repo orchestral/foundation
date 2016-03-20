@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http\Controllers\Extension;
+<?php
+
+namespace Orchestra\Foundation\Http\Controllers\Extension;
 
 use Orchestra\Contracts\Extension\Listener\Viewer as Listener;
 use Orchestra\Foundation\Processor\Extension\Viewer as Processor;

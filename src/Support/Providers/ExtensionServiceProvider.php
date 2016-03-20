@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Support\Providers;
+<?php
+
+namespace Orchestra\Foundation\Support\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

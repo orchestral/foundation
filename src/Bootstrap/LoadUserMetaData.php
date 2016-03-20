@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Bootstrap;
+<?php
+
+namespace Orchestra\Foundation\Bootstrap;
 
 use Orchestra\Model\Memory\UserMetaProvider;
 use Orchestra\Model\Memory\UserMetaRepository;

@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http\Controllers\Account;
+<?php
+
+namespace Orchestra\Foundation\Http\Controllers\Account;
 
 use Illuminate\Support\Facades\Request;
 use Orchestra\Contracts\Auth\Listener\PasswordReset;

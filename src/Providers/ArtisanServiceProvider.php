@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Providers;
+<?php
+
+namespace Orchestra\Foundation\Providers;
 
 use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Config\Console\ConfigCacheCommand;

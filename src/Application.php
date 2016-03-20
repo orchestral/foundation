@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation;
+<?php
+
+namespace Orchestra\Foundation;
 
 use Illuminate\Events\EventServiceProvider;
 use Orchestra\Routing\RoutingServiceProvider;

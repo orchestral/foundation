@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Bootstrap;
+<?php
+
+namespace Orchestra\Foundation\Bootstrap;
 
 use Orchestra\Contracts\Messages\MessageBag;
 use Illuminate\Contracts\Foundation\Application;

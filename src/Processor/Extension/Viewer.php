@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Processor\Extension;
+<?php
+
+namespace Orchestra\Foundation\Processor\Extension;
 
 use Orchestra\Contracts\Extension\Factory;
 use Orchestra\Foundation\Processor\Processor;

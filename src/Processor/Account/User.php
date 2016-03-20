@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Processor\Account;
+<?php
+
+namespace Orchestra\Foundation\Processor\Account;
 
 use Illuminate\Support\Facades\Event;
 use Orchestra\Foundation\Processor\Processor;

@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Publisher;
+<?php
+
+namespace Orchestra\Foundation\Publisher;
 
 use Exception;
 use Illuminate\Support\Manager;

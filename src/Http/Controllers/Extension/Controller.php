@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http\Controllers\Extension;
+<?php
+
+namespace Orchestra\Foundation\Http\Controllers\Extension;
 
 use Illuminate\Support\Fluent;
 use Orchestra\Foundation\Http\Controllers\AdminController;

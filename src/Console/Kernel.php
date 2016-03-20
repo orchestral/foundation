@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Console;
+<?php
+
+namespace Orchestra\Foundation\Console;
 
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 

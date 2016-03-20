@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http\Middleware;
+<?php
+
+namespace Orchestra\Foundation\Http\Middleware;
 
 class CanBeInstalled extends Can
 {

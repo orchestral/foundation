@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http\Controllers;
+<?php
+
+namespace Orchestra\Foundation\Http\Controllers;
 
 use Orchestra\Routing\Controller;
 use Illuminate\Support\Facades\Response;

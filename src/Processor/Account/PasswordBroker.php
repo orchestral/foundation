@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Processor\Account;
+<?php
+
+namespace Orchestra\Foundation\Processor\Account;
 
 use Illuminate\Support\Facades\Auth;
 use Orchestra\Model\User as Eloquent;

@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Providers;
+<?php
+
+namespace Orchestra\Foundation\Providers;
 
 use Orchestra\Model\Role;
 use Orchestra\Model\User;

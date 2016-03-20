@@ -1,10 +1,11 @@
-<?php namespace Orchestra\Foundation\Providers;
+<?php
+
+namespace Orchestra\Foundation\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Contracts\Http\Kernel;
 use Orchestra\Foundation\Http\Middleware\Can;
 use Orchestra\Http\Middleware\RequireCsrfToken;
-use Orchestra\Foundation\Http\Middleware\CanManage;
 use Orchestra\Foundation\Http\Middleware\Authenticate;
 use Orchestra\Foundation\Http\Middleware\CanBeInstalled;
 use Orchestra\Foundation\Http\Middleware\CanRegisterUser;

@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http;
+<?php
+
+namespace Orchestra\Foundation\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 

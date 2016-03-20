@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Support\Providers\Traits;
+<?php
+
+namespace Orchestra\Foundation\Support\Providers\Traits;
 
 use Illuminate\Routing\Router;
 

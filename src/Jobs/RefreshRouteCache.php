@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Jobs;
+<?php
+
+namespace Orchestra\Foundation\Jobs;
 
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Contracts\Foundation\Application;

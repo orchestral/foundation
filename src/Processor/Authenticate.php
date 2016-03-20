@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Processor;
+<?php
+
+namespace Orchestra\Foundation\Processor;
 
 use Orchestra\Contracts\Auth\Guard;
 

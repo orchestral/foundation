@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http\Controllers\Account;
+<?php
+
+namespace Orchestra\Foundation\Http\Controllers\Account;
 
 use Orchestra\Contracts\Foundation\Listener\Account\User;
 use Orchestra\Foundation\Http\Controllers\AdminController;

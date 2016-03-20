@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http\Middleware;
+<?php
+
+namespace Orchestra\Foundation\Http\Middleware;
 
 use Orchestra\Http\Traits\PassThroughTrait;
 use Illuminate\Contracts\Encryption\Encrypter;

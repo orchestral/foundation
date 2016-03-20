@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation;
+<?php
+
+namespace Orchestra\Foundation;
 
 use Closure;
 use Exception;

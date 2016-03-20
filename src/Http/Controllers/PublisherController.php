@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http\Controllers;
+<?php
+
+namespace Orchestra\Foundation\Http\Controllers;
 
 use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Processor\AssetPublisher;

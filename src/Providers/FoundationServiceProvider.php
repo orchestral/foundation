@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Providers;
+<?php
+
+namespace Orchestra\Foundation\Providers;
 
 use Orchestra\Foundation\Meta;
 use Orchestra\Foundation\Foundation;

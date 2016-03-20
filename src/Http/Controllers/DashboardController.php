@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http\Controllers;
+<?php
+
+namespace Orchestra\Foundation\Http\Controllers;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Orchestra\Foundation\Processor\Account\ProfileDashboard as Processor;

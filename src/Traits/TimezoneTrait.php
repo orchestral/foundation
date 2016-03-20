@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Traits;
+<?php
+
+namespace Orchestra\Foundation\Traits;
 
 use DateTime;
 use Carbon\Carbon;

@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http\Middleware;
+<?php
+
+namespace Orchestra\Foundation\Http\Middleware;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

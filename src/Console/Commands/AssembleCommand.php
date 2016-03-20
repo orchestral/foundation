@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Console\Commands;
+<?php
+
+namespace Orchestra\Foundation\Console\Commands;
 
 use PDOException;
 use Illuminate\Console\Command;

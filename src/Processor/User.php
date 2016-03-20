@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Processor;
+<?php
+
+namespace Orchestra\Foundation\Processor;
 
 use Exception;
 use Illuminate\Support\Arr;

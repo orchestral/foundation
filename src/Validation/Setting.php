@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Validation;
+<?php
+
+namespace Orchestra\Foundation\Validation;
 
 use Orchestra\Support\Validator;
 use Illuminate\Contracts\Validation\Validator as ValidatorResolver;

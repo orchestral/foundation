@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http\Controllers;
+<?php
+
+namespace Orchestra\Foundation\Http\Controllers;
 
 abstract class AdminController extends BaseController
 {
