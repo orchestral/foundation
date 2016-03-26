@@ -74,12 +74,13 @@ class Setting extends Presenter
             $fieldset->control('select', 'email_driver')
                 ->label(trans('orchestra/foundation::label.email.driver'))
                 ->options([
-                    'mail'     => 'Mail',
-                    'smtp'     => 'SMTP',
-                    'sendmail' => 'Sendmail',
-                    'ses'      => 'Amazon SES',
-                    'mailgun'  => 'Mailgun',
-                    'mandrill' => 'Mandrill',
+                    'mail'      => 'Mail',
+                    'smtp'      => 'SMTP',
+                    'sendmail'  => 'Sendmail',
+                    'ses'       => 'Amazon SES',
+                    'mailgun'   => 'Mailgun',
+                    'mandrill'  => 'Mandrill',
+                    'sparkpost' => 'SparkPost',
                 ]);
 
             $fieldset->control('input:text', 'email_host')

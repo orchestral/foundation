@@ -50,7 +50,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $rules = [
             'site_name' => ['required'],
             'email_address' => ['required', 'email'],
-            'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
+            'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill,sparkpost'],
             'email_port' => ['numeric'],
         ];
 
@@ -87,7 +87,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $rules = [
             'site_name' => ['required'],
             'email_address' => ['required', 'email'],
-            'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
+            'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill,sparkpost'],
             'email_port' => ['numeric'],
             'email_host' => ['required'],
         ];
@@ -131,7 +131,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $rules = [
             'site_name' => ['required'],
             'email_address' => ['required', 'email'],
-            'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
+            'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill,sparkpost'],
             'email_port' => ['numeric'],
             'email_sendmail' => ['required'],
         ];
@@ -169,7 +169,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $rules = [
             'site_name' => ['required'],
             'email_address' => ['required', 'email'],
-            'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
+            'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill,sparkpost'],
             'email_port' => ['numeric'],
             'email_domain' => ['required'],
         ];
@@ -213,7 +213,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $rules = [
             'site_name' => ['required'],
             'email_address' => ['required', 'email'],
-            'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
+            'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill,sparkpost'],
             'email_port' => ['numeric'],
         ];
 
@@ -258,7 +258,7 @@ class SettingTest extends \PHPUnit_Framework_TestCase
         $rules = [
             'site_name' => ['required'],
             'email_address' => ['required', 'email'],
-            'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill'],
+            'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill,sparkpost'],
             'email_port' => ['numeric'],
             'email_key' => ['required'],
             'email_region' => ['required', 'in:us-east-1,us-west-2,eu-west-1'],
