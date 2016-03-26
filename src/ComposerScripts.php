@@ -1,9 +1,9 @@
-<?php namespace Orchestra\Foundation\Composer;
+<?php namespace Orchestra\Foundation;
 
 use Composer\Script\Event;
 use Orchestra\Foundation\Application;
 
-class Command
+class ComposerScripts
 {
     /**
      * Handle the post-install Composer event.
