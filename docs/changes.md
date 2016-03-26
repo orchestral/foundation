@@ -5,6 +5,10 @@ title: Foundation Change Log
 
 ## Version 3.2 {#v3-2}
 
+### v3.2.7 {#v3-2-7}
+
+* Rename `Orchestra\Foundation\Composer\Command` to `Orchestra\Foundation\ComposerScripts`.
+
 ### v3.2.6 {#v3-2-6}
 
 * Add `Orchestra\Foundation\Composer\Command`.
