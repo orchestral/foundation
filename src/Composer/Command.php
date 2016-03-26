@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Composer;
+<?php
+
+namespace Orchestra\Foundation\Composer;
 
 use Orchestra\Foundation\Application;
 use Illuminate\Foundation\ComposerScripts;
