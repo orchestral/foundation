@@ -5,6 +5,17 @@ title: Foundation Change Log
 
 ## Version 3.2 {#v3-2}
 
+### v3.2.6 {#v3-2-6}
+
+* Add `Orchestra\Foundation\Composer\Command`.
+* Add support for SparkPost email provider.
+* Add `Orchestra\Foundation\Support\Providers\Traits\RouteProvider` and deprecate `Orchestra\Foundation\Support\Providers\Traits\RouteProviderTrait`.
+* Add `Orchestra\Foundation\Traits\Timezone` and deprecate `Orchestra\Foundation\Traits\TimezoneTrait`.
+* Update imported traits.
+* Update assets:
+  - Vue v1.0.19.
+  - Javie v2.1.1.
+  
 ### v3.2.5 {#v3-2-5}
 
 * Encrypt private informations under Orchestra Platform Settings. 

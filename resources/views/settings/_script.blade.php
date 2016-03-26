@@ -38,6 +38,7 @@ jQuery(function onSettingPageReady($) { 'use strict';
         get_container('input[name^="email_domain"]').show();
         break;
       case 'mandrill':
+      case 'sparkpost':
         get_container('input[name^="email_secret"]').show();
         break;
     }
