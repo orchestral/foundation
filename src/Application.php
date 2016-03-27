@@ -8,6 +8,13 @@ use Orchestra\Contracts\Foundation\Application as ApplicationContract;
 class Application extends BaseApplication implements ApplicationContract
 {
     /**
+     * The custom vendor path defined by the developer.
+     *
+     * @var string
+     */
+    protected $vendorPath;
+
+    /**
      * Register all of the base service providers.
      *
      * @return void
@@ -17,6 +24,18 @@ class Application extends BaseApplication implements ApplicationContract
         $this->register(new EventServiceProvider($this));
 
         $this->register(new RoutingServiceProvider($this));
+    }
+
+    /**
+     * Bind all of the application paths in the container.
+     *
+     * @return void
+     */
+    protected function bindPathsInContainer()
+    {
+        parent::bindPathsInContainer();
+
+        $this->instance('path.vendor', $this->vendorPath());
     }
 
     /**
@@ -37,6 +56,32 @@ class Application extends BaseApplication implements ApplicationContract
     public function databasePath()
     {
         return $this->databasePath ?: $this->basePath.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'database';
+    }
+
+    /**
+     * Get the path to the vendor directory.
+     *
+     * @return string
+     */
+    public function vendorPath()
+    {
+        return $this->databasePath ?: $this->basePath.DIRECTORY_SEPARATOR.'vendor';
+    }
+
+    /**
+     * Set the vendor directory.
+     *
+     * @param  string  $path
+     *
+     * @return $this
+     */
+    public function useVendorPath($path)
+    {
+        $this->vendorPath = $path;
+
+        $this->instance('path.vendor', $path);
+
+        return $this;
     }
 
     /**
