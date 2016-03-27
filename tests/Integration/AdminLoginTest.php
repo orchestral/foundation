@@ -25,4 +25,18 @@ class AdminLoginTest extends TestCase
             ->seePageIs('admin/login')
             ->see('Invalid user and password combination.');
     }
+
+    /**
+     * My test implementation
+     */
+    public function testItLoginValidUser()
+    {
+        $user = $this->createAdminUser();
+
+        $this->visit('admin/login')
+            ->type($user->email, 'email')
+            ->type('qwerty', 'password')
+            ->press('Login')
+            ->seePageIs('admin');
+    }
 }

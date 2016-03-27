@@ -34,6 +34,11 @@ abstract class TestCase extends ApplicationTestCase
         return $app;
     }
 
+    /**
+     * Make the installation.
+     *
+     * @return \Orchestra\Installation\Installation
+     */
     protected function makeInstaller()
     {
         $installer = new Installation($this->app);
