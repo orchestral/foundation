@@ -65,7 +65,7 @@ class Application extends BaseApplication implements ApplicationContract
      */
     public function vendorPath()
     {
-        return $this->databasePath ?: $this->basePath.DIRECTORY_SEPARATOR.'vendor';
+        return $this->vendorPath ?: $this->basePath.DIRECTORY_SEPARATOR.'vendor';
     }
 
     /**
