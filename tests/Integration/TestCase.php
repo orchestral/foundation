@@ -9,6 +9,18 @@ use Orchestra\Testing\TestCase as ApplicationTestCase;
 abstract class TestCase extends ApplicationTestCase
 {
     /**
+     * Define environment setup.
+     *
+     * @param  \Illuminate\Foundation\Application   $app
+     *
+     * @return void
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+        $app->make('config')->set(['auth.providers.users.model' => User::class]);
+    }
+
+    /**
      * Resolve application implementation.
      *
      * @return \Illuminate\Foundation\Application
@@ -53,6 +65,8 @@ abstract class TestCase extends ApplicationTestCase
         ]);
 
         $this->artisan('migrate');
+
+        $this->app['orchestra.installed'] = true;
 
         return $user;
     }
