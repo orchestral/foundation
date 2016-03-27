@@ -19,6 +19,11 @@
             "src/helpers.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Integration\\TestCase\\" : "tests/Integration/"
+        }
+    },
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "~5.2.25",
@@ -34,7 +39,7 @@
         "orchestra/model": "~3.2.0",
         "orchestra/notifier": "~3.2.3",
         "orchestra/optimize": "~3.2.0",
-        "orchestra/publisher": "~3.2.0",
+        "orchestra/publisher": "~3.2.1",
         "orchestra/support": "~3.2.3",
         "orchestra/translation": "~3.2.0",
         "orchestra/view": "~3.2.0",
