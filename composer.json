@@ -49,7 +49,7 @@
     "require-dev": {
         "mockery/mockery": "^0.9.1",
         "phpunit/phpunit": "~4.0",
-        "orchestra/testing": "~3.2.0"
+        "orchestra/testing": "~3.2.2"
     },
     "suggest": {
         "orchestra/ftp-updater": "Allow Extension with asset to be updated/uploaded environment without SSH support (~3.2).",

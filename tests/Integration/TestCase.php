@@ -9,6 +9,13 @@ use Orchestra\Testing\TestCase as ApplicationTestCase;
 abstract class TestCase extends ApplicationTestCase
 {
     /**
+     * The base URL to use while testing the application.
+     *
+     * @var string
+     */
+    protected $baseUrl = 'http://localhost';
+
+    /**
      * Define environment setup.
      *
      * @param  \Illuminate\Foundation\Application   $app

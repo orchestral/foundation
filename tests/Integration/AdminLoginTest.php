@@ -5,13 +5,6 @@ namespace Integration\TestCase;
 class AdminLoginTest extends TestCase
 {
     /**
-     * The base URL to use while testing the application.
-     *
-     * @var string
-     */
-    protected $baseUrl = 'http://localhost';
-
-    /**
      * My test implementation
      */
     public function testItCantLoginInvalidUser()
