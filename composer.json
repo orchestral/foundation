@@ -48,7 +48,7 @@
     },
     "require-dev": {
         "mockery/mockery": "^0.9.1",
-        "phpunit/phpunit": "~4.0",
+        "phpunit/phpunit": "~4.8",
         "orchestra/testing": "~3.2.2"
     },
     "suggest": {
