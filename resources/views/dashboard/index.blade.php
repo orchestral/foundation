@@ -4,9 +4,11 @@
 <div class="row">
 	@if(count($panes) > 0)
 
-	<?php $panes->add('mini-profile', '<')->title('Mini Profile')
-		->attributes(['class' => 'three columns widget'])
-		->content(view('orchestra/foundation::components.miniprofile')); ?>
+@php
+$panes->add('mini-profile', '<')->title('Mini Profile')
+	->attributes(['class' => 'three columns widget'])
+	->content(view('orchestra/foundation::components.miniprofile'));
+@endphp
 
 	@foreach($panes as $id => $pane)
 		<div{!! HTML::attributable($pane->get('attributes'), ['class' => 'panel']) !!}>
