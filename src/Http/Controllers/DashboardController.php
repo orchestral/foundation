@@ -9,18 +9,6 @@ use Orchestra\Contracts\Foundation\Listener\Account\ProfileDashboard as Listener
 class DashboardController extends AdminController implements Listener
 {
     /**
-     * Dashboard controller routing.
-     *
-     * @param \Orchestra\Foundation\Processor\Account\ProfileDashboard  $processor
-     */
-    public function __construct(Processor $processor)
-    {
-        $this->processor = $processor;
-
-        parent::__construct();
-    }
-
-    /**
      * Setup controller middleware.
      *
      * @return void
@@ -37,9 +25,9 @@ class DashboardController extends AdminController implements Listener
      *
      * @return mixed
      */
-    public function show()
+    public function show(Processor $processor)
     {
-        return $this->processor->show($this);
+        return $processor->show($this);
     }
 
     /**
