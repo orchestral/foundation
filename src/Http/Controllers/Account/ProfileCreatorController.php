@@ -4,12 +4,15 @@ namespace Orchestra\Foundation\Http\Controllers\Account;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Orchestra\Foundation\Traits\RedirectUsers;
 use Orchestra\Foundation\Http\Controllers\AdminController;
 use Orchestra\Foundation\Processor\Account\ProfileCreator as Processor;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator as Listener;
 
 class ProfileCreatorController extends AdminController implements Listener
 {
+    use RedirectUsers;
+
     /**
      * Registration Controller routing. It should only be accessible if
      * registration is allowed through the setting.
@@ -80,7 +83,7 @@ class ProfileCreatorController extends AdminController implements Listener
      */
     public function createProfileFailedValidation($errors)
     {
-        return $this->redirectWithErrors(handles('orchestra::register'), $errors);
+        return $this->redirectWithErrors($this->getRedirectToRegisterPath(), $errors);
     }
 
     /**
@@ -94,7 +97,7 @@ class ProfileCreatorController extends AdminController implements Listener
     {
         messages('error', trans('orchestra/foundation::response.db-failed', $errors));
 
-        return $this->redirect(handles('orchestra::register'))->withInput();
+        return $this->redirect($this->getRedirectToRegisterPath())->withInput();
     }
 
     /**
@@ -107,7 +110,7 @@ class ProfileCreatorController extends AdminController implements Listener
         messages('success', trans('orchestra/foundation::response.users.create'));
         messages('error', trans('orchestra/foundation::response.credential.register.email-fail'));
 
-        return Redirect::intended(handles('orchestra::login'));
+        return Redirect::intended($this->getRedirectToLoginPath());
     }
 
     /**
@@ -120,6 +123,28 @@ class ProfileCreatorController extends AdminController implements Listener
         messages('success', trans('orchestra/foundation::response.users.create'));
         messages('success', trans('orchestra/foundation::response.credential.register.email-send'));
 
-        return Redirect::intended(handles('orchestra::login'));
+        return Redirect::intended($this->getRedirectToLoginPath());
+    }
+
+    /**
+     * Get redirect to register path.
+     *
+     * @param  string|null  $redirect
+     * @return string
+     */
+    protected function getRedirectToRegisterPath($redirect = null)
+    {
+        return $this->resolveUserRedirectionPath('orchestra::register', $redirect);
+    }
+
+    /**
+     * Get redirect to login path.
+     *
+     * @param  string|null  $redirect
+     * @return string
+     */
+    protected function getRedirectToLoginPath($redirect = null)
+    {
+        return $this->resolveUserRedirectionPath('orchestra::login', $redirect);
     }
 }

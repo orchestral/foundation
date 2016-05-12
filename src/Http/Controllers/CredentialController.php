@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Orchestra\Foundation\Traits\RedirectUsers;
 use Orchestra\Foundation\Processor\AuthenticateUser;
 use Orchestra\Foundation\Processor\DeauthenticateUser;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins as ThrottlesCommand;
@@ -15,6 +16,8 @@ use Orchestra\Contracts\Auth\Listener\DeauthenticateUser as DeauthenticateListen
 
 class CredentialController extends AdminController implements AuthenticateListener, DeauthenticateListener, ThrottlesListener
 {
+    use RedirectUsers;
+
     /**
      * Setup controller middleware.
      *
@@ -76,7 +79,7 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     public function userLoginHasFailedValidation($errors)
     {
-        return $this->redirectWithErrors(handles('orchestra::login'), $errors);
+        return $this->redirectWithErrors($this->getRedirectToLoginPath(), $errors);
     }
 
     /**
@@ -90,7 +93,7 @@ class CredentialController extends AdminController implements AuthenticateListen
     {
         $message = trans('orchestra/foundation::response.credential.invalid-combination');
 
-        return $this->redirectWithMessage(handles('orchestra::login'), $message, 'error')->withInput();
+        return $this->redirectWithMessage($this->getRedirectToLoginPath(), $message, 'error')->withInput();
     }
 
     /**
@@ -105,7 +108,7 @@ class CredentialController extends AdminController implements AuthenticateListen
     {
         $message = trans('auth.throttle', ['seconds' => $seconds]);
 
-        return $this->redirectWithMessage(handles('orchestra::login'), $message, 'error')->withInput();
+        return $this->redirectWithMessage($this->getRedirectToLoginPath(), $message, 'error')->withInput();
     }
 
     /**
@@ -119,7 +122,7 @@ class CredentialController extends AdminController implements AuthenticateListen
     {
         messages('success', trans('orchestra/foundation::response.credential.logged-in'));
 
-        return Redirect::intended(handles('orchestra::/'));
+        return Redirect::intended($this->getRedirectToAuthenticatedPath());
     }
 
     /**
@@ -131,6 +134,27 @@ class CredentialController extends AdminController implements AuthenticateListen
     {
         messages('success', trans('orchestra/foundation::response.credential.logged-out'));
 
-        return Redirect::intended(handles(Input::get('redirect', 'orchestra::login')));
+        return Redirect::intended($this->getRedirectToLoginPath(Input::get('redirect')));
+    }
+
+    /**
+     * Get redirect to login path.
+     *
+     * @param  string|null  $redirect
+     * @return string
+     */
+    protected function getRedirectToLoginPath($redirect = null)
+    {
+        return $this->resolveUserRedirectionPath('orchestra::login', $redirect);
+    }
+
+    /**
+     * Get redirect to login path.
+     *
+     * @return string
+     */
+    protected function getRedirectToAuthenticatedPath($redirect = null)
+    {
+        return $this->resolveUserRedirectionPath('orchestra::/', $redirect);
     }
 }
