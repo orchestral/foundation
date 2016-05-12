@@ -141,6 +141,7 @@ class CredentialController extends AdminController implements AuthenticateListen
      * Get redirect to login path.
      *
      * @param  string|null  $redirect
+     *
      * @return string
      */
     protected function getRedirectToLoginPath($redirect = null)

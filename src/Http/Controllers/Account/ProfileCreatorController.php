@@ -130,6 +130,7 @@ class ProfileCreatorController extends AdminController implements Listener
      * Get redirect to register path.
      *
      * @param  string|null  $redirect
+     *
      * @return string
      */
     protected function getRedirectToRegisterPath($redirect = null)
@@ -141,6 +142,7 @@ class ProfileCreatorController extends AdminController implements Listener
      * Get redirect to login path.
      *
      * @param  string|null  $redirect
+     *
      * @return string
      */
     protected function getRedirectToLoginPath($redirect = null)

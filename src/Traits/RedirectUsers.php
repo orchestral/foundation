@@ -9,6 +9,7 @@ trait RedirectUsers
      *
      * @param  string  $path
      * @param  string|null  $redirect
+     *
      * @return string
      */
     protected function resolveUserRedirectionPath($path, $redirect = null)
