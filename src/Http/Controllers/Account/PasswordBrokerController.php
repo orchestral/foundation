@@ -11,19 +11,6 @@ use Orchestra\Foundation\Processor\Account\PasswordBroker as Processor;
 class PasswordBrokerController extends AdminController implements PasswordResetLink, PasswordReset
 {
     /**
-     * Construct Forgot Password Controller with some pre-define
-     * configuration.
-     *
-     * @param \Orchestra\Foundation\Processor\Account\PasswordBroker  $processor
-     */
-    public function __construct(Processor $processor)
-    {
-        $this->processor = $processor;
-
-        parent::__construct();
-    }
-
-    /**
      * Setup controller middleware.
      *
      * @return void
@@ -55,11 +42,13 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      *
      * POST (:orchestra)/forgot
      *
+     * @param \Orchestra\Foundation\Processor\Account\PasswordBroker  $processor
+     *
      * @return mixed
      */
-    public function sendResetLinkEmail()
+    public function sendResetLinkEmail(Processor $processor)
     {
-        return $this->processor->store($this, Request::all());
+        return $processor->store($this, Request::all());
     }
 
     /**
@@ -90,13 +79,15 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      *
      * POST (:orchestra)/forgot/reset
      *
+     * @param \Orchestra\Foundation\Processor\Account\PasswordBroker  $processor
+     *
      * @return mixed
      */
-    public function reset()
+    public function reset(Processor $processor)
     {
         $input = Request::only('email', 'password', 'password_confirmation', 'token');
 
-        return $this->processor->update($this, $input);
+        return $processor->update($this, $input);
     }
 
     /**

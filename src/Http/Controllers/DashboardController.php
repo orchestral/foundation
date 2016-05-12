@@ -23,6 +23,8 @@ class DashboardController extends AdminController implements Listener
      *
      * GET (:orchestra)/
      *
+     * @param \Orchestra\Foundation\Processor\Account\ProfileDashboard  $processor
+     *
      * @return mixed
      */
     public function show(Processor $processor)

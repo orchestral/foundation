@@ -9,28 +9,17 @@ use Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater as Listener;
 class PasswordUpdaterController extends Controller implements Listener
 {
     /**
-     * Construct Account Controller to allow user to update own profile.
-     * Only authenticated user should be able to access this controller.
-     *
-     * @param  \Orchestra\Foundation\Processor\Account\PasswordUpdater  $processor
-     */
-    public function __construct(Processor $processor)
-    {
-        $this->processor = $processor;
-
-        parent::__construct();
-    }
-
-    /**
      * Edit change password page.
      *
      * GET (:orchestra)/account/password
      *
+     * @param  \Orchestra\Foundation\Processor\Account\PasswordUpdater  $processor
+     *
      * @return mixed
      */
-    public function edit()
+    public function edit(Processor $processor)
     {
-        return $this->processor->edit($this);
+        return $processor->edit($this);
     }
 
     /**
@@ -38,11 +27,13 @@ class PasswordUpdaterController extends Controller implements Listener
      *
      * POST (:orchestra)/account/password
      *
+     * @param  \Orchestra\Foundation\Processor\Account\PasswordUpdater  $processor
+     *
      * @return mixed
      */
-    public function update()
+    public function update(Processor $processor)
     {
-        return $this->processor->update($this, Input::all());
+        return $processor->update($this, Input::all());
     }
 
     /**

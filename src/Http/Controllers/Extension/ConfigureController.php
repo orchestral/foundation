@@ -12,18 +12,6 @@ use Orchestra\Foundation\Processor\Extension\Configure as Processor;
 class ConfigureController extends Controller implements Listener
 {
     /**
-     * Extensions Controller routing to manage available extensions.
-     *
-     * @param  \Orchestra\Foundation\Processor\Extension\Configure  $processor
-     */
-    public function __construct(Processor $processor)
-    {
-        $this->processor = $processor;
-
-        parent::__construct();
-    }
-
-    /**
      * Setup controller middleware.
      *
      * @return void
@@ -39,16 +27,17 @@ class ConfigureController extends Controller implements Listener
      *
      * GET (:orchestra)/extensions/configure/(:name)
      *
+     * @param  \Orchestra\Foundation\Processor\Extension\Configure  $processor
      * @param  string  $vendor
      * @param  string|null  $package
      *
      * @return mixed
      */
-    public function configure($vendor, $package = null)
+    public function configure(Processor $processor, $vendor, $package = null)
     {
         $extension = $this->getExtension($vendor, $package);
 
-        return $this->processor->configure($this, $extension);
+        return $processor->configure($this, $extension);
     }
 
     /**
@@ -56,16 +45,17 @@ class ConfigureController extends Controller implements Listener
      *
      * POST (:orchestra)/extensions/configure/(:name)
      *
+     * @param  \Orchestra\Foundation\Processor\Extension\Configure  $processor
      * @param  string  $vendor
      * @param  string|null  $package
      *
      * @return mixed
      */
-    public function update($vendor, $package = null)
+    public function update(Processor $processor, $vendor, $package = null)
     {
         $extension = $this->getExtension($vendor, $package);
 
-        return $this->processor->update($this, $extension, Input::all());
+        return $processor->update($this, $extension, Input::all());
     }
 
     /**

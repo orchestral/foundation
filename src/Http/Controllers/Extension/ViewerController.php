@@ -8,18 +8,6 @@ use Orchestra\Foundation\Processor\Extension\Viewer as Processor;
 class ViewerController extends Controller implements Listener
 {
     /**
-     * Extensions Controller routing to manage available extensions.
-     *
-     * @param \Orchestra\Foundation\Processor\Extension\Viewer  $processor
-     */
-    public function __construct(Processor $processor)
-    {
-        $this->processor = $processor;
-
-        parent::__construct();
-    }
-
-    /**
      * Setup controller middleware.
      *
      * @return void
@@ -35,11 +23,13 @@ class ViewerController extends Controller implements Listener
      *
      * GET (:orchestra)/extensions
      *
+     * @param \Orchestra\Foundation\Processor\Extension\Viewer  $processor
+     *
      * @return mixed
      */
-    public function index()
+    public function index(Processor $processor)
     {
-        return $this->processor->index($this);
+        return $processor->index($this);
     }
 
     /**

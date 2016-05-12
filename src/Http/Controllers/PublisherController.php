@@ -9,17 +9,6 @@ use Orchestra\Contracts\Foundation\Listener\AssetPublishing as Listener;
 class PublisherController extends AdminController implements Listener
 {
     /**
-     * Publisher controller.
-     *
-     * @param  \Orchestra\Foundation\Processor\AssetPublisher  $processor
-     */
-    public function __construct(AssetPublisher $processor)
-    {
-        $this->processor = $processor;
-
-        parent::__construct();
-    }
-    /**
      * Setup controller middleware.
      *
      * @return void
@@ -32,11 +21,13 @@ class PublisherController extends AdminController implements Listener
     /**
      * Load publisher based on service.
      *
+     * @param  \Orchestra\Foundation\Processor\AssetPublisher  $processor
+     *
      * @return mixed
      */
-    public function index()
+    public function index(AssetPublisher $processor)
     {
-        return $this->processor->executeAndRedirect($this);
+        return $processor->executeAndRedirect($this);
     }
 
     /**
@@ -57,14 +48,16 @@ class PublisherController extends AdminController implements Listener
      *
      * POST (orchestra)/publisher/ftp
      *
+     * @param  \Orchestra\Foundation\Processor\AssetPublisher  $processor
+     *
      * @return mixed
      */
-    public function publish()
+    public function publish(AssetPublisher $processor)
     {
         $input        = Input::only(['host', 'user', 'password']);
         $input['ssl'] = (Input::get('connection-type', 'sftp') === 'sftp');
 
-        return $this->processor->publish($this, $input);
+        return $processor->publish($this, $input);
     }
 
     /**

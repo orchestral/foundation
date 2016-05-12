@@ -12,18 +12,6 @@ use Orchestra\Contracts\Foundation\Listener\Account\UserUpdater;
 class UsersController extends AdminController implements UserCreator, UserRemover, UserUpdater, UserViewer
 {
     /**
-     * CRUD Controller for Users management using resource routing.
-     *
-     * @param  \Orchestra\Foundation\Processor\User  $processor
-     */
-    public function __construct(Processor $processor)
-    {
-        $this->processor = $processor;
-
-        parent::__construct();
-    }
-
-    /**
      * Setup controller middleware.
      *
      * @return void
@@ -40,11 +28,13 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * GET (:orchestra)/users
      *
+     * @param  \Orchestra\Foundation\Processor\User  $processor
+     *
      * @return mixed
      */
-    public function index()
+    public function index(Processor $processor)
     {
-        return $this->processor->index($this, Input::all());
+        return $processor->index($this, Input::all());
     }
 
     /**
@@ -52,11 +42,13 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * GET (:orchestra)/users/create
      *
+     * @param  \Orchestra\Foundation\Processor\User  $processor
+     *
      * @return mixed
      */
-    public function create()
+    public function create(Processor $processor)
     {
-        return $this->processor->create($this);
+        return $processor->create($this);
     }
 
     /**
@@ -65,12 +57,13 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      * GET (:orchestra)/users/$users/edit
      *
      * @param  int|string  $users
+     * @param  \Orchestra\Foundation\Processor\User  $processor
      *
      * @return mixed
      */
-    public function edit($users)
+    public function edit(Processor $processor, $users)
     {
-        return $this->processor->edit($this, $users);
+        return $processor->edit($this, $users);
     }
 
     /**
@@ -78,11 +71,13 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * POST (:orchestra)/users
      *
+     * @param  \Orchestra\Foundation\Processor\User  $processor
+     *
      * @return mixed
      */
-    public function store()
+    public function store(Processor $processor)
     {
-        return $this->processor->store($this, Input::all());
+        return $processor->store($this, Input::all());
     }
 
     /**
@@ -90,13 +85,14 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * PUT (:orchestra)/users/$users
      *
+     * @param  \Orchestra\Foundation\Processor\User  $processor
      * @param  int|string  $users
      *
      * @return mixed
      */
-    public function update($users)
+    public function update(Processor $processor, $users)
     {
-        return $this->processor->update($this, $users, Input::all());
+        return $processor->update($this, $users, Input::all());
     }
 
     /**
@@ -104,13 +100,14 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * GET (:orchestra)/$users/delete
      *
+     * @param  \Orchestra\Foundation\Processor\User  $processor
      * @param  int|string  $users
      *
      * @return mixed
      */
-    public function delete($users)
+    public function delete(Processor $processor, $users)
     {
-        return $this->destroy($users);
+        return $this->destroy($processor, $users);
     }
 
     /**
@@ -118,13 +115,14 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * DELETE (:orchestra)/$users
      *
+     * @param  \Orchestra\Foundation\Processor\User  $processor
      * @param  int|string  $users
      *
      * @return mixed
      */
-    public function destroy($users)
+    public function destroy(Processor $processor, $users)
     {
-        return $this->processor->destroy($this, $users);
+        return $processor->destroy($this, $users);
     }
 
     /**

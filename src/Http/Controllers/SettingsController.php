@@ -10,18 +10,6 @@ use Orchestra\Contracts\Foundation\Listener\SettingUpdater;
 class SettingsController extends AdminController implements SystemUpdater, SettingUpdater
 {
     /**
-     * Settings configuration Controller for the application.
-     *
-     * @param  \Orchestra\Foundation\Processor\Setting  $processor
-     */
-    public function __construct(Processor $processor)
-    {
-        $this->processor = $processor;
-
-        parent::__construct();
-    }
-
-    /**
      * Setup controller middleware.
      *
      * @return void
@@ -38,11 +26,13 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
      *
      * GET (:orchestra)/settings
      *
+     * @param  \Orchestra\Foundation\Processor\Setting  $processor
+     *
      * @return mixed
      */
-    public function edit()
+    public function edit(Processor $processor)
     {
-        return $this->processor->edit($this);
+        return $processor->edit($this);
     }
 
     /**
@@ -50,21 +40,25 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
      *
      * POST (:orchestra)/settings
      *
+     * @param  \Orchestra\Foundation\Processor\Setting  $processor
+     *
      * @return mixed
      */
-    public function update()
+    public function update(Processor $processor)
     {
-        return $this->processor->update($this, Input::all());
+        return $processor->update($this, Input::all());
     }
 
     /**
      * Update orchestra/foundation.
      *
+     * @param  \Orchestra\Foundation\Processor\Setting  $processor
+     *
      * @return mixed
      */
-    public function migrate()
+    public function migrate(Processor $processor)
     {
-        return $this->processor->migrate($this);
+        return $processor->migrate($this);
     }
 
     /**

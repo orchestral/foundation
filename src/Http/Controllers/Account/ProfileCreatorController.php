@@ -14,19 +14,6 @@ class ProfileCreatorController extends AdminController implements Listener
     use RedirectUsers;
 
     /**
-     * Registration Controller routing. It should only be accessible if
-     * registration is allowed through the setting.
-     *
-     * @param  \Orchestra\Foundation\Processor\Account\ProfileCreator  $processor
-     */
-    public function __construct(Processor $processor)
-    {
-        $this->processor = $processor;
-
-        parent::__construct();
-    }
-
-    /**
      * Setup controller middleware.
      *
      * @return void
@@ -41,11 +28,13 @@ class ProfileCreatorController extends AdminController implements Listener
      *
      * GET (:orchestra)/register
      *
+     * @param  \Orchestra\Foundation\Processor\Account\ProfileCreator  $processor
+     *
      * @return mixed
      */
-    public function create()
+    public function create(Processor $processor)
     {
-        return $this->processor->create($this);
+        return $processor->create($this);
     }
 
     /**
@@ -53,11 +42,13 @@ class ProfileCreatorController extends AdminController implements Listener
      *
      * POST (:orchestra)/register
      *
+     * @param  \Orchestra\Foundation\Processor\Account\ProfileCreator  $processor
+     *
      * @return mixed
      */
-    public function store()
+    public function store(Processor $processor)
     {
-        return $this->processor->store($this, Input::all());
+        return $processor->store($this, Input::all());
     }
 
     /**
