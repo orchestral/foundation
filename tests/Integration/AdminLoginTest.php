@@ -28,7 +28,7 @@ class AdminLoginTest extends TestCase
 
         $this->visit('admin/login')
             ->type($user->email, 'email')
-            ->type('qwerty', 'password')
+            ->type('secret', 'password')
             ->press('Login')
             ->seePageIs('admin');
     }
