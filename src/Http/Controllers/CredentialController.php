@@ -143,7 +143,7 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     protected function getRedirectToLoginPath($redirect = null)
     {
-        return $this->resolveUserRedirectionPath('orchestra::login', $redirect);
+        return $this->resolveUserRedirectionHandles('login', 'orchestra::login', $redirect);
     }
 
     /**
@@ -153,6 +153,6 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     protected function getRedirectToAuthenticatedPath($redirect = null)
     {
-        return $this->resolveUserRedirectionPath('orchestra::/', $redirect);
+        return $this->resolveUserRedirectionHandles('dashboard', 'orchestra::/', $redirect);
     }
 }
