@@ -42,21 +42,6 @@ abstract class TestCase extends ApplicationTestCase
     }
 
     /**
-     * Make the installation.
-     *
-     * @return \Orchestra\Installation\Installation
-     */
-    protected function makeInstaller()
-    {
-        $installer = new Installation($this->app);
-
-        $installer->bootInstallerFilesForTesting();
-        $installer->migrate();
-
-        return $installer;
-    }
-
-    /**
      * Install Orchestra Platform and get the administrator user.
      *
      * @return \Orchestra\Model\User
@@ -79,6 +64,10 @@ abstract class TestCase extends ApplicationTestCase
         $this->artisan('migrate');
 
         $this->app['orchestra.installed'] = true;
+
+        $this->beforeApplicationDestroyed(function () {
+            $this->app['orchestra.installed'] = false;
+        });
 
         return $user;
     }

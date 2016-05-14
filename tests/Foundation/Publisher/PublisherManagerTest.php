@@ -12,12 +12,12 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
      *
      * @var Illuminate\Foundation\Application
      */
-    private $app = null;
+    private $app;
 
     /**
      * Setup the test environment.
      */
-    public function setUp()
+    protected function setUp()
     {
         $this->app = new Container();
 
@@ -28,7 +28,7 @@ class PublisherManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * Teardown the test environment.
      */
-    public function tearDown()
+    protected function tearDown()
     {
         unset($this->app);
         m::close();

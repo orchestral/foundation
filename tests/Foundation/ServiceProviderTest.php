@@ -9,7 +9,7 @@ use Orchestra\Foundation\Providers\ConsoleSupportServiceProvider;
 
 class ServiceProviderTest extends TestCase
 {
-    public function tearDown()
+    protected function tearDown()
     {
         m::close();
     }

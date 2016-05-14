@@ -18,17 +18,18 @@ class NotifyIfSafeModeTest extends \PHPUnit_Framework_TestCase
     /**
      * Setup the test environment.
      */
-    public function setUp()
+    protected function setUp()
     {
         $this->app = new Application(__DIR__);
 
         Facade::clearResolvedInstances();
         Container::setInstance($this->app);
     }
+
     /**
      * Teardown the test environment.
      */
-    public function tearDown()
+    protected function tearDown()
     {
         Facade::clearResolvedInstances();
 

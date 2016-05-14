@@ -14,7 +14,7 @@ class ProfileUpdaterControllerTest extends TestCase
     /**
      * Setup the test environment.
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -66,7 +66,7 @@ class ProfileUpdaterControllerTest extends TestCase
     /**
      * Test POST /admin/account with invalid user id.
      *
-     * @expectedException \Symfony\Component\HttpKernel\Exception\HttpException
+     * @test
      */
     public function testPostIndexActionGivenInvalidUserId()
     {
@@ -79,6 +79,7 @@ class ProfileUpdaterControllerTest extends TestCase
             });
 
         $this->call('POST', 'admin/account', $input);
+        $this->assertResponseStatus(500);
     }
 
     /**

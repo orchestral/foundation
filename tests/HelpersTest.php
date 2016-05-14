@@ -17,7 +17,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
     /**
      * Setup the test environment.
      */
-    public function setUp()
+    protected function setUp()
     {
         $this->app = new Application(__DIR__);
 
@@ -33,7 +33,7 @@ class HelpersTest extends \PHPUnit_Framework_TestCase
     /**
      * Teardown the test environment.
      */
-    public function tearDown()
+    protected function tearDown()
     {
         Facade::clearResolvedInstances();
 

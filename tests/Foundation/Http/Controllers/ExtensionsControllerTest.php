@@ -84,6 +84,7 @@ class ExtensionsControllerTest extends TestCase
     public function testGetActivateActionGivenStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
+        Extension::shouldReceive('finish')->once()->andReturnNull();
 
         $this->call('GET', 'admin/extensions/laravel/framework/activate');
         $this->assertResponseStatus(404);
@@ -132,6 +133,7 @@ class ExtensionsControllerTest extends TestCase
     public function testGetDeactivateActionGivenNotStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
+        Extension::shouldReceive('finish')->once()->andReturnNull();
         Extension::shouldReceive('activated')->once()->with('laravel/framework')->andReturn(false);
 
         $this->call('GET', 'admin/extensions/laravel/framework/deactivate');
@@ -177,6 +179,7 @@ class ExtensionsControllerTest extends TestCase
     public function testGetConfigureActionGivenStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
+        Extension::shouldReceive('finish')->once()->andReturnNull();
 
         $this->call('GET', 'admin/extensions/laravel/framework/configure');
         $this->assertResponseStatus(404);
