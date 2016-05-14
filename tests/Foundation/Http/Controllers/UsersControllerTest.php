@@ -17,7 +17,7 @@ class UsersControllerTest extends TestCase
     /**
      * Setup the test environment.
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -268,7 +268,6 @@ class UsersControllerTest extends TestCase
      * Test PUT /admin/users/(:any) when invalid user id is given.
      *
      * @test
-     * @expectedException \Symfony\Component\HttpKernel\Exception\HttpException
      */
     public function testPutUpdateActionGivenInvalidUserId()
     {
@@ -281,6 +280,7 @@ class UsersControllerTest extends TestCase
         ];
 
         $this->call('PUT', 'admin/users/foobar', $input);
+        $this->assertResponseStatus(500);
     }
 
     /**
@@ -396,7 +396,6 @@ class UsersControllerTest extends TestCase
      * account.
      *
      * @test
-     * @expectedException \Symfony\Component\HttpKernel\Exception\HttpException
      */
     public function testGetDeleteActionWhenDeletingOwnAccount()
     {
@@ -413,6 +412,7 @@ class UsersControllerTest extends TestCase
         Auth::shouldReceive('user')->once()->andReturn($auth);
 
         $this->call('GET', 'admin/users/foobar/delete');
+        $this->assertResponseStatus(404);
     }
 
     /**

@@ -14,7 +14,7 @@ class PasswordUpdaterControllerTest extends TestCase
     /**
      * Setup the test environment.
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -67,7 +67,6 @@ class PasswordUpdaterControllerTest extends TestCase
      * Test POST /admin/account with invalid user id.
      *
      * @test
-     * @expectedException \Symfony\Component\HttpKernel\Exception\HttpException
      */
     public function testPostIndexActionGivenInvalidUserId()
     {
@@ -80,7 +79,7 @@ class PasswordUpdaterControllerTest extends TestCase
             });
 
         $this->call('POST', 'admin/account/password', $input);
-        $this->assertRedirectedTo('password');
+        $this->assertResponseStatus(500);
     }
 
     /**
