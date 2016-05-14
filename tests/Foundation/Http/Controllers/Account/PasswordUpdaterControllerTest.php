@@ -80,7 +80,6 @@ class PasswordUpdaterControllerTest extends TestCase
             });
 
         $this->call('POST', 'admin/account/password', $input);
-        $this->assertRedirectedTo('password');
     }
 
     /**
