@@ -132,7 +132,7 @@ class ProfileCreatorController extends AdminController implements Listener
      */
     protected function getRedirectToRegisterPath($redirect = null)
     {
-        return $this->resolveUserRedirectionHandles('register', 'orchestra::register', $redirect);
+        return $this->redirectUserTo('register', 'orchestra::register', $redirect);
     }
 
     /**
@@ -143,6 +143,6 @@ class ProfileCreatorController extends AdminController implements Listener
      */
     protected function getRedirectToLoginPath($redirect = null)
     {
-        return $this->resolveUserRedirectionHandles('login', 'orchestra::login', $redirect);
+        return $this->redirectUserTo('login', 'orchestra::login', $redirect);
     }
 }

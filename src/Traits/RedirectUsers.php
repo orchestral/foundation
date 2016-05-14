@@ -7,16 +7,16 @@ use Illuminate\Support\Str;
 trait RedirectUsers
 {
     /**
-     * Get redirection path.
+     * Get redirection handles.
      *
      * @param  string  $namespace
      * @param  string  $path
      * @param  string|null  $redirect
      * @return string
      */
-    protected function resolveUserRedirectionHandles($namespace, $path, $redirect = null)
+    protected function redirectUserTo($namespace, $path, $redirect = null)
     {
-        return handles($this->resolveUserRedirectionPath($namespace, $path, $redirect));
+        return handles($this->redirectUserPath($namespace, $path, $redirect));
     }
 
     /**
@@ -27,7 +27,7 @@ trait RedirectUsers
      * @param  string|null  $redirect
      * @return string
      */
-    protected function resolveUserRedirectionPath($namespace, $path, $redirect = null)
+    protected function redirectUserPath($namespace, $path, $redirect = null)
     {
         if (! empty($redirect)) {
             $path = $redirect;
