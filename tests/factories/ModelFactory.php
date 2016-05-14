@@ -18,7 +18,7 @@ $factory->define(User::class, function (Generator $faker) {
     return [
         'email'          => $faker->safeEmail,
         'fullname'       => $faker->name,
-        'password'       => str_random(6),
+        'password'       => '$2y$10$ljMS3rXiNnM33rTw.UadO.jJ5xFwUzidc0pzMkJSmbBykB0.aAv0y',
         'remember_token' => str_random(10),
         'status'         => User::VERIFIED,
     ];
@@ -28,7 +28,7 @@ $factory->defineAs(User::class, 'admin', function (Generator $faker) {
     return [
         'email'          => $faker->safeEmail,
         'fullname'       => $faker->name,
-        'password'       => 'qwerty',
+        'password'       => '$2y$10$ljMS3rXiNnM33rTw.UadO.jJ5xFwUzidc0pzMkJSmbBykB0.aAv0y',
         'remember_token' => str_random(10),
         'status'         => User::VERIFIED,
     ];
