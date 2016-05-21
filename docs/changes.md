@@ -5,6 +5,13 @@ title: Foundation Change Log
 
 ## Version 3.2 {#v3-2}
 
+### v3.2.8 {#v3-2-8}
+
+* Add option to modify vendor path from `Orchestra\Foundation\Application`.
+* Add `Orchestra\Foundation\Traits\RedirectUsers`.
+* Update assets:
+  - Vue v1.0.24.
+
 ### v3.2.7 {#v3-2-7}
 
 * Rename `Orchestra\Foundation\Composer\Command` to `Orchestra\Foundation\ComposerScripts`.
