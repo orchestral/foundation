@@ -48,6 +48,7 @@
     },
     "require-dev": {
         "mockery/mockery": "^0.9.1",
+        "doctrine/dbal": "~2.5",
         "phpunit/phpunit": "~4.8",
         "orchestra/testing": "~3.2.2"
     },
