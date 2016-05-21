@@ -47,10 +47,8 @@
         "predis/predis": "~1.0"
     },
     "require-dev": {
-        "mockery/mockery": "^0.9.1",
-        "doctrine/dbal": "~2.5",
         "phpunit/phpunit": "~4.8",
-        "orchestra/testing": "~3.2.2"
+        "orchestra/testing": "~3.2.3"
     },
     "suggest": {
         "orchestra/ftp-updater": "Allow Extension with asset to be updated/uploaded environment without SSH support (~3.2).",
