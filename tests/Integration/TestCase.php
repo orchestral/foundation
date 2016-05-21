@@ -65,6 +65,10 @@ abstract class TestCase extends ApplicationTestCase
 
         $this->app['orchestra.installed'] = true;
 
+        $this->beforeApplicationDestroyed(function () {
+            $this->app['orchestra.installed'] = false;
+        });
+
         return $user;
     }
 }
