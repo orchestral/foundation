@@ -47,9 +47,7 @@
         "predis/predis": "~1.0"
     },
     "require-dev": {
-        "mockery/mockery": "^0.9.4",
         "phpunit/phpunit": "~4.8|~5.0",
-        "doctrine/dbal": "~2.5",
         "orchestra/testing": "~3.3.0"
     },
     "suggest": {
