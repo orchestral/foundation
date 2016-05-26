@@ -48,7 +48,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~4.8|~5.0",
-        "orchestra/testing": "~3.3.0"
+        "orchestra/testing": "~3.4.0"
     },
     "suggest": {
         "orchestra/ftp-updater": "Allow Extension with asset to be updated/uploaded environment without SSH support (~3.4).",
