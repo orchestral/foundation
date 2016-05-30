@@ -83,7 +83,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
         $notifier->shouldReceive('setDefaultDriver')->once()->with('orchestra')->andReturnNull();
         $widget->shouldReceive('make')->once()->with('menu.orchestra')->andReturn($widget)
             ->shouldReceive('make')->once()->with('menu.app')->andReturn($widget)
-            ->shouldReceive('add->title->link')->once()->andReturnNull();
+            ->shouldReceive('add->title->link->icon')->once()->with('home')->andReturnNull();
         $translator->shouldReceive('get')->andReturn('foo');
         $event->shouldReceive('listen')->once()
                 ->with('orchestra.started: admin', 'Orchestra\Foundation\Http\Handlers\UserMenuHandler')->andReturnNull()
@@ -133,7 +133,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
         $notifier->shouldReceive('setDefaultDriver')->once()->with('orchestra')->andReturnNull();
         $widget->shouldReceive('make')->once()->with('menu.orchestra')->andReturn($widget)
             ->shouldReceive('make')->once()->with('menu.app')->andReturn($widget)
-            ->shouldReceive('add->title->link')->once()->with('http://localhost/admin/install')->andReturn($widget);
+            ->shouldReceive('add->title->link->icon')->once()->with('power-off')->andReturn($widget);
         $request->shouldReceive('root')->andReturn('http://localhost')
             ->shouldReceive('secure')->andReturn(false);
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
