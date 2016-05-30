@@ -46,7 +46,9 @@ gulp.task('uglify', function () {
 
 gulp.task('copy', function () {
   var copy = [
-    [dir.bower+'/bootstrap/dist/**/*', dir.web+'/vendor/bootstrap']
+    [dir.bower+'/bootstrap/dist/**/*', dir.web+'/vendor/bootstrap'],
+    [dir.bower+'/perfect-scrollbar/js/*.min.js', dir.web+'/vendor/perfect-scrollbar'],
+    [dir.bower+'/perfect-scrollbar/css/*.min.css', dir.web+'/vendor/perfect-scrollbar']
   ];
 
   underscore.each(copy, function (file) {
