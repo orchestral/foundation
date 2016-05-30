@@ -225,7 +225,8 @@ class Foundation extends RouteManager implements FoundationContract
 
         $this->menu()->add('install')
             ->title('Install')
-            ->link($this->handles('orchestra::install'));
+            ->link($this->handles('orchestra::install'))
+            ->icon('power-off');
 
         $this->app->instance('orchestra.installed', false);
 
@@ -250,7 +251,8 @@ class Foundation extends RouteManager implements FoundationContract
 
         $menu->add('home')
             ->title($this->app->make('translator')->get('orchestra/foundation::title.home'))
-            ->link($this->handles('orchestra::/'));
+            ->link($this->handles('orchestra::/'))
+            ->icon('home');
 
         foreach ($handlers as $handler) {
             $events->listen('orchestra.started: admin', $handler);

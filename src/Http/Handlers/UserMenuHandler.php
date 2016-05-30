@@ -17,7 +17,7 @@ class UserMenuHandler extends MenuHandler
         'position' => '*',
         'title'    => 'orchestra/foundation::title.users.list',
         'link'     => 'orchestra::users',
-        'icon'     => null,
+        'icon'     => 'users',
     ];
 
     /**
