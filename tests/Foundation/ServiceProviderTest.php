@@ -117,6 +117,7 @@ class ServiceProviderTest extends TestCase
             'command.route.cache',
             'command.route.clear',
             'command.route.list',
+            'command.storage.link',
             'command.tinker',
             'command.up',
             'command.view.clear',
