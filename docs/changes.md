@@ -5,6 +5,12 @@ title: Foundation Change Log
 
 ## Version 3.1 {#v3-1}
 
+### v3.1.26 {#v3-1-26}
+
+* Add `Orchestra\Foundation\ComposerScripts`.
+* Update assets:
+  - Vue v1.0.24.
+
 ### v3.1.25 {#v3-1-25}
 
 * Encrypt private informations under Orchestra Platform Settings. 
