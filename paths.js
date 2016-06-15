@@ -1,4 +1,4 @@
-module.export = {
+module.exports = {
   asset: {
     css: './resources/public/css',
     font: './resources/public/fonts',
