@@ -27,8 +27,8 @@
 </table>
 
 <div class="row">
-  <div class="col-sm-5 col-xs-12">
-    @if($pagination->total() > 1)
+  <div class="col-sm-5 col-xs-12 sm-text">
+    @if($pagination->total() > 0)
     Showing
     @if($pagination->firstItem() !== $pagination->lastItem())
     {{ $pagination->firstItem() }} to {{ $pagination->lastItem() }}
