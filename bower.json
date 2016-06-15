@@ -13,6 +13,7 @@
     "html5shiv": "~3.7.3",
     "javie": "^2.1.0",
     "jquery": "~1.10.2",
+    "mousetrap": "~1.6.0",
     "select2": "~3.4.8",
     "underscore": "^1.6.0",
     "perfect-scrollbar": "^0.6.11"
