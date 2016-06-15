@@ -19,13 +19,13 @@
       </div>
 
       <div class="row">
-        <div class="columns six-sm">
+        <div class="col-sm-6">
           <div class="checkbox">
             {{ Form::checkbox('remember', 'yes', false, ['tabindex' => 3, 'id' => 'remember']) }}
             <label for="remember">{{ trans('orchestra/foundation::title.remember-me') }}</label>
           </div>
         </div>
-        <div class="columns six-sm text-right">
+        <div class="col-sm-6 text-right">
           <button type="submit" class="btn btn-primary">{{ trans('orchestra/foundation::title.login') }}</button>
           @if(memorize('site.registrable', false))
           <a href="{{ handles('orchestra::register') }}" class="btn btn-link">
