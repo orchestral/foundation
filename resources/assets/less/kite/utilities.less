@@ -1,0 +1,41 @@
+/**
+ * Utilities
+ */
+
+/*** Square ***/
+
+.square(@size) {
+	width: @size;
+	height: @size;
+	line-height: @size;
+	text-align: center;
+}
+
+
+/*** Backgrounds ***/
+
+.bg(@color) {
+	background-color: @color !important;
+}
+.bg-primary {
+	.bg(@brand-primary);
+}
+.bg-accent {
+	.bg(@brand-accent);
+}
+.bg-pink {
+	.bg(@brand-pink);
+}
+.bg-orange {
+	.bg(@brand-orange);
+}
+.bg-teal {
+	.bg(@brand-teal);
+}
+
+
+/*** Margin bottom ***/
+
+.mb_sm {
+	margin-bottom: 5px;
+}

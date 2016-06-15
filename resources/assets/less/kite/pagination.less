@@ -1,0 +1,43 @@
+/**
+ * Pagination
+ */
+
+@pagination-color: @text-muted;
+@pagination-hover-color: @text-color;
+@pagination-hover-bg: @grey-lighter;
+@pagination-border: @grey-light;
+@pagination-disabled-color: @grey;
+
+
+.pagination {
+
+	> li {
+		
+		> a {
+			outline: none !important;
+		}
+		&:first-child > a {
+			border-radius: 2px 0 0 2px;
+		}
+		&:last-child > a {
+			border-radius: 0 2px 2px 0;
+		}
+	}
+}
+
+
+/*** Pager ***/
+
+.pager {
+
+	> li {
+
+		> a {
+			color: @text-muted;
+
+			&:hover, &:focus {
+				color: @text-color;
+			}
+		}
+	}
+}

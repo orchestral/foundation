@@ -1,0 +1,21 @@
+/**
+ * Footer
+ */
+
+footer.footer {
+	padding: (@grid-gutter-width / 2);
+	line-height: 1.7em;
+	color: @text-muted;
+
+	a {
+		color: @text-muted;
+
+		&:hover, &:focus {
+			color: @text-color;
+		}
+	}
+
+	@media(max-width: @screen-xs-max) {
+		text-align: center;
+	}
+}

@@ -1,0 +1,112 @@
+/**
+ * Forms
+ */
+
+@input-color: @text-color;
+@input-border-radius: 2px;
+@input-border-radius-small: 2px;
+@input-border-radius-large: 2px;
+@input-border: fade(black,15%);
+@input-border-focus: fade(black,20%);
+
+form {
+	
+	.form-control {
+		box-shadow: none;
+
+		&:focus {
+			outline: none !important;
+			box-shadow: none !important;
+		}
+	}
+	label {
+		color: @text-muted;
+		font-weight: 400;
+	}
+
+	// Context classes
+
+	.has-error {
+		
+		.form-control {
+			border-color: @brand-danger;
+		}
+		label, .help-block {
+			color: darken(@brand-danger,20%);
+		}
+	}
+}
+
+
+/*** Checkboxes ***/
+
+form {
+
+	input[type="checkbox"] {
+		display: none;
+
+		+ label {
+			padding-left: 0;
+			
+			> a {
+				color: @text-muted;
+			}
+			&:before {
+				content: "";
+				display: inline-block;
+				vertical-align: middle;
+				margin-right: 10px;
+				margin-bottom: 4px;
+				width: 14px; height: 14px;
+				border-radius: 2px;
+				border: 1px solid @input-border;
+			}
+		}
+		&:checked + label:before {
+			content: "\f00c";
+			font-family: "FontAwesome";
+			color: @text-color;
+			font-size: 12px;
+			line-height: 14px;
+		}
+		&:disabled + label:before {
+			background-color: @grey-light;
+		}
+	}
+}
+
+
+/*** Radio ***/
+
+form {
+
+	input[type="radio"] {
+		display: none;
+
+		+ label {
+			padding-left: 0;
+			
+			> a {
+				color: @text-muted;
+			}
+			&:before {
+				content: "";
+				display: inline-block;
+				vertical-align: middle;
+				margin-right: 10px;
+				margin-bottom: 4px;
+				width: 14px; height: 14px;
+				border-radius: 50%;
+				border: 1px solid @input-border;
+			}
+		}
+		&:checked + label:before {
+			padding: 3px;
+			background-color: @text-color;
+			background-clip: content-box;
+		}
+		&:disabled + label:before {
+			background-color: @grey-light;
+		}
+	}
+}
