@@ -29,13 +29,11 @@
 <div class="row">
   <div class="col-sm-5 col-xs-12">
     @if($pagination->total() > 1)
-    Showing
     @if($pagination->firstItem() !== $pagination->lastItem())
-    {{ $pagination->firstItem() }} to {{ $pagination->lastItem() }}
+    {{ trans('orchestra/foundation::label.paginations.multiple', $pagination->toArray()) }}
     @else
-    {{ $pagination->lastItem() }}
+    {{ trans('orchestra/foundation::label.paginations.single', $pagination->toArray()) }}
     @endif
-    of {{ $pagination->total() }} entries
     @endif
   </div>
   @if($pagination->hasPages())
@@ -44,4 +42,3 @@
   </div>
   @endif
 </div>
-
