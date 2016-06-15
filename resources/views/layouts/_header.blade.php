@@ -7,14 +7,14 @@
 
 <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 <!--[if lt IE 9]>
-  <script src="{!! asset('js/html5shiv.js') !!}"></script>
+  <script src="{!! asset('packages/orchestra/foundation/js/html5shiv.js') !!}"></script>
 <![endif]-->
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300,500" rel="stylesheet" type="text/css">
 
 @php
 $asset = app('orchestra.asset')->container('orchestra/foundation::header');
-$asset->style('vendor', 'css/vendor.css');
-$asset->style('orchestra', 'css/orchestra.css', ['vendor']);
+$asset->style('vendor', 'packages/orchestra/foundation/css/vendor.css');
+$asset->style('orchestra', 'packages/orchestra/foundation/css/orchestra.css', ['vendor']);
 @endphp
 
 {{ $asset }}

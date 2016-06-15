@@ -2,8 +2,8 @@
 
 @php
 $asset = app('orchestra.asset')->container('orchestra/foundation::footer');
-$asset->script('vendor', 'js/vendor.js');
-$asset->script('orchestra', 'js/orchestra.js', ['vendor']);
+$asset->script('vendor', 'packages/orchestra/foundation/js/vendor.js');
+$asset->script('orchestra', 'packages/orchestra/foundation/js/orchestra.js', ['vendor']);
 @endphp
 
 {{ $asset }}
