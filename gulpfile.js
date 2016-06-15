@@ -14,6 +14,7 @@ var dir, elixir = require('laravel-elixir');
 dir = {
   asset: {
     css: 'resources/public/css',
+    font: 'resources/public/fonts',
     img: 'resources/public/img',
     js: 'resources/public/js'
   },
@@ -33,6 +34,8 @@ elixir.config.js.browserify.transformers.push({
 elixir.config.sourcemaps = false
 
 elixir(function(mix) {
+  mix.copy(dir.vendor+'/font-awesome/fonts', dir.asset.font)
+
   mix.less('orchestra.less', dir.asset.css+'/orchestra.css', {
     paths: [dir.vendor]
   })
