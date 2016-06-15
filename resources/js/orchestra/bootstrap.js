@@ -2,7 +2,7 @@ import $ from '../vendor/jquery'
 
 class Bootstrap {
   select2() {
-    $('select.form-control, .navbar-form > select').each((i, item) => {
+    $('select.form-control, .tabular-form > select').each((i, item) => {
       let selector = $(item)
 
       if (selector.is('[role!="agreement"]') && selector.is('[role!="native"]')) {
