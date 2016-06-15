@@ -15,7 +15,7 @@ $asset->script('orchestra', 'packages/orchestra/foundation/js/orchestra.js', ['v
 @placeholder('orchestra.layout: footer')
 @stack('orchestra.footer')
 <script>
-  if (!_.isUndefined(app) && app instanceof App) {
+  if (_.isObject(app) && app instanceof Vue) {
     app.$set('sidebar.menu', {!! app('orchestra.platform.menu')->toJson() !!})
     @unless(is_null($user))
     app.$set('user', {!! $user->toJson() !!})

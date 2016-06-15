@@ -181,7 +181,7 @@ class User extends Presenter
                 handles("orchestra::users/{$row->id}/edit"),
                 trans('orchestra/foundation::label.edit'),
                 [
-                    'class'   => 'btn btn-mini btn-warning',
+                    'class'   => 'btn btn-xs btn-label btn-warning',
                     'role'    => 'edit',
                     'data-id' => $row->id,
                 ]
