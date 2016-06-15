@@ -3,6 +3,7 @@ import $ from '../vendor/jquery'
 
 let App = Vue.extend({
   components: {
+    btndrop: require('./components/btndrop.vue'),
     fa: require('./components/fa.vue'),
     offcanvas: require('./components/offcanvas.vue'),
     progress: require('./components/progress.vue'),
