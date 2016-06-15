@@ -16,7 +16,7 @@
             <li v-if="item.link != '#!'">
               <a :href="item.link" :id="item.id">{{ item.title }}</a>
             </li>
-            <li v-for="child in item.childs">
+            <li v-for="child in item.childs" :class="{ 'active': isActive(child) }">
               <a :href="child.link">{{ child.title }}</a>
             </li>
           </ul>
