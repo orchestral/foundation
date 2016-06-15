@@ -1,13 +1,40 @@
-@extends('orchestra/foundation::layouts.main')
+@extends('orchestra/foundation::layouts.app')
 
 @section('content')
 <div class="row">
-	<div class="eight columns rounded box">
-		{!! $form !!}
+	<div class="col-xs-12 col-sm-9">
+    @if(data_get($eloquent, 'publishing', true))
+    <div class="panel panel-blank">
+      <div class="panel-body">
+        <a href="{{ handles("orchestra::extensions/{$extension->get('name')}/update", ['csrf' => true]) }}"
+          class="btn btn-info btn-block">
+          {{ trans('orchestra/foundation::label.extensions.actions.update') }}
+        </a>
+      </div>
+    </div>
+    @endif
+
+    <div class="panel panel-blank">
+      <div class="panel-body">
+        {{ $form }}
+      </div>
+    </div>
 	</div>
-	<div class="four columns">
+	<div class="col-xs-12 col-sm-3">
 		@placeholder('orchestra.extensions')
 		@placeholder('orchestra.helps')
 	</div>
 </div>
 @stop
+
+@push('orchestra.footer')
+<script>
+  var app = new App({
+    data: {
+      sidebar: {
+        active: 'extensions'
+      }
+    }
+  }).$mount('body')
+</script>
+@endpush

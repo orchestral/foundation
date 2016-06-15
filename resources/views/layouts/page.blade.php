@@ -1,1 +1,1 @@
-@include('orchestra/foundation::layouts.main')
+@include('orchestra/foundation::layouts.app')

@@ -6,6 +6,7 @@ let App = Vue.extend({
     fa: require('./components/fa.vue'),
     offcanvas: require('./components/offcanvas.vue'),
     progress: require('./components/progress.vue'),
+    secret: require('./components/secret.vue'),
     sidenav: require('./components/sidenav.vue')
   },
 

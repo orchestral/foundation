@@ -1,6 +1,6 @@
 @inject('factory', 'Orchestra\Contracts\Extension\Factory')
 
-<table class="table table-striped">
+<table class="table table-hover">
 	<thead>
 		<tr>
 			<th>{{ trans('orchestra/foundation::label.extensions.name') }}</th>
@@ -26,11 +26,11 @@
 				</strong>
 				<div class="pull-right btn-group">
 					@if(! ($started || $activated))
-						<a href="{!! handles("orchestra::extensions/{$name}/activate", ['csrf' => true]) !!}" class="btn btn-primary btn-mini">
+						<a href="{!! handles("orchestra::extensions/{$name}/activate", ['csrf' => true]) !!}" class="btn btn-primary btn-xs btn-label">
 							{{ trans('orchestra/foundation::label.extensions.actions.activate') }}
 						</a>
 					@else
-						<a href="{!! handles("orchestra::extensions/{$name}/deactivate", ['csrf' => true]) !!}" class="btn btn-warning btn-mini">
+						<a href="{!! handles("orchestra::extensions/{$name}/deactivate", ['csrf' => true]) !!}" class="btn btn-warning btn-xs btn-label">
 							{{ trans('orchestra/foundation::label.extensions.actions.deactivate') }}
 						</a>
 					@endif

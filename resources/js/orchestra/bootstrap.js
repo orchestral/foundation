@@ -1,10 +1,6 @@
 import $ from '../vendor/jquery'
 
 class Bootstrap {
-  btnGroup() {
-
-  }
-
   select2() {
     $('select.form-control, .navbar-form > select').each((i, item) => {
       let selector = $(item)

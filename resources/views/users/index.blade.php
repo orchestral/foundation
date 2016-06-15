@@ -1,12 +1,28 @@
-@extends('orchestra/foundation::layouts.main')
+@extends('orchestra/foundation::layouts.app')
 
 @set_meta('header::add-button', true)
 
 @section('content')
 <div class="row">
-	@include('orchestra/foundation::users._search')
-	<div class="twelve columns white rounded box">
-		{!! $table !!}
-	</div>
+  <div class="col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        @include('orchestra/foundation::users._search')
+        {{ $table }}
+      </div>
+    </div>
+  </div>
 </div>
 @stop
+
+@push('orchestra.footer')
+<script>
+  var app = new App({
+    data: {
+      sidebar: {
+        active: 'users'
+      }
+    }
+  }).$mount('body')
+</script>
+@endpush
