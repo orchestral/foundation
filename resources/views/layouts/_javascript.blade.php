@@ -9,17 +9,16 @@ $asset->script('orchestra', 'packages/orchestra/foundation/js/orchestra.js', ['v
 {{ $asset }}
 
 <script>
-Platform.route("{{ Request::path() }}")
+  var app
+  Platform.route("{{ Request::path() }}")
 </script>
-
 @placeholder('orchestra.layout: footer')
 @stack('orchestra.footer')
-
 <script>
-if (app instanceof App) {
-  app.$set('sidebar.menu', {!! app('orchestra.platform.menu')->toJson() !!})
-  @unless(is_null($user))
-  app.$set('user', {!! $user->toJson() !!})
-  @endunless
-}
+  if (!_.isUndefined(app) && app instanceof App) {
+    app.$set('sidebar.menu', {!! app('orchestra.platform.menu')->toJson() !!})
+    @unless(is_null($user))
+    app.$set('user', {!! $user->toJson() !!})
+    @endunless
+  }
 </script>

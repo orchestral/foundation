@@ -17,6 +17,11 @@
 
 @push('orchestra.footer')
 <script>
+  Platform.watch('/', function() {
+    $('input[role="keyword"]').first().focus()
+    return false
+  })
+
   var app = new App({
     data: {
       sidebar: {
