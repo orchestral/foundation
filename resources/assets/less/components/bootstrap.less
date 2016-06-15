@@ -8,6 +8,25 @@ form {
             font-size: 16px;
         }
     }
+
+    &.navbar-form {
+        input[role="keyword"] {
+            margin: 0;
+            padding: 8px 6px 10px;
+            width: 250px;
+        }
+
+        select[role="roles"] {
+            min-width: 200px;
+        }
+
+        @media (max-width: 768px) {
+            input[type="submit"] {
+                margin-top: 4px;
+            }
+        }
+    }
+
 }
 
 nav.navbar {

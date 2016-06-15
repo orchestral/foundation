@@ -29,6 +29,15 @@
       }
     },
 
+    ready() {
+      const vm = this
+
+      $('.sidebar__close').click(() => {
+        vm.toggle()
+        return false
+      })
+    },
+
     methods: {
       /**
        * Toggle off-canvas state.

@@ -8,3 +8,5 @@ Vue.use(Resource)
 window.Vue = Vue
 window.Platform = Platform
 window.App = App
+
+require('./orchestra/bootstrap')
