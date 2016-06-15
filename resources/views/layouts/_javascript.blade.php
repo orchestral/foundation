@@ -18,6 +18,8 @@ Platform.route("{{ Request::path() }}")
 <script>
 if (app instanceof App) {
   app.$set('sidebar.menu', {!! app('orchestra.platform.menu')->toJson() !!})
+  @unless(is_null($user))
   app.$set('user', {!! $user->toJson() !!})
+  @endunless
 }
 </script>

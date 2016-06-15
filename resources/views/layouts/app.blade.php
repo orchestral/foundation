@@ -11,7 +11,7 @@
                 @include('orchestra/foundation::layouts._navbar')
 
                 <div class="row">
-                    <div class="columns twelve">
+                    <div class="col-md-12">
                         @include('orchestra/foundation::components.header', [
                             'title' => get_meta('title', ''),
                             'description' => get_meta('description')
@@ -20,14 +20,14 @@
                 </div>
 
                 <div class="row">
-                    <div class="columns twelve">
+                    <div class="col-md-12">
                         @include('orchestra/foundation::components.messages')
                         @yield('content')
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="columns twelve">
+                    <div class="col-md-12">
                         @include('orchestra/foundation::layouts._footer')
                     </div>
                 </div>
