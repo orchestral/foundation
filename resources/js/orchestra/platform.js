@@ -24,7 +24,7 @@ class Platform {
   }
 
   extend(name, to, options) {
-    if (_.has(services, name) && services[name] instanceof Vue) {
+    if (_.has(services, name)) {
       this.register(to, services[name].extend(options))
     }
   }

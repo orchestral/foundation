@@ -1,4 +1,4 @@
-import $ from '../vendor/jquery'
+import $ from './vendor/jquery'
 
 class Bootstrap {
   select2() {

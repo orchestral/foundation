@@ -12,4 +12,4 @@ Platform.register('setting', Setting)
 window.Vue = Vue
 window.Platform = Platform
 
-require('./orchestra/bootstrap')
+require('./bootstrap')
