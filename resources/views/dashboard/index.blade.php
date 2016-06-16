@@ -1,30 +1,17 @@
-@extends('orchestra/foundation::layouts.main')
+@extends('orchestra/foundation::layouts.app')
 
 @section('content')
 <div class="row">
-	@if(count($panes) > 0)
-
-@php
-$panes->add('mini-profile', '<')->title('Mini Profile')
-	->attributes(['class' => 'three columns widget'])
-	->content(view('orchestra/foundation::components.miniprofile'));
-@endphp
-
-	@foreach($panes as $id => $pane)
-		<div{!! HTML::attributable($pane->get('attributes'), ['class' => 'panel']) !!}>
-		@if(! empty($pane->get('html')))
-		{!! $pane->get('html') !!}
-		@else
-		<div class="panel-heading">
-			{!! $pane->get('title') !!}
-		</div>
-		{!! $pane->get('content') !!}
-		@endif
-		</div>
-	@endforeach
-	@else
-	@include('orchestra/foundation::dashboard._welcome')
-	@endif
+  <div class="col-xs-12 col-sm-3" v-for="item in dash">
+    <dash :value="item.value" :title="item.title" :color="item.color" :icon="item.icon" :prefix="item.prefix" :suffix="item.suffix"></dash>
+  </div>
 </div>
-
+@include('orchestra/foundation::dashboard._welcome')
 @stop
+
+@push('orchestra.footer')
+<script>
+  var app = Platform.make('app').nav('home').$mount('body')
+  app.$set('dash', {!! app('orchestra.widget')->make('dash.orchestra')->toJson() !!})
+</script>
+@endpush

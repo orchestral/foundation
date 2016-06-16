@@ -136,19 +136,4 @@ class LoadExpressoTest extends TestCase
 
         $this->assertEquals('<title>Foobar &mdash; Foo (Page 5)</title>', $this->app['html']->title('Foobar'));
     }
-
-    /**
-     * Test Orchestra\Decorator navbar is registered.
-     *
-     * @test
-     */
-    public function testDecoratorIsRegistered()
-    {
-        $stub = $this->app['orchestra.decorator'];
-        $view = $stub->render('navbar', []);
-
-        $this->assertInstanceOf('\Orchestra\View\Decorator', $stub);
-        $this->assertInstanceOf('\Illuminate\View\View', $view);
-        $this->assertEquals('orchestra/foundation::components.navbar', $view->getName());
-    }
 }

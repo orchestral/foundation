@@ -1,0 +1,33 @@
+/**
+ * Dropdowns
+ */
+
+ .navbar-nav > li.dropdown.open > a {
+
+	&:before, &:after {
+		content: "";
+		position: absolute;
+		bottom: -1px; left: 50%;
+		-webkit-transform: translateX(-50%);
+				transform: translateX(-50%);
+		width: 0; height: 0;
+		z-index: 1001;
+	}
+	&:before {
+		border-bottom: 10px solid fade(black,10%);
+		border-left: 10px solid transparent;
+		border-right: 10px solid transparent;
+	}
+	&:after {
+		border-bottom: 9px solid white;
+		border-left: 9px solid transparent;
+		border-right: 9px solid transparent;		
+	}
+}
+
+@dropdown-border: fade(black,5%);
+
+.dropdown-menu {
+	border-radius: 0 0 2px 2px;
+	box-shadow: 0 2px 5px fade(black,10%);
+}

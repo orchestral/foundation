@@ -116,6 +116,18 @@ class Foundation extends RouteManager implements FoundationContract
     }
 
     /**
+     * Get widget services by type.
+     *
+     * @param  string  $type
+     *
+     * @return \Orchestra\Widget\Handler
+     */
+    public function widget($type)
+    {
+        return $this->app->make('orchestra.widget')->make("{$type}.orchestra");
+    }
+
+    /**
      * Register the given Closure with the "group" function namespace set.
      *
      * @param  string|null  $namespace
@@ -225,7 +237,8 @@ class Foundation extends RouteManager implements FoundationContract
 
         $this->menu()->add('install')
             ->title('Install')
-            ->link($this->handles('orchestra::install'));
+            ->link($this->handles('orchestra::install'))
+            ->icon('power-off');
 
         $this->app->instance('orchestra.installed', false);
 
@@ -250,7 +263,8 @@ class Foundation extends RouteManager implements FoundationContract
 
         $menu->add('home')
             ->title($this->app->make('translator')->get('orchestra/foundation::title.home'))
-            ->link($this->handles('orchestra::/'));
+            ->link($this->handles('orchestra::/'))
+            ->icon('home');
 
         foreach ($handlers as $handler) {
             $events->listen('orchestra.started: admin', $handler);
@@ -264,10 +278,8 @@ class Foundation extends RouteManager implements FoundationContract
      */
     protected function registerBaseServices()
     {
-        $this->app->instance('orchestra.platform.menu', $this->app->make('orchestra.widget')->make('menu.orchestra'));
+        $this->app->instance('orchestra.platform.menu', $this->widget('menu'));
         $this->app->instance('orchestra.platform.acl', $this->app->make('orchestra.acl')->make('orchestra'));
-
-        $this->app->instance('app.menu', $this->app->make('orchestra.widget')->make('menu.app'));
     }
 
     /**
@@ -310,6 +322,6 @@ class Foundation extends RouteManager implements FoundationContract
      */
     public function __call($method, $parameters)
     {
-        return call_user_func([$this->app, $method], ...$parameters);
+        return $this->app->{$method}(...$parameters);
     }
 }

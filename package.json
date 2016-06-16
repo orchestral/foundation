@@ -1,15 +1,17 @@
 {
   "devDependencies": {
-    "bower": "^1.7.7",
-    "bower-installer": "^0.8.4",
-    "gulp": "^3.9.1",
-    "gulp-coffee": "^2.3.1",
-    "gulp-less": "^1.3.3",
-    "gulp-minify-css": "^0.3.7",
-    "gulp-notify": "^1.8.0",
-    "gulp-rename": "^1.2.0",
-    "gulp-uglify": "^0.3.1",
-    "gulp-util": "^2.2.20",
-    "underscore": "^1.8.2"
+    "bower": "^1.6.0",
+    "gulp": "^3.9.1"
+  },
+  "dependencies": {
+    "laravel-elixir": "^5.0.0",
+    "laravel-elixir-vueify": "^1.0.3",
+    "vue": "^1.0.24",
+    "vue-resource": "^0.7.4"
+  },
+  "private": true,
+  "scripts": {
+    "build": "NODE_ENV=production gulp --production",
+    "dev": "gulp watch"
   }
 }

@@ -1,0 +1,70 @@
+/**
+ * Navs
+ */
+
+@nav-link-hover-bg: transparent;
+
+
+/*** Tabs ***/
+
+@nav-tabs-border-color: fade(black, 7%);
+@nav-tabs-link-hover-border-color: transparent;
+@nav-tabs-active-link-hover-border-color: fade(black,7%);
+
+.nav-tabs {
+	border-bottom: 0;
+
+	> li {
+
+		> a {
+			position: relative;
+			border-radius: 0;
+			color: @text-muted;
+
+			&:hover, &:focus {
+				border-bottom: 0;
+			}
+		}
+
+		&.active > a:before {
+			content: "";
+			position: absolute;
+			top: -2px; left: -1px; right: -1px;
+			border-top: 2px solid @brand-accent;
+		}
+		&.active {
+
+			> a, > a:hover, > a:focus {
+				background-color: white;
+			}
+		}
+	}
+}
+
+
+/*** Contextual alternatives ***/
+
+.nav-tabs-primary {
+
+	> li.active {
+
+		> a, > a:hover, > a:focus {
+			background-color: @brand-primary;
+			color: white;
+		}
+	}
+}
+.nav-tabs-accent {
+
+	> li.active {
+
+		> a, > a:hover, > a:focus {
+			background-color: @brand-accent;
+			color: white;
+
+			&:before {
+				border-top-color: @brand-pink-light;
+			}
+		}
+	}
+}

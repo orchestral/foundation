@@ -1,13 +1,19 @@
-@extends('orchestra/foundation::layouts.main')
+@extends('orchestra/foundation::layouts.app')
 
 @section('content')
 <div class="row">
-	<div class="eight columns rounded box">
-		{!! $form !!}
-	</div>
-	<div class="four columns">
-		@placeholder('orchestra.account')
-		@placeholder('orchestra.helps')
-	</div>
+  <div class="col-md-8 col-xs-12">
+    {{ $form }}
+  </div>
+  <div class="col-md-4 col-xs-12">
+    @placeholder('orchestra.account')
+    @placeholder('orchestra.helps')
+  </div>
 </div>
 @stop
+
+@push('orchestra.footer')
+<script>
+  var app = Platform.make('app').nav('accounts').$mount('body')
+</script>
+@endpush

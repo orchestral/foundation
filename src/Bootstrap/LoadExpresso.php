@@ -17,9 +17,6 @@ class LoadExpresso
     public function bootstrap(Application $app)
     {
         $this->addBladeExtensions($app);
-
-        $this->addDecoratorExtensions($app);
-
         $this->addHtmlExtensions($app);
     }
 
@@ -62,20 +59,6 @@ class LoadExpresso
             $view = preg_replace('/#\{\{\s*(.+?)\s*\}\}/s', '<?php $1; ?>', $view);
 
             return $view;
-        });
-    }
-
-    /**
-     * Add "navbar" macro for "orchestra.decorator" service location.
-     *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
-     *
-     * @return void
-     */
-    protected function addDecoratorExtensions(Application $app)
-    {
-        $app->make('orchestra.decorator')->macro('navbar', function ($navbar) use ($app) {
-            return $app->make('view')->make('orchestra/foundation::components.navbar', compact('navbar'));
         });
     }
 

@@ -1,0 +1,85 @@
+/**
+ * Buttons
+ */
+
+@btn-border-radius-small: 2px;
+@btn-border-radius-base: 2px;
+@btn-border-radius-large: 2px;
+
+.btn(@color) {
+	background-color: @color;
+	border-color: fade(black,10%);
+	outline: none !important;
+	box-shadow: none;
+	color: white;
+
+	&:hover {
+		background-color: darken(@color,5%);
+		border-color: fade(black,20%);
+		color: white;
+	}
+	&:focus, &:active, &:active:focus {
+		background-color: darken(@color,10%);
+		border-color: fade(black,20%);
+		color: white;
+	}
+}
+
+/*** Button sizes ***/
+
+.btn-lg {
+	font-size: @font-size-base;
+}
+
+/*** Button styles ***/
+
+/* Default */
+
+@btn-default-border: fade(black,15%);
+
+.btn-default {
+	box-shadow: none;
+
+	&:hover, &:focus, &:active {
+		outline: none !important;
+		background-color: @grey-light;
+		border-color: fade(black,20%) !important;
+		color: @text-color;
+	}
+}
+
+/* Primary */
+
+.btn-primary {
+	.btn(@brand-primary);
+}
+
+/* Accent */
+
+.btn-accent {
+	.btn(@brand-accent);
+}
+
+/* Danger */
+
+.btn-danger {
+	.btn(@brand-danger);
+}
+
+/* Success */
+
+.btn-success {
+	.btn(@brand-success);
+}
+
+/* Warning */
+
+.btn-warning {
+	.btn(@brand-warning);
+}
+
+/* Info */
+
+.btn-info {
+	.btn(@brand-info);
+}

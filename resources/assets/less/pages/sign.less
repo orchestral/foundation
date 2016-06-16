@@ -1,0 +1,44 @@
+/**
+ * Sign In / Up
+ */
+
+.sign__container {
+    margin-top: (@navbar-height + @navbar-margin-bottom);
+    margin-bottom: (@navbar-height + @navbar-margin-bottom);
+
+    > .panel {
+        border-top: 3px solid @brand-primary-light;
+        box-shadow: 0 1px 1px -1px fade(black,70%);
+    }
+
+    .panel-title {
+        font-weight: 500;
+        text-align: center;
+    }
+
+    label[for="remember"] {
+        line-height: 32px;
+    }
+
+    .panel-footer {
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-top: 1px solid fade(black,7%);
+        text-align: center;
+
+        > a {
+            color: @text-muted;
+        }
+    }
+}
+#sign__resend-password {
+    > form {
+        padding: 15px 0 0;
+    }
+}
+
+.sign__extra {
+    > a {
+        color: @text-muted;
+    }
+}

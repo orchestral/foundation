@@ -1,57 +1,31 @@
 <script>
-jQuery(function onSettingPageReady($) { 'use strict';
-  var email_driver, get_container;
+Javie.on('setting.changed: email.driver.smtp', function (app) {
+  $.each(['email_host', 'email_port', 'email_username', 'email_password', 'email_encryption'], function(index, name) {
+    app.container('input[name="'+name+'"]').removeClass('hidden')
+  })
+})
 
-  email_driver = $('select[name="email_driver"]');
+Javie.on('setting.changed: email.driver.sendmail', function (app) {
+  app.container('input[name^="email_sendmail"]').removeClass('hidden')
+})
 
-  get_container = function (node) {
-    return $(node).parent().parent().parent();
-  };
+Javie.on('setting.changed: email.driver.ses', function (app) {
+  $.each(['email_key', 'email_secret', 'email_region'], function(index, name) {
+    app.container('input[name="'+name+'"]').removeClass('hidden')
+  })
+})
 
-  // Listen to email.driver changed event.
-  Javie.on('setting.changed: email.driver', function listen_to_email_driver_changes (e, self) {
-    var value, smtp;
+Javie.on('setting.changed: email.driver.mailgun', function (app) {
+  $.each(['email_secret', 'email_domain'], function(index, name) {
+    app.container('input[name="'+name+'"]').removeClass('hidden')
+  })
+})
 
-    value = self.value ? self.value : '';
-    smtp  = ['email_host', 'email_port', 'email_username', 'email_password', 'email_encryption'];
+Javie.on('setting.changed: email.driver.mandrill', function (app) {
+  app.container('input[name="email_secret"]').removeClass('hidden')
+})
 
-    get_container('input[name^="email_"]').hide();
-    get_container('select[name^="email_region"]').hide();
-    get_container('input[name="email_queue"]').hide();
-
-    switch (value) {
-      case 'smtp' :
-        $.each(smtp, function(index, name) {
-          get_container('input[name="'+name+'"]').show();
-        });
-        break;
-      case 'sendmail' :
-        get_container('input[name^="email_sendmail"]').show();
-        break;
-      case 'ses':
-        get_container('input[name^="email_key"]').show();
-        get_container('input[name^="email_secret"]').show();
-        get_container('select[name^="email_region"]').show();
-        break;
-      case 'mailgun':
-        get_container('input[name^="email_secret"]').show();
-        get_container('input[name^="email_domain"]').show();
-        break;
-      case 'mandrill':
-      case 'sparkpost':
-        get_container('input[name^="email_secret"]').show();
-        break;
-    }
-
-    get_container('input[name^="email_address"]').show();
-  });
-
-  // bind onChange event to publish an event.
-  email_driver.on('change', function on_change_email_driver (e) {
-    Javie.trigger('setting.changed: email.driver', [e, this]);
-  });
-
-  // lets trigger an onChange event.
-  email_driver.trigger('change');
-});
+Javie.on('setting.changed: email.driver.sparkpost', function (app) {
+  app.container('input[name="email_secret"]').removeClass('hidden')
+})
 </script>

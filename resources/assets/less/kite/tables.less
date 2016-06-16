@@ -1,0 +1,152 @@
+/**
+ * Tables
+ */
+
+@table-cell-padding: 10px;
+@table-bg-accent: @grey-lighter;
+@table-bg-hover: @grey-lighter;
+@table-border-color: #f0f0f0;
+
+.table {
+
+	thead {
+
+		tr {
+
+			th {
+				border-bottom-width: 1px;
+				vertical-align: middle;
+				font-weight: 400;
+				text-transform: uppercase;
+				font-size: (@font-size-base - 2px);
+				color: @text-muted;
+			}
+		}
+	}
+	tbody {
+
+		tr {
+
+			td {
+				vertical-align: middle;
+				color: @text-muted;
+
+				strong {
+					color: @text-color;
+				}				
+			}
+			th {
+				font-weight: 400;
+				color: @text-muted;
+
+				strong {
+					color: @text-color;
+				}
+			}
+		}
+	}
+}
+
+
+/*** Table: Avatar ***/
+
+.table__avatar {
+	vertical-align: middle;
+	display: inline-block;
+	width: 40px; height: 40px;
+	margin-right: 15px;
+	border-radius: 50%;
+	border: 2px solid @grey-light;
+	overflow: hidden;
+
+	> img {
+		width: 100%;
+		height: auto;
+	}
+}
+
+
+/*** Table: Status ***/
+
+.table__status {
+
+	&.online {
+
+		> .fa {
+			color: @brand-success;
+		}
+	}
+	&.offline {
+
+		> .fa {
+			color: @brand-danger;
+		}
+	}
+	.fa {
+		margin-right: 10px;
+	}
+}
+
+
+/*** Table: filters ***/
+
+.table__filters {
+	margin-bottom: 30px;
+
+	@media(max-width: @screen-xs-max) {
+
+		.pull-right {
+			float: none;
+			width: 100%;
+		}
+	}
+	@media(min-width: @screen-sm-min) {
+
+		.form-group {
+			padding: 0 5px;
+
+			> label {
+				margin-right: 10px;
+			}
+			&:first-child {
+				padding-left: 0;
+			}
+			&:last-child {
+				padding-right: 0;
+			}
+		}
+	}
+}
+
+
+/*** Tables: Datatables ***/
+
+.form-control {
+
+	&:focus {
+		outline: none !important;
+		box-shadow: none !important;
+	}	
+}
+.table {
+
+	th {
+
+		&:focus {
+			outline: none !important;
+		}
+		&:after {
+			display: none !important;
+		}
+	}
+}
+.dataTables_info {
+	color: @text-muted;
+}
+
+
+/*** Tables: Responsive ***/
+
+.table-responsive {
+	border-width: 0;
+}

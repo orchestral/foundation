@@ -17,7 +17,7 @@ class SettingMenuHandler extends MenuHandler
         'position' => '*',
         'title'    => 'orchestra/foundation::title.settings.list',
         'link'     => 'orchestra::settings',
-        'icon'     => null,
+        'icon'     => 'cogs',
     ];
 
     /**

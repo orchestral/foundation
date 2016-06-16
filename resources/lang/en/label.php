@@ -61,6 +61,11 @@ return [
         ],
     ],
 
+    'paginations' => [
+        'multiple' => 'Showing :from to :to of :total entries',
+        'single'   => 'Showing :from of :total entries',
+    ],
+
     'search'    => [
         'button'  => 'Search',
         'filter'  => 'Filter',

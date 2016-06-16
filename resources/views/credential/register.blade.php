@@ -1,9 +1,9 @@
-@extends('orchestra/foundation::layouts.extra')
+@extends('orchestra/foundation::layouts.sign')
 
 @section('content')
 <div class="row">
 	<div class="six columns offset-by-three">
-		{!! $form !!}
+		{{ $form }}
 	</div>
 </div>
 @stop

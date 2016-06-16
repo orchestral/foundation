@@ -17,7 +17,7 @@ class ExtensionMenuHandler extends MenuHandler
         'position' => '>:home',
         'title'    => 'orchestra/foundation::title.extensions.list',
         'link'     => 'orchestra::extensions',
-        'icon'     => null,
+        'icon'     => 'cubes',
     ];
 
     /**
