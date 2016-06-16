@@ -280,8 +280,6 @@ class Foundation extends RouteManager implements FoundationContract
     {
         $this->app->instance('orchestra.platform.menu', $this->widget('menu'));
         $this->app->instance('orchestra.platform.acl', $this->app->make('orchestra.acl')->make('orchestra'));
-
-        $this->app->instance('app.menu', $this->app->make('orchestra.widget')->make('menu.app'));
     }
 
     /**
