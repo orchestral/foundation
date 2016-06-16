@@ -12,15 +12,10 @@
 </div>
 @stop
 
+
 @push('orchestra.footer')
-<script>
-  var app = new Setting({
-    data: {
-      sidebar: {
-        active: 'settings'
-      }
-    }
-  }).$mount('body')
-</script>
 @include('orchestra/foundation::settings._script')
+<script>
+  var app = Platform.make('setting').$mount('body')
+</script>
 @endpush

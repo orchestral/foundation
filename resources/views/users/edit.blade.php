@@ -14,12 +14,6 @@
 
 @push('orchestra.footer')
 <script>
-  var app = new App({
-    data: {
-      sidebar: {
-        active: 'users'
-      }
-    }
-  }).$mount('body')
+  var app = Platform.make('app').nav('users').$mount('body')
 </script>
 @endpush

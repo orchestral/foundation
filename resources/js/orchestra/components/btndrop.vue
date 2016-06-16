@@ -42,7 +42,7 @@
         default: 'left'
       },
       items: {
-        default: []
+        default: {}
       }
     },
 

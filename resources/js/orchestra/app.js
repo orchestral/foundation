@@ -13,11 +13,12 @@ let App = Vue.extend({
 
   data() {
     return {
-      user: null,
+      dropmenu: {},
       sidebar: {
         menu: [],
         active: null
-      }
+      },
+      user: null
     }
   },
 
@@ -42,6 +43,12 @@ let App = Vue.extend({
 
         return false
       })
+    },
+
+    nav(name) {
+      this.$set('sidebar.active', name)
+
+      return this
     }
   }
 })

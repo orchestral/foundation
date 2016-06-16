@@ -6,9 +6,10 @@ import App from './orchestra/app'
 
 Vue.use(Resource)
 
+Platform.register('app', App)
+Platform.register('setting', Setting)
+
 window.Vue = Vue
 window.Platform = Platform
-window.Setting = Setting
-window.App = App
 
 require('./orchestra/bootstrap')

@@ -54,3 +54,9 @@ $label = ['class' => 'col-md-3 control-label'];
   </div>
 </div>
 @stop
+
+@push('orchestra.footer')
+<script>
+  var app = Platform.make('app').nav('extensions').$mount('body')
+</script>
+@endpush
