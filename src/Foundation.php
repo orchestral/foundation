@@ -124,7 +124,7 @@ class Foundation extends RouteManager implements FoundationContract
      */
     public function widget($type)
     {
-        return $this->app->make('orchestra.widget')->make("{type}.orchestra");
+        return $this->app->make('orchestra.widget')->make("{$type}.orchestra");
     }
 
     /**
