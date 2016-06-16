@@ -13,13 +13,16 @@ let Setting = App.extend({
 
   ready() {
     const vm = this
-    const driver = $('select[name="email_driver"]')
 
-    driver.on('change', () => {
-      vm.driver(this.value ? this.value : 'mail')
+    $(() => {
+      const driver = $('select[name="email_driver"]')
+
+      driver.on('change', () => {
+        vm.driver(driver.val() || 'mail')
+      })
+
+      driver.trigger('change')
     })
-
-    driver.trigger('change')
   },
 
   methods: {
