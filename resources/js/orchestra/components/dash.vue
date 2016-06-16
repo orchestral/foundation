@@ -10,6 +10,7 @@
 
 <script>
   import Vue from 'vue'
+  import CountTo from '../plugins/count-to'
 
   const Dash = Vue.extend({
     /**
@@ -69,33 +70,19 @@
     },
 
     ready() {
+      let vm = this
+
       if (this.value >= 1000000) {
         this.value = Math.round(this.value / 1000000)
         this.suffix = 'M'
       } else if (this.value >= 100000) {
-        this.value = Math.round(this.value / 100000)
+        this.value = Math.round(this.value / 1000)
         this.suffix = 'K'
       }
 
-      let loops = Math.ceil(this.options.speed / this.options.refreshInterval)
-      this.increment = (this.value / loops)
-
-      if (this.increment < 1) {
-        this.increment = 1
-      }
-
-      this.interval = setInterval(this.update, 100)
-    },
-
-    methods: {
-      update() {
-        if (this.count < this.value) {
-          this.count = this.count + this.increment
-        } else {
-          this.count = this.value
-          clearInterval(this.inteval)
-        }
-      }
+      new CountTo(this.value, function(c) {
+        vm.count = c.count
+      }, this.options).start()
     }
   })
 
