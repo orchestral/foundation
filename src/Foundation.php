@@ -324,6 +324,6 @@ class Foundation extends RouteManager implements FoundationContract
      */
     public function __call($method, $parameters)
     {
-        return call_user_func([$this->app, $method], ...$parameters);
+        return $this->app->{$method}(...$parameters);
     }
 }
