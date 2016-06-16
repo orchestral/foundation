@@ -28,15 +28,13 @@
 
 <div class="row">
   <div class="col-sm-5 col-xs-12 sm-text">
-    @if($pagination->total() > 0)
-    Showing
+  @if($pagination->total() > 0)
     @if($pagination->firstItem() !== $pagination->lastItem())
-    {{ $pagination->firstItem() }} to {{ $pagination->lastItem() }}
+    {{ trans('orchestra/foundation::label.paginations.multiple', array_only($pagination->toArray(), ['from', 'to', 'total'])) }}
     @else
-    {{ $pagination->lastItem() }}
+    {{ trans('orchestra/foundation::label.paginations.single', array_only($pagination->toArray(), ['from', 'total'])) }}
     @endif
-    of {{ $pagination->total() }} entries
-    @endif
+  @endif
   </div>
   @if($pagination->hasPages())
   <div class="col-sm-7 col-xs-12">
