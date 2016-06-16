@@ -26,6 +26,7 @@ elixir(function(mix) {
     .copy(dir.vendor+'/select2/select2x2.png', dir.asset.css)
     .copy(dir.vendor+'/html5shiv/dist/html5shiv.min.js', dir.asset.js+'/html5shiv.js')
     .copy(dir.build.vendor+'/delta/theme/images', dir.asset.css+'/images')
+    .copy(dir.build.img, dir.asset.img)
 
   mix.less('orchestra.less', dir.asset.css+'/orchestra.css', {
     paths: [dir.vendor]

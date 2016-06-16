@@ -7,6 +7,7 @@ module.exports = {
   },
   build: {
     css: './resources/assets/css',
+    img: './resources/assets/img',
     js: './resources/assets/js',
     less: './resources/assets/less',
     vendor: './resources/assets/vendor'
