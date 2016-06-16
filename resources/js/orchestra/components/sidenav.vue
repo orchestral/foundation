@@ -1,28 +1,28 @@
 <template>
-    <nav>
-      <ul class="sidebar__nav">
-        <li v-for="item in items" :class="getClassAttributes(item)">
-          <a :href="item.link" :id="item.id" v-if="! hasChild(item) && hasLink(item)">
-            <fa :icon="item.icon" :title="item.title"></fa>
-          </a>
-          <p v-if="! hasLink(item)">
-            <fa :icon="item.icon" :title="item.title"></fa>
-          </p>
-          <a href="#" v-if="hasLink(item) && hasChild(item)">
-            <fa :icon="item.icon" :title="item.title"></fa>
-            <i class="fa fa-angle-down"></i>
-          </a>
-          <ul class="sidebar-nav__submenu" :style="{display: isActive(item) ? 'block' : 'none'}" v-if="hasChild(item)">
-            <li v-if="item.link != '#!'">
-              <a :href="item.link" :id="item.id">{{ item.title }}</a>
-            </li>
-            <li v-for="child in item.childs" :class="{ 'active': isActive(child) }">
-              <a :href="child.link">{{ child.title }}</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
+  <nav>
+    <ul class="sidebar__nav">
+      <li v-for="item in items" :class="getClassAttributes(item)">
+        <a :href="item.link" :id="item.id" v-if="! hasChild(item) && hasLink(item)">
+          <faicon :icon="item.icon" :title="item.title"></faicon>
+        </a>
+        <p v-if="! hasLink(item)">
+          <faicon :icon="item.icon" :title="item.title"></faicon>
+        </p>
+        <a href="#" v-if="hasLink(item) && hasChild(item)">
+          <faicon :icon="item.icon" :title="item.title"></faicon>
+          <i class="fa fa-angle-down"></i>
+        </a>
+        <ul class="sidebar-nav__submenu" :style="{display: isActive(item) ? 'block' : 'none'}" v-if="hasChild(item)">
+          <li v-if="item.link != '#!'">
+            <a :href="item.link" :id="item.id">{{ item.title }}</a>
+          </li>
+          <li v-for="child in item.childs" :class="{ 'active': isActive(child) }">
+            <a :href="child.link">{{ child.title }}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script>
@@ -30,7 +30,7 @@
   import $ from '../../vendor/jquery'
   import _ from '../../vendor/underscore'
 
-  let SideNav = Vue.extend({
+  const SideNav = Vue.extend({
     /**
      * Component name.
      *
@@ -52,7 +52,7 @@
     },
 
     components: {
-      fa: require('./fa.vue')
+      faicon: require('./faicon.vue')
     },
 
     ready() {

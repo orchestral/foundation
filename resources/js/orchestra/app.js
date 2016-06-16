@@ -4,7 +4,8 @@ import $ from '../vendor/jquery'
 let App = Vue.extend({
   components: {
     btndrop: require('./components/btndrop.vue'),
-    fa: require('./components/fa.vue'),
+    dash: require('./components/dash.vue'),
+    faicon: require('./components/faicon.vue'),
     offcanvas: require('./components/offcanvas.vue'),
     progress: require('./components/progress.vue'),
     secret: require('./components/secret.vue'),

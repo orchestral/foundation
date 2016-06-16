@@ -19,7 +19,7 @@
   import Vue from 'vue'
   import $ from '../../vendor/jquery'
 
-  let Secret = Vue.extend({
+  const Secret = Vue.extend({
     /**
      * Component name.
      *

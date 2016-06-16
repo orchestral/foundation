@@ -7,7 +7,7 @@
 <script>
   import Vue from 'vue'
 
-  let Progress = Vue.extend({
+  const Progress = Vue.extend({
     /**
      * Component name.
      *

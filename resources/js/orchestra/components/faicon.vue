@@ -1,17 +1,17 @@
 <template>
-  <span :class="['fa', `fa-${icon}`]" v-if="hasIcon"></span> {{ title }}
+  <span class="fa fa-{{ icon }}" v-if="hasIcon"></span>{{ text }}
 </template>
 
 <script>
   import Vue from 'vue'
 
-  let Fa = Vue.extend({
+  const Faicon = Vue.extend({
     /**
      * Component name.
      *
      * @type {String}
      */
-    name: 'fa',
+    name: 'faicon',
 
     /**
      * Component props
@@ -30,9 +30,15 @@
     computed: {
       hasIcon() {
         return this.icon != ''
+      },
+
+      text() {
+        if (this.title != '') {
+          return ` ${this.title}`
+        }
       }
     }
   })
 
-  export default Fa
+  export default Faicon
 </script>

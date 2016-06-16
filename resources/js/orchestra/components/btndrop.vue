@@ -15,7 +15,7 @@
 <script>
   import Vue from 'vue'
 
-  let BtnDrop = Vue.extend({
+  const BtnDrop = Vue.extend({
     /**
      * Component name.
      *
