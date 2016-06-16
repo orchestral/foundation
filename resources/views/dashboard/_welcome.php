@@ -7,6 +7,6 @@
 
 <div class="row">
     <div class="col-xs-12 col-sm-3">
-        <dash value="1" title="Posts"></dash>
+        <dash value="100000" title="Posts"></dash>
     </div>
 </div>

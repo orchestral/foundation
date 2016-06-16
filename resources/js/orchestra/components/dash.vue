@@ -2,7 +2,7 @@
   <div class="dashboard-stats__item bg-{{ color }}">
     <faicon :icon="icon"></faicon>
     <h3 class="dashboard-stats__title">
-      <span class="count-to">{{ count }}</span>
+      {{ prefix }}<span class="count-to">{{ count }}</span>{{ suffix }}
       <small>{{ title }}</small>
     </h3>
   </div>
@@ -38,6 +38,14 @@
           return parseInt(value)
         }
       },
+      prefix: {
+        type: String,
+        default: ''
+      },
+      suffix: {
+        type: String,
+        default: ''
+      },
       title: {
         type: String,
         default: ''
@@ -61,6 +69,14 @@
     },
 
     ready() {
+      if (this.value >= 1000000) {
+        this.value = Math.round(this.value / 1000000)
+        this.suffix = 'M'
+      } else if (this.value >= 100000) {
+        this.value = Math.round(this.value / 100000)
+        this.suffix = 'K'
+      }
+
       let loops = Math.ceil(this.options.speed / this.options.refreshInterval)
       this.increment = (this.value / loops)
 
