@@ -82,7 +82,6 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
         $memory->shouldReceive('make')->once()->andReturn($memoryProvider);
         $notifier->shouldReceive('setDefaultDriver')->once()->with('orchestra')->andReturnNull();
         $widget->shouldReceive('make')->once()->with('menu.orchestra')->andReturn($widget)
-            ->shouldReceive('make')->once()->with('menu.app')->andReturn($widget)
             ->shouldReceive('add->title->link->icon')->once()->with('home')->andReturnNull();
         $translator->shouldReceive('get')->andReturn('foo');
         $event->shouldReceive('listen')->once()
@@ -132,7 +131,6 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('make')->once()->with('runtime.orchestra')->andReturn($memoryProvider);
         $notifier->shouldReceive('setDefaultDriver')->once()->with('orchestra')->andReturnNull();
         $widget->shouldReceive('make')->once()->with('menu.orchestra')->andReturn($widget)
-            ->shouldReceive('make')->once()->with('menu.app')->andReturn($widget)
             ->shouldReceive('add->title->link->icon')->once()->with('power-off')->andReturn($widget);
         $request->shouldReceive('root')->andReturn('http://localhost')
             ->shouldReceive('secure')->andReturn(false);
