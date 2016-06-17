@@ -6,9 +6,10 @@
 
 <script>
   import Vue from 'vue'
+  import Platform from '../platform'
   import $ from '../../vendor/jquery'
 
-  const wrapper = $('.wrapper')
+  let wrapper
 
   const OffCanvas = Vue.extend({
     /**
@@ -25,16 +26,23 @@
      */
     data() {
       return {
-        open: ! wrapper.hasClass('alt')
+        open: false
       }
     },
 
     ready() {
       const vm = this
 
+      wrapper = $('.wrapper')
+      this.open = ! wrapper.hasClass('alt')
+
       $('.sidebar__close').click(() => {
         vm.toggle()
         return false
+      })
+
+      Platform.watch('t', () => {
+        vm.toggle()
       })
     },
 

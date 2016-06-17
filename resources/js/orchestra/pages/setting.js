@@ -1,6 +1,6 @@
-import App from './app'
-import Javie from '../vendor/javie'
-import $ from '../vendor/jquery'
+import App from '../app'
+import Javie from '../../vendor/javie'
+import $ from '../../vendor/jquery'
 
 let Setting = App.extend({
   data() {

@@ -11,7 +11,7 @@
 
 @push('orchestra.footer')
 <script>
-  var app = Platform.make('app').nav('home').$mount('body')
-  app.$set('dash', {!! app('orchestra.widget')->make('dash.orchestra')->toJson() !!})
+  var app = Platform.make('dashboard').$mount('body')
+  app.$set('dash', {!! app('orchestra.app')->widget('dash')->toJson() !!})
 </script>
 @endpush
