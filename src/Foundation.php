@@ -36,6 +36,13 @@ class Foundation extends RouteManager implements FoundationContract
     protected $status;
 
     /**
+     * The widget manager.
+     *
+     * @var \Orchestra\Widget\WidgetManager
+     */
+    protected $widget;
+
+    /**
      * Construct a new instance.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
@@ -46,6 +53,7 @@ class Foundation extends RouteManager implements FoundationContract
 
         $this->config = $app->make('config');
         $this->status = $app->make('orchestra.extension.status');
+        $this->widget = $app->make('orchestra.widget');
     }
 
     /**
@@ -108,7 +116,7 @@ class Foundation extends RouteManager implements FoundationContract
     /**
      * Get menu services.
      *
-     * @return \Orchestra\Widget\MenuWidgetHandler
+     * @return \Orchestra\Widget\Handlers\Menu
      */
     public function menu()
     {
@@ -124,7 +132,7 @@ class Foundation extends RouteManager implements FoundationContract
      */
     public function widget($type)
     {
-        return $this->app->make('orchestra.widget')->make("{$type}.orchestra");
+        return $this->widget->make("{$type}.orchestra");
     }
 
     /**
