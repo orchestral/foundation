@@ -12,6 +12,7 @@ trait RedirectUsers
      * @param  string  $namespace
      * @param  string  $path
      * @param  string|null  $redirect
+     *
      * @return string
      */
     protected function redirectUserTo($namespace, $path, $redirect = null)
