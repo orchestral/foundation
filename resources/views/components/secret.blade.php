@@ -1,7 +1,7 @@
 <secret
   action="{{ $action }}"
   element="{{ $field }}"
-  title="{{ trans("orchestra/foundation::label.email.{$action}") }}"
+  title="{{ $title }}"
   cancel="{{ trans('orchestra/foundation::label.cancel') }}"
   value="{!! str_limit(str_repeat('*', strlen($value)), 15) !!}">
 </secret>
