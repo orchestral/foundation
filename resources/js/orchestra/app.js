@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import $ from '../vendor/jquery'
 
-let App = Vue.extend({
+const App = Vue.extend({
   components: {
     btndrop: require('./components/btndrop.vue'),
     dash: require('./components/dash.vue'),
@@ -29,7 +29,7 @@ let App = Vue.extend({
 
   methods: {
     boot() {
-      const sidebar = $('.sidebar')
+      let sidebar = $('.sidebar')
 
       if (sidebar.size() < 1) {
         return null

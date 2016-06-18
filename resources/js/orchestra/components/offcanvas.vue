@@ -9,7 +9,7 @@
   import Platform from '../platform'
   import $ from '../../vendor/jquery'
 
-  let wrapper
+  let container
 
   const OffCanvas = Vue.extend({
     /**
@@ -18,6 +18,23 @@
      * @type {String}
      */
     name: 'offcanvas',
+
+    /**
+     * Component props
+     */
+    props: {
+      element: {
+        type: String,
+        default: 'wrapper',
+        coerce: (value) => {
+          if (value.lastIndexOf('.', 0) === 0) {
+            return value
+          } else {
+            return `#${value}`
+          }
+        }
+      }
+    },
 
     /**
      * Component data.
@@ -33,8 +50,8 @@
     ready() {
       const vm = this
 
-      wrapper = $('.wrapper')
-      this.open = ! wrapper.hasClass('alt')
+      container = $(this.element)
+      this.open = ! container.hasClass('alt')
 
       $('.sidebar__close').click(() => {
         vm.toggle()
@@ -55,10 +72,11 @@
       toggle() {
         this.open = (this.open != true)
 
-        if (this.open)
-          wrapper.removeClass('alt')
-        else
-          wrapper.addClass('alt')
+        if (this.open) {
+          container.removeClass('alt')
+        } else {
+          container.addClass('alt')
+        }
       }
     }
   })
