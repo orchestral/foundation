@@ -35,21 +35,10 @@ elixir(function(mix) {
   mix.browserify('orchestra.js', dir.asset.js+'/orchestra.js', dir.js)
 
   mix.styles([
-    'select2/select2.css',
-    'select2/select2-bootstrap.css',
-    'perfect-scrollbar/css/perfect-scrollbar.css',
-    dir.build.vendor+'/delta/theme/jquery-ui.css'
-  ], dir.asset.css+'/vendor.css', dir.vendor)
+    'vendor.css'
+  ], dir.asset.css+'/vendor.css', dir.build.vendor)
 
   mix.scripts([
-    'jquery/jquery.min.js',
-    'underscore/underscore-min.js',
-    'javie/dist/javie.min.js',
-    'bootstrap/dist/js/bootstrap.min.js',
-    'select2/select2.min.js',
-    'mousetrap/mousetrap.min.js',
-    dir.build.vendor+'/jquery.ui/jquery.ui.js',
-    dir.build.vendor+'/delta/js/jquery-ui.toggleSwitch.js',
-    'perfect-scrollbar/js/perfect-scrollbar.jquery.min.js'
-  ], dir.asset.js+'/vendor.js', dir.vendor)
+    'vendor.js'
+  ], dir.asset.js+'/vendor.js', dir.build.vendor)
 });
