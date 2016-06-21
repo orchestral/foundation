@@ -7,6 +7,7 @@ const App = Vue.extend({
     dash: require('./components/dash.vue'),
     faicon: require('./components/faicon.vue'),
     offcanvas: require('./components/offcanvas.vue'),
+    pane: require('./components/pane.vue'),
     progress: require('./components/progress.vue'),
     secret: require('./components/secret.vue'),
     sidenav: require('./components/sidenav.vue')

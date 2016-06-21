@@ -22,6 +22,8 @@
 
     /**
      * Component props
+     *
+     * @type {Object}
      */
     props: {
       color: {
@@ -30,14 +32,7 @@
       },
       icon: {
         type: String,
-        default: 'pie-chart'
-      },
-      value: {
-        type: Number,
-        default: 0,
-        coerce: (value) => {
-          return parseInt(value)
-        }
+        default: ''
       },
       prefix: {
         type: String,
@@ -50,6 +45,13 @@
       title: {
         type: String,
         default: ''
+      },
+      value: {
+        type: Number,
+        default: 0,
+        coerce: (value) => {
+          return parseInt(value)
+        }
       }
     },
 

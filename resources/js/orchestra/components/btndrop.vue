@@ -25,6 +25,8 @@
 
     /**
      * Component props.
+     *
+     * @return {Object}
      */
     props: {
       id: {
