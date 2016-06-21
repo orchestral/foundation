@@ -1,4 +1,4 @@
-@extends('orchestra/foundation::layouts.sign')
+@extends('orchestra/foundation::layouts.landing')
 
 @section('content')
 <div class="panel panel-default">

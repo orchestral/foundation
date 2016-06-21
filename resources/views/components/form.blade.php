@@ -16,10 +16,10 @@
 
     @foreach($fieldset->controls() as $control)
     <div class="form-group{{ $errors->has($control->id) ? ' has-error' : '' }}">
-      {{ Form::label($control->name, $control->label, ['class' => 'three columns control-label']) }}
+      {{ Form::label($control->name, $control->label, ['class' => 'col-md-3 control-label']) }}
 
       <div class="col-md-9">
-        <div>{!! $control->getField($grid->data(), $control, []) !!}</div>
+        <div>{!! $control->getField($grid->data(), $control->attributes(['class' => 'col-md-12']), []) !!}</div>
         @if($control->inlineHelp)
         <span class="help-inline">{!! $control->inlineHelp !!}</span>
         @endif
@@ -34,7 +34,7 @@
 @endforeach
 
 <div class="row">
-  <div class="col-md-9 col-md-offset-3">
+  <div{!! HTML::attributable(array_get($meta, 'button', []), ['class' => 'col-md-9 col-md-offset-3']) !!}>
     <button type="submit" class="btn btn-primary">
       {!! $submit !!}
     </button>
