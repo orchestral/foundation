@@ -17,6 +17,7 @@
 
 <script>
   import Vue from 'vue'
+  import ElementSelector from '../plugins/element-selector'
   import $ from '../../vendor/jquery'
 
   const Secret = Vue.extend({
@@ -42,11 +43,7 @@
       element: {
         type: String,
         coerce: (value) => {
-          if (value.lastIndexOf('.', 0) === 0) {
-            return value
-          } else {
-            return `#${value}`
-          }
+          return (new ElementSelector(value)).toString()
         }
       },
       title: {

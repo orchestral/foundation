@@ -1,5 +1,5 @@
 <template>
-  <a href="#" class="btn btn-default navbar-btn navbar-left offcanvas" @click.prevent="toggle">
+  <a href="#" class="btn btn-default navbar-btn navbar-left offcanvas" @click.prevent="toggle" v-if="enabled">
     <i class="fa fa-bars"></i>
   </a>
 </template>
@@ -7,6 +7,7 @@
 <script>
   import Vue from 'vue'
   import Platform from '../platform'
+  import ElementSelector from '../plugins/element-selector'
   import $ from '../../vendor/jquery'
 
   let container
@@ -27,11 +28,7 @@
         type: String,
         default: 'wrapper',
         coerce: (value) => {
-          if (value.lastIndexOf('.', 0) === 0) {
-            return value
-          } else {
-            return `#${value}`
-          }
+          return (new ElementSelector(value)).toString()
         }
       }
     },
@@ -43,27 +40,41 @@
      */
     data() {
       return {
+        enabled: true,
         open: false
       }
     },
 
     ready() {
-      const vm = this
-
       container = $(this.element)
-      this.open = ! container.hasClass('alt')
 
-      $('.sidebar__close').click(() => {
-        vm.toggle()
-        return false
-      })
+      this.enabled = container.size() > 0
 
-      Platform.watch('t', () => {
-        vm.toggle()
-      })
+      if (this.enabled) {
+        this.open = ! container.hasClass('alt')
+        this.boot()
+      }
     },
 
     methods: {
+      /**
+       * Boot the component.
+       *
+       * @return void
+       */
+      boot() {
+        const vm = this
+
+        $('.sidebar__close').click(() => {
+          vm.toggle()
+          return false
+        })
+
+        Platform.watch('t', () => {
+          vm.toggle()
+        })
+      },
+
       /**
        * Toggle off-canvas state.
        *
