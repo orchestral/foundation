@@ -15,3 +15,9 @@
   </div>
 </div>
 @stop
+
+@push('orchestra.footer')
+<script>
+  var app = Platform.make('app').$mount('body')
+</script>
+@endpush

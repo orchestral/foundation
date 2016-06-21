@@ -7,6 +7,16 @@
           <a class="navbar-brand navbar-left" href="{{ handles('orchestra::/') }}">
             {{ memorize('site.name', 'Orchestra Platform') }}
           </a>
+
+          <div class="navbar-form navbar-left hidden-xs">
+            @yield('navbar-left')
+          </div>
+
+          @section('navbar-right')
+          <a href="{{ handles('orchestra::logout', ['csrf' => true]) }}" class="btn btn-primary navbar-btn navbar-right" v-if="user">
+            {{ trans('orchestra/foundation::title.logout') }}
+          </a>
+          @show
         </div>
       </div>
     </nav>
