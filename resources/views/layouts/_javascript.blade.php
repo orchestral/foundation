@@ -9,7 +9,6 @@ $asset->script('orchestra', 'packages/orchestra/foundation/js/orchestra.js', ['v
 {{ $asset }}
 
 <script>
-  var app
   Platform.route("{{ Request::path() }}")
 </script>
 @placeholder('orchestra.layout: footer')
