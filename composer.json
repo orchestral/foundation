@@ -32,7 +32,7 @@
         "orchestra/auth": "~3.3.0",
         "orchestra/contracts": "~3.3.0",
         "orchestra/extension": "~3.3.0",
-        "orchestra/html": "~3.3.0",
+        "orchestra/html": "~3.3.1",
         "orchestra/kernel": "~3.3.0",
         "orchestra/memory": "~3.3.0",
         "orchestra/messages": "~3.3.0",
