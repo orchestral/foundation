@@ -132,6 +132,7 @@ class ServiceProviderTest extends TestCase
             'command.listener.make',
             'command.middleware.make',
             'command.model.make',
+            'command.notification.make',
             'command.policy.make',
             'command.provider.make',
             'command.queue.failed-table',
