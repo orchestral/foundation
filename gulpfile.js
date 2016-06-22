@@ -20,13 +20,11 @@ elixir.config.js.browserify.transformers.push({
 elixir.config.sourcemaps = false
 
 elixir(function(mix) {
-  mix.copy(dir.vendor+'/font-awesome/fonts', dir.asset.font)
-    .copy(dir.vendor+'/select2/select2-spinner.gif', dir.asset.css)
-    .copy(dir.vendor+'/select2/select2.png', dir.asset.css)
-    .copy(dir.vendor+'/select2/select2x2.png', dir.asset.css)
-    .copy(dir.vendor+'/html5shiv/dist/html5shiv.min.js', dir.asset.js+'/html5shiv.js')
-    .copy(dir.build.vendor+'/delta/theme/images', dir.asset.css+'/images')
+  mix.copy(dir.build.js+'/html5shiv.js', dir.asset.js+'/html5shiv.js')
+    .copy(dir.build.css, dir.asset.css)
+    .copy(dir.build.font, dir.asset.font)
     .copy(dir.build.img, dir.asset.img)
+    .copy(dir.build.vendor+'/delta/theme/images', dir.asset.css+'/images')
 
   mix.less('orchestra.less', dir.asset.css+'/orchestra.css', {
     paths: [dir.vendor]
