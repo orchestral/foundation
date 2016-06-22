@@ -28,7 +28,7 @@
     props: {
       color: {
         type: String,
-        default: 'orange'
+        default: 'primary'
       },
       icon: {
         type: String,
