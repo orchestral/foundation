@@ -82,8 +82,8 @@
         this.suffix = 'K'
       }
 
-      new CountTo(this.value, function(c) {
-        vm.count = c.count
+      new CountTo(this.value, c => {
+        this.count = c.count
       }, this.options).start()
     }
   })

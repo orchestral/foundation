@@ -95,11 +95,11 @@
       boot() {
         const sidebar = $('.sidebar')
 
-        $('.sidebar-nav__dropdown > a').click(function () {
-          let li = $(this).parent('li')
+        $('.sidebar-nav__dropdown > a').click((e) => {
+          let li = $(e.toElement).parent('li')
 
           li.toggleClass('open')
-          li.find('.sidebar-nav__submenu').slideToggle(300, function() {
+          li.find('.sidebar-nav__submenu').slideToggle(300, () => {
             sidebar.perfectScrollbar('update')
           })
 

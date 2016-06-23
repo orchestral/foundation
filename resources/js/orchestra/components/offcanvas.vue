@@ -63,16 +63,12 @@
        * @return void
        */
       boot() {
-        const vm = this
-
         $('.sidebar__close').click(() => {
-          vm.toggle()
+          this.toggle()
           return false
         })
 
-        Platform.watch('t', () => {
-          vm.toggle()
-        })
+        Platform.watch('t', () => this.toggle())
       },
 
       /**
