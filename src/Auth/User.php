@@ -6,10 +6,10 @@ use Orchestra\Model\User as Authenticatable;
 use Orchestra\Contracts\Notification\Recipient;
 use Illuminate\Notifications\RoutesNotifications;
 use Illuminate\Foundation\Auth\Access\Authorizable;
-use Orchestra\Foundation\Notifications\ResetPassword;
-use Orchestra\Foundation\Notifications\UserRegistered;
+use Orchestra\Foundation\Notifications\Welcome as WelcomeNotification;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Orchestra\Foundation\Notifications\ResetPassword as ResetPasswordNotification;
 
 class User extends Authenticatable implements AuthorizableContract, CanResetPasswordContract, Recipient
 {
@@ -67,7 +67,7 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
      */
     public function sendPasswordResetNotification($token, $provider = null)
     {
-        $this->notify(new ResetPassword($token, $provider));
+        $this->notify(new ResetPasswordNotification($token, $provider));
     }
 
     /**
@@ -79,6 +79,6 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
      */
     public function sendWelcomeNotification($password)
     {
-        $this->notify(new UserRegistered($password));
+        $this->notify(new WelcomeNotification($password));
     }
 }

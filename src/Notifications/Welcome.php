@@ -5,7 +5,7 @@ namespace Orchestra\Foundation\Notifications;
 use Orchestra\Foundation\Auth\User;
 use Illuminate\Notifications\Notification;
 
-class UserRegistered extends Notification
+class Welcome extends Notification
 {
     /**
      * The password.
