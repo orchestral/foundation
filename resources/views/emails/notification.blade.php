@@ -2,11 +2,11 @@
 
 @section('title')
 @if($level == 'error')
-  {{ array_get($payload, 'title', 'Whoops!') }}
+  {{ isset($subject) ? $subject : 'Whoops!' }}
 @elseif($level == 'warning')
-  {{ array_get($payload, 'title', 'Warning!') }}
+  {{ isset($subject) ? $subject : 'Warning!' }}
 @else
-  {{ array_get($payload, 'title', 'Hello!') }}
+  {{ isset($subject) ? $subject : 'Hello!' }}
 @endif
 @stop
 
