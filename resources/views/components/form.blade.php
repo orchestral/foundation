@@ -19,7 +19,7 @@
       {{ Form::label($control->name, $control->label, ['class' => 'col-md-3 control-label']) }}
 
       <div class="col-md-9">
-        <div>{!! $control->getField($grid->data(), $control->attributes(['class' => 'col-md-12']), []) !!}</div>
+        <div>{!! $control->attributes(['class' => 'col-md-12'])->getField($grid->data()) !!}</div>
         @if($control->inlineHelp)
         <span class="help-inline">{!! $control->inlineHelp !!}</span>
         @endif

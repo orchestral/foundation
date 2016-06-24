@@ -17,7 +17,7 @@
     @foreach($fieldset->controls() as $control)
     <div class="form-group{{ $errors->has($control->id) ? ' has-error' : '' }}">
       {{ Form::label($control->name, $control->label, ['class' => 'control-label']) }}
-      {!! $control->getField($grid->data(), $control, []) !!}
+      {!! $control->getField($grid->data()) !!}
       @if($control->inlineHelp)
       <span class="help-inline">{!! $control->inlineHelp !!}</span>
       @endif
