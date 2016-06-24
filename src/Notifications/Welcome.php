@@ -10,18 +10,16 @@ class Welcome extends Notification
     /**
      * The password.
      *
-     * @var string
+     * @var string|null
      */
     public $password;
 
     /**
      * Create a notification instance.
      *
-     * @param  string  $password
-     *
-     * @return void
+     * @param  string|null  $password
      */
-    public function __construct($password)
+    public function __construct($password = null)
     {
         $this->password = $password;
     }
@@ -57,8 +55,13 @@ class Welcome extends Notification
      */
     public function message(User $notifiable)
     {
-        return $this->line('Thank you for registering with us, in order to login please use the following:')
-                    ->line("E-mail Address: {$notifiable->email}")
-                    ->line("Password: {$this->password}");
+        $message = $this->line('Thank you for registering with us, in order to login please use the following:')
+                    ->line("E-mail Address: {$notifiable->email}");
+
+        if (! is_null($this->password)) {
+            $message->line("Password: {$this->password}");
+        }
+
+        return $message;
     }
 }

@@ -61,11 +61,11 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
     /**
      * Send the user registered notification.
      *
-     * @param  string  $password
+     * @param  string|null  $password
      *
      * @return void
      */
-    public function sendWelcomeNotification($password)
+    public function sendWelcomeNotification($password = null)
     {
         $this->notify(new WelcomeNotification($password));
     }
