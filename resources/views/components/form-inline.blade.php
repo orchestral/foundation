@@ -11,7 +11,7 @@
 @foreach($grid->fieldsets() as $fieldset)
   <fieldset{{ HTML::attributes($fieldset->attributes ?: []) }}>
     @if($fieldset->name)
-    <legend>{!! $fieldset->name or '' !!}</legend>
+    <legend>{!! $fieldset->name ? $fieldset->name : '' !!}</legend>
     @endif
 
     @foreach($fieldset->controls() as $control)
