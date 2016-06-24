@@ -1,11 +1,11 @@
 <?php
 
-namespace Orchestra\Foundation\Auth;
+namespace Orchestra\Foundation\Auth\Throttle;
 
 use Illuminate\Support\Arr;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins as Command;
 
-class WithoutThrottle extends ThrottlesLogins implements Command
+class Without extends Throttle implements Command
 {
     /**
      * Determine if the user has too many failed login attempts.

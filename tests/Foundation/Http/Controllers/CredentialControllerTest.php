@@ -8,8 +8,8 @@ use Orchestra\Support\Facades\Meta;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Auth\WithoutThrottle;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Orchestra\Foundation\Auth\Throttle\Without as WithoutThrottle;
 
 class CredentialControllerTest extends TestCase
 {

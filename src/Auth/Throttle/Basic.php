@@ -1,11 +1,11 @@
 <?php
 
-namespace Orchestra\Foundation\Auth;
+namespace Orchestra\Foundation\Auth\Throttle;
 
 use Illuminate\Cache\RateLimiter;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins as Command;
 
-class BasicThrottle extends ThrottlesLogins implements Command
+class Basic extends Throttle implements Command
 {
     /**
      * The cache limiter implementation.
