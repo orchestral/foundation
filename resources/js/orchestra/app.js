@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Bootstrap from './bootstrap'
 import $ from '../vendor/jquery'
 
 const App = Vue.extend({
@@ -22,6 +23,13 @@ const App = Vue.extend({
       },
       user: null
     }
+  },
+
+  created() {
+    (new Bootstrap())
+      .select2()
+      .switcher()
+      .restful()
   },
 
   ready() {

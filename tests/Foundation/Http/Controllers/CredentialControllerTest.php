@@ -144,7 +144,7 @@ class CredentialControllerTest extends TestCase
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::login', [])->andReturn('login');
 
-        $this->call('GET', 'admin/logout');
+        $this->call('DELETE', 'admin/logout');
         $this->assertRedirectedTo('login');
     }
 
@@ -165,7 +165,7 @@ class CredentialControllerTest extends TestCase
 
         Foundation::shouldReceive('handles')->once()->with('home', [])->andReturn('home');
 
-        $this->call('GET', 'admin/logout', ['redirect' => 'home']);
+        $this->call('DELETE', 'admin/logout', ['redirect' => 'home']);
         $this->assertRedirectedTo('home');
     }
 

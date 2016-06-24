@@ -13,21 +13,27 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', function (Router
     // Route to extensions.
     if (Foundation::bound('orchestra.extension')) {
         $router->get('extensions', 'Extension\ViewerController@index');
-        $router->get('extensions/{vendor}/{package}/activate', 'Extension\ActionController@activate');
-        $router->get('extensions/{vendor}/activate', 'Extension\ActionController@activate');
-        $router->get('extensions/{vendor}/{package}/deactivate', 'Extension\ActionController@deactivate');
-        $router->get('extensions/{vendor}/deactivate', 'Extension\ActionController@deactivate');
-        $router->get('extensions/{vendor}/{package}/update', 'Extension\ActionController@migrate');
-        $router->get('extensions/{vendor}/update', 'Extension\ActionController@migrate');
+
+        $router->post('extensions/{vendor}/{package}/activate', 'Extension\ActionController@activate');
+        $router->post('extensions/{vendor}/activate', 'Extension\ActionController@activate');
+
+        $router->post('extensions/{vendor}/{package}/deactivate', 'Extension\ActionController@deactivate');
+        $router->post('extensions/{vendor}/deactivate', 'Extension\ActionController@deactivate');
+
+        $router->post('extensions/{vendor}/{package}/update', 'Extension\ActionController@migrate');
+        $router->post('extensions/{vendor}/update', 'Extension\ActionController@migrate');
+
         $router->get('extensions/{vendor}/{package}/configure', 'Extension\ConfigureController@configure');
         $router->get('extensions/{vendor}/configure', 'Extension\ConfigureController@configure');
         $router->post('extensions/{vendor}/{package}/configure', 'Extension\ConfigureController@update');
         $router->post('extensions/{vendor}/configure', 'Extension\ConfigureController@update');
     }
 
-    // Route to reset password.
+    // Route to request reset password.
     $router->get('forgot', 'Account\PasswordBrokerController@showLinkRequestForm');
     $router->post('forgot', 'Account\PasswordBrokerController@sendResetLinkEmail');
+
+    // Route to reset password.
     $router->get('forgot/reset/{token?}', 'Account\PasswordBrokerController@showResetForm');
     $router->post('forgot/reset', 'Account\PasswordBrokerController@reset');
 
@@ -47,7 +53,7 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', function (Router
     // Route for credentials.
     $router->get('login', 'CredentialController@index');
     $router->post('login', 'CredentialController@login');
-    $router->match(['GET', 'HEAD', 'DELETE'], 'logout', 'CredentialController@logout');
+    $router->delete('logout', 'CredentialController@logout');
 
     $router->get('register', 'Account\ProfileCreatorController@create');
     $router->post('register', 'Account\ProfileCreatorController@store');

@@ -13,5 +13,3 @@ Platform.register('setting', Setting)
 
 window.Vue = Vue
 window.Platform = Platform
-
-require('./bootstrap')

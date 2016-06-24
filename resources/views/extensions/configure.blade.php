@@ -6,8 +6,10 @@
     @if(data_get($eloquent, 'publishing', true))
     <div class="panel panel-blank">
       <div class="panel-body">
-        <a href="{{ handles("orchestra::extensions/{$extension->get('name')}/update", ['csrf' => true]) }}"
-          class="btn btn-info btn-block">
+        <a href="{{ handles("orchestra::extensions/{$extension->get('name')}/update") }}"
+          data-method="POST"
+          class="btn btn-info btn-block"
+        >
           {{ trans('orchestra/foundation::label.extensions.actions.update') }}
         </a>
       </div>

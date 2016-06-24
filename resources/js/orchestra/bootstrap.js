@@ -1,4 +1,5 @@
-import $ from './vendor/jquery'
+import MakeRequest from './plugins/make-request'
+import $ from '../vendor/jquery'
 
 class Bootstrap {
   select2() {
@@ -31,9 +32,25 @@ class Bootstrap {
 
     return this
   }
+
+  restful() {
+    console.log('Bootstrap restful')
+    $('body').on('click', '[data-method]', function (e) {
+      e.preventDefault()
+      e.stopPropagation()
+
+      let element = $(this)
+      let method = element.data('method')
+      let href = element.attr('href')
+      let rest = new MakeRequest(method, href)
+
+      rest.dispatch()
+
+      return false
+    })
+
+    return this
+  }
 }
 
-(new Bootstrap())
-  .select2()
-  .switcher()
-
+export default Bootstrap

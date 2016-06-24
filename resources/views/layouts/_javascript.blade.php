@@ -9,6 +9,7 @@ $asset->script('orchestra', 'packages/orchestra/foundation/js/orchestra.js');
 
 <script>
   Platform.route("{{ Request::path() }}")
+  Javie.put('csrf.token', "{{ csrf_token() }}")
 </script>
 @placeholder('orchestra.layout: footer')
 @stack('orchestra.footer')
