@@ -2,6 +2,7 @@
 
 namespace Orchestra\Foundation\Notifications;
 
+use Orchestra\Foundation\Auth\User;
 use Orchestra\Notifications\Notification;
 
 class ResetPassword extends Notification
@@ -37,11 +38,11 @@ class ResetPassword extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  mixed  $notifiable
+     * @param  \Orchestra\Foundation\Auth\User  $notifiable
      *
      * @return array|string
      */
-    public function via($notifiable)
+    public function via(User $notifiable)
     {
         return ['mail'];
     }
@@ -63,24 +64,26 @@ class ResetPassword extends Notification
      */
     public function subject()
     {
-        $site = memorize('site.name', 'Orchestra Platform');
+        $application = memorize('site.name', 'Orchestra Platform');
 
-        return trans('orchestra/foundation::email.forgot.request', compact('site'));
+        return trans('orchestra/foundation::email.forgot.request', compact('application'));
     }
 
     /**
      * Get the notification message.
      *
-     * @param  mixed  $notifiable
+     * @param  \Orchestra\Foundation\Auth\User  $notifiable
      *
      * @return \Illuminate\Notifications\MessageBuilder
      */
-    public function message($notifiable)
+    public function message(User $notifiable)
     {
-        $email = urlencode($notifiable->email);
+        $email   = urlencode($notifiable->getEmailForPasswordReset());
+        $expired = config("auth.passwords.{$this->provider}.expire", 60);
 
         return $this->line('You are receiving this email because we received a password reset request for your account. Click the button below to reset your password:')
                     ->action('Reset Password', handles("orchestra::forgot/reset{$this->token}?email={$email}"))
+                    ->line("This link will expire in {$expired} minutes.")
                     ->line('If you did not request a password reset, no further action is required.');
     }
 }

@@ -6,9 +6,10 @@ use Orchestra\Model\User as Authenticatable;
 use Orchestra\Contracts\Notification\Recipient;
 use Illuminate\Notifications\RoutesNotifications;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use Orchstra\Foundation\Notifications\UserRegistered;
+use Orchestra\Foundation\Notifications\ResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Orchestra\Foundation\Notifications\ResetPassword as ResetPasswordNotification;
 
 class User extends Authenticatable implements AuthorizableContract, CanResetPasswordContract, Recipient
 {
@@ -48,6 +49,7 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
      * Get the notification routing information for mail driver.
      *
      * @param  string  $driver
+     *
      * @return mixed
      */
     public function routeNotificationForMail()
@@ -65,6 +67,18 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
      */
     public function sendPasswordResetNotification($token, $provider = null)
     {
-        $this->notify(new ResetPasswordNotification($token, $provider));
+        $this->notify(new ResetPassword($token, $provider));
+    }
+
+    /**
+     * Send the user registered notification.
+     *
+     * @param  string  $password
+     *
+     * @return void
+     */
+    public function sendWelcomeNotification($password)
+    {
+        $this->notify(new UserRegistered($password));
     }
 }

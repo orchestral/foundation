@@ -2,10 +2,10 @@
 
 return [
     'credential' => [
-        'register' => '[:site] Your New Account',
+        'register' => '[:application] Your New Account',
     ],
     'forgot'     => [
-        'request' => '[:site] Reset Your Password',
-        'reset'   => '[:site] Your New Password',
+        'request' => '[:application] Reset Your Password',
+        'reset'   => '[:application] Your New Password',
     ],
 ];

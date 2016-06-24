@@ -156,7 +156,7 @@ a {
   text-transform: capitalize;
 }
 
-.btn,.btn-primary {
+.btn,.btn-primary,.btn-info {
   background-color: #348eda;
   border: solid #348eda;
 }
@@ -220,7 +220,7 @@ a {
   font-size: 16px;
 }
 
-.alert.alert-primary {
+.alert.alert-primary, .alert.alert-info {
   background-color: #348eda;
 }
 .alert.alert-warning {

@@ -5,11 +5,9 @@ namespace Orchestra\Foundation\Processor\Account;
 use Exception;
 use Orchestra\Support\Str;
 use Illuminate\Support\Arr;
-use Orchestra\Notifier\Message;
 use Orchestra\Model\User as Eloquent;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Support\Facades\Foundation;
-use Illuminate\Contracts\Support\Arrayable;
 use Orchestra\Contracts\Foundation\Command\Account\ProfileCreator as Command;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator as Listener;
 
@@ -78,25 +76,9 @@ class ProfileCreator extends User implements Command
      */
     protected function notifyCreatedUser(Listener $listener, Eloquent $user, $password)
     {
-        // Converting the user to an object allow the data to be a generic
-        // object. This allow the data to be transferred to JSON if the
-        // mail is send using queue.
-
-        $memory = Foundation::memory();
-        $site   = $memory->get('site.name', 'Orchestra Platform');
-
-        $data = [
-            'password' => $password,
-            'site'     => $site,
-            'user'     => ($user instanceof Arrayable ? $user->toArray() : $user),
-        ];
-
-        $subject = trans('orchestra/foundation::email.credential.register', ['site' => $site]);
-        $message = Message::create(config('auth.registers.email', 'emails.auth.register'), $data, $subject);
-
-        $receipt = $user->notify($message);
-
-        if ($receipt->failed()) {
+        try {
+            $user->sendWelcomeNotification($password);
+        } catch (Exception $e) {
             return $listener->profileCreatedWithoutNotification();
         }
 
