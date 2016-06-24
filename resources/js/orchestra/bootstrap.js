@@ -1,5 +1,6 @@
-import MakeRequest from './plugins/make-request'
+import Restful from './plugins/restful'
 import $ from '../vendor/jquery'
+import Javie from '../vendor/javie'
 
 class Bootstrap {
   select2() {
@@ -34,7 +35,6 @@ class Bootstrap {
   }
 
   restful() {
-    console.log('Bootstrap restful')
     $('body').on('click', '[data-method]', function (e) {
       e.preventDefault()
       e.stopPropagation()
@@ -42,7 +42,7 @@ class Bootstrap {
       let element = $(this)
       let method = element.data('method')
       let href = element.attr('href')
-      let rest = new MakeRequest(method, href)
+      let rest = new Restful(method, href, {_token: Javie.get('csrf.token')})
 
       rest.dispatch()
 
