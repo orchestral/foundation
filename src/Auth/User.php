@@ -2,9 +2,10 @@
 
 namespace Orchestra\Foundation\Auth;
 
+use Illuminate\Support\Str;
 use Orchestra\Model\User as Authenticatable;
 use Orchestra\Contracts\Notification\Recipient;
-use Orchestra\Notifications\RoutesNotifications;
+use Illuminate\Notifications\RoutesNotifications;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Orchestra\Foundation\Notifications\Welcome as WelcomeNotification;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -68,5 +69,27 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
     public function sendWelcomeNotification($password = null)
     {
         $this->notify(new WelcomeNotification($password));
+    }
+
+    /**
+     * Get the notification routing information for the given driver.
+     *
+     * @param  string  $driver
+     * @return mixed
+     */
+    public function routeNotificationFor($driver)
+    {
+        if (method_exists($this, $method = 'routeNotificationFor'.Str::studly($driver))) {
+            return $this->{$method}();
+        }
+
+        switch ($driver) {
+            case 'database':
+                return $this->notifications();
+            case 'mail':
+                return $this->getRecipientEmail();
+            case 'nexmo':
+                return $this->phone_number;
+        }
     }
 }
