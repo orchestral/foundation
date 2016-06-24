@@ -53,8 +53,6 @@ class ProfileCreatorTest extends TestCase
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $receipt = m::mock('\Orchestra\Contracts\Notification\Receipt');
-        $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
         $user = m::mock('\Orchestra\Model\User');
         $role = m::mock('\Orchestra\Model\Role');
 
@@ -74,20 +72,12 @@ class ProfileCreatorTest extends TestCase
                 });
         $user->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles')->once()->andReturn($role)
-            ->shouldReceive('toArray')->once()->andReturn([])
-            ->shouldReceive('notify')->once()
-                ->with(m::type('\Orchestra\Contracts\Notification\Message'))
-                ->andReturn($receipt);
+            ->shouldReceive('sendWelcomeNotification')->once()->with(m::type('String'))->andReturnNull();
         $role->shouldReceive('sync')->once()->with([2])->andReturnNull();
-        $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('Orchestra Platform');
-        $receipt->shouldReceive('failed')->once()->andReturn(false);
         $listener->shouldReceive('profileCreated')->once()->andReturn('profile.created');
 
         Config::shouldReceive('get')->once()->with('orchestra/foundation::roles.member', 2)->andReturn(2);
-        Config::shouldReceive('get')->once()->with('auth.registers.email', 'emails.auth.register')
-            ->andReturn('emails.auth.register');
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
-        Foundation::shouldReceive('memory')->once()->andReturn($memory);
 
         $this->assertEquals('profile.created', $stub->store($listener, $input));
     }
@@ -104,8 +94,6 @@ class ProfileCreatorTest extends TestCase
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Account');
         $validator = m::mock('\Orchestra\Foundation\Validation\Account');
         $resolver = m::mock('\Illuminate\Contracts\Validation\Validator');
-        $receipt = m::mock('\Orchestra\Contracts\Notification\Receipt');
-        $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
         $user = m::mock('\Orchestra\Model\User');
         $role = m::mock('\Orchestra\Model\Role');
 
@@ -125,20 +113,12 @@ class ProfileCreatorTest extends TestCase
                 });
         $user->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles')->once()->andReturn($role)
-            ->shouldReceive('toArray')->once()->andReturn([])
-            ->shouldReceive('notify')->once()
-                ->with(m::type('\Orchestra\Contracts\Notification\Message'))
-                ->andReturn($receipt);
+            ->shouldReceive('sendWelcomeNotification')->once()->with(m::type('String'))->andThrow('\Exception');
         $role->shouldReceive('sync')->once()->with([2])->andReturnNull();
-        $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('Orchestra Platform');
-        $receipt->shouldReceive('failed')->once()->andReturn(true);
         $listener->shouldReceive('profileCreatedWithoutNotification')->once()->andReturn('profile.created.without.notification');
 
         Config::shouldReceive('get')->once()->with('orchestra/foundation::roles.member', 2)->andReturn(2);
-        Config::shouldReceive('get')->once()->with('auth.registers.email', 'emails.auth.register')
-            ->andReturn('emails.auth.register');
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
-        Foundation::shouldReceive('memory')->once()->andReturn($memory);
 
         $this->assertEquals('profile.created.without.notification', $stub->store($listener, $input));
     }

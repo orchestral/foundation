@@ -2,11 +2,11 @@
 
 @section('title')
 @if($level == 'error')
-  {{ array_get($payload, 'title', 'Whoops!') }}
+  {{ isset($title) ? $title : 'Whoops!' }}
 @elseif($level == 'warning')
-  {{ array_get($payload, 'title', 'Warning!') }}
+  {{ isset($title) ? $title : 'Warning!' }}
 @else
-  {{ array_get($payload, 'title', 'Hello!') }}
+  {{ isset($title) ? $title : 'Hello!' }}
 @endif
 @stop
 
@@ -33,6 +33,7 @@
   </tr>
 
   {{-- Action --}}
+  @if(isset($actionText))
   <tr>
     <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
       <a href="{{ $actionUrl }}" class="btn btn-{{ $actionColor }}" itemprop="url"  target="_blank">
@@ -40,6 +41,7 @@
       </a>
     </td>
   </tr>
+  @endif
 
   {{-- Outro --}}
   <tr>

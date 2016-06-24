@@ -1,12 +1,12 @@
 <?php
 
-namespace Orchestra\Foundation\TestCase\Auth;
+namespace Orchestra\Foundation\TestCase\Auth\Throttle;
 
 use Mockery as m;
 use Illuminate\Http\Request;
-use Orchestra\Foundation\Auth\BasicThrottle;
+use Orchestra\Foundation\Auth\Throttle\Basic as BasicThrottle;
 
-class BasicThrottleTest extends \PHPUnit_Framework_TestCase
+class BasicTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Teardown the test environment.

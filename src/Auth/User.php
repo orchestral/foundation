@@ -4,14 +4,16 @@ namespace Orchestra\Foundation\Auth;
 
 use Orchestra\Model\User as Authenticatable;
 use Orchestra\Contracts\Notification\Recipient;
+use Orchestra\Notifications\RoutesNotifications;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use Orchestra\Foundation\Notifications\Welcome as WelcomeNotification;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Orchestra\Foundation\Notifications\ResetPassword as ResetPasswordNotification;
 
 class User extends Authenticatable implements AuthorizableContract, CanResetPasswordContract, Recipient
 {
-    use Authorizable;
+    use Authorizable, RoutesNotifications;
 
     /**
      * Get the e-mail address where password reset links are sent.
@@ -54,5 +56,17 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
     public function sendPasswordResetNotification($token, $provider = null)
     {
         $this->notify(new ResetPasswordNotification($token, $provider));
+    }
+
+    /**
+     * Send the user registered notification.
+     *
+     * @param  string|null  $password
+     *
+     * @return void
+     */
+    public function sendWelcomeNotification($password = null)
+    {
+        $this->notify(new WelcomeNotification($password));
     }
 }

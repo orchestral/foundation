@@ -18,6 +18,30 @@ return [
 
     /*
     |----------------------------------------------------------------------
+    | Model for Orchestra Platform
+    |----------------------------------------------------------------------
+    */
+
+    'model' => [
+        /*
+        |------------------------------------------------------------------
+        | User model
+        |------------------------------------------------------------------
+        */
+
+        'user' => Orchestra\Foundation\Auth\User::class,
+
+        /*
+        |------------------------------------------------------------------
+        | Role model
+        |------------------------------------------------------------------
+        */
+
+        'role' => Orchestra\Model\Role::class,
+    ],
+
+    /*
+    |----------------------------------------------------------------------
     | Route configuration for Orchestra Platform
     |----------------------------------------------------------------------
     */
@@ -89,12 +113,15 @@ return [
         |------------------------------------------------------------------
         |
         | The default for handling login throttles, by default we use the
-        | default `BasicThrottle` which is identical Laravel offering.
-        | However you can disable it by changing to `WithoutThrottle`.
+        | default basic throttle `Orchestra\Foundation\Auth\Throttle\Basic`
+        | which is identical Laravel offering.
+        |
+        | However you can disable it by changing to without throttling
+        | `Orchestra\Foundation\Auth\Throttle\Without`.
         |
         */
 
-        'resolver' => Orchestra\Foundation\Auth\BasicThrottle::class,
+        'resolver' => Orchestra\Foundation\Auth\Throttle\Basic::class,
 
         /*
         |------------------------------------------------------------------

@@ -242,9 +242,13 @@ class Foundation extends RouteManager implements FoundationContract
         // to use other implementation if there is a need for it.
         $memory = $this->app->make('orchestra.memory')->make();
 
-        if (is_null($memory->get('site.name'))) {
+        $name = $memory->get('site.name');
+
+        if (is_null($name)) {
             throw new Exception('Installation is not completed');
         }
+
+        $this->config->set('app.name', $name);
 
         // In event where we reach this point, we can consider no
         // exception has occur, we should be able to compile acl and

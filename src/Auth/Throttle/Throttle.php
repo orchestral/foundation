@@ -1,13 +1,13 @@
 <?php
 
-namespace Orchestra\Foundation\Auth;
+namespace Orchestra\Foundation\Auth\Throttle;
 
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Event;
 
-abstract class ThrottlesLogins
+abstract class Throttle
 {
     /**
      * The configurations.

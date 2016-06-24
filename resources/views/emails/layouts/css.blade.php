@@ -154,13 +154,18 @@ a {
   display: inline-block;
   border-radius: 5px;
   text-transform: capitalize;
+  padding: 8px 10px;
 }
 
-.btn,.btn-primary {
+.btn.btn-block {
+  display: block;
+}
+
+.btn.btn-primary, .btn.btn-info {
   background-color: #348eda;
   border: solid #348eda;
 }
-.btn,.btn-warning {
+.btn.btn-warning {
   background-color: #FF9F00;
   border: solid #FF9F00;
 }
@@ -220,7 +225,7 @@ a {
   font-size: 16px;
 }
 
-.alert.alert-primary {
+.alert.alert-primary, .alert.alert-info {
   background-color: #348eda;
 }
 .alert.alert-warning {
