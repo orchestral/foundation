@@ -7,7 +7,7 @@ use Orchestra\Contracts\Notification\Recipient;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Orchestra\Foundation\Auth\Notifications\ResetPassword as ResetPasswordNotification;
+use Orchestra\Foundation\Notifications\ResetPassword as ResetPasswordNotification;
 
 class User extends Authenticatable implements AuthorizableContract, CanResetPasswordContract, Recipient
 {

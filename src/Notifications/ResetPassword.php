@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Foundation\Auth\Notifications;
+namespace Orchestra\Foundation\Notifications;
 
 use Orchestra\Notifications\Notification;
 
