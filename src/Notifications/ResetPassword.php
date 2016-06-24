@@ -61,7 +61,9 @@ class ResetPassword extends Notification
      */
     public function payload()
     {
-        return ['view' => config("auth.passwords.{$this->provider}.email")];
+        return [
+            'view' => config("auth.passwords.{$this->provider}.email"),
+        ];
     }
 
     /**
@@ -89,7 +91,7 @@ class ResetPassword extends Notification
         $expired = config("auth.passwords.{$this->provider}.expire", 60);
 
         return $this->line('You are receiving this email because we received a password reset request for your account. Click the button below to reset your password:')
-                    ->action('Reset Password', handles("orchestra::forgot/reset{$this->token}?email={$email}"))
+                    ->action('Reset Password', handles("orchestra::forgot/reset/{$this->token}?email={$email}"))
                     ->line("This link will expire in {$expired} minutes.")
                     ->line('If you did not request a password reset, no further action is required.');
     }
