@@ -9,12 +9,6 @@
   </div>
 </template>
 
-<style>
-  .secret .btn-label {
-    margin-top: 5px;
-  }
-</style>
-
 <script>
   import Vue from 'vue'
   import ElementSelector from '../plugins/element-selector'
