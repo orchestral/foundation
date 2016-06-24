@@ -156,6 +156,10 @@ a {
   text-transform: capitalize;
 }
 
+.btn,.btn-block {
+  display: block;
+}
+
 .btn,.btn-primary,.btn-info {
   background-color: #348eda;
   border: solid #348eda;

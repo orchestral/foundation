@@ -22,6 +22,13 @@ class ResetPassword extends Notification
     public $provider;
 
     /**
+     * The "level" of the notification (info, success, error).
+     *
+     * @var string
+     */
+    public $level = 'warning';
+
+    /**
      * Create a notification instance.
      *
      * @param  string  $token

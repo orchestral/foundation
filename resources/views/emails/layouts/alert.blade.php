@@ -22,7 +22,7 @@
             @endif
             <tr>
               <td class="content-wrap">
-                @yied('content')
+                @yield('content')
               </td>
             </tr>
           </table>
