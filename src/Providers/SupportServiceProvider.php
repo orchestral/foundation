@@ -3,7 +3,7 @@
 namespace Orchestra\Foundation\Providers;
 
 use Orchestra\Model\Role;
-use Orchestra\Model\User;
+use Orchestra\Foundation\Auth\User;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Foundation\Publisher\PublisherManager;
@@ -53,7 +53,9 @@ class SupportServiceProvider extends ServiceProvider
     protected function registerRoleEloquent()
     {
         $this->app->bind('orchestra.role', function () {
-            return new Role();
+            $model = $this->getConfig('models.role', Role::class);
+
+            return new $model();
         });
     }
 
@@ -64,9 +66,24 @@ class SupportServiceProvider extends ServiceProvider
      */
     protected function registerUserEloquent()
     {
-        $this->app->bind('orchestra.user', function () {
-            return new User();
+        $this->app->bind('orchestra.user', function (Application $app) {
+            $model = $this->getConfig('models.user', User::class);
+
+            return new $model();
         });
+    }
+
+    /**
+     * Get configuration value.
+     *
+     * @param  string  $name
+     * @param  mixed  $default
+     *
+     * @return string
+     */
+    protected function getConfig($name, $default = null)
+    {
+        return $this->app->make('config')->get("orchestra/foundation::{$name}", $default);
     }
 
     /**
