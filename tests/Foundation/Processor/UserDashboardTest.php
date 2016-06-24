@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Processor\TestCase;
+<?php
+
+namespace Orchestra\Foundation\TestCase\Processor;
 
 use Mockery as m;
 use Orchestra\Foundation\Processor\Account\ProfileDashboard;

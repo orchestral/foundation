@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http\Middleware\TestCase;
+<?php
+
+namespace Orchestra\Foundation\TestCase\Http\Middleware;
 
 use Mockery as m;
 use Orchestra\Foundation\Http\Middleware\UseBackendTheme;

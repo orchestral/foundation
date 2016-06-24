@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Http\Presenters\TestCase;
+<?php
+
+namespace Orchestra\Foundation\TestCase\Http\Presenters;
 
 use Mockery as m;
 use Illuminate\Support\Fluent;

@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Providers\TestCase;
+<?php
+
+namespace Orchestra\Foundation\TestCase\Providers;
 
 use Mockery as m;
 use Orchestra\Foundation\Auth\BasicThrottle;

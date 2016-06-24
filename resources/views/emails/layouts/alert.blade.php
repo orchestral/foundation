@@ -13,11 +13,13 @@
       <td class="container" width="600">
         <div class="content">
           <table class="main" width="100%" cellpadding="0" cellspacing="0">
+            @if(isset($level) && ! is_null($level))
             <tr>
-              <td class="alert alert-@get_meta('email::alert', 'good')">
+              <td class="alert alert-{{ $level }}">
                 @yield('title')
               </td>
             </tr>
+            @endif
             <tr>
               <td class="content-wrap">
                 @yied('content')
@@ -25,13 +27,15 @@
             </tr>
           </table>
           <div class="footer">
-            @section('footer')
             <table width="100%">
               <tr>
-                <td class="aligncenter content-block">&copy; <a href="{!! handles('app::/') !!}">{!! memorize('site.name') !!}</a>.</td>
+                <td class="aligncenter content-block">
+                  @section('footer')
+                  &copy; {{ date('Y') }} <a href="{!! handles('app::/') !!}">{{ memorize('site.name') }}</a>.
+                  @show
+                </td>
               </tr>
             </table>
-            @show
           </div>
         </div>
       </td>

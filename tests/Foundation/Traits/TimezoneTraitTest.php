@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Traits\TestCase;
+<?php
+
+namespace Orchestra\Foundation\TestCase\Traits;
 
 use Mockery as m;
 use Carbon\Carbon;

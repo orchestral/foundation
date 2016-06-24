@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Validation\TestCase;
+<?php
+
+namespace Orchestra\Foundation\TestCase\Validation;
 
 use Mockery as m;
 use Orchestra\Foundation\Validation\AuthenticateUser;

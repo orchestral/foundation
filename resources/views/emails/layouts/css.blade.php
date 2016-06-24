@@ -141,11 +141,9 @@ a {
   text-decoration: underline;
 }
 
-.btn-primary {
+.btn {
   text-decoration: none;
   color: #FFF;
-  background-color: #348eda;
-  border: solid #348eda;
   border-width: 10px 20px;
   line-height: 2em;
   /* 2em * 14px = 28px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
@@ -156,6 +154,23 @@ a {
   display: inline-block;
   border-radius: 5px;
   text-transform: capitalize;
+}
+
+.btn,.btn-primary {
+  background-color: #348eda;
+  border: solid #348eda;
+}
+.btn,.btn-warning {
+  background-color: #FF9F00;
+  border: solid #FF9F00;
+}
+.btn.btn-bad, .btn.btn-error {
+  background-color: #D0021B;
+  border: solid #D0021B;
+}
+.btn.btn-good, .btn.btn-success {
+  background-color: #68B90F;
+  border: solid #68B90F;
 }
 
 /* -------------------------------------
@@ -197,11 +212,16 @@ a {
   text-align: center;
   border-radius: 3px 3px 0 0;
 }
+
 .alert a {
   color: #fff;
   text-decoration: none;
   font-weight: 500;
   font-size: 16px;
+}
+
+.alert.alert-primary {
+  background-color: #348eda;
 }
 .alert.alert-warning {
   background-color: #FF9F00;
@@ -209,7 +229,7 @@ a {
 .alert.alert-bad {
   background-color: #D0021B;
 }
-.alert.alert-good {
+.alert.alert-good, .alert.alert-success {
   background-color: #68B90F;
 }
 

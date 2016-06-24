@@ -15,19 +15,21 @@
           <table class="main" width="100%" cellpadding="0" cellspacing="0" itemprop="action" itemscope itemtype="http://schema.org/ConfirmAction">
             <tr>
               <td class="content-wrap">
-                <meta itemprop="name" content="@get_meta('title')"/>
+                <meta itemprop="name" content="@yield('title')"/>
                 @yield('content')
               </td>
             </tr>
           </table>
           <div class="footer">
-            @section('footer')
             <table width="100%">
               <tr>
-                <td class="aligncenter content-block">&copy; <a href="{!! handles('app::/') !!}">{!! memorize('site.name') !!}</a>.</td>
+                <td class="aligncenter content-block">
+                  @section('footer')
+                  &copy; {{ date('Y') }} <a href="{!! handles('app::/') !!}">{{ memorize('site.name') }}</a>.
+                  @show
+                </td>
               </tr>
             </table>
-            @show
           </div>
         </div>
       </td>
