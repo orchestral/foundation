@@ -6,8 +6,8 @@ use Orchestra\Model\User as Authenticatable;
 use Orchestra\Contracts\Notification\Recipient;
 use Illuminate\Notifications\RoutesNotifications;
 use Illuminate\Foundation\Auth\Access\Authorizable;
-use Orchstra\Foundation\Notifications\UserRegistered;
 use Orchestra\Foundation\Notifications\ResetPassword;
+use Orchestra\Foundation\Notifications\UserRegistered;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
