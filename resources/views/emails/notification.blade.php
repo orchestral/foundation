@@ -2,11 +2,11 @@
 
 @section('title')
 @if($level == 'error')
-  {{ isset($subject) ? $subject : 'Whoops!' }}
+  {{ isset($title) ? $title : 'Whoops!' }}
 @elseif($level == 'warning')
-  {{ isset($subject) ? $subject : 'Warning!' }}
+  {{ isset($title) ? $title : 'Warning!' }}
 @else
-  {{ isset($subject) ? $subject : 'Hello!' }}
+  {{ isset($title) ? $title : 'Hello!' }}
 @endif
 @stop
 

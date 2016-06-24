@@ -4,7 +4,7 @@ namespace Orchestra\Foundation\Auth;
 
 use Orchestra\Model\User as Authenticatable;
 use Orchestra\Contracts\Notification\Recipient;
-use Illuminate\Notifications\RoutesNotifications;
+use Orchestra\Notifications\RoutesNotifications;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Orchestra\Foundation\Notifications\Welcome as WelcomeNotification;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -43,18 +43,6 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
     public function getRecipientName()
     {
         return $this->getAttribute('fullname');
-    }
-
-    /**
-     * Get the notification routing information for mail driver.
-     *
-     * @param  string  $driver
-     *
-     * @return mixed
-     */
-    public function routeNotificationForMail()
-    {
-        return $this->getRecipientEmail();
     }
 
     /**
