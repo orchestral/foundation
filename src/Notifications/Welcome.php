@@ -39,15 +39,13 @@ class Welcome extends Notification
     }
 
     /**
-     * Get the subject of the notification.
+     * Get the title of the notification.
      *
      * @return string
      */
-    public function subject()
+    public function title()
     {
-        $application = memorize('site.name', 'Orchestra Platform');
-
-        return trans('orchestra/foundation::email.credential.register', compact('application'));
+        return trans('orchestra/foundation::email.credential.register');
     }
 
     /**

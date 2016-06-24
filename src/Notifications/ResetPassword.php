@@ -67,15 +67,23 @@ class ResetPassword extends Notification
     }
 
     /**
+     * Get the title of the notification.
+     *
+     * @return string
+     */
+    public function title()
+    {
+        return trans('orchestra/foundation::email.forgot.request');
+    }
+
+    /**
      * Get the subject of the notification.
      *
      * @return string
      */
     public function subject()
     {
-        $application = memorize('site.name', 'Orchestra Platform');
-
-        return trans('orchestra/foundation::email.forgot.request', compact('application'));
+        return trans('orchestra/foundation::email.forgot.request');
     }
 
     /**
