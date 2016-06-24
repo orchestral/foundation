@@ -3,7 +3,7 @@
 namespace Orchestra\Foundation\Notifications;
 
 use Orchestra\Foundation\Auth\User;
-use Orchestra\Notifications\Notification;
+use Illuminate\Notifications\Notification;
 
 class ResetPassword extends Notification
 {
