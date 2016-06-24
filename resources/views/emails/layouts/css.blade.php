@@ -154,6 +154,7 @@ a {
   display: inline-block;
   border-radius: 5px;
   text-transform: capitalize;
+  padding: 8px 10px;
 }
 
 .btn,.btn-block {

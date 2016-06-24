@@ -35,7 +35,7 @@
   {{-- Action --}}
   <tr>
     <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
-      <a href="{{ $actionUrl }}" class="btn btn-block btn-{{ $actionColor }}" itemprop="url"  target="_blank">
+      <a href="{{ $actionUrl }}" class="btn btn-{{ $actionColor }}" itemprop="url"  target="_blank">
         {{ $actionText }}
       </a>
     </td>
