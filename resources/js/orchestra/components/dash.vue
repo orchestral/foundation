@@ -22,22 +22,17 @@
 
     /**
      * Component props
+     *
+     * @type {Object}
      */
     props: {
       color: {
         type: String,
-        default: 'orange'
+        default: 'primary'
       },
       icon: {
         type: String,
-        default: 'pie-chart'
-      },
-      value: {
-        type: Number,
-        default: 0,
-        coerce: (value) => {
-          return parseInt(value)
-        }
+        default: ''
       },
       prefix: {
         type: String,
@@ -50,6 +45,13 @@
       title: {
         type: String,
         default: ''
+      },
+      value: {
+        type: Number,
+        default: 0,
+        coerce: (value) => {
+          return parseInt(value)
+        }
       }
     },
 
@@ -80,8 +82,8 @@
         this.suffix = 'K'
       }
 
-      new CountTo(this.value, function(c) {
-        vm.count = c.count
+      new CountTo(this.value, c => {
+        this.count = c.count
       }, this.options).start()
     }
   })

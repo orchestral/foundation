@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Auth\TestCase;
+<?php
+
+namespace Orchestra\Foundation\TestCase\Auth;
 
 use Mockery as m;
 use Illuminate\Http\Request;

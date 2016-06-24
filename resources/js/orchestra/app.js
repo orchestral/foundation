@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import $ from '../vendor/jquery'
 
-let App = Vue.extend({
+const App = Vue.extend({
   components: {
     btndrop: require('./components/btndrop.vue'),
     dash: require('./components/dash.vue'),
     faicon: require('./components/faicon.vue'),
     offcanvas: require('./components/offcanvas.vue'),
+    pane: require('./components/pane.vue'),
     progress: require('./components/progress.vue'),
     secret: require('./components/secret.vue'),
     sidenav: require('./components/sidenav.vue')
@@ -29,7 +30,7 @@ let App = Vue.extend({
 
   methods: {
     boot() {
-      const sidebar = $('.sidebar')
+      let sidebar = $('.sidebar')
 
       if (sidebar.size() < 1) {
         return null

@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\TestCase;
+<?php
+
+namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
 use Orchestra\Testing\TestCase;
@@ -132,6 +134,7 @@ class ServiceProviderTest extends TestCase
             'command.listener.make',
             'command.middleware.make',
             'command.model.make',
+            'command.notification.make',
             'command.policy.make',
             'command.provider.make',
             'command.queue.failed-table',

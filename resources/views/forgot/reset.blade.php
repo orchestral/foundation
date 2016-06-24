@@ -1,4 +1,4 @@
-@extends('orchestra/foundation::layouts.sign')
+@extends('orchestra/foundation::layouts.landing')
 
 @section('content')
 <div class="panel panel-default">
@@ -39,3 +39,9 @@
   </div>
 </div>
 @stop
+
+@push('orchestra.footer')
+<script>
+  var app = Platform.make('app').$mount('body')
+</script>
+@endpush

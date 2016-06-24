@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\TestCase;
+<?php
+
+namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
 use Orchestra\Foundation\Foundation;

@@ -17,6 +17,7 @@
 
 <script>
   import Vue from 'vue'
+  import ElementSelector from '../plugins/element-selector'
   import $ from '../../vendor/jquery'
 
   const Secret = Vue.extend({
@@ -39,8 +40,11 @@
         type: String,
         default: 'Cancel'
       },
-      field: {
-        type: String
+      element: {
+        type: String,
+        coerce: (value) => {
+          return (new ElementSelector(value)).toString()
+        }
       },
       title: {
         type: String
@@ -64,28 +68,28 @@
     },
 
     ready() {
-      const field = this.getField()
+      let element = this.getElement()
 
       if (this.open) {
-        field.removeClass('hidden')
+        element.removeClass('hidden')
       } else {
-        field.addClass('hidden')
+        element.addClass('hidden')
       }
     },
 
     methods: {
       openForEdit() {
-        this.getField().removeClass('hidden')
+        this.getElement().removeClass('hidden')
         this.open = true
       },
 
       closeForEdit() {
-        this.getField().addClass('hidden')
+        this.getElement().addClass('hidden')
         this.open = false
       },
 
-      getField() {
-        return $(`#${this.field}`).parent()
+      getElement() {
+        return $(this.element).parent()
       }
     }
   })

@@ -44,6 +44,7 @@
         "orchestra/translation": "~3.4.0",
         "orchestra/view": "~3.4.0",
         "orchestra/widget": "~3.4.0",
+
         "predis/predis": "~1.0"
     },
     "require-dev": {
@@ -51,6 +52,7 @@
         "orchestra/testing": "~3.4.0"
     },
     "suggest": {
+        "orchestra/avatar": "Add gravatar support for Orchestra Platform (~3.4).",
         "orchestra/ftp-updater": "Allow Extension with asset to be updated/uploaded environment without SSH support (~3.4).",
         "orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.4).",
         "orchestra/studio": "Allow additional code generator for Orchestra Platform (~3.4).",

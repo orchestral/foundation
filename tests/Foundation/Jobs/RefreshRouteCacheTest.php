@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Jobs\TestCase;
+<?php
+
+namespace Orchestra\Foundation\TestCase\Jobs;
 
 use Mockery as m;
 use Orchestra\Foundation\Jobs\RefreshRouteCache;

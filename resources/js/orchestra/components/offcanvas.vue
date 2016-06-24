@@ -1,14 +1,16 @@
 <template>
-  <a href="#" class="btn btn-default navbar-btn navbar-left offcanvas" @click.prevent="toggle">
+  <a href="#" class="btn btn-default navbar-btn navbar-left offcanvas" @click.prevent="toggle" v-if="enabled">
     <i class="fa fa-bars"></i>
   </a>
 </template>
 
 <script>
   import Vue from 'vue'
+  import Platform from '../platform'
+  import ElementSelector from '../plugins/element-selector'
   import $ from '../../vendor/jquery'
 
-  const wrapper = $('.wrapper')
+  let container
 
   const OffCanvas = Vue.extend({
     /**
@@ -19,26 +21,56 @@
     name: 'offcanvas',
 
     /**
+     * Component props
+     */
+    props: {
+      element: {
+        type: String,
+        default: 'wrapper',
+        coerce: (value) => {
+          return (new ElementSelector(value)).toString()
+        }
+      }
+    },
+
+    /**
      * Component data.
      *
      * @return {Object}
      */
     data() {
       return {
-        open: ! wrapper.hasClass('alt')
+        enabled: true,
+        open: false
       }
     },
 
     ready() {
-      const vm = this
+      container = $(this.element)
 
-      $('.sidebar__close').click(() => {
-        vm.toggle()
-        return false
-      })
+      this.enabled = container.size() > 0
+
+      if (this.enabled) {
+        this.open = ! container.hasClass('alt')
+        this.boot()
+      }
     },
 
     methods: {
+      /**
+       * Boot the component.
+       *
+       * @return void
+       */
+      boot() {
+        $('.sidebar__close').click(() => {
+          this.toggle()
+          return false
+        })
+
+        Platform.watch('t', () => this.toggle())
+      },
+
       /**
        * Toggle off-canvas state.
        *
@@ -47,10 +79,11 @@
       toggle() {
         this.open = (this.open != true)
 
-        if (this.open)
-          wrapper.removeClass('alt')
-        else
-          wrapper.addClass('alt')
+        if (this.open) {
+          container.removeClass('alt')
+        } else {
+          container.addClass('alt')
+        }
       }
     }
   })

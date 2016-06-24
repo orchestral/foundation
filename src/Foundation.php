@@ -29,11 +29,25 @@ class Foundation extends RouteManager implements FoundationContract
     protected $config;
 
     /**
+     * Foundation services.
+     *
+     * @var array
+     */
+    protected $services = [];
+
+    /**
      * Application status/mode implementation.
      *
      * @var \Orchestra\Contracts\Extension\StatusChecker
      */
     protected $status;
+
+    /**
+     * The widget manager.
+     *
+     * @var \Orchestra\Widget\WidgetManager
+     */
+    protected $widget;
 
     /**
      * Construct a new instance.
@@ -44,18 +58,14 @@ class Foundation extends RouteManager implements FoundationContract
     {
         parent::__construct($app);
 
-        $this->config = $app->make('config');
-        $this->status = $app->make('orchestra.extension.status');
-    }
-
-    /**
-     * Get acl services.
-     *
-     * @return \Orchestra\Contracts\Authorization\Authorization
-     */
-    public function acl()
-    {
-        return $this->app->make('orchestra.platform.acl');
+        $this->config   = $app->make('config');
+        $this->status   = $app->make('orchestra.extension.status');
+        $this->widget   = $app->make('orchestra.widget');
+        $this->services = [
+            'acl'    => null,
+            'memory' => null,
+            'menu'   => null,
+        ];
     }
 
     /**
@@ -73,6 +83,24 @@ class Foundation extends RouteManager implements FoundationContract
         }
 
         return $this;
+    }
+
+    /**
+     * Flush the container of all bindings and resolved instances.
+     *
+     * @return void
+     */
+    public function flush()
+    {
+        $this->booted   = false;
+        $this->config   = null;
+        $this->status   = null;
+        $this->widget   = null;
+        $this->services = [
+            'acl'    => null,
+            'memory' => null,
+            'menu'   => null,
+        ];
     }
 
     /**
@@ -96,23 +124,33 @@ class Foundation extends RouteManager implements FoundationContract
     }
 
     /**
+     * Get acl services.
+     *
+     * @return \Orchestra\Contracts\Authorization\Authorization
+     */
+    public function acl()
+    {
+        return $this->services['acl'];
+    }
+
+    /**
      * Get memory services.
      *
      * @return \Orchestra\Contracts\Memory\Provider
      */
     public function memory()
     {
-        return $this->app->make('orchestra.platform.memory');
+        return $this->services['memory'];
     }
 
     /**
      * Get menu services.
      *
-     * @return \Orchestra\Widget\MenuWidgetHandler
+     * @return \Orchestra\Widget\Handlers\Menu
      */
     public function menu()
     {
-        return $this->app->make('orchestra.platform.menu');
+        return $this->services['menu'];
     }
 
     /**
@@ -124,7 +162,7 @@ class Foundation extends RouteManager implements FoundationContract
      */
     public function widget($type)
     {
-        return $this->app->make('orchestra.widget')->make("{$type}.orchestra");
+        return $this->widget->make("{$type}.orchestra");
     }
 
     /**
@@ -183,6 +221,7 @@ class Foundation extends RouteManager implements FoundationContract
             $memory = $this->bootNewApplication();
         }
 
+        $this->services['memory'] = $memory;
         $this->app->instance('orchestra.platform.memory', $memory);
 
         $this->registerComponents($memory);
@@ -278,8 +317,11 @@ class Foundation extends RouteManager implements FoundationContract
      */
     protected function registerBaseServices()
     {
-        $this->app->instance('orchestra.platform.menu', $this->widget('menu'));
-        $this->app->instance('orchestra.platform.acl', $this->app->make('orchestra.acl')->make('orchestra'));
+        $this->services['acl'] = $this->app->make('orchestra.acl')->make('orchestra');
+        $this->app->instance('orchestra.platform.acl', $this->services['acl']);
+
+        $this->services['menu'] = $this->widget('menu');
+        $this->app->instance('orchestra.platform.menu', $this->services['menu']);
     }
 
     /**

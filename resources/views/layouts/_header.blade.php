@@ -15,6 +15,7 @@
 $asset = app('orchestra.asset')->container('orchestra/foundation::header');
 $asset->style('vendor', 'packages/orchestra/foundation/css/vendor.css');
 $asset->style('orchestra', 'packages/orchestra/foundation/css/orchestra.css', ['vendor']);
+$asset->script('vendor', 'packages/orchestra/foundation/js/vendor.js');
 @endphp
 
 {{ $asset }}

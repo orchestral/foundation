@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\TestCase;
+<?php
+
+namespace Orchestra\Foundation\TestCase;
 
 use Orchestra\Foundation\Application;
 

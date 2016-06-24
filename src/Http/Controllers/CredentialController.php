@@ -26,6 +26,7 @@ class CredentialController extends AdminController implements AuthenticateListen
     protected function setupMiddleware()
     {
         $this->middleware('orchestra.guest', ['only' => ['index', 'login']]);
+        $this->middleware('orchestra.csrf', ['only' => 'logout']);
     }
 
     /**

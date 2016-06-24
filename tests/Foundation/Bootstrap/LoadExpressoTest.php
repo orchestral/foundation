@@ -1,4 +1,6 @@
-<?php namespace Orchestra\Foundation\Bootstrap\TestCase;
+<?php
+
+namespace Orchestra\Foundation\TestCase\Bootstrap;
 
 use Illuminate\Pagination\Paginator;
 use Mockery as m;
