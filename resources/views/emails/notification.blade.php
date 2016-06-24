@@ -33,6 +33,7 @@
   </tr>
 
   {{-- Action --}}
+  @if(isset($actionText))
   <tr>
     <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
       <a href="{{ $actionUrl }}" class="btn btn-{{ $actionColor }}" itemprop="url"  target="_blank">
@@ -40,6 +41,7 @@
       </a>
     </td>
   </tr>
+  @endif
 
   {{-- Outro --}}
   <tr>

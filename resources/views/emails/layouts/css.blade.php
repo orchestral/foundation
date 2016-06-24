@@ -157,15 +157,15 @@ a {
   padding: 8px 10px;
 }
 
-.btn,.btn-block {
+.btn.btn-block {
   display: block;
 }
 
-.btn,.btn-primary,.btn-info {
+.btn.btn-primary, .btn.btn-info {
   background-color: #348eda;
   border: solid #348eda;
 }
-.btn,.btn-warning {
+.btn.btn-warning {
   background-color: #FF9F00;
   border: solid #FF9F00;
 }
