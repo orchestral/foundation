@@ -34,7 +34,7 @@
         "orchestra/extension": "~3.3.0",
         "orchestra/html": "~3.3.1",
         "orchestra/kernel": "~3.3.1",
-        "orchestra/memory": "~3.3.0",
+        "orchestra/memory": "~3.3.1",
         "orchestra/messages": "~3.3.0",
         "orchestra/model": "~3.3.2",
         "orchestra/notifier": "~3.3.1",
