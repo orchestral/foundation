@@ -1,6 +1,4 @@
 * text=auto
-*.css linguist-vendored
-*.js linguist-vendored
 
 # Ignore following folder/file.
 /build export-ignore
