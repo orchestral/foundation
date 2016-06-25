@@ -2,7 +2,7 @@
 
 namespace Integration\TestCase;
 
-use Orchestra\Model\User;
+use Orchestra\Foundation\Auth\User;
 use Orchestra\Installation\Installation;
 use Orchestra\Testing\TestCase as ApplicationTestCase;
 
@@ -14,6 +14,18 @@ abstract class TestCase extends ApplicationTestCase
      * @var string
      */
     protected $baseUrl = 'http://localhost';
+
+    /**
+     * Setup the test environment.
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->withFactories(__DIR__.'/../factories');
+    }
 
     /**
      * Define environment setup.
@@ -44,31 +56,10 @@ abstract class TestCase extends ApplicationTestCase
     /**
      * Install Orchestra Platform and get the administrator user.
      *
-     * @return \Orchestra\Model\User
+     * @return \Orchestra\Foundation\Auth\User
      */
-    protected function createAdminUser(Installation $installer = null)
+    protected function createAdminUser()
     {
-        $this->withFactories(__DIR__.'/../factories');
-
-        if (is_null($installer)) {
-            $installer = $this->makeInstaller();
-        }
-
-        $user = factory(User::class, 'admin')->create();
-
-        $installer->create($user, [
-            'site_name' => 'Orchestra Platform',
-            'email'     => 'hello@orchestraplatform.com',
-        ]);
-
-        $this->artisan('migrate');
-
-        $this->app['orchestra.installed'] = true;
-
-        $this->beforeApplicationDestroyed(function () {
-            $this->app['orchestra.installed'] = false;
-        });
-
-        return $user;
+        return factory(User::class, 'admin')->create();
     }
 }

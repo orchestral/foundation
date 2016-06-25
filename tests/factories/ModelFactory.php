@@ -1,7 +1,7 @@
 <?php
 
 use Faker\Generator;
-use Orchestra\Model\User;
+use Orchestra\Foundation\Auth\User;
 
 /*
 |--------------------------------------------------------------------------
