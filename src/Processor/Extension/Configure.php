@@ -78,11 +78,12 @@ class Configure extends Processor implements Command
             return $listener->updateConfigurationFailedValidation($validation->getMessageBag(), $extension->uid);
         }
 
+        $input['handles'] = str_replace(['{domain}', '{{domain}}'], '{{domain}}', $input['handles']);
+        unset($input['_token']);
+
         $memory = Foundation::memory();
         $config = (array) $memory->get("extension.active.{$extension->get('name')}.config", []);
         $input  = new Fluent(array_merge($config, $input));
-
-        unset($input['_token']);
 
         Event::fire("orchestra.saving: extension.{$extension->get('name')}", [& $input]);
 
