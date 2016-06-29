@@ -5,6 +5,7 @@ namespace Orchestra\Foundation\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Mpociot\Reauthenticate\Reauthenticates;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Foundation\Traits\RedirectUsers;
 use Orchestra\Foundation\Processor\AuthenticateUser;
@@ -16,7 +17,7 @@ use Orchestra\Contracts\Auth\Listener\DeauthenticateUser as DeauthenticateListen
 
 class CredentialController extends AdminController implements AuthenticateListener, DeauthenticateListener, ThrottlesListener
 {
-    use RedirectUsers;
+    use Reauthenticates, RedirectUsers;
 
     /**
      * Setup controller middleware.
