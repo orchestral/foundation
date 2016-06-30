@@ -189,12 +189,13 @@ class User extends Presenter
 
             if (! is_null($this->user) && $this->user->id !== $row->id) {
                 $btn[] = app('html')->link(
-                    handles("orchestra::users/{$row->id}/delete", ['csrf' => true]),
+                    handles("orchestra::users/{$row->id}"),
                     trans('orchestra/foundation::label.delete'),
                     [
-                        'class'   => 'btn btn-xs btn-label btn-danger',
-                        'role'    => 'delete',
-                        'data-id' => $row->id,
+                        'class'       => 'btn btn-xs btn-label btn-danger',
+                        'role'        => 'delete',
+                        'data-id'     => $row->id,
+                        'data-method' => 'DELETE',
                     ]
                 );
             }

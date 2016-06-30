@@ -44,7 +44,14 @@ class ProfileCreator extends User implements Command
      */
     public function store(Listener $listener, array $input)
     {
-        $password = Arr::get($input, 'password', Str::random(5));
+        $random   = Str::random(5);
+        $password = Arr::get($input, 'password');
+
+        if (empty($password)) {
+            $password = $random;
+        } else {
+            $random = null;
+        }
 
         $validation = $this->validator->on('register')->with($input);
 
@@ -62,7 +69,7 @@ class ProfileCreator extends User implements Command
             return $listener->createProfileFailed(['error' => $e->getMessage()]);
         }
 
-        return $this->notifyCreatedUser($listener, $user, $password);
+        return $this->notifyCreatedUser($listener, $user, $random);
     }
 
     /**

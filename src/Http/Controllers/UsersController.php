@@ -54,16 +54,16 @@ class UsersController extends AdminController implements UserCreator, UserRemove
     /**
      * Edit the user.
      *
-     * GET (:orchestra)/users/$users/edit
+     * GET (:orchestra)/users/$user/edit
      *
-     * @param  int|string  $users
      * @param  \Orchestra\Foundation\Processor\User  $processor
+     * @param  int|string  $user
      *
      * @return mixed
      */
-    public function edit(Processor $processor, $users)
+    public function edit(Processor $processor, $user)
     {
-        return $processor->edit($this, $users);
+        return $processor->edit($this, $user);
     }
 
     /**
@@ -83,46 +83,46 @@ class UsersController extends AdminController implements UserCreator, UserRemove
     /**
      * Update the user.
      *
-     * PUT (:orchestra)/users/$users
+     * PUT (:orchestra)/users/$user
      *
      * @param  \Orchestra\Foundation\Processor\User  $processor
-     * @param  int|string  $users
+     * @param  int|string  $user
      *
      * @return mixed
      */
-    public function update(Processor $processor, $users)
+    public function update(Processor $processor, $user)
     {
-        return $processor->update($this, $users, Input::all());
+        return $processor->update($this, $user, Input::all());
     }
 
     /**
      * Request to delete a user.
      *
-     * GET (:orchestra)/$users/delete
+     * GET (:orchestra)/$user/delete
      *
      * @param  \Orchestra\Foundation\Processor\User  $processor
-     * @param  int|string  $users
+     * @param  int|string  $user
      *
      * @return mixed
      */
-    public function delete(Processor $processor, $users)
+    public function delete(Processor $processor, $user)
     {
-        return $this->destroy($processor, $users);
+        return $this->destroy($processor, $user);
     }
 
     /**
      * Request to delete a user.
      *
-     * DELETE (:orchestra)/$users
+     * DELETE (:orchestra)/$user
      *
      * @param  \Orchestra\Foundation\Processor\User  $processor
-     * @param  int|string  $users
+     * @param  int|string  $user
      *
      * @return mixed
      */
-    public function destroy(Processor $processor, $users)
+    public function destroy(Processor $processor, $user)
     {
-        return $processor->destroy($this, $users);
+        return $processor->destroy($this, $user);
     }
 
     /**

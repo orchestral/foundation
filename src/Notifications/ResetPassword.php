@@ -55,11 +55,11 @@ class ResetPassword extends Notification
     }
 
     /**
-     * Get the notification channel payload data.
+     * Get the notification's options.
      *
      * @return array
      */
-    public function payload()
+    public function options()
     {
         return [
             'view' => config("auth.passwords.{$this->provider}.email"),

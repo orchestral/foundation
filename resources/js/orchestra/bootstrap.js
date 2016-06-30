@@ -1,4 +1,6 @@
-import $ from './vendor/jquery'
+import Restful from './plugins/restful'
+import $ from '../vendor/jquery'
+import Javie from '../vendor/javie'
 
 class Bootstrap {
   select2() {
@@ -31,9 +33,24 @@ class Bootstrap {
 
     return this
   }
+
+  restful() {
+    $('body').on('click', '[data-method]', function (e) {
+      e.preventDefault()
+      e.stopPropagation()
+
+      let element = $(this)
+      let method = element.data('method')
+      let href = element.attr('href')
+      let rest = new Restful(method, href, {_token: Javie.get('csrf.token')})
+
+      rest.dispatch()
+
+      return false
+    })
+
+    return this
+  }
 }
 
-(new Bootstrap())
-  .select2()
-  .switcher()
-
+export default Bootstrap

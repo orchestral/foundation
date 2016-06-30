@@ -4,6 +4,7 @@ namespace Orchestra\Foundation\TestCase\Bootstrap;
 
 use Mockery as m;
 use Orchestra\Testing\TestCase;
+use Illuminate\Support\Collection;
 
 class UserAccessPolicyTest extends TestCase
 {
@@ -17,7 +18,7 @@ class UserAccessPolicyTest extends TestCase
     {
         $this->app->make('Orchestra\Foundation\Bootstrap\UserAccessPolicy')->bootstrap($this->app);
 
-        $this->assertEquals(['Guest'], $this->app['auth']->roles());
+        $this->assertEquals(new Collection(['Guest']), $this->app['auth']->roles());
 
         $user = m::mock('\Orchestra\Model\User[getRoles]');
         $user->id = 1;

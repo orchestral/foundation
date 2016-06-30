@@ -49,7 +49,7 @@ class Extension extends Presenter
                     // We should only cater for custom URL handles for a route.
                     $fieldset->control('input:text', 'handles')
                         ->label(trans('orchestra/foundation::label.extensions.handles'))
-                        ->value($handles);
+                        ->value(str_replace(['{{domain}}', '{domain}'], '{domain}', $handles));
                 });
             }
         });

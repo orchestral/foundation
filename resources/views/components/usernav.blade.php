@@ -27,7 +27,7 @@
       </a>
     </li>
     <li>
-      <a href="{!! handles('orchestra::logout', ['csrf' => true]) !!}">
+      <a href="{!! handles('orchestra::logout') !!}" data-method="DELETE">
         <i class="fa fa-sign-out"></i> {{ trans('orchestra/foundation::title.logout') }}
       </a>
     </li>

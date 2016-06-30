@@ -13,7 +13,11 @@
           </div>
 
           @section('navbar-right')
-          <a href="{{ handles('orchestra::logout', ['csrf' => true]) }}" class="btn btn-primary navbar-btn navbar-right v-cloak--hidden" v-if="user">
+          <a href="{{ handles('orchestra::logout') }}"
+            data-method="DELETE"
+            class="btn btn-primary navbar-btn navbar-right v-cloak--hidden"
+            v-if="user"
+          >
             {{ trans('orchestra/foundation::title.logout') }}
           </a>
           @show

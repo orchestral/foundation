@@ -9,7 +9,7 @@ class AdminLoginTest extends TestCase
      */
     public function testItCantLoginInvalidUser()
     {
-        $user = $this->createAdminUser();
+        $user = $this->install();
 
         $this->visit('admin/login')
             ->type('hello@orchestraplatform.com', 'email')
@@ -24,7 +24,7 @@ class AdminLoginTest extends TestCase
      */
     public function testItLoginValidUser()
     {
-        $user = $this->createAdminUser();
+        $user = $this->install();
 
         $this->visit('admin/login')
             ->type($user->email, 'email')
