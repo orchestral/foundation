@@ -30,8 +30,6 @@ class OptimizeCommand extends Command
         foreach ($this->getClassFiles() as $file) {
             try {
                 fwrite($handle, $preloader->getCode($file, false)."\n");
-            } catch (SkipFileException $ex) {
-                // Class Preloader 2.x
             } catch (VisitorExceptionInterface $e) {
                 // Class Preloader 3.x
             } catch (RuntimeException $e) {

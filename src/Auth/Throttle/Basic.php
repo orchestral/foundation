@@ -54,8 +54,6 @@ class Basic extends Throttle implements Command
     /**
      * Get total seconds before doing another login attempts for the user.
      *
-     * @param  array  $input
-     *
      * @return int
      */
     public function getSecondsBeforeNextAttempts()

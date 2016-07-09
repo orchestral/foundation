@@ -90,7 +90,7 @@ class AssembleCommand extends Command
                 $this->call('extension:update', $options);
             }
 
-            $this->foundation->make('orchestra.extension.provider')->writeFreshManifest();
+            $this->laravel->make('orchestra.extension.provider')->writeFreshManifest();
         } catch (PDOException $e) {
             // Skip if application is unable to make connection to the database.
         }
