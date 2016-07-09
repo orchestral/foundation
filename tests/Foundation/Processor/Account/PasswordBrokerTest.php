@@ -33,14 +33,8 @@ class PasswordBrokerTest extends TestCase
         $validator->shouldReceive('with')->once()->with($input)->andReturn($resolver);
         $resolver->shouldReceive('fails')->once()->andReturn(false);
         $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('Orchestra Platform');
-        $message->shouldReceive('subject')->once()->with(m::type('String'))->andReturnNull();
         $password->shouldReceive('sendResetLink')->once()
-            ->with(['email' => $input['email']], m::type('Closure'))
-            ->andReturnUsing(function ($d, $c) use ($message) {
-                $c($message);
-
-                return Password::RESET_LINK_SENT;
-            });
+            ->with(['email' => $input['email']])->andReturn(Password::RESET_LINK_SENT);
         $listener->shouldReceive('resetLinkSent')->once()->with(Password::RESET_LINK_SENT)->andReturn('reset.sent');
 
         Foundation::shouldReceive('memory')->once()->andReturn($memory);
@@ -70,10 +64,7 @@ class PasswordBrokerTest extends TestCase
         $resolver->shouldReceive('fails')->once()->andReturn(false);
         $memory->shouldReceive('get')->once()->with('site.name', 'Orchestra Platform')->andReturn('Orchestra Platform');
         $password->shouldReceive('sendResetLink')->once()
-            ->with(['email' => $input['email']], m::type('Closure'))
-            ->andReturnUsing(function ($d, $c) {
-                return Password::INVALID_USER;
-            });
+            ->with(['email' => $input['email']])->andReturn(Password::INVALID_USER);
         $listener->shouldReceive('resetLinkFailed')->once()->with(Password::INVALID_USER)->andReturn('reset.not.sent');
 
         Foundation::shouldReceive('memory')->once()->andReturn($memory);

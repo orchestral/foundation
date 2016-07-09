@@ -49,13 +49,10 @@ class PasswordBroker extends Processor implements Command
             return $listener->resetLinkFailedValidation($validation->getMessageBag());
         }
 
-        $memory = Foundation::memory();
-        $site   = $memory->get('site.name', 'Orchestra Platform');
-        $data   = ['email' => $input['email']];
+        $site = Foundation::memory()->get('site.name', 'Orchestra Platform');
+        $data = ['email' => $input['email']];
 
-        $response = $this->password->sendResetLink($data, function ($mail) use ($site) {
-            $mail->subject(trans('orchestra/foundation::email.forgot.request', ['site' => $site]));
-        });
+        $response = $this->password->sendResetLink($data);
 
         if ($response != Password::RESET_LINK_SENT) {
             return $listener->resetLinkFailed($response);
