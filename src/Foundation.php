@@ -56,16 +56,13 @@ class Foundation extends RouteManager implements FoundationContract
      */
     public function __construct(Application $app)
     {
+        $this->flush();
+
         parent::__construct($app);
 
-        $this->config   = $app->make('config');
-        $this->status   = $app->make('orchestra.extension.status');
-        $this->widget   = $app->make('orchestra.widget');
-        $this->services = [
-            'acl'    => null,
-            'memory' => null,
-            'menu'   => null,
-        ];
+        $this->config = $app->make('config');
+        $this->status = $app->make('orchestra.extension.status');
+        $this->widget = $app->make('orchestra.widget');
     }
 
     /**
@@ -92,10 +89,11 @@ class Foundation extends RouteManager implements FoundationContract
      */
     public function flush()
     {
-        $this->booted   = false;
-        $this->config   = null;
-        $this->status   = null;
-        $this->widget   = null;
+        $this->booted = false;
+        $this->config = null;
+        $this->status = null;
+        $this->widget = null;
+
         $this->services = [
             'acl'    => null,
             'memory' => null,
@@ -348,14 +346,14 @@ class Foundation extends RouteManager implements FoundationContract
     {
         // Orchestra Platform routing is managed by `orchestra/foundation::handles`
         // and can be manage using configuration.
-        if (in_array($name, ['orchestra'])) {
-            return $this->app->make(RouteGenerator::class, [
-                $this->config->get('orchestra/foundation::handles', $default),
-                $this->app->make('request'),
-            ]);
+        if (! in_array($name, ['orchestra'])) {
+            return parent::generateRouteByName($name, $default);
         }
 
-        return parent::generateRouteByName($name, $default);
+        return $this->app->make(RouteGenerator::class, [
+            $this->config->get('orchestra/foundation::handles', $default),
+            $this->app->make('request'),
+        ]);
     }
 
     /**
