@@ -10,7 +10,7 @@ class Basic extends Throttle implements Command
     /**
      * The cache limiter implementation.
      *
-     * @var \Illuminate\Contracts\Cache\Repository
+     * @var \Illuminate\Cache\RateLimiter
      */
     protected $cacheLimiter;
 
