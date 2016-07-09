@@ -1,9 +1,9 @@
 <?php namespace Orchestra\Foundation\Http\Middleware;
 
+use Illuminate\Foundation\Application;
 use Orchestra\Http\Traits\PassThrough;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Orchestra\Contracts\Foundation\Foundation;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
 class VerifyCsrfToken extends BaseVerifier
@@ -13,7 +13,7 @@ class VerifyCsrfToken extends BaseVerifier
     /**
      * Create a new middleware instance.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param  \Illuminate\Foundation\Application  $app
      * @param  \Illuminate\Contracts\Encryption\Encrypter  $encrypter
      * @param  \Orchestra\Contracts\Foundation\Foundation  $foundation
      */
