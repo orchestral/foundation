@@ -17,7 +17,7 @@ class Reauthenticate
      */
     public function handle($request, Closure $next)
     {
-        if ((new ReauthLimiter($request)->check())) {
+        if ((new ReauthLimiter($request))->check()) {
             return $next($request);
         }
 
