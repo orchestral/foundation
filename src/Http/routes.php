@@ -38,7 +38,7 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', function (Router
     $router->post('forgot/reset', 'Account\PasswordBrokerController@reset');
 
     // Route to asset publishing.
-    $router->get('publisher', 'PublisherController@index');
+    $router->get('publisher', 'PublisherController@show');
     $router->get('publisher/ftp', 'PublisherController@ftp');
     $router->post('publisher/ftp', 'PublisherController@publish');
 
@@ -51,12 +51,15 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', function (Router
     $router->get('settings/migrate', 'SettingsController@migrate');
 
     // Route for credentials.
-    $router->get('login', 'CredentialController@index');
+    $router->get('login', 'CredentialController@show');
     $router->post('login', 'CredentialController@login');
     $router->delete('logout', 'CredentialController@logout');
 
     $router->get('register', 'Account\ProfileCreatorController@create');
     $router->post('register', 'Account\ProfileCreatorController@store');
+
+    $router->get('sudo', 'Account\RequthenticateController@show');
+    $router->post('sudo', 'Account\RequthenticateController@reauth');
 
     // Base routing.
     $router->match(['GET', 'HEAD'], '/', [

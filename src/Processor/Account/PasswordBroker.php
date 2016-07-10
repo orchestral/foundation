@@ -4,7 +4,6 @@ namespace Orchestra\Foundation\Processor\Account;
 
 use Illuminate\Support\Facades\Auth;
 use Orchestra\Model\User as Eloquent;
-use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Processor\Processor;
 use Orchestra\Contracts\Auth\Listener\PasswordReset;
 use Orchestra\Contracts\Auth\Listener\PasswordResetLink;

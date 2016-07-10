@@ -4,7 +4,6 @@ namespace Orchestra\Foundation\Console\Commands;
 
 use RuntimeException;
 use ClassPreloader\Factory;
-use ClassPreloader\Exceptions\SkipFileException;
 use ClassPreloader\Exceptions\VisitorExceptionInterface;
 use Illuminate\Foundation\Console\OptimizeCommand as Command;
 

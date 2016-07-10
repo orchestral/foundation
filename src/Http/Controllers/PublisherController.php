@@ -25,7 +25,7 @@ class PublisherController extends AdminController implements Listener
      *
      * @return mixed
      */
-    public function index(AssetPublisher $processor)
+    public function show(AssetPublisher $processor)
     {
         return $processor->executeAndRedirect($this);
     }

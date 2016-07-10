@@ -56,4 +56,18 @@ class Account extends Validator
 
         $this->events = [];
     }
+
+    /**
+     * On reauthenticate password scenario.
+     *
+     * @return void
+     */
+    protected function onReauthenticate()
+    {
+        $this->rules = [
+            'password' => ['required'],
+        ];
+
+        $this->events = [];
+    }
 }
