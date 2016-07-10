@@ -53,7 +53,7 @@ class ProfileUpdaterController extends Controller implements Listener
     /**
      * Response when validation on update profile failed.
      *
-     * @param  \Illuminate\Support\MessageBag|array  $errors
+     * @param  \Illuminate\Contracts\Support\MessageBag|array  $errors
      *
      * @return mixed
      */

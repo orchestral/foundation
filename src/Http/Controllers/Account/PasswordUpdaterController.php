@@ -53,7 +53,7 @@ class PasswordUpdaterController extends Controller implements Listener
     /**
      * Response when validation on change password failed.
      *
-     * @param  \Illuminate\Support\MessageBag|array  $errors
+     * @param  \Illuminate\Contracts\Support\MessageBag|array  $errors
      *
      * @return mixed
      */

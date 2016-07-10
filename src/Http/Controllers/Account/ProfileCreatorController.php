@@ -68,7 +68,7 @@ class ProfileCreatorController extends AdminController implements Listener
     /**
      * Response when create a user failed validation.
      *
-     * @param  \Illuminate\Support\MessageBag|array  $errors
+     * @param  \Illuminate\Contracts\Support\MessageBag|array  $errors
      *
      * @return mixed
      */

@@ -93,7 +93,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
     /**
      * Response when request password failed on validation.
      *
-     * @param  \Illuminate\Support\MessageBag|array  $errors
+     * @param  \Illuminate\Contracts\Support\MessageBag|array  $errors
      *
      * @return mixed
      */

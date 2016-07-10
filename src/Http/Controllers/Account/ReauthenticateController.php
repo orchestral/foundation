@@ -56,7 +56,7 @@ class ReauthenticateController extends Controller
     /**
      * Response to user reauthenticate trigger failed validation.
      *
-     * @param  \Illuminate\Support\MessageBag|array  $errors
+     * @param  \Illuminate\Contracts\Support\MessageBag|array  $errors
      *
      * @return mixed
      */
