@@ -66,7 +66,6 @@ class ReauthenticateController extends Controller
     }
 
     /**
-     *
      * Response to user reauthenticate trigger has failed authentication.
      *
      * @return mixed
@@ -78,8 +77,7 @@ class ReauthenticateController extends Controller
         return $this->redirectWithMessage(handles('orchestra::sudo'), $message, 'error');
     }
 
-     /**
-     *
+    /**
      * Response to user reauthenticate successfully.
      *
      * @return mixed

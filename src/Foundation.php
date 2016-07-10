@@ -230,9 +230,9 @@ class Foundation extends RouteManager implements FoundationContract
     /**
      * Run booting on installed application.
      *
-     * @return \Orchestra\Contracts\Memory\Provider
-     *
      * @throws \Exception
+     *
+     * @return \Orchestra\Contracts\Memory\Provider
      */
     protected function bootInstalledApplication()
     {
