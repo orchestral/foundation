@@ -1,5 +1,7 @@
 var dir, elixir = require('laravel-elixir');
 
+require('laravel-elixir-vue');
+
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -12,10 +14,6 @@ var dir, elixir = require('laravel-elixir');
  */
 
 dir = require('./paths.js')
-
-elixir.config.js.browserify.transformers.push({
-  name: 'vueify'
-})
 
 elixir.config.sourcemaps = false
 
@@ -30,7 +28,7 @@ elixir(function(mix) {
     paths: [dir.vendor]
   })
 
-  mix.browserify('orchestra.js', dir.asset.js+'/orchestra.js', dir.js)
+  mix.webpack('orchestra.js', dir.asset.js+'/orchestra.js', dir.js)
 
   mix.styles([
     'vendor.css'
