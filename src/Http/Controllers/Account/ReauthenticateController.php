@@ -3,7 +3,7 @@
 namespace Orchestra\Foundation\Http\Controllers\Account;
 
 use Illuminate\Support\Facades\Redirect;
-use Orchestra\Foundation\Auth\Reauthenticate\ReauthLimiter;
+use Mpociot\Reauthenticate\ReauthLimiter;
 use Orchestra\Foundation\Validation\Account as AccountValidator;
 
 class ReauthenticateController extends Controller
