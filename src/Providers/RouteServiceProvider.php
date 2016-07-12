@@ -45,8 +45,8 @@ class RouteServiceProvider extends ServiceProvider
         'orchestra.guest'       => RedirectIfAuthenticated::class,
         'orchestra.installable' => CanBeInstalled::class,
         'orchestra.installed'   => RedirectIfInstalled::class,
-        'orchestra.reauth'      => Reauthenticate::class,
         'orchestra.registrable' => CanRegisterUser::class,
+        'orchestra.sudo'        => Reauthenticate::class,
     ];
 
     /**

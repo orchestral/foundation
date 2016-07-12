@@ -3,29 +3,10 @@
 namespace Orchestra\Foundation\Http\Middleware;
 
 use Closure;
-use Orchestra\Foundation\Auth\Reauthenticate\ReauthLimiter;
+use Mpociot\Reauthenticate\Middleware\Reauthenticate;
 
-class Reauthenticate
+class Reauthenticate extends Middleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param \Illuminate\Http\Request  $request
-     * @param \Closure  $next
-     *
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
-    {
-        if ((new ReauthLimiter($request))->check()) {
-            return $next($request);
-        }
-
-        $request->session()->set('url.intended', $request->url());
-
-        return $this->invalidated($request);
-    }
-
     /**
      * Redirect to response with reauthenticate path.
      *
