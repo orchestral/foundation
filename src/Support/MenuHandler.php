@@ -178,7 +178,7 @@ abstract class MenuHandler
     /**
      * Prepare nested menu.
      *
-     * @return void
+     * @return $this
      */
     public function prepare()
     {
@@ -199,6 +199,8 @@ abstract class MenuHandler
 
         $this->id = $id;
         $this->enabled = $this->passesAuthorization();
+
+        return $this;
     }
 
     /**
