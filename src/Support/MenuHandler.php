@@ -79,8 +79,26 @@ abstract class MenuHandler
         $this->prepare();
 
         if ($this->enabled) {
-            $this->createMenu()->handleNestedMenu();
+            $this->create();
         }
+    }
+
+    /**
+     * Create a new menu.
+     *
+     * @return $this
+     */
+    public function create()
+    {
+        $menu = $this->handler->add($this->id, $this->getAttribute('position'))
+                    ->title($this->getAttribute('title'))
+                    ->link($this->getAttribute('link'))
+                    ->handles(Arr::get($this->menu, 'link'));
+
+        $this->attachIcon($menu);
+        $this->handleNestedMenu();
+
+        return $this;
     }
 
     /**
@@ -144,23 +162,6 @@ abstract class MenuHandler
     }
 
     /**
-     * Create a new menu.
-     *
-     * @return $this
-     */
-    protected function createMenu()
-    {
-        $menu = $this->handler->add($this->id, $this->getAttribute('position'))
-                    ->title($this->getAttribute('title'))
-                    ->link($this->getAttribute('link'))
-                    ->handles(Arr::get($this->menu, 'link'));
-
-        $this->attachIcon($menu);
-
-        return $this;
-    }
-
-    /**
      * Attach icon to menu.
      *
      * @param  \Illuminate\Support\Fluent|null  $menu
@@ -208,7 +209,7 @@ abstract class MenuHandler
     protected function handleNestedMenu()
     {
         foreach ((array) $this->items as $menu) {
-            $menu->handle();
+            $menu->create();
         }
 
         return $this;
