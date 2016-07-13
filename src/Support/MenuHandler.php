@@ -31,6 +31,27 @@ abstract class MenuHandler
     ];
 
     /**
+     * Menu's id.
+     *
+     * @var string
+     */
+    protected $id;
+
+    /**
+     * List of items.
+     *
+     * @var array
+     */
+    protected $items = [];
+
+    /**
+     * Hide the menu.
+     *
+     * @var bool|null
+     */
+    protected $enabled;
+
+    /**
      * Menu instance.
      *
      * @var \Orchestra\Widget\Handlers\Menu
@@ -55,16 +76,21 @@ abstract class MenuHandler
      */
     public function handle()
     {
-        if (! $this->passesAuthorization()) {
-            return ;
+        $this->prepare();
+
+        if ($this->enabled) {
+            $this->createMenu()->handleNestedMenu();
         }
+    }
 
-        $id   = $this->getAttribute('id');
-        $menu = $this->createMenu($id);
-
-        $this->attachNestedMenu($id);
-
-        $this->attachIcon($menu);
+    /**
+     * Determine if the request passes the authorization check.
+     *
+     * @return bool
+     */
+    public function passes()
+    {
+        return $this->enabled;
     }
 
     /**
@@ -96,6 +122,10 @@ abstract class MenuHandler
      */
     public function setAttribute($name, $value)
     {
+        if (in_array($name, ['id'])) {
+            $this->{$name} = $value;
+        }
+
         $this->menu[$name] = $value;
 
         return $this;
@@ -116,20 +146,18 @@ abstract class MenuHandler
     /**
      * Create a new menu.
      *
-     * @param  string|null  $id
-     *
-     * @return \Illuminate\Support\Fluent|null
+     * @return $this
      */
-    protected function createMenu($id = null)
+    protected function createMenu()
     {
-        if (is_null($id)) {
-            $id = $this->getAttribute('id');
-        }
-
-        return $this->handler->add($id, $this->getAttribute('position'))
+        $menu = $this->handler->add($this->id, $this->getAttribute('position'))
                     ->title($this->getAttribute('title'))
                     ->link($this->getAttribute('link'))
                     ->handles(Arr::get($this->menu, 'link'));
+
+        $this->attachIcon($menu);
+
+        return $this;
     }
 
     /**
@@ -141,27 +169,49 @@ abstract class MenuHandler
      */
     protected function attachIcon(Fluent $menu = null)
     {
-        if (! is_null($menu) && ! is_null($icon = $this->getAttribute('icon'))) {
+        if (! (is_null($menu) || is_null($icon = $this->getAttribute('icon')))) {
             $menu->icon($icon);
         }
     }
 
     /**
-     * Attach nested menu.
-     *
-     * @param  string  $id
+     * Prepare nested menu.
      *
      * @return void
      */
-    protected function attachNestedMenu($id)
+    public function prepare()
     {
-        $with     = isset($this->menu['with']) ? $this->menu['with'] : [];
+        $id       = $this->getAttribute('id');
+        $menus    = isset($this->menu['with']) ? $this->menu['with'] : [];
         $parent   = $this->getAttribute('position');
         $position = Str::startsWith($parent, '^:') ? $parent.'.' : '^:';
 
-        foreach ((array) $with as $class) {
-            $this->container->make($class)->setAttribute('position', "{$position}{$id}")->handle();
+        foreach ((array) $menus as $class) {
+            $menu = $this->container->make($class)
+                            ->setAttribute('position', "{$position}{$id}")
+                            ->prepare();
+
+            if ($menu->passes()) {
+                $this->items[] = $menu;
+            }
         }
+
+        $this->id = $id;
+        $this->enabled = $this->passesAuthorization();
+    }
+
+    /**
+     * Attach nested menu.
+     *
+     * @return $this
+     */
+    protected function handleNestedMenu()
+    {
+        foreach ((array) $this->items as $menu) {
+            $menu->handle();
+        }
+
+        return $this;
     }
 
     /**
@@ -171,11 +221,17 @@ abstract class MenuHandler
      */
     protected function passesAuthorization()
     {
+        $enabled = false;
+
         if (method_exists($this, 'authorize')) {
-            return $this->container->call([$this, 'authorize']);
+            $enabled = $this->container->call([$this, 'authorize']);
         }
 
-        return false;
+        if (! is_bool($enabled)) {
+            $enabled = ! empty($this->items);
+        }
+
+        return $enabled;
     }
 
     /**
