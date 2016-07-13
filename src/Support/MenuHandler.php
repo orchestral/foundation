@@ -31,23 +31,23 @@ abstract class MenuHandler
     ];
 
     /**
-     * Menu's id.
+     * Name for the menu.
      *
      * @var string
      */
-    protected $id;
+    protected $name;
 
     /**
-     * List of items.
+     * List of childs menu.
      *
      * @var array
      */
-    protected $items = [];
+    protected $childs = [];
 
     /**
-     * Hide the menu.
+     * Enable the menu.
      *
-     * @var bool|null
+     * @var bool
      */
     protected $enabled;
 
@@ -90,7 +90,7 @@ abstract class MenuHandler
      */
     public function create()
     {
-        $menu = $this->handler->add($this->id, $this->getAttribute('position'))
+        $menu = $this->handler->add($this->name, $this->getAttribute('position'))
                     ->title($this->getAttribute('title'))
                     ->link($this->getAttribute('link'))
                     ->handles(Arr::get($this->menu, 'link'));
@@ -162,20 +162,6 @@ abstract class MenuHandler
     }
 
     /**
-     * Attach icon to menu.
-     *
-     * @param  \Illuminate\Support\Fluent|null  $menu
-     *
-     * @return void
-     */
-    protected function attachIcon(Fluent $menu = null)
-    {
-        if (! (is_null($menu) || is_null($icon = $this->getAttribute('icon')))) {
-            $menu->icon($icon);
-        }
-    }
-
-    /**
      * Prepare nested menu.
      *
      * @return $this
@@ -193,14 +179,38 @@ abstract class MenuHandler
                             ->prepare();
 
             if ($menu->passes()) {
-                $this->items[] = $menu;
+                $this->childs[] = $menu;
             }
         }
 
-        $this->id = $id;
+        $this->name    = $id;
         $this->enabled = $this->passesAuthorization();
 
         return $this;
+    }
+
+    /**
+     * Check if has any nested menu.
+     *
+     * @return bool
+     */
+    public function hasNestedMenu()
+    {
+        return ! empty($this->childs);
+    }
+
+    /**
+     * Attach icon to menu.
+     *
+     * @param  \Illuminate\Support\Fluent|null  $menu
+     *
+     * @return void
+     */
+    protected function attachIcon(Fluent $menu = null)
+    {
+        if (! (is_null($menu) || is_null($icon = $this->getAttribute('icon')))) {
+            $menu->icon($icon);
+        }
     }
 
     /**
@@ -210,7 +220,7 @@ abstract class MenuHandler
      */
     protected function handleNestedMenu()
     {
-        foreach ((array) $this->items as $menu) {
+        foreach ((array) $this->childs as $menu) {
             $menu->create();
         }
 
@@ -230,11 +240,7 @@ abstract class MenuHandler
             $enabled = $this->container->call([$this, 'authorize']);
         }
 
-        if (! is_bool($enabled)) {
-            $enabled = ! empty($this->items);
-        }
-
-        return $enabled;
+        return (bool) $enabled;
     }
 
     /**
