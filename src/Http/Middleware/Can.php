@@ -20,7 +20,7 @@ class Can
     /**
      * The authenticator implementation.
      *
-     * @var \Illuminate\Contracts\Auth\Guard
+     * @var \Orchestra\Contracts\Auth\Guard
      */
     protected $auth;
 

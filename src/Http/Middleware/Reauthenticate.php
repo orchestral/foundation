@@ -2,37 +2,19 @@
 
 namespace Orchestra\Foundation\Http\Middleware;
 
-use Closure;
-use Mpociot\Reauthenticate\Middleware\Reauthenticate as Middleware;
+use Mpociot\Reauthenticate\Middleware\Reauthenticate;
 
 class Reauthenticate extends Middleware
 {
     /**
-     * Handle an incoming request.
-     *
-     * @param \Illuminate\Http\Request  $request
-     * @param \Closure  $next
-     *
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
-    {
-        if ($this->validAuth($request->session())) {
-            return $next($request);
-        }
-
-        $request->session()->set('url.intended', $request->url());
-
-        return $this->redirectToReauthenticate();
-    }
-
-    /**
      * Redirect to response with reauthenticate path.
+     *
+     * @param  \Illuminate\Http\Request  $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function redirectToReauthenticate()
+    protected function invalidated($request)
     {
-        return redirect('orchestra/foundation::sudo');
+        return redirect(handles('orchestra::sudo'));
     }
 }

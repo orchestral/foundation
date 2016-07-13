@@ -19,10 +19,15 @@ abstract class Throttle
         'locked_for' => 60,
     ];
 
+    /**
+     * Login key name.
+     *
+     * @var string
+     */
     protected $loginKey = 'email';
 
     /**
-     * The HTTP Requesr object.
+     * The HTTP Request object.
      *
      * @var \Illuminate\Http\Request
      */

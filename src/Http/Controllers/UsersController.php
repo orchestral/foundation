@@ -170,7 +170,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
     /**
      * Response when storing user failed on validation.
      *
-     * @param  \Illuminate\Support\MessageBag|array  $errors
+     * @param  \Illuminate\Contracts\Support\MessageBag|array  $errors
      *
      * @return mixed
      */
@@ -208,7 +208,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
     /**
      * Response when update user failed on validation.
      *
-     * @param  \Illuminate\Support\MessageBag|array  $errors
+     * @param  \Illuminate\Contracts\Support\MessageBag|array  $errors
      * @param  string|int  $id
      *
      * @return mixed

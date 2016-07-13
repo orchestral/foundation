@@ -33,8 +33,6 @@ class ResetPassword extends Notification
      *
      * @param  string  $token
      * @param  string|null  $provider
-     *
-     * @return void
      */
     public function __construct($token, $provider = 'users')
     {

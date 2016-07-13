@@ -120,10 +120,9 @@ class PasswordBrokerControllerTest extends TestCase
     {
         $this->getProcessorMock();
 
-        $view = m::mock('\Illuminate\Contracts\View\View');
-
-        View::shouldReceive('make')->once()->with('orchestra/foundation::forgot.reset', [], [])->andReturn($view);
-        $view->shouldReceive('with')->once()->with(['email' => null, 'token' => 'auniquetoken'])->andReturn('foo');
+        View::shouldReceive('make')->once()
+            ->with('orchestra/foundation::forgot.reset', ['email' => null, 'token' => 'auniquetoken'], [])
+            ->andReturn('foo');
 
         $this->call('GET', 'admin/forgot/reset/auniquetoken');
         $this->assertResponseOk();

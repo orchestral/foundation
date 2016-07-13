@@ -71,7 +71,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
 
         set_meta('title', trans('orchestra/foundation::title.reset-password'));
 
-        return view('orchestra/foundation::forgot.reset')->with(compact('email', 'token'));
+        return view('orchestra/foundation::forgot.reset', compact('email', 'token'));
     }
 
     /**
@@ -93,7 +93,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
     /**
      * Response when request password failed on validation.
      *
-     * @param  \Illuminate\Support\MessageBag|array  $errors
+     * @param  \Illuminate\Contracts\Support\MessageBag|array  $errors
      *
      * @return mixed
      */

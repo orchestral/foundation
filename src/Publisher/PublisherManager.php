@@ -15,9 +15,9 @@ class PublisherManager extends Manager
      *
      * @param  string  $driver
      *
-     * @return mixed
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return mixed
      */
     protected function createDriver($driver)
     {

@@ -10,7 +10,7 @@ class Basic extends Throttle implements Command
     /**
      * The cache limiter implementation.
      *
-     * @var \Illuminate\Contracts\Cache\Repository
+     * @var \Illuminate\Cache\RateLimiter
      */
     protected $cacheLimiter;
 
@@ -53,8 +53,6 @@ class Basic extends Throttle implements Command
 
     /**
      * Get total seconds before doing another login attempts for the user.
-     *
-     * @param  array  $input
      *
      * @return int
      */

@@ -78,7 +78,7 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
     /**
      * Response when update setting failed on validation.
      *
-     * @param  \Illuminate\Support\MessageBag|array  $errors
+     * @param  \Illuminate\Contracts\Support\MessageBag|array  $errors
      *
      * @return mixed
      */

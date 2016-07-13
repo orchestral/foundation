@@ -23,9 +23,9 @@ class CanRegisterUser extends Can
      *
      * @param  \Illuminate\Http\Request  $request
      *
-     * @return mixed
-     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return mixed
      */
     protected function responseOnUnauthorized($request)
     {

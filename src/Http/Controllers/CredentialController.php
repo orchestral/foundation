@@ -5,7 +5,6 @@ namespace Orchestra\Foundation\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
-use Mpociot\Reauthenticate\Reauthenticates;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Foundation\Traits\RedirectUsers;
 use Orchestra\Foundation\Processor\AuthenticateUser;
@@ -17,7 +16,7 @@ use Orchestra\Contracts\Auth\Listener\DeauthenticateUser as DeauthenticateListen
 
 class CredentialController extends AdminController implements AuthenticateListener, DeauthenticateListener, ThrottlesListener
 {
-    use Reauthenticates, RedirectUsers;
+    use RedirectUsers;
 
     /**
      * Setup controller middleware.
@@ -26,7 +25,7 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     protected function setupMiddleware()
     {
-        $this->middleware('orchestra.guest', ['only' => ['index', 'login']]);
+        $this->middleware('orchestra.guest', ['only' => ['index', 'show', 'login']]);
         $this->middleware('orchestra.csrf', ['only' => 'logout']);
     }
 
@@ -37,7 +36,7 @@ class CredentialController extends AdminController implements AuthenticateListen
      *
      * @return mixed
      */
-    public function index()
+    public function show()
     {
         set_meta('title', trans('orchestra/foundation::title.login'));
 
@@ -73,9 +72,9 @@ class CredentialController extends AdminController implements AuthenticateListen
     }
 
     /**
-     * Response to user log-in trigger failed validation .
+     * Response to user log-in trigger failed validation.
      *
-     * @param  \Illuminate\Support\MessageBag|array  $errors
+     * @param  \Illuminate\Contracts\Support\MessageBag|array  $errors
      *
      * @return mixed
      */

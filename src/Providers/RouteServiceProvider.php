@@ -8,6 +8,7 @@ use Orchestra\Foundation\Http\Middleware\Can;
 use Orchestra\Http\Middleware\RequireCsrfToken;
 use Orchestra\Foundation\Http\Middleware\Authenticate;
 use Orchestra\Foundation\Http\Middleware\CanBeInstalled;
+use Orchestra\Foundation\Http\Middleware\Reauthenticate;
 use Orchestra\Foundation\Http\Middleware\CanRegisterUser;
 use Orchestra\Support\Providers\Traits\MiddlewareProvider;
 use Orchestra\Foundation\Http\Middleware\RedirectIfInstalled;
@@ -45,17 +46,17 @@ class RouteServiceProvider extends ServiceProvider
         'orchestra.installable' => CanBeInstalled::class,
         'orchestra.installed'   => RedirectIfInstalled::class,
         'orchestra.registrable' => CanRegisterUser::class,
+        'orchestra.sudo'        => Reauthenticate::class,
     ];
 
     /**
      * Bootstrap the application events.
      *
-     * @param  \Illuminate\Routing\Router  $router
-     *
      * @return void
      */
-    public function boot(Router $router)
+    public function boot()
     {
+        $router = $this->app->make(Router::class);
         $kernel = $this->app->make(Kernel::class);
 
         $this->registerRouteMiddleware($router, $kernel);

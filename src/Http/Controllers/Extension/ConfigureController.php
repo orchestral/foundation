@@ -78,7 +78,7 @@ class ConfigureController extends Controller implements Listener
     /**
      * Response when update extension configuration failed on validation.
      *
-     * @param  \Illuminate\Support\MessageBag|array  $errors
+     * @param  \Illuminate\Contracts\Support\MessageBag|array  $errors
      * @param  string  $id
      *
      * @return mixed

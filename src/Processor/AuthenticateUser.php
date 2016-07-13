@@ -85,7 +85,7 @@ class AuthenticateUser extends Authenticate implements Command
     protected function handleUserWasAuthenticated(Listener $listener, array $input, ThrottlesCommand $throttles = null)
     {
         if ($throttles) {
-            $throttles->clearLoginAttempts($input);
+            $throttles->clearLoginAttempts();
         }
 
         return $listener->userHasLoggedIn($this->verifyWhenFirstTimeLogin($this->getUser()));
@@ -102,10 +102,10 @@ class AuthenticateUser extends Authenticate implements Command
      */
     protected function handleUserHasTooManyAttempts(Listener $listener, array $input, ThrottlesCommand $throttles = null)
     {
-        $throttles->incrementLoginAttempts($input);
+        $throttles->incrementLoginAttempts();
         $throttles->fireLockoutEvent();
 
-        return $listener->sendLockoutResponse($input, $throttles->getSecondsBeforeNextAttempts($input));
+        return $listener->sendLockoutResponse($input, $throttles->getSecondsBeforeNextAttempts());
     }
 
     /**
@@ -120,7 +120,7 @@ class AuthenticateUser extends Authenticate implements Command
     protected function handleUserFailedAuthentication(Listener $listener, array $input, ThrottlesCommand $throttles = null)
     {
         if ($throttles) {
-            $throttles->incrementLoginAttempts($input);
+            $throttles->incrementLoginAttempts();
         }
 
         return $listener->userLoginHasFailedAuthentication($input);

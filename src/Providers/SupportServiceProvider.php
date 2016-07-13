@@ -66,7 +66,7 @@ class SupportServiceProvider extends ServiceProvider
      */
     protected function registerUserEloquent()
     {
-        $this->app->bind('orchestra.user', function (Application $app) {
+        $this->app->bind('orchestra.user', function () {
             $model = $this->getConfig('models.user', User::class);
 
             return new $model();

@@ -44,7 +44,7 @@
         "orchestra/translation": "~3.4.0",
         "orchestra/view": "~3.4.0",
         "orchestra/widget": "~3.4.0",
-        "mpociot/reauthenticate": "~1.0",
+        "mpociot/reauthenticate": "~1.1",
         "predis/predis": "~1.0"
     },
     "require-dev": {
