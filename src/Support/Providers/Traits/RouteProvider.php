@@ -11,15 +11,16 @@ trait RouteProvider
      *
      * @param  string  $path
      * @param  string|null  $namespace
+     * @param  array  $attributes
      *
      * @return void
      */
-    protected function loadBackendRoutesFrom($path, $namespace = null)
+    protected function loadBackendRoutesFrom($path, $namespace = '', array $attributes = [])
     {
         $foundation = $this->app->make('orchestra.app');
-        $namespace  = $namespace ?: $this->namespace;
+        $attributes = $this->resolveRouteGroupAttributes($namespace, $attributes);
 
-        $foundation->namespaced($namespace, $this->getRouteLoader($path));
+        $foundation->namespaced(null, $attributes, $this->getRouteLoader($path));
     }
 
     /**
@@ -30,15 +31,10 @@ trait RouteProvider
      *
      * @return void
      */
-    protected function loadFrontendRoutesFrom($path, $namespace = null)
+    protected function loadFrontendRoutesFrom($path, $namespace = '', array $attributes = [])
     {
         $foundation = $this->app->make('orchestra.app');
-        $namespace  = $namespace ?: $this->namespace;
-        $attributes = [];
-
-        if (! is_null($namespace)) {
-            $attributes['namespace'] = $namespace;
-        }
+        $attributes = $this->resolveRouteGroupAttributes($namespace, $attributes);
 
         $foundation->group($this->routeGroup, $this->routePrefix, $attributes, $this->getRouteLoader($path));
     }
@@ -66,5 +62,22 @@ trait RouteProvider
     protected function afterExtensionLoaded($callback)
     {
         $this->app->make('orchestra.extension')->after($callback);
+    }
+
+    /**
+     * Resolve route group attributes.
+     *
+     * @param  string|null  $namespace
+     * @param  array  $attributes
+     *
+     * @return array
+     */
+    protected function resolveRouteGroupAttributes($namespace = null, array $attributes = [])
+    {
+        if (! is_null($namespace)) {
+            $attributes['namespace'] = empty($namespace) ? $this->namespace : "{$this->namespace}\{$namespace}";
+        }
+
+        return $attributes;
     }
 }
