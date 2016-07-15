@@ -67,13 +67,18 @@ trait RouteProvider
     /**
      * Resolve route group attributes.
      *
-     * @param  string|null  $namespace
+     * @param  array|string|null  $namespace
      * @param  array  $attributes
      *
      * @return array
      */
     protected function resolveRouteGroupAttributes($namespace = null, array $attributes = [])
     {
+        if (is_array($namespace)) {
+            $attributes = $namespace;
+            $namespace = '';
+        }
+
         if (! is_null($namespace)) {
             $attributes['namespace'] = empty($namespace) ? $this->namespace : "{$this->namespace}\{$namespace}";
         }
