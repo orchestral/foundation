@@ -132,6 +132,7 @@ class ServiceProviderTest extends TestCase
             'command.event.make',
             'command.job.make',
             'command.listener.make',
+            'command.mail.make',
             'command.middleware.make',
             'command.model.make',
             'command.notification.make',
