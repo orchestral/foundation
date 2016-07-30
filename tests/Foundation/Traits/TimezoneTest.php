@@ -4,11 +4,11 @@ namespace Orchestra\Foundation\TestCase\Traits;
 
 use Mockery as m;
 use Carbon\Carbon;
-use Orchestra\Foundation\Traits\TimezoneTrait;
+use Orchestra\Foundation\Traits\Timezone;
 
-class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
+class TimezoneTest extends \PHPUnit_Framework_TestCase
 {
-    use TimezoneTrait;
+    use Timezone;
 
     /**
      * Setup the test environment.
@@ -27,7 +27,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Traits\TimezoneTrait::toLocalTime() method given date as
+     * Test Orchestra\Foundation\Traits\Timezone::toLocalTime() method given date as
      * string.
      *
      * @test
@@ -48,7 +48,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Traits\TimezoneTrait::toLocalTime() method return proper
+     * Test Orchestra\Foundation\Traits\Timezone::toLocalTime() method return proper
      * datetime when is guest.
      *
      * @test
@@ -69,7 +69,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Traits\TimezoneTrait::toLocalTime() method return proper
+     * Test Orchestra\Foundation\Traits\Timezone::toLocalTime() method return proper
      * datetime when is user.
      *
      * @test
@@ -93,7 +93,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Traits\TimezoneTrait::toGlobalTime() method return proper
+     * Test Orchestra\Foundation\Traits\Timezone::toGlobalTime() method return proper
      * datetime when is guest.
      *
      * @test
@@ -114,7 +114,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Traits\TimezoneTrait::fromLocalTime() method return proper
+     * Test Orchestra\Foundation\Traits\Timezone::fromLocalTime() method return proper
      * datetime when is user.
      *
      * @test
@@ -138,7 +138,7 @@ class TimezoneTraitTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Traits\TimezoneTrait::convertToDateTime() method when
+     * Test Orchestra\Foundation\Traits\Timezone::convertToDateTime() method when
      * timezone is null.
      *
      * @test

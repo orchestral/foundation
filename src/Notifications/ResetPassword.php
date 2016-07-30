@@ -75,16 +75,6 @@ class ResetPassword extends Notification
     }
 
     /**
-     * Get the subject of the notification.
-     *
-     * @return string
-     */
-    public function subject()
-    {
-        return trans('orchestra/foundation::email.forgot.request');
-    }
-
-    /**
      * Get the notification message.
      *
      * @param  \Orchestra\Foundation\Auth\User  $notifiable

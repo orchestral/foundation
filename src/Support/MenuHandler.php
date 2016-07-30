@@ -31,6 +31,27 @@ abstract class MenuHandler
     ];
 
     /**
+     * Name for the menu.
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * List of childs menu.
+     *
+     * @var array
+     */
+    protected $childs = [];
+
+    /**
+     * Enable the menu.
+     *
+     * @var bool
+     */
+    protected $enabled;
+
+    /**
      * Menu instance.
      *
      * @var \Orchestra\Widget\Handlers\Menu
@@ -55,16 +76,39 @@ abstract class MenuHandler
      */
     public function handle()
     {
-        if (! $this->passesAuthorization()) {
-            return ;
+        $this->prepare();
+
+        if ($this->enabled) {
+            $this->create();
         }
+    }
 
-        $id   = $this->getAttribute('id');
-        $menu = $this->createMenu($id);
-
-        $this->attachNestedMenu($id);
+    /**
+     * Create a new menu.
+     *
+     * @return $this
+     */
+    public function create()
+    {
+        $menu = $this->handler->add($this->name, $this->getAttribute('position'))
+                    ->title($this->getAttribute('title'))
+                    ->link($this->getAttribute('link'))
+                    ->handles(Arr::get($this->menu, 'link'));
 
         $this->attachIcon($menu);
+        $this->handleNestedMenu();
+
+        return $this;
+    }
+
+    /**
+     * Determine if the request passes the authorization check.
+     *
+     * @return bool
+     */
+    public function passes()
+    {
+        return $this->enabled;
     }
 
     /**
@@ -96,6 +140,10 @@ abstract class MenuHandler
      */
     public function setAttribute($name, $value)
     {
+        if (in_array($name, ['id'])) {
+            $this->{$name} = $value;
+        }
+
         $this->menu[$name] = $value;
 
         return $this;
@@ -114,22 +162,41 @@ abstract class MenuHandler
     }
 
     /**
-     * Create a new menu.
+     * Prepare nested menu.
      *
-     * @param  string|null  $id
-     *
-     * @return \Illuminate\Support\Fluent|null
+     * @return $this
      */
-    protected function createMenu($id = null)
+    public function prepare()
     {
-        if (is_null($id)) {
-            $id = $this->getAttribute('id');
+        $id       = $this->getAttribute('id');
+        $menus    = isset($this->menu['with']) ? $this->menu['with'] : [];
+        $parent   = $this->getAttribute('position');
+        $position = Str::startsWith($parent, '^:') ? $parent.'.' : '^:';
+
+        foreach ((array) $menus as $class) {
+            $menu = $this->container->make($class)
+                            ->setAttribute('position', "{$position}{$id}")
+                            ->prepare();
+
+            if ($menu->passes()) {
+                $this->childs[] = $menu;
+            }
         }
 
-        return $this->handler->add($id, $this->getAttribute('position'))
-                    ->title($this->getAttribute('title'))
-                    ->link($this->getAttribute('link'))
-                    ->handles(Arr::get($this->menu, 'link'));
+        $this->name    = $id;
+        $this->enabled = $this->passesAuthorization();
+
+        return $this;
+    }
+
+    /**
+     * Check if has any nested menu.
+     *
+     * @return bool
+     */
+    public function hasNestedMenu()
+    {
+        return ! empty($this->childs);
     }
 
     /**
@@ -141,7 +208,7 @@ abstract class MenuHandler
      */
     protected function attachIcon(Fluent $menu = null)
     {
-        if (! is_null($menu) && ! is_null($icon = $this->getAttribute('icon'))) {
+        if (! (is_null($menu) || is_null($icon = $this->getAttribute('icon')))) {
             $menu->icon($icon);
         }
     }
@@ -149,19 +216,15 @@ abstract class MenuHandler
     /**
      * Attach nested menu.
      *
-     * @param  string  $id
-     *
-     * @return void
+     * @return $this
      */
-    protected function attachNestedMenu($id)
+    protected function handleNestedMenu()
     {
-        $with     = isset($this->menu['with']) ? $this->menu['with'] : [];
-        $parent   = $this->getAttribute('position');
-        $position = Str::startsWith($parent, '^:') ? $parent.'.' : '^:';
-
-        foreach ((array) $with as $class) {
-            $this->container->make($class)->setAttribute('position', "{$position}{$id}")->handle();
+        foreach ((array) $this->childs as $menu) {
+            $menu->create();
         }
+
+        return $this;
     }
 
     /**
@@ -171,11 +234,13 @@ abstract class MenuHandler
      */
     protected function passesAuthorization()
     {
+        $enabled = false;
+
         if (method_exists($this, 'authorize')) {
-            return $this->container->call([$this, 'authorize']);
+            $enabled = $this->container->call([$this, 'authorize']);
         }
 
-        return false;
+        return (bool) $enabled;
     }
 
     /**
