@@ -43,52 +43,30 @@ class ResetPassword extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  \Orchestra\Foundation\Auth\User  $notifiable
-     *
      * @return array|string
      */
-    public function via(User $notifiable)
+    public function via()
     {
         return ['mail'];
-    }
-
-    /**
-     * Get the notification's options.
-     *
-     * @return array
-     */
-    public function options()
-    {
-        return [
-            'view' => config("auth.passwords.{$this->provider}.email"),
-        ];
-    }
-
-    /**
-     * Get the title of the notification.
-     *
-     * @return string
-     */
-    public function title()
-    {
-        return trans('orchestra/foundation::email.forgot.request');
     }
 
     /**
      * Get the notification message.
      *
      * @param  \Orchestra\Foundation\Auth\User  $notifiable
-     *
-     * @return \Illuminate\Notifications\MessageBuilder
+     * @return void
      */
-    public function message(User $notifiable)
+    public function message($notifiable)
     {
         $email   = urlencode($notifiable->getEmailForPasswordReset());
         $expired = config("auth.passwords.{$this->provider}.expire", 60);
+        $view    = config("auth.passwords.{$this->provider}.email");
 
-        return $this->line('You are receiving this email because we received a password reset request for your account. Click the button below to reset your password:')
-                    ->action('Reset Password', handles("orchestra::forgot/reset/{$this->token}?email={$email}"))
-                    ->line("This link will expire in {$expired} minutes.")
-                    ->line('If you did not request a password reset, no further action is required.');
+        $this->title(trans('orchestra/foundation::email.forgot.request'))
+            ->options(compact('view'))
+            ->line('You are receiving this email because we received a password reset request for your account. Click the button below to reset your password:')
+            ->action('Reset Password', handles("orchestra::forgot/reset/{$this->token}?email={$email}"))
+            ->line("This link will expire in {$expired} minutes.")
+            ->line('If you did not request a password reset, no further action is required.');
     }
 }
