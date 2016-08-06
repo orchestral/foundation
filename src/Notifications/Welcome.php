@@ -37,25 +37,16 @@ class Welcome extends Notification
     }
 
     /**
-     * Get the title of the notification.
-     *
-     * @return string
-     */
-    public function title()
-    {
-        return trans('orchestra/foundation::email.credential.register');
-    }
-
-    /**
      * Get the notification message.
      *
-     * @param  \Orchestra\Foundation\Auth\User  $notifiable
+     * @param  mixed  $notifiable
      *
-     * @return \Illuminate\Notifications\MessageBuilder
+     * @return \Illuminate\Notifications\Message
      */
-    public function message(User $notifiable)
+    public function message($notifiable)
     {
-        $message = $this->line('Thank you for registering with us, in order to login please use the following:')
+        $message = $this->title(trans('orchestra/foundation::email.credential.register'))
+                    ->line('Thank you for registering with us, in order to login please use the following:')
                     ->line("E-mail Address: {$notifiable->email}");
 
         if (! is_null($this->password)) {

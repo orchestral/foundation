@@ -22,13 +22,6 @@ class ResetPassword extends Notification
     public $provider;
 
     /**
-     * The "level" of the notification (info, success, error).
-     *
-     * @var string
-     */
-    public $level = 'warning';
-
-    /**
      * Create a notification instance.
      *
      * @param  string  $token
@@ -53,8 +46,9 @@ class ResetPassword extends Notification
     /**
      * Get the notification message.
      *
-     * @param  \Orchestra\Foundation\Auth\User  $notifiable
-     * @return void
+     * @param  mixed  $notifiable
+     *
+     * @return \Illuminate\Notifications\Message
      */
     public function message($notifiable)
     {
@@ -63,6 +57,7 @@ class ResetPassword extends Notification
         $view    = config("auth.passwords.{$this->provider}.email");
 
         $this->title(trans('orchestra/foundation::email.forgot.request'))
+            ->level('warning')
             ->options(compact('view'))
             ->line('You are receiving this email because we received a password reset request for your account. Click the button below to reset your password:')
             ->action('Reset Password', handles("orchestra::forgot/reset/{$this->token}?email={$email}"))
