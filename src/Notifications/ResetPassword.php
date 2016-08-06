@@ -36,9 +36,11 @@ class ResetPassword extends Notification
     /**
      * Get the notification's channels.
      *
+     * @param  mixed  $notifiable
+     *
      * @return array|string
      */
-    public function via()
+    public function via($notifiable)
     {
         return ['mail'];
     }
@@ -56,12 +58,12 @@ class ResetPassword extends Notification
         $expired = config("auth.passwords.{$this->provider}.expire", 60);
         $view    = config("auth.passwords.{$this->provider}.email");
 
-        $this->title(trans('orchestra/foundation::email.forgot.request'))
-            ->level('warning')
-            ->options(compact('view'))
-            ->line('You are receiving this email because we received a password reset request for your account. Click the button below to reset your password:')
-            ->action('Reset Password', handles("orchestra::forgot/reset/{$this->token}?email={$email}"))
-            ->line("This link will expire in {$expired} minutes.")
-            ->line('If you did not request a password reset, no further action is required.');
+        return $this->title(trans('orchestra/foundation::email.forgot.request'))
+                    ->level('warning')
+                    ->options(compact('view'))
+                    ->line('You are receiving this email because we received a password reset request for your account. Click the button below to reset your password:')
+                    ->action('Reset Password', handles("orchestra::forgot/reset/{$this->token}?email={$email}"))
+                    ->line("This link will expire in {$expired} minutes.")
+                    ->line('If you did not request a password reset, no further action is required.');
     }
 }

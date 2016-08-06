@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation\Notifications;
 
-use Orchestra\Foundation\Auth\User;
 use Orchestra\Notifications\Notification;
 
 class Welcome extends Notification
@@ -27,11 +26,11 @@ class Welcome extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  \Orchestra\Foundation\Auth\User  $notifiable
+     * @param  mixed  $notifiable
      *
      * @return array|string
      */
-    public function via(User $notifiable)
+    public function via($notifiable)
     {
         return ['mail'];
     }
