@@ -4,6 +4,7 @@ namespace Orchestra\Foundation\Notifications;
 
 use Orchestra\Foundation\Auth\User;
 use Orchestra\Notifications\Notification;
+use Orchestra\Notifications\Messages\MailMessage;
 
 class ResetPassword extends Notification
 {
@@ -46,24 +47,31 @@ class ResetPassword extends Notification
     }
 
     /**
-     * Get the notification message.
+     * Get the notification message for mail.
      *
      * @param  mixed  $notifiable
      *
-     * @return \Illuminate\Notifications\Message
+     * @return \Orchestra\Notifications\Messages\MailMessage
      */
-    public function message($notifiable)
+    public function toMail($notifiable)
     {
         $email   = urlencode($notifiable->getEmailForPasswordReset());
         $expired = config("auth.passwords.{$this->provider}.expire", 60);
-        $view    = config("auth.passwords.{$this->provider}.email");
+        $title   = trans('orchestra/foundation::email.forgot.title');
 
-        return $this->title(trans('orchestra/foundation::email.forgot.request'))
+        $message = new MailMessage();
+
+        $message->title($title)
                     ->level('warning')
-                    ->options(compact('view'))
-                    ->line('You are receiving this email because we received a password reset request for your account. Click the button below to reset your password:')
-                    ->action('Reset Password', handles("orchestra::forgot/reset/{$this->token}?email={$email}"))
-                    ->line("This link will expire in {$expired} minutes.")
-                    ->line('If you did not request a password reset, no further action is required.');
+                    ->line(trans('orchestra/foundation::email.forgot.message.intro'))
+                    ->action($title, handles("orchestra::forgot/reset/{$this->token}?email={$email}"))
+                    ->line(trans('orchestra/foundation::email.forgot.message.expired_in', compact('expired')))
+                    ->line(trans('orchestra/foundation::email.forgot.message.outro'));
+
+        if (! is_null($view = config("auth.passwords.{$this->provider}.email"))) {
+            $message->view($view);
+        }
+
+        return $message;
     }
 }

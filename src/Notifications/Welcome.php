@@ -3,6 +3,7 @@
 namespace Orchestra\Foundation\Notifications;
 
 use Orchestra\Notifications\Notification;
+use Orchestra\Notifications\Messages\MailMessage;
 
 class Welcome extends Notification
 {
@@ -36,20 +37,25 @@ class Welcome extends Notification
     }
 
     /**
-     * Get the notification message.
+     * Get the notification message for mail.
      *
      * @param  mixed  $notifiable
      *
-     * @return \Illuminate\Notifications\Message
+     * @return \Orchestra\Notifications\Messages\MailMessage
      */
-    public function message($notifiable)
+    public function toMail($notifiable)
     {
-        $message = $this->title(trans('orchestra/foundation::email.credential.register'))
-                    ->line('Thank you for registering with us, in order to login please use the following:')
-                    ->line("E-mail Address: {$notifiable->email}");
+        $email    = $notifiable->email;
+        $password = $this->password;
+
+        $message = new MailMessage();
+
+        $message->title(trans('orchestra/foundation::email.register.title'))
+                ->line(trans('orchestra/foundation::email.register.message.intro'))
+                ->line(trans('orchestra/foundation::email.register.message.email', compact('email')));
 
         if (! is_null($this->password)) {
-            $message->line("Password: {$this->password}");
+            $message->>line(trans('orchestra/foundation::email.register.message.password', compact('password')));
         }
 
         return $message;
