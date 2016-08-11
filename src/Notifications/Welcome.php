@@ -2,7 +2,7 @@
 
 namespace Orchestra\Foundation\Notifications;
 
-use Orchestra\Notifications\Notification;
+use Illuminate\Notifications\Notification;
 use Orchestra\Notifications\Messages\MailMessage;
 
 class Welcome extends Notification
@@ -29,7 +29,7 @@ class Welcome extends Notification
      *
      * @param  mixed  $notifiable
      *
-     * @return array|string
+     * @return array
      */
     public function via($notifiable)
     {
