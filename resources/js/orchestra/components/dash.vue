@@ -10,7 +10,8 @@
 
 <script>
   import Vue from 'vue'
-  import CountTo from '../plugins/count-to'
+
+  const CountTo = require('../plugins/count-to.js').default
 
   const Dash = Vue.extend({
     /**

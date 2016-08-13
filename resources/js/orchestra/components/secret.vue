@@ -11,8 +11,8 @@
 
 <script>
   import Vue from 'vue'
-  import ElementSelector from '../plugins/element-selector'
-  import $ from '../../vendor/jquery'
+
+  const ElementSelector = require('../plugins/element-selector.js').default
 
   const Secret = Vue.extend({
     /**
@@ -83,7 +83,7 @@
       },
 
       getElement() {
-        return $(this.element).parent()
+        return jQuery(this.element).parent()
       }
     }
   })

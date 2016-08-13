@@ -6,11 +6,10 @@
 
 <script>
   import Vue from 'vue'
-  import Platform from '../platform'
-  import ElementSelector from '../plugins/element-selector'
-  import $ from '../../vendor/jquery'
 
   let container
+  const Platform = require('../platform').default
+  const ElementSelector = require('../plugins/element-selector.js').default
 
   const OffCanvas = Vue.extend({
     /**
@@ -63,7 +62,7 @@
        * @return void
        */
       boot() {
-        $('.sidebar__close').click(() => {
+        jQuery('.sidebar__close').click(() => {
           this.toggle()
           return false
         })

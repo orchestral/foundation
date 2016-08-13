@@ -27,8 +27,6 @@
 
 <script>
   import Vue from 'vue'
-  import $ from '../../vendor/jquery'
-  import _ from '../../vendor/underscore'
 
   const SideNav = Vue.extend({
     /**
@@ -56,11 +54,7 @@
     },
 
     ready() {
-      let vm = this
-
-      $(function() {
-        vm.boot()
-      })
+      jQuery(() => this.boot())
     },
 
     methods: {
@@ -93,10 +87,10 @@
       },
 
       boot() {
-        const sidebar = $('.sidebar')
+        const sidebar = jQuery('.sidebar')
 
-        $('.sidebar-nav__dropdown > a').click((e) => {
-          let li = $(e.toElement).parent('li')
+        jQuery('.sidebar-nav__dropdown > a').click((e) => {
+          let li = jQuery(e.toElement).parent('li')
 
           li.toggleClass('open')
           li.find('.sidebar-nav__submenu').slideToggle(300, () => {
