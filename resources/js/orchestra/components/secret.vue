@@ -12,7 +12,8 @@
 <script>
   import Vue from 'vue'
 
-  const ElementSelector = require('../plugins/element-selector.js').default
+  const jQuery = require('../../vendor/jquery').default
+  const ElementSelector = require('../plugins/element-selector').default
 
   const Secret = Vue.extend({
     /**

@@ -28,6 +28,9 @@
 <script>
   import Vue from 'vue'
 
+  const _ = require('../../vendor/underscore').default
+  const jQuery = require('../../vendor/jquery').default
+
   const SideNav = Vue.extend({
     /**
      * Component name.

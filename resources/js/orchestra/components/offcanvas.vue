@@ -8,8 +8,10 @@
   import Vue from 'vue'
 
   let container
+
+  const jQuery = require('../../vendor/jquery').default
   const Platform = require('../platform').default
-  const ElementSelector = require('../plugins/element-selector.js').default
+  const ElementSelector = require('../plugins/element-selector').default
 
   const OffCanvas = Vue.extend({
     /**
