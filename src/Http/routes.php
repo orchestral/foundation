@@ -58,8 +58,8 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', function (Router
     $router->get('register', 'Account\ProfileCreatorController@create');
     $router->post('register', 'Account\ProfileCreatorController@store');
 
-    $router->get('sudo', 'Account\RequthenticateController@show');
-    $router->post('sudo', 'Account\RequthenticateController@reauth');
+    $router->get('sudo', 'Account\ReauthenticateController@show');
+    $router->post('sudo', 'Account\ReauthenticateController@reauth');
 
     // Base routing.
     $router->match(['GET', 'HEAD'], '/', [
