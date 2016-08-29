@@ -25,7 +25,10 @@ class AdminControllerTest extends \PHPUnit_Framework_TestCase
         $stub = new StubAdminController();
 
         $middleware = [
-            'orchestra.installable' => [],
+            [
+                'middleware' => 'orchestra.installable',
+                'options' => [],
+            ],
         ];
 
         $this->assertEquals($middleware, $stub->getMiddleware());
