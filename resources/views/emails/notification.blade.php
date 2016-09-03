@@ -1,5 +1,7 @@
 @extends('orchestra/foundation::emails.layouts.alert')
 
+@php($actionColor = $level)
+
 @section('title')
 @if($level == 'error')
   {{ isset($title) ? $title : 'Whoops!' }}
