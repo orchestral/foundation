@@ -15,7 +15,7 @@
 @section('content')
 <table width="100%" cellpadding="0" cellspacing="0">
   {{-- Logo --}}
-  @if(isset($logoUrl) && ! is_null($logoUrl))
+  @unless(is_null($logoUrl = config('app.logo')))
   <tr>
     <td class="email-masthead">
       <a class="email-masthead_name" href="{{ handles('app::/') }}" target="_blank">
@@ -57,7 +57,7 @@
   {{-- Salutation --}}
   <tr>
     <td class="content-block">
-      &mdash; {{ $application }}
+      &mdash; {{ memorize('site.name') }}
     </td>
   </tr>
 </table>
