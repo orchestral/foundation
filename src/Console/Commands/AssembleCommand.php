@@ -75,6 +75,8 @@ class AssembleCommand extends Command
     protected function refreshApplication()
     {
         if (! $this->foundation->installed()) {
+            $this->error('Abort as application is not installed!');
+
             return;
         }
 
@@ -103,6 +105,8 @@ class AssembleCommand extends Command
      */
     protected function setupApplication()
     {
+        $this->info('Publishing assets for Orchestra Platform');
+
         $this->call('publish:assets', ['package' => 'orchestra/foundation']);
     }
 
@@ -113,6 +117,8 @@ class AssembleCommand extends Command
      */
     protected function optimizeApplication()
     {
+        $this->info('Optimizing application for Orchestra Platform');
+
         $this->call('config:clear');
         $this->call('route:clear');
         $this->call('clear-compiled');
