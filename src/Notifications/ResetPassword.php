@@ -57,6 +57,7 @@ class ResetPassword extends Notification
     {
         $email   = urlencode($notifiable->getEmailForPasswordReset());
         $expired = config("auth.passwords.{$this->provider}.expire", 60);
+        $url     = config('orchestra/foundation::routes.reset', 'orchestra::forgot/reset');
         $title   = trans('orchestra/foundation::email.forgot.title');
 
         $message = new MailMessage();
@@ -64,7 +65,7 @@ class ResetPassword extends Notification
         $message->title($title)
                     ->level('warning')
                     ->line(trans('orchestra/foundation::email.forgot.message.intro'))
-                    ->action($title, handles("orchestra::forgot/reset/{$this->token}?email={$email}"))
+                    ->action($title, handles("{$url}/{$this->token}?email={$email}"))
                     ->line(trans('orchestra/foundation::email.forgot.message.expired_in', compact('expired')))
                     ->line(trans('orchestra/foundation::email.forgot.message.outro'));
 
