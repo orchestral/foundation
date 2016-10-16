@@ -8,16 +8,9 @@
   import Vue from 'vue'
 
   const Progress = Vue.extend({
-    /**
-     * Component name.
-     *
-     * @type {String}
-     */
+
     name: 'progress',
 
-    /**
-     * Component props.
-     */
     props: {
       type: {
         type: String,

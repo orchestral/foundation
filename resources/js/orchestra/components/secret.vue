@@ -16,16 +16,9 @@
   const ElementSelector = require('../plugins/element-selector').default
 
   const Secret = Vue.extend({
-    /**
-     * Component name.
-     *
-     * @type {String}
-     */
+
     name: 'secret',
 
-    /**
-     * Component props.
-     */
     props: {
       action: {
         type: String,
@@ -62,17 +55,17 @@
       }
     },
 
-    ready() {
-      let element = this.getElement()
-
-      if (this.open) {
-        element.removeClass('hidden')
-      } else {
-        element.addClass('hidden')
-      }
-    },
-
     methods: {
+      bootComponent() {
+        let element = this.getElement()
+
+        if (this.open) {
+          element.removeClass('hidden')
+        } else {
+          element.addClass('hidden')
+        }
+      },
+
       openForEdit() {
         this.getElement().removeClass('hidden')
         this.open = true
@@ -86,6 +79,14 @@
       getElement() {
         return jQuery(this.element).parent()
       }
+    },
+
+    mounted() {
+      this.bootComponent()
+    },
+
+    ready() {
+      this.bootComponent()
     }
   })
 

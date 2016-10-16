@@ -14,18 +14,13 @@
   const CountTo = require('../plugins/count-to').default
 
   const Dash = Vue.extend({
-    /**
-     * Component name.
-     *
-     * @type {String}
-     */
+
     name: 'dash',
 
-    /**
-     * Component props
-     *
-     * @type {Object}
-     */
+    components: {
+      faicon: require('./faicon.vue')
+    },
+
     props: {
       color: {
         type: String,
@@ -68,24 +63,28 @@
       }
     },
 
-    components: {
-      faicon: require('./faicon.vue')
+    methods: {
+      bootComponent() {
+        if (this.value >= 1000000) {
+          this.value = Math.round(this.value / 1000000)
+          this.suffix = 'M'
+        } else if (this.value >= 100000) {
+          this.value = Math.round(this.value / 1000)
+          this.suffix = 'K'
+        }
+
+        new CountTo(this.value, c => {
+          this.count = c.count
+        }, this.options).start()
+      }
+    },
+
+    mounted() {
+      this.bootComponent()
     },
 
     ready() {
-      let vm = this
-
-      if (this.value >= 1000000) {
-        this.value = Math.round(this.value / 1000000)
-        this.suffix = 'M'
-      } else if (this.value >= 100000) {
-        this.value = Math.round(this.value / 1000)
-        this.suffix = 'K'
-      }
-
-      new CountTo(this.value, c => {
-        this.count = c.count
-      }, this.options).start()
+      this.bootComponent()
     }
   })
 

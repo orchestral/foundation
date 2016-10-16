@@ -18,18 +18,9 @@
   const _ = require('../../vendor/underscore').default
 
   const BtnDrop = Vue.extend({
-    /**
-     * Component name.
-     *
-     * @type {String}
-     */
+
     name: 'btndrop',
 
-    /**
-     * Component props.
-     *
-     * @return {Object}
-     */
     props: {
       id: {
         type: String

@@ -17,18 +17,9 @@
   import Vue from 'vue'
 
   const Pane = Vue.extend({
-    /**
-     * Component name.
-     *
-     * @type {String}
-     */
+
     name: 'pane',
 
-    /**
-     * Component props
-     *
-     * @type {Object}
-     */
     props: {
       content: {
         type: String,
