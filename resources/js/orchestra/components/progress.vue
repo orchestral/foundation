@@ -8,7 +8,6 @@
   import Vue from 'vue'
 
   const Progress = Vue.extend({
-
     name: 'progress',
 
     props: {

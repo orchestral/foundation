@@ -9,12 +9,11 @@
 
   let container
 
-  const jQuery = require('../../vendor/jquery').default
-  const Platform = require('../platform').default
-  const ElementSelector = require('../plugins/element-selector').default
+  const jQuery = require('../../vendor/jquery')
+  const Platform = require('../platform')
+  const ElementSelector = require('../plugins/element-selector')
 
   const OffCanvas = Vue.extend({
-
     name: 'offcanvas',
 
     props: {

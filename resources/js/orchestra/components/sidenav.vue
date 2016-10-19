@@ -28,20 +28,12 @@
 <script>
   import Vue from 'vue'
 
-  const _ = require('../../vendor/underscore').default
-  const jQuery = require('../../vendor/jquery').default
+  const _ = require('../../vendor/underscore')
+  const jQuery = require('../../vendor/jquery')
 
   const SideNav = Vue.extend({
-    /**
-     * Component name.
-     *
-     * @type {String}
-     */
     name: 'sidenav',
 
-    /**
-     * Component props.
-     */
     props: {
       active: {
         type: String,
@@ -56,11 +48,11 @@
       faicon: require('./faicon.vue')
     },
 
-    ready() {
-      jQuery(() => this.boot())
-    },
-
     methods: {
+      bootComponent() {
+
+      },
+
       getClassAttributes(item) {
         return {
           'sidebar-nav__dropdown': this.hasChild(item),
@@ -105,6 +97,14 @@
 
         sidebar.perfectScrollbar('update')
       }
+    },
+
+    mounted() {
+      this.bootComponent()
+    },
+
+    ready() {
+      this.bootComponent()
     }
   })
 

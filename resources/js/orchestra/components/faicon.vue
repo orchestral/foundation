@@ -6,16 +6,8 @@
   import Vue from 'vue'
 
   const Faicon = Vue.extend({
-    /**
-     * Component name.
-     *
-     * @type {String}
-     */
     name: 'faicon',
 
-    /**
-     * Component props
-     */
     props: {
       title: {
         type: String,

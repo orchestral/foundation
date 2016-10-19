@@ -15,10 +15,9 @@
 <script>
   import Vue from 'vue'
 
-  const _ = require('../../vendor/underscore').default
+  const _ = require('../../vendor/underscore')
 
   const BtnDrop = Vue.extend({
-
     name: 'btndrop',
 
     props: {

@@ -17,7 +17,6 @@
   import Vue from 'vue'
 
   const Pane = Vue.extend({
-
     name: 'pane',
 
     props: {

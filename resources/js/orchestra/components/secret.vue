@@ -12,11 +12,10 @@
 <script>
   import Vue from 'vue'
 
-  const jQuery = require('../../vendor/jquery').default
-  const ElementSelector = require('../plugins/element-selector').default
+  const jQuery = require('../../vendor/jquery')
+  const ElementSelector = require('../plugins/element-selector')
 
   const Secret = Vue.extend({
-
     name: 'secret',
 
     props: {
