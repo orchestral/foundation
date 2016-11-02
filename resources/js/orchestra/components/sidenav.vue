@@ -50,7 +50,7 @@
 
     methods: {
       bootComponent() {
-
+        jQuery(() => this.boot())
       },
 
       getClassAttributes(item) {
