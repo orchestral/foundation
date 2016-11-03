@@ -27,20 +27,13 @@
 
 <script>
   import Vue from 'vue'
-  import $ from '../../vendor/jquery'
-  import _ from '../../vendor/underscore'
+
+  const _ = require('../../vendor/underscore')
+  const jQuery = require('../../vendor/jquery')
 
   const SideNav = Vue.extend({
-    /**
-     * Component name.
-     *
-     * @type {String}
-     */
     name: 'sidenav',
 
-    /**
-     * Component props.
-     */
     props: {
       active: {
         type: String,
@@ -55,15 +48,11 @@
       faicon: require('./faicon.vue')
     },
 
-    ready() {
-      let vm = this
-
-      $(function() {
-        vm.boot()
-      })
-    },
-
     methods: {
+      bootComponent() {
+        jQuery(() => this.boot())
+      },
+
       getClassAttributes(item) {
         return {
           'sidebar-nav__dropdown': this.hasChild(item),
@@ -93,10 +82,10 @@
       },
 
       boot() {
-        const sidebar = $('.sidebar')
+        const sidebar = jQuery('.sidebar')
 
-        $('.sidebar-nav__dropdown > a').click((e) => {
-          let li = $(e.toElement).parent('li')
+        jQuery('.sidebar-nav__dropdown > a').click((e) => {
+          let li = jQuery(e.toElement).parent('li')
 
           li.toggleClass('open')
           li.find('.sidebar-nav__submenu').slideToggle(300, () => {
@@ -108,6 +97,14 @@
 
         sidebar.perfectScrollbar('update')
       }
+    },
+
+    mounted() {
+      this.bootComponent()
+    },
+
+    ready() {
+      this.bootComponent()
     }
   })
 

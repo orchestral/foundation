@@ -11,20 +11,13 @@
 
 <script>
   import Vue from 'vue'
-  import ElementSelector from '../plugins/element-selector'
-  import $ from '../../vendor/jquery'
+
+  const jQuery = require('../../vendor/jquery')
+  const ElementSelector = require('../plugins/element-selector')
 
   const Secret = Vue.extend({
-    /**
-     * Component name.
-     *
-     * @type {String}
-     */
     name: 'secret',
 
-    /**
-     * Component props.
-     */
     props: {
       action: {
         type: String,
@@ -61,17 +54,17 @@
       }
     },
 
-    ready() {
-      let element = this.getElement()
-
-      if (this.open) {
-        element.removeClass('hidden')
-      } else {
-        element.addClass('hidden')
-      }
-    },
-
     methods: {
+      bootComponent() {
+        let element = this.getElement()
+
+        if (this.open) {
+          element.removeClass('hidden')
+        } else {
+          element.addClass('hidden')
+        }
+      },
+
       openForEdit() {
         this.getElement().removeClass('hidden')
         this.open = true
@@ -83,8 +76,16 @@
       },
 
       getElement() {
-        return $(this.element).parent()
+        return jQuery(this.element).parent()
       }
+    },
+
+    mounted() {
+      this.bootComponent()
+    },
+
+    ready() {
+      this.bootComponent()
     }
   })
 

@@ -3,7 +3,8 @@
 namespace Orchestra\Foundation\Notifications;
 
 use Orchestra\Foundation\Auth\User;
-use Orchestra\Notifications\Notification;
+use Illuminate\Notifications\Notification;
+use Orchestra\Notifications\Messages\MailMessage;
 
 class ResetPassword extends Notification
 {
@@ -22,13 +23,6 @@ class ResetPassword extends Notification
     public $provider;
 
     /**
-     * The "level" of the notification (info, success, error).
-     *
-     * @var string
-     */
-    public $level = 'warning';
-
-    /**
      * Create a notification instance.
      *
      * @param  string  $token
@@ -43,52 +37,42 @@ class ResetPassword extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  \Orchestra\Foundation\Auth\User  $notifiable
+     * @param  mixed  $notifiable
      *
      * @return array|string
      */
-    public function via(User $notifiable)
+    public function via($notifiable)
     {
         return ['mail'];
     }
 
     /**
-     * Get the notification's options.
+     * Get the notification message for mail.
      *
-     * @return array
+     * @param  mixed  $notifiable
+     *
+     * @return \Orchestra\Notifications\Messages\MailMessage
      */
-    public function options()
-    {
-        return [
-            'view' => config("auth.passwords.{$this->provider}.email"),
-        ];
-    }
-
-    /**
-     * Get the title of the notification.
-     *
-     * @return string
-     */
-    public function title()
-    {
-        return trans('orchestra/foundation::email.forgot.request');
-    }
-
-    /**
-     * Get the notification message.
-     *
-     * @param  \Orchestra\Foundation\Auth\User  $notifiable
-     *
-     * @return \Illuminate\Notifications\MessageBuilder
-     */
-    public function message(User $notifiable)
+    public function toMail($notifiable)
     {
         $email   = urlencode($notifiable->getEmailForPasswordReset());
         $expired = config("auth.passwords.{$this->provider}.expire", 60);
+        $url     = config('orchestra/foundation::routes.reset', 'orchestra::forgot/reset');
+        $title   = trans('orchestra/foundation::email.forgot.title');
 
-        return $this->line('You are receiving this email because we received a password reset request for your account. Click the button below to reset your password:')
-                    ->action('Reset Password', handles("orchestra::forgot/reset/{$this->token}?email={$email}"))
-                    ->line("This link will expire in {$expired} minutes.")
-                    ->line('If you did not request a password reset, no further action is required.');
+        $message = new MailMessage();
+
+        $message->title($title)
+                    ->level('warning')
+                    ->line(trans('orchestra/foundation::email.forgot.message.intro'))
+                    ->action($title, handles("{$url}/{$this->token}?email={$email}"))
+                    ->line(trans('orchestra/foundation::email.forgot.message.expired_in', compact('expired')))
+                    ->line(trans('orchestra/foundation::email.forgot.message.outro'));
+
+        if (! is_null($view = config("auth.passwords.{$this->provider}.email"))) {
+            $message->view($view);
+        }
+
+        return $message;
     }
 }

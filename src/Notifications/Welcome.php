@@ -2,8 +2,8 @@
 
 namespace Orchestra\Foundation\Notifications;
 
-use Orchestra\Foundation\Auth\User;
-use Orchestra\Notifications\Notification;
+use Illuminate\Notifications\Notification;
+use Orchestra\Notifications\Messages\MailMessage;
 
 class Welcome extends Notification
 {
@@ -27,39 +27,35 @@ class Welcome extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  \Orchestra\Foundation\Auth\User  $notifiable
+     * @param  mixed  $notifiable
      *
-     * @return array|string
+     * @return array
      */
-    public function via(User $notifiable)
+    public function via($notifiable)
     {
         return ['mail'];
     }
 
     /**
-     * Get the title of the notification.
+     * Get the notification message for mail.
      *
-     * @return string
+     * @param  mixed  $notifiable
+     *
+     * @return \Orchestra\Notifications\Messages\MailMessage
      */
-    public function title()
+    public function toMail($notifiable)
     {
-        return trans('orchestra/foundation::email.credential.register');
-    }
+        $email    = $notifiable->email;
+        $password = $this->password;
 
-    /**
-     * Get the notification message.
-     *
-     * @param  \Orchestra\Foundation\Auth\User  $notifiable
-     *
-     * @return \Illuminate\Notifications\MessageBuilder
-     */
-    public function message(User $notifiable)
-    {
-        $message = $this->line('Thank you for registering with us, in order to login please use the following:')
-                    ->line("E-mail Address: {$notifiable->email}");
+        $message = new MailMessage();
+
+        $message->title(trans('orchestra/foundation::email.register.title'))
+                ->line(trans('orchestra/foundation::email.register.message.intro'))
+                ->line(trans('orchestra/foundation::email.register.message.email', compact('email')));
 
         if (! is_null($this->password)) {
-            $message->line("Password: {$this->password}");
+            $message->line(trans('orchestra/foundation::email.register.message.password', compact('password')));
         }
 
         return $message;

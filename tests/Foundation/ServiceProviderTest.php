@@ -65,7 +65,10 @@ class ServiceProviderTest extends TestCase
         $this->assertTrue($this->app->environment('testing'));
         $this->assertFalse($this->app->environment('production'));
 
-        $this->assertEquals($this->getConsoleSupportProvides(), $console->provides());
+        foreach ($this->getConsoleSupportProvides() as $provide) {
+            $this->assertContains($provide, $console->provides());
+        }
+
         $this->assertTrue($console->isDeferred());
 
         $this->assertInstanceOf('\Orchestra\Config\Console\ConfigCacheCommand', $this->app['command.config.cache']);
@@ -108,62 +111,6 @@ class ServiceProviderTest extends TestCase
     protected function getConsoleSupportProvides()
     {
         return [
-            'command.clear-compiled',
-            'command.auth.resets.clear',
-            'command.config.cache',
-            'command.config.clear',
-            'command.down',
-            'command.environment',
-            'command.key.generate',
-            'command.optimize',
-            'command.route.cache',
-            'command.route.clear',
-            'command.route.list',
-            'command.storage.link',
-            'command.tinker',
-            'command.up',
-            'command.view.clear',
-            'command.app.name',
-            'command.auth.make',
-            'command.cache.table',
-            'command.console.make',
-            'command.controller.make',
-            'command.event.generate',
-            'command.event.make',
-            'command.job.make',
-            'command.listener.make',
-            'command.mail.make',
-            'command.middleware.make',
-            'command.model.make',
-            'command.notification.make',
-            'command.policy.make',
-            'command.provider.make',
-            'command.queue.failed-table',
-            'command.queue.table',
-            'command.request.make',
-            'command.seeder.make',
-            'command.session.table',
-            'command.serve',
-            'command.test.make',
-            'command.vendor.publish',
-            'Illuminate\Console\Scheduling\ScheduleRunCommand',
-            'migrator',
-            'migration.repository',
-            'command.migrate',
-            'command.migrate.rollback',
-            'command.migrate.reset',
-            'command.migrate.refresh',
-            'command.migrate.install',
-            'command.migrate.status',
-            'migration.creator',
-            'command.migrate.make',
-            'seeder',
-            'command.seed',
-            'composer',
-            'command.queue.failed',
-            'command.queue.retry',
-            'command.queue.forget',
-            'command.queue.flush',
             'orchestra.commands.auth',
             'orchestra.commands.extension.activate',
             'orchestra.commands.extension.deactivate',

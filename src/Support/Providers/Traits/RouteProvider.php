@@ -80,7 +80,7 @@ trait RouteProvider
         }
 
         if (! is_null($namespace)) {
-            $attributes['namespace'] = empty($namespace) ? $this->namespace : "{$this->namespace}\{$namespace}";
+            $attributes['namespace'] = empty($namespace) ? $this->namespace : "{$this->namespace}\\{$namespace}";
         }
 
         return $attributes;

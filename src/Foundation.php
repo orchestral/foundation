@@ -11,6 +11,7 @@ use Orchestra\Foundation\Http\Handlers\UserMenuHandler;
 use Orchestra\Foundation\Http\Handlers\SettingMenuHandler;
 use Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler;
 use Orchestra\Contracts\Foundation\Foundation as FoundationContract;
+use Orchestra\Contracts\Foundation\Application as ApplicationContract;
 
 class Foundation extends RouteManager implements FoundationContract
 {
@@ -52,9 +53,9 @@ class Foundation extends RouteManager implements FoundationContract
     /**
      * Construct a new instance.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param  \Orchestra\Contracts\Foundation\Application  $app
      */
-    public function __construct(Application $app)
+    public function __construct(ApplicationContract $app)
     {
         $this->flush();
 

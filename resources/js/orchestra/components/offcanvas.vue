@@ -6,23 +6,16 @@
 
 <script>
   import Vue from 'vue'
-  import Platform from '../platform'
-  import ElementSelector from '../plugins/element-selector'
-  import $ from '../../vendor/jquery'
 
   let container
 
+  const jQuery = require('../../vendor/jquery')
+  const Platform = require('../platform')
+  const ElementSelector = require('../plugins/element-selector')
+
   const OffCanvas = Vue.extend({
-    /**
-     * Component name.
-     *
-     * @type {String}
-     */
     name: 'offcanvas',
 
-    /**
-     * Component props
-     */
     props: {
       element: {
         type: String,
@@ -33,11 +26,6 @@
       }
     },
 
-    /**
-     * Component data.
-     *
-     * @return {Object}
-     */
     data() {
       return {
         enabled: true,
@@ -45,25 +33,20 @@
       }
     },
 
-    ready() {
-      container = $(this.element)
-
-      this.enabled = container.size() > 0
-
-      if (this.enabled) {
-        this.open = ! container.hasClass('alt')
-        this.boot()
-      }
-    },
-
     methods: {
-      /**
-       * Boot the component.
-       *
-       * @return void
-       */
+      bootComponent() {
+        container = $(this.element)
+
+        this.enabled = container.size() > 0
+
+        if (this.enabled) {
+          this.open = ! container.hasClass('alt')
+          this.boot()
+        }
+      },
+
       boot() {
-        $('.sidebar__close').click(() => {
+        jQuery('.sidebar__close').click(() => {
           this.toggle()
           return false
         })
@@ -71,11 +54,6 @@
         Platform.watch('t', () => this.toggle())
       },
 
-      /**
-       * Toggle off-canvas state.
-       *
-       * @return void
-       */
       toggle() {
         this.open = (this.open != true)
 
@@ -85,6 +63,14 @@
           container.addClass('alt')
         }
       }
+    },
+
+    mounted() {
+      this.bootComponent()
+    },
+
+    ready() {
+      this.bootComponent()
     }
   })
 
