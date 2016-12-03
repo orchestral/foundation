@@ -6,6 +6,7 @@ use Mockery as m;
 use Orchestra\Foundation\Foundation;
 use Orchestra\Foundation\Application;
 use Illuminate\Support\Facades\Facade;
+use Orchestra\Foundation\RouteResolver;
 
 class FoundationTest extends \PHPUnit_Framework_TestCase
 {
@@ -153,7 +154,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
     public function testBootMethod()
     {
         $app = $this->getInstallableContainerSetup();
-        $stub = new Foundation($app);
+        $stub = new Foundation($app, new RouteResolver($app));
         $stub->boot();
 
         $this->assertTrue($app['orchestra.installed']);
@@ -175,7 +176,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->getUnInstallableContainerSetup();
 
-        $stub = new Foundation($app);
+        $stub = new Foundation($app, new RouteResolver($app));
         $stub->boot();
 
         $this->assertFalse($app['orchestra.installed']);
@@ -209,7 +210,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
         $url->shouldReceive('to')->once()->with('/')->andReturn('/')
             ->shouldReceive('to')->once()->with('info?foo=bar')->andReturn('info?foo=bar');
 
-        $stub = new StubRouteManager($app);
+        $stub = new StubRouteManager($app, new RouteResolver($app));
 
         $this->assertEquals('/', $stub->handles('app::/'));
         $this->assertEquals('info?foo=bar', $stub->handles('info?foo=bar'));
@@ -242,7 +243,7 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
         $status->shouldReceive('mode')->times(4)->andReturn('normal');
         $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
 
-        $stub = new StubRouteManager($app);
+        $stub = new StubRouteManager($app, new RouteResolver($app));
 
         $this->assertTrue($stub->is('app::/'));
         $this->assertTrue($stub->is('info?foo=bar'));
@@ -257,7 +258,9 @@ class FoundationTest extends \PHPUnit_Framework_TestCase
      */
     public function testNamespacedMethod()
     {
-        $stub = m::mock('\Orchestra\Foundation\Foundation[group]', [$this->app]);
+        $stub = m::mock('\Orchestra\Foundation\Foundation[group]', [
+            $this->app, new RouteResolver($this->app)
+        ]);
 
         $closure = function () {
 
