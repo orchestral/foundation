@@ -2,13 +2,14 @@
 
 namespace Orchestra\Foundation\Providers;
 
-use Orchestra\Foundation\Meta;
-use Orchestra\Foundation\Foundation;
 use Illuminate\Contracts\Foundation\Application;
-use Orchestra\Support\Providers\ServiceProvider;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins;
-use Orchestra\Support\Providers\Traits\AliasesProvider;
 use Orchestra\Foundation\Auth\Throttle\Basic as BasicThrottle;
+use Orchestra\Foundation\Foundation;
+use Orchestra\Foundation\Meta;
+use Orchestra\Foundation\RouteResolver;
+use Orchestra\Support\Providers\ServiceProvider;
+use Orchestra\Support\Providers\Traits\AliasesProvider;
 
 class FoundationServiceProvider extends ServiceProvider
 {
@@ -82,7 +83,7 @@ class FoundationServiceProvider extends ServiceProvider
         $this->app['orchestra.installed'] = false;
 
         $this->app->singleton('orchestra.app', function (Application $app) {
-            return new Foundation($app);
+            return new Foundation($app, new RouteResolver($app));
         });
     }
 

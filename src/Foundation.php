@@ -37,13 +37,6 @@ class Foundation extends RouteManager implements FoundationContract
     protected $services = [];
 
     /**
-     * Application status/mode implementation.
-     *
-     * @var \Orchestra\Contracts\Extension\StatusChecker
-     */
-    protected $status;
-
-    /**
      * The widget manager.
      *
      * @var \Orchestra\Widget\WidgetManager
@@ -54,15 +47,15 @@ class Foundation extends RouteManager implements FoundationContract
      * Construct a new instance.
      *
      * @param  \Orchestra\Contracts\Foundation\Application  $app
+     * @param  \Orchestra\Foundation\RouteResolver  $resolver
      */
-    public function __construct(ApplicationContract $app)
+    public function __construct(ApplicationContract $app, RouteResolver $resolver)
     {
         $this->flush();
 
-        parent::__construct($app);
+        parent::__construct($app, $resolver);
 
         $this->config = $app->make('config');
-        $this->status = $app->make('orchestra.extension.status');
         $this->widget = $app->make('orchestra.widget');
     }
 
@@ -92,7 +85,6 @@ class Foundation extends RouteManager implements FoundationContract
     {
         $this->booted = false;
         $this->config = null;
-        $this->status = null;
         $this->widget = null;
 
         $this->services = [
@@ -110,16 +102,6 @@ class Foundation extends RouteManager implements FoundationContract
     public function installed()
     {
         return $this->app->make('orchestra.installed');
-    }
-
-    /**
-     * Get application mode.
-     *
-     * @return
-     */
-    public function mode()
-    {
-        return $this->status->mode();
     }
 
     /**
@@ -203,10 +185,6 @@ class Foundation extends RouteManager implements FoundationContract
     {
         // Boot the application.
         $this->boot();
-
-        if (in_array($name, ['orchestra', 'orchestra/foundation'])) {
-            $name = 'orchestra';
-        }
 
         return parent::route($name, $default);
     }
@@ -344,23 +322,6 @@ class Foundation extends RouteManager implements FoundationContract
     {
         $this->app->make('orchestra.notifier')->setDefaultDriver('orchestra');
         $this->app->make('orchestra.mail')->attach($memory);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function generateRouteByName($name, $default)
-    {
-        // Orchestra Platform routing is managed by `orchestra/foundation::handles`
-        // and can be manage using configuration.
-        if (! in_array($name, ['orchestra'])) {
-            return parent::generateRouteByName($name, $default);
-        }
-
-        return $this->app->make(RouteGenerator::class, [
-            $this->config->get('orchestra/foundation::handles', $default),
-            $this->app->make('request'),
-        ]);
     }
 
     /**
