@@ -2,6 +2,7 @@
 
 namespace Orchestra\Foundation\Validation;
 
+use Laravie\Authen\Authen;
 use Orchestra\Support\Validator;
 
 class AuthenticateUser extends Validator
@@ -12,7 +13,7 @@ class AuthenticateUser extends Validator
      * @var array
      */
     protected $rules = [
-        'email'    => ['required', 'email'],
+        'email'    => ['sometimes', 'required', 'email'],
         'fullname' => ['sometimes', 'required'],
     ];
 
@@ -23,6 +24,7 @@ class AuthenticateUser extends Validator
      */
     protected function onLogin()
     {
+        $this->rules[Authen::getIdentifierName()] = ['required'];
         $this->rules['password'] = ['required'];
     }
 }

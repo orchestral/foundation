@@ -1,5 +1,6 @@
 @extends('orchestra/foundation::layouts.landing')
 
+#{{ $username = Laravie\Authen\Authen::getIdentifierName() }}
 @section('content')
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -8,10 +9,10 @@
 
   <div class="panel-body">
     {{ Form::open(['url' => handles('orchestra::login'), 'action' => 'POST']) }}
-      <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-        {{ Form::label('email', trans("orchestra/foundation::label.users.email")) }}
-        {{ Form::input('text', 'email', old('email'), ['required' => true, 'tabindex' => 1, 'class' => 'form-control']) }}
-        {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
+      <div class="form-group{{ $errors->has($username) ? ' has-error' : '' }}">
+        {{ Form::label($username, trans("orchestra/foundation::label.users.username")) }}
+        {{ Form::input('text', $username, old($username), ['required' => true, 'tabindex' => 1, 'class' => 'form-control']) }}
+        {!! $errors->first($username, '<p class="help-block">:message</p>') !!}
       </div>
       <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
         {{ Form::label('password', trans('orchestra/foundation::label.users.password')) }}

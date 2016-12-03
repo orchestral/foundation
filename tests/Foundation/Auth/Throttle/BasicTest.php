@@ -20,13 +20,13 @@ class BasicTest extends \PHPUnit_Framework_TestCase
     {
         $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $request = Request::create('/', 'GET', [
-            'email' => $email = 'admin@orchestraplatform.com',
+            'username' => $key = 'admin@orchestraplatform.com',
         ], [], [], ['REMOTE_ADDR' => $ip = '127.0.0.1']);
 
         $stub = new BasicThrottle($cache);
         $stub->setRequest($request);
 
-        $cache->shouldReceive('tooManyAttempts')->once()->with($email.$ip, 5, 1)->andReturn(false);
+        $cache->shouldReceive('tooManyAttempts')->once()->with($key.$ip, 5, 1)->andReturn(false);
 
         $this->assertFalse($stub->hasTooManyLoginAttempts());
     }
@@ -35,13 +35,13 @@ class BasicTest extends \PHPUnit_Framework_TestCase
     {
         $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $request = Request::create('/', 'GET', [
-            'email' => $email = 'admin@orchestraplatform.com',
+            'username' => $key = 'admin@orchestraplatform.com',
         ], [], [], ['REMOTE_ADDR' => $ip = '127.0.0.1']);
 
         $stub = new BasicThrottle($cache);
         $stub->setRequest($request);
 
-        $cache->shouldReceive('tooManyAttempts')->once()->with($email.$ip, 5, 1)->andReturn(true);
+        $cache->shouldReceive('tooManyAttempts')->once()->with($key.$ip, 5, 1)->andReturn(true);
 
         $this->assertTrue($stub->hasTooManyLoginAttempts());
     }
@@ -50,13 +50,13 @@ class BasicTest extends \PHPUnit_Framework_TestCase
     {
         $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $request = Request::create('/', 'GET', [
-            'email' => $email = 'admin@orchestraplatform.com',
+            'username' => $key = 'admin@orchestraplatform.com',
         ], [], [], ['REMOTE_ADDR' => $ip = '127.0.0.1']);
 
         $stub = new BasicThrottle($cache);
         $stub->setRequest($request);
 
-        $cache->shouldReceive('availableIn')->once()->with($email.$ip)->andReturn(50);
+        $cache->shouldReceive('availableIn')->once()->with($key.$ip)->andReturn(50);
 
         $this->assertEquals(50, $stub->getSecondsBeforeNextAttempts());
     }
@@ -65,13 +65,13 @@ class BasicTest extends \PHPUnit_Framework_TestCase
     {
         $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $request = Request::create('/', 'GET', [
-            'email' => $email = 'admin@orchestraplatform.com',
+            'username' => $key = 'admin@orchestraplatform.com',
         ], [], [], ['REMOTE_ADDR' => $ip = '127.0.0.1']);
 
         $stub = new BasicThrottle($cache);
         $stub->setRequest($request);
 
-        $cache->shouldReceive('hit')->once()->with($email.$ip)->andReturnNull();
+        $cache->shouldReceive('hit')->once()->with($key.$ip)->andReturnNull();
 
         $this->assertNull($stub->incrementLoginAttempts());
     }
@@ -80,7 +80,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase
     {
         $cache = m::mock('\Illuminate\Cache\RateLimiter');
         $request = Request::create('/', 'GET', [
-            'email' => $email = 'admin@orchestraplatform.com',
+            'username' => $key = 'admin@orchestraplatform.com',
         ], [], [], ['REMOTE_ADDR' => $ip = '127.0.0.1']);
 
         $limit = time() + 60;
@@ -88,7 +88,7 @@ class BasicTest extends \PHPUnit_Framework_TestCase
         $stub = new BasicThrottle($cache);
         $stub->setRequest($request);
 
-        $cache->shouldReceive('clear')->once()->with($email.$ip)->andReturnNull();
+        $cache->shouldReceive('clear')->once()->with($key.$ip)->andReturnNull();
 
         $this->assertNull($stub->clearLoginAttempts());
     }

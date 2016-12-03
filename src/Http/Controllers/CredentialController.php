@@ -2,6 +2,7 @@
 
 namespace Orchestra\Foundation\Http\Controllers;
 
+use Laravie\Authen\Authen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
@@ -52,9 +53,11 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     public function login(Request $request, AuthenticateUser $authenticate, ThrottlesCommand $throttles)
     {
-        $input = $request->only(['email', 'password', 'remember']);
+        $username = Authen::getIdentifierName();
 
-        $throttles->setRequest($request)->setLoginKey('email');
+        $input = $request->only([$username, 'password', 'remember']);
+
+        $throttles->setRequest($request)->setLoginKey($username);
 
         return $authenticate->login($this, $input, $throttles);
     }
