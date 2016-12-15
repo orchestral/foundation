@@ -35,9 +35,9 @@ class RouteResolver extends Resolver
             return parent::generateRouteByName($name, $default);
         }
 
-        return $this->app->make(RouteGenerator::class, [
-            $this->app->make('config')->get('orchestra/foundation::handles', $default),
-            $this->app->make('request'),
-        ]);
+        $url = $this->app->make('config')->get('orchestra/foundation::handles', $default);
+
+        return $this->app->make(RouteGenerator::class)
+                    ->handle($url);
     }
 }
