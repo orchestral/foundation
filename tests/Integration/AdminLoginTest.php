@@ -12,7 +12,7 @@ class AdminLoginTest extends TestCase
         $user = $this->install();
 
         $this->visit('admin/login')
-            ->type('hello@orchestraplatform.com', 'email')
+            ->type('hello@orchestraplatform.com', 'username')
             ->type('hello', 'password')
             ->press('Login')
             ->seePageIs('admin/login')
@@ -27,7 +27,7 @@ class AdminLoginTest extends TestCase
         $user = $this->install();
 
         $this->visit('admin/login')
-            ->type($user->email, 'email')
+            ->type($user->email, 'username')
             ->type('secret', 'password')
             ->press('Login')
             ->seePageIs('admin');

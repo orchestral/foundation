@@ -4,6 +4,7 @@ namespace Orchestra\Foundation\TestCase\Http\Presenters;
 
 use Mockery as m;
 use Orchestra\Testing\TestCase;
+use Orchestra\Foundation\RouteResolver;
 use Orchestra\Foundation\Http\Presenters\Presenter;
 
 class PresenterTest extends TestCase
@@ -26,7 +27,9 @@ class PresenterTest extends TestCase
      */
     public function testHandlesMethod()
     {
-        $orchestra = m::mock('\Orchestra\Foundation\Foundation[handles]', [$this->app]);
+        $orchestra = m::mock('\Orchestra\Foundation\Foundation[handles]', [
+            $this->app, new RouteResolver($this->app)
+        ]);
 
         $this->app->instance('orchestra.app', $orchestra);
 

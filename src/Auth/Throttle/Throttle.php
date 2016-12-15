@@ -24,7 +24,7 @@ abstract class Throttle
      *
      * @var string
      */
-    protected $loginKey = 'email';
+    protected $loginKey = 'username';
 
     /**
      * The HTTP Request object.

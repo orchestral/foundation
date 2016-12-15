@@ -3,6 +3,7 @@
 namespace Orchestra\Foundation\Auth;
 
 use Illuminate\Support\Str;
+use Laravie\Authen\AuthenUser;
 use Orchestra\Model\User as Authenticatable;
 use Orchestra\Contracts\Notification\Recipient;
 use Illuminate\Notifications\RoutesNotifications;
@@ -14,7 +15,7 @@ use Orchestra\Foundation\Notifications\ResetPassword as ResetPasswordNotificatio
 
 class User extends Authenticatable implements AuthorizableContract, CanResetPasswordContract, Recipient
 {
-    use Authorizable, RoutesNotifications;
+    use AuthenUser, Authorizable, RoutesNotifications;
 
     /**
      * Get the e-mail address where password reset links are sent.
@@ -44,6 +45,16 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
     public function getRecipientName()
     {
         return $this->getAttribute('fullname');
+    }
+
+    /**
+     * Get the name of the unique identifier for the user.
+     *
+     * @return array
+     */
+    public function getAuthIdentifiersName()
+    {
+        return ['email'];
     }
 
     /**
