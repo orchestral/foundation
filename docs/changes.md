@@ -5,6 +5,11 @@ title: Foundation Change Log
 
 ## Version 3.2 {#v3-2}
 
+### v3.2.9 {#v3-2-9}
+
+* Use `Illuminate\Foundation\Application` typehint for `Orchestra\Foundation\Http\Middleware\VerifyCsrfToken` middleware.
+* Use auto height for the Select2 choices. [@quetzyg](https://github.com/quetzyg)
+
 ### v3.2.8 {#v3-2-8}
 
 * Add option to modify vendor path from `Orchestra\Foundation\Application`.
