@@ -3,6 +3,14 @@ title: Foundation Change Log
 
 ---
 
+## Version 3.3 {#v3-3}
+
+### v3.3.0 {#v3-3-0}
+
+* Update support to Laravel Framework v5.3.20+.
+* A new backend theme with Vue.js integration.
+* Add support for `laravie/authen` and `mpociot/reauthenticate`.
+
 ## Version 3.2 {#v3-2}
 
 ### v3.2.9 {#v3-2-9}
