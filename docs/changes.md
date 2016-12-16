@@ -3,7 +3,22 @@ title: Foundation Change Log
 
 ---
 
+## Version 3.3 {#v3-3}
+
+### v3.3.0 {#v3-3-0}
+
+* Update support to Laravel Framework v5.3.20+.
+* A new backend theme with Vue.js integration.
+* Add support for `laravie/authen` and `mpociot/reauthenticate`.
+* Remove `Orchestra\Foundation\Http\Middleware\CanManage`.
+* Remove `Orchestra\Foundation\Http\Middleware\RequireCsrfToken`.
+
 ## Version 3.2 {#v3-2}
+
+### v3.2.9 {#v3-2-9}
+
+* Use `Illuminate\Foundation\Application` typehint for `Orchestra\Foundation\Http\Middleware\VerifyCsrfToken` middleware.
+* Use auto height for the Select2 choices. [@quetzyg](https://github.com/quetzyg)
 
 ### v3.2.8 {#v3-2-8}
 
