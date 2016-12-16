@@ -10,6 +10,8 @@ title: Foundation Change Log
 * Update support to Laravel Framework v5.3.20+.
 * A new backend theme with Vue.js integration.
 * Add support for `laravie/authen` and `mpociot/reauthenticate`.
+* Remove `Orchestra\Foundation\Http\Middleware\CanManage`.
+* Remove `Orchestra\Foundation\Http\Middleware\RequireCsrfToken`.
 
 ## Version 3.2 {#v3-2}
 
