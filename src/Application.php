@@ -41,6 +41,20 @@ class Application extends BaseApplication implements ApplicationContract
     }
 
     /**
+     * Mark the given provider as registered.
+     *
+     * @param  \Illuminate\Support\ServiceProvider  $provider
+     *
+     * @return void
+     */
+    protected function markAsRegistered($provider)
+    {
+        $this['events']->fire(get_class($provider), [$provider]);
+
+        parent::markAsRegistered($provider);
+    }
+
+    /**
      * Get the path to the application configuration files.
      *
      * @return string
