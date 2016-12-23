@@ -14,9 +14,7 @@ class ConsoleSupportServiceProvider extends AggregateServiceProvider
     protected $providers = [
         'Orchestra\Foundation\Providers\ArtisanServiceProvider',
         'Orchestra\Database\MigrationServiceProvider',
-        'Illuminate\Database\SeedServiceProvider',
         'Illuminate\Foundation\Providers\ComposerServiceProvider',
-        'Illuminate\Queue\ConsoleServiceProvider',
 
         'Orchestra\Auth\CommandServiceProvider',
         'Orchestra\Extension\CommandServiceProvider',

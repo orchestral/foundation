@@ -3,8 +3,8 @@
 namespace Orchestra\Foundation\TestCase\Http\Controllers;
 
 use Mockery as m;
-use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\View;
+use Orchestra\Testing\BrowserKit\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PublisherControllerTest extends TestCase

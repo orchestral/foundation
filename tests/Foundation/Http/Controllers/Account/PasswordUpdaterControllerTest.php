@@ -3,10 +3,10 @@
 namespace Orchestra\Foundation\TestCase\Http\Controllers\Account;
 
 use Mockery as m;
-use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
+use Orchestra\Testing\BrowserKit\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class PasswordUpdaterControllerTest extends TestCase

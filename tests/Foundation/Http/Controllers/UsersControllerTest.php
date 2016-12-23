@@ -3,13 +3,13 @@
 namespace Orchestra\Foundation\TestCase\Http\Controllers;
 
 use Mockery as m;
-use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Orchestra\Support\Facades\Messages;
 use Orchestra\Support\Facades\Foundation;
+use Orchestra\Testing\BrowserKit\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class UsersControllerTest extends TestCase

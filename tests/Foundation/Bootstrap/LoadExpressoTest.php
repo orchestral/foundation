@@ -2,10 +2,10 @@
 
 namespace Orchestra\Foundation\TestCase\Bootstrap;
 
-use Illuminate\Pagination\Paginator;
 use Mockery as m;
 use Orchestra\Testing\TestCase;
 use Orchestra\Support\Facades\Meta;
+use Illuminate\Pagination\Paginator;
 
 class LoadExpressoTest extends TestCase
 {

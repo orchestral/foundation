@@ -4,7 +4,7 @@ namespace Integration\TestCase;
 
 use Orchestra\Foundation\Auth\User;
 use Orchestra\Installation\Installation;
-use Orchestra\Testing\TestCase as ApplicationTestCase;
+use Orchestra\Testing\BrowserKit\TestCase as ApplicationTestCase;
 
 abstract class TestCase extends ApplicationTestCase
 {

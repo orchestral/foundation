@@ -3,9 +3,9 @@
 namespace Orchestra\Foundation\TestCase\Http\Controllers;
 
 use Mockery as m;
-use Orchestra\Testing\TestCase;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
+use Orchestra\Testing\BrowserKit\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Orchestra\Foundation\Http\Controllers\BaseController;
 
