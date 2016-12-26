@@ -2,6 +2,7 @@
 
 namespace Orchestra\Foundation;
 
+use Illuminate\Log\LogServiceProvider;
 use Illuminate\Events\EventServiceProvider;
 use Orchestra\Routing\RoutingServiceProvider;
 use Illuminate\Foundation\Application as BaseApplication;
@@ -26,6 +27,8 @@ class Application extends BaseApplication implements ApplicationContract
         $this->register(new EventServiceProvider($this));
 
         $this->register(new RoutingServiceProvider($this));
+
+        $this->register(new LogServiceProvider($this));
     }
 
     /**
