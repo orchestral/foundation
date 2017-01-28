@@ -20,7 +20,6 @@ class ConsoleSupportServiceProvider extends AggregateServiceProvider
         'Orchestra\Extension\CommandServiceProvider',
         'Orchestra\Memory\CommandServiceProvider',
         'Orchestra\Foundation\Providers\CommandServiceProvider',
-        'Orchestra\Optimize\OptimizeServiceProvider',
         'Orchestra\Publisher\CommandServiceProvider',
         'Orchestra\View\CommandServiceProvider',
     ];
