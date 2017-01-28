@@ -15,8 +15,7 @@ class AssembleCommand extends Command
      * @var string
      */
     protected $signature = 'orchestra:assemble
-        {--no-cache : Avoid running route and config caching.}
-        {--no-optimize : Avoid running class optimization.}';
+        {--no-cache : Avoid running route and config caching.}';
 
     /**
      * The console command description.
@@ -121,15 +120,10 @@ class AssembleCommand extends Command
 
         $this->call('config:clear');
         $this->call('route:clear');
-        $this->call('clear-compiled');
 
         if ($this->laravel->environment('production') && ! $this->option('no-cache')) {
             $this->call('config:cache');
             $this->call('route:cache');
-        }
-
-        if (! $this->option('no-optimize')) {
-            $this->call('orchestra:optimize');
         }
     }
 }
