@@ -39,7 +39,6 @@
         "orchestra/messages": "~3.4.0",
         "orchestra/model": "~3.4.0",
         "orchestra/notifier": "~3.4.0",
-        "orchestra/optimize": "~3.4.0",
         "orchestra/publisher": "~3.4.0",
         "orchestra/support": "~3.4.0",
         "orchestra/translation": "~3.4.0",

@@ -52,14 +52,4 @@ abstract class TestCase extends ApplicationTestCase
 
         return $app;
     }
-
-    /**
-     * Install Orchestra Platform and get the administrator user.
-     *
-     * @return \Orchestra\Foundation\Auth\User
-     */
-    protected function createAdminUser()
-    {
-        return factory(User::class, 'admin')->create();
-    }
 }
