@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected $bootstrappers = [
-        \Illuminate\Foundation\Bootstrap\DetectEnvironment::class,
+        \Illuminate\Foundation\Bootstrap\LoadEnvironmentVariables::class,
         \Orchestra\Config\Bootstrap\LoadConfiguration::class,
         \Illuminate\Foundation\Bootstrap\HandleExceptions::class,
         \Illuminate\Foundation\Bootstrap\RegisterFacades::class,
