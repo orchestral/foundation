@@ -60,11 +60,13 @@ class Application extends BaseApplication implements ApplicationContract
     /**
      * Get the path to the application configuration files.
      *
+     * @param  string  $path Optionally, a path to append to the config path
+     *
      * @return string
      */
-    public function configPath()
+    public function configPath($path = null)
     {
-        return $this->basePath.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'config';
+        return $this->resourcesPath('config'.($path ? DIRECTORY_SEPARATOR.$path : ''));
     }
 
     /**
@@ -72,9 +74,21 @@ class Application extends BaseApplication implements ApplicationContract
      *
      * @return string
      */
-    public function databasePath()
+    public function databasePath($path = null)
     {
-        return $this->databasePath ?: $this->basePath.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'database';
+        return ($this->databasePath ?: $this->resourcesPath('database')).($path ? DIRECTORY_SEPARATOR.$path : '');
+    }
+
+    /**
+     * Get the path to the application resource files.
+     *
+     * @param  string  $path Optionally, a path to append to the config path
+     *
+     * @return string
+     */
+    public function resourcesPath($path = null)
+    {
+        return $this->basePath.DIRECTORY_SEPARATOR.'resources'.($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
 
     /**
