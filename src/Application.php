@@ -64,7 +64,7 @@ class Application extends BaseApplication implements ApplicationContract
      *
      * @return string
      */
-    public function configPath($path = null)
+    public function configPath($path = '')
     {
         return $this->resourcesPath('config'.($path ? DIRECTORY_SEPARATOR.$path : ''));
     }
@@ -74,7 +74,7 @@ class Application extends BaseApplication implements ApplicationContract
      *
      * @return string
      */
-    public function databasePath($path = null)
+    public function databasePath($path = '')
     {
         return ($this->databasePath ?: $this->resourcesPath('database')).($path ? DIRECTORY_SEPARATOR.$path : '');
     }
@@ -86,9 +86,9 @@ class Application extends BaseApplication implements ApplicationContract
      *
      * @return string
      */
-    public function resourcesPath($path = null)
+    public function resourcesPath($path = '')
     {
-        return $this->basePath.DIRECTORY_SEPARATOR.'resources'.($path ? DIRECTORY_SEPARATOR.$path : $path);
+        return $this->basePath.DIRECTORY_SEPARATOR.'resources'.($path ? DIRECTORY_SEPARATOR.$path : '');
     }
 
     /**
@@ -124,7 +124,7 @@ class Application extends BaseApplication implements ApplicationContract
      */
     public function getCachedExtensionServicesPath()
     {
-        return $this->basePath().'/bootstrap/cache/extension.php';
+        return $this->basePath('bootstrap'.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.'extension.php');
     }
 
     /**
