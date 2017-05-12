@@ -6,13 +6,14 @@ if (! function_exists('assetic')) {
      * Get the path to a versioned Elixir file or fallback to original file.
      *
      * @param  string  $file
+     * @param  string  $buildDirectory
      *
      * @return string
      */
-    function assetic($file)
+    function assetic($file, $buildDirectory = 'build')
     {
         try {
-            return asset(elixir($file));
+            return asset(elixir($file, $buildDirectory));
         } catch (Exception $e) {
             return asset($file);
         }
