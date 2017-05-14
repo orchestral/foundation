@@ -1,8 +1,14 @@
 {
-  "name": "orchestra-platform",
+  "name": "orchestra-foundation",
+  "homepage": "http://orchestraplatform.com",
+  "authors": [
+    "crynobone <crynobone@gmail.com>"
+  ],
+  "description": "Orchestra Platform Foundation Component",
+  "license": "MIT",
   "private": true,
   "dependencies": {
-    "bootstrap": "~3.3.6",
+    "bootstrap": "~3.3.7",
     "font-awesome": "~4.3.0",
     "html5shiv": "~3.7.3",
     "javie": "^2.1.0",
