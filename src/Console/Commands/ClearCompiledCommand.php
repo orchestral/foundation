@@ -28,7 +28,6 @@ class ClearCompiledCommand extends Command
     public function fire()
     {
         $files = [
-            $this->laravel->getCachedCompilePath(),
             $this->laravel->getCachedServicesPath(),
             $this->laravel->getCachedExtensionServicesPath(),
         ];
