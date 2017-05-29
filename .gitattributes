@@ -19,5 +19,6 @@
 /package.json export-ignore
 /phpunit.xml export-ignore
 /resources/public/.gitignore export-ignore
+/CHANGELOG.md export-ignore
 /LICENSE export-ignore
 /README.md export-ignore
