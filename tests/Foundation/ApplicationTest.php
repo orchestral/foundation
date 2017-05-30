@@ -2,9 +2,10 @@
 
 namespace Orchestra\Foundation\TestCase;
 
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Application;
 
-class ApplicationTest extends \PHPUnit_Framework_TestCase
+class ApplicationTest extends TestCase
 {
     /**
      * Test Orchestra\Foundation\Application::registerBaseServiceProviders()

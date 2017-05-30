@@ -3,10 +3,11 @@
 namespace Orchestra\Foundation\TestCase\Bootstrap;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Foundation\Application;
 use Orchestra\Foundation\Bootstrap\LoadFoundation;
 
-class LoadFoundationTest extends \PHPUnit_Framework_TestCase
+class LoadFoundationTest extends TestCase
 {
     /**
      * Teardown the test environment.

@@ -3,9 +3,10 @@
 namespace Orchestra\Foundation\TestCase\Http\Middleware;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Http\Middleware\LoginAs;
 
-class LoginAsTest extends \PHPUnit_Framework_TestCase
+class LoginAsTest extends TestCase
 {
     /**
      * Teardown the test environment.

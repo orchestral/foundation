@@ -3,10 +3,11 @@
 namespace Orchestra\Foundation\TestCase\Providers;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Auth\BasicThrottle;
 use Orchestra\Foundation\Providers\FoundationServiceProvider;
 
-class FoundationServiceProviderTest extends \PHPUnit_Framework_TestCase
+class FoundationServiceProviderTest extends TestCase
 {
     /**
      * Teardown the test environment.

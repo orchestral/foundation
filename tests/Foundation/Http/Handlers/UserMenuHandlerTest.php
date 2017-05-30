@@ -3,10 +3,11 @@
 namespace Orchestra\Foundation\TestCase\Http\Handlers;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Container\Container;
 use Orchestra\Foundation\Http\Handlers\UserMenuHandler;
 
-class UserMenuHandlerTest extends \PHPUnit_Framework_TestCase
+class UserMenuHandlerTest extends TestCase
 {
     /**
      * Teardown the test environment.

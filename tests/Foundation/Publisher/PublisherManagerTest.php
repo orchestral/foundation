@@ -3,11 +3,12 @@
 namespace Orchestra\Foundation\TestCase\Publisher;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
 use Orchestra\Foundation\Publisher\PublisherManager;
 
-class PublisherManagerTest extends \PHPUnit_Framework_TestCase
+class PublisherManagerTest extends TestCase
 {
     /**
      * Application instance.

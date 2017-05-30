@@ -2,9 +2,10 @@
 
 namespace Orchestra\Foundation\TestCase\Auth\Throttle;
 
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Auth\Throttle\Without as WithoutThrottle;
 
-class WithoutTest extends \PHPUnit_Framework_TestCase
+class WithoutTest extends TestCase
 {
     public function testHasTooManyLoginAttemptsMethod()
     {

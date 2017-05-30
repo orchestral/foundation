@@ -2,9 +2,10 @@
 
 namespace Orchestra\Foundation\TestCase\Auth;
 
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Auth\User;
 
-class UserTest extends \PHPUnit_Framework_TestCase
+class UserTest extends TestCase
 {
     /**
      * Test Orchestra\Foundation\Auth\User::getEmailForPasswordReset() method.

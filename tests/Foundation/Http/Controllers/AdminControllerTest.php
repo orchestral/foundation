@@ -3,9 +3,10 @@
 namespace Orchestra\Foundation\TestCase\Http\Controllers;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Http\Controllers\AdminController;
 
-class AdminControllerTest extends \PHPUnit_Framework_TestCase
+class AdminControllerTest extends TestCase
 {
     /**
      * Teardown the test environment.

@@ -3,9 +3,10 @@
 namespace Orchestra\Foundation\TestCase\Processor;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Processor\Account\ProfileDashboard;
 
-class UserDashboardTest extends \PHPUnit_Framework_TestCase
+class UserDashboardTest extends TestCase
 {
     /**
      * Teardown the test environment.
