@@ -3,9 +3,10 @@
 namespace Orchestra\Foundation\TestCase\Validation;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Validation\Extension;
 
-class ExtensionTest extends \PHPUnit_Framework_TestCase
+class ExtensionTest extends TestCase
 {
     /**
      * Test Orchestra\Foundation\Validation\Extension.

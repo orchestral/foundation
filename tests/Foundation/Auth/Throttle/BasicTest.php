@@ -4,9 +4,10 @@ namespace Orchestra\Foundation\TestCase\Auth\Throttle;
 
 use Mockery as m;
 use Illuminate\Http\Request;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Auth\Throttle\Basic as BasicThrottle;
 
-class BasicTest extends \PHPUnit_Framework_TestCase
+class BasicTest extends TestCase
 {
     /**
      * Teardown the test environment.

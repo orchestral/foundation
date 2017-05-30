@@ -4,9 +4,10 @@ namespace Orchestra\Foundation\TestCase\Validation;
 
 use Mockery as m;
 use Illuminate\Support\Fluent;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Validation\Setting;
 
-class SettingTest extends \PHPUnit_Framework_TestCase
+class SettingTest extends TestCase
 {
     /**
      * Teardown the test environment.

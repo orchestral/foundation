@@ -4,11 +4,12 @@ namespace Orchestra\Foundation\TestCase\Http\Presenters;
 
 use Mockery as m;
 use Illuminate\Support\Fluent;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
 use Orchestra\Foundation\Http\Presenters\Account;
 
-class AccountTest extends \PHPUnit_Framework_TestCase
+class AccountTest extends TestCase
 {
     /**
      * Setup the test environment.

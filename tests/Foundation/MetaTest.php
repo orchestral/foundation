@@ -4,8 +4,9 @@ namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
 use Orchestra\Foundation\Meta;
+use PHPUnit\Framework\TestCase;
 
-class MetaTest extends \PHPUnit_Framework_TestCase
+class MetaTest extends TestCase
 {
     /**
      * Setup the test environment.

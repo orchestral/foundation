@@ -3,9 +3,10 @@
 namespace Orchestra\Foundation\TestCase\Jobs;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Jobs\RefreshRouteCache;
 
-class RefreshRouteCacheTest extends \PHPUnit_Framework_TestCase
+class RefreshRouteCacheTest extends TestCase
 {
     /**
      * Teardown the test environment.

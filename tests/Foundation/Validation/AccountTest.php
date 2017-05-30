@@ -3,9 +3,10 @@
 namespace Orchestra\Foundation\TestCase\Validation;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Validation\Account;
 
-class AccountTest extends \PHPUnit_Framework_TestCase
+class AccountTest extends TestCase
 {
     /**
      * Teardown the test environment.

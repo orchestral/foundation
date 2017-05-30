@@ -3,12 +3,13 @@
 namespace Orchestra\Foundation\TestCase\Bootstrap;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Container\Container;
-use Illuminate\Support\Facades\Facade;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Facade;
 use Orchestra\Foundation\Bootstrap\NotifyIfSafeMode;
 
-class NotifyIfSafeModeTest extends \PHPUnit_Framework_TestCase
+class NotifyIfSafeModeTest extends TestCase
 {
     /**
      * Application instance.

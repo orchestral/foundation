@@ -3,9 +3,10 @@
 namespace Orchestra\Foundation\TestCase\Http\Middleware;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Http\Middleware\UseBackendTheme;
 
-class UseBackendThemeTest extends \PHPUnit_Framework_TestCase
+class UseBackendThemeTest extends TestCase
 {
     /**
      * Teardown the test environment.

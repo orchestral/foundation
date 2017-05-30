@@ -4,9 +4,10 @@ namespace Orchestra\Foundation\TestCase\Traits;
 
 use Mockery as m;
 use Carbon\Carbon;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Traits\Timezone;
 
-class TimezoneTest extends \PHPUnit_Framework_TestCase
+class TimezoneTest extends TestCase
 {
     use Timezone;
 

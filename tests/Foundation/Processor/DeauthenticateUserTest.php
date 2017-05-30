@@ -3,9 +3,10 @@
 namespace Orchestra\Foundation\TestCase\Processor;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Processor\DeauthenticateUser;
 
-class DeauthenticateUserTest extends \PHPUnit_Framework_TestCase
+class DeauthenticateUserTest extends TestCase
 {
     /**
      * Teardown the test environment.

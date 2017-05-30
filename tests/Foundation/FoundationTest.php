@@ -3,12 +3,13 @@
 namespace Orchestra\Foundation\TestCase;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Foundation;
 use Orchestra\Foundation\Application;
 use Illuminate\Support\Facades\Facade;
 use Orchestra\Foundation\RouteResolver;
 
-class FoundationTest extends \PHPUnit_Framework_TestCase
+class FoundationTest extends TestCase
 {
     /**
      * Application instance.
