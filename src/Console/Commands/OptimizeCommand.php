@@ -18,12 +18,6 @@ class OptimizeCommand extends Command
     {
         $preloader = (new Factory())->create(['skip' => true]);
 
-        $path = $this->laravel->getCachedCompilePath();
-
-        if (file_exists($path)) {
-            unlink($path);
-        }
-
         $handle = $preloader->prepareOutput($path.'.tmp');
 
         foreach ($this->getClassFiles() as $file) {

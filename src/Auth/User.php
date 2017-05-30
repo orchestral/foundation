@@ -101,7 +101,7 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
             case 'mail':
                 return $this->getRecipientEmail();
             case 'nexmo':
-                return $this->phone_number;
+                return $this->getAttribute('phone_number');
         }
     }
 }
