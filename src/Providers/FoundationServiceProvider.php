@@ -109,7 +109,7 @@ class FoundationServiceProvider extends ServiceProvider
     protected function registerThrottlesLogins()
     {
         $config    = $this->app->make('config')->get('orchestra/foundation::throttle', []);
-        $throttles = isset($config['resolver']) ? $config['resolver'] : BasicThrottle::class;
+        $throttles = $config['resolver'] ?? BasicThrottle::class;
 
         $this->app->bind(ThrottlesLogins::class, $throttles);
 

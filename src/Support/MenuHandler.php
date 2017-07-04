@@ -93,7 +93,7 @@ abstract class MenuHandler
         $menu = $this->handler->add($this->name, $this->getAttribute('position'))
                     ->title($this->getAttribute('title'))
                     ->link($this->getAttribute('link'))
-                    ->handles(Arr::get($this->menu, 'link'));
+                    ->handles($this->menu['link'] ?? null);
 
         $this->attachIcon($menu);
         $this->handleNestedMenu();
@@ -121,7 +121,7 @@ abstract class MenuHandler
     public function getAttribute($name)
     {
         $method = 'get'.ucfirst($name).'Attribute';
-        $value  = isset($this->menu[$name]) ? $this->menu[$name] : null;
+        $value  = $this->menu[$name] ?? null;
 
         if (method_exists($this, $method)) {
             return $this->container->call([$this, $method], ['value' => $value]);
@@ -169,7 +169,7 @@ abstract class MenuHandler
     public function prepare()
     {
         $id       = $this->getAttribute('id');
-        $menus    = isset($this->menu['with']) ? $this->menu['with'] : [];
+        $menus    = $this->menu['with'] ?? [];
         $parent   = $this->getAttribute('position');
         $position = Str::startsWith($parent, '^:') ? $parent.'.' : '^:';
 

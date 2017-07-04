@@ -44,8 +44,8 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
     public function index(UserViewerListener $listener, array $input = [])
     {
         $search = [
-            'keyword' => Arr::get($input, 'q', ''),
-            'roles'   => Arr::get($input, 'roles', []),
+            'keyword' => $input['q'] ?? '',
+            'roles'   => $input['roles'] ?? [],
         ];
 
         // Get Users (with roles) and limit it to only 30 results for

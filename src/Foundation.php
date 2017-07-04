@@ -172,7 +172,7 @@ class Foundation extends RouteManager implements FoundationContract
         }
 
         $attributes['middleware'] = array_unique(array_merge(
-            isset($attributes['middleware']) ? $attributes['middleware'] : [], ['orchestra']
+            $attributes['middleware'] ?? [], ['orchestra']
         ));
 
         $this->group('orchestra/foundation', 'orchestra', $attributes, $callback);

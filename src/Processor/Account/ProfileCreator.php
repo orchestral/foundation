@@ -45,7 +45,7 @@ class ProfileCreator extends User implements Command
     public function store(Listener $listener, array $input)
     {
         $random   = Str::random(5);
-        $password = Arr::get($input, 'password');
+        $password = $input['password'] ?? null;
 
         if (empty($password)) {
             $password = $random;

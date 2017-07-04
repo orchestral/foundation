@@ -90,7 +90,7 @@ abstract class Throttle
      */
     protected function maxLoginAttempts()
     {
-        return Arr::get(static::$config, 'attempts', 5);
+        return static::$config['attempts'] ?? 5;
     }
 
     /**
@@ -100,7 +100,7 @@ abstract class Throttle
      */
     protected function lockoutTime()
     {
-        return Arr::get(static::$config, 'locked_for', 60);
+        return static::$config['locked_for'] ?? 60;
     }
 
     /**

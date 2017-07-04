@@ -34,7 +34,7 @@ class Without extends Throttle implements Command
      */
     public function getSecondsBeforeNextAttempts()
     {
-        return Arr::get(static::$config, 'locked_for', 60);
+        return static::$config['locked_for'] ?? 60;
     }
 
     /**

@@ -64,7 +64,7 @@ class AuthenticateUser extends Authenticate implements Command
      */
     protected function authenticate(array $input)
     {
-        $remember = (isset($input['remember']) && $input['remember'] === 'yes');
+        $remember = (($input['remember'] ?? 'no') === 'yes');
 
         $data = Arr::except($input, ['remember']);
 
