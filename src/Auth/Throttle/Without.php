@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation\Auth\Throttle;
 
-use Illuminate\Support\Arr;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins as Command;
 
 class Without extends Throttle implements Command

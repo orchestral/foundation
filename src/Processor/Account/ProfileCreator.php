@@ -4,7 +4,6 @@ namespace Orchestra\Foundation\Processor\Account;
 
 use Exception;
 use Orchestra\Support\Str;
-use Illuminate\Support\Arr;
 use Orchestra\Model\User as Eloquent;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Support\Facades\Foundation;

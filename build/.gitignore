@@ -1,6 +1,0 @@
-coverage/*
-logs/*
-!code-browser/.gitignore
-!coverage/.gitignore
-!logs/.gitignore
-!pdepend/.gitignore

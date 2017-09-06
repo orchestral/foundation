@@ -136,6 +136,20 @@ class Application extends BaseApplication implements ApplicationContract
     {
         parent::flush();
 
+        $this->booted              = false;
         $this->hasBeenBootstrapped = false;
+
+        $this->bootingCallbacks = [];
+        $this->bootedCallbacks = [];
+        $this->reboundCallbacks = [];
+        $this->resolvingCallbacks = [];
+        $this->terminatingCallbacks = [];
+        $this->afterResolvingCallbacks = [];
+        $this->globalResolvingCallbacks = [];
+
+        $this->middlewares = [];
+        $this->serviceProviders = [];
+        $this->deferredServices = [];
+        $this->buildStack = [];
     }
 }

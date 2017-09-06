@@ -3,7 +3,6 @@
 namespace Orchestra\Foundation\Processor;
 
 use Exception;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Orchestra\Model\User as Eloquent;

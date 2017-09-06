@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation\Validation;
 
-use Laravie\Authen\Authen;
 use Orchestra\Support\Validator;
 
 class Account extends Validator

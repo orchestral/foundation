@@ -5,7 +5,6 @@ namespace Orchestra\Foundation;
 use Closure;
 use Exception;
 use Orchestra\Http\RouteManager;
-use Orchestra\Extension\RouteGenerator;
 use Orchestra\Contracts\Memory\Provider;
 use Orchestra\Foundation\Http\Handlers\UserMenuHandler;
 use Orchestra\Foundation\Http\Handlers\SettingMenuHandler;
