@@ -30,7 +30,7 @@
         "laravie/authen": "~1.1",
         "laravie/html": "~5.4.0",
         "orchestra/asset": "~3.4.0",
-        "orchestra/auth": "~3.4.0",
+        "orchestra/auth": "~3.4.1",
         "orchestra/contracts": "~3.4.0",
         "orchestra/extension": "~3.4.0",
         "orchestra/html": "~3.4.0",
