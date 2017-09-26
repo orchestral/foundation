@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+## 3.4.1
+
+Released: 2017-09-26
+
+### Fixes
+
+* Fixes `remember_me` timing attack vector.
+
 ## 3.4.0
 
 Released: 2017-05-30
