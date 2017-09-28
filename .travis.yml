@@ -5,6 +5,7 @@ sudo: false
 php:
   - 7.0
   - 7.1
+  - 7.2
 
 env:
   global:
@@ -35,6 +36,6 @@ matrix:
     - php: 7.0
       env: setup=coveralls coverage=yes
   allow_failures:
-    - env: setup=stable
+    - env: setup=lowest
     - env: setup=coveralls coverage=yes
   fast_finish: true

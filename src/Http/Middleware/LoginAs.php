@@ -39,8 +39,8 @@ class LoginAs
      */
     public function __construct(Authorization $acl, Guard $auth, ResponseFactory $response)
     {
-        $this->acl      = $acl;
-        $this->auth     = $auth;
+        $this->acl = $acl;
+        $this->auth = $auth;
         $this->response = $response;
     }
 

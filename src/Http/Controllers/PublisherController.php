@@ -54,7 +54,7 @@ class PublisherController extends AdminController implements Listener
      */
     public function publish(AssetPublisher $processor)
     {
-        $input        = Input::only(['host', 'user', 'password']);
+        $input = Input::only(['host', 'user', 'password']);
         $input['ssl'] = (Input::get('connection-type', 'sftp') === 'sftp');
 
         return $processor->publish($this, $input);

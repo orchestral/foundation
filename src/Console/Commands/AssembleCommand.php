@@ -47,7 +47,7 @@ class AssembleCommand extends Command
     public function __construct(Foundation $foundation, Provider $memory)
     {
         $this->foundation = $foundation;
-        $this->memory     = $memory;
+        $this->memory = $memory;
 
         parent::__construct();
     }

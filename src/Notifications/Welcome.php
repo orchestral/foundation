@@ -45,7 +45,7 @@ class Welcome extends Notification
      */
     public function toMail($notifiable)
     {
-        $email    = $notifiable->email;
+        $email = $notifiable->email;
         $password = $this->password;
 
         $message = new MailMessage();

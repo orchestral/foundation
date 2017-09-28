@@ -4,7 +4,6 @@ namespace Orchestra\Foundation\TestCase\Processor\Account;
 
 use Mockery as m;
 use Orchestra\Testing\TestCase;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Orchestra\Foundation\Processor\Account\PasswordUpdater;

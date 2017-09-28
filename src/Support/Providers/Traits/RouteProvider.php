@@ -76,7 +76,7 @@ trait RouteProvider
     {
         if (is_array($namespace)) {
             $attributes = $namespace;
-            $namespace  = '';
+            $namespace = '';
         }
 
         if (! is_null($namespace)) {

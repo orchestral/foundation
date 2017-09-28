@@ -29,7 +29,7 @@ class PasswordBroker extends Processor implements Command
     public function __construct(Validator $validator, Password $password)
     {
         $this->validator = $validator;
-        $this->password  = $password;
+        $this->password = $password;
     }
 
     /**

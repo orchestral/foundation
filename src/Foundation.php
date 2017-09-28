@@ -90,9 +90,9 @@ class Foundation extends RouteManager implements FoundationContract
         $this->widget = null;
 
         $this->services = [
-            'acl'    => null,
+            'acl' => null,
             'memory' => null,
-            'menu'   => null,
+            'menu' => null,
         ];
     }
 
@@ -162,7 +162,7 @@ class Foundation extends RouteManager implements FoundationContract
     public function namespaced($namespace, $attributes = [], Closure $callback = null)
     {
         if ($attributes instanceof Closure) {
-            $callback   = $attributes;
+            $callback = $attributes;
             $attributes = [];
         }
 
@@ -282,7 +282,7 @@ class Foundation extends RouteManager implements FoundationContract
      */
     protected function createAdminMenu()
     {
-        $menu   = $this->menu();
+        $menu = $this->menu();
         $events = $this->app->make('events');
 
         $handlers = [

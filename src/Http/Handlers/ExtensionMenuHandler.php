@@ -13,11 +13,11 @@ class ExtensionMenuHandler extends MenuHandler
      * @var array
      */
     protected $menu = [
-        'id'       => 'extensions',
+        'id' => 'extensions',
         'position' => '>:home',
-        'title'    => 'orchestra/foundation::title.extensions.list',
-        'link'     => 'orchestra::extensions',
-        'icon'     => 'cubes',
+        'title' => 'orchestra/foundation::title.extensions.list',
+        'link' => 'orchestra::extensions',
+        'icon' => 'cubes',
     ];
 
     /**
@@ -41,6 +41,6 @@ class ExtensionMenuHandler extends MenuHandler
      */
     public function authorize(Authorization $acl)
     {
-        return ($this->container->bound('orchestra.extension') && $acl->canIf('manage-orchestra'));
+        return $this->container->bound('orchestra.extension') && $acl->canIf('manage-orchestra');
     }
 }

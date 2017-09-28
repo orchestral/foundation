@@ -21,7 +21,7 @@ class PasswordUpdater extends User implements Command
     public function edit(Listener $listener)
     {
         $eloquent = Auth::user();
-        $form     = $this->presenter->password($eloquent);
+        $form = $this->presenter->password($eloquent);
 
         return $listener->showPasswordChanger(['eloquent' => $eloquent, 'form' => $form]);
     }

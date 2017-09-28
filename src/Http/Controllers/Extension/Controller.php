@@ -3,8 +3,8 @@
 namespace Orchestra\Foundation\Http\Controllers\Extension;
 
 use Illuminate\Support\Fluent;
-use Orchestra\Foundation\Http\Controllers\AdminController;
 use Orchestra\Contracts\Extension\Listener\Extension;
+use Orchestra\Foundation\Http\Controllers\AdminController;
 
 abstract class Controller extends AdminController implements Extension
 {

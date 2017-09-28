@@ -33,7 +33,7 @@ class AssetPublisher extends Processor implements Command
     public function __construct(PublisherManager $publisher, Store $session)
     {
         $this->publisher = $publisher;
-        $this->session   = $session;
+        $this->session = $session;
     }
 
     /**

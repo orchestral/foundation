@@ -24,7 +24,7 @@ class Extension extends Presenter
      */
     public function __construct(ExtensionContract $extension, FormFactory $form)
     {
-        $this->form      = $form;
+        $this->form = $form;
         $this->extension = $extension;
     }
 
@@ -41,7 +41,7 @@ class Extension extends Presenter
         return $this->form->of("orchestra.extension: {$name}", function (FormGrid $form) use ($model, $name) {
             $form->setup($this, "orchestra::extensions/{$name}/configure", $model);
 
-            $handles      = data_get($model, 'handles', $this->extension->option($name, 'handles'));
+            $handles = data_get($model, 'handles', $this->extension->option($name, 'handles'));
             $configurable = data_get($model, 'configurable', true);
 
             if (! is_null($handles) && $configurable !== false) {

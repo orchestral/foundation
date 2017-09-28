@@ -12,9 +12,9 @@ class User extends Validator
      * @var array
      */
     protected $rules = [
-        'email'    => ['required', 'email'],
+        'email' => ['required', 'email'],
         'fullname' => ['required'],
-        'roles'    => ['required'],
+        'roles' => ['required'],
     ];
 
     /**

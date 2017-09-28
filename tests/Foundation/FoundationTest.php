@@ -260,11 +260,10 @@ class FoundationTest extends TestCase
     public function testNamespacedMethod()
     {
         $stub = m::mock('\Orchestra\Foundation\Foundation[group]', [
-            $this->app, new RouteResolver($this->app)
+            $this->app, new RouteResolver($this->app),
         ]);
 
         $closure = function () {
-
         };
 
         $middleware = ['orchestra'];
