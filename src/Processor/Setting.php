@@ -34,7 +34,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
     {
         $this->presenter = $presenter;
         $this->validator = $validator;
-        $this->memory    = $memory;
+        $this->memory = $memory;
     }
 
     /**
@@ -51,23 +51,23 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
         $memory = $this->memory;
 
         $eloquent = new Fluent([
-            'site_name'        => $memory->get('site.name', ''),
+            'site_name' => $memory->get('site.name', ''),
             'site_description' => $memory->get('site.description', ''),
             'site_registrable' => ($memory->get('site.registrable', false) ? 'yes' : 'no'),
 
-            'email_driver'     => $memory->get('email.driver', ''),
-            'email_address'    => $memory->get('email.from.address', ''),
-            'email_host'       => $memory->get('email.host', ''),
-            'email_port'       => $memory->get('email.port', ''),
-            'email_username'   => $memory->get('email.username', ''),
-            'email_password'   => $memory->secureGet('email.password', ''),
+            'email_driver' => $memory->get('email.driver', ''),
+            'email_address' => $memory->get('email.from.address', ''),
+            'email_host' => $memory->get('email.host', ''),
+            'email_port' => $memory->get('email.port', ''),
+            'email_username' => $memory->get('email.username', ''),
+            'email_password' => $memory->secureGet('email.password', ''),
             'email_encryption' => $memory->get('email.encryption', ''),
-            'email_sendmail'   => $memory->get('email.sendmail', ''),
-            'email_queue'      => ($memory->get('email.queue', false) ? 'yes' : 'no'),
-            'email_key'        => $memory->secureGet('email.key', ''),
-            'email_secret'     => $memory->secureGet('email.secret', ''),
-            'email_domain'     => $memory->get('email.domain', ''),
-            'email_region'     => $memory->get('email.region', ''),
+            'email_sendmail' => $memory->get('email.sendmail', ''),
+            'email_queue' => ($memory->get('email.queue', false) ? 'yes' : 'no'),
+            'email_key' => $memory->secureGet('email.key', ''),
+            'email_secret' => $memory->secureGet('email.secret', ''),
+            'email_domain' => $memory->get('email.domain', ''),
+            'email_region' => $memory->get('email.region', ''),
         ]);
 
         $form = $this->presenter->form($eloquent);
@@ -87,7 +87,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
      */
     public function update(SettingUpdateListener $listener, array $input)
     {
-        $input  = new Fluent($input);
+        $input = new Fluent($input);
         $driver = $this->getValue($input['email_driver'], 'mail.driver');
 
         $validation = $this->validator->on($driver)->with($input->toArray());
@@ -105,7 +105,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
 
         $memory->put('email.from', [
             'address' => $this->getValue($input['email_address'], 'mail.from.address'),
-            'name'    => $input['site_name'],
+            'name' => $input['site_name'],
         ]);
 
         if ((empty($input['email_password']) && $input['enable_change_password'] === 'no')) {

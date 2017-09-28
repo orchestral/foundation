@@ -136,7 +136,7 @@ class Application extends BaseApplication implements ApplicationContract
     {
         parent::flush();
 
-        $this->booted= false;
+        $this->booted = false;
         $this->hasBeenBootstrapped = false;
 
         $this->bootingCallbacks = [];

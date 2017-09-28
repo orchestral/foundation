@@ -57,7 +57,7 @@ class Setting extends Presenter
                 ->attributes(['role' => 'agreement'])
                 ->options([
                     'yes' => 'Yes',
-                    'no'  => 'No',
+                    'no' => 'No',
                 ]);
         });
     }
@@ -76,12 +76,12 @@ class Setting extends Presenter
             $fieldset->control('select', 'email_driver')
                 ->label(trans('orchestra/foundation::label.email.driver'))
                 ->options([
-                    'mail'      => 'Mail',
-                    'smtp'      => 'SMTP',
-                    'sendmail'  => 'Sendmail',
-                    'ses'       => 'Amazon SES',
-                    'mailgun'   => 'Mailgun',
-                    'mandrill'  => 'Mandrill',
+                    'mail' => 'Mail',
+                    'smtp' => 'SMTP',
+                    'sendmail' => 'Sendmail',
+                    'ses' => 'Amazon SES',
+                    'mailgun' => 'Mailgun',
+                    'mandrill' => 'Mandrill',
                     'sparkpost' => 'SparkPost',
                 ]);
 
@@ -100,9 +100,9 @@ class Setting extends Presenter
             $fieldset->control('input:password', 'email_password')
                 ->label(trans('orchestra/foundation::label.email.password'))
                 ->help(view('orchestra/foundation::settings._hidden', [
-                    'value'  => $model['email_password'],
+                    'value' => $model['email_password'],
                     'action' => 'change_password',
-                    'field'  => 'email_password',
+                    'field' => 'email_password',
                 ]));
 
             $fieldset->control('input:text', 'email_encryption')
@@ -114,9 +114,9 @@ class Setting extends Presenter
             $fieldset->control('input:password', 'email_secret')
                 ->label(trans('orchestra/foundation::label.email.secret'))
                 ->help(view('orchestra/foundation::settings._hidden', [
-                    'value'  => $model['email_secret'],
+                    'value' => $model['email_secret'],
                     'action' => 'change_secret',
-                    'field'  => 'email_secret',
+                    'field' => 'email_secret',
                 ]));
 
             $fieldset->control('input:text', 'email_domain')
@@ -138,7 +138,7 @@ class Setting extends Presenter
                 ->attributes(['role' => 'agreement'])
                 ->options([
                     'yes' => 'Yes',
-                    'no'  => 'No',
+                    'no' => 'No',
                 ]);
         });
     }

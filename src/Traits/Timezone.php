@@ -46,7 +46,7 @@ trait Timezone
             return $datetime;
         }
 
-        $userId       = $this->auth->user()->id;
+        $userId = $this->auth->user()->id;
         $userTimeZone = $this->memory->get("timezone.{$userId}", $appTimeZone);
 
         $datetime->timezone = $userTimeZone;
@@ -70,9 +70,9 @@ trait Timezone
             return $this->convertToDateTime($datetime, $appTimeZone);
         }
 
-        $userId       = $this->auth->user()->id;
+        $userId = $this->auth->user()->id;
         $userTimeZone = $this->memory->get("timezone.{$userId}", $appTimeZone);
-        $datetime     = $this->convertToDateTime($datetime, $userTimeZone);
+        $datetime = $this->convertToDateTime($datetime, $userTimeZone);
 
         $datetime->timezone = $appTimeZone;
 

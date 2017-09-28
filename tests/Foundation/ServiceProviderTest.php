@@ -92,7 +92,7 @@ class ServiceProviderTest extends TestCase
     /**
      * Get value of Orchestra\Foundation\Providers\SupportServiceProvider::provides().
      *
-     * @return array.
+     * @return array
      */
     protected function getSupportProvides()
     {

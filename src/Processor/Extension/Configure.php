@@ -44,7 +44,7 @@ class Configure extends Processor implements Command
 
         // Load configuration from memory.
         $activeConfig = (array) $memory->get("extensions.active.{$extension->get('name')}.config", []);
-        $baseConfig   = (array) $memory->get("extension_{$extension->get('name')}", []);
+        $baseConfig = (array) $memory->get("extension_{$extension->get('name')}", []);
 
         $eloquent = new Fluent(array_merge($activeConfig, $baseConfig));
 
@@ -83,9 +83,9 @@ class Configure extends Processor implements Command
 
         $memory = Foundation::memory();
         $config = (array) $memory->get("extension.active.{$extension->get('name')}.config", []);
-        $input  = new Fluent(array_merge($config, $input));
+        $input = new Fluent(array_merge($config, $input));
 
-        Event::fire("orchestra.saving: extension.{$extension->get('name')}", [& $input]);
+        Event::fire("orchestra.saving: extension.{$extension->get('name')}", [&$input]);
 
         $memory->put("extensions.active.{$extension->get('name')}.config", $input->getAttributes());
         $memory->put("extension_{$extension->get('name')}", $input->getAttributes());

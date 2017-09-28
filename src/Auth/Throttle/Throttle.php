@@ -15,7 +15,7 @@ abstract class Throttle
      * @var array
      */
     protected static $config = [
-        'attempts'   => 5,
+        'attempts' => 5,
         'locked_for' => 60,
     ];
 
@@ -111,7 +111,7 @@ abstract class Throttle
     protected function getUniqueLoginKey()
     {
         $key = $this->request->input($this->loginKey);
-        $ip  = $this->request->ip();
+        $ip = $this->request->ip();
 
         return mb_strtolower($key).$ip;
     }

@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation\Validation;
 
-use Laravie\Authen\Authen;
 use Orchestra\Support\Validator;
 
 class Account extends Validator
@@ -13,7 +12,7 @@ class Account extends Validator
      * @var array
      */
     protected $rules = [
-        'email'    => ['required', 'email'],
+        'email' => ['required', 'email'],
         'fullname' => ['required'],
     ];
 
@@ -34,8 +33,8 @@ class Account extends Validator
     protected function onRegister()
     {
         $this->rules = array_replace($this->rules, [
-            'email'                 => ['required', 'email', 'unique:users,email'],
-            'password'              => ['sometimes', 'required'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['sometimes', 'required'],
             'password_confirmation' => ['sometimes', 'same:password'],
         ]);
 
@@ -51,7 +50,7 @@ class Account extends Validator
     {
         $this->rules = [
             'current_password' => ['required'],
-            'new_password'     => ['required', 'different:current_password'],
+            'new_password' => ['required', 'different:current_password'],
             'confirm_password' => ['same:new_password'],
         ];
 

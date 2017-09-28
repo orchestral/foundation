@@ -173,10 +173,10 @@ class UserTest extends TestCase
         $app['auth'] = m::mock('\Illuminate\Contracts\Auth\Guard');
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
         $app['html']->shouldReceive('link')->once()
-                ->with(handles("orchestra/foundation::users/1/edit"), m::any(), m::type('Array'))
+                ->with(handles('orchestra/foundation::users/1/edit'), m::any(), m::type('Array'))
                 ->andReturn('edit')
             ->shouldReceive('link')->once()
-                ->with(handles("orchestra/foundation::users/1/delete"), m::any(), m::type('Array'))
+                ->with(handles('orchestra/foundation::users/1/delete'), m::any(), m::type('Array'))
                 ->andReturn('delete')
             ->shouldReceive('raw')->once()->with('editdelete')->andReturn('raw-edit')
             ->shouldReceive('create')->once()

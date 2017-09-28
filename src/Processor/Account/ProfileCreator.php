@@ -23,7 +23,7 @@ class ProfileCreator extends User implements Command
     public function create(Listener $listener)
     {
         $eloquent = Foundation::make('orchestra.user');
-        $form     = $this->presenter->profile($eloquent, 'orchestra::register');
+        $form = $this->presenter->profile($eloquent, 'orchestra::register');
 
         $form->extend(function ($form) {
             $form->submit = 'orchestra/foundation::title.register';
@@ -44,7 +44,7 @@ class ProfileCreator extends User implements Command
      */
     public function store(Listener $listener, array $input)
     {
-        $random   = Str::random(5);
+        $random = Str::random(5);
         $password = Arr::get($input, 'password');
 
         if (empty($password)) {

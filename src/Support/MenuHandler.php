@@ -22,12 +22,12 @@ abstract class MenuHandler
      * @var array
      */
     protected $menu = [
-        'id'       => null,
+        'id' => null,
         'position' => '*',
-        'title'    => null,
-        'link'     => '#',
-        'icon'     => null,
-        'with'     => [],
+        'title' => null,
+        'link' => '#',
+        'icon' => null,
+        'with' => [],
     ];
 
     /**
@@ -66,7 +66,7 @@ abstract class MenuHandler
     public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->handler   = $container->make('orchestra.platform.menu');
+        $this->handler = $container->make('orchestra.platform.menu');
     }
 
     /**
@@ -121,7 +121,7 @@ abstract class MenuHandler
     public function getAttribute($name)
     {
         $method = 'get'.ucfirst($name).'Attribute';
-        $value  = isset($this->menu[$name]) ? $this->menu[$name] : null;
+        $value = isset($this->menu[$name]) ? $this->menu[$name] : null;
 
         if (method_exists($this, $method)) {
             return $this->container->call([$this, $method], ['value' => $value]);
@@ -168,9 +168,9 @@ abstract class MenuHandler
      */
     public function prepare()
     {
-        $id       = $this->getAttribute('id');
-        $menus    = isset($this->menu['with']) ? $this->menu['with'] : [];
-        $parent   = $this->getAttribute('position');
+        $id = $this->getAttribute('id');
+        $menus = isset($this->menu['with']) ? $this->menu['with'] : [];
+        $parent = $this->getAttribute('position');
         $position = Str::startsWith($parent, '^:') ? $parent.'.' : '^:';
 
         foreach ((array) $menus as $class) {
@@ -183,7 +183,7 @@ abstract class MenuHandler
             }
         }
 
-        $this->name    = $id;
+        $this->name = $id;
         $this->enabled = $this->passesAuthorization();
 
         return $this;

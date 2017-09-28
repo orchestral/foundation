@@ -74,7 +74,7 @@ class LoadExpressoTest extends TestCase
                 ->andReturn('{site.name} (Page {page.number})')
             ->shouldReceive('get')->once()
                 ->with('html::title.format.page', '{page.title} &mdash; {site.name}')
-                ->andReturn('{page.title} &mdash; {site.name}');;
+                ->andReturn('{page.title} &mdash; {site.name}');
 
         Paginator::currentPageResolver(function () {
             return 5;

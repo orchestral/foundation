@@ -48,7 +48,7 @@ class SettingsControllerTest extends TestCase
     public function testGetIndexAction()
     {
         $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
-        list($presenter, ) = $this->bindDependencies();
+        list($presenter) = $this->bindDependencies();
 
         $memory->shouldReceive('get')->times(13)->andReturn('')
             ->shouldReceive('secureGet')->times(3)->andReturn('');

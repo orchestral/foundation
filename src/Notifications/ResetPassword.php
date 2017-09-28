@@ -30,7 +30,7 @@ class ResetPassword extends Notification
      */
     public function __construct($token, $provider = 'users')
     {
-        $this->token    = $token;
+        $this->token = $token;
         $this->provider = $provider;
     }
 
@@ -55,10 +55,10 @@ class ResetPassword extends Notification
      */
     public function toMail($notifiable)
     {
-        $email   = urlencode($notifiable->getEmailForPasswordReset());
+        $email = urlencode($notifiable->getEmailForPasswordReset());
         $expired = config("auth.passwords.{$this->provider}.expire", 60);
-        $url     = config('orchestra/foundation::routes.reset', 'orchestra::forgot/reset');
-        $title   = trans('orchestra/foundation::email.forgot.title');
+        $url = config('orchestra/foundation::routes.reset', 'orchestra::forgot/reset');
+        $title = trans('orchestra/foundation::email.forgot.title');
 
         $message = new MailMessage();
 
