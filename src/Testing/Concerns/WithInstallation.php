@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Foundation\Testing\Traits;
+namespace Orchestra\Foundation\Testing\Concerns;
 
 use Illuminate\Support\Arr;
 use Orchestra\Installation\Installation;

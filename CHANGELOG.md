@@ -2,6 +2,15 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+## 3.4.2
+
+Released: 2017-09-28
+
+### Added
+
+* Add `Orchestra\Foundation\Testing\Concerns\WithInstallation` trait.
+* Add `Orchestra\Foundation\Testing\Installation` test helper.
+
 ## 3.4.1
 
 Released: 2017-09-26
