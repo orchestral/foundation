@@ -147,7 +147,6 @@ class Application extends BaseApplication implements ApplicationContract
         $this->afterResolvingCallbacks = [];
         $this->globalResolvingCallbacks = [];
 
-        $this->middlewares = [];
         $this->serviceProviders = [];
         $this->deferredServices = [];
         $this->buildStack = [];
