@@ -13,11 +13,11 @@ class UserMenuHandler extends MenuHandler
      * @var array
      */
     protected $menu = [
-        'id'       => 'users',
+        'id' => 'users',
         'position' => '*',
-        'title'    => 'orchestra/foundation::title.users.list',
-        'link'     => 'orchestra::users',
-        'icon'     => 'users',
+        'title' => 'orchestra/foundation::title.users.list',
+        'link' => 'orchestra::users',
+        'icon' => 'users',
     ];
 
     /**

@@ -49,9 +49,9 @@ class Can
     public function __construct(Foundation $foundation, Guard $auth, Repository $config, ResponseFactory $response)
     {
         $this->foundation = $foundation;
-        $this->auth       = $auth;
-        $this->config     = $config;
-        $this->response   = $response;
+        $this->auth = $auth;
+        $this->config = $config;
+        $this->response = $response;
     }
 
     /**
@@ -102,7 +102,7 @@ class Can
         }
 
         $type = ($this->auth->guest() ? 'guest' : 'user');
-        $url  = $this->config->get("orchestra/foundation::routes.{$type}");
+        $url = $this->config->get("orchestra/foundation::routes.{$type}");
 
         return $this->response->redirectTo($this->foundation->handles($url));
     }

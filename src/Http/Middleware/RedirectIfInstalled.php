@@ -30,7 +30,7 @@ class RedirectIfInstalled extends Can
         }
 
         $type = ($this->auth->guest() ? 'guest' : 'user');
-        $url  = $this->config->get("orchestra/foundation::routes.{$type}");
+        $url = $this->config->get("orchestra/foundation::routes.{$type}");
 
         return $this->response->redirectTo($this->foundation->handles($url));
     }

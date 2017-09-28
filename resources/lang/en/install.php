@@ -1,67 +1,67 @@
 <?php
 
 return [
-    'process'       => 'Installation Process',
+    'process' => 'Installation Process',
     'hide-password' => 'Database password is hidden for security.',
-    'verify'        => 'Please ensure following configuration is correct based on your :filename.',
-    'solution'      => 'Solution',
+    'verify' => 'Please ensure following configuration is correct based on your :filename.',
+    'solution' => 'Solution',
 
-    'status'     => [
+    'status' => [
         'still' => 'Still Workable',
-        'work'  => 'Workable',
-        'not'   => 'Not Workable',
+        'work' => 'Workable',
+        'not' => 'Not Workable',
     ],
 
     'connection' => [
-        'status'  => 'Connection Status',
+        'status' => 'Connection Status',
         'success' => 'Successful',
-        'fail'    => 'Failed',
+        'fail' => 'Failed',
     ],
 
-    'auth'     => [
-        'title'       => 'Authentication Setting',
-        'driver'      => 'Driver',
-        'model'       => 'Model',
+    'auth' => [
+        'title' => 'Authentication Setting',
+        'driver' => 'Driver',
+        'model' => 'Model',
         'requirement' => [
-            'driver'     => 'Orchestra Platform require Auth using the Eloquent Driver',
+            'driver' => 'Orchestra Platform require Auth using the Eloquent Driver',
             'instanceof' => 'Model name should be an instance of :class',
         ],
     ],
 
     'database' => [
-        'title'    => 'Database Setting',
-        'host'     => 'Host',
-        'name'     => 'Database Name',
+        'title' => 'Database Setting',
+        'host' => 'Host',
+        'name' => 'Database Name',
         'password' => 'Password',
         'username' => 'Username',
-        'type'     => 'Database Type',
+        'type' => 'Database Type',
     ],
 
-    'steps'    => [
+    'steps' => [
         'requirement' => 'Check Requirements',
-        'account'     => 'Create Administrator',
+        'account' => 'Create Administrator',
         'application' => 'Application Information',
-        'done'        => 'Done',
+        'done' => 'Done',
     ],
 
-    'system'   => [
-        'title'       => 'System Requirement',
+    'system' => [
+        'title' => 'System Requirement',
         'description' => 'Please ensure the following requirement is profilled before installing Orchestra Platform.',
         'requirement' => 'Requirement',
-        'status'      => 'Status',
+        'status' => 'Status',
 
         'writableStorage' => [
-            'name'     => 'Writable to :path',
+            'name' => 'Writable to :path',
             'solution' => 'Change the directory permission to 0777, however it might cause a security issue if this folder is accessible from the web.',
         ],
         'writableAsset' => [
-            'name'     => 'Writable to :path',
+            'name' => 'Writable to :path',
             'solution' => 'Change the directory permission to 0777. Once installation is completed, please revert the permission to 0755.',
         ],
     ],
 
     'user' => [
-        'created'   => 'User created, you can now login to the administation page',
+        'created' => 'User created, you can now login to the administation page',
         'duplicate' => 'Unable to install when there already user registered.',
     ],
 ];

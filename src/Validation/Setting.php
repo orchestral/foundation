@@ -13,10 +13,10 @@ class Setting extends Validator
      * @var array
      */
     protected $rules = [
-        'site_name'     => ['required'],
+        'site_name' => ['required'],
         'email_address' => ['required', 'email'],
-        'email_driver'  => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill,sparkpost'],
-        'email_port'    => ['numeric'],
+        'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill,sparkpost'],
+        'email_port' => ['numeric'],
     ];
 
     /**
@@ -65,7 +65,7 @@ class Setting extends Validator
      */
     protected function onSes()
     {
-        $this->rules['email_key']    = ['required'];
+        $this->rules['email_key'] = ['required'];
         $this->rules['email_region'] = ['required', 'in:us-east-1,us-west-2,eu-west-1'];
     }
 
@@ -129,7 +129,7 @@ class Setting extends Validator
     protected function addRequiredForSecretField(ValidatorResolver $resolver, $field, $hidden)
     {
         $resolver->sometimes($field, 'required', function ($input) use ($hidden) {
-            return ($input->$hidden == 'yes');
+            return $input->$hidden == 'yes';
         });
     }
 }

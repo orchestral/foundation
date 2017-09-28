@@ -19,7 +19,7 @@ class ProfileUpdater extends User implements Command
     public function edit(Listener $listener)
     {
         $eloquent = Auth::user();
-        $form     = $this->presenter->profile($eloquent, 'orchestra::account');
+        $form = $this->presenter->profile($eloquent, 'orchestra::account');
 
         $this->fireEvent('form', [$eloquent, $form]);
 

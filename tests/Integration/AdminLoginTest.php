@@ -5,7 +5,7 @@ namespace Integration\TestCase;
 class AdminLoginTest extends TestCase
 {
     /**
-     * My test implementation
+     * My test implementation.
      */
     public function testItCantLoginInvalidUser()
     {
@@ -20,7 +20,7 @@ class AdminLoginTest extends TestCase
     }
 
     /**
-     * My test implementation
+     * My test implementation.
      */
     public function testItLoginValidUser()
     {

@@ -3,7 +3,6 @@
 namespace Orchestra\Foundation\TestCase\Http\Controllers;
 
 use Mockery as m;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -58,7 +57,7 @@ class UsersControllerTest extends TestCase
         $role = m::mock('\Orchestra\Model\Role');
         $table = m::mock('\Orchestra\Contracts\Html\Table\Builder');
 
-        list($presenter, ) = $this->bindDependencies();
+        list($presenter) = $this->bindDependencies();
 
         $user->shouldReceive('search')->once()->with('', [])->andReturn($user);
         $role->shouldReceive('pluck')->once()->with('name', 'id')->andReturn([]);
@@ -81,7 +80,7 @@ class UsersControllerTest extends TestCase
      */
     public function testGetCreateAction()
     {
-        list($presenter, ) = $this->bindDependencies();
+        list($presenter) = $this->bindDependencies();
 
         $presenter->shouldReceive('form')->once()->andReturn('form.users');
 
@@ -103,7 +102,7 @@ class UsersControllerTest extends TestCase
         $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
         $user = m::mock('\Orchestra\Model\User');
 
-        list($presenter, ) = $this->bindDependencies();
+        list($presenter) = $this->bindDependencies();
 
         $builder->shouldReceive('findOrFail')->once()->with('foo')->andReturn($user);
         $presenter->shouldReceive('form')->once()->andReturn('form.users');

@@ -144,7 +144,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
     public function passwordResetHasFailed($response)
     {
         $message = trans($response);
-        $token   = Request::input('token');
+        $token = Request::input('token');
 
         return $this->redirectWithMessage(handles("orchestra::forgot/reset/{$token}"), $message, 'error');
     }

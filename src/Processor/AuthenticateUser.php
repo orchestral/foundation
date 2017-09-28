@@ -135,7 +135,7 @@ class AuthenticateUser extends Authenticate implements Command
      */
     protected function hasTooManyAttempts(ThrottlesCommand $throttles = null)
     {
-        return ($throttles && $throttles->hasTooManyLoginAttempts());
+        return $throttles && $throttles->hasTooManyLoginAttempts();
     }
 
     /**

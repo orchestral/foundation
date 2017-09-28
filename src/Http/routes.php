@@ -63,14 +63,14 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', function (Router
 
     // Base routing.
     $router->match(['GET', 'HEAD'], '/', [
-        'as'     => 'orchestra.dashboard',
+        'as' => 'orchestra.dashboard',
         'before' => 'orchestra.installable',
-        'uses'   => 'DashboardController@show',
+        'uses' => 'DashboardController@show',
     ]);
 
     // File not found routing.
     $router->any('missing', [
-        'as'   => 'orchestra.404',
+        'as' => 'orchestra.404',
         'uses' => 'DashboardController@missing',
     ]);
 });

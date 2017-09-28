@@ -28,8 +28,8 @@ class User extends Presenter
      */
     public function __construct(Guard $auth, FormFactory $form, TableFactory $table)
     {
-        $this->user  = $auth->user();
-        $this->form  = $form;
+        $this->user = $auth->user();
+        $this->form = $form;
         $this->table = $table;
     }
 
@@ -176,13 +176,13 @@ class User extends Presenter
     protected function getActionsColumn()
     {
         return function ($row) {
-            $btn   = [];
+            $btn = [];
             $btn[] = app('html')->link(
                 handles("orchestra::users/{$row->id}/edit"),
                 trans('orchestra/foundation::label.edit'),
                 [
-                    'class'   => 'btn btn-xs btn-label btn-warning',
-                    'role'    => 'edit',
+                    'class' => 'btn btn-xs btn-label btn-warning',
+                    'role' => 'edit',
                     'data-id' => $row->id,
                 ]
             );
@@ -192,9 +192,9 @@ class User extends Presenter
                     handles("orchestra::users/{$row->id}"),
                     trans('orchestra/foundation::label.delete'),
                     [
-                        'class'       => 'btn btn-xs btn-label btn-danger',
-                        'role'        => 'delete',
-                        'data-id'     => $row->id,
+                        'class' => 'btn btn-xs btn-label btn-danger',
+                        'role' => 'delete',
+                        'data-id' => $row->id,
                         'data-method' => 'DELETE',
                     ]
                 );
@@ -222,7 +222,7 @@ class User extends Presenter
             foreach ($roles as $role) {
                 $value[] = app('html')->create('span', e($role->name), [
                     'class' => 'label label-info',
-                    'role'  => 'role',
+                    'role' => 'role',
                 ]);
             }
 

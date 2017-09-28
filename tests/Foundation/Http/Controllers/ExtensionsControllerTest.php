@@ -150,7 +150,7 @@ class ExtensionsControllerTest extends TestCase
     public function testGetConfigureAction()
     {
         $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
-        list($presenter, ) = $this->bindDependencies();
+        list($presenter) = $this->bindDependencies();
 
         $memory->shouldReceive('get')->once()
                 ->with('extensions.active.laravel/framework.config', [])->andReturn([])
@@ -210,7 +210,7 @@ class ExtensionsControllerTest extends TestCase
                 ->with('extension_laravel/framework', ['handles' => 'foo'])->andReturnNull();
 
         $validator->shouldReceive('with')->once()
-                ->with($input, ["orchestra.validate: extension.laravel/framework"])->andReturn($validator)
+                ->with($input, ['orchestra.validate: extension.laravel/framework'])->andReturn($validator)
             ->shouldReceive('fails')->once()->andReturn(false);
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
@@ -258,7 +258,7 @@ class ExtensionsControllerTest extends TestCase
         list(, $validator) = $this->bindDependencies();
 
         $validator->shouldReceive('with')->once()
-                ->with($input, ["orchestra.validate: extension.laravel/framework"])->andReturn($validator)
+                ->with($input, ['orchestra.validate: extension.laravel/framework'])->andReturn($validator)
             ->shouldReceive('getMessageBag')->once()->andReturn([])
             ->shouldReceive('fails')->once()->andReturn(true);
 

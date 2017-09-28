@@ -16,20 +16,20 @@ use Orchestra\Foundation\Auth\User;
 
 $factory->define(User::class, function (Generator $faker) {
     return [
-        'email'          => $faker->safeEmail,
-        'fullname'       => $faker->name,
-        'password'       => '$2y$10$ljMS3rXiNnM33rTw.UadO.jJ5xFwUzidc0pzMkJSmbBykB0.aAv0y',
+        'email' => $faker->safeEmail,
+        'fullname' => $faker->name,
+        'password' => '$2y$10$ljMS3rXiNnM33rTw.UadO.jJ5xFwUzidc0pzMkJSmbBykB0.aAv0y',
         'remember_token' => str_random(10),
-        'status'         => User::VERIFIED,
+        'status' => User::VERIFIED,
     ];
 });
 
 $factory->defineAs(User::class, 'admin', function (Generator $faker) {
     return [
-        'email'          => $faker->safeEmail,
-        'fullname'       => $faker->name,
-        'password'       => '$2y$10$ljMS3rXiNnM33rTw.UadO.jJ5xFwUzidc0pzMkJSmbBykB0.aAv0y',
+        'email' => $faker->safeEmail,
+        'fullname' => $faker->name,
+        'password' => '$2y$10$ljMS3rXiNnM33rTw.UadO.jJ5xFwUzidc0pzMkJSmbBykB0.aAv0y',
         'remember_token' => str_random(10),
-        'status'         => User::VERIFIED,
+        'status' => User::VERIFIED,
     ];
 });

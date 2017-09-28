@@ -42,8 +42,8 @@ class PublisherManager extends Manager
     public function execute()
     {
         $messages = $this->app->make('orchestra.messages');
-        $queues   = $this->queued();
-        $fails    = [];
+        $queues = $this->queued();
+        $fails = [];
 
         foreach ($queues as $queue) {
             try {

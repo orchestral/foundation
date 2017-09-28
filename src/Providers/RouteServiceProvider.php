@@ -39,14 +39,14 @@ class RouteServiceProvider extends ServiceProvider
      * @var array
      */
     protected $routeMiddleware = [
-        'orchestra.auth'        => Authenticate::class,
-        'orchestra.can'         => Can::class,
-        'orchestra.csrf'        => RequireCsrfToken::class,
-        'orchestra.guest'       => RedirectIfAuthenticated::class,
+        'orchestra.auth' => Authenticate::class,
+        'orchestra.can' => Can::class,
+        'orchestra.csrf' => RequireCsrfToken::class,
+        'orchestra.guest' => RedirectIfAuthenticated::class,
         'orchestra.installable' => CanBeInstalled::class,
-        'orchestra.installed'   => RedirectIfInstalled::class,
+        'orchestra.installed' => RedirectIfInstalled::class,
         'orchestra.registrable' => CanRegisterUser::class,
-        'orchestra.sudo'        => Reauthenticate::class,
+        'orchestra.sudo' => Reauthenticate::class,
     ];
 
     /**

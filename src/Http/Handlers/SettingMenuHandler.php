@@ -13,11 +13,11 @@ class SettingMenuHandler extends MenuHandler
      * @var array
      */
     protected $menu = [
-        'id'       => 'settings',
+        'id' => 'settings',
         'position' => '*',
-        'title'    => 'orchestra/foundation::title.settings.list',
-        'link'     => 'orchestra::settings',
-        'icon'     => 'cogs',
+        'title' => 'orchestra/foundation::title.settings.list',
+        'link' => 'orchestra::settings',
+        'icon' => 'cogs',
     ];
 
     /**

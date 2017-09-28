@@ -28,7 +28,7 @@ class PresenterTest extends TestCase
     public function testHandlesMethod()
     {
         $orchestra = m::mock('\Orchestra\Foundation\Foundation[handles]', [
-            $this->app, new RouteResolver($this->app)
+            $this->app, new RouteResolver($this->app),
         ]);
 
         $this->app->instance('orchestra.app', $orchestra);

@@ -1,88 +1,88 @@
 <?php
 
 return [
-    'add'    => 'Add',
+    'add' => 'Add',
     'cancel' => 'Cancel',
     'delete' => 'Delete',
-    'edit'   => 'Edit',
-    'next'   => 'Next',
+    'edit' => 'Edit',
+    'next' => 'Next',
     'submit' => 'Submit',
-    'view'   => 'View',
+    'view' => 'View',
 
-    'name'        => 'Name',
+    'name' => 'Name',
     'description' => 'Description',
 
-    'no-data'      => 'No data at the moment',
+    'no-data' => 'No data at the moment',
     'no-extension' => 'No extension available at the moment',
 
     'account' => [
         'current_password' => 'Current Password',
-        'new_password'     => 'New Password',
+        'new_password' => 'New Password',
         'confirm_password' => 'Confirm Password',
     ],
 
     'email' => [
-        'driver'          => 'Driver',
-        'from'            => 'From Address',
-        'host'            => 'Host',
-        'port'            => 'Port',
-        'username'        => 'Username',
-        'password'        => 'Password',
-        'encryption'      => 'Encryption',
+        'driver' => 'Driver',
+        'from' => 'From Address',
+        'host' => 'Host',
+        'port' => 'Port',
+        'username' => 'Username',
+        'password' => 'Password',
+        'encryption' => 'Encryption',
         'change_password' => 'Change Password',
-        'change_secret'   => 'Change API Secret',
-        'command'         => 'Sendmail Command',
-        'queue'           => 'Mail via Queue',
-        'key'             => 'API Key',
-        'secret'          => 'Secret Key',
-        'domain'          => 'Domain',
-        'region'          => 'API Region',
+        'change_secret' => 'Change API Secret',
+        'command' => 'Sendmail Command',
+        'queue' => 'Mail via Queue',
+        'key' => 'API Key',
+        'secret' => 'Secret Key',
+        'domain' => 'Domain',
+        'region' => 'API Region',
     ],
 
     'extensions' => [
-        'name'         => 'Extension',
-        'author'       => 'By :author',
-        'version'      => 'Version :version',
+        'name' => 'Extension',
+        'author' => 'By :author',
+        'version' => 'Version :version',
         'dependencies' => 'Dependencies',
-        'update'       => 'Update',
-        'handles'      => 'Handle URL',
+        'update' => 'Update',
+        'handles' => 'Handle URL',
 
         'actions' => [
-            'activate'   => 'Activate',
+            'activate' => 'Activate',
             'deactivate' => 'Deactivate',
-            'update'     => 'Migrate and Publish',
+            'update' => 'Migrate and Publish',
         ],
 
         'publisher' => [
-            'host'            => 'Host',
-            'user'            => 'User',
-            'password'        => 'Password',
+            'host' => 'Host',
+            'user' => 'User',
+            'password' => 'Password',
             'connection-type' => 'Connection Type',
         ],
     ],
 
     'paginations' => [
         'multiple' => 'Showing :from to :to of :total entries',
-        'single'   => 'Showing :from of :total entries',
+        'single' => 'Showing :from of :total entries',
     ],
 
-    'search'    => [
-        'button'  => 'Search',
-        'filter'  => 'Filter',
+    'search' => [
+        'button' => 'Search',
+        'filter' => 'Filter',
         'keyword' => 'Search keyword...',
     ],
 
     'settings' => [
-        'application'       => 'Application',
-        'mail'              => 'E-mail',
+        'application' => 'Application',
+        'mail' => 'E-mail',
         'user-registration' => 'Allow User Registration',
     ],
 
     'users' => [
-        'email'    => 'E-mail Address',
+        'email' => 'E-mail Address',
         'username' => 'Username',
         'fullname' => 'Full Name',
         'password' => 'Password',
-        'roles'    => 'Roles',
+        'roles' => 'Roles',
     ],
 ];

@@ -44,13 +44,13 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
     {
         $search = [
             'keyword' => $input['q'] ?? '',
-            'roles'   => $input['roles'] ?? [],
+            'roles' => $input['roles'] ?? [],
         ];
 
         // Get Users (with roles) and limit it to only 30 results for
         // pagination. Don't you just love it when pagination simply works.
         $eloquent = Foundation::make('orchestra.user')->search($search['keyword'], $search['roles']);
-        $roles    = Foundation::make('orchestra.role')->pluck('name', 'id');
+        $roles = Foundation::make('orchestra.role')->pluck('name', 'id');
 
         // Build users table HTML using a schema liked code structure.
         $table = $this->presenter->table($eloquent);
@@ -64,9 +64,9 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
 
         $data = [
             'eloquent' => $eloquent,
-            'roles'    => $roles,
-            'table'    => $table,
-            'search'   => $search,
+            'roles' => $roles,
+            'table' => $table,
+            'search' => $search,
         ];
 
         return $listener->showUsers($data);
@@ -82,7 +82,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
     public function create(UserCreatorListener $listener)
     {
         $eloquent = Foundation::make('orchestra.user');
-        $form     = $this->presenter->form($eloquent, 'create');
+        $form = $this->presenter->form($eloquent, 'create');
 
         $this->fireEvent('form', [$eloquent, $form]);
 
@@ -100,7 +100,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
     public function edit(UserUpdaterListener $listener, $id)
     {
         $eloquent = Foundation::make('orchestra.user')->findOrFail($id);
-        $form     = $this->presenter->form($eloquent, 'update');
+        $form = $this->presenter->form($eloquent, 'update');
 
         $this->fireEvent('form', [$eloquent, $form]);
 
@@ -125,7 +125,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
 
         $user = Foundation::make('orchestra.user');
 
-        $user->status   = Eloquent::UNVERIFIED;
+        $user->status = Eloquent::UNVERIFIED;
         $user->password = $input['password'];
 
         try {
@@ -216,10 +216,10 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
     protected function saving(Eloquent $user, $input = [], $type = 'create')
     {
         $beforeEvent = ($type === 'create' ? 'creating' : 'updating');
-        $afterEvent  = ($type === 'create' ? 'created' : 'updated');
+        $afterEvent = ($type === 'create' ? 'created' : 'updated');
 
         $user->fullname = $input['fullname'];
-        $user->email    = $input['email'];
+        $user->email = $input['email'];
 
         $this->fireEvent($beforeEvent, [$user]);
         $this->fireEvent('saving', [$user]);

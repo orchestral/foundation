@@ -1,41 +1,41 @@
 <?php
 
 return [
-    'home'     => 'Home',
-    'login'    => 'Login',
-    'logout'   => 'Logout',
+    'home' => 'Home',
+    'login' => 'Login',
+    'logout' => 'Logout',
     'register' => 'Register',
 
-    'remember-me'     => 'Remember Me',
+    'remember-me' => 'Remember Me',
     'forgot-password' => 'Forgot Password',
-    'reset-password'  => 'Reset Password',
+    'reset-password' => 'Reset Password',
 
     'account' => [
-        'profile'  => 'Edit Profile',
+        'profile' => 'Edit Profile',
         'password' => 'Edit Password',
     ],
 
     'extensions' => [
-        'list'      => 'Extensions',
+        'list' => 'Extensions',
         'configure' => 'Configure Extension',
     ],
 
     'resources' => [
-        'list'        => 'Resources',
+        'list' => 'Resources',
         'list-detail' => 'List of available resources',
     ],
 
     'settings' => [
-        'list'    => 'Settings',
+        'list' => 'Settings',
     ],
 
     'publisher' => [
-        'ftp'         => 'FTP Credential',
+        'ftp' => 'FTP Credential',
         'description' => 'We would need to have your credential in order to run the following task.',
     ],
 
     'users' => [
-        'list'   => 'Users',
+        'list' => 'Users',
         'create' => 'Add User',
         'update' => 'Edit User',
     ],
