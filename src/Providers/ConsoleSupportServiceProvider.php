@@ -12,16 +12,17 @@ class ConsoleSupportServiceProvider extends AggregateServiceProvider
      * @var array
      */
     protected $providers = [
-        'Orchestra\Foundation\Providers\ArtisanServiceProvider',
-        'Orchestra\Database\ConsoleServiceProvider',
-        'Illuminate\Foundation\Providers\ComposerServiceProvider',
+        ArtisanServiceProvider::class,
+        \Illuminate\Foundation\Providers\ComposerServiceProvider::class,
+        \Orchestra\Database\ConsoleServiceProvider::class,
+        \Illuminate\Database\MigrationServiceProvider::class,
 
-        'Orchestra\Auth\CommandServiceProvider',
-        'Orchestra\Extension\CommandServiceProvider',
-        'Orchestra\Memory\CommandServiceProvider',
-        'Orchestra\Foundation\Providers\CommandServiceProvider',
-        'Orchestra\Publisher\CommandServiceProvider',
-        'Orchestra\View\CommandServiceProvider',
+        \Orchestra\Auth\CommandServiceProvider::class,
+        \Orchestra\Extension\CommandServiceProvider::class,
+        \Orchestra\Memory\CommandServiceProvider::class,
+        \Orchestra\Foundation\Providers\CommandServiceProvider::class,
+        \Orchestra\Publisher\CommandServiceProvider::class,
+        \Orchestra\View\CommandServiceProvider::class,
     ];
 
     /**
