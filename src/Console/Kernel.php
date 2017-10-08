@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         \Illuminate\Foundation\Bootstrap\RegisterProviders::class,
         \Illuminate\Foundation\Bootstrap\BootProviders::class,
 
+        \Orchestra\Foundation\Bootstrap\LoadAuthen::class,
         \Orchestra\Foundation\Bootstrap\LoadFoundation::class,
         \Orchestra\Foundation\Bootstrap\UserAccessPolicy::class,
         \Orchestra\Extension\Bootstrap\LoadExtension::class,
