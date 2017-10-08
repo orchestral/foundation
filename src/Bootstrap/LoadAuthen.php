@@ -5,8 +5,10 @@ namespace Orchestra\Foundation\Bootstrap;
 use Laravie\Authen\BootAuthenProvider;
 use Illuminate\Contracts\Foundation\Application;
 
-class LoadFoundation
+class LoadAuthen
 {
+    use BootAuthenProvider;
+
     /**
      * Bootstrap the given application.
      *
@@ -16,6 +18,6 @@ class LoadFoundation
      */
     public function bootstrap(Application $app)
     {
-        $app->make('orchestra.app')->boot();
+        $this->BootAuthenProvider();
     }
 }

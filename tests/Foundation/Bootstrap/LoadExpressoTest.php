@@ -10,18 +10,6 @@ use Illuminate\Pagination\Paginator;
 class LoadExpressoTest extends TestCase
 {
     /**
-     * Define environment setup.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     */
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-
-        $app->make('Orchestra\Foundation\Bootstrap\LoadExpresso')->bootstrap($app);
-    }
-
-    /**
      * Test Blade::extend() is registered.
      *
      * @test
