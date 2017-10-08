@@ -48,15 +48,9 @@
         "predis/predis": "~1.0"
     },
     "require-dev": {
-<<<<<<< HEAD
         "phpunit/phpunit": "~6.0",
         "orchestra/installer": "~3.5.0",
         "orchestra/testing": "~3.5.0"
-=======
-        "phpunit/phpunit": "~5.7",
-        "orchestra/installer": "~3.4.0",
-        "orchestra/testing": "~3.4.3"
->>>>>>> 3.4
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (~3.5).",
