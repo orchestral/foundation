@@ -52,7 +52,7 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
      *
      * @return array
      */
-    public function getAuthIdentifiersName()
+    public function getAuthIdentifiersName(): array
     {
         return ['email'];
     }
