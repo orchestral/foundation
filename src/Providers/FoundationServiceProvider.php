@@ -5,6 +5,7 @@ namespace Orchestra\Foundation\Providers;
 use Laravie\Authen\Authen;
 use Orchestra\Foundation\Meta;
 use Orchestra\Foundation\Foundation;
+use Laravie\Authen\BootAuthenProvider;
 use Orchestra\Foundation\RouteResolver;
 use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Support\Providers\ServiceProvider;
@@ -14,7 +15,7 @@ use Orchestra\Foundation\Auth\Throttle\Basic as BasicThrottle;
 
 class FoundationServiceProvider extends ServiceProvider
 {
-    use AliasesProvider;
+    use AliasesProvider, BootAuthenProvider;
 
     /**
      * List of core aliases.
@@ -134,6 +135,8 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->bootAuthenProvider();
+
         Authen::setIdentifierName('username');
 
         $path = realpath(__DIR__.'/../../');
