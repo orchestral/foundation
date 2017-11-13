@@ -3,9 +3,9 @@
 namespace Orchestra\Foundation\Providers;
 
 use Laravie\Authen\Authen;
-use Laravie\Authen\BootAuthenProvider;
 use Orchestra\Foundation\Meta;
 use Orchestra\Foundation\Foundation;
+use Laravie\Authen\BootAuthenProvider;
 use Orchestra\Foundation\RouteResolver;
 use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Support\Providers\ServiceProvider;

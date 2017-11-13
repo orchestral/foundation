@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation\Bootstrap;
 
-use Laravie\Authen\BootAuthenProvider;
 use Illuminate\Contracts\Foundation\Application;
 
 class LoadAuthen
