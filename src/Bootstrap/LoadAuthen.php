@@ -2,13 +2,13 @@
 
 namespace Orchestra\Foundation\Bootstrap;
 
-use Laravie\Authen\BootAuthenProvider;
 use Illuminate\Contracts\Foundation\Application;
 
+/**
+ * @deprecated v3.4.x
+ */
 class LoadAuthen
 {
-    use BootAuthenProvider;
-
     /**
      * Bootstrap the given application.
      *
@@ -18,6 +18,6 @@ class LoadAuthen
      */
     public function bootstrap(Application $app)
     {
-        $this->BootAuthenProvider();
+        //
     }
 }

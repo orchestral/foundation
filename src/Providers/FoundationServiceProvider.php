@@ -135,15 +135,25 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->bootAuthenProvider();
-
-        Authen::setIdentifierName('username');
+        $this->bootAuthen();
 
         $path = realpath(__DIR__.'/../../');
 
         $this->addConfigComponent('orchestra/foundation', 'orchestra/foundation', "{$path}/resources/config");
         $this->addLanguageComponent('orchestra/foundation', 'orchestra/foundation', "{$path}/resources/lang");
         $this->addViewComponent('orchestra/foundation', 'orchestra/foundation', "{$path}/resources/views");
+    }
+
+    /**
+     * Bootstrap authen.
+     *
+     * @return void
+     */
+    protected function bootAuthen()
+    {
+        $this->bootAuthenProvider();
+
+        Authen::setIdentifierName('username');
     }
 
     /**
