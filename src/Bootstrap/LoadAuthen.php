@@ -7,8 +7,6 @@ use Illuminate\Contracts\Foundation\Application;
 
 class LoadAuthen
 {
-    use BootAuthenProvider;
-
     /**
      * Bootstrap the given application.
      *
@@ -18,6 +16,6 @@ class LoadAuthen
      */
     public function bootstrap(Application $app)
     {
-        $this->BootAuthenProvider();
+        //
     }
 }
