@@ -6,6 +6,13 @@ This changelog references the relevant changes (bug and security fixes) done to 
 
 Released: 2017-11-13
 
+### Changes
+
+* Boot `laravie/authen` directly from `Orchestra\Foundation\Providers\FoundationServiceProvider`.
+
+### Deprecates
+
+* Deprecate `Orchestra\Foundation\Bootstrap\LoadAuthen`.
 
 ## 3.4.3
 

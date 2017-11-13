@@ -4,6 +4,9 @@ namespace Orchestra\Foundation\Bootstrap;
 
 use Illuminate\Contracts\Foundation\Application;
 
+/**
+ * @deprecated v3.4.x
+ */
 class LoadAuthen
 {
     /**
