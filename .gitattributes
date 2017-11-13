@@ -12,11 +12,13 @@
 /.travis.yml export-ignore
 /bower.json export-ignore
 /gulpfile.js export-ignore
+/gulpfile.*.js export-ignore
 /paths.js export-ignore
 /npm-shrinkwrap.json export-ignore
 /package.json export-ignore
+/yarn.lock export-ignore
 /phpunit.xml export-ignore
 /resources/public/.gitignore export-ignore
-/CHANGELOG.md export-ignore
+/CHANGELOG-*.md export-ignore
 /LICENSE export-ignore
 /README.md export-ignore

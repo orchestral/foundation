@@ -1,6 +1,9 @@
 @extends('orchestra/foundation::layouts.landing')
 
-#{{ $username = Laravie\Authen\Authen::getIdentifierName() }}
+@php
+$username = Laravie\Authen\Authen::getIdentifierName();
+@endphp
+
 @section('content')
 <div class="panel panel-default">
   <div class="panel-heading">
