@@ -57,8 +57,7 @@
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (~3.5).",
         "orchestra/ftp-updater": "Allow Extension with asset to be updated/uploaded environment without SSH support (~3.5).",
         "orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.5).",
-        "orchestra/studio": "Allow additional code generator for Orchestra Platform (~3.5).",
-        "orchestra/testing": "Allow better unit testing support for Orchestra Platform (~3.4)."
+        "orchestra/testing": "Allow better unit testing support for Orchestra Platform (~3.5)."
     },
     "scripts": {
         "test": [
