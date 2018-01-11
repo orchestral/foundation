@@ -99,7 +99,7 @@ class FoundationTest extends TestCase
             ->shouldReceive('set')->once()->with('app.name', 'Orchestra')->andReturnNull();
         $status->shouldReceive('mode')->once()->andReturn('normal');
         $request->shouldReceive('root')->andReturn('http://localhost')
-            ->shouldReceive('secure')->andReturn(false);
+            ->shouldReceive('getScheme')->andReturn('http');
 
         return $app;
     }
@@ -138,7 +138,7 @@ class FoundationTest extends TestCase
         $widget->shouldReceive('make')->once()->with('menu.orchestra')->andReturn($widget)
             ->shouldReceive('add->title->link->icon')->once()->with('power-off')->andReturn($widget);
         $request->shouldReceive('root')->andReturn('http://localhost')
-            ->shouldReceive('secure')->andReturn(false);
+            ->shouldReceive('getScheme')->andReturn('http');
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
         $status->shouldReceive('mode')->once()->andReturn('normal');
         $event->shouldReceive('fire')->once()->with('orchestra.started', [$memoryProvider])->andReturnNull();
@@ -202,7 +202,7 @@ class FoundationTest extends TestCase
         $appRoute = m::mock('\Orchestra\Contracts\Extension\RouteGenerator');
 
         $request->shouldReceive('root')->andReturn('http://localhost')
-            ->shouldReceive('secure')->andReturn(false);
+            ->shouldReceive('getScheme')->andReturn('http');
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
         $appRoute->shouldReceive('to')->once()->with('/')->andReturn('/')
             ->shouldReceive('to')->once()->with('info?foo=bar')->andReturn('info?foo=bar');
@@ -236,7 +236,7 @@ class FoundationTest extends TestCase
         $appRoute = m::mock('\Orchestra\Contracts\Extension\RouteGenerator');
 
         $request->shouldReceive('root')->andReturn('http://localhost')
-            ->shouldReceive('secure')->andReturn(false);
+            ->shouldReceive('getScheme')->andReturn('http');
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
         $request->shouldReceive('path')->twice()->andReturn('/');
         $appRoute->shouldReceive('is')->once()->with('/')->andReturn(true)

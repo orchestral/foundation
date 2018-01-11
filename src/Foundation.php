@@ -183,7 +183,7 @@ class Foundation extends RouteManager implements FoundationContract
      * @param  string  $name
      * @param  string  $default
      *
-     * @return \Orchestra\Contracts\Extension\RouteGenerator
+     * @return \Orchestra\Contracts\Extension\UrlGenerator
      */
     public function route($name, $default = '/')
     {
