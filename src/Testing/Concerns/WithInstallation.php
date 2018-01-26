@@ -43,6 +43,14 @@ trait WithInstallation
 
         $this->artisan('migrate');
 
+        $this->beforeApplicationDestroyed(function () {
+            $this->artisan('migrate:rollback');
+        });
+
+        if ($this->app['orchestra.installed']) {
+            return $this->adminUser = $this->app['orchestra.user']->newQuery()->first();
+        }
+
         $this->adminUser = $this->createAdminUser();
 
         $installer->create($this->adminUser, [
@@ -54,8 +62,6 @@ trait WithInstallation
 
         $this->beforeApplicationDestroyed(function () {
             $this->app['orchestra.installed'] = false;
-
-            $this->artisan('migrate:rollback');
         });
 
         return $this->adminUser;
