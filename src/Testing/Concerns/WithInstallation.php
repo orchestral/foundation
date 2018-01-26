@@ -47,7 +47,7 @@ trait WithInstallation
             $this->artisan('migrate:rollback');
         });
 
-        if ($this->app['orchestra.installed']) {
+        if ($this->app['orchestra.installed'] === true) {
             return $this->adminUser = $this->app['orchestra.user']->newQuery()->first();
         }
 
