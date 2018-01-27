@@ -80,7 +80,7 @@ class PublisherManagerTest extends TestCase
         $messages->shouldReceive('add')->once()->with('success', m::any())->andReturnNull()
             ->shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
         $translator->shouldReceive('trans')->andReturn('foo');
-        $client->shouldReceive('upload')->with('a')->andReturnNull()
+        $client->shouldReceive('upload')->with('a')->andReturnTrue()
             ->shouldReceive('upload')->with('b')->andThrow('\Exception');
 
         $stub = (new PublisherManager($app))->attach($memory);

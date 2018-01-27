@@ -59,7 +59,7 @@ class ExtensionServiceProviderTest extends TestCase
 
         $stub = new StubExtensionProvider($app);
 
-        $this->assertNull($stub->boot());
+        $this->assertTrue($stub->boot());
     }
 
     /**

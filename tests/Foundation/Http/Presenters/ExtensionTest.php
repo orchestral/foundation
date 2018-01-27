@@ -60,6 +60,7 @@ class ExtensionTest extends TestCase
         $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $extension = m::mock('\Orchestra\Contracts\Extension\Factory');
 
+        $builder = m::mock('\Orchestra\Contracts\Html\Form\Builder');
         $grid = m::mock('\Orchestra\Contracts\Html\Form\Grid');
         $fieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
         $control = m::mock('\Orchestra\Contracts\Html\Form\Control');
@@ -77,12 +78,12 @@ class ExtensionTest extends TestCase
         $extension->shouldReceive('option')->once()->with('foo/bar', 'handles')->andReturn('foo');
         $form->shouldReceive('of')->once()
                 ->with('orchestra.extension: foo/bar', m::type('Closure'))
-                ->andReturnUsing(function ($t, $c) use ($grid) {
+                ->andReturnUsing(function ($t, $c) use ($builder, $grid) {
                     $c($grid);
 
-                    return 'foo';
+                    return $builder;
                 });
 
-        $this->assertEquals('foo', $stub->configure($model, 'foo/bar'));
+        $this->assertSame($builder, $stub->configure($model, 'foo/bar'));
     }
 }

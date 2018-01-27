@@ -6,6 +6,7 @@ use Mockery as m;
 use Illuminate\Support\Fluent;
 use PHPUnit\Framework\TestCase;
 use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
 use Orchestra\Foundation\Http\Presenters\User;
@@ -104,14 +105,14 @@ class UserTest extends TestCase
                 });
 
         $app['html']->shouldReceive('create')->once()
-                ->with('span', 'Administrator', m::any())->andReturn('administrator')
+                ->with('span', 'Administrator', m::any())->andReturn(new HtmlString('administrator'))
             ->shouldReceive('create')->once()
-                ->with('span', 'Member', m::any())->andReturn('member')
+                ->with('span', 'Member', m::any())->andReturn(new HtmlString('member'))
             ->shouldReceive('create')->once()
-                ->with('strong', 'Foo')->andReturn('Foo')
-            ->shouldReceive('create')->once()->with('br')->andReturn('')
-            ->shouldReceive('create')->once()->with('span', 'raw-foo', m::any())->andReturnNull()
-            ->shouldReceive('raw')->once()->with('administrator member')->andReturn('raw-foo');
+                ->with('strong', 'Foo')->andReturn(new HtmlString('Foo'))
+            ->shouldReceive('create')->once()->with('br')->andReturn(new HtmlString(''))
+            ->shouldReceive('create')->once()->with('span', 'raw-foo', m::any())->andReturn(new HtmlString(''))
+            ->shouldReceive('raw')->once()->with('administrator member')->andReturn(new HtmlString('raw-foo'));
 
         $this->assertEquals('foo', $stub->table($model));
     }
@@ -164,25 +165,23 @@ class UserTest extends TestCase
         $grid->shouldReceive('column')->once()->with('actions')->andReturn($column);
 
         $builder->shouldReceive('extend')->once()->with(m::type('Closure'))
-            ->andReturnUsing(function ($c) use ($grid) {
+            ->andReturnUsing(function ($c) use ($builder, $grid) {
                 $c($grid);
 
-                return 'foo';
+                return $builder;
             });
 
         $app['auth'] = m::mock('\Illuminate\Contracts\Auth\Guard');
         $app['html'] = m::mock('\Orchestra\Html\HtmlBuilder')->makePartial();
         $app['html']->shouldReceive('link')->once()
                 ->with(handles('orchestra/foundation::users/1/edit'), m::any(), m::type('Array'))
-                ->andReturn('edit')
+                ->andReturn(new HtmlString('edit'))
             ->shouldReceive('link')->once()
                 ->with(handles('orchestra/foundation::users/1/delete'), m::any(), m::type('Array'))
-                ->andReturn('delete')
-            ->shouldReceive('raw')->once()->with('editdelete')->andReturn('raw-edit')
-            ->shouldReceive('create')->once()
-                ->with('div', 'raw-edit', m::type('Array'))->andReturn('create-div');
+                ->andReturn(new HtmlString('delete'))
+            ->shouldReceive('raw')->once()->with('editdelete')->andReturn(new HtmlString('raw-edit'));
 
-        $this->assertEquals('foo', $stub->actions($builder));
+        $this->assertSame($builder, $stub->actions($builder));
     }
 
     /**
@@ -200,6 +199,7 @@ class UserTest extends TestCase
         $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
 
+        $builder = m::mock('\Orchestra\Contracts\Html\Form\Builder');
         $grid = m::mock('\Orchestra\Contracts\Html\Form\Grid');
         $fieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
         $control = m::mock('\Orchestra\Contracts\Html\Form\Control');
@@ -246,10 +246,10 @@ class UserTest extends TestCase
                 });
         $form->shouldReceive('of')->once()
                 ->with('orchestra.users', m::any())
-                ->andReturnUsing(function ($f, $c) use ($grid) {
+                ->andReturnUsing(function ($f, $c) use ($builder, $grid) {
                     $c($grid);
 
-                    return 'foo';
+                    return $builder;
                 });
 
         $app['orchestra.role']->shouldReceive('pluck')->once()

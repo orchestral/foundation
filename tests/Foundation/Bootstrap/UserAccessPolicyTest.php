@@ -23,10 +23,10 @@ class UserAccessPolicyTest extends TestCase
         $user = m::mock('\Orchestra\Model\User[getRoles]');
         $user->id = 1;
 
-        $user->shouldReceive('getRoles')->once()->andReturn(['Administrator']);
+        $user->shouldReceive('getRoles')->once()->andReturn(collect(['Administrator']));
 
         $this->assertEquals(
-            ['Administrator'],
+            collect(['Administrator']),
             $this->app['events']->until('orchestra.auth: roles', [$user, []])
         );
     }

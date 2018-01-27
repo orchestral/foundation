@@ -33,6 +33,7 @@ class FoundationTest extends TestCase
         $app['orchestra.acl'] = m::mock('\Orchestra\Contracts\Authorization\Authorization');
         $app['orchestra.extension'] = m::mock('\Orchestra\Contracts\Extension\Factory');
         $app['orchestra.extension.status'] = m::mock('\Orchestra\Contracts\Extension\StatusChecker');
+        $app['orchestra.extension.url'] = $app->make('\Orchestra\Extension\UrlGenerator');
         $app['orchestra.mail'] = m::mock('\Orchestra\Notifier\Mailer')->makePartial();
         $app['encrypter'] = m::mock('\Illuminate\Contracts\Encryption\Encrypter');
         $app['orchestra.memory'] = m::mock('\Orchestra\Memory\MemoryManager', [$app]);
@@ -41,6 +42,8 @@ class FoundationTest extends TestCase
 
         Facade::clearResolvedInstances();
         Application::setInstance($app);
+
+        $app['orchestra.extension.url']->shouldReceive('handle')->with()->andReturn('/');
 
         $this->app = $app;
     }
@@ -79,7 +82,8 @@ class FoundationTest extends TestCase
 
         $memoryProvider = m::mock('\Orchestra\Contracts\Memory\Provider');
 
-        $memoryProvider->shouldReceive('get')->once()->with('site.name')->andReturn('Orchestra');
+        $memoryProvider->shouldReceive('get')->once()->with('site.name')->andReturn('Orchestra')
+            ->shouldReceive('put')->once()->with('site.name', 'Orchestra Platform');
         $acl->shouldReceive('make')->once()->andReturn($acl)
             ->shouldReceive('attach')->once()->with($memoryProvider)->andReturn($acl);
         $mailer->shouldReceive('attach')->once()->with($memoryProvider)->andReturnNull();
@@ -99,7 +103,7 @@ class FoundationTest extends TestCase
             ->shouldReceive('set')->once()->with('app.name', 'Orchestra')->andReturnNull();
         $status->shouldReceive('mode')->once()->andReturn('normal');
         $request->shouldReceive('root')->andReturn('http://localhost')
-            ->shouldReceive('secure')->andReturn(false);
+            ->shouldReceive('getScheme')->andReturn('http');
 
         return $app;
     }
@@ -138,7 +142,7 @@ class FoundationTest extends TestCase
         $widget->shouldReceive('make')->once()->with('menu.orchestra')->andReturn($widget)
             ->shouldReceive('add->title->link->icon')->once()->with('power-off')->andReturn($widget);
         $request->shouldReceive('root')->andReturn('http://localhost')
-            ->shouldReceive('secure')->andReturn(false);
+            ->shouldReceive('getScheme')->andReturn('http');
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
         $status->shouldReceive('mode')->once()->andReturn('normal');
         $event->shouldReceive('fire')->once()->with('orchestra.started', [$memoryProvider])->andReturnNull();
@@ -195,18 +199,18 @@ class FoundationTest extends TestCase
         $config = $app['config'];
         $extension = $app['orchestra.extension'];
         $status = $app['orchestra.extension.status'];
+        $extensionUrl = $app['orchestra.extension.url'];
         $url = $app['url'];
 
         $app['request'] = $request = m::mock('\Illuminate\Http\Request');
 
-        $appRoute = m::mock('\Orchestra\Contracts\Extension\RouteGenerator');
 
         $request->shouldReceive('root')->andReturn('http://localhost')
-            ->shouldReceive('secure')->andReturn(false);
+            ->shouldReceive('getScheme')->andReturn('http');
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
-        $appRoute->shouldReceive('to')->once()->with('/')->andReturn('/')
+        $extensionUrl->shouldReceive('to')->once()->with('/')->andReturn('/')
             ->shouldReceive('to')->once()->with('info?foo=bar')->andReturn('info?foo=bar');
-        $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
+        $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($extensionUrl);
         $status->shouldReceive('mode')->times(4)->andReturn('normal');
         $url->shouldReceive('to')->once()->with('/')->andReturn('/')
             ->shouldReceive('to')->once()->with('info?foo=bar')->andReturn('info?foo=bar');
@@ -230,19 +234,18 @@ class FoundationTest extends TestCase
         $config = $app['config'];
         $extension = $app['orchestra.extension'];
         $status = $app['orchestra.extension.status'];
+        $extensionUrl = $app['orchestra.extension.url'];
 
         $app['request'] = $request = m::mock('\Illuminate\Http\Request');
 
-        $appRoute = m::mock('\Orchestra\Contracts\Extension\RouteGenerator');
-
         $request->shouldReceive('root')->andReturn('http://localhost')
-            ->shouldReceive('secure')->andReturn(false);
+            ->shouldReceive('getScheme')->andReturn('http');
         $config->shouldReceive('get')->once()->with('orchestra/foundation::handles', '/')->andReturn('admin');
         $request->shouldReceive('path')->twice()->andReturn('/');
-        $appRoute->shouldReceive('is')->once()->with('/')->andReturn(true)
+        $extensionUrl->shouldReceive('is')->once()->with('/')->andReturn(true)
             ->shouldReceive('is')->once()->with('info?foo=bar')->andReturn(true);
         $status->shouldReceive('mode')->times(4)->andReturn('normal');
-        $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($appRoute);
+        $extension->shouldReceive('route')->once()->with('app', '/')->andReturn($extensionUrl);
 
         $stub = new StubRouteManager($app, new RouteResolver($app));
 

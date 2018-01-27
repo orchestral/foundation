@@ -46,6 +46,7 @@ class AccountTest extends TestCase
     {
         $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
 
+        $builder = m::mock('\Orchestra\Contracts\Html\Form\Builder');
         $grid = m::mock('\Orchestra\Contracts\Html\Form\Grid');
         $fieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
         $control = m::mock('\Orchestra\Contracts\Html\Form\Control');
@@ -63,13 +64,13 @@ class AccountTest extends TestCase
                 });
         $form->shouldReceive('of')->once()
                 ->with('orchestra.account', m::type('Closure'))
-                ->andReturnUsing(function ($f, $c) use ($grid) {
+                ->andReturnUsing(function ($f, $c) use ($builder, $grid) {
                     $c($grid);
 
-                    return 'foo';
+                    return $builder;
                 });
 
-        $this->assertEquals('foo', $stub->profile($model, 'foo'));
+        $this->assertSame($builder, $stub->profile($model, 'foo'));
     }
 
     /**
@@ -80,6 +81,7 @@ class AccountTest extends TestCase
      */
     public function testPasswordFormMethod()
     {
+        $builder = m::mock('\Orchestra\Contracts\Html\Form\Builder');
         $grid = m::mock('\Orchestra\Contracts\Html\Form\Grid');
         $fieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
         $control = m::mock('\Orchestra\Contracts\Html\Form\Control');
@@ -98,12 +100,12 @@ class AccountTest extends TestCase
                 });
         $form->shouldReceive('of')->once()
                 ->with('orchestra.account: password', m::type('Closure'))
-                ->andReturnUsing(function ($f, $c) use ($grid) {
+                ->andReturnUsing(function ($f, $c) use ($builder, $grid) {
                     $c($grid);
 
-                    return 'foo';
+                    return $builder;
                 });
 
-        $this->assertEquals('foo', $stub->password($model, 'foo'));
+        $this->assertSame($builder, $stub->password($model, 'foo'));
     }
 }

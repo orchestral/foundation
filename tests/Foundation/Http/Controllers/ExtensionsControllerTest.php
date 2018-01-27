@@ -50,7 +50,7 @@ class ExtensionsControllerTest extends TestCase
     public function testGetIndexAction()
     {
         Extension::shouldReceive('detect')->once()->andReturn('foo');
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
         View::shouldReceive('make')->once()
             ->with('orchestra/foundation::extensions.index', ['extensions' => 'foo'], [])
             ->andReturn('foo');
@@ -69,7 +69,7 @@ class ExtensionsControllerTest extends TestCase
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
         Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('activate')->once()->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', [])->andReturn('extensions');
 
@@ -86,7 +86,7 @@ class ExtensionsControllerTest extends TestCase
     public function testPostActivateActionGivenStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
 
         $this->call('POST', 'admin/extensions/laravel/framework/activate');
         $this->assertResponseStatus(404);
@@ -101,7 +101,7 @@ class ExtensionsControllerTest extends TestCase
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
         Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(false);
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
         Publisher::shouldReceive('queue')->once()->with('laravel/framework')->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::publisher', [])->andReturn('publisher');
 
@@ -118,7 +118,7 @@ class ExtensionsControllerTest extends TestCase
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('deactivate')->once()->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', [])->andReturn('extensions');
 
@@ -135,7 +135,7 @@ class ExtensionsControllerTest extends TestCase
     public function testPostDeactivateActionGivenNotStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
         Extension::shouldReceive('activated')->once()->with('laravel/framework')->andReturn(false);
 
         $this->call('POST', 'admin/extensions/laravel/framework/deactivate');
@@ -162,7 +162,7 @@ class ExtensionsControllerTest extends TestCase
         $presenter->shouldReceive('configure')->once()->andReturn('edit.extension');
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
         Foundation::shouldReceive('memory')->twice()->andReturn($memory);
         View::shouldReceive('make')->once()
             ->with('orchestra/foundation::extensions.configure', m::type('Array'), [])
@@ -181,7 +181,7 @@ class ExtensionsControllerTest extends TestCase
     public function testGetConfigureActionGivenStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
 
         $this->call('GET', 'admin/extensions/laravel/framework/configure');
         $this->assertResponseStatus(404);
@@ -214,7 +214,7 @@ class ExtensionsControllerTest extends TestCase
             ->shouldReceive('fails')->once()->andReturn(false);
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
         Foundation::shouldReceive('memory')->once()->andReturn($memory);
         Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', [])->andReturn('extensions');
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
@@ -237,7 +237,7 @@ class ExtensionsControllerTest extends TestCase
         ];
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
 
         $this->call('POST', 'admin/extensions/laravel/framework/configure', $input);
         $this->assertResponseStatus(404);
@@ -263,7 +263,7 @@ class ExtensionsControllerTest extends TestCase
             ->shouldReceive('fails')->once()->andReturn(true);
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
         Foundation::shouldReceive('handles')->once()
             ->with('orchestra::extensions/laravel/framework/configure', [])->andReturn('extensions');
 
@@ -281,7 +281,7 @@ class ExtensionsControllerTest extends TestCase
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('publish')->once()->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
         Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', [])->andReturn('extensions');
 
@@ -298,7 +298,7 @@ class ExtensionsControllerTest extends TestCase
     public function testPostUpdateActionGivenNotStartedExtension()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
 
         $this->call('POST', 'admin/extensions/laravel/framework/update');
         $this->assertResponseStatus(404);
@@ -313,7 +313,7 @@ class ExtensionsControllerTest extends TestCase
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(false);
-        Extension::shouldReceive('finish')->once()->andReturnNull();
+        Extension::shouldReceive('finish')->once()->andReturnSelf();
         Publisher::shouldReceive('queue')->once()->with('laravel/framework')->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::publisher', [])->andReturn('publisher');
 

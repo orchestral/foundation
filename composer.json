@@ -39,7 +39,6 @@
         "orchestra/messages": "~3.6.0",
         "orchestra/model": "~3.6.0",
         "orchestra/notifier": "~3.6.0",
-        "orchestra/publisher": "~3.6.0",
         "orchestra/support": "~3.6.0",
         "orchestra/translation": "~3.6.0",
         "orchestra/view": "~3.6.0",
@@ -48,7 +47,7 @@
         "predis/predis": "~1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~6.0",
+        "phpunit/phpunit": "~6.0 || ~7.0",
         "orchestra/installer": "~3.6.0",
         "orchestra/testing": "~3.6.0"
     },

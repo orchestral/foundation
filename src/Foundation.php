@@ -101,7 +101,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return bool
      */
-    public function installed()
+    public function installed(): bool
     {
         return $this->app->make('orchestra.installed');
     }
@@ -183,9 +183,9 @@ class Foundation extends RouteManager implements FoundationContract
      * @param  string  $name
      * @param  string  $default
      *
-     * @return \Orchestra\Contracts\Extension\RouteGenerator
+     * @return \Orchestra\Contracts\Extension\UrlGenerator
      */
-    public function route($name, $default = '/')
+    public function route(string $name, string $default = '/')
     {
         // Boot the application.
         $this->boot();

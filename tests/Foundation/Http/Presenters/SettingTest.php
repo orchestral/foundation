@@ -64,6 +64,7 @@ class SettingTest extends TestCase
         $encrypter = m::mock('\Illuminate\Contracts\Encryption\Encrypter');
         $grid = m::mock('\Orchestra\Contracts\Html\Form\Grid');
 
+        $siteBuilder = m::mock('\Orchestra\Contracts\Html\Form\Builder');
         $siteFieldset = m::mock('\Orchestra\Contracts\Html\Form\Fieldset');
         $siteControl = m::mock('\Orchestra\Contracts\Html\Form\Control');
 
@@ -99,16 +100,16 @@ class SettingTest extends TestCase
 
         $form->shouldReceive('of')->once()
                 ->with('orchestra.settings', m::type('Closure'))
-                ->andReturnUsing(function ($n, $c) use ($grid) {
+                ->andReturnUsing(function ($n, $c) use ($siteBuilder, $grid) {
                     $c($grid);
 
-                    return 'foo';
+                    return $siteBuilder;
                 });
 
         $app['Illuminate\Contracts\View\Factory']->shouldReceive('make')->twice()
             ->with('orchestra/foundation::settings._hidden', m::type('Array'), [])
             ->andReturn('email.password.help');
 
-        $this->assertEquals('foo', $stub->form($model));
+        $this->assertSame($siteBuilder, $stub->form($model));
     }
 }
