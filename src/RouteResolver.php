@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation;
 
-use Orchestra\Extension\RouteGenerator;
 use Orchestra\Http\RouteResolver as Resolver;
 
 class RouteResolver extends Resolver
@@ -13,7 +12,7 @@ class RouteResolver extends Resolver
      * @param  string   $name
      * @param  string   $default
      *
-     * @return \Orchestra\Contracts\Extension\RouteGenerator
+     * @return \Orchestra\Contracts\Extension\UrlGenerator
      */
     public function route($name, $default = '/')
     {
@@ -37,7 +36,6 @@ class RouteResolver extends Resolver
 
         $url = $this->app->make('config')->get('orchestra/foundation::handles', $default);
 
-        return $this->app->make(RouteGenerator::class)
-                    ->handle($url);
+        return $this->app->make('orchestra.extension.url')->handle($url);
     }
 }
