@@ -31,6 +31,6 @@ class LoadFoundationTest extends TestCase
 
         $foundation->shouldReceive('boot')->once()->andReturnNull();
 
-        (new LoadFoundation())->bootstrap($app);
+        $this->assertNull((new LoadFoundation())->bootstrap($app));
     }
 }

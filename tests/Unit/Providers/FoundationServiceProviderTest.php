@@ -46,6 +46,6 @@ class FoundationServiceProviderTest extends TestCase
             });
 
         $foundation = new FoundationServiceProvider($app);
-        $foundation->register();
+        $this->assertNull($foundation->register());
     }
 }

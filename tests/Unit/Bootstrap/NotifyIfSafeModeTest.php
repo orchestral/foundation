@@ -61,6 +61,6 @@ class NotifyIfSafeModeTest extends TestCase
 
         $mode->shouldReceive('is')->once()->with('safe')->andReturn(true);
 
-        (new NotifyIfSafeMode())->bootstrap($app);
+        $this->assertNull((new NotifyIfSafeMode())->bootstrap($app));
     }
 }

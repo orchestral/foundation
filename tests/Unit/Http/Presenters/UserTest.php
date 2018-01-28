@@ -255,6 +255,6 @@ class UserTest extends TestCase
         $app['orchestra.role']->shouldReceive('pluck')->once()
                 ->with('name', 'id')->andReturn('roles');
 
-        $stub->form($model);
+        $this->assertSame('foo', $stub->form($model));
     }
 }

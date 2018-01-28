@@ -56,7 +56,7 @@ class PresenterTest extends TestCase
             ->with('orchestra/foundation::components.form')->andReturnNull();
 
         $stub = new PresenterStub();
-        $stub->setupForm($form);
+        $this->assertNull($stub->setupForm($form));
     }
 }
 

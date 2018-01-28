@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Tests\Integration;
+namespace Orchestra\Tests\Controller;
 
 class AdminLoginTest extends TestCase
 {
