@@ -63,7 +63,7 @@ class CredentialControllerTest extends TestCase
                 return $listener->userHasLoggedIn($user);
             });
 
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnSelf();
         Foundation::shouldReceive('handles')->once()->with('orchestra::/', [])->andReturn('/');
 
         $this->call('POST', 'admin/login', $input);

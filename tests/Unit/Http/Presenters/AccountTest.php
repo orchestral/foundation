@@ -61,6 +61,8 @@ class AccountTest extends TestCase
             ->shouldReceive('fieldset')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);
+
+                    return $fieldset;
                 });
         $form->shouldReceive('of')->once()
                 ->with('orchestra.account', m::type('Closure'))
@@ -97,6 +99,8 @@ class AccountTest extends TestCase
             ->shouldReceive('fieldset')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);
+
+                    return $fieldset;
                 });
         $form->shouldReceive('of')->once()
                 ->with('orchestra.account: password', m::type('Closure'))

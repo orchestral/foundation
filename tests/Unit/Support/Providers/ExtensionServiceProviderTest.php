@@ -55,11 +55,11 @@ class ExtensionServiceProviderTest extends TestCase
         $app['orchestra.extension.finder'] = $finder = m::mock('\Orchestra\Contracts\Extension\Finder');
 
         $finder->shouldReceive('addPath')->once()->with('app::Extensions/*/*')->andReturnNull()
-            ->shouldReceive('registerExtension')->once()->with('forum', 'base::modules/forum')->andReturnNull();
+            ->shouldReceive('registerExtension')->once()->with('forum', 'base::modules/forum')->andReturn(true);
 
         $stub = new StubExtensionProvider($app);
 
-        $this->assertTrue($stub->boot());
+        $this->assertNull($stub->boot());
     }
 
     /**

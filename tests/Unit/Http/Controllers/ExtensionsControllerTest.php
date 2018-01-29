@@ -49,10 +49,12 @@ class ExtensionsControllerTest extends TestCase
      */
     public function testGetIndexAction()
     {
-        Extension::shouldReceive('detect')->once()->andReturn('foo');
+        $extensions = collect('foo');
+
+        Extension::shouldReceive('detect')->once()->andReturn($extensions);
         Extension::shouldReceive('finish')->once()->andReturnSelf();
         View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::extensions.index', ['extensions' => 'foo'], [])
+            ->with('orchestra/foundation::extensions.index', compact('extensions'), [])
             ->andReturn('foo');
 
         $this->call('GET', 'admin/extensions');
@@ -70,7 +72,7 @@ class ExtensionsControllerTest extends TestCase
         Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('activate')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('finish')->once()->andReturnSelf();
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnSelf();
         Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', [])->andReturn('extensions');
 
         $this->call('POST', 'admin/extensions/laravel/framework/activate');
@@ -201,6 +203,7 @@ class ExtensionsControllerTest extends TestCase
 
         $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
         list(, $validator) = $this->bindDependencies();
+        $validation = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $memory->shouldReceive('get')->once()
                 ->with('extension.active.laravel/framework.config', [])->andReturn([])
@@ -210,14 +213,15 @@ class ExtensionsControllerTest extends TestCase
                 ->with('extension_laravel/framework', ['handles' => 'foo'])->andReturnNull();
 
         $validator->shouldReceive('with')->once()
-                ->with($input, ['orchestra.validate: extension.laravel/framework'])->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturn(false);
+                ->with($input, ['orchestra.validate: extension.laravel/framework'])
+                ->andReturn($validation);
+        $validation->shouldReceive('fails')->once()->andReturn(false);
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('finish')->once()->andReturnSelf();
         Foundation::shouldReceive('memory')->once()->andReturn($memory);
         Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', [])->andReturn('extensions');
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnSelf();
 
         $this->call('POST', 'admin/extensions/laravel/framework/configure', $input);
         $this->assertRedirectedTo('extensions');
@@ -256,10 +260,12 @@ class ExtensionsControllerTest extends TestCase
         ];
 
         list(, $validator) = $this->bindDependencies();
+        $validation = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $validator->shouldReceive('with')->once()
-                ->with($input, ['orchestra.validate: extension.laravel/framework'])->andReturn($validator)
-            ->shouldReceive('getMessageBag')->once()->andReturn([])
+                ->with($input, ['orchestra.validate: extension.laravel/framework'])
+                ->andReturn($validation);
+        $validation->shouldReceive('getMessageBag')->once()->andReturn([])
             ->shouldReceive('fails')->once()->andReturn(true);
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);

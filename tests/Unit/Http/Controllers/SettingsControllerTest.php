@@ -91,19 +91,21 @@ class SettingsControllerTest extends TestCase
 
         $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
         list(, $validator) = $this->bindDependencies();
+        $validation = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $memory->shouldReceive('put')->times(13)->andReturnNull()
             ->shouldReceive('securePut')->times(3)->andReturnNull()
             ->shouldReceive('secureGet')->once()->with('email.password')->andReturn('foo')
             ->shouldReceive('secureGet')->once()->with('email.secret')->andReturn('foo');
-        $validator->shouldReceive('on')->once()->with('smtp')->andReturn($validator)
-            ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturn(false);
+        $validator->shouldReceive('on')->once()->with('smtp')->andReturnSelf()
+            ->shouldReceive('with')->once()->with($input)->andReturn($validation);
+
+        $validation->shouldReceive('fails')->once()->andReturn(false);
 
         $this->app->instance('Orchestra\Contracts\Memory\Provider', $memory);
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::settings', [])->andReturn('settings');
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnSelf();
 
         $this->call('POST', 'admin/settings', $input);
         $this->assertRedirectedTo('settings');
@@ -136,10 +138,12 @@ class SettingsControllerTest extends TestCase
         ];
 
         list(, $validator) = $this->bindDependencies();
+        $validation = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $validator->shouldReceive('on')->once()->with('smtp')->andReturn($validator)
-            ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturn(true)
+        $validator->shouldReceive('on')->once()->with('smtp')->andReturnSelf()
+            ->shouldReceive('with')->once()->with($input)->andReturn($validation);
+
+        $validation->shouldReceive('fails')->once()->andReturn(true)
             ->shouldReceive('getMessageBag')->once()->andReturn([]);
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::settings', [])->andReturn('settings');

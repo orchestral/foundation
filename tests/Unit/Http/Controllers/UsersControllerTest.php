@@ -130,6 +130,7 @@ class UsersControllerTest extends TestCase
         ];
 
         list(, $validator) = $this->bindDependencies();
+        $validation = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $user = m::mock('\Orchestra\Model\User');
 
@@ -143,13 +144,14 @@ class UsersControllerTest extends TestCase
                 });
         $user->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles->sync')->once()->with($input['roles'])->andReturnNull();
-        $validator->shouldReceive('on')->once()->with('create')->andReturn($validator)
-            ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturnNull();
+        $validator->shouldReceive('on')->once()->with('create')->andReturnSelf()
+            ->shouldReceive('with')->once()->with($input)->andReturn($validation);
+
+        $validation->shouldReceive('fails')->once()->andReturn(false);
 
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Foundation::shouldReceive('handles')->once()->with('orchestra::users', [])->andReturn('users');
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnSelf();
 
         $this->call('POST', 'admin/users', $input);
         $this->assertRedirectedTo('users');
@@ -170,6 +172,7 @@ class UsersControllerTest extends TestCase
         ];
 
         list(, $validator) = $this->bindDependencies();
+        $validation = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $user = m::mock('\Orchestra\Model\User');
 
@@ -183,13 +186,14 @@ class UsersControllerTest extends TestCase
                 });
         $user->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles->sync')->once()->with($input['roles'])->andThrow('\Exception');
-        $validator->shouldReceive('on')->once()->with('create')->andReturn($validator)
-            ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturnNull();
+        $validator->shouldReceive('on')->once()->with('create')->andReturnSelf()
+            ->shouldReceive('with')->once()->with($input)->andReturn($validation);
+
+        $validation->shouldReceive('fails')->once()->andReturn(false);
 
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
         Foundation::shouldReceive('handles')->once()->with('orchestra::users', [])->andReturn('users');
-        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
+        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnSelf();
 
         $this->call('POST', 'admin/users', $input);
         $this->assertRedirectedTo('users');
@@ -210,10 +214,12 @@ class UsersControllerTest extends TestCase
         ];
 
         list(, $validator) = $this->bindDependencies();
+        $validation = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $validator->shouldReceive('on')->once()->with('create')->andReturn($validator)
-            ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('getMessageBag')->once()->andReturn([])
+        $validator->shouldReceive('on')->once()->with('create')->andReturnSelf()
+            ->shouldReceive('with')->once()->with($input)->andReturn($validation);
+
+        $validation->shouldReceive('getMessageBag')->once()->andReturn([])
             ->shouldReceive('fails')->once()->andReturn(true);
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::users/create', [])->andReturn('users/create');
@@ -239,6 +245,7 @@ class UsersControllerTest extends TestCase
         ];
 
         list(, $validator) = $this->bindDependencies();
+        $validation = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
         $user = m::mock('\Orchestra\Model\User');
@@ -253,13 +260,14 @@ class UsersControllerTest extends TestCase
                 });
         $user->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles->sync')->once()->with($input['roles'])->andReturnNull();
-        $validator->shouldReceive('on')->once()->with('update')->andReturn($validator)
-            ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturnNull();
+        $validator->shouldReceive('on')->once()->with('update')->andReturnSelf()
+            ->shouldReceive('with')->once()->with($input)->andReturn($validation);
+
+        $validation->shouldReceive('fails')->once()->andReturn(false);
 
         Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($builder);
         Foundation::shouldReceive('handles')->once()->with('orchestra::users', [])->andReturn('users');
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnSelf();
 
         $this->call('PUT', 'admin/users/foo', $input);
         $this->assertRedirectedTo('users');
@@ -300,6 +308,7 @@ class UsersControllerTest extends TestCase
         ];
 
         list(, $validator) = $this->bindDependencies();
+        $validation = m::mock('\Illuminate\Contracts\Validation\Validator');
 
         $builder = m::mock('\Illuminate\Database\Eloquent\Builder')->makePartial();
         $user = m::mock('\Orchestra\Model\User');
@@ -314,16 +323,17 @@ class UsersControllerTest extends TestCase
                 });
         $user->shouldReceive('save')->once()->andReturnNull()
             ->shouldReceive('roles->sync')->once()->with($input['roles'])->andThrow('\Exception');
-        $validator->shouldReceive('on')->once()->with('update')->andReturn($validator)
-            ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('fails')->once()->andReturnNull();
+        $validator->shouldReceive('on')->once()->with('update')->andReturnSelf()
+            ->shouldReceive('with')->once()->with($input)->andReturn($validation);
+
+        $validation->shouldReceive('fails')->once()->andReturnNull();
 
         Foundation::shouldReceive('make')->once()
             ->with('orchestra.user')->andReturn($builder);
         Foundation::shouldReceive('handles')->once()
             ->with('orchestra::users', [])->andReturn('users');
         Messages::shouldReceive('add')->once()
-            ->with('error', m::any())->andReturnNull();
+            ->with('error', m::any())->andReturnSelf();
 
         $this->call('PUT', 'admin/users/foo', $input);
         $this->assertRedirectedTo('users');
@@ -345,10 +355,12 @@ class UsersControllerTest extends TestCase
         ];
 
         list(, $validator) = $this->bindDependencies();
+        $validation = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $validator->shouldReceive('on')->once()->with('update')->andReturn($validator)
-            ->shouldReceive('with')->once()->with($input)->andReturn($validator)
-            ->shouldReceive('getMessageBag')->once()->andReturn([])
+        $validator->shouldReceive('on')->once()->with('update')->andReturnSelf()
+            ->shouldReceive('with')->once()->with($input)->andReturn($validation);
+
+        $validation->shouldReceive('getMessageBag')->once()->andReturn([])
             ->shouldReceive('fails')->once()->andReturn(true);
 
         Foundation::shouldReceive('handles')->once()

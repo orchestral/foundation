@@ -91,11 +91,15 @@ class SettingTest extends TestCase
                 ->with(trans('orchestra/foundation::label.settings.application'), m::type('Closure'))
                 ->andReturnUsing(function ($t, $c) use ($siteFieldset) {
                     $c($siteFieldset);
+
+                    return $siteFieldset;
                 })
             ->shouldReceive('fieldset')->once()
                 ->with(trans('orchestra/foundation::label.settings.mail'), m::type('Closure'))
                 ->andReturnUsing(function ($t, $c) use ($emailFieldset) {
                     $c($emailFieldset);
+
+                    return $emailFieldset;
                 });
 
         $form->shouldReceive('of')->once()

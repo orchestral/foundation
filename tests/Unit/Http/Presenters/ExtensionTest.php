@@ -74,6 +74,8 @@ class ExtensionTest extends TestCase
             ->shouldReceive('fieldset')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);
+
+                    return $fieldset;
                 });
         $extension->shouldReceive('option')->once()->with('foo/bar', 'handles')->andReturn('foo');
         $form->shouldReceive('of')->once()

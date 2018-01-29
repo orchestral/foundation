@@ -59,7 +59,7 @@ class ProfileCreatorControllerTest extends TestCase
             });
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::login', [])->andReturn('login');
-        Messages::shouldReceive('add')->twice()->with('success', m::any())->andReturnNull();
+        Messages::shouldReceive('add')->twice()->with('success', m::any())->andReturnSelf();
 
         $this->call('POST', 'admin/register', $input);
         $this->assertRedirectedTo('login');
@@ -81,8 +81,8 @@ class ProfileCreatorControllerTest extends TestCase
             });
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::login', [])->andReturn('login');
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
-        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
+        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnSelf();
+        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnSelf();
 
         $this->call('POST', 'admin/register', $input);
         $this->assertRedirectedTo('login');
@@ -104,7 +104,7 @@ class ProfileCreatorControllerTest extends TestCase
             });
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::register', [])->andReturn('register');
-        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
+        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnSelf();
 
         $this->call('POST', 'admin/register', $input);
         $this->assertRedirectedTo('register');

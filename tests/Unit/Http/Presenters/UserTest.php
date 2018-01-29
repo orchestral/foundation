@@ -68,6 +68,7 @@ class UserTest extends TestCase
         $form = m::mock('\Orchestra\Contracts\Html\Form\Factory');
         $table = m::mock('\Orchestra\Contracts\Html\Table\Factory');
 
+        $builder = m::mock('\Orchestra\Contracts\Html\Table\Builder');
         $grid = m::mock('\Orchestra\Contracts\Html\Table\Grid');
         $column = m::mock('\Orchestra\Contracts\Html\Table\Column');
 
@@ -98,10 +99,10 @@ class UserTest extends TestCase
             ->shouldReceive('column')->once()->with('email')->andReturn($column);
         $table->shouldReceive('of')->once()
                 ->with('orchestra.users', m::type('Closure'))
-                ->andReturnUsing(function ($t, $c) use ($grid) {
+                ->andReturnUsing(function ($t, $c) use ($builder, $grid) {
                     $c($grid);
 
-                    return 'foo';
+                    return $builder;
                 });
 
         $app['html']->shouldReceive('create')->once()
@@ -111,10 +112,10 @@ class UserTest extends TestCase
             ->shouldReceive('create')->once()
                 ->with('strong', 'Foo')->andReturn(new HtmlString('Foo'))
             ->shouldReceive('create')->once()->with('br')->andReturn(new HtmlString(''))
-            ->shouldReceive('create')->once()->with('span', 'raw-foo', m::any())->andReturn(new HtmlString(''))
+            ->shouldReceive('create')->once()->with('span', m::type(HtmlString::class), ['class' => 'meta'])->andReturn(new HtmlString(''))
             ->shouldReceive('raw')->once()->with('administrator member')->andReturn(new HtmlString('raw-foo'));
 
-        $this->assertEquals('foo', $stub->table($model));
+        $this->assertEquals($builder, $stub->table($model));
     }
 
     /**
@@ -243,6 +244,8 @@ class UserTest extends TestCase
             ->shouldReceive('fieldset')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($fieldset) {
                     $c($fieldset);
+
+                    return $fieldset;
                 });
         $form->shouldReceive('of')->once()
                 ->with('orchestra.users', m::any())
@@ -255,6 +258,6 @@ class UserTest extends TestCase
         $app['orchestra.role']->shouldReceive('pluck')->once()
                 ->with('name', 'id')->andReturn('roles');
 
-        $this->assertSame('foo', $stub->form($model));
+        $this->assertSame($builder, $stub->form($model));
     }
 }
