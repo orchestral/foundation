@@ -10,6 +10,7 @@ return PhpCsFixer\Config::create()
             ->setRules([
                 '@Symfony' => true,
                 'binary_operator_spaces' => ['align_double_arrow' => false, 'align_equals' => false],
+                'no_extra_blank_lines' => false,
                 'no_empty_comment' => false,
                 'no_extra_consecutive_blank_lines' => false,
                 'not_operator_with_successor_space' => true,

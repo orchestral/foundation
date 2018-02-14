@@ -5,7 +5,6 @@ namespace Orchestra\Tests\Integration;
 use Mockery as m;
 use Illuminate\Http\Request;
 use Orchestra\Extension\UrlGenerator;
-use Orchestra\Tests\Integration\TestCase;
 
 class FoundationTest extends TestCase
 {
