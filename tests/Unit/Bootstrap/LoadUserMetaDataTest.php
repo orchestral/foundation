@@ -27,7 +27,7 @@ class LoadUserMetaDataTest extends TestCase
     {
         $stub = $this->app->make('orchestra.memory')->driver('user');
 
-        $this->assertInstanceOf('\Orchestra\Model\Memory\UserMetaProvider', $stub);
+        $this->assertInstanceOf('\Orchestra\Model\Memory\UserProvider', $stub);
         $this->assertInstanceOf('\Orchestra\Memory\Provider', $stub);
     }
 }

@@ -111,7 +111,6 @@ class ServiceProviderTest extends TestCase
     protected function getConsoleSupportProvides()
     {
         return [
-            'orchestra.commands.auth',
             'orchestra.commands.extension.activate',
             'orchestra.commands.extension.deactivate',
             'orchestra.commands.extension.detect',
@@ -119,7 +118,6 @@ class ServiceProviderTest extends TestCase
             'orchestra.commands.extension.publish',
             'orchestra.commands.extension.refresh',
             'orchestra.commands.extension.reset',
-            'orchestra.commands.memory',
             'orchestra.commands.assemble',
             'command.asset.publish',
             'command.config.publish',
