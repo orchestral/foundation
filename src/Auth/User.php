@@ -32,7 +32,7 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
      *
      * @return string
      */
-    public function getRecipientEmail()
+    public function getRecipientEmail(): string
     {
         return $this->getAttribute('email');
     }
@@ -42,7 +42,7 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
      *
      * @return string
      */
-    public function getRecipientName()
+    public function getRecipientName(): string
     {
         return $this->getAttribute('fullname');
     }
