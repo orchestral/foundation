@@ -30,12 +30,14 @@ class RouteResolver extends Resolver
     {
         // Orchestra Platform routing is managed by `orchestra/foundation::handles`
         // and can be manage using configuration.
-        if (! in_array($name, ['orchestra'])) {
-            return parent::generateRouteByName($name, $default);
+        if (in_array($name, ['orchestra'])) {
+            $url = $this->app->make('config')->get('orchestra/foundation::handles', $default);
+
+            return $this->app->make('orchestra.extension.url')->handle(
+                is_string($url) ? $url : 'admin'
+            );
         }
 
-        $url = $this->app->make('config')->get('orchestra/foundation::handles', $default);
-
-        return $this->app->make('orchestra.extension.url')->handle($url);
+        return parent::generateRouteByName($name, $default);
     }
 }
