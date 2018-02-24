@@ -13,7 +13,7 @@ class ComposerScripts
      *
      * @return void
      */
-    public static function postInstall(Event $event)
+    public static function postInstall(Event $event): void
     {
         require_once $event->getComposer()->getConfig()->get('vendor-dir').'/autoload.php';
 
@@ -27,7 +27,7 @@ class ComposerScripts
      *
      * @return void
      */
-    public static function postUpdate(Event $event)
+    public static function postUpdate(Event $event): void
     {
         require_once $event->getComposer()->getConfig()->get('vendor-dir').'/autoload.php';
 
@@ -41,7 +41,7 @@ class ComposerScripts
      *
      * @return void
      */
-    public static function postAutoloadDump(Event $event)
+    public static function postAutoloadDump(Event $event): void
     {
         require_once $event->getComposer()->getConfig()->get('vendor-dir').'/autoload.php';
 
@@ -53,7 +53,7 @@ class ComposerScripts
      *
      * @return void
      */
-    private static function clearCompiled()
+    private static function clearCompiled(): void
     {
         $laravel = new Application(getcwd());
 

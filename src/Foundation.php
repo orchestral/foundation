@@ -5,9 +5,11 @@ namespace Orchestra\Foundation;
 use Closure;
 use Exception;
 use Orchestra\Http\RouteManager;
-use Orchestra\Contracts\Memory\Provider;
+use Orchestra\Contracts\Extension\UrlGenerator;
+use Orchestra\Contracts\Authorization\Authorization;
 use Orchestra\Foundation\Http\Handlers\UserMenuHandler;
 use Orchestra\Foundation\Http\Handlers\SettingMenuHandler;
+use Orchestra\Contracts\Memory\Provider as MemoryProvider;
 use Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler;
 use Orchestra\Contracts\Foundation\Foundation as FoundationContract;
 use Orchestra\Contracts\Foundation\Application as ApplicationContract;
@@ -66,7 +68,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return $this
      */
-    public function boot()
+    public function boot(): self
     {
         if (! $this->booted) {
             // Mark the application as booted and boot the application.
@@ -83,7 +85,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return void
      */
-    public function flush()
+    public function flush(): void
     {
         $this->booted = false;
         $this->config = null;
@@ -111,7 +113,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return \Orchestra\Contracts\Authorization\Authorization
      */
-    public function acl()
+    public function acl(): Authorization
     {
         return $this->services['acl'];
     }
@@ -121,7 +123,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return \Orchestra\Contracts\Memory\Provider
      */
-    public function memory()
+    public function memory(): MemoryProvider
     {
         return $this->services['memory'];
     }
@@ -143,7 +145,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return \Orchestra\Widget\Handler|null
      */
-    public function widget($type)
+    public function widget(string $type)
     {
         if (! is_null($this->widget)) {
             return $this->widget->make("{$type}.orchestra");
@@ -159,7 +161,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return void
      */
-    public function namespaced($namespace, $attributes = [], Closure $callback = null)
+    public function namespaced($namespace, $attributes = [], Closure $callback = null): void
     {
         if ($attributes instanceof Closure) {
             $callback = $attributes;
@@ -185,7 +187,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return \Orchestra\Contracts\Extension\UrlGenerator
      */
-    public function route(string $name, string $default = '/')
+    public function route(string $name, string $default = '/'): UrlGenerator
     {
         // Boot the application.
         $this->boot();
@@ -198,7 +200,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return void
      */
-    protected function bootApplication()
+    protected function bootApplication(): void
     {
         $this->registerBaseServices();
 
@@ -223,7 +225,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return \Orchestra\Contracts\Memory\Provider
      */
-    protected function bootInstalledApplication()
+    protected function bootInstalledApplication(): MemoryProvider
     {
         // Initiate Memory class from App, this to allow advanced user
         // to use other implementation if there is a need for it.
@@ -257,7 +259,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return \Orchestra\Contracts\Memory\Provider
      */
-    protected function bootNewApplication()
+    protected function bootNewApplication(): MemoryProvider
     {
         // In any case where Exception is catched, we can be assure that
         // Installation is not done/completed, in this case we should
@@ -280,7 +282,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return void
      */
-    protected function createAdminMenu()
+    protected function createAdminMenu(): void
     {
         $menu = $this->menu();
         $events = $this->app->make('events');
@@ -306,7 +308,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return void
      */
-    protected function registerBaseServices()
+    protected function registerBaseServices(): void
     {
         $this->services['acl'] = $this->app->make('orchestra.acl')->make('orchestra');
         $this->app->instance('orchestra.platform.acl', $this->services['acl']);
@@ -322,7 +324,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return void
      */
-    protected function registerComponents(Provider $memory)
+    protected function registerComponents(MemoryProvider $memory): void
     {
         $this->app->make('orchestra.notifier')->setDefaultDriver('orchestra');
         $this->app->make('orchestra.mail')->attach($memory);
@@ -336,7 +338,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return mixed
      */
-    public function __call($method, $parameters)
+    public function __call(string $method, array $parameters)
     {
         return $this->app->{$method}(...$parameters);
     }
