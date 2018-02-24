@@ -79,7 +79,7 @@ abstract class Throttle
      */
     public function fireLockoutEvent()
     {
-        Event::fire(new Lockout($this->request));
+        Event::dispatch(new Lockout($this->request));
     }
 
     /**

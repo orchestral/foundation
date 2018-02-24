@@ -72,7 +72,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
 
         $form = $this->presenter->form($eloquent);
 
-        Event::fire('orchestra.form: settings', [$eloquent, $form]);
+        Event::dispatch('orchestra.form: settings', [$eloquent, $form]);
 
         return $listener->showSettingChanger(compact('eloquent', 'form'));
     }
@@ -128,7 +128,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
         $memory->put('email.domain', $this->getValue($input['email_domain'], "services.{$driver}.domain"));
         $memory->put('email.region', $this->getValue($input['email_region'], "services.{$driver}.region"));
 
-        Event::fire('orchestra.saved: settings', [$memory, $input]);
+        Event::dispatch('orchestra.saved: settings', [$memory, $input]);
 
         return $listener->settingHasUpdated();
     }

@@ -67,7 +67,7 @@ class RouteServiceProvider extends ServiceProvider
             });
         }
 
-        $this->app->make('events')->fire('orchestra.ready');
+        $this->app->make('events')->dispatch('orchestra.ready');
     }
 
     /**

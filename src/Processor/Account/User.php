@@ -44,6 +44,6 @@ abstract class User extends Processor
      */
     protected function fireEvent($type, array $parameters = [])
     {
-        Event::fire("orchestra.{$type}: user.account", $parameters);
+        Event::dispatch("orchestra.{$type}: user.account", $parameters);
     }
 }

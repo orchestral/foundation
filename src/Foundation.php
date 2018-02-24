@@ -215,7 +215,7 @@ class Foundation extends RouteManager implements FoundationContract
 
         $this->registerComponents($memory);
 
-        $this->app->make('events')->fire('orchestra.started', [$memory]);
+        $this->app->make('events')->dispatch('orchestra.started', [$memory]);
     }
 
     /**

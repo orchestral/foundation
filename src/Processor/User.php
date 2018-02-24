@@ -55,7 +55,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
         // Build users table HTML using a schema liked code structure.
         $table = $this->presenter->table($eloquent);
 
-        Event::fire('orchestra.list: users', [$eloquent, $table]);
+        Event::dispatch('orchestra.list: users', [$eloquent, $table]);
 
         // Once all event listening to `orchestra.list: users` is executed,
         // we can add we can now add the final column, edit and delete
@@ -245,7 +245,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      */
     protected function fireEvent($type, array $parameters = [])
     {
-        Event::fire("orchestra.{$type}: users", $parameters);
-        Event::fire("orchestra.{$type}: user.account", $parameters);
+        Event::dispatch("orchestra.{$type}: users", $parameters);
+        Event::dispatch("orchestra.{$type}: user.account", $parameters);
     }
 }
