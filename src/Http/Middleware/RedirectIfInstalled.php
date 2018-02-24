@@ -11,7 +11,7 @@ class RedirectIfInstalled extends Can
      *
      * @return bool
      */
-    protected function authorize($action = null)
+    protected function authorize(?string $action = null): bool
     {
         return ! $this->foundation->installed();
     }

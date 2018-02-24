@@ -76,7 +76,7 @@ class PublisherManagerTest extends TestCase
 
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', [])->andReturn(['a', 'b'])
             ->shouldReceive('get')->times(2)->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp')
-            ->shouldReceive('put')->once()->with('orchestra.publisher.queue', ['b'])->andReturnNull();
+            ->shouldReceive('put')->once()->with('orchestra.publisher.queue', ['b'])->andReturn(true);
         $messages->shouldReceive('add')->once()->with('success', m::any())->andReturnNull()
             ->shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
         $translator->shouldReceive('trans')->andReturn('foo');
@@ -117,9 +117,9 @@ class PublisherManagerTest extends TestCase
         $app = $this->app;
         $app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
 
-        $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', [])->andReturn('foo');
+        $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', [])->andReturn(['foo']);
 
         $stub = (new PublisherManager($app))->attach($memory);
-        $this->assertEquals('foo', $stub->queued());
+        $this->assertEquals(['foo'], $stub->queued());
     }
 }

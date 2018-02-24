@@ -73,7 +73,7 @@ abstract class MenuHandler
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->prepare();
 
@@ -87,7 +87,7 @@ abstract class MenuHandler
      *
      * @return $this
      */
-    public function create()
+    public function create(): self
     {
         $menu = $this->handler->add($this->name, $this->getAttribute('position'))
                     ->title($this->getAttribute('title'))
@@ -105,7 +105,7 @@ abstract class MenuHandler
      *
      * @return bool
      */
-    public function passes()
+    public function passes(): bool
     {
         return $this->enabled;
     }
@@ -117,7 +117,7 @@ abstract class MenuHandler
      *
      * @return mixed
      */
-    public function getAttribute($name)
+    public function getAttribute(string $name)
     {
         $method = 'get'.ucfirst($name).'Attribute';
         $value = $this->menu[$name] ?? null;
@@ -137,7 +137,7 @@ abstract class MenuHandler
      *
      * @return $this
      */
-    public function setAttribute($name, $value)
+    public function setAttribute(string $name, $value): self
     {
         if (in_array($name, ['id'])) {
             $this->{$name} = $value;
@@ -165,7 +165,7 @@ abstract class MenuHandler
      *
      * @return $this
      */
-    public function prepare()
+    public function prepare(): self
     {
         $id = $this->getAttribute('id');
         $menus = $this->menu['with'] ?? [];
@@ -193,7 +193,7 @@ abstract class MenuHandler
      *
      * @return bool
      */
-    public function hasNestedMenu()
+    public function hasNestedMenu(): bool
     {
         return ! empty($this->childs);
     }
@@ -205,7 +205,7 @@ abstract class MenuHandler
      *
      * @return void
      */
-    protected function attachIcon(Fluent $menu = null)
+    protected function attachIcon(Fluent $menu = null): void
     {
         if (! (is_null($menu) || is_null($icon = $this->getAttribute('icon')))) {
             $menu->icon($icon);
@@ -217,7 +217,7 @@ abstract class MenuHandler
      *
      * @return $this
      */
-    protected function handleNestedMenu()
+    protected function handleNestedMenu(): self
     {
         foreach ((array) $this->childs as $menu) {
             $menu->create();
@@ -231,7 +231,7 @@ abstract class MenuHandler
      *
      * @return bool
      */
-    protected function passesAuthorization()
+    protected function passesAuthorization(): bool
     {
         $enabled = false;
 
@@ -250,7 +250,7 @@ abstract class MenuHandler
      *
      * @return mixed
      */
-    public function __call($name, $parameters)
+    public function __call(string $name, array $parameters)
     {
         return $this->getAttribute($name);
     }

@@ -30,7 +30,8 @@ class FoundationServiceProviderTest extends TestCase
         $app['config'] = $config = m::mock('\Illuminate\Contracts\Config\Repository');
         $app['events'] = $events = m::mock('\Illuminate\Contracts\Events\Dispatcher[fire]');
         $app['router'] = $router = m::mock('\Illuminate\Routing\Router');
-        $events->shouldReceive('fire')->once()->with('orchestra.done')->andReturnNull();
+
+        $events->shouldReceive('dispatch')->once()->with('orchestra.done')->andReturnNull();
 
         $throttles = [
             'resolver' => BasicThrottle::class,

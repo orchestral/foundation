@@ -7,11 +7,11 @@ class Authenticate extends Can
     /**
      * Check authorization.
      *
-     * @param  string  $action
+     * @param  string|null  $action
      *
      * @return bool
      */
-    protected function authorize($action = null)
+    protected function authorize(?string $action = null): bool
     {
         return $this->auth->check();
     }

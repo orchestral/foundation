@@ -16,7 +16,7 @@ trait Installation
      *
      * @return void
      */
-    public function beginInstallation()
+    public function beginInstallation(): void
     {
         $this->afterApplicationCreated(function () {
             $this->adminUser = $this->app['orchestra.installed'] === false

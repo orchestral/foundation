@@ -75,7 +75,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function loadRoutes()
+    protected function loadRoutes(): void
     {
         $path = realpath(__DIR__.'/../../');
 

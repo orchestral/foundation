@@ -11,9 +11,9 @@ trait WithInstallation
     /**
      * Make Orchestra Platform installer.
      *
-     * @return \Orchestra\Installation\Installation
+     * @return \Orchestra\Contracts\Installation\Installation
      */
-    protected function makeInstaller()
+    protected function makeInstaller(): InstallationContract
     {
         $installer = new Installation($this->app);
 
@@ -35,7 +35,7 @@ trait WithInstallation
      *
      * @return \Orchestra\Foundation\Auth\User
      */
-    protected function install(InstallationContract $installer = null, array $config = [])
+    protected function install(?InstallationContract $installer = null, array $config = [])
     {
         if (is_null($installer)) {
             $installer = $this->makeInstaller();

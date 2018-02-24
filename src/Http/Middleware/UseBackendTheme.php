@@ -12,16 +12,16 @@ class UseBackendTheme
      *
      * @var \Illuminate\Contracts\Events\Dispatcher
      */
-    protected $dispatcher;
+    protected $events;
 
     /**
      * Create a new middleware instance.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $dispatcher
+     * @param  \Illuminate\Contracts\Events\Dispatcher  $events
      */
-    public function __construct(Dispatcher $dispatcher)
+    public function __construct(Dispatcher $events)
     {
-        $this->dispatcher = $dispatcher;
+        $this->events = $events;
     }
 
     /**
@@ -48,10 +48,10 @@ class UseBackendTheme
      *
      * @return void
      */
-    protected function beforeSendingThroughPipeline()
+    protected function beforeSendingThroughPipeline(): void
     {
-        $this->dispatcher->fire('orchestra.started: admin');
-        $this->dispatcher->fire('orchestra.ready: admin');
+        $this->events->dispatch('orchestra.started: admin');
+        $this->events->dispatch('orchestra.ready: admin');
     }
 
     /**
@@ -59,8 +59,8 @@ class UseBackendTheme
      *
      * @return void
      */
-    protected function afterSendingThroughPipeline()
+    protected function afterSendingThroughPipeline(): void
     {
-        $this->dispatcher->fire('orchestra.done: admin');
+        $this->events->dispatch('orchestra.done: admin');
     }
 }

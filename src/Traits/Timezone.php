@@ -36,7 +36,7 @@ trait Timezone
      *
      * @return \Carbon\Carbon
      */
-    public function toLocalTime($datetime)
+    public function toLocalTime($datetime): Carbon
     {
         $appTimeZone = $this->config->get('app.timezone', 'UTC');
 
@@ -62,7 +62,7 @@ trait Timezone
      *
      * @return \Carbon\Carbon
      */
-    public function fromLocalTime($datetime)
+    public function fromLocalTime($datetime): Carbon
     {
         $appTimeZone = $this->config->get('app.timezone', 'UTC');
 
@@ -87,7 +87,7 @@ trait Timezone
      *
      * @return \Carbon\Carbon
      */
-    public function convertToDateTime($datetime, $timezone = null)
+    public function convertToDateTime($datetime, $timezone = null): Carbon
     {
         // Convert instanceof DateTime to Carbon
         if ($datetime instanceof DateTime) {
