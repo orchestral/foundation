@@ -2,15 +2,17 @@
 
 namespace Orchestra\Tests\Controller;
 
+use Orchestra\Foundation\Testing\Installation;
+
 class AdminLoginTest extends TestCase
 {
+    use Installation;
+
     /**
      * My test implementation.
      */
     public function testItCantLoginInvalidUser()
     {
-        $user = $this->install();
-
         $this->visit('admin/login')
             ->type('hello@orchestraplatform.com', 'username')
             ->type('hello', 'password')
@@ -24,10 +26,8 @@ class AdminLoginTest extends TestCase
      */
     public function testItLoginValidUser()
     {
-        $user = $this->install();
-
         $this->visit('admin/login')
-            ->type($user->email, 'username')
+            ->type($this->adminUser->email, 'username')
             ->type('secret', 'password')
             ->press('Login')
             ->seePageIs('admin');

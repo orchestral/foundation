@@ -58,6 +58,7 @@ trait RouteProvider
      * application to be loaded only after extension routing.
      *
      * @param  \Closure|string  $callback
+     *
      * @return void
      */
     protected function afterExtensionLoaded($callback): void

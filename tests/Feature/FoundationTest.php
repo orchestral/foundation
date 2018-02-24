@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Tests\Integration;
+namespace Orchestra\Tests\Feature;
 
 use Mockery as m;
 use Illuminate\Http\Request;

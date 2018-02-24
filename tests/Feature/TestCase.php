@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Tests\Integration;
+namespace Orchestra\Tests\Feature;
 
 use Orchestra\Foundation\Auth\User;
 use Orchestra\Testing\TestCase as ApplicationTestCase;

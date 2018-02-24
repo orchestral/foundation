@@ -4,6 +4,8 @@ namespace Orchestra\Foundation\Processor\Account;
 
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Orchestra\Foundation\Auth\User as Model;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Contracts\Foundation\Command\Account\ProfileUpdater as Command;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater as Listener;
 
@@ -13,10 +15,11 @@ class ProfileUpdater extends User implements Command
      * Get account/profile information.
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater  $listener
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      *
      * @return mixed
      */
-    public function edit(Listener $listener)
+    public function edit(Listener $listener, Authenticatable $user)
     {
         $eloquent = Auth::user();
         $form = $this->presenter->profile($eloquent, 'orchestra::account');
@@ -30,14 +33,13 @@ class ProfileUpdater extends User implements Command
      * Update profile information.
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater  $listener
+     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  array  $input
      *
      * @return mixed
      */
-    public function update(Listener $listener, array $input)
+    public function update(Listener $listener, Authenticatable $user, array $input)
     {
-        $user = Auth::user();
-
         if (! $this->validateCurrentUser($user, $input)) {
             return $listener->abortWhenUserMismatched();
         }
@@ -60,12 +62,12 @@ class ProfileUpdater extends User implements Command
     /**
      * Save user profile.
      *
-     * @param  \Orchestra\Model\User|\Illuminate\Database\Eloquent\Model  $user
+     * @param  \Orchestra\Foundation\Auth\User  $user
      * @param  array  $input
      *
      * @return void
      */
-    protected function saving($user, array $input)
+    protected function saving(Model $user, array $input)
     {
         $user->setAttribute('email', $input['email']);
         $user->setAttribute('fullname', $input['fullname']);
