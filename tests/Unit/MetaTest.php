@@ -9,17 +9,9 @@ use PHPUnit\Framework\TestCase;
 class MetaTest extends TestCase
 {
     /**
-     * Setup the test environment.
-     */
-    protected function setUp(): void
-    {
-        date_default_timezone_set('UTC');
-    }
-
-    /**
      * Teardown the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
     }
