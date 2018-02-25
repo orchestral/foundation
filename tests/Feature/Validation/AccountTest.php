@@ -2,7 +2,6 @@
 
 namespace Orchestra\Tests\Feature\Validation;
 
-use Mockery as m;
 use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Validation\Account;
 use Orchestra\Foundation\Testing\Installation;
@@ -10,9 +9,8 @@ use Orchestra\Foundation\Testing\Installation;
 class AccountTest extends TestCase
 {
     use Installation;
-    /**
-     * @test
-     */
+
+    /** @test */
     public function it_declares_proper_signature()
     {
         $stub = $this->app->make(Account::class);
@@ -20,9 +18,7 @@ class AccountTest extends TestCase
         $this->assertInstanceOf('\Orchestra\Support\Validator', $stub);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_validate_account()
     {
         $data = [
@@ -36,9 +32,7 @@ class AccountTest extends TestCase
         $this->assertTrue($stub->passes());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_validate_account_on_register()
     {
         $data = [
@@ -52,9 +46,7 @@ class AccountTest extends TestCase
         $this->assertTrue($stub->passes());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_validate_account_on_password_change()
     {
         $data = [

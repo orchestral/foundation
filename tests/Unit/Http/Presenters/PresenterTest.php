@@ -10,16 +10,6 @@ use Orchestra\Foundation\Http\Presenters\Presenter;
 class PresenterTest extends TestCase
 {
     /**
-     * Teardown the test environment.
-     */
-    protected function tearDown()
-    {
-        m::close();
-
-        parent::tearDown();
-    }
-
-    /**
      * Test Orchestra\Foundation\Http\Presenters\Presenter::handles()
      * method.
      *
