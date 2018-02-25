@@ -9,14 +9,6 @@ use Orchestra\Foundation\Validation\Setting;
 class SettingTest extends TestCase
 {
     /**
-     * Teardown the test environment.
-     */
-    protected function tearDown()
-    {
-        m::close();
-    }
-
-    /**
      * @test
      */
     public function it_declares_proper_signature()

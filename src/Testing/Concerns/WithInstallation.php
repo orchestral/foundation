@@ -43,20 +43,17 @@ trait WithInstallation
 
         $this->artisan('migrate');
 
-        $this->beforeApplicationDestroyed(function () {
-            $this->artisan('migrate:rollback');
-        });
-
         $this->adminUser = $this->createAdminUser();
 
         $installer->create($this->adminUser, [
-            'site_name' => Arr::get($config, 'name', 'Orchestra Platform'),
-            'email' => Arr::get($config, 'email', 'hello@orchestraplatform.com'),
+            'site_name' => $config['name'] ?? 'Orchestra Platform',
+            'email' => $config['email'] ?? 'hello@orchestraplatform.com',
         ]);
 
         $this->app['orchestra.installed'] = true;
 
         $this->beforeApplicationDestroyed(function () {
+            $this->artisan('migrate:rollback');
             $this->app['orchestra.installed'] = false;
         });
 
