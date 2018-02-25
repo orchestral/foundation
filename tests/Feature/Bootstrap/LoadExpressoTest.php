@@ -1,34 +1,28 @@
 <?php
 
-namespace Orchestra\Tests\Unit\Bootstrap;
+namespace Orchestra\Tests\Feature\Bootstrap;
 
 use Mockery as m;
-use Orchestra\Testing\TestCase;
 use Orchestra\Support\Facades\Meta;
 use Illuminate\Pagination\Paginator;
+use Orchestra\Tests\Feature\TestCase;
 
 class LoadExpressoTest extends TestCase
 {
-    /**
-     * Test Blade::extend() is registered.
-     *
-     * @test
-     */
-    public function testBladeExtendIsRegistered()
+    /** @test */
+    public function it_can_register_decorator()
     {
         $compiler = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
 
-        $this->assertEquals('<?php echo app(\'orchestra.decorator\')->render("foo"); ?>', $compiler->compileString('@decorator("foo")'));
+        $this->assertEquals(
+            '<?php echo app(\'orchestra.decorator\')->render("foo"); ?>', $compiler->compileString('@decorator("foo")')
+        );
     }
 
-    /**
-     * Test HTML::title() macro.
-     *
-     * @test
-     */
-    public function testHtmlTitleMacro()
+    /** @test */
+    public function it_can_register_html_title()
     {
-        $this->app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $this->app->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
 
         Meta::shouldReceive('get')->once()->with('title', '')->andReturn('')
             ->shouldReceive('get')->once()
@@ -47,14 +41,10 @@ class LoadExpressoTest extends TestCase
         $this->assertEquals('<title>Foo</title>', $this->app['html']->title());
     }
 
-    /**
-     * Test HTML::title() macro.
-     *
-     * @test
-     */
-    public function testHtmlTitleMacroWithPageNumber()
+    /** @test */
+    public function it_can_register_html_title_with_page_number()
     {
-        $this->app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $this->app->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
 
         Meta::shouldReceive('get')->once()->with('title', '')->andReturn('')
             ->shouldReceive('get')->once()
@@ -73,14 +63,10 @@ class LoadExpressoTest extends TestCase
         $this->assertEquals('<title>Foo (Page 5)</title>', $this->app['html']->title());
     }
 
-    /**
-     * Test HTML::title() macro with page title.
-     *
-     * @test
-     */
-    public function testHtmlTitleMacroWithPageTitle()
+    /** @test */
+    public function it_can_register_html_title_with_page_title()
     {
-        $this->app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $this->app->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
 
         Paginator::currentPageResolver(function () {
             return 1;
@@ -100,15 +86,10 @@ class LoadExpressoTest extends TestCase
         $this->assertEquals('<title>Foobar &mdash; Foo</title>', $this->app['html']->title());
     }
 
-    /**
-     * Test HTML::title() macro with page title
-     * and number.
-     *
-     * @test
-     */
-    public function testHtmlTitleMacroWithPageTitleAndNumber()
+    /** @test */
+    public function it_can_register_html_title_with_page_title_and_number()
     {
-        $this->app['orchestra.platform.memory'] = $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $this->app->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
 
         Paginator::currentPageResolver(function () {
             return 5;

@@ -3,11 +3,7 @@
 namespace Orchestra\Tests\Feature\Processor\Account;
 
 use Mockery as m;
-use Illuminate\Support\Facades\DB;
 use Orchestra\Tests\Feature\TestCase;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Mail;
-use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Testing\Installation;
 use Orchestra\Foundation\Processor\Account\ProfileCreator;
 

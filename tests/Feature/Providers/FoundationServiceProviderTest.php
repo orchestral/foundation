@@ -1,11 +1,8 @@
 <?php
 
-namespace Orchestra\Tests\Unit\Providers;
+namespace Orchestra\Tests\Feature\Providers;
 
-use Mockery as m;
 use Orchestra\Tests\Feature\TestCase;
-use Orchestra\Foundation\Providers\BasicThrottle;
-use Orchestra\Foundation\Providers\FoundationServiceProvider;
 
 class FoundationServiceProviderTest extends TestCase
 {

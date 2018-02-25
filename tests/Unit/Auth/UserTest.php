@@ -7,12 +7,8 @@ use Orchestra\Foundation\Auth\User;
 
 class UserTest extends TestCase
 {
-    /**
-     * Test Orchestra\Foundation\Auth\User::getEmailForPasswordReset() method.
-     *
-     * @test
-     */
-    public function testGetEmailForPasswordResetMethod()
+    /** @test */
+    public function it_can_get_email_for_password_reset()
     {
         $stub = new User();
         $stub->email = 'admin@orchestraplatform.com';
@@ -20,12 +16,8 @@ class UserTest extends TestCase
         $this->assertEquals('admin@orchestraplatform.com', $stub->getEmailForPasswordReset());
     }
 
-    /**
-     * Test Orchestra\Foundation\Auth\User::getRecipientEmail() method.
-     *
-     * @test
-     */
-    public function testGetRecipientEmailMethod()
+    /** @test */
+    public function it_can_get_recipient_email()
     {
         $stub = new User();
         $stub->email = 'admin@orchestraplatform.com';
@@ -33,12 +25,8 @@ class UserTest extends TestCase
         $this->assertEquals('admin@orchestraplatform.com', $stub->getRecipientEmail());
     }
 
-    /**
-     * Test Orchestra\Foundation\Auth\User::getRecipientName() method.
-     *
-     * @test
-     */
-    public function testGetRecipientNameMethod()
+    /** @test */
+    public function it_can_get_recipient_name()
     {
         $stub = new User();
         $stub->fullname = 'Administrator';
