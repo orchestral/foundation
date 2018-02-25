@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation\Http\Controllers\Account;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Orchestra\Foundation\Processor\Account\ProfileUpdater as Processor;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater as Listener;
@@ -20,7 +19,7 @@ class ProfileUpdaterController extends Controller implements Listener
      */
     public function edit(Processor $processor)
     {
-        return $processor->edit($this, Auth::user());
+        return $processor->edit($this);
     }
 
     /**
@@ -34,7 +33,7 @@ class ProfileUpdaterController extends Controller implements Listener
      */
     public function update(Processor $processor)
     {
-        return $processor->update($this, Auth::user(), Input::all());
+        return $processor->update($this, Input::all());
     }
 
     /**

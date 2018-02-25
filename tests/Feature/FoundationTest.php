@@ -11,7 +11,7 @@ class FoundationTest extends TestCase
     /** @test */
     public function it_booted_after_installed()
     {
-        $this->install();
+        $this->runInstallation();
 
         $this->assertTrue($this->app['orchestra.installed']);
         $this->assertInstanceOf('\Orchestra\Widget\WidgetManager', $this->app['orchestra.widget']);
@@ -50,7 +50,8 @@ class FoundationTest extends TestCase
      */
     public function it_validate_routes_properly($url, $expected)
     {
-        $this->install();
+        $this->runInstallation();
+
         $this->app['request'] = $request = m::mock('\Illuminate\Http\Request');
 
         $request->shouldReceive('root')->andReturn('http://localhost')

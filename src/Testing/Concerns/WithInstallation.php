@@ -35,7 +35,7 @@ trait WithInstallation
      *
      * @return \Orchestra\Foundation\Auth\User
      */
-    protected function install(?InstallationContract $installer = null, array $config = [])
+    protected function runInstallation(?InstallationContract $installer = null, array $config = [])
     {
         if (is_null($installer)) {
             $installer = $this->makeInstaller();

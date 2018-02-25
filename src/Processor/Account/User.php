@@ -24,14 +24,14 @@ abstract class User extends Processor
     /**
      * Validate current user.
      *
-     * @param  \Orchestra\Model\User|\Illuminate\Database\Eloquent\Model  $user
+     * @param  \Orchestra\Foundation\Auth\User  $user
      * @param  array  $input
      *
      * @return bool
      */
     protected function validateCurrentUser($user, array $input)
     {
-        return (string) $user->getAttribute('id') === $input['id'];
+        return (string) $user->getAttribute('id') === (string) $input['id'];
     }
 
     /**

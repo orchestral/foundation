@@ -4,21 +4,10 @@ namespace Orchestra\Tests\Feature;
 
 use Orchestra\Foundation\Auth\User;
 use Orchestra\Testing\TestCase as ApplicationTestCase;
+use Illuminate\Database\Eloquent\Factory as ModelFactory;
 
 abstract class TestCase extends ApplicationTestCase
 {
-    /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->withFactories(__DIR__.'/../factories');
-    }
-
     /**
      * Define environment setup.
      *
@@ -29,6 +18,8 @@ abstract class TestCase extends ApplicationTestCase
     protected function getEnvironmentSetUp($app)
     {
         $app->make('config')->set(['auth.providers.users.model' => User::class]);
+
+        $app->make(ModelFactory::class)->load(__DIR__.'/../factories');
     }
 
     /**

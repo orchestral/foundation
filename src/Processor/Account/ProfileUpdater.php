@@ -4,8 +4,6 @@ namespace Orchestra\Foundation\Processor\Account;
 
 use Exception;
 use Illuminate\Support\Facades\Auth;
-use Orchestra\Foundation\Auth\User as Model;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Contracts\Foundation\Command\Account\ProfileUpdater as Command;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater as Listener;
 
@@ -15,31 +13,32 @@ class ProfileUpdater extends User implements Command
      * Get account/profile information.
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater  $listener
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      *
      * @return mixed
      */
-    public function edit(Listener $listener, Authenticatable $user)
+    public function edit(Listener $listener)
     {
-        $eloquent = Auth::user();
-        $form = $this->presenter->profile($eloquent, 'orchestra::account');
+        $user = Auth::user();
 
-        $this->fireEvent('form', [$eloquent, $form]);
+        $form = $this->presenter->profile($user, 'orchestra::account');
 
-        return $listener->showProfileChanger(['eloquent' => $eloquent, 'form' => $form]);
+        $this->fireEvent('form', [$user, $form]);
+
+        return $listener->showProfileChanger(['eloquent' => $user, 'form' => $form]);
     }
 
     /**
      * Update profile information.
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater  $listener
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  array  $input
      *
      * @return mixed
      */
-    public function update(Listener $listener, Authenticatable $user, array $input)
+    public function update(Listener $listener, array $input)
     {
+        $user = Auth::user();
+
         if (! $this->validateCurrentUser($user, $input)) {
             return $listener->abortWhenUserMismatched();
         }
@@ -67,7 +66,7 @@ class ProfileUpdater extends User implements Command
      *
      * @return void
      */
-    protected function saving(Model $user, array $input)
+    protected function saving($user, array $input)
     {
         $user->setAttribute('email', $input['email']);
         $user->setAttribute('fullname', $input['fullname']);
