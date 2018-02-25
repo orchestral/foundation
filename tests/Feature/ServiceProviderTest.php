@@ -2,8 +2,6 @@
 
 namespace Orchestra\Tests\Feature;
 
-use Orchestra\Tests\Feature\TestCase;
-
 class ServiceProviderTest extends TestCase
 {
     /** @test */

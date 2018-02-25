@@ -2,9 +2,7 @@
 
 namespace Orchestra\Tests\Unit;
 
-use Mockery as m;
 use Orchestra\Testbench\TestCase;
-use Illuminate\Container\Container;
 use Orchestra\Foundation\Providers\ArtisanServiceProvider;
 use Orchestra\Foundation\Providers\SupportServiceProvider;
 use Orchestra\Foundation\Providers\FoundationServiceProvider;
