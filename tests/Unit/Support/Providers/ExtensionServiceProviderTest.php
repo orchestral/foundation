@@ -57,7 +57,12 @@ class ExtensionServiceProviderTest extends TestCase
         $finder->shouldReceive('addPath')->once()->with('app::Extensions/*/*')->andReturnNull()
             ->shouldReceive('registerExtension')->once()->with('forum', 'base::modules/forum')->andReturn(true);
 
-        $stub = new StubExtensionProvider($app);
+        $stub = new class($app) extends ExtensionServiceProvider {
+            protected $extensions = [
+                'app::Extensions/*/*',
+                'forum' => 'base::modules/forum',
+            ];
+        };
 
         $this->assertNull($stub->boot());
     }
@@ -74,12 +79,4 @@ class ExtensionServiceProviderTest extends TestCase
 
         $this->assertContains('orchestra.extension: detecting', $stub->when());
     }
-}
-
-class StubExtensionProvider extends ExtensionServiceProvider
-{
-    protected $extensions = [
-        'app::Extensions/*/*',
-        'forum' => 'base::modules/forum',
-    ];
 }
