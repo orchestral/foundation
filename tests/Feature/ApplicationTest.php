@@ -4,9 +4,7 @@ namespace Orchestra\Tests\Feature;
 
 class ApplicationTest extends TestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     public function it_registes_base_service_providers()
     {
         $this->assertInstanceOf('\Illuminate\Events\Dispatcher', $this->app['events']);
