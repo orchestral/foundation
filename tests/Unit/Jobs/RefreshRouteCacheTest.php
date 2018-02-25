@@ -11,20 +11,21 @@ class RefreshRouteCacheTest extends TestCase
     /**
      * Teardown the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
     }
 
-    public function testHandleMethod()
+    /** @test */
+    public function it_can_refresh_cached_route()
     {
         $app = m::mock('\Illuminate\Contracts\Foundation\Application');
         $kernel = m::mock('\Illuminate\Contracts\Console\Kernel');
 
         $app->shouldReceive('routesAreCached')->once()->andReturn(true)
             ->shouldReceive('terminating')->once()->with(m::type('Closure'))
-                ->andReturnUsing(function ($c) {
-                    $c();
+                ->andReturnUsing(function ($callback) {
+                    $callback();
                 });
 
         $kernel->shouldReceive('call')->once()->with('route:cache')->andReturnNull();

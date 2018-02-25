@@ -11,18 +11,13 @@ class UserDashboardTest extends TestCase
     /**
      * Teardown the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
     }
 
-    /**
-     * Test Orchestra\Foundation\Processor\UserDashboard::show()
-     * method.
-     *
-     * @test
-     */
-    public function testShowMethod()
+    /** @test */
+    public function it_can_show_dashboard()
     {
         $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\Account\ProfileDashboard');
         $widget = m::mock('\Orchestra\Widget\WidgetManager');

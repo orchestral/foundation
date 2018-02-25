@@ -11,7 +11,10 @@ use Orchestra\Foundation\Providers\ConsoleSupportServiceProvider;
 
 class ServiceProviderTest extends TestCase
 {
-    protected function tearDown()
+    /**
+     * Teardown the test environment.
+     */
+    protected function tearDown(): void
     {
         m::close();
     }

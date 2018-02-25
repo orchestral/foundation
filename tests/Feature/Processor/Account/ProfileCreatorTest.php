@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Tests\Unit\Processor\Account;
+namespace Orchestra\Tests\Feature\Processor\Account;
 
 use Mockery as m;
 use Illuminate\Support\Facades\DB;
