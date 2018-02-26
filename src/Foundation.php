@@ -111,9 +111,9 @@ class Foundation extends RouteManager implements FoundationContract
     /**
      * Get acl services.
      *
-     * @return \Orchestra\Contracts\Authorization\Authorization
+     * @return \Orchestra\Contracts\Authorization\Authorization|null
      */
-    public function acl(): Authorization
+    public function acl(): ?Authorization
     {
         return $this->services['acl'];
     }
@@ -121,9 +121,9 @@ class Foundation extends RouteManager implements FoundationContract
     /**
      * Get memory services.
      *
-     * @return \Orchestra\Contracts\Memory\Provider
+     * @return \Orchestra\Contracts\Memory\Provider|null
      */
-    public function memory(): MemoryProvider
+    public function memory(): ?MemoryProvider
     {
         return $this->services['memory'];
     }
@@ -147,9 +147,9 @@ class Foundation extends RouteManager implements FoundationContract
      */
     public function widget(string $type)
     {
-        if (! is_null($this->widget)) {
-            return $this->widget->make("{$type}.orchestra");
-        }
+        return ! is_null($this->widget)
+                    ? $this->widget->make("{$type}.orchestra")
+                    : null;
     }
 
     /**
