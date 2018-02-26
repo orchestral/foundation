@@ -25,6 +25,7 @@ class ViewerTest extends TestCase
         $this->actingAs($this->adminUser)
             ->visit('admin/users')
             ->seePageIs('admin/users')
-            ->seeText('Users');
+            ->seeText('Users')
+            ->seeLink('Add', 'admin/users/create');
     }
 }
