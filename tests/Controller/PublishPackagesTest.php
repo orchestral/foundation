@@ -13,9 +13,17 @@ class PublishPackagesTest extends TestCase
 {
     use Installation;
 
-    /**
-     * @test
-     */
+    /** @test */
+    public function its_not_accessible_for_user()
+    {
+        $user = $this->createUserAsMember();
+
+        $this->actingAs($user)
+            ->visit('admin/publisher/ftp')
+            ->seePageIs('admin');
+    }
+
+    /** @test */
     public function it_can_select_publishing_driver()
     {
         $this->app->instance('orchestra.publisher.ftp', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
@@ -27,21 +35,7 @@ class PublishPackagesTest extends TestCase
             ->seePageIs('admin/publisher/ftp');
     }
 
-    /**
-     * @test
-     */
-    public function it_cant_select_publishing_driver_as_user()
-    {
-        $user = $this->createUserAsMember();
-
-        $this->actingAs($user)
-            ->visit('admin/publisher/ftp')
-            ->seePageIs('admin');
-    }
-
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_publish_assets_using_ftp_connection()
     {
         $data = [
@@ -67,9 +61,7 @@ class PublishPackagesTest extends TestCase
             ->seePageIs('admin/publisher/ftp');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_cant_publish_assets_using_ftp_connection_when_connection_fails()
     {
         $data = [
