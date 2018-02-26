@@ -4,7 +4,6 @@ namespace Orchestra\Tests\Controller;
 
 use Mockery as m;
 use Orchestra\Foundation\Auth\User;
-use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Testing\Installation;
 use Orchestra\Foundation\Processor\AssetPublisher;
 use Orchestra\Foundation\Http\Controllers\PublisherController;

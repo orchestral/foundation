@@ -2,7 +2,6 @@
 
 namespace Orchestra\Tests\Feature\Http\Controllers;
 
-use Orchestra\Foundation\Auth\User;
 use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Testing\Installation;
 

@@ -5,7 +5,6 @@ namespace Orchestra\Tests\Controller\Users;
 use Mockery as m;
 use Orchestra\Tests\Controller\TestCase;
 use Orchestra\Foundation\Testing\Installation;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Orchestra\Foundation\Processor\User as UserProcessor;
 
 class RemoverTest extends TestCase

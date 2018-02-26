@@ -2,7 +2,6 @@
 
 namespace Orchestra\Tests\Controller;
 
-use Orchestra\Foundation\Auth\User;
 use Orchestra\Foundation\Testing\Installation;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
