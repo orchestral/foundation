@@ -67,10 +67,4 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', function (Router
         'before' => 'orchestra.installable',
         'uses' => 'DashboardController@show',
     ]);
-
-    // File not found routing.
-    $router->any('missing', [
-        'as' => 'orchestra.404',
-        'uses' => 'DashboardController@missing',
-    ]);
 });
