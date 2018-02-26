@@ -23,7 +23,7 @@ abstract class BaseController extends Controller
      */
     public function __construct()
     {
-        $this->setupMiddleware();
+        $this->onCreate();
     }
 
     /**
@@ -31,7 +31,7 @@ abstract class BaseController extends Controller
      *
      * @return void
      */
-    abstract protected function setupMiddleware();
+    abstract protected function onCreate();
 
     /**
      * Show missing pages.

@@ -19,11 +19,13 @@ class ActionController extends Controller implements ActivatorListener, Deactiva
      *
      * @return void
      */
-    protected function setupMiddleware()
+    protected function onCreate()
     {
-        $this->middleware('orchestra.auth');
-        $this->middleware('orchestra.can:manage-orchestra');
-        $this->middleware('orchestra.csrf');
+        $this->middleware([
+            'orchestra.auth',
+            'orchestra.can:manage-orchestra',
+            'orchestra.csrf',
+        ]);
     }
 
     /**

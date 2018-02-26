@@ -12,10 +12,12 @@ class ViewerController extends Controller implements Listener
      *
      * @return void
      */
-    protected function setupMiddleware()
+    protected function onCreate()
     {
-        $this->middleware('orchestra.auth');
-        $this->middleware('orchestra.can:manage-orchestra');
+        $this->middleware([
+            'orchestra.auth',
+            'orchestra.can:manage-orchestra',
+        ]);
     }
 
     /**

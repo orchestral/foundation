@@ -15,7 +15,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      *
      * @return void
      */
-    protected function setupMiddleware()
+    protected function onCreate()
     {
         $this->middleware('orchestra.guest');
     }
