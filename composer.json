@@ -48,7 +48,8 @@
     },
     "require-dev": {
         "orchestra/installer": "~3.6.0",
-        "orchestra/testing": "~3.6.0"
+        "orchestra/testing": "~3.6.0",
+        "phpunit/phpunit": "~7.0.1 || ~7.1"
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (~3.6).",
