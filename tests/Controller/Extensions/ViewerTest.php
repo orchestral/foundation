@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Tests\Controller\Extension;
+namespace Orchestra\Tests\Controller\Extensions;
 
 use Orchestra\Tests\Controller\TestCase;
 use Orchestra\Foundation\Testing\Installation;

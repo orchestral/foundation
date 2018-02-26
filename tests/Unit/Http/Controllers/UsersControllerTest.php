@@ -47,33 +47,6 @@ class UsersControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/users.
-     *
-     * @test
-     */
-    public function testGetIndexAction()
-    {
-        $user = m::mock('\Orchestra\Model\User');
-        $role = m::mock('\Orchestra\Model\Role');
-        $table = m::mock('\Orchestra\Contracts\Html\Table\Builder');
-
-        list($presenter) = $this->bindDependencies();
-
-        $user->shouldReceive('search')->once()->with('', [])->andReturn($user);
-        $role->shouldReceive('pluck')->once()->with('name', 'id')->andReturn([]);
-        $presenter->shouldReceive('table')->once()->andReturn($table)
-            ->shouldReceive('actions')->once()->with($table)->andReturn('list.users');
-
-        Foundation::shouldReceive('make')->once()->with('orchestra.user')->andReturn($user);
-        Foundation::shouldReceive('make')->once()->with('orchestra.role')->andReturn($role);
-        View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::users.index', m::type('Array'), [])->andReturn('foo');
-
-        $this->call('GET', 'admin/users');
-        $this->assertResponseOk();
-    }
-
-    /**
      * Test GET /admin/users/create.
      *
      * @test
