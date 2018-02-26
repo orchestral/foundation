@@ -18,12 +18,13 @@ class ProfileUpdater extends User implements Command
      */
     public function edit(Listener $listener)
     {
-        $eloquent = Auth::user();
-        $form = $this->presenter->profile($eloquent, 'orchestra::account');
+        $user = Auth::user();
 
-        $this->fireEvent('form', [$eloquent, $form]);
+        $form = $this->presenter->profile($user, 'orchestra::account');
 
-        return $listener->showProfileChanger(['eloquent' => $eloquent, 'form' => $form]);
+        $this->fireEvent('form', [$user, $form]);
+
+        return $listener->showProfileChanger(['eloquent' => $user, 'form' => $form]);
     }
 
     /**
@@ -60,7 +61,7 @@ class ProfileUpdater extends User implements Command
     /**
      * Save user profile.
      *
-     * @param  \Orchestra\Model\User|\Illuminate\Database\Eloquent\Model  $user
+     * @param  \Orchestra\Foundation\Auth\User  $user
      * @param  array  $input
      *
      * @return void

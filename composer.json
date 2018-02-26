@@ -60,7 +60,9 @@
     },
     "scripts": {
         "test": [
-            "./vendor/bin/phpunit"
+            "./vendor/bin/phpunit --testsuite=Unit",
+            "./vendor/bin/phpunit --testsuite=Controller",
+            "./vendor/bin/phpunit --testsuite=Feature"
         ],
         "update:frontend": [
             "bower update",

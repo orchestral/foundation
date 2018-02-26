@@ -15,7 +15,7 @@ trait RouteProvider
      *
      * @return void
      */
-    protected function loadBackendRoutesFrom($path, $namespace = '', array $attributes = [])
+    protected function loadBackendRoutesFrom(string $path, ?string $namespace = '', array $attributes = []): void
     {
         $foundation = $this->app->make('orchestra.app');
         $attributes = $this->resolveRouteGroupAttributes($namespace, $attributes);
@@ -31,7 +31,7 @@ trait RouteProvider
      *
      * @return void
      */
-    protected function loadFrontendRoutesFrom($path, $namespace = '', array $attributes = [])
+    protected function loadFrontendRoutesFrom(string $path, ?string $namespace = '', array $attributes = []): void
     {
         $foundation = $this->app->make('orchestra.app');
         $attributes = $this->resolveRouteGroupAttributes($namespace, $attributes);
@@ -58,8 +58,10 @@ trait RouteProvider
      * application to be loaded only after extension routing.
      *
      * @param  \Closure|string  $callback
+     *
+     * @return void
      */
-    protected function afterExtensionLoaded($callback)
+    protected function afterExtensionLoaded($callback): void
     {
         $this->app->make('orchestra.extension')->after($callback);
     }
@@ -72,7 +74,7 @@ trait RouteProvider
      *
      * @return array
      */
-    protected function resolveRouteGroupAttributes($namespace = null, array $attributes = [])
+    protected function resolveRouteGroupAttributes($namespace = null, array $attributes = []): array
     {
         if (is_array($namespace)) {
             $attributes = $namespace;

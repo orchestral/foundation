@@ -52,7 +52,7 @@ class Configure extends Processor implements Command
         // to this form using events.
         $form = $this->presenter->configure($eloquent, $extension->get('name'));
 
-        Event::fire("orchestra.form: extension.{$extension->get('name')}", [$eloquent, $form]);
+        Event::dispatch("orchestra.form: extension.{$extension->get('name')}", [$eloquent, $form]);
 
         return $listener->showConfigurationChanger(compact('eloquent', 'form', 'extension'));
     }
@@ -85,12 +85,12 @@ class Configure extends Processor implements Command
         $config = (array) $memory->get("extension.active.{$extension->get('name')}.config", []);
         $input = new Fluent(array_merge($config, $input));
 
-        Event::fire("orchestra.saving: extension.{$extension->get('name')}", [&$input]);
+        Event::dispatch("orchestra.saving: extension.{$extension->get('name')}", [&$input]);
 
         $memory->put("extensions.active.{$extension->get('name')}.config", $input->getAttributes());
         $memory->put("extension_{$extension->get('name')}", $input->getAttributes());
 
-        Event::fire("orchestra.saved: extension.{$extension->get('name')}", [$input]);
+        Event::dispatch("orchestra.saved: extension.{$extension->get('name')}", [$input]);
 
         return $listener->configurationUpdated($extension);
     }

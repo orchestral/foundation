@@ -16,8 +16,12 @@ trait Installation
      *
      * @return void
      */
-    public function beginInstallation()
+    public function beginInstallation(): void
     {
-        $this->adminUser = $this->install();
+        $this->afterApplicationCreated(function () {
+            $this->adminUser = $this->app['orchestra.installed'] === false
+                                    ? $this->runInstallation()
+                                    : $this->app['orchestra.user']->newQuery()->first();
+        });
     }
 }

@@ -27,9 +27,9 @@ class UseBackendThemeTest extends TestCase
         $events = m::mock('\Illuminate\Contracts\Events\Dispatcher');
         $request = m::mock('\Illuminate\Http\Request');
 
-        $events->shouldReceive('fire')->once()->with('orchestra.started: admin')->andReturnNull()
-            ->shouldReceive('fire')->once()->with('orchestra.ready: admin')->andReturnNull()
-            ->shouldReceive('fire')->once()->with('orchestra.done: admin')->andReturnNull();
+        $events->shouldReceive('dispatch')->once()->with('orchestra.started: admin')->andReturnNull()
+            ->shouldReceive('dispatch')->once()->with('orchestra.ready: admin')->andReturnNull()
+            ->shouldReceive('dispatch')->once()->with('orchestra.done: admin')->andReturnNull();
 
         $next = function ($request) {
             return 'foo';

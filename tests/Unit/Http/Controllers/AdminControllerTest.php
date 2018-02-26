@@ -11,19 +11,20 @@ class AdminControllerTest extends TestCase
     /**
      * Teardown the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
     }
 
-    /**
-     * Test Orchestra\Foundation\Http\Controllers\AdminController filters.
-     *
-     * @test
-     */
-    public function testFilters()
+    /** @test */
+    public function it_defines_expected_middlewares()
     {
-        $stub = new StubAdminController();
+        $stub = new class() extends AdminController {
+            protected function setupMiddleware()
+            {
+                //
+            }
+        };
 
         $middleware = [
             [
@@ -33,13 +34,5 @@ class AdminControllerTest extends TestCase
         ];
 
         $this->assertEquals($middleware, $stub->getMiddleware());
-    }
-}
-
-class StubAdminController extends AdminController
-{
-    protected function setupMiddleware()
-    {
-        //
     }
 }

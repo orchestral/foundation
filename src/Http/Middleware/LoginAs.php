@@ -70,7 +70,7 @@ class LoginAs
      *
      * @return bool
      */
-    protected function authorize()
+    protected function authorize(): bool
     {
         return $this->acl->canIf('manage orchestra');
     }

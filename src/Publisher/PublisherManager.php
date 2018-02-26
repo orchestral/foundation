@@ -39,7 +39,7 @@ class PublisherManager extends Manager
      *
      * @return bool
      */
-    public function execute()
+    public function execute(): bool
     {
         $messages = $this->app->make('orchestra.messages');
         $queues = $this->queued();
@@ -67,11 +67,11 @@ class PublisherManager extends Manager
     /**
      * Add a process to be queue.
      *
-     * @param  string  $queue
+     * @param  string|array  $queue
      *
      * @return bool
      */
-    public function queue($queue)
+    public function queue($queue): bool
     {
         $queue = array_unique(array_merge($this->queued(), (array) $queue));
         $this->memory->put('orchestra.publisher.queue', $queue);
@@ -84,7 +84,7 @@ class PublisherManager extends Manager
      *
      * @return array
      */
-    public function queued()
+    public function queued(): array
     {
         return $this->memory->get('orchestra.publisher.queue', []);
     }

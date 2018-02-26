@@ -63,7 +63,7 @@ class Can
      *
      * @return mixed
      */
-    public function handle($request, Closure $next, $action = null)
+    public function handle($request, Closure $next, ?string $action = null)
     {
         if (! $this->authorize($action)) {
             return $this->responseOnUnauthorized($request);
@@ -75,11 +75,11 @@ class Can
     /**
      * Check authorization.
      *
-     * @param  string  $action
+     * @param  string|null  $action
      *
      * @return bool
      */
-    protected function authorize($action = null)
+    protected function authorize(?string $action = null): bool
     {
         if (empty($action)) {
             return false;

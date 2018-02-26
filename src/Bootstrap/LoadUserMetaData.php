@@ -2,8 +2,8 @@
 
 namespace Orchestra\Foundation\Bootstrap;
 
-use Orchestra\Model\Memory\UserMetaProvider;
-use Orchestra\Model\Memory\UserMetaRepository;
+use Orchestra\Model\Memory\UserProvider;
+use Orchestra\Model\Memory\UserRepository;
 use Illuminate\Contracts\Foundation\Application;
 
 class LoadUserMetaData
@@ -18,9 +18,9 @@ class LoadUserMetaData
     public function bootstrap(Application $app)
     {
         $app->make('orchestra.memory')->extend('user', function ($app, $name) {
-            $handler = new UserMetaRepository($name, [], $app);
+            $handler = new UserRepository($name, [], $app);
 
-            return new UserMetaProvider($handler);
+            return new UserProvider($handler);
         });
     }
 }

@@ -15,7 +15,7 @@ trait RedirectUsers
      *
      * @return string
      */
-    protected function redirectUserTo($namespace, $path, $redirect = null)
+    protected function redirectUserTo(string $namespace, string $path, ?string $redirect = null): string
     {
         return handles($this->redirectUserPath($namespace, $path, $redirect));
     }
@@ -29,7 +29,7 @@ trait RedirectUsers
      *
      * @return string
      */
-    protected function redirectUserPath($namespace, $path, $redirect = null)
+    protected function redirectUserPath(string $namespace, string $path, ?string $redirect = null): string
     {
         if (! empty($redirect)) {
             $path = $redirect;

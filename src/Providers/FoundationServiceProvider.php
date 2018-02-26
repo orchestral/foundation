@@ -80,7 +80,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerFoundation()
+    protected function registerFoundation(): void
     {
         $this->app['orchestra.installed'] = false;
 
@@ -94,7 +94,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerMetaContainer()
+    protected function registerMetaContainer(): void
     {
         $this->app->singleton('orchestra.meta', function () {
             return new Meta();
@@ -106,7 +106,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerThrottlesLogins()
+    protected function registerThrottlesLogins(): void
     {
         $config = $this->app->make('config')->get('orchestra/foundation::throttle', []);
         $throttles = $config['resolver'] ?? BasicThrottle::class;
@@ -121,10 +121,10 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerEventListeners()
+    protected function registerEventListeners(): void
     {
         $this->app->terminating(function () {
-            $this->app->make('events')->fire('orchestra.done');
+            $this->app->make('events')->dispatch('orchestra.done');
         });
     }
 
@@ -149,7 +149,7 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function bootAuthen()
+    protected function bootAuthen(): void
     {
         $this->bootAuthenProvider();
 

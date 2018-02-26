@@ -67,7 +67,7 @@ class RouteServiceProvider extends ServiceProvider
             });
         }
 
-        $this->app->make('events')->fire('orchestra.ready');
+        $this->app->make('events')->dispatch('orchestra.ready');
     }
 
     /**
@@ -75,7 +75,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function loadRoutes()
+    protected function loadRoutes(): void
     {
         $path = realpath(__DIR__.'/../../');
 

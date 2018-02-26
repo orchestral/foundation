@@ -36,7 +36,7 @@ class SupportServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerPublisher()
+    protected function registerPublisher(): void
     {
         $this->app->singleton('orchestra.publisher', function (Application $app) {
             $memory = $app->make('orchestra.platform.memory');
@@ -50,7 +50,7 @@ class SupportServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerRoleEloquent()
+    protected function registerRoleEloquent(): void
     {
         $this->app->bind('orchestra.role', function () {
             $model = $this->getConfig('models.role', Role::class);
@@ -64,7 +64,7 @@ class SupportServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerUserEloquent()
+    protected function registerUserEloquent(): void
     {
         $this->app->bind('orchestra.user', function () {
             $model = $this->getConfig('models.user', User::class);
@@ -79,9 +79,9 @@ class SupportServiceProvider extends ServiceProvider
      * @param  string  $name
      * @param  mixed  $default
      *
-     * @return string
+     * @return mixed
      */
-    protected function getConfig($name, $default = null)
+    protected function getConfig(string $name, $default = null)
     {
         return $this->app->make('config')->get("orchestra/foundation::{$name}", $default);
     }

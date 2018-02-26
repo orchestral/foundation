@@ -11,18 +11,13 @@ class AssetPublisherTest extends TestCase
     /**
      * Teardown the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
     }
 
-    /**
-     * Test Orchestra\Foundation\Processor\AssetPublisher::executeAndRedirect()
-     * method.
-     *
-     * @test
-     */
-    public function testExecuteAndRedirectMethod()
+    /** @test */
+    public function it_can_publish_and_redirect_user()
     {
         $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
         $publisher = m::mock('\Orchestra\Foundation\Publisher\PublisherManager');
@@ -37,19 +32,14 @@ class AssetPublisherTest extends TestCase
         $this->assertEquals('redirected', $stub->executeAndRedirect($listener));
     }
 
-    /**
-     * Test Orchestra\Foundation\Processor\AssetPublisher::publish()
-     * method.
-     *
-     * @test
-     */
-    public function testPublishMethod()
+    /** @test */
+    public function it_can_publish_for_package()
     {
         $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
         $publisher = m::mock('\Orchestra\Foundation\Publisher\PublisherManager');
         $session = m::mock('\Illuminate\Session\Store');
 
-        $input = $this->getInput();
+        $data = $this->getServerConnection();
 
         $stub = new AssetPublisher($publisher, $session);
 
@@ -57,26 +47,21 @@ class AssetPublisherTest extends TestCase
             ->shouldReceive('connect')->once()->andReturn(true)
             ->shouldReceive('connected')->once()->andReturn(true)
             ->shouldReceive('execute')->once()->andReturn(true);
-        $session->shouldReceive('put')->once()->with('orchestra.ftp', $input)->andReturnNull();
+        $session->shouldReceive('put')->once()->with('orchestra.ftp', $data)->andReturnNull();
         $listener->shouldReceive('publishingHasSucceed')->once()->andReturn('asset.published');
 
-        $this->assertEquals('asset.published', $stub->publish($listener, $input));
+        $this->assertEquals('asset.published', $stub->publish($listener, $data));
     }
 
-    /**
-     * Test Orchestra\Foundation\Processor\AssetPublisher::publish()
-     * method when connection failed.
-     *
-     * @test
-     */
-    public function testPublishMethodGivenConnectionFailed()
+    /** @test */
+    public function it_cant_publish_given_connection_error()
     {
         $listener = m::mock('\Orchestra\Contracts\Foundation\Listener\AssetPublishing');
         $publisher = m::mock('\Orchestra\Foundation\Publisher\PublisherManager');
         $uploader = m::mock('\Orchestra\Contracts\Publisher\Uploader');
         $session = m::mock('\Illuminate\Session\Store');
 
-        $input = $this->getInput();
+        $data = $this->getServerConnection();
 
         $stub = new AssetPublisher($publisher, $session);
 
@@ -85,7 +70,7 @@ class AssetPublisherTest extends TestCase
         $session->shouldReceive('forget')->once()->with('orchestra.ftp')->andReturnNull();
         $listener->shouldReceive('publishingHasFailed')->once()->andReturn(['error' => 'failed']);
 
-        $this->assertEquals(['error' => 'failed'], $stub->publish($listener, $input));
+        $this->assertEquals(['error' => 'failed'], $stub->publish($listener, $data));
     }
 
     /**
@@ -93,7 +78,7 @@ class AssetPublisherTest extends TestCase
      *
      * @return array
      */
-    protected function getInput()
+    protected function getServerConnection(): array
     {
         return [
             'host' => 'localhost',

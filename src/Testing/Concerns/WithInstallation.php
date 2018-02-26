@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation\Testing\Concerns;
 
-use Illuminate\Support\Arr;
 use Orchestra\Installation\Installation;
 use Orchestra\Contracts\Installation\Installation as InstallationContract;
 
@@ -11,9 +10,9 @@ trait WithInstallation
     /**
      * Make Orchestra Platform installer.
      *
-     * @return \Orchestra\Installation\Installation
+     * @return \Orchestra\Contracts\Installation\Installation
      */
-    protected function makeInstaller()
+    protected function makeInstaller(): InstallationContract
     {
         $installer = new Installation($this->app);
 
@@ -35,7 +34,7 @@ trait WithInstallation
      *
      * @return \Orchestra\Foundation\Auth\User
      */
-    protected function install(InstallationContract $installer = null, array $config = [])
+    protected function runInstallation(?InstallationContract $installer = null, array $config = [])
     {
         if (is_null($installer)) {
             $installer = $this->makeInstaller();
@@ -43,24 +42,17 @@ trait WithInstallation
 
         $this->artisan('migrate');
 
-        $this->beforeApplicationDestroyed(function () {
-            $this->artisan('migrate:rollback');
-        });
-
-        if ($this->app['orchestra.installed'] === true) {
-            return $this->adminUser = $this->app['orchestra.user']->newQuery()->first();
-        }
-
         $this->adminUser = $this->createAdminUser();
 
         $installer->create($this->adminUser, [
-            'site_name' => Arr::get($config, 'name', 'Orchestra Platform'),
-            'email' => Arr::get($config, 'email', 'hello@orchestraplatform.com'),
+            'site_name' => $config['name'] ?? 'Orchestra Platform',
+            'email' => $config['email'] ?? 'hello@orchestraplatform.com',
         ]);
 
         $this->app['orchestra.installed'] = true;
 
         $this->beforeApplicationDestroyed(function () {
+            $this->artisan('migrate:rollback');
             $this->app['orchestra.installed'] = false;
         });
 

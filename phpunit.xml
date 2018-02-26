@@ -9,12 +9,18 @@
      processIsolation="false"
      stopOnError="false"
      stopOnFailure="false"
-     syntaxCheck="false"
+     syntaxCheck="true"
 >
 
     <testsuites>
-        <testsuite name="Orchestra\Foundation Test Suite">
-            <directory suffix="Test.php">./tests/</directory>
+        <testsuite name="Controller">
+            <directory suffix="Test.php">./tests/Controller</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./tests/Feature</directory>
+        </testsuite>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
     </testsuites>
 
@@ -24,9 +30,8 @@
             <file>src/helpers.php</file>
 
             <exclude>
-                <directory>tests/</directory>
-                <directory>vendor/</directory>
-                <file>src/Testing/ApplicationTestCase.php</file>
+                <directory>resources/</directory>
+                <directory>routes/</directory>
             </exclude>
         </whitelist>
     </filter>
