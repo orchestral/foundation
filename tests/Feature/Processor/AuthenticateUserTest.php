@@ -12,12 +12,10 @@ class AuthenticateUserTest extends TestCase
 {
     use Installation;
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_authenticate_a_user()
     {
-        $user = User::faker()->create();
+        $user = $this->createUserAsMember();
 
         $data = [
             'username' => $user->email,
@@ -36,12 +34,10 @@ class AuthenticateUserTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_cant_authenticate_user_given_invalid_credential()
     {
-        $user = User::faker()->create();
+        $user = $this->createUserAsMember();
 
         $data = [
             'username' => 'crynobone@gmail.com',
@@ -59,12 +55,10 @@ class AuthenticateUserTest extends TestCase
         $this->assertGuest();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_cant_authenticate_user_given_validation_fails()
     {
-        $user = User::faker()->create();
+        $user = $this->createUserAsMember();
 
         $data = [
             'username' => $user->email,

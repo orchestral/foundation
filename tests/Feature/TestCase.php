@@ -19,7 +19,7 @@ abstract class TestCase extends ApplicationTestCase
     {
         $app->make('config')->set(['auth.providers.users.model' => User::class]);
 
-        $app->make(ModelFactory::class)->load(__DIR__.'/../factories');
+        $this->loadFactoriesUsing($app, __DIR__.'/../factories');
     }
 
     /**
@@ -34,5 +34,19 @@ abstract class TestCase extends ApplicationTestCase
         $app->useVendorPath(__DIR__.'/../../vendor');
 
         return $app;
+    }
+
+    /**
+     * Create user with member permission.
+     *
+     * @param  array  $attributes
+     *
+     * @return \Orchestra\Foundation\Auth\User
+     */
+    protected function createUserAsMember(array $attributes = [])
+    {
+        return tap(User::faker()->create($attributes), function ($user) {
+            $user->attachRole([2]);
+        });
     }
 }

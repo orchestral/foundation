@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Orchestra\Foundation\Testing\Installation;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-class AdminLogoutTest extends TestCase
+class LogoutTest extends TestCase
 {
     use Installation,
         WithoutMiddleware;

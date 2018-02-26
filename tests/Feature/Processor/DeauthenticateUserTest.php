@@ -15,7 +15,7 @@ class DeauthenticateUserTest extends TestCase
     /** @test */
     public function it_can_deauthenticate_user()
     {
-        $this->be($user = User::faker()->create());
+        $this->be($user = $this->createUserAsMember());
 
         $this->assertAuthenticated();
 
