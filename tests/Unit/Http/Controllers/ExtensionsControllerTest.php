@@ -43,25 +43,6 @@ class ExtensionsControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/extensions.
-     *
-     * @test
-     */
-    public function testGetIndexAction()
-    {
-        $extensions = collect('foo');
-
-        Extension::shouldReceive('detect')->once()->andReturn($extensions);
-        Extension::shouldReceive('finish')->once()->andReturnSelf();
-        View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::extensions.index', compact('extensions'), [])
-            ->andReturn('foo');
-
-        $this->call('GET', 'admin/extensions');
-        $this->assertResponseOk();
-    }
-
-    /**
      * Test POST /admin/extensions/(:name)/activate.
      *
      * @test
