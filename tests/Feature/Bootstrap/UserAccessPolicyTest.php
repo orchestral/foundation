@@ -22,8 +22,7 @@ class UserAccessPolicyTest extends TestCase
     /** @test */
     public function it_can_boot_for_member()
     {
-        $user = User::faker()->create();
-        $user->attachRole([2]);
+        $user = $this->createUserAsMember();
 
         $this->assertEquals(
             collect(['Member']),

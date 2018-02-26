@@ -60,17 +60,14 @@ class BaseControllerTest extends TestCase
 
         $this->assertFalse($_SERVER['StubBaseController@setupFilters']);
 
-        $stub = new StubBaseController();
+        $stub = new class() extends BaseController {
+            protected function onCreate()
+            {
+                $_SERVER['StubBaseController@setupFilters'] = true;
+            }
+        };
 
         $this->assertEquals($view, $stub->missingMethod([]));
         $this->assertTrue($_SERVER['StubBaseController@setupFilters']);
-    }
-}
-
-class StubBaseController extends BaseController
-{
-    protected function setupMiddleware()
-    {
-        $_SERVER['StubBaseController@setupFilters'] = true;
     }
 }

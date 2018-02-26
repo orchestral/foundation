@@ -18,7 +18,7 @@ class ProfileCreatorController extends AdminController implements Listener
      *
      * @return void
      */
-    protected function setupMiddleware()
+    protected function onCreate()
     {
         $this->middleware('orchestra.registrable');
     }

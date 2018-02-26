@@ -20,7 +20,7 @@ class AdminControllerTest extends TestCase
     public function it_defines_expected_middlewares()
     {
         $stub = new class() extends AdminController {
-            protected function setupMiddleware()
+            protected function onCreate()
             {
                 //
             }

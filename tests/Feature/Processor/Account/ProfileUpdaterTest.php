@@ -15,7 +15,7 @@ class ProfileUpdaterTest extends TestCase
     /** @test */
     public function it_can_show_edit_page()
     {
-        $this->actingAs($user = User::faker()->create());
+        $this->actingAs($user = $this->createUserAsMember());
 
         $stub = $this->app->make(ProfileUpdater::class);
 
@@ -28,7 +28,7 @@ class ProfileUpdaterTest extends TestCase
     /** @test */
     public function it_can_update_the_profile()
     {
-        $this->actingAs($user = User::faker()->create());
+        $this->actingAs($user = $this->createUserAsMember());
 
         $stub = $this->app->make(ProfileUpdater::class);
 
@@ -51,7 +51,7 @@ class ProfileUpdaterTest extends TestCase
     /** @test */
     public function it_cant_update_given_invalid_user()
     {
-        $this->actingAs($user = User::faker()->create());
+        $this->actingAs($user = $this->createUserAsMember());
 
         $stub = $this->app->make(ProfileUpdater::class);
 
@@ -74,7 +74,7 @@ class ProfileUpdaterTest extends TestCase
     /** @test */
     public function it_cant_update_given_validation_fails()
     {
-        $this->actingAs($user = User::faker()->create());
+        $this->actingAs($user = $this->createUserAsMember());
 
         $stub = $this->app->make(ProfileUpdater::class);
 
@@ -104,7 +104,7 @@ class ProfileUpdaterTest extends TestCase
      */
     public function it_cant_update_given_database_fails()
     {
-        $this->actingAs($user = User::faker()->create());
+        $this->actingAs($user = $this->createUserAsMember());
 
         $presenter = $this->app->make('Orchestra\Foundation\Http\Presenters\Account');
         $validator = $this->app->make('Orchestra\Foundation\Validation\Account');

@@ -4,7 +4,7 @@ namespace Orchestra\Tests\Controller;
 
 use Orchestra\Foundation\Testing\Installation;
 
-class AdminLoginTest extends TestCase
+class LoginTest extends TestCase
 {
     use Installation;
 

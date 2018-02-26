@@ -13,8 +13,7 @@ class DashboardControllerTest extends TestCase
     /** @test */
     public function it_show_missing_page()
     {
-        $user = User::faker()->create();
-        $user->attachRole([2]);
+        $user = $this->createUserAsMember();
 
         $this->actingAs($user)
             ->call('GET', 'admin/missing')

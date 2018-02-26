@@ -13,9 +13,9 @@ class ReauthenticateController extends Controller
      *
      * @return void
      */
-    protected function setupMiddleware()
+    protected function onCreate()
     {
-        parent::setupMiddleware();
+        parent::onCreate();
 
         $this->middleware('orchestra.reauth');
     }

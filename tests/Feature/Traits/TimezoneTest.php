@@ -72,7 +72,7 @@ class TimezoneTest extends TestCase
      */
     public function it_can_convert_to_local_time_for_user()
     {
-        $this->be($user = User::faker()->create());
+        $this->be($user = $this->createUserAsMember());
 
         $this->assertAuthenticated();
 
@@ -113,7 +113,7 @@ class TimezoneTest extends TestCase
      */
     public function it_can_convert_from_local_time_for_user()
     {
-        $this->be($user = User::faker()->create());
+        $this->be($user = $this->createUserAsMember());
 
         $this->assertAuthenticated();
 

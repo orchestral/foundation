@@ -13,9 +13,12 @@ class PublisherController extends AdminController implements Listener
      *
      * @return void
      */
-    protected function setupMiddleware()
+    protected function onCreate()
     {
-        $this->middleware('orchestra.auth');
+        $this->middleware([
+            'orchestra.auth',
+            'orchestra.can:manage-orchestra',
+        ]);
     }
 
     /**
