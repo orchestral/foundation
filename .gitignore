@@ -1,7 +1,6 @@
 # Composer & PHP
 /composer.lock
 /vendor/*
-.php_cs.cache
 
 # Node.js
 /node_modules/*
@@ -9,3 +8,9 @@
 
 # Bower
 /resources/components/*
+
+# PHP-CS-Fixer
+.php_cs.cache
+
+# PHPUnit
+/coverage/*

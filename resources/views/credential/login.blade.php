@@ -1,6 +1,7 @@
 @extends('orchestra/foundation::layouts.landing')
 
 @php
+$errors = $errors ?? new Illuminate\Support\MessageBag();
 $username = Laravie\Authen\Authen::getIdentifierName();
 @endphp
 

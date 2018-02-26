@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation\Testing\Concerns;
 
-use Illuminate\Support\Arr;
 use Orchestra\Installation\Installation;
 use Orchestra\Contracts\Installation\Installation as InstallationContract;
 

@@ -2,7 +2,6 @@
 
 namespace Orchestra\Tests\Feature\Validation;
 
-use Mockery as m;
 use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Validation\Setting;
 
