@@ -21,7 +21,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Orchestra\\Tests\\" : "tests/"
+            "Orchestra\\Tests\\Controller\\" : "tests/Controller/",
+            "Orchestra\\Tests\\Feature\\" : "tests/Feature/",
+            "Orchestra\\Tests\\Unit\\" : "tests/Unit/"
         }
     },
     "require": {
