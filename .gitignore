@@ -9,3 +9,6 @@
 
 # Bower
 /resources/components/*
+
+# PHPUnit
+/coverage/*
