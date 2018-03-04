@@ -1,9 +1,9 @@
 {
-    "name": "Story CMS",
-    "description": "Story CMS Extension",
+    "name": "CMS",
+    "description": "CMS Extension",
     "author": "Mior Muhammad Zaki",
     "url": "https://github.com/acme/story",
-    "version": "3.4.0@dev",
+    "version": "1.0@dev",
     "config": {
         "handles": "cms"
     },

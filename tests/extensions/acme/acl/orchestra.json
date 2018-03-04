@@ -1,0 +1,11 @@
+{
+    "name": "ACL",
+    "description": "ACL Extension",
+    "author": "Mior Muhammad Zaki",
+    "url": "https://github.com/acme/acl",
+    "version": "1.0@dev",
+    "config": {
+        "handles": "acl"
+    },
+    "provides": []
+}

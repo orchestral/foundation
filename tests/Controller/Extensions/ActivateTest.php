@@ -12,14 +12,40 @@ class ActivateTest extends TestCase
 {
     use Installation;
 
+    /**
+     * Define environment setup.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Extension::register('acme/acl', realpath(__DIR__.'/../../extensions/acme/acl'));
+        Extension::register('acme/cms', realpath(__DIR__.'/../../extensions/acme/cms'));
+
+        Extension::detect();
+    }
+
+    /**
+     * Define environment setup.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return void
+     */
+    protected function getEnvironmentSetUp($app): void
+    {
+        parent::getEnvironmentSetUp($app);
+    }
+
     /** @test */
     public function it_can_activate_extension()
     {
-        $this->app->make('orchestra.extension.finder')->addPath(__DIR__.'/../../extensions/');
-
         $this->actingAs($this->adminUser)
-            ->makeRequest('POST', 'admin/extensions/acme/story/activate')
-            ->seePageIs('admin/extensions');
+            ->makeRequest('POST', 'admin/extensions/acme/cms/activate')
+            ->seePageIs('admin/extensions')
+            ->seeText('Extension acme/cms activated');
     }
 
     /** @test */
@@ -40,7 +66,7 @@ class ActivateTest extends TestCase
             });
 
         $this->actingAs($this->adminUser)
-            ->makeRequest('POST', 'admin/extensions/acme/story/activate')
+            ->makeRequest('POST', 'admin/extensions/acme/cms/activate')
             ->seePageIs('admin/publisher/ftp');
     }
 }

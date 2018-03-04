@@ -21,7 +21,7 @@ abstract class TestCase extends ApplicationTestCase
      *
      * @return void
      */
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         $app->make('config')->set(['auth.providers.users.model' => User::class]);
 
