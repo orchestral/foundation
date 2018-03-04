@@ -28,17 +28,6 @@ class ActivateTest extends TestCase
         Extension::detect();
     }
 
-    /**
-     * Define environment setup.
-     *
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return void
-     */
-    protected function getEnvironmentSetUp($app): void
-    {
-        parent::getEnvironmentSetUp($app);
-    }
-
     /** @test */
     public function it_can_activate_extension()
     {
