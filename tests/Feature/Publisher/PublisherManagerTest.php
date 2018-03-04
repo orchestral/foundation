@@ -19,7 +19,7 @@ class PublisherManagerTest extends TestCase
     /** @test */
     public function it_can_get_default_driver()
     {
-        $this->app->instance('orchestra.publisher.ftp', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
+        $this->instance('orchestra.publisher.ftp', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
 
         $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp');
@@ -34,7 +34,7 @@ class PublisherManagerTest extends TestCase
     /** @test */
     public function it_can_execute_publisher()
     {
-        $this->app->instance('orchestra.publisher.ftp', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
+        $this->instance('orchestra.publisher.ftp', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
 
         $client->shouldReceive('upload')->with('a')->andReturnTrue()
             ->shouldReceive('upload')->with('b')->andThrow('\Exception');

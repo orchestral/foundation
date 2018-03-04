@@ -25,7 +25,7 @@ class PublishPackagesTest extends TestCase
     /** @test */
     public function it_can_select_publishing_driver()
     {
-        $this->app->instance('orchestra.publisher.ftp', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
+        $this->instance('orchestra.publisher.ftp', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
 
         $client->shouldReceive('connected')->once()->andReturn(false);
 
@@ -99,7 +99,7 @@ class PublishPackagesTest extends TestCase
             m::mock('\Illuminate\Session\Store'),
         ]);
 
-        $this->app->instance(AssetPublisher::class, $processor);
+        $this->instance(AssetPublisher::class, $processor);
 
         return $processor;
     }
