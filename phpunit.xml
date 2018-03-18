@@ -39,6 +39,6 @@
     <php>
         <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
         <env name="DB_CONNECTION" value="testing"/>
-        <env name="MEMORY_DRIVER" value="runtime"/>
+        <env name="MEMORY_DRIVER" value="runtime.default"/>
     </php>
 </phpunit>

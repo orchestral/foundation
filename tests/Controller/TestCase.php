@@ -23,7 +23,6 @@ abstract class TestCase extends ApplicationTestCase
      */
     protected function getEnvironmentSetUp($app): void
     {
-        $app->make('config')->set(['orchestra/memory::driver' => 'runtime.default']);
         $app->make('config')->set(['auth.providers.users.model' => User::class]);
 
         $this->loadFactoriesUsing($app, __DIR__.'/../factories');
