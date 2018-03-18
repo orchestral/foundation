@@ -3,7 +3,7 @@
 namespace Orchestra\Foundation\Concerns;
 
 use DateTime;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
 trait Timezone
 {
@@ -34,7 +34,7 @@ trait Timezone
      *
      * @param  mixed  $datetime
      *
-     * @return \Carbon\Carbon
+     * @return \Illuminate\Support\Carbon
      */
     public function toLocalTime($datetime): Carbon
     {
@@ -60,7 +60,7 @@ trait Timezone
      *
      * @param  mixed  $datetime
      *
-     * @return \Carbon\Carbon
+     * @return \Illuminate\Support\Carbon
      */
     public function fromLocalTime($datetime): Carbon
     {
@@ -85,7 +85,7 @@ trait Timezone
      * @param  mixed   $datetime
      * @param  string  $timezone
      *
-     * @return \Carbon\Carbon
+     * @return \Illuminate\Support\Carbon
      */
     public function convertToDateTime($datetime, $timezone = null): Carbon
     {
