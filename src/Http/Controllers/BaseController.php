@@ -4,7 +4,7 @@ namespace Orchestra\Foundation\Http\Controllers;
 
 use Orchestra\Routing\Controller;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Orchestra\Routing\Traits\ControllerResponse;
+use Orchestra\Routing\Concerns\ControllerResponse;
 
 abstract class BaseController extends Controller
 {

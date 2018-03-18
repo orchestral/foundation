@@ -3,7 +3,7 @@
 namespace Orchestra\Foundation\Http\Middleware;
 
 use Illuminate\Foundation\Application;
-use Orchestra\Http\Traits\PassThrough;
+use Orchestra\Http\Concerns\PassThrough;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Orchestra\Contracts\Foundation\Foundation;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
