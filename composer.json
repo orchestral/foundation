@@ -55,7 +55,6 @@
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (~3.6).",
-        "orchestra/ftp-updater": "Allow Extension with asset to be updated/uploaded environment without SSH support (~3.6).",
         "orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.6).",
         "orchestra/testing": "Allow better unit testing support for Orchestra Platform (~3.6)."
     },
