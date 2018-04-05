@@ -68,7 +68,7 @@ class Foundation extends RouteManager implements FoundationContract
      *
      * @return $this
      */
-    public function boot(): self
+    public function boot()
     {
         if (! $this->booted) {
             // Mark the application as booted and boot the application.

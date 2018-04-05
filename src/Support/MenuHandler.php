@@ -87,7 +87,7 @@ abstract class MenuHandler
      *
      * @return $this
      */
-    public function create(): self
+    public function create()
     {
         $menu = $this->handler->add($this->name, $this->getAttribute('position'))
                     ->title($this->getAttribute('title'))
@@ -137,7 +137,7 @@ abstract class MenuHandler
      *
      * @return $this
      */
-    public function setAttribute(string $name, $value): self
+    public function setAttribute(string $name, $value)
     {
         if (in_array($name, ['id'])) {
             $this->{$name} = $value;
@@ -165,7 +165,7 @@ abstract class MenuHandler
      *
      * @return $this
      */
-    public function prepare(): self
+    public function prepare()
     {
         $id = $this->getAttribute('id');
         $menus = $this->menu['with'] ?? [];
@@ -217,7 +217,7 @@ abstract class MenuHandler
      *
      * @return $this
      */
-    protected function handleNestedMenu(): self
+    protected function handleNestedMenu()
     {
         foreach ((array) $this->childs as $menu) {
             $menu->create();
