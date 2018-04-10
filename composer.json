@@ -40,7 +40,7 @@
         "orchestra/model": "~3.5.6",
         "orchestra/notifier": "~3.5.2",
         "orchestra/publisher": "~3.5.0",
-        "orchestra/support": "~3.5.2",
+        "orchestra/support": "~3.5.4",
         "orchestra/translation": "~3.5.0",
         "orchestra/view": "~3.5.0",
         "orchestra/widget": "~3.5.0",
