@@ -29,15 +29,15 @@
     "require": {
         "php": ">=7.1",
         "laravel/framework": "~5.6.5",
-        "laravie/authen": "~2.0",
+        "laravie/authen": "^2.0",
         "laravie/html": "~5.6.1",
-        "mpociot/reauthenticate": "~1.2",
+        "mpociot/reauthenticate": "^1.2",
         "orchestra/asset": "~3.6.0",
         "orchestra/auth": "~3.6.0",
         "orchestra/contracts": "~3.6.0",
         "orchestra/extension": "~3.6.0",
         "orchestra/html": "~3.6.0",
-        "orchestra/kernel": "~3.6.0",
+        "orchestra/kernel": "~3.6.1",
         "orchestra/memory": "~3.6.1",
         "orchestra/messages": "~3.6.0",
         "orchestra/model": "~3.6.0",
@@ -46,12 +46,12 @@
         "orchestra/translation": "~3.6.0",
         "orchestra/view": "~3.6.0",
         "orchestra/widget": "~3.6.0",
-        "predis/predis": "~1.0"
+        "predis/predis": "^1.0"
     },
     "require-dev": {
         "orchestra/installer": "~3.6.0",
         "orchestra/testing": "~3.6.0",
-        "phpunit/phpunit": "~7.0.1 || ~7.1"
+        "phpunit/phpunit": "^7.0.1"
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (~3.6).",
