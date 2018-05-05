@@ -43,43 +43,6 @@ class ExtensionsControllerTest extends TestCase
     }
 
     /**
-     * Test GET /admin/extensions.
-     *
-     * @test
-     */
-    public function testGetIndexAction()
-    {
-        $extensions = collect('foo');
-
-        Extension::shouldReceive('detect')->once()->andReturn($extensions);
-        Extension::shouldReceive('finish')->once()->andReturnSelf();
-        View::shouldReceive('make')->once()
-            ->with('orchestra/foundation::extensions.index', compact('extensions'), [])
-            ->andReturn('foo');
-
-        $this->call('GET', 'admin/extensions');
-        $this->assertResponseOk();
-    }
-
-    /**
-     * Test POST /admin/extensions/(:name)/activate.
-     *
-     * @test
-     */
-    public function testPostActivateAction()
-    {
-        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
-        Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('activate')->once()->with('laravel/framework')->andReturn(true);
-        Extension::shouldReceive('finish')->once()->andReturnSelf();
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnSelf();
-        Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', [])->andReturn('extensions');
-
-        $this->call('POST', 'admin/extensions/laravel/framework/activate');
-        $this->assertRedirectedTo('extensions');
-    }
-
-    /**
      * Test POST /admin/extensions/(:name)/activate when extension is already
      * started.
      *
@@ -92,23 +55,6 @@ class ExtensionsControllerTest extends TestCase
 
         $this->call('POST', 'admin/extensions/laravel/framework/activate');
         $this->assertResponseStatus(404);
-    }
-
-    /**
-     * Test POST /admin/extensions/(:name)/activate with migration error.
-     *
-     * @test
-     */
-    public function testPostActivateActionGivenMigrationError()
-    {
-        Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(false);
-        Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(false);
-        Extension::shouldReceive('finish')->once()->andReturnSelf();
-        Publisher::shouldReceive('queue')->once()->with('laravel/framework')->andReturn(true);
-        Foundation::shouldReceive('handles')->once()->with('orchestra::publisher', [])->andReturn('publisher');
-
-        $this->call('POST', 'admin/extensions/laravel/framework/activate');
-        $this->assertRedirectedTo('publisher');
     }
 
     /**
@@ -315,7 +261,7 @@ class ExtensionsControllerTest extends TestCase
      *
      * @test
      */
-    public function testPostUpdateActionGivenMgrationError()
+    public function testPostUpdateActionGivenMigrationError()
     {
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(false);

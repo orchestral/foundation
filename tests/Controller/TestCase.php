@@ -3,7 +3,6 @@
 namespace Orchestra\Tests\Controller;
 
 use Orchestra\Foundation\Auth\User;
-use Illuminate\Database\Eloquent\Factory as ModelFactory;
 use Orchestra\Testing\BrowserKit\TestCase as ApplicationTestCase;
 
 abstract class TestCase extends ApplicationTestCase
@@ -22,7 +21,7 @@ abstract class TestCase extends ApplicationTestCase
      *
      * @return void
      */
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         $app->make('config')->set(['auth.providers.users.model' => User::class]);
 

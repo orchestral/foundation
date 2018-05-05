@@ -1,0 +1,11 @@
+{
+    "name": "CMS",
+    "description": "CMS Extension",
+    "author": "Mior Muhammad Zaki",
+    "url": "https://github.com/acme/story",
+    "version": "1.0@dev",
+    "config": {
+        "handles": "cms"
+    },
+    "provides": []
+}

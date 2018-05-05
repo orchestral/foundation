@@ -41,7 +41,7 @@ class HelperTest extends TestCase
      */
     public function it_can_use_get_meta_helper()
     {
-        $this->app->instance('orchestra.meta', $meta = m::mock('\Orchestra\Foundation\Meta'));
+        $this->instance('orchestra.meta', $meta = m::mock('\Orchestra\Foundation\Meta'));
 
         $meta->shouldReceive('get')->once()->with('title', 'foo')->andReturn('foobar');
 

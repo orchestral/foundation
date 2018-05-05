@@ -4,7 +4,6 @@ namespace Orchestra\Tests\Controller;
 
 use Mockery as m;
 use Orchestra\Foundation\Auth\User;
-use Illuminate\Support\Facades\View;
 use Orchestra\Foundation\Testing\Installation;
 use Orchestra\Foundation\Processor\AssetPublisher;
 use Orchestra\Foundation\Http\Controllers\PublisherController;
@@ -13,24 +12,8 @@ class PublishPackagesTest extends TestCase
 {
     use Installation;
 
-    /**
-     * @test
-     */
-    public function it_can_select_publishing_driver()
-    {
-        $this->app->instance('orchestra.publisher.ftp', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
-
-        $client->shouldReceive('connected')->once()->andReturn(false);
-
-        $this->actingAs($this->adminUser)
-            ->visit('admin/publisher')
-            ->seePageIs('admin/publisher/ftp');
-    }
-
-    /**
-     * @test
-     */
-    public function it_cant_select_publishing_driver_as_user()
+    /** @test */
+    public function its_not_accessible_for_user()
     {
         $user = $this->createUserAsMember();
 
@@ -39,9 +22,19 @@ class PublishPackagesTest extends TestCase
             ->seePageIs('admin');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
+    public function it_can_select_publishing_driver()
+    {
+        $this->instance('orchestra.publisher.ftp', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
+
+        $client->shouldReceive('connected')->once()->andReturn(false);
+
+        $this->actingAs($this->adminUser)
+            ->visit('admin/publisher')
+            ->seePageIs('admin/publisher/ftp');
+    }
+
+    /** @test */
     public function it_can_publish_assets_using_ftp_connection()
     {
         $data = [
@@ -67,9 +60,7 @@ class PublishPackagesTest extends TestCase
             ->seePageIs('admin/publisher/ftp');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_cant_publish_assets_using_ftp_connection_when_connection_fails()
     {
         $data = [
@@ -108,7 +99,7 @@ class PublishPackagesTest extends TestCase
             m::mock('\Illuminate\Session\Store'),
         ]);
 
-        $this->app->instance(AssetPublisher::class, $processor);
+        $this->instance(AssetPublisher::class, $processor);
 
         return $processor;
     }

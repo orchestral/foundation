@@ -4,12 +4,10 @@ namespace Orchestra\Tests\Controller;
 
 use Illuminate\Support\Facades\Route;
 use Orchestra\Foundation\Testing\Installation;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class LogoutTest extends TestCase
 {
-    use Installation,
-        WithoutMiddleware;
+    use Installation;
 
     /** @test */
     public function it_can_logout_an_admin()

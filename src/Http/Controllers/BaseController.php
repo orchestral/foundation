@@ -3,9 +3,8 @@
 namespace Orchestra\Foundation\Http\Controllers;
 
 use Orchestra\Routing\Controller;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Orchestra\Routing\Traits\ControllerResponse;
+use Orchestra\Routing\Concerns\ControllerResponse;
 
 abstract class BaseController extends Controller
 {
@@ -32,18 +31,4 @@ abstract class BaseController extends Controller
      * @return void
      */
     abstract protected function onCreate();
-
-    /**
-     * Show missing pages.
-     *
-     * GET (:orchestra) return 404
-     *
-     * @param  array  $parameters
-     *
-     * @return mixed
-     */
-    public function missingMethod($parameters = [])
-    {
-        return Response::view('orchestra/foundation::dashboard.missing', $parameters, 404);
-    }
 }

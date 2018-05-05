@@ -22,7 +22,7 @@ class LoadExpressoTest extends TestCase
     /** @test */
     public function it_can_register_html_title()
     {
-        $this->app->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
+        $this->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
 
         Meta::shouldReceive('get')->once()->with('title', '')->andReturn('')
             ->shouldReceive('get')->once()
@@ -44,7 +44,7 @@ class LoadExpressoTest extends TestCase
     /** @test */
     public function it_can_register_html_title_with_page_number()
     {
-        $this->app->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
+        $this->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
 
         Meta::shouldReceive('get')->once()->with('title', '')->andReturn('')
             ->shouldReceive('get')->once()
@@ -66,7 +66,7 @@ class LoadExpressoTest extends TestCase
     /** @test */
     public function it_can_register_html_title_with_page_title()
     {
-        $this->app->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
+        $this->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
 
         Paginator::currentPageResolver(function () {
             return 1;
@@ -89,7 +89,7 @@ class LoadExpressoTest extends TestCase
     /** @test */
     public function it_can_register_html_title_with_page_title_and_number()
     {
-        $this->app->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
+        $this->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
 
         Paginator::currentPageResolver(function () {
             return 5;

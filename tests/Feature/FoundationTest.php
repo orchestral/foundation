@@ -36,7 +36,7 @@ class FoundationTest extends TestCase
         $request->shouldReceive('root')->andReturn('http://localhost')
             ->shouldReceive('getScheme')->andReturn('http');
 
-        $this->app->instance('orchestra.extension.url', new UrlGenerator($request));
+        $this->instance('orchestra.extension.url', new UrlGenerator($request));
 
         $this->assertEquals('http://localhost', $foundation->handles('app::/'));
         $this->assertEquals('http://localhost/info?foo=bar', $foundation->handles('info?foo=bar'));
@@ -58,7 +58,7 @@ class FoundationTest extends TestCase
             ->shouldReceive('getScheme')->andReturn('http')
             ->shouldReceive('path')->andReturn($url);
 
-        $this->app->instance('orchestra.extension.url', new UrlGenerator($request));
+        $this->instance('orchestra.extension.url', new UrlGenerator($request));
         $this->app['orchestra.extension.url']->handle($url);
 
         $this->assertTrue($this->app['orchestra.app']->is(...$expected));

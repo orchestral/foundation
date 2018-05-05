@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Orchestra\Foundation\Traits\RedirectUsers;
+use Orchestra\Foundation\Concerns\RedirectUsers;
 use Orchestra\Foundation\Processor\AuthenticateUser;
 use Orchestra\Foundation\Processor\DeauthenticateUser;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins as ThrottlesCommand;

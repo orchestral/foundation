@@ -21,15 +21,17 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Orchestra\\Tests\\" : "tests/"
+            "Orchestra\\Tests\\Controller\\" : "tests/Controller/",
+            "Orchestra\\Tests\\Feature\\" : "tests/Feature/",
+            "Orchestra\\Tests\\Unit\\" : "tests/Unit/"
         }
     },
     "require": {
         "php": ">=7.1",
         "laravel/framework": "~5.7.0",
-        "laravie/authen": "~2.0",
+        "laravie/authen": "^2.0",
         "laravie/html": "~5.7.0",
-        "mpociot/reauthenticate": "~1.2",
+        "mpociot/reauthenticate": "^1.2",
         "orchestra/asset": "~3.7.0",
         "orchestra/auth": "~3.7.0",
         "orchestra/contracts": "~3.7.0",
@@ -44,17 +46,15 @@
         "orchestra/translation": "~3.7.0",
         "orchestra/view": "~3.7.0",
         "orchestra/widget": "~3.7.0",
-        "predis/predis": "~1.0",
-        "symfony/http-foundation": "~4.0.0"
+        "predis/predis": "^1.0"
     },
     "require-dev": {
         "orchestra/installer": "~3.7.0",
         "orchestra/testing": "~3.7.0",
-        "phpunit/phpunit": "~7.0.1 || ~7.1"
+        "phpunit/phpunit": "^7.0.1"
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (~3.7).",
-        "orchestra/ftp-updater": "Allow Extension with asset to be updated/uploaded environment without SSH support (~3.7).",
         "orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.7).",
         "orchestra/testing": "Allow better unit testing support for Orchestra Platform (~3.7)."
     },

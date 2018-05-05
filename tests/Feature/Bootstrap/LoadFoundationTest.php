@@ -11,7 +11,7 @@ class LoadFoundationTest extends TestCase
     /** @test */
     public function it_can_bootstrap_foundation()
     {
-        $this->app->instance('orchestra.app', $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation'));
+        $this->instance('orchestra.app', $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation'));
 
         $foundation->shouldReceive('boot')->once()->andReturnSelf();
 

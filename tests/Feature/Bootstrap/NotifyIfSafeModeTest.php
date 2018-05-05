@@ -11,8 +11,8 @@ class NotifyIfSafeModeTest extends TestCase
     /** @test */
     public function it_show_notification_when_on_safe_mode()
     {
-        $this->app->instance('orchestra.extension.status', $mode = m::mock('\Orchestra\Contracts\Extension\StatusChecker'));
-        $this->app->instance('orchestra.messages', $messages = m::mock('\Orchestra\Contracts\Messages\MessageBag'));
+        $this->instance('orchestra.extension.status', $mode = m::mock('\Orchestra\Contracts\Extension\StatusChecker'));
+        $this->instance('orchestra.messages', $messages = m::mock('\Orchestra\Contracts\Messages\MessageBag'));
 
         $mode->shouldReceive('is')->once()->with('safe')->andReturn(true);
 

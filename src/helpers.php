@@ -10,7 +10,7 @@ if (! function_exists('assetic')) {
      *
      * @return string
      */
-    function assetic($file, $buildDirectory = 'build')
+    function assetic(string $file, string $buildDirectory = 'build'): string
     {
         try {
             return asset(elixir($file, $buildDirectory));
@@ -27,9 +27,9 @@ if (! function_exists('get_meta')) {
      * @param  string  $key
      * @param  mixed   $default
      *
-     * @return string
+     * @return mixed
      */
-    function get_meta($key, $default = null)
+    function get_meta(string $key, $default = null)
     {
         return app('orchestra.meta')->get($key, $default);
     }
@@ -44,7 +44,7 @@ if (! function_exists('handles')) {
      *
      * @return string
      */
-    function handles($name, array $options = [])
+    function handles(string $name, array $options = []): string
     {
         return app('orchestra.app')->handles($name, $options);
     }
@@ -55,13 +55,13 @@ if (! function_exists('memorize')) {
      * Return memory configuration associated to the request.
      *
      * @param  string  $key
-     * @param  string  $default
+     * @param  mixed  $default
      *
      * @return mixed
      *
      * @see \Orchestra\Foundation\Foundation::memory()
      */
-    function memorize($key, $default = null)
+    function memorize(string $key, $default = null)
     {
         return app('orchestra.platform.memory')->get($key, $default);
     }
@@ -75,7 +75,7 @@ if (! function_exists('orchestra')) {
      *
      * @return mixed
      */
-    function orchestra($service = null)
+    function orchestra(?string $service = null)
     {
         if (! is_null($service)) {
             return app("orchestra.platform.{$service}");
@@ -92,9 +92,9 @@ if (! function_exists('set_meta')) {
      * @param  string  $key
      * @param  mixed   $value
      *
-     * @return string
+     * @return mixed
      */
-    function set_meta($key, $value = null)
+    function set_meta(string $key, $value = null)
     {
         return app('orchestra.meta')->set($key, $value);
     }
