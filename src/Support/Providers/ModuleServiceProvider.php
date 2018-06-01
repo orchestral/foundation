@@ -78,14 +78,17 @@ abstract class ModuleServiceProvider extends ServiceProvider
     public function boot()
     {
         $events = $this->app->make(Dispatcher::class);
-        $kernel = $this->app->make(Kernel::class);
-        $router = $this->app->make(Router::class);
-
         $this->registerEventListeners($events);
-        $this->registerRouteMiddleware($router, $kernel);
+
+        if ($this->app->bound(Kernel::class)) {
+            $kernel = $this->app->make(Kernel::class);
+            $router = $this->app->make(Router::class);
+
+            $this->registerRouteMiddleware($router, $kernel);
+            $this->bootExtensionRouting();
+        }
 
         $this->bootExtensionComponents();
-        $this->bootExtensionRouting();
     }
 
     /**
