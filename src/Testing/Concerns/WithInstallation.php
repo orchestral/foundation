@@ -2,7 +2,7 @@
 
 namespace Orchestra\Foundation\Testing\Concerns;
 
-use Orchestra\Installation\Installation;
+use Orchestra\Installation\InstallerServiceProvider;
 use Orchestra\Contracts\Installation\Installation as InstallationContract;
 
 trait WithInstallation
@@ -14,7 +14,11 @@ trait WithInstallation
      */
     protected function makeInstaller(): InstallationContract
     {
-        $installer = new Installation($this->app);
+        if (! $this->app->bound(InstallationContract::class)) {
+            $this->app->register(InstallerServiceProvider::class);
+        }
+
+        $installer = $this->app->make(InstallationContract::class);
 
         $installer->bootInstallerFilesForTesting();
         $installer->migrate();
