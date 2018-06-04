@@ -28,7 +28,7 @@
     },
     "require": {
         "php": ">=7.1",
-        "laravel/framework": "~5.6.5",
+        "laravel/framework": "~5.6.17",
         "laravie/authen": "^2.1",
         "laravie/html": "~5.6.1",
         "mpociot/reauthenticate": "^1.2",
