@@ -31,7 +31,7 @@ class ComposerScripts
     {
         require_once $event->getComposer()->getConfig()->get('vendor-dir').'/autoload.php';
 
-        self::clearCompiled();
+        static::clearCompiled();
     }
 
     /**
