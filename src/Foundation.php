@@ -265,7 +265,7 @@ class Foundation extends RouteManager implements FoundationContract
         // Installation is not done/completed, in this case we should
         // use runtime/in-memory setup
         $memory = $this->app->make('orchestra.memory')->make('runtime.orchestra');
-        $memory->put('site.name', 'Orchestra Platform');
+        $memory->put('site.name', $this->config->get('app.name', 'Orchestra Platform'));
 
         $this->menu()->add('install')
             ->title('Install')
