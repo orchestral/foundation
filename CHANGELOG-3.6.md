@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+### 3.6.1
+
+Released: 2018-08-07
+
+### Changes
+
+* Use `app.name` configuration as default application name instead of Orchestra Platform.
+
 ### 3.6.0
 
 Released: 2018-06-07
