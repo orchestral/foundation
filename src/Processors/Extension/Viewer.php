@@ -33,10 +33,22 @@ class Viewer extends Processor implements Command
      *
      * @return mixed
      */
-    public function index(Listener $listener)
+    public function view(Listener $listener)
     {
         $data['extensions'] = $this->extension->detect();
 
         return $listener->showExtensions($data);
+    }
+
+    /**
+     * Invoke the processor
+     *
+     * @param  \Orchestra\Contracts\Extension\Listener\Viewer $listener
+     *
+     * @return mixed
+     */
+    public function __invoke(Listener $listener)
+    {
+        return $this->view($listener);
     }
 }

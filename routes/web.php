@@ -12,16 +12,16 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', function (Router
 
     // Route to extensions.
     if (Foundation::bound('orchestra.extension')) {
-        $router->get('extensions', 'Extension\ViewerController@index');
+        $router->get('extensions', 'Extension\ViewerController');
 
-        $router->post('extensions/{vendor}/{package}/activate', 'Extension\ActionController@activate');
-        $router->post('extensions/{vendor}/activate', 'Extension\ActionController@activate');
+        $router->post('extensions/{vendor}/{package}/activate', 'Extension\ActivateController');
+        $router->post('extensions/{vendor}/activate', 'Extension\ActivateController');
 
-        $router->post('extensions/{vendor}/{package}/deactivate', 'Extension\ActionController@deactivate');
-        $router->post('extensions/{vendor}/deactivate', 'Extension\ActionController@deactivate');
+        $router->post('extensions/{vendor}/{package}/deactivate', 'Extension\DeactivateController');
+        $router->post('extensions/{vendor}/deactivate', 'Extension\DeactivateController');
 
-        $router->post('extensions/{vendor}/{package}/update', 'Extension\ActionController@migrate');
-        $router->post('extensions/{vendor}/update', 'Extension\ActionController@migrate');
+        $router->post('extensions/{vendor}/{package}/update', 'Extension\MigrateController');
+        $router->post('extensions/{vendor}/update', 'Extension\MigrateController');
 
         $router->get('extensions/{vendor}/{package}/configure', 'Extension\ConfigureController@configure');
         $router->get('extensions/{vendor}/configure', 'Extension\ConfigureController@configure');

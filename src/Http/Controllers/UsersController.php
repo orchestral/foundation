@@ -36,7 +36,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function index(Processor $processor)
     {
-        return $processor->index($this, Input::all());
+        return $processor->view($this, Input::all());
     }
 
     /**

@@ -29,9 +29,9 @@ class ViewerController extends Controller implements Listener
      *
      * @return mixed
      */
-    public function index(Processor $processor)
+    public function __invoke(Processor $processor)
     {
-        return $processor->index($this);
+        return $processor($this);
     }
 
     /**

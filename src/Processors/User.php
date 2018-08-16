@@ -40,7 +40,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      *
      * @return mixed
      */
-    public function index(UserViewerListener $listener, array $input = [])
+    public function view(UserViewerListener $listener, array $input = [])
     {
         $search = [
             'keyword' => $input['q'] ?? '',
