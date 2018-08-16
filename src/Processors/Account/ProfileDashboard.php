@@ -39,4 +39,16 @@ class ProfileDashboard extends Processor implements Command
 
         return $listener->showDashboard(['panes' => $panes]);
     }
+
+    /**
+     * Invoke the processor.
+     *
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileDashboard  $listener
+     *
+     * @return mixed
+     */
+    public function __invoke(Listener $listener)
+    {
+        return $this->show($listener);
+    }
 }

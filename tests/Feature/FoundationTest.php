@@ -3,7 +3,6 @@
 namespace Orchestra\Tests\Feature;
 
 use Mockery as m;
-use Illuminate\Http\Request;
 use Orchestra\Extension\UrlGenerator;
 
 class FoundationTest extends TestCase

@@ -3,7 +3,6 @@
 namespace Orchestra\Tests\Controller;
 
 use Mockery as m;
-use Orchestra\Foundation\Auth\User;
 use Orchestra\Foundation\Testing\Installation;
 use Orchestra\Foundation\Processors\AssetPublisher;
 use Orchestra\Foundation\Http\Controllers\PublisherController;

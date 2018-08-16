@@ -29,7 +29,7 @@ class DashboardController extends AdminController implements Listener
      */
     public function show(Processor $processor)
     {
-        return $processor->show($this);
+        return $processor($this);
     }
 
     /**

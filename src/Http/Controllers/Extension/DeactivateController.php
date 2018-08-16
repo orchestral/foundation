@@ -3,7 +3,6 @@
 namespace Orchestra\Foundation\Http\Controllers\Extension;
 
 use Illuminate\Support\Fluent;
-use Orchestra\Support\Facades\Publisher;
 use Orchestra\Foundation\Jobs\RefreshRouteCache;
 use Orchestra\Extension\Processors\Deactivator as Processor;
 use Orchestra\Contracts\Extension\Listener\Deactivator as Listener;

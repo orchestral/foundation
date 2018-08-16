@@ -41,7 +41,7 @@ class Viewer extends Processor implements Command
     }
 
     /**
-     * Invoke the processor
+     * Invoke the processor.
      *
      * @param  \Orchestra\Contracts\Extension\Listener\Viewer $listener
      *
