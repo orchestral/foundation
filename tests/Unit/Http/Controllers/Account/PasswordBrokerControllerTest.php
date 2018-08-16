@@ -235,9 +235,9 @@ class PasswordBrokerControllerTest extends TestCase
      */
     protected function getProcessorMock()
     {
-        $processor = m::mock('\Orchestra\Foundation\Processor\Account\PasswordBroker');
+        $processor = m::mock('\Orchestra\Foundation\Processors\Account\PasswordBroker');
 
-        $this->app->instance('Orchestra\Foundation\Processor\Account\PasswordBroker', $processor);
+        $this->app->instance('Orchestra\Foundation\Processors\Account\PasswordBroker', $processor);
 
         return $processor;
     }

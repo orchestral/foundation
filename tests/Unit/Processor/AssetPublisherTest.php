@@ -4,7 +4,7 @@ namespace Orchestra\Tests\Unit\Processor;
 
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
-use Orchestra\Foundation\Processor\AssetPublisher;
+use Orchestra\Foundation\Processors\AssetPublisher;
 
 class AssetPublisherTest extends TestCase
 {

@@ -3,7 +3,7 @@
 namespace Orchestra\Foundation\Http\Controllers\Extension;
 
 use Orchestra\Contracts\Extension\Listener\Viewer as Listener;
-use Orchestra\Foundation\Processor\Extension\Viewer as Processor;
+use Orchestra\Foundation\Processors\Extension\Viewer as Processor;
 
 class ViewerController extends Controller implements Listener
 {
@@ -25,7 +25,7 @@ class ViewerController extends Controller implements Listener
      *
      * GET (:orchestra)/extensions
      *
-     * @param \Orchestra\Foundation\Processor\Extension\Viewer  $processor
+     * @param \Orchestra\Foundation\Processors\Extension\Viewer  $processor
      *
      * @return mixed
      */

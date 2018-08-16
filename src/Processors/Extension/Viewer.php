@@ -1,9 +1,9 @@
 <?php
 
-namespace Orchestra\Foundation\Processor\Extension;
+namespace Orchestra\Foundation\Processors\Extension;
 
 use Orchestra\Contracts\Extension\Factory;
-use Orchestra\Foundation\Processor\Processor;
+use Orchestra\Foundation\Processors\Processor;
 use Orchestra\Contracts\Extension\Command\Viewer as Command;
 use Orchestra\Contracts\Extension\Listener\Viewer as Listener;
 

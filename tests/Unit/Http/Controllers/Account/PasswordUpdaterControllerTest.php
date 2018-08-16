@@ -151,13 +151,13 @@ class PasswordUpdaterControllerTest extends TestCase
     /**
      * Get processor mock.
      *
-     * @return \Orchestra\Foundation\Processor\Account\PasswordUpdater
+     * @return \Orchestra\Foundation\Processors\Account\PasswordUpdater
      */
     protected function getProcessorMock()
     {
-        $processor = m::mock('\Orchestra\Foundation\Processor\Account\PasswordUpdater');
+        $processor = m::mock('\Orchestra\Foundation\Processors\Account\PasswordUpdater');
 
-        $this->app->instance('Orchestra\Foundation\Processor\Account\PasswordUpdater', $processor);
+        $this->app->instance('Orchestra\Foundation\Processors\Account\PasswordUpdater', $processor);
 
         return $processor;
     }

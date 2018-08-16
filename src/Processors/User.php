@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Foundation\Processor;
+namespace Orchestra\Foundation\Processors;
 
 use Exception;
 use Illuminate\Support\Facades\Auth;

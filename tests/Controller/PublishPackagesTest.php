@@ -5,7 +5,7 @@ namespace Orchestra\Tests\Controller;
 use Mockery as m;
 use Orchestra\Foundation\Auth\User;
 use Orchestra\Foundation\Testing\Installation;
-use Orchestra\Foundation\Processor\AssetPublisher;
+use Orchestra\Foundation\Processors\AssetPublisher;
 use Orchestra\Foundation\Http\Controllers\PublisherController;
 
 class PublishPackagesTest extends TestCase
@@ -90,7 +90,7 @@ class PublishPackagesTest extends TestCase
     /**
      * Get processor mock.
      *
-     * @return \Orchestra\Foundation\Processor\AssetPublisher
+     * @return \Orchestra\Foundation\Processors\AssetPublisher
      */
     protected function getMockedProcessor()
     {

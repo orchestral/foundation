@@ -3,7 +3,7 @@
 namespace Orchestra\Foundation\Http\Controllers;
 
 use Illuminate\Support\Facades\Input;
-use Orchestra\Foundation\Processor\User as Processor;
+use Orchestra\Foundation\Processors\User as Processor;
 use Orchestra\Contracts\Foundation\Listener\Account\UserViewer;
 use Orchestra\Contracts\Foundation\Listener\Account\UserCreator;
 use Orchestra\Contracts\Foundation\Listener\Account\UserRemover;
@@ -30,7 +30,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * GET (:orchestra)/users
      *
-     * @param  \Orchestra\Foundation\Processor\User  $processor
+     * @param  \Orchestra\Foundation\Processors\User  $processor
      *
      * @return mixed
      */
@@ -44,7 +44,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * GET (:orchestra)/users/create
      *
-     * @param  \Orchestra\Foundation\Processor\User  $processor
+     * @param  \Orchestra\Foundation\Processors\User  $processor
      *
      * @return mixed
      */
@@ -58,7 +58,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * GET (:orchestra)/users/$user/edit
      *
-     * @param  \Orchestra\Foundation\Processor\User  $processor
+     * @param  \Orchestra\Foundation\Processors\User  $processor
      * @param  int|string  $user
      *
      * @return mixed
@@ -73,7 +73,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * POST (:orchestra)/users
      *
-     * @param  \Orchestra\Foundation\Processor\User  $processor
+     * @param  \Orchestra\Foundation\Processors\User  $processor
      *
      * @return mixed
      */
@@ -87,7 +87,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * PUT (:orchestra)/users/$user
      *
-     * @param  \Orchestra\Foundation\Processor\User  $processor
+     * @param  \Orchestra\Foundation\Processors\User  $processor
      * @param  int|string  $user
      *
      * @return mixed
@@ -102,7 +102,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * GET (:orchestra)/$user/delete
      *
-     * @param  \Orchestra\Foundation\Processor\User  $processor
+     * @param  \Orchestra\Foundation\Processors\User  $processor
      * @param  int|string  $user
      *
      * @return mixed
@@ -117,7 +117,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * DELETE (:orchestra)/$user
      *
-     * @param  \Orchestra\Foundation\Processor\User  $processor
+     * @param  \Orchestra\Foundation\Processors\User  $processor
      * @param  int|string  $user
      *
      * @return mixed

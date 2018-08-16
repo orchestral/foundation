@@ -3,7 +3,7 @@
 namespace Orchestra\Foundation\Http\Controllers;
 
 use Illuminate\Support\Facades\Input;
-use Orchestra\Foundation\Processor\Setting as Processor;
+use Orchestra\Foundation\Processors\Setting as Processor;
 use Orchestra\Contracts\Foundation\Listener\SystemUpdater;
 use Orchestra\Contracts\Foundation\Listener\SettingUpdater;
 
@@ -28,7 +28,7 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
      *
      * GET (:orchestra)/settings
      *
-     * @param  \Orchestra\Foundation\Processor\Setting  $processor
+     * @param  \Orchestra\Foundation\Processors\Setting  $processor
      *
      * @return mixed
      */
@@ -42,7 +42,7 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
      *
      * POST (:orchestra)/settings
      *
-     * @param  \Orchestra\Foundation\Processor\Setting  $processor
+     * @param  \Orchestra\Foundation\Processors\Setting  $processor
      *
      * @return mixed
      */
@@ -54,7 +54,7 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
     /**
      * Update orchestra/foundation.
      *
-     * @param  \Orchestra\Foundation\Processor\Setting  $processor
+     * @param  \Orchestra\Foundation\Processors\Setting  $processor
      *
      * @return mixed
      */

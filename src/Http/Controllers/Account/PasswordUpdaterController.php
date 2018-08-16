@@ -3,7 +3,7 @@
 namespace Orchestra\Foundation\Http\Controllers\Account;
 
 use Illuminate\Support\Facades\Input;
-use Orchestra\Foundation\Processor\Account\PasswordUpdater as Processor;
+use Orchestra\Foundation\Processors\Account\PasswordUpdater as Processor;
 use Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater as Listener;
 
 class PasswordUpdaterController extends Controller implements Listener
@@ -13,7 +13,7 @@ class PasswordUpdaterController extends Controller implements Listener
      *
      * GET (:orchestra)/account/password
      *
-     * @param  \Orchestra\Foundation\Processor\Account\PasswordUpdater  $processor
+     * @param  \Orchestra\Foundation\Processors\Account\PasswordUpdater  $processor
      *
      * @return mixed
      */
@@ -27,7 +27,7 @@ class PasswordUpdaterController extends Controller implements Listener
      *
      * POST (:orchestra)/account/password
      *
-     * @param  \Orchestra\Foundation\Processor\Account\PasswordUpdater  $processor
+     * @param  \Orchestra\Foundation\Processors\Account\PasswordUpdater  $processor
      *
      * @return mixed
      */

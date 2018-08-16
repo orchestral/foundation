@@ -6,12 +6,12 @@ use Mockery as m;
 use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\PasswordBroker as Password;
-use Orchestra\Foundation\Processor\Account\PasswordBroker;
+use Orchestra\Foundation\Processors\Account\PasswordBroker;
 
 class PasswordBrokerTest extends TestCase
 {
     /**
-     * Test Orchestra\Foundation\Processor\Account\PasswordBroker::store()
+     * Test Orchestra\Foundation\Processors\Account\PasswordBroker::store()
      * method.
      *
      * @test
@@ -38,7 +38,7 @@ class PasswordBrokerTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Processor\Account\PasswordBroker::store()
+     * Test Orchestra\Foundation\Processors\Account\PasswordBroker::store()
      * method given invalid user.
      *
      * @test
@@ -64,7 +64,7 @@ class PasswordBrokerTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Processor\Account\PasswordBroker::store()
+     * Test Orchestra\Foundation\Processors\Account\PasswordBroker::store()
      * method given failed validation.
      *
      * @test
@@ -89,7 +89,7 @@ class PasswordBrokerTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Processor\Account\PasswordBroker::update()
+     * Test Orchestra\Foundation\Processors\Account\PasswordBroker::update()
      * method.
      *
      * @test
@@ -122,7 +122,7 @@ class PasswordBrokerTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Processor\Account\PasswordBroker::store()
+     * Test Orchestra\Foundation\Processors\Account\PasswordBroker::store()
      * method given failed execution.
      *
      * @test

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Orchestra\Foundation\Concerns\RedirectUsers;
 use Orchestra\Foundation\Http\Controllers\AdminController;
-use Orchestra\Foundation\Processor\Account\ProfileCreator as Processor;
+use Orchestra\Foundation\Processors\Account\ProfileCreator as Processor;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator as Listener;
 
 class ProfileCreatorController extends AdminController implements Listener
@@ -28,7 +28,7 @@ class ProfileCreatorController extends AdminController implements Listener
      *
      * GET (:orchestra)/register
      *
-     * @param  \Orchestra\Foundation\Processor\Account\ProfileCreator  $processor
+     * @param  \Orchestra\Foundation\Processors\Account\ProfileCreator  $processor
      *
      * @return mixed
      */
@@ -42,7 +42,7 @@ class ProfileCreatorController extends AdminController implements Listener
      *
      * POST (:orchestra)/register
      *
-     * @param  \Orchestra\Foundation\Processor\Account\ProfileCreator  $processor
+     * @param  \Orchestra\Foundation\Processors\Account\ProfileCreator  $processor
      *
      * @return mixed
      */

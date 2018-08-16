@@ -5,7 +5,7 @@ namespace Orchestra\Tests\Feature\Processor;
 use Mockery as m;
 use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Testing\Installation;
-use Orchestra\Foundation\Processor\AuthenticateUser;
+use Orchestra\Foundation\Processors\AuthenticateUser;
 
 class AuthenticateUserTest extends TestCase
 {
@@ -28,7 +28,7 @@ class AuthenticateUserTest extends TestCase
         $listener = m::mock('\Orchestra\Contracts\Auth\Listener\AuthenticateUser');
         $listener->shouldReceive('userHasLoggedIn')->once()->andReturn('logged.in');
 
-        $this->assertEquals('logged.in', $stub->login($listener, $data));
+        $this->assertEquals('logged.in', $stub($listener, $data));
 
         $this->assertAuthenticatedAs($user);
     }
@@ -49,7 +49,7 @@ class AuthenticateUserTest extends TestCase
         $listener->shouldReceive('userLoginHasFailedAuthentication')->once()
                 ->with(m::type('Array'))->andReturn('login.authentication.failed');
 
-        $this->assertEquals('login.authentication.failed', $stub->login($listener, $data));
+        $this->assertEquals('login.authentication.failed', $stub($listener, $data));
 
         $this->assertGuest();
     }
@@ -69,7 +69,7 @@ class AuthenticateUserTest extends TestCase
         $listener->shouldReceive('userLoginHasFailedValidation')->once()
                 ->with(m::type('Illuminate\Support\MessageBag'))->andReturn('login.validation.failed');
 
-        $this->assertEquals('login.validation.failed', $stub->login($listener, $data));
+        $this->assertEquals('login.validation.failed', $stub($listener, $data));
 
         $this->assertGuest();
     }

@@ -5,7 +5,7 @@ namespace Orchestra\Tests\Feature\Processor\Account;
 use Mockery as m;
 use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Testing\Installation;
-use Orchestra\Foundation\Processor\Account\ProfileCreator;
+use Orchestra\Foundation\Processors\Account\ProfileCreator;
 
 class ProfileCreatorTest extends TestCase
 {
@@ -119,7 +119,7 @@ class ProfileCreatorTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Processor\Account\ProfileCreator::store()
+     * Test Orchestra\Foundation\Processors\Account\ProfileCreator::store()
      * method with failed validation.
      *
      * @test

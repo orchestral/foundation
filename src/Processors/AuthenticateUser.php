@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Foundation\Processor;
+namespace Orchestra\Foundation\Processors;
 
 use Illuminate\Support\Arr;
 use Orchestra\Contracts\Auth\Guard;
@@ -153,5 +153,19 @@ class AuthenticateUser extends Authenticate implements Command
         }
 
         return $user;
+    }
+
+    /**
+     * Login a user.
+     *
+     * @param  \Orchestra\Contracts\Auth\Listener\AuthenticateUser  $listener
+     * @param  array  $input
+     * @param  \Orchestra\Contracts\Auth\Command\ThrottlesLogins|null  $throttles
+     *
+     * @return mixed
+     */
+    public function __invoke(Listener $listener, array $input, ThrottlesCommand $throttles = null)
+    {
+        return $this->login($listener, $input, $throttles);
     }
 }
