@@ -1,9 +1,9 @@
 <?php
 
-namespace Orchestra\Foundation\Processor\Account;
+namespace Orchestra\Foundation\Processors\Account;
 
 use Orchestra\Widget\WidgetManager;
-use Orchestra\Foundation\Processor\Processor;
+use Orchestra\Foundation\Processors\Processor;
 use Orchestra\Contracts\Foundation\Command\Account\ProfileDashboard as Command;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileDashboard as Listener;
 
@@ -38,5 +38,17 @@ class ProfileDashboard extends Processor implements Command
         $panes = $this->widget->make('pane.orchestra');
 
         return $listener->showDashboard(['panes' => $panes]);
+    }
+
+    /**
+     * Invoke the processor.
+     *
+     * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileDashboard  $listener
+     *
+     * @return mixed
+     */
+    public function __invoke(Listener $listener)
+    {
+        return $this->show($listener);
     }
 }

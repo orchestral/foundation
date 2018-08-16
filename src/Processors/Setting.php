@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Foundation\Processor;
+namespace Orchestra\Foundation\Processors;
 
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\Event;

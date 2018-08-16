@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Foundation\Concerns\RedirectUsers;
-use Orchestra\Foundation\Processor\AuthenticateUser;
-use Orchestra\Foundation\Processor\DeauthenticateUser;
+use Orchestra\Foundation\Processors\AuthenticateUser;
+use Orchestra\Foundation\Processors\DeauthenticateUser;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins as ThrottlesCommand;
 use Orchestra\Contracts\Auth\Listener\ThrottlesLogins as ThrottlesListener;
 use Orchestra\Contracts\Auth\Listener\AuthenticateUser as AuthenticateListener;
@@ -59,7 +59,7 @@ class CredentialController extends AdminController implements AuthenticateListen
 
         $throttles->setRequest($request)->setLoginKey($username);
 
-        return $authenticate->login($this, $input, $throttles);
+        return $authenticate($this, $input, $throttles);
     }
 
     /**
@@ -71,7 +71,7 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     public function logout(DeauthenticateUser $deauthenticate)
     {
-        return $deauthenticate->logout($this);
+        return $deauthenticate($this);
     }
 
     /**

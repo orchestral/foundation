@@ -1,9 +1,9 @@
 <?php
 
-namespace Orchestra\Foundation\Processor\Account;
+namespace Orchestra\Foundation\Processors\Account;
 
 use Illuminate\Support\Facades\Event;
-use Orchestra\Foundation\Processor\Processor;
+use Orchestra\Foundation\Processors\Processor;
 use Orchestra\Foundation\Validation\Account as Validator;
 use Orchestra\Foundation\Http\Presenters\Account as Presenter;
 

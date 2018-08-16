@@ -5,7 +5,7 @@ namespace Orchestra\Tests\Controller\Extensions;
 use Mockery as m;
 use Orchestra\Support\Facades\Extension;
 use Orchestra\Tests\Controller\TestCase;
-use Orchestra\Extension\Processor\Activator;
+use Orchestra\Extension\Processors\Activator;
 use Orchestra\Foundation\Testing\Installation;
 
 class ActivateTest extends TestCase

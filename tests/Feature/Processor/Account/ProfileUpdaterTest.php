@@ -3,10 +3,9 @@
 namespace Orchestra\Tests\Feature\Processor\Account;
 
 use Mockery as m;
-use Orchestra\Foundation\Auth\User;
 use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Testing\Installation;
-use Orchestra\Foundation\Processor\Account\ProfileUpdater;
+use Orchestra\Foundation\Processors\Account\ProfileUpdater;
 
 class ProfileUpdaterTest extends TestCase
 {
@@ -97,7 +96,7 @@ class ProfileUpdaterTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Processor\Account\ProfileUpdater::update()
+     * Test Orchestra\Foundation\Processors\Account\ProfileUpdater::update()
      * method given saving failed.
      *
      * @test

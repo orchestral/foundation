@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Foundation\Processor;
+namespace Orchestra\Foundation\Processors;
 
 use Illuminate\Session\Store;
 use Orchestra\Contracts\Publisher\ServerException;

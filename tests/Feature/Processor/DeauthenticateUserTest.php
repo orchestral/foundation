@@ -5,7 +5,7 @@ namespace Orchestra\Tests\Feature\Processor;
 use Mockery as m;
 use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Testing\Installation;
-use Orchestra\Foundation\Processor\DeauthenticateUser;
+use Orchestra\Foundation\Processors\DeauthenticateUser;
 
 class DeauthenticateUserTest extends TestCase
 {
@@ -23,7 +23,7 @@ class DeauthenticateUserTest extends TestCase
         $listener = m::mock('\Orchestra\Contracts\Auth\Listener\DeauthenticateUser');
         $listener->shouldReceive('userHasLoggedOut')->once()->andReturn('logged.out');
 
-        $this->assertEquals('logged.out', $stub->logout($listener));
+        $this->assertEquals('logged.out', $stub($listener));
 
         $this->assertGuest();
     }

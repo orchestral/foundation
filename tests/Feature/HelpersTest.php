@@ -23,7 +23,7 @@ class HelperTest extends TestCase
      */
     public function it_can_use_memorize_helper()
     {
-        $this->assertEquals('Orchestra Platform', memorize('site.name'));
+        $this->assertEquals('My Application', memorize('site.name'));
         $this->assertEquals('Laravel', memorize('site.platform', 'Laravel'));
     }
 

@@ -3,7 +3,7 @@
 namespace Orchestra\Foundation\Http\Controllers\Account;
 
 use Illuminate\Support\Facades\Input;
-use Orchestra\Foundation\Processor\Account\ProfileUpdater as Processor;
+use Orchestra\Foundation\Processors\Account\ProfileUpdater as Processor;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater as Listener;
 
 class ProfileUpdaterController extends Controller implements Listener
@@ -13,7 +13,7 @@ class ProfileUpdaterController extends Controller implements Listener
      *
      * GET (:orchestra)/account
      *
-     * @param  \Orchestra\Foundation\Processor\Account\ProfileUpdater  $processor
+     * @param  \Orchestra\Foundation\Processors\Account\ProfileUpdater  $processor
      *
      * @return mixed
      */
@@ -27,7 +27,7 @@ class ProfileUpdaterController extends Controller implements Listener
      *
      * POST (:orchestra)/account
      *
-     * @param  \Orchestra\Foundation\Processor\Account\ProfileUpdater  $processor
+     * @param  \Orchestra\Foundation\Processors\Account\ProfileUpdater  $processor
      *
      * @return mixed
      */

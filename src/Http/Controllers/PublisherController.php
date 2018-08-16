@@ -3,7 +3,7 @@
 namespace Orchestra\Foundation\Http\Controllers;
 
 use Illuminate\Support\Facades\Input;
-use Orchestra\Foundation\Processor\AssetPublisher;
+use Orchestra\Foundation\Processors\AssetPublisher;
 use Orchestra\Contracts\Foundation\Listener\AssetPublishing as Listener;
 
 class PublisherController extends AdminController implements Listener
@@ -24,7 +24,7 @@ class PublisherController extends AdminController implements Listener
     /**
      * Load publisher based on service.
      *
-     * @param  \Orchestra\Foundation\Processor\AssetPublisher  $processor
+     * @param  \Orchestra\Foundation\Processors\AssetPublisher  $processor
      *
      * @return mixed
      */
@@ -51,7 +51,7 @@ class PublisherController extends AdminController implements Listener
      *
      * POST (orchestra)/publisher/ftp
      *
-     * @param  \Orchestra\Foundation\Processor\AssetPublisher  $processor
+     * @param  \Orchestra\Foundation\Processors\AssetPublisher  $processor
      *
      * @return mixed
      */

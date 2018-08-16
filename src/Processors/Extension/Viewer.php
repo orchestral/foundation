@@ -1,9 +1,9 @@
 <?php
 
-namespace Orchestra\Foundation\Processor\Extension;
+namespace Orchestra\Foundation\Processors\Extension;
 
 use Orchestra\Contracts\Extension\Factory;
-use Orchestra\Foundation\Processor\Processor;
+use Orchestra\Foundation\Processors\Processor;
 use Orchestra\Contracts\Extension\Command\Viewer as Command;
 use Orchestra\Contracts\Extension\Listener\Viewer as Listener;
 
@@ -33,10 +33,22 @@ class Viewer extends Processor implements Command
      *
      * @return mixed
      */
-    public function index(Listener $listener)
+    public function view(Listener $listener)
     {
         $data['extensions'] = $this->extension->detect();
 
         return $listener->showExtensions($data);
+    }
+
+    /**
+     * Invoke the processor.
+     *
+     * @param  \Orchestra\Contracts\Extension\Listener\Viewer $listener
+     *
+     * @return mixed
+     */
+    public function __invoke(Listener $listener)
+    {
+        return $this->view($listener);
     }
 }

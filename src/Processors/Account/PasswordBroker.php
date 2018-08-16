@@ -1,10 +1,10 @@
 <?php
 
-namespace Orchestra\Foundation\Processor\Account;
+namespace Orchestra\Foundation\Processors\Account;
 
 use Illuminate\Support\Facades\Auth;
 use Orchestra\Model\User as Eloquent;
-use Orchestra\Foundation\Processor\Processor;
+use Orchestra\Foundation\Processors\Processor;
 use Orchestra\Contracts\Auth\Listener\PasswordReset;
 use Orchestra\Contracts\Auth\Listener\PasswordResetLink;
 use Illuminate\Contracts\Auth\PasswordBroker as Password;

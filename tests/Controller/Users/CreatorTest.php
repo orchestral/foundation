@@ -6,7 +6,7 @@ use Mockery as m;
 use Orchestra\Foundation\Auth\User;
 use Orchestra\Tests\Controller\TestCase;
 use Orchestra\Foundation\Testing\Installation;
-use Orchestra\Foundation\Processor\User as UserProcessor;
+use Orchestra\Foundation\Processors\User as UserProcessor;
 
 class CreatorTest extends TestCase
 {

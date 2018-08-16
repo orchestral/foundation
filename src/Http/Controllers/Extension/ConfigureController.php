@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Input;
 use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Jobs\RefreshRouteCache;
 use Orchestra\Contracts\Extension\Listener\Configure as Listener;
-use Orchestra\Foundation\Processor\Extension\Configure as Processor;
+use Orchestra\Foundation\Processors\Extension\Configure as Processor;
 
 class ConfigureController extends Controller implements Listener
 {
@@ -29,7 +29,7 @@ class ConfigureController extends Controller implements Listener
      *
      * GET (:orchestra)/extensions/configure/(:name)
      *
-     * @param  \Orchestra\Foundation\Processor\Extension\Configure  $processor
+     * @param  \Orchestra\Foundation\Processors\Extension\Configure  $processor
      * @param  string  $vendor
      * @param  string|null  $package
      *
@@ -47,7 +47,7 @@ class ConfigureController extends Controller implements Listener
      *
      * POST (:orchestra)/extensions/configure/(:name)
      *
-     * @param  \Orchestra\Foundation\Processor\Extension\Configure  $processor
+     * @param  \Orchestra\Foundation\Processors\Extension\Configure  $processor
      * @param  string  $vendor
      * @param  string|null  $package
      *

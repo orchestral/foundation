@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Request;
 use Orchestra\Contracts\Auth\Listener\PasswordReset;
 use Orchestra\Contracts\Auth\Listener\PasswordResetLink;
 use Orchestra\Foundation\Http\Controllers\AdminController;
-use Orchestra\Foundation\Processor\Account\PasswordBroker as Processor;
+use Orchestra\Foundation\Processors\Account\PasswordBroker as Processor;
 
 class PasswordBrokerController extends AdminController implements PasswordResetLink, PasswordReset
 {
@@ -42,7 +42,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      *
      * POST (:orchestra)/forgot
      *
-     * @param \Orchestra\Foundation\Processor\Account\PasswordBroker  $processor
+     * @param \Orchestra\Foundation\Processors\Account\PasswordBroker  $processor
      *
      * @return mixed
      */
@@ -79,7 +79,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      *
      * POST (:orchestra)/forgot/reset
      *
-     * @param \Orchestra\Foundation\Processor\Account\PasswordBroker  $processor
+     * @param \Orchestra\Foundation\Processors\Account\PasswordBroker  $processor
      *
      * @return mixed
      */

@@ -1,12 +1,12 @@
 <?php
 
-namespace Orchestra\Foundation\Processor\Extension;
+namespace Orchestra\Foundation\Processors\Extension;
 
 use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\Event;
 use Orchestra\Support\Facades\Extension;
 use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Processor\Processor;
+use Orchestra\Foundation\Processors\Processor;
 use Orchestra\Foundation\Validation\Extension as Validator;
 use Orchestra\Contracts\Extension\Command\Configure as Command;
 use Orchestra\Foundation\Http\Presenters\Extension as Presenter;

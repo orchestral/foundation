@@ -130,13 +130,13 @@ class ProfileUpdaterControllerTest extends TestCase
     /**
      * Get processor mock.
      *
-     * @return \Orchestra\Foundation\Processor\Account\ProfileUpdater
+     * @return \Orchestra\Foundation\Processors\Account\ProfileUpdater
      */
     protected function getProcessorMock()
     {
-        $processor = m::mock('\Orchestra\Foundation\Processor\Account\ProfileUpdater');
+        $processor = m::mock('\Orchestra\Foundation\Processors\Account\ProfileUpdater');
 
-        $this->app->instance('Orchestra\Foundation\Processor\Account\ProfileUpdater', $processor);
+        $this->app->instance('Orchestra\Foundation\Processors\Account\ProfileUpdater', $processor);
 
         return $processor;
     }

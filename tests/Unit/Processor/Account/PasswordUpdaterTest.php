@@ -6,12 +6,12 @@ use Mockery as m;
 use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Orchestra\Foundation\Processor\Account\PasswordUpdater;
+use Orchestra\Foundation\Processors\Account\PasswordUpdater;
 
 class PasswordUpdaterTest extends TestCase
 {
     /**
-     * Test Orchestra\Foundation\Processor\Account\ProfileUpdater::edit()
+     * Test Orchestra\Foundation\Processors\Account\ProfileUpdater::edit()
      * method.
      *
      * @test
@@ -35,7 +35,7 @@ class PasswordUpdaterTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Processor\Account\ProfileUpdater::update()
+     * Test Orchestra\Foundation\Processors\Account\ProfileUpdater::update()
      * method.
      *
      * @test
@@ -68,7 +68,7 @@ class PasswordUpdaterTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Processor\Account\ProfileUpdater::update()
+     * Test Orchestra\Foundation\Processors\Account\ProfileUpdater::update()
      * method given user mismatched.
      *
      * @test
@@ -93,7 +93,7 @@ class PasswordUpdaterTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Processor\Account\ProfileUpdater::update()
+     * Test Orchestra\Foundation\Processors\Account\ProfileUpdater::update()
      * method given validation failed.
      *
      * @test
@@ -124,7 +124,7 @@ class PasswordUpdaterTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Processor\Account\ProfileUpdater::update()
+     * Test Orchestra\Foundation\Processors\Account\ProfileUpdater::update()
      * method given saving failed.
      *
      * @test
@@ -157,7 +157,7 @@ class PasswordUpdaterTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Processor\Account\ProfileUpdater::update()
+     * Test Orchestra\Foundation\Processors\Account\ProfileUpdater::update()
      * method given current password missmatch.
      *
      * @test
