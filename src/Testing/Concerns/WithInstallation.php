@@ -2,6 +2,7 @@
 
 namespace Orchestra\Foundation\Testing\Concerns;
 
+use Illuminate\Foundation\Testing\PendingCommand;
 use Orchestra\Installation\InstallerServiceProvider;
 use Orchestra\Contracts\Installation\Installation as InstallationContract;
 
@@ -24,7 +25,11 @@ trait WithInstallation
         $installer->migrate();
 
         $this->beforeApplicationDestroyed(function () {
-            $this->artisan('migrate:rollback');
+            tap($this->artisan('migrate:rollback'), function ($console) {
+                if ($console instanceof PendingCommand) {
+                    $console->run();
+                }
+            });
         });
 
         return $installer;
@@ -40,11 +45,19 @@ trait WithInstallation
      */
     protected function runInstallation(?InstallationContract $installer = null, array $config = [])
     {
+        $artisan = function ($command) {
+            tap($this->artisan($command), function($console) {
+                if ($console instanceof PendingCommand) {
+                    $console->run();
+                }
+            });
+        };
+
         if (is_null($installer)) {
             $installer = $this->makeInstaller();
         }
 
-        $this->artisan('migrate');
+        $artisan('migrate');
 
         $this->adminUser = $this->createAdminUser();
 
@@ -55,8 +68,8 @@ trait WithInstallation
 
         $this->app['orchestra.installed'] = true;
 
-        $this->beforeApplicationDestroyed(function () {
-            $this->artisan('migrate:rollback');
+        $this->beforeApplicationDestroyed(function () use ($artisan) {
+            $artisan('migrate:rollback');
             $this->app['orchestra.installed'] = false;
         });
 
