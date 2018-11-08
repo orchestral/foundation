@@ -2,19 +2,10 @@
 
 namespace Orchestra\Foundation\Processor;
 
-abstract class Processor
+/**
+ * @deprecated v3.7.0
+ */
+abstract class Processor extends \Orchestra\Foundation\Processors\Processor
 {
-    /**
-     * Presenter instance.
-     *
-     * @var object
-     */
-    protected $presenter;
-
-    /**
-     * Validator instance.
-     *
-     * @var object
-     */
-    protected $validator;
+    //
 }
