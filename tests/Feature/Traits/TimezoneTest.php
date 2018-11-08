@@ -4,6 +4,7 @@ namespace Orchestra\Tests\Feature\Traits;
 
 use Mockery as m;
 use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
 use Orchestra\Foundation\Auth\User;
 use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Traits\Timezone;
@@ -40,7 +41,7 @@ class TimezoneTest extends TestCase
 
         $stub = $this->toLocalTime('2012-01-01 00:00:00');
 
-        $this->assertEquals(new \DateTimeZone('UTC'), $stub->getTimezone());
+        $this->assertEquals(new CarbonTimeZone('UTC'), $stub->getTimezone());
     }
 
     /**
@@ -60,7 +61,7 @@ class TimezoneTest extends TestCase
 
         $stub = $this->toLocalTime(new Carbon('2012-01-01 00:00:00'));
 
-        $this->assertEquals(new \DateTimeZone('UTC'), $stub->getTimezone());
+        $this->assertEquals(new CarbonTimeZone('UTC'), $stub->getTimezone());
     }
 
     /**
@@ -85,7 +86,7 @@ class TimezoneTest extends TestCase
 
         $stub = $this->toLocalTime(new Carbon('2012-01-01 00:00:00'));
 
-        $this->assertEquals(new \DateTimeZone('Asia/Kuala_Lumpur'), $stub->timezone);
+        $this->assertEquals(new CarbonTimeZone('Asia/Kuala_Lumpur'), $stub->timezone);
         $this->assertEquals('2012-01-01 08:00:00', $stub->toDateTimeString());
     }
 
@@ -103,7 +104,7 @@ class TimezoneTest extends TestCase
 
         $stub = $this->fromLocalTime('2012-01-01 00:00:00');
 
-        $this->assertEquals(new \DateTimeZone('UTC'), $stub->timezone);
+        $this->assertEquals(new CarbonTimeZone('UTC'), $stub->timezone);
         $this->assertEquals('2012-01-01 00:00:00', $stub->toDateTimeString());
     }
 
@@ -126,7 +127,7 @@ class TimezoneTest extends TestCase
 
         $stub = $this->fromLocalTime('2012-01-01 08:00:00');
 
-        $this->assertEquals(new \DateTimeZone('UTC'), $stub->timezone);
+        $this->assertEquals(new CarbonTimeZone('UTC'), $stub->timezone);
         $this->assertEquals('2012-01-01 00:00:00', $stub->toDateTimeString());
     }
 
