@@ -69,6 +69,9 @@
             "gulp"
         ]
     },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "3.7-dev"
