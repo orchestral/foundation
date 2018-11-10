@@ -32,6 +32,7 @@
         "laravie/authen": "^2.1",
         "laravie/html": "~5.8.0",
         "mpociot/reauthenticate": "^1.3",
+        "nesbot/carbon": "^2.0",
         "orchestra/asset": "~3.8.0",
         "orchestra/auth": "~3.8.0",
         "orchestra/contracts": "~3.8.0",
@@ -50,8 +51,7 @@
     "require-dev": {
         "orchestra/installer": "~3.8.0",
         "orchestra/testing": "~3.8.0",
-        "phpunit/phpunit": "^7.2",
-        "nesbot/carbon": "^2.5"
+        "phpunit/phpunit": "^7.2"
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (~3.8).",
@@ -69,6 +69,9 @@
             "bower-installer",
             "gulp"
         ]
+    },
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
