@@ -69,7 +69,7 @@ class RemoverTest extends TestCase
     {
         $this->instance(UserProcessor::class, $processor = m::mock(UserProcessor::class.'[fireEvent]', [
             $this->app->make(\Orchestra\Foundation\Http\Presenters\User::class),
-            $this->app->make(\Orchestra\Foundation\Validation\User::class),
+            $this->app->make(\Orchestra\Foundation\Validations\User::class),
         ]))->shouldAllowMockingProtectedMethods();
 
         $processor->shouldReceive('fireEvent')->with('deleting', m::type('Array'))->andThrows('\Exception');

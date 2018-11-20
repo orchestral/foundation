@@ -106,7 +106,7 @@ class ProfileUpdaterTest extends TestCase
         $this->actingAs($user = $this->createUserAsMember());
 
         $presenter = $this->app->make('Orchestra\Foundation\Http\Presenters\Account');
-        $validator = $this->app->make('Orchestra\Foundation\Validation\Account');
+        $validator = $this->app->make('Orchestra\Foundation\Validations\Account');
 
         $stub = m::mock(ProfileUpdater::class.'[saving]', [
             $presenter, $validator,

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Orchestra\Model\User as Eloquent;
 use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Validation\User as Validator;
+use Orchestra\Foundation\Validations\User as Validator;
 use Orchestra\Foundation\Http\Presenters\User as Presenter;
 use Orchestra\Contracts\Foundation\Command\Account\UserViewer as UserViewerCommand;
 use Orchestra\Contracts\Foundation\Command\Account\UserCreator as UserCreatorCommand;
@@ -24,7 +24,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      * Create a new processor instance.
      *
      * @param  \Orchestra\Foundation\Http\Presenters\User  $presenter
-     * @param  \Orchestra\Foundation\Validation\User  $validator
+     * @param  \Orchestra\Foundation\Validations\User  $validator
      */
     public function __construct(Presenter $presenter, Validator $validator)
     {

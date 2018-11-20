@@ -59,7 +59,7 @@ class EditorTest extends TestCase
     {
         $this->instance(UserProcessor::class, $processor = m::mock(UserProcessor::class.'[saving]', [
             $this->app->make(\Orchestra\Foundation\Http\Presenters\User::class),
-            $this->app->make(\Orchestra\Foundation\Validation\User::class),
+            $this->app->make(\Orchestra\Foundation\Validations\User::class),
         ]))->shouldAllowMockingProtectedMethods();
 
         $second = $this->createUserAsMember();

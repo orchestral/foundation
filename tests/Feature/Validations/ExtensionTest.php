@@ -1,9 +1,9 @@
 <?php
 
-namespace Orchestra\Tests\Feature\Validation;
+namespace Orchestra\Tests\Feature\Validations;
 
 use Orchestra\Tests\Feature\TestCase;
-use Orchestra\Foundation\Validation\Extension;
+use Orchestra\Foundation\Validations\Extension;
 
 class ExtensionTest extends TestCase
 {
@@ -12,7 +12,7 @@ class ExtensionTest extends TestCase
     {
         $stub = $this->app->make(Extension::class);
 
-        $this->assertInstanceOf('\Orchestra\Foundation\Validation\Extension', $stub);
+        $this->assertInstanceOf('\Orchestra\Foundation\Validations\Extension', $stub);
         $this->assertInstanceOf('\Orchestra\Support\Validator', $stub);
     }
 }

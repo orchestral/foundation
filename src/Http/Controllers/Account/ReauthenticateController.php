@@ -4,7 +4,7 @@ namespace Orchestra\Foundation\Http\Controllers\Account;
 
 use Illuminate\Support\Facades\Redirect;
 use Mpociot\Reauthenticate\ReauthLimiter;
-use Orchestra\Foundation\Validation\Account as AccountValidator;
+use Orchestra\Foundation\Validations\Account as AccountValidator;
 
 class ReauthenticateController extends Controller
 {
@@ -36,7 +36,7 @@ class ReauthenticateController extends Controller
      * Handle the reauthentication request to the application.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Orchestra\Foundation\Validation\Account  $validator
+     * @param  \Orchestra\Foundation\Validations\Account  $validator
      *
      * @return mixed
      */

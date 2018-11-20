@@ -9,7 +9,7 @@ use Orchestra\Contracts\Auth\Listener\PasswordReset;
 use Orchestra\Contracts\Auth\Listener\PasswordResetLink;
 use Illuminate\Contracts\Auth\PasswordBroker as Password;
 use Orchestra\Contracts\Auth\Command\PasswordBroker as Command;
-use Orchestra\Foundation\Validation\AuthenticateUser as Validator;
+use Orchestra\Foundation\Validations\AuthenticateUser as Validator;
 
 class PasswordBroker extends Processor implements Command
 {
@@ -23,7 +23,7 @@ class PasswordBroker extends Processor implements Command
     /**
      * Create a new processor instance.
      *
-     * @param \Orchestra\Foundation\Validation\AuthenticateUser  $validator
+     * @param \Orchestra\Foundation\Validations\AuthenticateUser  $validator
      * @param \Illuminate\Contracts\Auth\PasswordBroker  $password
      */
     public function __construct(Validator $validator, Password $password)

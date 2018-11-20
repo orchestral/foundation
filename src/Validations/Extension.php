@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Foundation\Validation;
+namespace Orchestra\Foundation\Validations;
 
 use Orchestra\Support\Validator;
 
