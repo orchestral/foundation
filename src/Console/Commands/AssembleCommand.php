@@ -4,7 +4,7 @@ namespace Orchestra\Foundation\Console\Commands;
 
 use PDOException;
 use Illuminate\Console\Command;
-use Orchestra\Contracts\Memory\Provider;
+use Orchestra\Contracts\Memory\Provider as Memory;
 use Orchestra\Contracts\Foundation\Foundation;
 
 class AssembleCommand extends Command
@@ -25,43 +25,18 @@ class AssembleCommand extends Command
     protected $description = 'Refresh application setup (during composer install/update)';
 
     /**
-     * The application foundation implementation.
-     *
-     * @var \Orchestra\Contracts\Foundation\Foundation
-     */
-    protected $foundation;
-
-    /**
-     * The memory provider implementation.
-     *
-     * @var \Orchestra\Contracts\Memory\Provider
-     */
-    protected $memory;
-
-    /**
-     * Construct a new command.
+     * Execute the console command.
      *
      * @param  \Orchestra\Contracts\Foundation\Foundation  $foundation
      * @param  \Orchestra\Contracts\Memory\Provider  $memory
-     */
-    public function __construct(Foundation $foundation, Provider $memory)
-    {
-        $this->foundation = $foundation;
-        $this->memory = $memory;
-
-        parent::__construct();
-    }
-
-    /**
-     * Execute the console command.
      *
      * @return void
      */
-    public function handle()
+    public function handle(Foundation $foundation, Memory $memory)
     {
         $this->setupApplication();
 
-        $this->refreshApplication();
+        $this->refreshApplication($foundation, $memory);
 
         $this->optimizeApplication();
     }
@@ -69,11 +44,14 @@ class AssembleCommand extends Command
     /**
      * Refresh application for Orchestra Platform.
      *
+     * @param  \Orchestra\Contracts\Foundation\Foundation  $foundation
+     * @param  \Orchestra\Contracts\Memory\Provider  $memory
+     *
      * @return void
      */
-    protected function refreshApplication(): void
+    protected function refreshApplication(Foundation $foundation, Memory $memory): void
     {
-        if (! $this->foundation->installed()) {
+        if (! $foundation->installed()) {
             $this->error('Abort as application is not installed!');
 
             return;
@@ -81,7 +59,7 @@ class AssembleCommand extends Command
 
         $this->call('extension:detect', ['--quiet' => true]);
 
-        $extensions = $this->memory->get('extensions.active', []);
+        $extensions = $memory->get('extensions.active', []);
 
         try {
             foreach ($extensions as $extension => $config) {
