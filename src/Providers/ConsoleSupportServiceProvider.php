@@ -17,9 +17,7 @@ class ConsoleSupportServiceProvider extends AggregateServiceProvider
         \Orchestra\Database\ConsoleServiceProvider::class,
         \Illuminate\Database\MigrationServiceProvider::class,
 
-        \Orchestra\Auth\CommandServiceProvider::class,
         \Orchestra\Extension\CommandServiceProvider::class,
-        \Orchestra\Memory\CommandServiceProvider::class,
         \Orchestra\Foundation\Providers\CommandServiceProvider::class,
         \Orchestra\Publisher\CommandServiceProvider::class,
         \Orchestra\View\CommandServiceProvider::class,
