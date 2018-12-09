@@ -17,7 +17,7 @@ class ReauthenticateController extends Controller
     {
         parent::onCreate();
 
-        $this->middleware('orchestra.reauth');
+        $this->middleware('orchestra.sudo');
     }
 
     /**
