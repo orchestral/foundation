@@ -2,7 +2,7 @@
 
 namespace Orchestra\Foundation\Http\Middleware;
 
-use Mpociot\Reauthenticate\Middleware\Reauthenticate;
+use Mpociot\Reauthenticate\Middleware\Reauthenticate as Middleware;
 
 class Reauthenticate extends Middleware
 {
