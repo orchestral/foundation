@@ -37,6 +37,9 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', function (Router
     $router->get('forgot/reset/{token?}', 'Account\PasswordBrokerController@showResetForm');
     $router->post('forgot/reset', 'Account\PasswordBrokerController@reset');
 
+    // Route to asset publishing.
+    $router->get('publisher', 'PublisherController@show');
+
     // Route to users.
     $router->resource('users', 'UsersController', ['except' => ['show']]);
 
