@@ -34,10 +34,10 @@ class ExtensionsControllerTest extends TestCase
     protected function bindDependencies()
     {
         $presenter = m::mock('\Orchestra\Foundation\Http\Presenters\Extension');
-        $validator = m::mock('\Orchestra\Foundation\Validation\Extension');
+        $validator = m::mock('\Orchestra\Foundation\Validations\Extension');
 
         App::instance('Orchestra\Foundation\Http\Presenters\Extension', $presenter);
-        App::instance('Orchestra\Foundation\Validation\Extension', $validator);
+        App::instance('Orchestra\Foundation\Validations\Extension', $validator);
 
         return [$presenter, $validator];
     }

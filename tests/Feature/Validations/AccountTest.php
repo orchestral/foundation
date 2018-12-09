@@ -1,9 +1,9 @@
 <?php
 
-namespace Orchestra\Tests\Feature\Validation;
+namespace Orchestra\Tests\Feature\Validations;
 
 use Orchestra\Tests\Feature\TestCase;
-use Orchestra\Foundation\Validation\Account;
+use Orchestra\Foundation\Validations\Account;
 use Orchestra\Foundation\Testing\Installation;
 
 class AccountTest extends TestCase

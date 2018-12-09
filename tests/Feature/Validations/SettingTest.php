@@ -1,9 +1,9 @@
 <?php
 
-namespace Orchestra\Tests\Feature\Validation;
+namespace Orchestra\Tests\Feature\Validations;
 
 use Orchestra\Tests\Feature\TestCase;
-use Orchestra\Foundation\Validation\Setting;
+use Orchestra\Foundation\Validations\Setting;
 
 class SettingTest extends TestCase
 {
@@ -18,7 +18,7 @@ class SettingTest extends TestCase
     }
 
     /**
-     * Test Orchestra\Foundation\Validation\Setting validation.
+     * Test Orchestra\Foundation\Validations\Setting validation.
      *
      * @test
      */

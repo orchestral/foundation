@@ -27,7 +27,7 @@ class ProfileCreatorTest extends TestCase
     public function it_can_store_profile()
     {
         $presenter = $this->app->make('Orchestra\Foundation\Http\Presenters\Account');
-        $validator = $this->app->make('Orchestra\Foundation\Validation\Account');
+        $validator = $this->app->make('Orchestra\Foundation\Validations\Account');
 
         $stub = m::mock(ProfileCreator::class.'[notifyCreatedUser]', [
             $presenter, $validator,
@@ -59,7 +59,7 @@ class ProfileCreatorTest extends TestCase
     public function it_can_store_profile_without_sending_notification()
     {
         $presenter = $this->app->make('Orchestra\Foundation\Http\Presenters\Account');
-        $validator = $this->app->make('Orchestra\Foundation\Validation\Account');
+        $validator = $this->app->make('Orchestra\Foundation\Validations\Account');
 
         $stub = m::mock(ProfileCreator::class.'[notifyCreatedUser]', [
             $presenter, $validator,
@@ -92,7 +92,7 @@ class ProfileCreatorTest extends TestCase
     public function it_cant_store_profile_given_database_fails()
     {
         $presenter = $this->app->make('Orchestra\Foundation\Http\Presenters\Account');
-        $validator = $this->app->make('Orchestra\Foundation\Validation\Account');
+        $validator = $this->app->make('Orchestra\Foundation\Validations\Account');
 
         $stub = m::mock(ProfileCreator::class.'[saving]', [
             $presenter, $validator,

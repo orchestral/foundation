@@ -4,7 +4,7 @@ namespace Orchestra\Foundation\Processors\Account;
 
 use Illuminate\Support\Facades\Event;
 use Orchestra\Foundation\Processors\Processor;
-use Orchestra\Foundation\Validation\Account as Validator;
+use Orchestra\Foundation\Validations\Account as Validator;
 use Orchestra\Foundation\Http\Presenters\Account as Presenter;
 
 abstract class User extends Processor
@@ -13,7 +13,7 @@ abstract class User extends Processor
      * Create a new processor instance.
      *
      * @param  \Orchestra\Foundation\Http\Presenters\Account  $presenter
-     * @param  \Orchestra\Foundation\Validation\Account  $validator
+     * @param  \Orchestra\Foundation\Validations\Account  $validator
      */
     public function __construct(Presenter $presenter, Validator $validator)
     {

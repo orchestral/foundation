@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+### 3.6.2
+
+Released: 2018-12-09
+
+### Fixes
+
+* Rename invalid `orchestra.reauth` middleware alias to `orchestra.sudo`.
+
 ### 3.6.1
 
 Released: 2018-08-07
