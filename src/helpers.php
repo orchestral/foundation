@@ -1,6 +1,5 @@
 <?php
 
-
 if (! function_exists('assetic')) {
     /**
      * Get the path to a versioned Elixir file or fallback to original file.
