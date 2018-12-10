@@ -42,6 +42,26 @@ class PublisherManager extends Manager
     }
 
     /**
+     * Set the default authentication driver name.
+     *
+     * @return $this
+     */
+    public function setDefaultDriver(string $driver)
+    {
+        $this->memory->put('orchestra.publisher.driver', 'filesystem');
+    }
+
+    /**
+     * Verify that the driver is connected to a service.
+     *
+     * @return bool
+     */
+    public function connected(): bool
+    {
+        return $this->driver()->connected();
+    }
+
+    /**
      * Execute the queue.
      *
      * @return bool

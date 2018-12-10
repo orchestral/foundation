@@ -71,7 +71,7 @@ abstract class Uploader
             foreach ($lists as $dir) {
                 // Not a file or folder, ignore it.
                 if (! $ignoredPath($dir)) {
-                    $this->chmod($dir, $mode, true);
+                    $this->chmodRecursively($dir, $mode);
                 }
             }
         }

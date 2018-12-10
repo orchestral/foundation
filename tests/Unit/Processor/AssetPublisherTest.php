@@ -27,7 +27,7 @@ class AssetPublisherTest extends TestCase
 
         $publisher->shouldReceive('connected')->once()->andReturn(true)
             ->shouldReceive('execute')->once()->andReturn(true);
-        $listener->shouldReceive('redirectToCurrentPublisher')->once()->andReturn('redirected');
+        $listener->shouldReceive('publishingHasSucceed')->once()->andReturn('redirected');
 
         $this->assertEquals('redirected', $stub->executeAndRedirect($listener));
     }
