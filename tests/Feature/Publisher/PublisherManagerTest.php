@@ -19,10 +19,10 @@ class PublisherManagerTest extends TestCase
     /** @test */
     public function it_can_get_default_driver()
     {
-        $this->instance('orchestra.publisher.ftp', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
+        $this->instance('orchestra.publisher.filesystem', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
 
         $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
-        $memory->shouldReceive('get')->once()->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp');
+        $memory->shouldReceive('get')->once()->with('orchestra.publisher.driver', 'filesystem')->andReturn('filesystem');
 
         $stub = (new PublisherManager($this->app))->attach($memory);
 
@@ -34,14 +34,14 @@ class PublisherManagerTest extends TestCase
     /** @test */
     public function it_can_execute_publisher()
     {
-        $this->instance('orchestra.publisher.ftp', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
+        $this->instance('orchestra.publisher.filesystem', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
 
         $client->shouldReceive('upload')->with('a')->andReturnTrue()
             ->shouldReceive('upload')->with('b')->andThrow('\Exception');
 
         $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
         $memory->shouldReceive('get')->once()->with('orchestra.publisher.queue', [])->andReturn(['a', 'b'])
-            ->shouldReceive('get')->times(2)->with('orchestra.publisher.driver', 'ftp')->andReturn('ftp')
+            ->shouldReceive('get')->times(2)->with('orchestra.publisher.driver', 'filesystem')->andReturn('filesystem')
             ->shouldReceive('put')->once()->with('orchestra.publisher.queue', ['b'])->andReturn(true);
 
         $stub = (new PublisherManager($this->app))->attach($memory);

@@ -38,7 +38,7 @@ class PublisherManager extends Manager
      */
     public function getDefaultDriver()
     {
-        return $this->memory->get('orchestra.publisher.driver', 'ftp');
+        return $this->memory->get('orchestra.publisher.driver', 'filesystem');
     }
 
     /**
