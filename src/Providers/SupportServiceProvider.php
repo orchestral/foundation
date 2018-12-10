@@ -46,6 +46,18 @@ class SupportServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the service provider for filesystem publisher.
+     *
+     * @return void
+     */
+    protected function registerFilesystemPublisher(): void
+    {
+        $this->app->singleton('orchestra.publisher.filesystem', function (Application $app) {
+            return new Filesystem($app);
+        });
+    }
+
+    /**
      * Register the service provider for user.
      *
      * @return void

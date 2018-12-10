@@ -3,7 +3,6 @@
 namespace Orchestra\Tests\Feature\Processor\Account;
 
 use Mockery as m;
-use Orchestra\Foundation\Auth\User;
 use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Testing\Installation;
 use Orchestra\Foundation\Processor\Account\ProfileUpdater;
