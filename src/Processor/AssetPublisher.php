@@ -47,7 +47,7 @@ class AssetPublisher extends Processor implements Command
     {
         $this->publisher->connected() && $this->publisher->execute();
 
-        return $listener->redirectToCurrentPublisher();
+        return null; //$listener->redirectToCurrentPublisher();
     }
 
     /**

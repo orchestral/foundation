@@ -41,9 +41,6 @@ class ActivateTest extends TestCase
         /** @test */
     public function it_can_activate_extension_while_requires_asset_publishing()
     {
-        $this->instance('orchestra.publisher.ftp', $client = m::mock('\Orchestra\Contracts\Publisher\Uploader'));
-        $client->shouldReceive('connected')->once()->andReturn(false);
-
          $this->instance(Activator::class, $activator = m::mock(Activator::class.'[execute]', [
             $this->app->make(\Orchestra\Contracts\Extension\Factory::class),
         ]))->shouldAllowMockingProtectedMethods();
@@ -57,6 +54,6 @@ class ActivateTest extends TestCase
 
          $this->actingAs($this->adminUser)
             ->makeRequest('POST', 'admin/extensions/acme/cms/activate')
-            ->seePageIs('admin/publisher/ftp');
+            ->seePageIs('admin/publisher');
     }
 }

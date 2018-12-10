@@ -52,15 +52,12 @@ class Filesystem extends Uploader implements UploaderContract
         try {
             $basePath = "{$config->basePath}{$name}/";
 
+            if (! $config->folderExist) {
+                $app['files']->makeDirectory($basePath, 0777, true);
+            }
+
             $this->changePermission(
-                $config->workingPath,
-                0777,
-                $config->recursively,
-                function () use ($app, $config, $basePath) {
-                    if (! $config->folderExist) {
-                        $app['files']->makeDirectory($basePath, 0777, true);
-                    }
-                }
+                $config->workingPath, 0777, $config->recursively
             );
         } catch (RuntimeException $e) {
             // We found an exception with Filesystem, but it would be hard to say
@@ -69,7 +66,7 @@ class Filesystem extends Uploader implements UploaderContract
             // those exception instead.
         }
 
-        $this->getContainer()['orchestra.extension']->activate($name);
+        $app['orchestra.extension']->activate($name);
 
         $this->changePermission($config->workingPath, 0755, $config->recursively);
 
@@ -83,6 +80,6 @@ class Filesystem extends Uploader implements UploaderContract
      */
     public function connected(): bool
     {
-        return $this->app['files'] instanceof File;
+        return true;
     }
 }

@@ -27,6 +27,8 @@ class SupportServiceProvider extends ServiceProvider
     {
         $this->registerPublisher();
 
+        $this->registerFilesystemPublisher();
+
         $this->registerRoleEloquent();
 
         $this->registerUserEloquent();
