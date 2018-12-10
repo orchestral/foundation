@@ -54,6 +54,6 @@ class ActivateTest extends TestCase
 
          $this->actingAs($this->adminUser)
             ->makeRequest('POST', 'admin/extensions/acme/cms/activate')
-            ->seePageIs('admin/publisher');
+            ->seePageIs('admin/extensions');
     }
 }

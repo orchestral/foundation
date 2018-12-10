@@ -82,16 +82,6 @@ class PublisherController extends AdminController implements Listener
      */
     public function publishingHasSucceed()
     {
-        return $this->redirectToCurrentPublisher();
-    }
-
-    /**
-     * Redirect back to current publisher.
-     *
-     * @return mixed
-     */
-    public function redirectToCurrentPublisher()
-    {
-        return $this->redirect(handles('orchestra::publisher'));
+        return $this->redirect(handles('orchestra::extensions'));
     }
 }
