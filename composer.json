@@ -34,7 +34,7 @@
         "mpociot/reauthenticate": "^1.3",
         "orchestra/asset": "~3.7.0",
         "orchestra/auth": "~3.7.0",
-        "orchestra/contracts": "~3.7.0",
+        "orchestra/contracts": "~3.7.1",
         "orchestra/extension": "~3.7.0",
         "orchestra/html": "~3.7.0",
         "orchestra/kernel": "~3.7.0",
