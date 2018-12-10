@@ -5,6 +5,7 @@ namespace Orchestra\Foundation\Providers;
 use Orchestra\Model\Role;
 use Orchestra\Foundation\Auth\User;
 use Illuminate\Support\ServiceProvider;
+use Orchestra\Foundation\Publisher\Filesystem;
 use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Foundation\Publisher\PublisherManager;
 

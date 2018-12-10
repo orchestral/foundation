@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Publisher;
+namespace Orchestra\Foundation\Publisher;
 
 use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Contracts\Foundation\Application;
