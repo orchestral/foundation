@@ -39,8 +39,6 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', function (Router
 
     // Route to asset publishing.
     $router->get('publisher', 'PublisherController@show');
-    $router->get('publisher/ftp', 'PublisherController@ftp');
-    $router->post('publisher/ftp', 'PublisherController@publish');
 
     // Route to users.
     $router->resource('users', 'UsersController', ['except' => ['show']]);
