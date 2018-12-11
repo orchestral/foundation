@@ -48,6 +48,7 @@
         "orchestra/widget": "~3.7.0"
     },
     "require-dev": {
+        "mockery/mockery": "^1.1",
         "orchestra/installer": "~3.7.0",
         "orchestra/testing": "~3.7.0",
         "phpunit/phpunit": "^7.2"
