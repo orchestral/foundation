@@ -15,49 +15,18 @@ abstract class Uploader
      * @param  string  $path
      * @param  int  $mode
      * @param  bool  $recursively
-     * @param  \Closure  $callback
      *
      * @return void
      */
-    protected function changePermission(string $path, $mode = 0755, bool $recursively, Closure $callback = null)
-    {
-        if ($recursively) {
-            $this->chmodRecursively($path, $mode);
-        } else {
-            $this->chmod($path, $mode);
-
-            if (is_callable($callback)) {
-                $callback();
-            }
-        }
-    }
-
-    /**
-     * CHMOD a directory/file.
-     *
-     * @param  string  $path
-     * @param  int  $mode
-     *
-     * @return mixed
-     */
-    protected function chmod(string $path, $mode = 0755): void
-    {
-        $this->getContainer()['files']->chmod($path, $mode);
-    }
-
-    /**
-     * CHMOD both file and directory recursively.
-     *
-     * @param  string  $path
-     * @param  int. $mode
-     *
-     * @return bool
-     */
-    protected function chmodRecursively(string $path, $mode = 0755): bool
+    protected function changePermission(string $path, $mode = 0755, bool $recursively = false): void
     {
         $filesystem = $this->getContainer()['files'];
 
         $filesystem->chmod($path, $mode);
+
+        if ($recursively === false) {
+            return;
+        }
 
         $lists = $filesystem->allFiles($path);
 
@@ -71,12 +40,27 @@ abstract class Uploader
             foreach ($lists as $dir) {
                 // Not a file or folder, ignore it.
                 if (! $ignoredPath($dir)) {
-                    $this->chmodRecursively($dir, $mode);
+                    $this->changePermission($dir, $mode, true);
                 }
             }
         }
+    }
 
-        return true;
+    /**
+     * Prepare destination directory.
+     *
+     * @param  string  $path
+     * @param  int  $mode
+     *
+     * @return void
+     */
+    protected function prepareDirectory(string $path, $mode = 0755): void
+    {
+        $filesystem = $this->getContainer()['files'];
+
+        if (! $filesystem->isDirectory($path)) {
+            $filesystem->makeDirectory($path, $mode, true);
+        }
     }
 
     /**
@@ -109,7 +93,6 @@ abstract class Uploader
     protected function destination(string $name, bool $recursively = false): Fluent
     {
         $filesystem = $this->getContainer()['files'];
-        $folderExist = true;
 
         $publicPath = $this->basePath($this->getContainer()['path.public']);
 
@@ -124,8 +107,6 @@ abstract class Uploader
         if ($filesystem->isDirectory($folder = "{$basePath}{$name}/")) {
             $recursively = true;
             $workingPath = $folder;
-        } else {
-            $folderExist = false;
         }
 
         // Alternatively if vendor has been created before, we need to
@@ -143,7 +124,6 @@ abstract class Uploader
             'workingPath' => $workingPath,
             'basePath' => $basePath,
             'resursively' => $recursively,
-            'folderExist' => $folderExist,
         ]);
     }
 

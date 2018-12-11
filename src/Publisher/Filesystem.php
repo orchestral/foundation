@@ -52,13 +52,11 @@ class Filesystem extends Uploader implements UploaderContract
         try {
             $basePath = "{$config->basePath}{$name}/";
 
-            if (! $config->folderExist) {
-                $app['files']->makeDirectory($basePath, 0777, true);
-            }
-
             $this->changePermission(
                 $config->workingPath, 0777, $config->recursively
             );
+
+            $this->prepareDirectory($basePath, 0777);
         } catch (RuntimeException $e) {
             // We found an exception with Filesystem, but it would be hard to say
             // extension can't be activated, let's try activating the
