@@ -15,49 +15,18 @@ abstract class Uploader
      * @param  string  $path
      * @param  int  $mode
      * @param  bool  $recursively
-     * @param  \Closure  $callback
      *
      * @return void
      */
-    protected function changePermission(string $path, $mode = 0755, bool $recursively, Closure $callback = null)
-    {
-        if ($recursively) {
-            $this->chmodRecursively($path, $mode);
-        } else {
-            $this->chmod($path, $mode);
-
-            if (is_callable($callback)) {
-                $callback();
-            }
-        }
-    }
-
-    /**
-     * CHMOD a directory/file.
-     *
-     * @param  string  $path
-     * @param  int  $mode
-     *
-     * @return mixed
-     */
-    protected function chmod(string $path, $mode = 0755): void
-    {
-        $this->getContainer()['files']->chmod($path, $mode);
-    }
-
-    /**
-     * CHMOD both file and directory recursively.
-     *
-     * @param  string  $path
-     * @param  int. $mode
-     *
-     * @return bool
-     */
-    protected function chmodRecursively(string $path, $mode = 0755): bool
+    protected function changePermission(string $path, $mode = 0755, bool $recursively = false): void
     {
         $filesystem = $this->getContainer()['files'];
 
         $filesystem->chmod($path, $mode);
+
+        if ($recursively === false) {
+            return;
+        }
 
         $lists = $filesystem->allFiles($path);
 
@@ -71,12 +40,10 @@ abstract class Uploader
             foreach ($lists as $dir) {
                 // Not a file or folder, ignore it.
                 if (! $ignoredPath($dir)) {
-                    $this->chmodRecursively($dir, $mode);
+                    $this->changePermission($dir, $mode, true);
                 }
             }
         }
-
-        return true;
     }
 
     /**
