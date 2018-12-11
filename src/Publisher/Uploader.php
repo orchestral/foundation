@@ -47,6 +47,23 @@ abstract class Uploader
     }
 
     /**
+     * Prepare destination directory.
+     *
+     * @param  string  $path
+     * @param  int  $mode
+     *
+     * @return void
+     */
+    protected function prepareDirectory(string $path, $mode = 0755): void
+    {
+        $filesystem = $this->getContainer()['files'];
+
+        if (! $filesystem->isDirectory($path)) {
+            $filesystem->makeDirectory($path, $mode, true);
+        }
+    }
+
+    /**
      * Get base path for FTP.
      *
      * @param  string  $path
@@ -76,7 +93,6 @@ abstract class Uploader
     protected function destination(string $name, bool $recursively = false): Fluent
     {
         $filesystem = $this->getContainer()['files'];
-        $folderExist = true;
 
         $publicPath = $this->basePath($this->getContainer()['path.public']);
 
@@ -91,8 +107,6 @@ abstract class Uploader
         if ($filesystem->isDirectory($folder = "{$basePath}{$name}/")) {
             $recursively = true;
             $workingPath = $folder;
-        } else {
-            $folderExist = false;
         }
 
         // Alternatively if vendor has been created before, we need to
@@ -110,7 +124,6 @@ abstract class Uploader
             'workingPath' => $workingPath,
             'basePath' => $basePath,
             'resursively' => $recursively,
-            'folderExist' => $folderExist,
         ]);
     }
 
