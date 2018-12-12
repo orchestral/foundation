@@ -6,8 +6,8 @@ use Illuminate\Support\Arr;
 use Orchestra\Contracts\Auth\Guard;
 use Orchestra\Model\User as Eloquent;
 use Orchestra\Contracts\Auth\Command\AuthenticateUser as Command;
-use Orchestra\Foundation\Validations\AuthenticateUser as Validator;
 use Orchestra\Contracts\Auth\Listener\AuthenticateUser as Listener;
+use Orchestra\Foundation\Validations\AuthenticateUser as Validator;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins as ThrottlesCommand;
 
 class AuthenticateUser extends Authenticate implements Command
