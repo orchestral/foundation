@@ -38,21 +38,21 @@ class ActivateTest extends TestCase
             ->seeText('Extension acme/cms activated');
     }
 
-        /** @test */
+    /** @test */
     public function it_can_activate_extension_while_requires_asset_publishing()
     {
-         $this->instance(Activator::class, $activator = m::mock(Activator::class.'[execute]', [
+        $this->instance(Activator::class, $activator = m::mock(Activator::class.'[execute]', [
             $this->app->make(\Orchestra\Contracts\Extension\Factory::class),
         ]))->shouldAllowMockingProtectedMethods();
 
-         $activator->shouldReceive('execute')
+        $activator->shouldReceive('execute')
             ->with(
                 m::type('\Orchestra\Contracts\Extension\Listener\Activator'), 'activation', m::any(), m::type('\Closure')
             )->andReturnUsing(function ($listener, $type, $extension) {
                 return $listener->activationHasFailed($extension, []);
             });
 
-         $this->actingAs($this->adminUser)
+        $this->actingAs($this->adminUser)
             ->makeRequest('POST', 'admin/extensions/acme/cms/activate')
             ->seePageIs('admin/extensions');
     }
