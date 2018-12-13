@@ -2,6 +2,19 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+### 3.6.3
+
+Released: 2018-12-13
+
+### Added
+
+* Add `Orchestra\Foundation\Publisher\Filesystem` as replacement to FTP publisher.
+* Overwrite `Orchestra\Foundation\Application::registerConfiguredProviders()` to consider `Orchestra` namespace to be loaded first before discovered packages.
+
+### Fixes
+
+* Fixed missing import on `Orchestra\Foundation\Http\Middleware\Reauthenticate`.
+
 ### 3.6.2
 
 Released: 2018-12-09
