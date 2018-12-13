@@ -34,36 +34,6 @@ class PublisherController extends AdminController implements Listener
     }
 
     /**
-     * Show FTP configuration form or run the queue.
-     *
-     * @return mixed
-     */
-    public function ftp()
-    {
-        set_meta('title', trans('orchestra/foundation::title.publisher.ftp'));
-        set_meta('description', trans('orchestra/foundation::title.publisher.description'));
-
-        return view('orchestra/foundation::publisher.ftp');
-    }
-
-    /**
-     * POST FTP configuration and run the queue.
-     *
-     * POST (orchestra)/publisher/ftp
-     *
-     * @param  \Orchestra\Foundation\Processors\AssetPublisher  $processor
-     *
-     * @return mixed
-     */
-    public function publish(AssetPublisher $processor)
-    {
-        $input = Input::only(['host', 'user', 'password']);
-        $input['ssl'] = (Input::get('connection-type', 'sftp') === 'sftp');
-
-        return $processor->publish($this, $input);
-    }
-
-    /**
      * Response to publishing asset failed.
      *
      * @param  array  $errors
