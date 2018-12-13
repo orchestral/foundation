@@ -46,7 +46,7 @@ trait WithInstallation
     protected function runInstallation(?InstallationContract $installer = null, array $config = [])
     {
         $artisan = function ($command) {
-            tap($this->artisan($command), function($console) {
+            tap($this->artisan($command), function ($console) {
                 if ($console instanceof PendingCommand) {
                     $console->run();
                 }

@@ -4,8 +4,8 @@ namespace Orchestra\Foundation\Console\Commands;
 
 use PDOException;
 use Illuminate\Console\Command;
-use Orchestra\Contracts\Memory\Provider as Memory;
 use Orchestra\Contracts\Foundation\Foundation;
+use Orchestra\Contracts\Memory\Provider as Memory;
 
 class AssembleCommand extends Command
 {

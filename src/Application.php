@@ -2,8 +2,13 @@
 
 namespace Orchestra\Foundation;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Log\LogServiceProvider;
+use Illuminate\Foundation\PackageManifest;
 use Illuminate\Events\EventServiceProvider;
+use Illuminate\Foundation\ProviderRepository;
 use Orchestra\Routing\RoutingServiceProvider;
 use Illuminate\Foundation\Application as BaseApplication;
 use Orchestra\Contracts\Foundation\Application as ApplicationContract;
@@ -115,6 +120,24 @@ class Application extends BaseApplication implements ApplicationContract
         $this->instance('path.vendor', $path);
 
         return $this;
+    }
+
+    /**
+     * Register all of the configured providers.
+     *
+     * @return void
+     */
+    public function registerConfiguredProviders()
+    {
+        $providers = Collection::make($this->config['app.providers'])
+                        ->partition(function ($provider) {
+                            return Str::startsWith($provider, ['Illuminate\\', 'Orchestra\\']);
+                        });
+
+        $providers->splice(1, 0, [$this->make(PackageManifest::class)->providers()]);
+
+        (new ProviderRepository($this, new Filesystem(), $this->getCachedServicesPath()))
+                    ->load($providers->collapse()->toArray());
     }
 
     /**
