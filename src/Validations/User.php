@@ -34,6 +34,6 @@ class User extends Validator
      */
     protected function onCreate()
     {
-        $this->rules['password'] = ['required'];
+        $this->rules['password'] = ['required', 'min:6'];
     }
 }
