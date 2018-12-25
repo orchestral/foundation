@@ -34,7 +34,7 @@ class Account extends Validator
     {
         $this->rules = array_replace($this->rules, [
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['sometimes', 'required'],
+            'password' => ['sometimes', 'required', 'min:6'],
             'password_confirmation' => ['sometimes', 'same:password'],
         ]);
 
