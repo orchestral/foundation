@@ -17,6 +17,6 @@ class DashboardControllerTest extends TestCase
         $this->actingAs($user)
             ->call('GET', 'admin/missing')
             ->assertStatus(404)
-            ->assertSeeText('Sorry, the page you are looking for could not be found.');
+            ->assertSeeText('Not Found');
     }
 }

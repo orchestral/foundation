@@ -3,8 +3,9 @@
 namespace Orchestra\Foundation\Providers;
 
 use Illuminate\Support\AggregateServiceProvider;
+use Illuminate\Contracts\Support\DeferrableProvider;
 
-class ConsoleSupportServiceProvider extends AggregateServiceProvider
+class ConsoleSupportServiceProvider extends AggregateServiceProvider implements DeferrableProvider
 {
     /**
      * The provider class names.
@@ -22,11 +23,4 @@ class ConsoleSupportServiceProvider extends AggregateServiceProvider
         \Orchestra\Publisher\CommandServiceProvider::class,
         \Orchestra\View\CommandServiceProvider::class,
     ];
-
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
 }

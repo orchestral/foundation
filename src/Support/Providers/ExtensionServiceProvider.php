@@ -3,16 +3,10 @@
 namespace Orchestra\Foundation\Support\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Support\DeferrableProvider;
 
-class ExtensionServiceProvider extends ServiceProvider
+class ExtensionServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-
     /**
      * Available orchestra extensions.
      *

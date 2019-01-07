@@ -7,17 +7,11 @@ use Orchestra\Foundation\Auth\User;
 use Illuminate\Support\ServiceProvider;
 use Orchestra\Foundation\Publisher\Filesystem;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Orchestra\Foundation\Publisher\PublisherManager;
 
-class SupportServiceProvider extends ServiceProvider
+class SupportServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-
     /**
      * Register the service provider.
      *
