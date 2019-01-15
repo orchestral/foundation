@@ -1,0 +1,19 @@
+# Changelog for v3.7
+
+This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
+
+### 3.7.0
+
+Released: 2019-01-14
+
+### Added
+
+* Add `Orchestra\Foundation\Publisher\Filesystem` as replacement to FTP publisher.
+* Overwrite `Orchestra\Foundation\Application::registerConfiguredProviders()` to consider `Orchestra` namespace to be loaded first before discovered packages.
+
+### Changes
+
+* Update support for Laravel Framework v5.7.
+* Rename `Orchestra\Foundation\Processor` namespace to `Orchestra\Foundation\Processors`.
+* Rename `Orchestra\Foundation\Validation` namespace to `Orchestra\Foundation\Validations`.
+* Restucture routing.
