@@ -40,7 +40,7 @@ class ExtensionServiceProvider extends ServiceProvider
         $finder = $this->app->make('orchestra.extension.finder');
 
         foreach ($this->extensions as $name => $path) {
-            if (is_numeric($name)) {
+            if (\is_numeric($name)) {
                 $finder->addPath($path);
             } else {
                 $finder->registerExtension($name, $path);

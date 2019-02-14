@@ -16,7 +16,7 @@ class RouteResolver extends Resolver
      */
     public function route(string $name, string $default = '/')
     {
-        if (in_array($name, ['orchestra', 'orchestra/foundation'])) {
+        if (\in_array($name, ['orchestra', 'orchestra/foundation'])) {
             $name = 'orchestra';
         }
 
@@ -30,11 +30,11 @@ class RouteResolver extends Resolver
     {
         // Orchestra Platform routing is managed by `orchestra/foundation::handles`
         // and can be manage using configuration.
-        if (in_array($name, ['orchestra'])) {
+        if (\in_array($name, ['orchestra'])) {
             $url = $this->app->make('config')->get('orchestra/foundation::handles', $default);
 
             return $this->app->make('orchestra.extension.url')->handle(
-                is_string($url) ? $url : 'admin'
+                \is_string($url) ? $url : 'admin'
             );
         }
 

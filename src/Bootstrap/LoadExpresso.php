@@ -36,7 +36,7 @@ class LoadExpresso
         });
 
         $blade->directive('placeholder', function ($expression) {
-            $expression = preg_replace('/\(\s*(.*)\)/', '$1', $expression);
+            $expression = \preg_replace('/\(\s*(.*)\)/', '$1', $expression);
 
             return "<?php \$__ps = app('orchestra.widget')->make('placeholder.'.{$expression}); "
                         ."foreach (\$__ps as \$__p) { echo value(\$__p->value ?: ''); } ?>";
@@ -55,8 +55,8 @@ class LoadExpresso
         });
 
         $blade->extend(function ($view) {
-            $view = preg_replace('/(\s*)(<\?\s)/', '$1<?php ', $view);
-            $view = preg_replace('/#\{\{\s*(.+?)\s*\}\}/s', '<?php $1; ?>', $view);
+            $view = \preg_replace('/(\s*)(<\?\s)/', '$1<?php ', $view);
+            $view = \preg_replace('/#\{\{\s*(.+?)\s*\}\}/s', '<?php $1; ?>', $view);
 
             return $view;
         });
@@ -74,12 +74,12 @@ class LoadExpresso
         $html = $app->make('html');
 
         $html->macro('title', function ($title = null) use ($html) {
-            $builder = new Title($html, memorize('site.name'), [
-                'site' => get_meta('html::title.format.site', '{site.name} (Page {page.number})'),
-                'page' => get_meta('html::title.format.page', '{page.title} &mdash; {site.name}'),
+            $builder = new Title($html, \memorize('site.name'), [
+                'site' => \get_meta('html::title.format.site', '{site.name} (Page {page.number})'),
+                'page' => \get_meta('html::title.format.page', '{page.title} &mdash; {site.name}'),
             ]);
 
-            return $builder->title($title ?: trim(get_meta('title', '')));
+            return $builder->title($title ?: \trim(\get_meta('title', '')));
         });
     }
 }

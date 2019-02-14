@@ -95,14 +95,14 @@ trait Timezone
         }
 
         if (! ($datetime instanceof Carbon)) {
-            if (is_null($timezone)) {
+            if (\is_null($timezone)) {
                 return new Carbon($datetime);
             }
 
             return new Carbon($datetime, $timezone);
         }
 
-        ! is_null($timezone) && $datetime->timezone = $timezone;
+        ! \is_null($timezone) && $datetime->timezone = $timezone;
 
         return $datetime;
     }

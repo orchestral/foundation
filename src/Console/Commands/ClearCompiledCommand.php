@@ -33,8 +33,8 @@ class ClearCompiledCommand extends Command
         ];
 
         foreach ($files as $file) {
-            if (file_exists($file)) {
-                @unlink($file);
+            if (\file_exists($file)) {
+                @\unlink($file);
             }
         }
     }

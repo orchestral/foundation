@@ -100,7 +100,7 @@ class PublisherManager extends Manager
      */
     public function queue($queue): bool
     {
-        $queue = array_unique(array_merge($this->queued(), (array) $queue));
+        $queue = \array_unique(\array_merge($this->queued(), (array) $queue));
         $this->memory->put('orchestra.publisher.queue', $queue);
 
         return true;

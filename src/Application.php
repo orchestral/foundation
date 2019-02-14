@@ -57,7 +57,7 @@ class Application extends BaseApplication implements ApplicationContract
      */
     protected function markAsRegistered($provider)
     {
-        $this['events']->dispatch(get_class($provider), [$provider]);
+        $this['events']->dispatch(\get_class($provider), [$provider]);
 
         parent::markAsRegistered($provider);
     }

@@ -147,7 +147,7 @@ class Foundation extends RouteManager implements FoundationContract
      */
     public function widget(string $type)
     {
-        return ! is_null($this->widget)
+        return ! \is_null($this->widget)
                     ? $this->widget->make("{$type}.orchestra")
                     : null;
     }
@@ -172,7 +172,7 @@ class Foundation extends RouteManager implements FoundationContract
             $attributes['namespace'] = $namespace;
         }
 
-        $attributes['middleware'] = array_unique(array_merge(
+        $attributes['middleware'] = \array_unique(\array_merge(
             $attributes['middleware'] ?? [], ['orchestra']
         ));
 
@@ -233,7 +233,7 @@ class Foundation extends RouteManager implements FoundationContract
 
         $name = $memory->get('site.name');
 
-        if (is_null($name)) {
+        if (\is_null($name)) {
             throw new Exception('Installation is not completed');
         }
 

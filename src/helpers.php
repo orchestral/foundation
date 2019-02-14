@@ -1,6 +1,6 @@
 <?php
 
-if (! function_exists('assetic')) {
+if (! \function_exists('assetic')) {
     /**
      * Get the path to a versioned Elixir file or fallback to original file.
      *
@@ -12,14 +12,14 @@ if (! function_exists('assetic')) {
     function assetic(string $file, string $buildDirectory = 'build'): string
     {
         try {
-            return asset(elixir($file, $buildDirectory));
+            return \asset(\elixir($file, $buildDirectory));
         } catch (Exception $e) {
-            return asset($file);
+            return \asset($file);
         }
     }
 }
 
-if (! function_exists('get_meta')) {
+if (! \function_exists('get_meta')) {
     /**
      * Get meta.
      *
@@ -30,11 +30,11 @@ if (! function_exists('get_meta')) {
      */
     function get_meta(string $key, $default = null)
     {
-        return app('orchestra.meta')->get($key, $default);
+        return \app('orchestra.meta')->get($key, $default);
     }
 }
 
-if (! function_exists('handles')) {
+if (! \function_exists('handles')) {
     /**
      * Return handles configuration for a package/app.
      *
@@ -45,11 +45,11 @@ if (! function_exists('handles')) {
      */
     function handles(string $name, array $options = []): string
     {
-        return app('orchestra.app')->handles($name, $options);
+        return \app('orchestra.app')->handles($name, $options);
     }
 }
 
-if (! function_exists('memorize')) {
+if (! \function_exists('memorize')) {
     /**
      * Return memory configuration associated to the request.
      *
@@ -62,11 +62,11 @@ if (! function_exists('memorize')) {
      */
     function memorize(string $key, $default = null)
     {
-        return app('orchestra.platform.memory')->get($key, $default);
+        return \app('orchestra.platform.memory')->get($key, $default);
     }
 }
 
-if (! function_exists('orchestra')) {
+if (! \function_exists('orchestra')) {
     /**
      * Return orchestra.app instance.
      *
@@ -76,15 +76,15 @@ if (! function_exists('orchestra')) {
      */
     function orchestra(?string $service = null)
     {
-        if (! is_null($service)) {
-            return app("orchestra.platform.{$service}");
+        if (! \is_null($service)) {
+            return \app("orchestra.platform.{$service}");
         }
 
-        return app('orchestra.app');
+        return \app('orchestra.app');
     }
 }
 
-if (! function_exists('set_meta')) {
+if (! \function_exists('set_meta')) {
     /**
      * Set meta.
      *
@@ -95,6 +95,6 @@ if (! function_exists('set_meta')) {
      */
     function set_meta(string $key, $value = null)
     {
-        return app('orchestra.meta')->set($key, $value);
+        return \app('orchestra.meta')->set($key, $value);
     }
 }
