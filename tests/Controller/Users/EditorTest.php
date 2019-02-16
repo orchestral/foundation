@@ -100,12 +100,11 @@ class EditorTest extends TestCase
         $this->assertNotSame('Mior Muhammad Zaki', $second->fullname);
     }
 
-    /**
-     * @test
-     * @expectedException \Laravel\BrowserKitTesting\HttpException
-     */
+    /** @test */
     public function its_cant_edit_a_user_and_send_for_a_different_user()
     {
+        $this->expectException('Laravel\BrowserKitTesting\HttpException');
+
         $second = $this->createUserAsMember();
 
         $this->actingAs($this->adminUser)
