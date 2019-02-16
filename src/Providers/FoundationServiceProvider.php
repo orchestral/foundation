@@ -137,7 +137,7 @@ class FoundationServiceProvider extends ServiceProvider
     {
         $this->bootAuthen();
 
-        $path = realpath(__DIR__.'/../../');
+        $path = \realpath(__DIR__.'/../../');
 
         $this->addConfigComponent('orchestra/foundation', 'orchestra/foundation', "{$path}/resources/config");
         $this->addLanguageComponent('orchestra/foundation', 'orchestra/foundation', "{$path}/resources/lang");

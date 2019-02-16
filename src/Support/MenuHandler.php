@@ -119,10 +119,10 @@ abstract class MenuHandler
      */
     public function getAttribute(string $name)
     {
-        $method = 'get'.ucfirst($name).'Attribute';
+        $method = 'get'.\ucfirst($name).'Attribute';
         $value = $this->menu[$name] ?? null;
 
-        if (method_exists($this, $method)) {
+        if (\method_exists($this, $method)) {
             return $this->container->call([$this, $method], ['value' => $value]);
         }
 
@@ -139,7 +139,7 @@ abstract class MenuHandler
      */
     public function setAttribute(string $name, $value)
     {
-        if (in_array($name, ['id'])) {
+        if (\in_array($name, ['id'])) {
             $this->{$name} = $value;
         }
 
@@ -207,7 +207,7 @@ abstract class MenuHandler
      */
     protected function attachIcon(Fluent $menu = null): void
     {
-        if (! (is_null($menu) || is_null($icon = $this->getAttribute('icon')))) {
+        if (! (\is_null($menu) || \is_null($icon = $this->getAttribute('icon')))) {
             $menu->icon($icon);
         }
     }
@@ -235,7 +235,7 @@ abstract class MenuHandler
     {
         $enabled = false;
 
-        if (method_exists($this, 'authorize')) {
+        if (\method_exists($this, 'authorize')) {
             $enabled = $this->container->call([$this, 'authorize']);
         }
 

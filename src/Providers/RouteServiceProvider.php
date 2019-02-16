@@ -77,7 +77,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function loadRoutes(): void
     {
-        $path = realpath(__DIR__.'/../../');
+        $path = \realpath(__DIR__.'/../../');
 
         require "{$path}/routes/web.php";
     }

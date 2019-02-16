@@ -41,7 +41,7 @@ abstract class Throttle
      */
     public static function setConfig(array $config)
     {
-        static::$config = array_merge(static::$config, $config);
+        static::$config = \array_merge(static::$config, $config);
     }
 
     /**
@@ -112,6 +112,6 @@ abstract class Throttle
         $key = $this->request->input($this->loginKey);
         $ip = $this->request->ip();
 
-        return mb_strtolower($key).$ip;
+        return \mb_strtolower($key).$ip;
     }
 }

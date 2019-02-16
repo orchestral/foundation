@@ -91,7 +91,7 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
      */
     public function routeNotificationFor($driver)
     {
-        if (method_exists($this, $method = 'routeNotificationFor'.Str::studly($driver))) {
+        if (\method_exists($this, $method = 'routeNotificationFor'.Str::studly($driver))) {
             return $this->{$method}();
         }
 

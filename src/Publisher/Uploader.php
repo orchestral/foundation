@@ -31,7 +31,7 @@ abstract class Uploader
         $lists = $filesystem->allFiles($path);
 
         $ignoredPath = function ($dir) {
-            return (substr($dir, -3) === '/..' || substr($dir, -2) === '/.');
+            return (\substr($dir, -3) === '/..' || \substr($dir, -2) === '/.');
         };
 
         // this is to check if return value is just a single file,
@@ -75,8 +75,8 @@ abstract class Uploader
         // This set of preg_match would filter ftp' user is not accessing
         // exact path as path('public'), in most shared hosting ftp' user
         // would only gain access to it's /home/username directory.
-        if (preg_match('/^\/(home)\/([a-zA-Z0-9]+)\/(.*)$/', $path, $matches)) {
-            $path = '/'.ltrim($matches[3], '/');
+        if (\preg_match('/^\/(home)\/([a-zA-Z0-9]+)\/(.*)$/', $path, $matches)) {
+            $path = '/'.\ltrim($matches[3], '/');
         }
 
         return $path;
@@ -99,7 +99,7 @@ abstract class Uploader
         // Start chmod from public/packages directory, if the extension folder
         // is yet to be created, it would be created and own by the web server
         // (Apache or Nginx). If otherwise, we would then emulate chmod -Rf
-        $publicPath = rtrim($publicPath, '/').'/';
+        $publicPath = \rtrim($publicPath, '/').'/';
         $workingPath = $basePath = "{$publicPath}packages/";
 
         // If the extension directory exist, we should start chmod from the
@@ -113,7 +113,7 @@ abstract class Uploader
         // change the permission on the vendor folder instead of
         // public/packages.
         if (! $recursively && Str::contains($name, '/')) {
-            [$vendor, ] = explode('/', $name);
+            [$vendor, ] = \explode('/', $name);
 
             if ($filesystem->isDirectory($folder = "{$basePath}{$vendor}/")) {
                 $workingPath = $folder;

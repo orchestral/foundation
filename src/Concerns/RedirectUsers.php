@@ -17,7 +17,7 @@ trait RedirectUsers
      */
     protected function redirectUserTo(string $namespace, string $path, ?string $redirect = null): string
     {
-        return handles($this->redirectUserPath($namespace, $path, $redirect));
+        return \handles($this->redirectUserPath($namespace, $path, $redirect));
     }
 
     /**
@@ -35,8 +35,8 @@ trait RedirectUsers
             $path = $redirect;
         }
 
-        $property = sprintf('redirect%sPath', Str::ucfirst($namespace));
+        $property = \sprintf('redirect%sPath', Str::ucfirst($namespace));
 
-        return property_exists($this, $property) ? $this->{$property} : $path;
+        return \property_exists($this, $property) ? $this->{$property} : $path;
     }
 }

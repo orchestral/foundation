@@ -76,12 +76,12 @@ trait RouteProvider
      */
     protected function resolveRouteGroupAttributes($namespace = null, array $attributes = []): array
     {
-        if (is_array($namespace)) {
+        if (\is_array($namespace)) {
             $attributes = $namespace;
             $namespace = '';
         }
 
-        if (! is_null($namespace)) {
+        if (! \is_null($namespace)) {
             $attributes['namespace'] = empty($namespace) ? $this->namespace : "{$this->namespace}\\{$namespace}";
         }
 

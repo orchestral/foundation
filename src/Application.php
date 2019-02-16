@@ -57,7 +57,7 @@ class Application extends BaseApplication implements ApplicationContract
      */
     protected function markAsRegistered($provider)
     {
-        $this['events']->dispatch(get_class($provider), [$provider]);
+        $this['events']->dispatch(\get_class($provider), [$provider]);
 
         parent::markAsRegistered($provider);
     }
@@ -147,7 +147,7 @@ class Application extends BaseApplication implements ApplicationContract
      */
     public function getCachedExtensionServicesPath()
     {
-        return $this->basePath('bootstrap'.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.'extension.php');
+        return $this->bootstrapPath('cache'.DIRECTORY_SEPARATOR.'extension.php');
     }
 
     /**
