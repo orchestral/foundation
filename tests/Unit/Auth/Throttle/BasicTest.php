@@ -12,7 +12,7 @@ class BasicTest extends TestCase
     /**
      * Teardown the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
     }

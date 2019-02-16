@@ -21,7 +21,7 @@ class ExtensionTest extends TestCase
     /**
      * Setup the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->app = new Container();
 
@@ -38,7 +38,7 @@ class ExtensionTest extends TestCase
     /**
      * Teardown the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         unset($this->app);
 

@@ -14,7 +14,7 @@ class AccountTest extends TestCase
     /**
      * Setup the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $app = new Container();
 
@@ -31,7 +31,7 @@ class AccountTest extends TestCase
     /**
      * Teardown the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
     }
