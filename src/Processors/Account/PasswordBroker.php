@@ -81,7 +81,7 @@ class PasswordBroker extends Processor implements Command
             Password::INVALID_USER,
         ];
 
-        if (in_array($response, $errors)) {
+        if (\in_array($response, $errors)) {
             return $listener->passwordResetHasFailed($response);
         }
 

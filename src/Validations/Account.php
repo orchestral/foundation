@@ -32,7 +32,7 @@ class Account extends Validator
      */
     protected function onRegister()
     {
-        $this->rules = array_replace($this->rules, [
+        $this->rules = \array_replace($this->rules, [
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['sometimes', 'required', 'min:6'],
             'password_confirmation' => ['sometimes', 'same:password'],

@@ -86,7 +86,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
 
         $this->fireEvent('form', [$eloquent, $form]);
 
-        return $listener->showUserCreator(compact('eloquent', 'form'));
+        return $listener->showUserCreator(\compact('eloquent', 'form'));
     }
 
     /**
@@ -104,7 +104,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
 
         $this->fireEvent('form', [$eloquent, $form]);
 
-        return $listener->showUserChanger(compact('eloquent', 'form'));
+        return $listener->showUserChanger(\compact('eloquent', 'form'));
     }
 
     /**
