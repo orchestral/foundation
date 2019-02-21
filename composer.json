@@ -40,7 +40,7 @@
         "orchestra/kernel": "~3.7.1",
         "orchestra/memory": "~3.7.1",
         "orchestra/messages": "~3.7.0",
-        "orchestra/model": "~3.7.3",
+        "orchestra/model": "~3.7.2",
         "orchestra/notifier": "~3.7.1",
         "orchestra/support": "~3.7.1",
         "orchestra/translation": "~3.7.0",
