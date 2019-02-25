@@ -4,6 +4,7 @@ namespace Orchestra\Foundation\Console\Commands;
 
 use PDOException;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Orchestra\Contracts\Foundation\Foundation;
 use Orchestra\Contracts\Memory\Provider as Memory;
 
@@ -59,15 +60,14 @@ class AssembleCommand extends Command
 
         $this->call('extension:detect', ['--quiet' => true]);
 
-        $extensions = $memory->get('extensions.active', []);
-
         try {
-            foreach ($extensions as $extension => $config) {
-                $options = ['name' => $extension, '--force' => true];
+            Collection::make($memory->get('extensions.active', []))
+                ->keys()->each(function ($extension) {
+                    $options = ['name' => $extension, '--force' => true];
 
-                $this->call('extension:refresh', $options);
-                $this->call('extension:update', $options);
-            }
+                    $this->call('extension:refresh', $options);
+                    $this->call('extension:update', $options);
+                });
 
             $this->laravel->make('orchestra.extension.provider')->writeFreshManifest();
         } catch (PDOException $e) {

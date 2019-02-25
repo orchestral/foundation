@@ -153,16 +153,9 @@ class User extends Presenter
 
                         return $roles->pluck('name', 'id');
                     })
-                    ->value(function ($row) {
+                    ->value(function ($user) {
                         // get all the user roles from objects
-                        $roles = [];
-                        $pivots = $row->roles()->get();
-
-                        foreach ($pivots as $row) {
-                            $roles[] = $row->id;
-                        }
-
-                        return $roles;
+                        return $user->roles()->get()->pluck('id')->all();
                     });
             });
         });
