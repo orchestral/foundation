@@ -44,7 +44,7 @@
         "orchestra/notifier": "~3.7.1",
         "orchestra/support": "~3.7.1",
         "orchestra/translation": "~3.7.0",
-        "orchestra/view": "~3.7.0",
+        "orchestra/view": "~3.7.2",
         "orchestra/widget": "~3.7.0"
     },
     "require-dev": {
