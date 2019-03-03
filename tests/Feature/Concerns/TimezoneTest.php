@@ -1,13 +1,13 @@
 <?php
 
-namespace Orchestra\Tests\Feature\Traits;
+namespace Orchestra\Tests\Feature\Concerns;
 
 use Mockery as m;
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
 use Orchestra\Foundation\Auth\User;
 use Orchestra\Tests\Feature\TestCase;
-use Orchestra\Foundation\Traits\Timezone;
+use Orchestra\Foundation\Concerns\Timezone;
 use Orchestra\Foundation\Testing\Installation;
 
 class TimezoneTest extends TestCase

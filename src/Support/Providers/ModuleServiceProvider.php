@@ -6,10 +6,10 @@ use RuntimeException;
 use Illuminate\Routing\Router;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Contracts\Events\Dispatcher;
-use Orchestra\Support\Providers\Traits\EventProvider;
-use Orchestra\Support\Providers\Traits\PackageProvider;
-use Orchestra\Support\Providers\Traits\MiddlewareProvider;
-use Orchestra\Foundation\Support\Providers\Traits\RouteProvider;
+use Orchestra\Support\Providers\Concerns\EventProvider;
+use Orchestra\Support\Providers\Concerns\PackageProvider;
+use Orchestra\Support\Providers\Concerns\MiddlewareProvider;
+use Orchestra\Foundation\Support\Providers\Concerns\RouteProvider;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 abstract class ModuleServiceProvider extends ServiceProvider
