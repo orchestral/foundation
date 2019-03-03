@@ -48,7 +48,7 @@ abstract class MenuHandler
      *
      * @var bool
      */
-    protected $enabled;
+    protected $showToUser = true;
 
     /**
      * Menu instance.
@@ -77,7 +77,7 @@ abstract class MenuHandler
     {
         $this->prepare();
 
-        if ($this->enabled) {
+        if ($this->showToUser === true) {
             $this->create();
         }
     }
@@ -183,7 +183,7 @@ abstract class MenuHandler
         }
 
         $this->name = $id;
-        $this->enabled = $this->passesAuthorization();
+        $this->showToUser = $this->passesAuthorization();
 
         return $this;
     }
@@ -233,13 +233,13 @@ abstract class MenuHandler
      */
     protected function passesAuthorization(): bool
     {
-        $enabled = false;
+        $passes = false;
 
         if (\method_exists($this, 'authorize')) {
-            $enabled = $this->container->call([$this, 'authorize']);
+            $passes = $this->container->call([$this, 'authorize']);
         }
 
-        return (bool) $enabled;
+        return (bool) $passes;
     }
 
     /**

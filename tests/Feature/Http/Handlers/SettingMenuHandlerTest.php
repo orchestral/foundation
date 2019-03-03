@@ -1,22 +1,14 @@
 <?php
 
-namespace Orchestra\Tests\Unit\Http\Handlers;
+namespace Orchestra\Tests\Feature\Http\Handlers;
 
 use Mockery as m;
-use PHPUnit\Framework\TestCase;
+use Orchestra\Testing\TestCase;
 use Illuminate\Container\Container;
 use Orchestra\Foundation\Http\Handlers\SettingMenuHandler;
 
 class SettingMenuHandlerTest extends TestCase
 {
-    /**
-     * Teardown the test environment.
-     */
-    protected function tearDown(): void
-    {
-        m::close();
-    }
-
     /**
      * Test Orchestra\Foundation\Http\Handlers\SettingMenuHandler::handle()
      * method with authorized user.
@@ -25,21 +17,21 @@ class SettingMenuHandlerTest extends TestCase
      */
     public function testCreatingMenuWithAuthorizedUser()
     {
-        $app = new Container();
-        $app['orchestra.app'] = $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation');
-        $app['orchestra.platform.menu'] = $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
-        $app['translator'] = $translator = m::mock('\Illuminate\Translator\Translator');
-        $app['Orchestra\Contracts\Authorization\Authorization'] = $acl = m::mock('\Orchestra\Contracts\Authorization\Authorization');
+        $this->instance('orchestra.app', $foundation = m::mock('\Orchestra\Contracts\Foundation\Foundation'));
+        $this->instance('orchestra.platform.menu', $menu = m::mock('\Orchestra\Widget\Handlers\Menu'));
+        $this->instance('orchestra.platform.acl', $acl = m::mock('\Orchestra\Contracts\Authorization\Authorization'));
+        $this->instance('translator', $translator = m::mock('\Illuminate\Translator\Translator'));
 
         $acl->shouldReceive('canIf')->with('manage-orchestra')->once()->andReturn(true);
-        $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.settings.list')->andReturn('settings');
+        $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.settings.list', [], null)->andReturn('settings');
         $foundation->shouldReceive('handles')->once()->with('orchestra::settings')->andReturn('admin/settings');
         $menu->shouldReceive('add')->once()->andReturnSelf()
             ->shouldReceive('title')->once()->with('settings')->andReturnSelf()
             ->shouldReceive('link')->once()->with('admin/settings')->andReturnSelf()
             ->shouldReceive('handles')->once()->with('orchestra::settings')->andReturnNull();
 
-        $stub = new SettingMenuHandler($app);
+        $stub = new SettingMenuHandler($this->app);
+
         $this->assertNull($stub->handle());
     }
 
@@ -51,13 +43,12 @@ class SettingMenuHandlerTest extends TestCase
      */
     public function testCreatingMenuWithoutAuthorizedUser()
     {
-        $app = new Container();
-        $app['orchestra.platform.menu'] = $menu = m::mock('\Orchestra\Widget\Handlers\Menu');
-        $app['Orchestra\Contracts\Authorization\Authorization'] = $acl = m::mock('\Orchestra\Contracts\Authorization\Authorization');
+        $this->instance('orchestra.platform.acl', $acl = m::mock('\Orchestra\Contracts\Authorization\Authorization'));
 
         $acl->shouldReceive('canIf')->with('manage-orchestra')->once()->andReturn(false);
 
-        $stub = new SettingMenuHandler($app);
+        $stub = new SettingMenuHandler($this->app);
+
         $this->assertNull($stub->handle());
     }
 }
