@@ -12,8 +12,7 @@ use Orchestra\Foundation\Testing\Installation;
 
 class TimezoneTest extends TestCase
 {
-    use Installation,
-        Timezone;
+    use Installation, Timezone;
 
     /**
      * Get application timezone.
@@ -35,13 +34,9 @@ class TimezoneTest extends TestCase
     {
         $this->assertGuest();
 
-        $this->config = $this->app['config'];
-        $this->auth = $this->app['auth'];
-        $this->memory = $this->app->make('orchestra.memory')->driver('user');
-
         $stub = $this->toLocalTime('2012-01-01 00:00:00');
 
-        $this->assertEquals(new CarbonTimeZone('UTC'), $stub->getTimezone());
+        $this->assertEquals($this->resolveTimezoneInstance('UTC'), $stub->getTimezone());
     }
 
     /**
@@ -55,13 +50,9 @@ class TimezoneTest extends TestCase
     {
         $this->assertGuest();
 
-        $this->config = $this->app['config'];
-        $this->auth = $this->app['auth'];
-        $this->memory = $this->app->make('orchestra.memory')->driver('user');
-
         $stub = $this->toLocalTime(new Carbon('2012-01-01 00:00:00'));
 
-        $this->assertEquals(new CarbonTimeZone('UTC'), $stub->getTimezone());
+        $this->assertEquals($this->resolveTimezoneInstance('UTC'), $stub->getTimezone());
     }
 
     /**
@@ -77,16 +68,14 @@ class TimezoneTest extends TestCase
 
         $this->assertAuthenticated();
 
-        $this->config = $this->app['config'];
-        $this->auth = $this->app['auth'];
-        $this->memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $this->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
 
-        $this->memory->shouldReceive('get')->once()
+        $memory->shouldReceive('get')->once()
             ->with("timezone.{$user->id}", 'UTC')->andReturn('Asia/Kuala_Lumpur');
 
         $stub = $this->toLocalTime(new Carbon('2012-01-01 00:00:00'));
 
-        $this->assertEquals(new CarbonTimeZone('Asia/Kuala_Lumpur'), $stub->timezone);
+        $this->assertEquals($this->resolveTimezoneInstance('Asia/Kuala_Lumpur'), $stub->timezone);
         $this->assertEquals('2012-01-01 08:00:00', $stub->toDateTimeString());
     }
 
@@ -104,7 +93,7 @@ class TimezoneTest extends TestCase
 
         $stub = $this->fromLocalTime('2012-01-01 00:00:00');
 
-        $this->assertEquals(new CarbonTimeZone('UTC'), $stub->timezone);
+        $this->assertEquals($this->resolveTimezoneInstance('UTC'), $stub->timezone);
         $this->assertEquals('2012-01-01 00:00:00', $stub->toDateTimeString());
     }
 
@@ -118,16 +107,14 @@ class TimezoneTest extends TestCase
 
         $this->assertAuthenticated();
 
-        $this->config = $this->app['config'];
-        $this->auth = $this->app['auth'];
-        $this->memory = m::mock('\Orchestra\Contracts\Memory\Provider');
+        $this->instance('orchestra.platform.memory', $memory = m::mock('\Orchestra\Contracts\Memory\Provider'));
 
-        $this->memory->shouldReceive('get')->once()
+        $memory->shouldReceive('get')->once()
             ->with("timezone.{$user->id}", 'UTC')->andReturn('Asia/Kuala_Lumpur');
 
         $stub = $this->fromLocalTime('2012-01-01 08:00:00');
 
-        $this->assertEquals(new CarbonTimeZone('UTC'), $stub->timezone);
+        $this->assertEquals($this->resolveTimezoneInstance('UTC'), $stub->timezone);
         $this->assertEquals('2012-01-01 00:00:00', $stub->toDateTimeString());
     }
 
@@ -143,9 +130,20 @@ class TimezoneTest extends TestCase
         $this->auth = $this->app['auth'];
         $this->memory = $this->app->make('orchestra.memory')->driver('user');
 
-        $stub = $this->convertToDateTime('2012-01-01 08:00:00');
+        $stub = \carbonize('2012-01-01 08:00:00');
 
         $this->assertInstanceOf('\Carbon\Carbon', $stub);
         $this->assertEquals('2012-01-01 08:00:00', $stub->toDateTimeString());
+    }
+
+    /**
+     * Resolve timezone instance.
+     *
+     * @param  string $timezone
+     * @return object
+     */
+    protected function resolveTimezoneInstance(string $timezone)
+    {
+        return new CarbonTimeZone($timezone);
     }
 }

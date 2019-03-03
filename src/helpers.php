@@ -1,5 +1,8 @@
 <?php
 
+use Carbon\CarbonInterface;
+use Illuminate\Support\Facades\Date;
+
 if (! \function_exists('assetic')) {
     /**
      * Get the path to a versioned Elixir file or fallback to original file.
@@ -16,6 +19,35 @@ if (! \function_exists('assetic')) {
         } catch (Exception $e) {
             return \asset($file);
         }
+    }
+}
+
+if (! \function_exists('carbonize')) {
+    /**
+     * Parse string to Carbon instance.
+     *
+     * @param string|null $datetime
+     * @param string      $timezone
+     *
+     * @return \Illuminate\Support\Carbon|null
+     */
+    function carbonize($datetime, string $timezone = 'UTC')
+    {
+        try {
+            if ($datetime instanceof CarbonInterface) {
+                return \use_timezone($datetime, $timezone);
+            } elseif ($datetime instanceof DateTimeInterface) {
+                return Date::instance($datetime)->timezone($timezone);
+            } elseif (\is_array($datetime) && isset($datetime['date'])) {
+                return Date::parse($datetime['date'], $datetime['timezone'] ?? 'UTC');
+            } elseif (\is_string($datetime)) {
+                return Date::parse($datetime, $timezone);
+            }
+        } catch (Exception $e) {
+            //
+        }
+
+        return null;
     }
 }
 
@@ -76,11 +108,11 @@ if (! \function_exists('orchestra')) {
      */
     function orchestra(?string $service = null)
     {
-        if (! \is_null($service)) {
-            return \app("orchestra.platform.{$service}");
+        if (\is_null($service)) {
+            return \app('orchestra.app');
         }
 
-        return \app('orchestra.app');
+        return \app("orchestra.platform.{$service}");
     }
 }
 
@@ -96,5 +128,24 @@ if (! \function_exists('set_meta')) {
     function set_meta(string $key, $value = null)
     {
         return \app('orchestra.meta')->set($key, $value);
+    }
+}
+
+if (! \function_exists('use_timezone')) {
+    /**
+     * Clone carbon and use different timezone.
+     *
+     * @param \Carbon\CarbonInterface  $carbon
+     * @param string  $timezone
+     *
+     * @return \Carbon\CarbonInterface
+     */
+    function use_timezone(CarbonInterface $carbon, string $timezone): CarbonInterface
+    {
+        if ($carbon->timezone === $timezone) {
+            return $carbon->copy();
+        }
+
+        return $carbon->copy()->timezone($timezone);
     }
 }

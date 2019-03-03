@@ -3,7 +3,8 @@
 namespace Orchestra\Foundation\Concerns;
 
 use DateTime;
-use Illuminate\Support\Carbon;
+use Carbon\CarbonInterface;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 trait Timezone
 {
@@ -34,24 +35,23 @@ trait Timezone
      *
      * @param  mixed  $datetime
      *
-     * @return \Illuminate\Support\Carbon
+     * @return \Carbon\CarbonInter
      */
-    public function toLocalTime($datetime): Carbon
+    public function toLocalTime($datetime): CarbonInterface
     {
-        $appTimeZone = $this->config->get('app.timezone', 'UTC');
+        $user = \resolve(Authenticatable::class);
 
-        $datetime = $this->convertToDateTime($datetime, $appTimeZone);
+        $datetime = \carbonize(
+            $datetime, $appTimeZone = \config('app.timezone', 'UTC')
+        );
 
-        if ($this->auth->guest()) {
+        if (\is_null($user)) {
             return $datetime;
         }
 
-        $userId = $this->auth->user()->id;
-        $userTimeZone = $this->memory->get("timezone.{$userId}", $appTimeZone);
-
-        $datetime->timezone = $userTimeZone;
-
-        return $datetime;
+        return \use_timezone(
+            $datetime, \memorize("timezone.{$user->id}", $appTimeZone)
+        );
     }
 
     /**
@@ -60,50 +60,22 @@ trait Timezone
      *
      * @param  mixed  $datetime
      *
-     * @return \Illuminate\Support\Carbon
+     * @return \Carbon\CarbonInterface
      */
-    public function fromLocalTime($datetime): Carbon
+    public function fromLocalTime($datetime): CarbonInterface
     {
-        $appTimeZone = $this->config->get('app.timezone', 'UTC');
+        $user = \resolve(Authenticatable::class);
 
-        if ($this->auth->guest()) {
-            return $this->convertToDateTime($datetime, $appTimeZone);
+        $appTimeZone = \config('app.timezone', 'UTC');
+
+        if (\is_null($user)) {
+            return \carbonize($datetime, $appTimeZone);
         }
 
-        $userId = $this->auth->user()->id;
-        $userTimeZone = $this->memory->get("timezone.{$userId}", $appTimeZone);
-        $datetime = $this->convertToDateTime($datetime, $userTimeZone);
+        $datetime = \carbonize(
+            $datetime, \memorize("timezone.{$user->id}", $appTimeZone)
+        );
 
-        $datetime->timezone = $appTimeZone;
-
-        return $datetime;
-    }
-
-    /**
-     * Convert datetime string to DateTime.
-     *
-     * @param  mixed   $datetime
-     * @param  string  $timezone
-     *
-     * @return \Illuminate\Support\Carbon
-     */
-    public function convertToDateTime($datetime, $timezone = null): Carbon
-    {
-        // Convert instanceof DateTime to Carbon
-        if ($datetime instanceof DateTime) {
-            $datetime = Carbon::instance($datetime);
-        }
-
-        if (! ($datetime instanceof Carbon)) {
-            if (\is_null($timezone)) {
-                return new Carbon($datetime);
-            }
-
-            return new Carbon($datetime, $timezone);
-        }
-
-        ! \is_null($timezone) && $datetime->timezone = $timezone;
-
-        return $datetime;
+        return \use_timezone($datetime, $appTimeZone);
     }
 }
