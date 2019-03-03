@@ -37,9 +37,9 @@
     </filter>
 
     <php>
-        <server name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
-        <server name="DB_CONNECTION" value="testing"/>
-        <server name="MEMORY_DRIVER" value="runtime.default"/>
-        <server name="BCRYPT_ROUNDS" value="4"/>
+        <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
+        <env name="DB_CONNECTION" value="testing"/>
+        <env name="MEMORY_DRIVER" value="runtime.default"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
     </php>
 </phpunit>

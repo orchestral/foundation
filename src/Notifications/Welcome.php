@@ -54,7 +54,7 @@ class Welcome extends Notification
                 ->line(trans('orchestra/foundation::email.register.message.intro'))
                 ->line(trans('orchestra/foundation::email.register.message.email', compact('email')));
 
-        if (! is_null($this->password)) {
+        if (! \is_null($this->password)) {
             $message->line(trans('orchestra/foundation::email.register.message.password', compact('password')));
         }
 

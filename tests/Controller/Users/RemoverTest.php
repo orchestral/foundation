@@ -46,12 +46,11 @@ class RemoverTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     * @expectedException \Laravel\BrowserKitTesting\HttpException
-     */
+    /** @test */
     public function it_cant_delete_own_account()
     {
+        $this->expectException('Laravel\BrowserKitTesting\HttpException');
+
         $this->actingAs($this->adminUser)
             ->makeRequest('POST', "admin/users/{$this->adminUser->id}", ['_method' => 'DELETE'])
             ->dontSeeText('User has been deleted')

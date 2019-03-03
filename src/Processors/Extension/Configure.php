@@ -46,7 +46,7 @@ class Configure extends Processor implements Command
         $activeConfig = (array) $memory->get("extensions.active.{$extension->get('name')}.config", []);
         $baseConfig = (array) $memory->get("extension_{$extension->get('name')}", []);
 
-        $eloquent = new Fluent(array_merge($activeConfig, $baseConfig));
+        $eloquent = new Fluent(\array_merge($activeConfig, $baseConfig));
 
         // Add basic form, allow extension to add custom configuration field
         // to this form using events.
@@ -54,7 +54,7 @@ class Configure extends Processor implements Command
 
         Event::dispatch("orchestra.form: extension.{$extension->get('name')}", [$eloquent, $form]);
 
-        return $listener->showConfigurationChanger(compact('eloquent', 'form', 'extension'));
+        return $listener->showConfigurationChanger(\compact('eloquent', 'form', 'extension'));
     }
 
     /**
@@ -83,7 +83,7 @@ class Configure extends Processor implements Command
 
         $memory = Foundation::memory();
         $config = (array) $memory->get("extension.active.{$extension->get('name')}.config", []);
-        $input = new Fluent(array_merge($config, $input));
+        $input = new Fluent(\array_merge($config, $input));
 
         Event::dispatch("orchestra.saving: extension.{$extension->get('name')}", [&$input]);
 
