@@ -26,12 +26,12 @@ if (! \function_exists('carbonize')) {
     /**
      * Parse string to Carbon instance.
      *
-     * @param string|null $datetime
-     * @param string      $timezone
+     * @param mixed  $datetime
+     * @param string  $timezone
      *
-     * @return \Illuminate\Support\Carbon|null
+     * @return \Carbon\CarbonInterface|null
      */
-    function carbonize($datetime, string $timezone = 'UTC')
+    function carbonize($datetime, string $timezone = 'UTC'): ?CarbonInterface
     {
         try {
             if ($datetime instanceof CarbonInterface) {
