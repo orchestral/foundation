@@ -29,10 +29,10 @@ class LoadExpresso
      */
     protected function addBladeExtensions(Application $app)
     {
-        $blade = $app->make('view')->getEngineResolver()->resolve('blade')->getCompiler();
+        $blade = $app->make('blade.compiler');
 
         $blade->directive('decorator', function ($expression) {
-            return "<?php echo app('orchestra.decorator')->render({$expression}); ?>";
+            return "<?php echo \app('orchestra.decorator')->render({$expression}); ?>";
         });
 
         $blade->directive('placeholder', function ($expression) {
@@ -43,15 +43,15 @@ class LoadExpresso
         });
 
         $blade->directive('get_meta', function ($expression) {
-            return "<?php echo get_meta({$expression}); ?>";
+            return "<?php echo \get_meta({$expression}); ?>";
         });
 
         $blade->directive('set_meta', function ($expression) {
-            return "<?php set_meta({$expression}); ?>";
+            return "<?php \set_meta({$expression}); ?>";
         });
 
         $blade->directive('title', function ($expression) {
-            return "<?php echo app('html')->title({$expression}); ?>";
+            return "<?php echo \app('html')->title({$expression}); ?>";
         });
 
         $blade->extend(function ($view) {
