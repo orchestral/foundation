@@ -107,7 +107,7 @@ abstract class MenuHandler
      */
     public function passes(): bool
     {
-        return $this->enabled;
+        return $this->showToUser;
     }
 
     /**
