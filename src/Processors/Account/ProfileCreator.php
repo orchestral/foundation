@@ -109,12 +109,7 @@ class ProfileCreator extends User implements Command
         $this->fireEvent('creating', [$user]);
         $this->fireEvent('saving', [$user]);
 
-        $user->transaction(function () use ($user) {
-            $user->save();
-            $user->roles()->sync([
-                Config::get('orchestra/foundation::roles.member', 2),
-            ]);
-        });
+        $user->saveOrFail();
 
         $this->fireEvent('created', [$user]);
         $this->fireEvent('saved', [$user]);
