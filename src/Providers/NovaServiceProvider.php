@@ -2,7 +2,7 @@
 
 namespace Orchestra\Foundation\Providers;
 
-class RouteServiceProvider extends MiddlewareServiceProvider
+class NovaServiceProvider extends MiddlewareServiceProvider
 {
     /**
      * Boot routes for Orchestra Platform.
@@ -25,8 +25,6 @@ class RouteServiceProvider extends MiddlewareServiceProvider
      */
     protected function loadRoutes(): void
     {
-        $path = \realpath(__DIR__.'/../../');
-
-        require "{$path}/routes/web.php";
+        //
     }
 }
