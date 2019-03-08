@@ -71,7 +71,7 @@ class Application extends BaseApplication implements ApplicationContract
      */
     public function configPath($path = '')
     {
-        return $this->resourcesPath('config'.($path ? DIRECTORY_SEPARATOR.$path : ''));
+        return $this->basePath('config'.($path ? DIRECTORY_SEPARATOR.$path : ''));
     }
 
     /**
@@ -81,7 +81,7 @@ class Application extends BaseApplication implements ApplicationContract
      */
     public function databasePath($path = '')
     {
-        return ($this->databasePath ?: $this->resourcesPath('database')).($path ? DIRECTORY_SEPARATOR.$path : '');
+        return ($this->databasePath ?: $this->basePath('database')).($path ? DIRECTORY_SEPARATOR.$path : '');
     }
 
     /**
