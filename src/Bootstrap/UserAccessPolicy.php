@@ -50,6 +50,6 @@ class UserAccessPolicy
 
         // Orchestra Platform should be able to determine admin and member roles
         // dynamically.
-        Role::setDefaultRoles($app->make('config')->get('orchestra/foundation::roles'));
+        Role::setDefaultRoles(\config('orchestra/foundation::roles'));
     }
 }

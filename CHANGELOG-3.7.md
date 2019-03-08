@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+### 3.7.2
+
+Released: 2019-03-08
+
+### Changes
+
+* Allows developers to remove Orchestra Platform admin routes if they want to use it with other administation panels.
+
 ### 3.7.1
 
 Released: 2019-03-03

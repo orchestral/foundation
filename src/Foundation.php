@@ -294,7 +294,7 @@ class Foundation extends RouteManager implements FoundationContract
         ];
 
         $menu->add('home')
-            ->title($this->app->make('translator')->get('orchestra/foundation::title.home'))
+            ->title(\trans('orchestra/foundation::title.home'))
             ->link($this->handles('orchestra::/'))
             ->icon('home');
 

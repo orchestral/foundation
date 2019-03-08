@@ -15,7 +15,7 @@ class LoadExpressoTest extends TestCase
         $compiler = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
 
         $this->assertEquals(
-            '<?php echo app(\'orchestra.decorator\')->render("foo"); ?>', $compiler->compileString('@decorator("foo")')
+            '<?php echo \app(\'orchestra.decorator\')->render("foo"); ?>', $compiler->compileString('@decorator("foo")')
         );
     }
 

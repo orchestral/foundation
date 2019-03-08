@@ -15,6 +15,14 @@ trait WithInstallation
      */
     protected function makeInstaller(): InstallationContract
     {
+        $artisan = function ($command) {
+            \tap($this->artisan($command), function ($console) {
+                if ($console instanceof PendingCommand) {
+                    $console->run();
+                }
+            });
+        };
+
         if (! $this->app->bound(InstallationContract::class)) {
             $this->app->register(InstallerServiceProvider::class);
         }
@@ -24,12 +32,8 @@ trait WithInstallation
         $installer->bootInstallerFilesForTesting();
         $installer->migrate();
 
-        $this->beforeApplicationDestroyed(function () {
-            \tap($this->artisan('migrate:rollback'), function ($console) {
-                if ($console instanceof PendingCommand) {
-                    $console->run();
-                }
-            });
+        $this->beforeApplicationDestroyed(function () use ($artisan) {
+            $artisan('migrate:rollback');
         });
 
         return $installer;
@@ -66,11 +70,11 @@ trait WithInstallation
             'email' => $config['email'] ?? 'hello@orchestraplatform.com',
         ]);
 
-        $this->app['orchestra.installed'] = true;
+        $this->app->instance('orchestra.installed', true);
 
         $this->beforeApplicationDestroyed(function () use ($artisan) {
             $artisan('migrate:rollback');
-            $this->app['orchestra.installed'] = false;
+            $this->app->instance('orchestra.installed', false);
         });
 
         return $this->adminUser;

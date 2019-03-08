@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Laravie\Authen\AuthenUser;
 use Orchestra\Model\User as Authenticatable;
 use Orchestra\Contracts\Notification\Recipient;
+use Orchestra\Foundation\Observers\UserObserver;
 use Illuminate\Notifications\RoutesNotifications;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Orchestra\Foundation\Notifications\Welcome as WelcomeNotification;
@@ -16,6 +17,13 @@ use Orchestra\Foundation\Notifications\ResetPassword as ResetPasswordNotificatio
 class User extends Authenticatable implements AuthorizableContract, CanResetPasswordContract, Recipient
 {
     use AuthenUser, Authorizable, RoutesNotifications;
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::observe(\resolve(UserObserver::class));
+    }
 
     /**
      * Get the e-mail address where password reset links are sent.
