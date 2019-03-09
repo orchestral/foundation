@@ -34,7 +34,7 @@
 @endforeach
 
 <div class="row">
-  <div{!! HTML::attributable(array_get($meta, 'button', []), ['class' => 'col-md-9 col-md-offset-3']) !!}>
+  <div{!! HTML::attributable(($meta['button'] ?? []), ['class' => 'col-md-9 col-md-offset-3']) !!}>
     <button type="submit" class="btn btn-primary">
       {!! $submit !!}
     </button>

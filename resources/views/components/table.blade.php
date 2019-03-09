@@ -30,9 +30,9 @@
   <div class="col-sm-5 col-xs-12 sm-text">
   @if($pagination->total() > 0)
     @if($pagination->firstItem() !== $pagination->lastItem())
-    {{ trans('orchestra/foundation::label.paginations.multiple', array_only($pagination->toArray(), ['from', 'to', 'total'])) }}
+    {{ trans('orchestra/foundation::label.paginations.multiple', Arr::only($pagination->toArray(), ['from', 'to', 'total'])) }}
     @else
-    {{ trans('orchestra/foundation::label.paginations.single', array_only($pagination->toArray(), ['from', 'total'])) }}
+    {{ trans('orchestra/foundation::label.paginations.single', Arr::only($pagination->toArray(), ['from', 'total'])) }}
     @endif
   @endif
   </div>
