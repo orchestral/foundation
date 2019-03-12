@@ -23,7 +23,6 @@ class Kernel extends ConsoleKernel
         \Orchestra\Foundation\Bootstrap\LoadFoundation::class,
         \Orchestra\Foundation\Bootstrap\UserAccessPolicy::class,
         \Orchestra\Extension\Bootstrap\LoadExtension::class,
-        \Orchestra\Foundation\Bootstrap\LoadUserMetaData::class,
         \Orchestra\View\Bootstrap\LoadCurrentTheme::class,
         \Orchestra\Foundation\Bootstrap\LoadExpresso::class,
     ];
