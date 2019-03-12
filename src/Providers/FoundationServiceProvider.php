@@ -139,7 +139,7 @@ class FoundationServiceProvider extends ServiceProvider
 
         $path = \realpath(__DIR__.'/../../');
 
-        $this->addConfigComponent('orchestra/foundation', 'orchestra/foundation', "{$path}/resources/config");
+        $this->addConfigComponent('orchestra/foundation', 'orchestra/foundation', "{$path}/config");
         $this->addLanguageComponent('orchestra/foundation', 'orchestra/foundation', "{$path}/resources/lang");
         $this->addViewComponent('orchestra/foundation', 'orchestra/foundation', "{$path}/resources/views");
     }
