@@ -41,7 +41,7 @@
         "orchestra/memory": "~3.8.0",
         "orchestra/messages": "~3.8.0",
         "orchestra/model": "~3.8.0",
-        "orchestra/notifier": "~3.8.0",
+        "orchestra/notifier": "~3.8.1",
         "orchestra/support": "~3.8.0",
         "orchestra/translation": "~3.8.0",
         "orchestra/view": "~3.8.0",
