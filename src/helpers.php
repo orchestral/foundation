@@ -27,15 +27,15 @@ if (! \function_exists('carbonize')) {
      * Parse string to Carbon instance.
      *
      * @param mixed  $datetime
-     * @param string  $timezone
+     * @param string|null  $timezone
      *
      * @return \Carbon\CarbonInterface|null
      */
-    function carbonize($datetime, string $timezone = 'UTC'): ?CarbonInterface
+    function carbonize($datetime, ?string $timezone = 'UTC'): ?CarbonInterface
     {
         try {
             if ($datetime instanceof CarbonInterface) {
-                return \use_timezone($datetime, $timezone);
+                return \use_timezone($datetime, $timezone ?? $datetime->timezone);
             } elseif ($datetime instanceof DateTimeInterface) {
                 return Carbon::instance($datetime)->timezone($timezone);
             } elseif (\is_array($datetime) && isset($datetime['date'])) {
