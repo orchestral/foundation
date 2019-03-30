@@ -1,7 +1,7 @@
 <?php
 
 use Carbon\CarbonInterface;
-use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Carbon;
 
 if (! \function_exists('assetic')) {
     /**
@@ -27,21 +27,21 @@ if (! \function_exists('carbonize')) {
      * Parse string to Carbon instance.
      *
      * @param mixed  $datetime
-     * @param string  $timezone
+     * @param string|null  $timezone
      *
      * @return \Carbon\CarbonInterface|null
      */
-    function carbonize($datetime, string $timezone = 'UTC'): ?CarbonInterface
+    function carbonize($datetime, ?string $timezone = 'UTC'): ?CarbonInterface
     {
         try {
             if ($datetime instanceof CarbonInterface) {
-                return \use_timezone($datetime, $timezone);
+                return \use_timezone($datetime, $timezone ?? $datetime->timezone);
             } elseif ($datetime instanceof DateTimeInterface) {
-                return Date::instance($datetime)->timezone($timezone);
+                return Carbon::instance($datetime)->timezone($timezone);
             } elseif (\is_array($datetime) && isset($datetime['date'])) {
-                return Date::parse($datetime['date'], $datetime['timezone'] ?? 'UTC');
+                return Carbon::parse($datetime['date'], $datetime['timezone'] ?? 'UTC');
             } elseif (\is_string($datetime)) {
-                return Date::parse($datetime, $timezone);
+                return Carbon::parse($datetime, $timezone);
             }
         } catch (Exception $e) {
             //

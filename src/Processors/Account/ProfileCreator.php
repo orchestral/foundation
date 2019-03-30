@@ -7,6 +7,7 @@ use Orchestra\Support\Str;
 use Orchestra\Model\User as Eloquent;
 use Illuminate\Support\Facades\Config;
 use Orchestra\Support\Facades\Foundation;
+use Orchestra\Foundation\Tools\GenerateRandomPassword;
 use Orchestra\Contracts\Foundation\Command\Account\ProfileCreator as Command;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator as Listener;
 
@@ -43,13 +44,11 @@ class ProfileCreator extends User implements Command
      */
     public function store(Listener $listener, array $input)
     {
-        $random = Str::random(5);
+        $temporaryPassword = null;
         $password = $input['password'] ?? null;
 
         if (empty($password)) {
-            $password = $random;
-        } else {
-            $random = null;
+            $password = $temporaryPassword = \resolve(GenerateRandomPassword::class)();
         }
 
         $validation = $this->validator->on('register')->with($input);
@@ -68,7 +67,7 @@ class ProfileCreator extends User implements Command
             return $listener->createProfileFailed(['error' => $e->getMessage()]);
         }
 
-        return $this->notifyCreatedUser($listener, $user, $random);
+        return $this->notifyCreatedUser($listener, $user, $temporaryPassword);
     }
 
     /**
@@ -76,14 +75,14 @@ class ProfileCreator extends User implements Command
      *
      * @param  \Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator  $listener
      * @param  \Orchestra\Model\User  $user
-     * @param  string  $password
+     * @param  string|null  $temporaryPassword
      *
      * @return mixed
      */
-    protected function notifyCreatedUser(Listener $listener, Eloquent $user, $password)
+    protected function notifyCreatedUser(Listener $listener, Eloquent $user, ?string $temporaryPassword)
     {
         try {
-            $user->sendWelcomeNotification($password);
+            $user->sendWelcomeNotification($temporaryPassword);
         } catch (Exception $e) {
             return $listener->profileCreatedWithoutNotification();
         }

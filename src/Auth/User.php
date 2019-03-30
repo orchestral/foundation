@@ -18,7 +18,12 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
 {
     use AuthenUser, Authorizable, RoutesNotifications;
 
-    public static function boot()
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
     {
         parent::boot();
 
