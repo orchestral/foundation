@@ -10,6 +10,7 @@ class UserObserver
      * On created observer.
      *
      * @param  \Orchestra\Foundation\Auth\User  $user
+     *
      * @return void
      */
     public function created(User $user): void

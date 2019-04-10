@@ -4,7 +4,6 @@ namespace Orchestra\Tests\Feature\Http\Handlers;
 
 use Mockery as m;
 use Orchestra\Testing\TestCase;
-use Illuminate\Container\Container;
 use Orchestra\Foundation\Http\Handlers\UserMenuHandler;
 
 class UserMenuHandlerTest extends TestCase
