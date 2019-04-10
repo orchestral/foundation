@@ -55,22 +55,25 @@ class ResetPassword extends Notification
      */
     public function toMail($notifiable)
     {
-        $email = urlencode($notifiable->getEmailForPasswordReset());
-        $expired = config("auth.passwords.{$this->provider}.expire", 60);
-        $url = config('orchestra/foundation::routes.reset', 'orchestra::forgot/reset');
-        $title = trans('orchestra/foundation::email.forgot.title');
+        $email = $notifiable->getEmailForPasswordReset();
+        $expired = \config("auth.passwords.{$this->provider}.expire", 60);
+        $url = \config('orchestra/foundation::routes.reset', 'orchestra::forgot/reset');
+        $title = \trans('orchestra/foundation::email.forgot.title');
 
         $message = new MailMessage();
 
         $message->title($title)
                     ->level('warning')
-                    ->line(trans('orchestra/foundation::email.forgot.message.intro'))
-                    ->action($title, handles("{$url}/{$this->token}?email={$email}"))
-                    ->line(trans('orchestra/foundation::email.forgot.message.expired_in', compact('expired')))
-                    ->line(trans('orchestra/foundation::email.forgot.message.outro'));
+                    ->line(\trans('orchestra/foundation::email.forgot.message.intro'))
+                    ->action($title, \handles("{$url}/{$this->token}?email=".\urlencode($email)))
+                    ->line(\trans('orchestra/foundation::email.forgot.message.expired_in', \compact('expired')))
+                    ->line(\trans('orchestra/foundation::email.forgot.message.outro'));
 
-        if (! is_null($view = config("auth.passwords.{$this->provider}.email"))) {
-            $message->view($view);
+        if (! \is_null($view = \config("auth.passwords.{$this->provider}.email"))) {
+            $message->view($view, [
+                'email' => $email,
+                'fullname' => $notifiable->getRecipientName(),
+            ]);
         }
 
         return $message;
