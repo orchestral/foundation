@@ -10,7 +10,7 @@ use Orchestra\Foundation\Http\Middleware\Authenticate;
 use Orchestra\Foundation\Http\Middleware\CanBeInstalled;
 use Orchestra\Foundation\Http\Middleware\Reauthenticate;
 use Orchestra\Foundation\Http\Middleware\CanRegisterUser;
-use Orchestra\Support\Providers\Traits\MiddlewareProvider;
+use Orchestra\Support\Providers\Concerns\MiddlewareProvider;
 use Orchestra\Foundation\Http\Middleware\RedirectIfInstalled;
 use Orchestra\Foundation\Http\Middleware\RedirectIfAuthenticated;
 use Orchestra\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
