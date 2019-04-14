@@ -28,7 +28,7 @@
     },
     "require": {
         "php": ">=7.1",
-        "laravel/framework": "~5.8.8",
+        "laravel/framework": "~5.8.9",
         "laravie/authen": "^2.1",
         "laravie/html": "~5.8.0",
         "mpociot/reauthenticate": "^1.3",
@@ -41,8 +41,8 @@
         "orchestra/memory": "~3.8.0",
         "orchestra/messages": "~3.8.0",
         "orchestra/model": "~3.8.0",
-        "orchestra/notifier": "~3.8.1",
-        "orchestra/support": "~3.8.0",
+        "orchestra/notifier": "~3.8.2",
+        "orchestra/support": "~3.8.1",
         "orchestra/translation": "~3.8.0",
         "orchestra/view": "~3.8.0",
         "orchestra/widget": "~3.8.0"
