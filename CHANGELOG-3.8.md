@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+## 3.8.1
+
+Released: 2019-04-15
+
+### Changes
+
+* Improves notification emails for reset password and welcome user.
+
 ## 3.8.0
 
 Released: 2019-03-30
