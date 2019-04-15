@@ -10,6 +10,7 @@ class GenerateRandomPassword
      * Generate random password.
      *
      * @param  int $length
+     *
      * @return string
      */
     public function __invoke(int $length = 6): string
