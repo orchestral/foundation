@@ -37,7 +37,7 @@ class FoundationServiceProvider extends ServiceProvider
         'orchestra.extension.finder' => ['Orchestra\Extension\Finder', 'Orchestra\Contracts\Extension\Finder'],
         'orchestra.extension' => ['Orchestra\Extension\Factory', 'Orchestra\Contracts\Extension\Factory'],
         'orchestra.form' => ['Orchestra\Html\Form\Factory', 'Orchestra\Contracts\Html\Form\Factory'],
-        'orchestra.mail' => ['Orchestra\Notifier\Mailer'],
+        'orchestra.postal' => ['Orchestra\Notifier\Postal'],
         'orchestra.memory' => ['Orchestra\Memory\MemoryManager'],
         'orchestra.messages' => ['Orchestra\Messages\MessageBag', 'Orchestra\Contracts\Messages\MessageBag'],
         'orchestra.notifier' => ['Orchestra\Notifier\NotifierManager'],

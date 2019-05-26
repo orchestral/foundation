@@ -8,7 +8,6 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Log\LogServiceProvider;
 use Illuminate\Foundation\PackageManifest;
 use Illuminate\Events\EventServiceProvider;
-use Illuminate\Foundation\ProviderRepository;
 use Orchestra\Routing\RoutingServiceProvider;
 use Illuminate\Foundation\Application as BaseApplication;
 use Orchestra\Contracts\Foundation\Application as ApplicationContract;

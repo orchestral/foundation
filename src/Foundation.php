@@ -327,7 +327,7 @@ class Foundation extends RouteManager implements FoundationContract
     protected function registerComponents(MemoryProvider $memory): void
     {
         $this->app->make('orchestra.notifier')->setDefaultDriver('orchestra');
-        $this->app->make('orchestra.mail')->attach($memory);
+        $this->app->make('orchestra.postal')->attach($memory);
     }
 
     /**
