@@ -36,7 +36,7 @@
         "orchestra/auth": "~3.8.0",
         "orchestra/contracts": "~3.8.0",
         "orchestra/extension": "~3.8.0",
-        "orchestra/html": "~3.8.0",
+        "orchestra/html": "~3.8.1",
         "orchestra/kernel": "~3.8.0",
         "orchestra/memory": "~3.8.0",
         "orchestra/messages": "~3.8.0",
