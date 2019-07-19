@@ -21,7 +21,7 @@ class RefreshRouteCache extends Job
             return;
         }
 
-        $app->terminating(function () use ($kernel) {
+        $app->terminating(static function () use ($kernel) {
             $kernel->call('route:cache');
         });
     }

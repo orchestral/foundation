@@ -31,30 +31,30 @@ class LoadExpresso
     {
         $blade = $app->make('blade.compiler');
 
-        $blade->directive('decorator', function ($expression) {
+        $blade->directive('decorator', static function ($expression) {
             return "<?php echo \app('orchestra.decorator')->render({$expression}); ?>";
         });
 
-        $blade->directive('placeholder', function ($expression) {
+        $blade->directive('placeholder', static function ($expression) {
             $expression = \preg_replace('/\(\s*(.*)\)/', '$1', $expression);
 
             return "<?php \$__ps = app('orchestra.widget')->make('placeholder.'.{$expression}); "
                         ."foreach (\$__ps as \$__p) { echo value(\$__p->value ?: ''); } ?>";
         });
 
-        $blade->directive('get_meta', function ($expression) {
+        $blade->directive('get_meta', static function ($expression) {
             return "<?php echo \get_meta({$expression}); ?>";
         });
 
-        $blade->directive('set_meta', function ($expression) {
+        $blade->directive('set_meta', static function ($expression) {
             return "<?php \set_meta({$expression}); ?>";
         });
 
-        $blade->directive('title', function ($expression) {
+        $blade->directive('title', static function ($expression) {
             return "<?php echo \app('html')->title({$expression}); ?>";
         });
 
-        $blade->extend(function ($view) {
+        $blade->extend(static function ($view) {
             $view = \preg_replace('/(\s*)(<\?\s)/', '$1<?php ', $view);
             $view = \preg_replace('/#\{\{\s*(.+?)\s*\}\}/s', '<?php $1; ?>', $view);
 
@@ -73,7 +73,7 @@ class LoadExpresso
     {
         $html = $app->make('html');
 
-        $html->macro('title', function ($title = null) use ($html) {
+        $html->macro('title', static function ($title = null) use ($html) {
             $builder = new Title($html, \memorize('site.name'), [
                 'site' => \get_meta('html::title.format.site', '{site.name} (Page {page.number})'),
                 'page' => \get_meta('html::title.format.page', '{page.title} &mdash; {site.name}'),

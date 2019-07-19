@@ -24,7 +24,7 @@ class CommandServiceProvider extends ServiceProvider
      */
     protected function registerAssembleCommand()
     {
-        $this->app->singleton('orchestra.commands.assemble', function (Application $app) {
+        $this->app->singleton('orchestra.commands.assemble', static function (Application $app) {
             $foundation = $app->make('orchestra.app');
 
             return new AssembleCommand($foundation, $foundation->memory());

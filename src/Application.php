@@ -129,7 +129,7 @@ class Application extends BaseApplication implements ApplicationContract
     public function registerConfiguredProviders()
     {
         $providers = Collection::make($this->config['app.providers'])
-                        ->partition(function ($provider) {
+                        ->partition(static function ($provider) {
                             return Str::startsWith($provider, ['Illuminate\\', 'Orchestra\\']);
                         });
 

@@ -78,7 +78,7 @@ class User extends Presenter
                 ->label('')
                 ->escape(false)
                 ->headers(['class' => 'th-action'])
-                ->attributes(function () {
+                ->attributes(static function () {
                     return ['class' => 'th-action'];
                 })
                 ->value($this->getActionsColumn());
@@ -148,12 +148,10 @@ class User extends Presenter
                 $fieldset->control('select', 'roles[]')
                     ->label(trans('orchestra/foundation::label.users.roles'))
                     ->attributes(['multiple' => true])
-                    ->options(function () {
-                        $roles = app('orchestra.role');
-
-                        return $roles->pluck('name', 'id');
+                    ->options(static function () {
+                        return \app('orchestra.role')->pluck('name', 'id');
                     })
-                    ->value(function ($user) {
+                    ->value(static function ($user) {
                         // get all the user roles from objects
                         return $user->roles()->get()->pluck('id')->all();
                     });

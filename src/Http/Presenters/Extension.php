@@ -45,7 +45,7 @@ class Extension extends Presenter
             $configurable = data_get($model, 'configurable', true);
 
             if (! is_null($handles) && $configurable !== false) {
-                $form->fieldset(function (Fieldset $fieldset) use ($handles) {
+                $form->fieldset(static function (Fieldset $fieldset) use ($handles) {
                     // We should only cater for custom URL handles for a route.
                     $fieldset->control('input:text', 'handles')
                         ->label(trans('orchestra/foundation::label.extensions.handles'))

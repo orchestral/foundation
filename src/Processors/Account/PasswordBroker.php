@@ -67,7 +67,7 @@ class PasswordBroker extends Processor implements Command
      */
     public function update(PasswordReset $listener, array $input)
     {
-        $response = $this->password->reset($input, function (Eloquent $user, $password) {
+        $response = $this->password->reset($input, static function (Eloquent $user, $password) {
             // Save the new password and login the user.
             $user->setAttribute('password', $password);
             $user->save();

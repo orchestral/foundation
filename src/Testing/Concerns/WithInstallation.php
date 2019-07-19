@@ -16,7 +16,7 @@ trait WithInstallation
     protected function makeInstaller(): InstallationContract
     {
         $artisan = function ($command) {
-            \tap($this->artisan($command), function ($console) {
+            \tap($this->artisan($command), static function ($console) {
                 if ($console instanceof PendingCommand) {
                     $console->run();
                 }
@@ -32,7 +32,7 @@ trait WithInstallation
         $installer->bootInstallerFilesForTesting();
         $installer->migrate();
 
-        $this->beforeApplicationDestroyed(function () use ($artisan) {
+        $this->beforeApplicationDestroyed(static function () use ($artisan) {
             $artisan('migrate:rollback');
         });
 
@@ -50,7 +50,7 @@ trait WithInstallation
     protected function runInstallation(?InstallationContract $installer = null, array $config = [])
     {
         $artisan = function ($command) {
-            \tap($this->artisan($command), function ($console) {
+            \tap($this->artisan($command), static function ($console) {
                 if ($console instanceof PendingCommand) {
                     $console->run();
                 }

@@ -16,7 +16,7 @@ class ArtisanServiceProvider extends ServiceProvider
      */
     protected function registerClearCompiledCommand()
     {
-        $this->app->singleton('command.clear-compiled', function () {
+        $this->app->singleton('command.clear-compiled', static function () {
             return new ClearCompiledCommand();
         });
     }
@@ -28,7 +28,7 @@ class ArtisanServiceProvider extends ServiceProvider
      */
     protected function registerConfigCacheCommand()
     {
-        $this->app->singleton('command.config.cache', function (Application $app) {
+        $this->app->singleton('command.config.cache', static function (Application $app) {
             return new ConfigCacheCommand($app->make('files'));
         });
     }
