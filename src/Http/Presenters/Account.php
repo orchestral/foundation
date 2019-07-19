@@ -32,7 +32,7 @@ class Account extends Presenter
             $form->setup($this, $url, $model);
             $form->hidden('id');
 
-            $form->fieldset(function (Fieldset $fieldset) {
+            $form->fieldset(static function (Fieldset $fieldset) {
                 $fieldset->control('input:text', 'email')
                     ->label(trans('orchestra/foundation::label.users.email'));
 

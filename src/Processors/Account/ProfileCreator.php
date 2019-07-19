@@ -23,7 +23,7 @@ class ProfileCreator extends User implements Command
         $eloquent = Foundation::make('orchestra.user');
         $form = $this->presenter->profile($eloquent, 'orchestra::register');
 
-        $form->extend(function ($form) {
+        $form->extend(static function ($form) {
             $form->submit = 'orchestra/foundation::title.register';
         });
 

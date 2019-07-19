@@ -31,9 +31,9 @@ class ClearCompiledCommand extends Command
         Collection::make([
             $this->laravel->getCachedServicesPath(),
             $this->laravel->getCachedExtensionServicesPath(),
-        ])->filter(function ($file) {
+        ])->filter(static function ($file) {
             return \file_exists($file);
-        })->each(function ($file) {
+        })->each(static function ($file) {
             @\unlink($file);
         });
     }

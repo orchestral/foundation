@@ -128,7 +128,7 @@ class Setting extends Validator
      */
     protected function addRequiredForSecretField(ValidatorResolver $resolver, $field, $hidden)
     {
-        $resolver->sometimes($field, 'required', function ($input) use ($hidden) {
+        $resolver->sometimes($field, 'required', static function ($input) use ($hidden) {
             return $input->$hidden == 'yes';
         });
     }
