@@ -1,9 +1,9 @@
 module.exports = {
   asset: {
-    css: 'resources/public/css',
-    font: 'resources/public/fonts',
-    img: 'resources/public/img',
-    js: 'resources/public/js'
+    css: 'public/css',
+    font: 'public/fonts',
+    img: 'public/img',
+    js: 'public/js'
   },
   build: {
     css: 'resources/assets/css',
