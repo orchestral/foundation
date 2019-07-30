@@ -31,7 +31,6 @@
         "laravel/framework": "dev-master",
         "laravie/authen": "^2.4",
         "laravie/html": "^6.0",
-        "mpociot/reauthenticate": "^1.3",
         "orchestra/asset": "^4.0",
         "orchestra/auth": "~4.0.0",
         "orchestra/contracts": "~4.0.0",
