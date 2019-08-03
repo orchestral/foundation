@@ -53,8 +53,8 @@ class DashboardController extends AdminController implements Listener
      */
     public function showDashboard(array $data)
     {
-        set_meta('title', trans('orchestra/foundation::title.home'));
+        \set_meta('title', \trans('orchestra/foundation::title.home'));
 
-        return view('orchestra/foundation::dashboard.index', $data);
+        return \view('orchestra/foundation::dashboard.index', $data);
     }
 }

@@ -71,10 +71,10 @@ class ConfigureController extends Controller implements Listener
     {
         $name = $data['extension']->name;
 
-        set_meta('title', Foundation::memory()->get("extensions.available.{$name}.name", $name));
-        set_meta('description', trans('orchestra/foundation::title.extensions.configure'));
+        \set_meta('title', Foundation::memory()->get("extensions.available.{$name}.name", $name));
+        \set_meta('description', \trans('orchestra/foundation::title.extensions.configure'));
 
-        return view('orchestra/foundation::extensions.configure', $data);
+        return \view('orchestra/foundation::extensions.configure', $data);
     }
 
     /**
@@ -87,7 +87,7 @@ class ConfigureController extends Controller implements Listener
      */
     public function updateConfigurationFailedValidation($errors, $id)
     {
-        return $this->redirectWithErrors(handles("orchestra::extensions/{$id}/configure"), $errors);
+        return $this->redirectWithErrors(\handles("orchestra::extensions/{$id}/configure"), $errors);
     }
 
     /**
@@ -101,8 +101,8 @@ class ConfigureController extends Controller implements Listener
     {
         $this->dispatch(new RefreshRouteCache());
 
-        $message = trans('orchestra/foundation::response.extensions.configure', $extension->getAttributes());
+        $message = \trans('orchestra/foundation::response.extensions.configure', $extension->getAttributes());
 
-        return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
+        return $this->redirectWithMessage(\handles('orchestra::extensions'), $message);
     }
 }

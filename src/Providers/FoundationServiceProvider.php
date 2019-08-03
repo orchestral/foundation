@@ -84,7 +84,7 @@ class FoundationServiceProvider extends ServiceProvider
     {
         $this->app['orchestra.installed'] = false;
 
-        $this->app->singleton('orchestra.app', function (Application $app) {
+        $this->app->singleton('orchestra.app', static function (Application $app) {
             return new Foundation($app, new RouteResolver($app));
         });
     }
@@ -96,7 +96,7 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function registerMetaContainer(): void
     {
-        $this->app->singleton('orchestra.meta', function () {
+        $this->app->singleton('orchestra.meta', static function () {
             return new Meta();
         });
     }

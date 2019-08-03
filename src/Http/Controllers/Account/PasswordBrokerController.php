@@ -30,9 +30,9 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      */
     public function showLinkRequestForm()
     {
-        set_meta('title', trans('orchestra/foundation::title.forgot-password'));
+        \set_meta('title', \trans('orchestra/foundation::title.forgot-password'));
 
-        return view('orchestra/foundation::forgot.index');
+        return \view('orchestra/foundation::forgot.index');
     }
 
     /**
@@ -63,15 +63,15 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      */
     public function showResetForm($token = null)
     {
-        if (is_null($token)) {
+        if (\is_null($token)) {
             return $this->showLinkRequestForm();
         }
 
         $email = Request::input('email');
 
-        set_meta('title', trans('orchestra/foundation::title.reset-password'));
+        \set_meta('title', \trans('orchestra/foundation::title.reset-password'));
 
-        return view('orchestra/foundation::forgot.reset', compact('email', 'token'));
+        return \view('orchestra/foundation::forgot.reset', \compact('email', 'token'));
     }
 
     /**
@@ -103,7 +103,7 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
         // to tell it the the user. This might not be important but a
         // good practice to make sure all form use the same e-mail
         // address validation
-        return $this->redirectWithErrors(handles('orchestra::forgot'), $errors);
+        return $this->redirectWithErrors(\handles('orchestra::forgot'), $errors);
     }
 
     /**
@@ -115,9 +115,9 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      */
     public function resetLinkFailed($response)
     {
-        $message = trans($response);
+        $message = \trans($response);
 
-        return $this->redirectWithMessage(handles('orchestra::forgot'), $message, 'error');
+        return $this->redirectWithMessage(\handles('orchestra::forgot'), $message, 'error');
     }
 
     /**
@@ -129,9 +129,9 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      */
     public function resetLinkSent($response)
     {
-        $message = trans($response);
+        $message = \trans($response);
 
-        return $this->redirectWithMessage(handles('orchestra::forgot'), $message);
+        return $this->redirectWithMessage(\handles('orchestra::forgot'), $message);
     }
 
     /**
@@ -143,10 +143,10 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      */
     public function passwordResetHasFailed($response)
     {
-        $message = trans($response);
+        $message = \trans($response);
         $token = Request::input('token');
 
-        return $this->redirectWithMessage(handles("orchestra::forgot/reset/{$token}"), $message, 'error');
+        return $this->redirectWithMessage(\handles("orchestra::forgot/reset/{$token}"), $message, 'error');
     }
 
     /**
@@ -158,8 +158,8 @@ class PasswordBrokerController extends AdminController implements PasswordResetL
      */
     public function passwordHasReset($response)
     {
-        $message = trans('orchestra/foundation::response.account.password.update');
+        $message = \trans('orchestra/foundation::response.account.password.update');
 
-        return $this->redirectWithMessage(handles('orchestra::/'), $message);
+        return $this->redirectWithMessage(\handles('orchestra::/'), $message);
     }
 }

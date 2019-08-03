@@ -45,9 +45,9 @@ class PasswordUpdaterController extends Controller implements Listener
      */
     public function showPasswordChanger(array $data)
     {
-        set_meta('title', trans('orchestra/foundation::title.account.password'));
+        \set_meta('title', \trans('orchestra/foundation::title.account.password'));
 
-        return view('orchestra/foundation::account.password', $data);
+        return \view('orchestra/foundation::account.password', $data);
     }
 
     /**
@@ -59,7 +59,7 @@ class PasswordUpdaterController extends Controller implements Listener
      */
     public function updatePasswordFailedValidation($errors)
     {
-        return $this->redirectWithErrors(handles('orchestra::account/password'), $errors);
+        return $this->redirectWithErrors(\handles('orchestra::account/password'), $errors);
     }
 
     /**
@@ -69,9 +69,9 @@ class PasswordUpdaterController extends Controller implements Listener
      */
     public function verifyCurrentPasswordFailed()
     {
-        $message = trans('orchestra/foundation::response.account.password.invalid');
+        $message = \trans('orchestra/foundation::response.account.password.invalid');
 
-        return $this->redirectWithMessage(handles('orchestra::account/password'), $message, 'error');
+        return $this->redirectWithMessage(\handles('orchestra::account/password'), $message, 'error');
     }
 
     /**
@@ -83,9 +83,9 @@ class PasswordUpdaterController extends Controller implements Listener
      */
     public function updatePasswordFailed(array $errors)
     {
-        $message = trans('orchestra/foundation::response.db-failed', $errors);
+        $message = \trans('orchestra/foundation::response.db-failed', $errors);
 
-        return $this->redirectWithMessage(handles('orchestra::account/password'), $message, 'error');
+        return $this->redirectWithMessage(\handles('orchestra::account/password'), $message, 'error');
     }
 
     /**
@@ -95,8 +95,8 @@ class PasswordUpdaterController extends Controller implements Listener
      */
     public function passwordUpdated()
     {
-        $message = trans('orchestra/foundation::response.account.password.update');
+        $message = \trans('orchestra/foundation::response.account.password.update');
 
-        return $this->redirectWithMessage(handles('orchestra::account/password'), $message);
+        return $this->redirectWithMessage(\handles('orchestra::account/password'), $message);
     }
 }

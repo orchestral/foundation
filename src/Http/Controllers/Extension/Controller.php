@@ -28,7 +28,7 @@ abstract class Controller extends AdminController implements Extension
      */
     protected function getExtension($vendor, $package = null)
     {
-        $name = (is_null($package) ? $vendor : implode('/', [$vendor, $package]));
+        $name = (\is_null($package) ? $vendor : \implode('/', [$vendor, $package]));
 
         return new Fluent(['name' => $name, 'uid' => $name]);
     }

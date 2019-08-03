@@ -45,9 +45,9 @@ class ProfileUpdaterController extends Controller implements Listener
      */
     public function showProfileChanger(array $data)
     {
-        set_meta('title', trans('orchestra/foundation::title.account.profile'));
+        \set_meta('title', \trans('orchestra/foundation::title.account.profile'));
 
-        return view('orchestra/foundation::account.index', $data);
+        return \view('orchestra/foundation::account.index', $data);
     }
 
     /**
@@ -59,7 +59,7 @@ class ProfileUpdaterController extends Controller implements Listener
      */
     public function updateProfileFailedValidation($errors)
     {
-        return $this->redirectWithErrors(handles('orchestra::account'), $errors);
+        return $this->redirectWithErrors(\handles('orchestra::account'), $errors);
     }
 
     /**
@@ -71,9 +71,9 @@ class ProfileUpdaterController extends Controller implements Listener
      */
     public function updateProfileFailed(array $errors)
     {
-        $message = trans('orchestra/foundation::response.db-failed', $errors);
+        $message = \trans('orchestra/foundation::response.db-failed', $errors);
 
-        return $this->redirectWithMessage(handles('orchestra::account'), $message, 'error');
+        return $this->redirectWithMessage(\handles('orchestra::account'), $message, 'error');
     }
 
     /**
@@ -83,8 +83,8 @@ class ProfileUpdaterController extends Controller implements Listener
      */
     public function profileUpdated()
     {
-        $message = trans('orchestra/foundation::response.account.profile.update');
+        $message = \trans('orchestra/foundation::response.account.profile.update');
 
-        return $this->redirectWithMessage(handles('orchestra::account'), $message);
+        return $this->redirectWithMessage(\handles('orchestra::account'), $message);
     }
 }

@@ -72,9 +72,9 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
      */
     public function showSettingChanger(array $data)
     {
-        set_meta('title', trans('orchestra/foundation::title.settings.list'));
+        \set_meta('title', \trans('orchestra/foundation::title.settings.list'));
 
-        return view('orchestra/foundation::settings.index', $data);
+        return \view('orchestra/foundation::settings.index', $data);
     }
 
     /**
@@ -86,7 +86,7 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
      */
     public function settingFailedValidation($errors)
     {
-        return $this->redirectWithErrors(handles('orchestra::settings'), $errors);
+        return $this->redirectWithErrors(\handles('orchestra::settings'), $errors);
     }
 
     /**
@@ -96,9 +96,9 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
      */
     public function settingHasUpdated()
     {
-        $message = trans('orchestra/foundation::response.settings.update');
+        $message = \trans('orchestra/foundation::response.settings.update');
 
-        return $this->redirectWithMessage(handles('orchestra::settings'), $message);
+        return $this->redirectWithMessage(\handles('orchestra::settings'), $message);
     }
 
     /**
@@ -108,8 +108,8 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
      */
     public function systemHasUpdated()
     {
-        $message = trans('orchestra/foundation::response.settings.system-update');
+        $message = \trans('orchestra/foundation::response.settings.system-update');
 
-        return $this->redirectWithMessage(handles('orchestra::settings'), $message);
+        return $this->redirectWithMessage(\handles('orchestra::settings'), $message);
     }
 }

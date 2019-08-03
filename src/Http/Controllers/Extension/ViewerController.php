@@ -43,8 +43,8 @@ class ViewerController extends Controller implements Listener
      */
     public function showExtensions(array $data)
     {
-        set_meta('title', trans('orchestra/foundation::title.extensions.list'));
+        \set_meta('title', \trans('orchestra/foundation::title.extensions.list'));
 
-        return view('orchestra/foundation::extensions.index', $data);
+        return \view('orchestra/foundation::extensions.index', $data);
     }
 }

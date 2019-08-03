@@ -136,9 +136,9 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function showUsers(array $data)
     {
-        set_meta('title', trans('orchestra/foundation::title.users.list'));
+        \set_meta('title', \trans('orchestra/foundation::title.users.list'));
 
-        return view('orchestra/foundation::users.index', $data);
+        return \view('orchestra/foundation::users.index', $data);
     }
 
     /**
@@ -150,9 +150,9 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function showUserCreator(array $data)
     {
-        set_meta('title', trans('orchestra/foundation::title.users.create'));
+        \set_meta('title', \trans('orchestra/foundation::title.users.create'));
 
-        return view('orchestra/foundation::users.edit', $data);
+        return \view('orchestra/foundation::users.edit', $data);
     }
 
     /**
@@ -164,9 +164,9 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function showUserChanger(array $data)
     {
-        set_meta('title', trans('orchestra/foundation::title.users.update'));
+        \set_meta('title', \trans('orchestra/foundation::title.users.update'));
 
-        return view('orchestra/foundation::users.edit', $data);
+        return \view('orchestra/foundation::users.edit', $data);
     }
 
     /**
@@ -190,9 +190,9 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function createUserFailed(array $errors)
     {
-        $message = trans('orchestra/foundation::response.db-failed', $errors);
+        $message = \trans('orchestra/foundation::response.db-failed', $errors);
 
-        return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
+        return $this->redirectWithMessage(\handles('orchestra::users'), $message, 'error');
     }
 
     /**
@@ -202,9 +202,9 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function userCreated()
     {
-        $message = trans('orchestra/foundation::response.users.create');
+        $message = \trans('orchestra/foundation::response.users.create');
 
-        return $this->redirectWithMessage(handles('orchestra::users'), $message);
+        return $this->redirectWithMessage(\handles('orchestra::users'), $message);
     }
 
     /**
@@ -217,7 +217,7 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function updateUserFailedValidation($errors, $id)
     {
-        return $this->redirectWithErrors(handles("orchestra::users/{$id}/edit"), $errors);
+        return $this->redirectWithErrors(\handles("orchestra::users/{$id}/edit"), $errors);
     }
 
     /**
@@ -229,9 +229,9 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function updateUserFailed(array $errors)
     {
-        $message = trans('orchestra/foundation::response.db-failed', $errors);
+        $message = \trans('orchestra/foundation::response.db-failed', $errors);
 
-        return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
+        return $this->redirectWithMessage(\handles('orchestra::users'), $message, 'error');
     }
 
     /**
@@ -241,9 +241,9 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function userUpdated()
     {
-        $message = trans('orchestra/foundation::response.users.update');
+        $message = \trans('orchestra/foundation::response.users.update');
 
-        return $this->redirectWithMessage(handles('orchestra::users'), $message);
+        return $this->redirectWithMessage(\handles('orchestra::users'), $message);
     }
 
     /**
@@ -255,9 +255,9 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function userDeletionFailed(array $errors)
     {
-        $message = trans('orchestra/foundation::response.db-failed', $errors);
+        $message = \trans('orchestra/foundation::response.db-failed', $errors);
 
-        return $this->redirectWithMessage(handles('orchestra::users'), $message, 'error');
+        return $this->redirectWithMessage(\handles('orchestra::users'), $message, 'error');
     }
 
     /**
@@ -267,9 +267,9 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      */
     public function userDeleted()
     {
-        $message = trans('orchestra/foundation::response.users.delete');
+        $message = \trans('orchestra/foundation::response.users.delete');
 
-        return $this->redirectWithMessage(handles('orchestra::users'), $message);
+        return $this->redirectWithMessage(\handles('orchestra::users'), $message);
     }
 
     /**

@@ -41,7 +41,7 @@ class PublisherController extends AdminController implements Listener
      */
     public function publishingHasFailed(array $errors)
     {
-        return $this->redirectWithMessage(handles('orchestra::extensions'), $errors['error'], 'error')->withInput();
+        return $this->redirectWithMessage(\handles('orchestra::extensions'), $errors['error'], 'error')->withInput();
     }
 
     /**
@@ -51,6 +51,6 @@ class PublisherController extends AdminController implements Listener
      */
     public function publishingHasSucceed()
     {
-        return $this->redirect(handles('orchestra::extensions'));
+        return $this->redirect(\handles('orchestra::extensions'));
     }
 }

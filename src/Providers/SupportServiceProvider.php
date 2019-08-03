@@ -35,7 +35,7 @@ class SupportServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     protected function registerPublisher(): void
     {
-        $this->app->singleton('orchestra.publisher', function (Application $app) {
+        $this->app->singleton('orchestra.publisher', static function (Application $app) {
             $memory = $app->make('orchestra.platform.memory');
 
             return (new PublisherManager($app))->attach($memory);
@@ -49,7 +49,7 @@ class SupportServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     protected function registerFilesystemPublisher(): void
     {
-        $this->app->singleton('orchestra.publisher.filesystem', function (Application $app) {
+        $this->app->singleton('orchestra.publisher.filesystem', static function (Application $app) {
             return new Filesystem($app);
         });
     }

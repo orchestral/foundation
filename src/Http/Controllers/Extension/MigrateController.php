@@ -46,8 +46,8 @@ class MigrateController extends ActionController implements Listener
      */
     public function migrationHasSucceed(Fluent $extension)
     {
-        $message = trans('orchestra/foundation::response.extensions.migrate', $extension->getAttributes());
+        $message = \trans('orchestra/foundation::response.extensions.migrate', $extension->getAttributes());
 
-        return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
+        return $this->redirectWithMessage(\handles('orchestra::extensions'), $message);
     }
 }
