@@ -58,7 +58,7 @@ class PasswordUpdaterControllerTest extends TestCase
                 return $listener->passwordUpdated([]);
             });
 
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
+        Messages::spy()->shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::account/password', [])->andReturn('password');
 
         $this->call('POST', 'admin/account/password', $input);
@@ -100,7 +100,7 @@ class PasswordUpdaterControllerTest extends TestCase
             });
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::account/password', [])->andReturn('password');
-        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
+        Messages::spy()->shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/account/password', $input);
         $this->assertRedirectedTo('password');

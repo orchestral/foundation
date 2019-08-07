@@ -67,7 +67,7 @@ class ExtensionsControllerTest extends TestCase
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('deactivate')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('finish')->once()->andReturnSelf();
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
+        Messages::spy()->shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', [])->andReturn('extensions');
 
         $this->call('POST', 'admin/extensions/laravel/framework/deactivate');
@@ -167,7 +167,7 @@ class ExtensionsControllerTest extends TestCase
         Extension::shouldReceive('finish')->once()->andReturnSelf();
         Foundation::shouldReceive('memory')->once()->andReturn($memory);
         Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', [])->andReturn('extensions');
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnSelf();
+        Messages::spy()->shouldReceive('add')->once()->with('success', m::any())->andReturnSelf();
 
         $this->call('POST', 'admin/extensions/laravel/framework/configure', $input);
         $this->assertRedirectedTo('extensions');
@@ -234,7 +234,7 @@ class ExtensionsControllerTest extends TestCase
         Extension::shouldReceive('permission')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('publish')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('finish')->once()->andReturnSelf();
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
+        Messages::spy()->shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::extensions', [])->andReturn('extensions');
 
         $this->call('POST', 'admin/extensions/laravel/framework/update');

@@ -58,7 +58,7 @@ class ProfileUpdaterControllerTest extends TestCase
                 return $listener->profileUpdated([]);
             });
 
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
+        Messages::spy()->shouldReceive('add')->once()->with('success', m::any())->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::account', [])->andReturn('account');
 
         $this->call('POST', 'admin/account', $input);
@@ -100,7 +100,7 @@ class ProfileUpdaterControllerTest extends TestCase
             });
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::account', [])->andReturn('account');
-        Messages::shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
+        Messages::spy()->shouldReceive('add')->once()->with('error', m::any())->andReturnNull();
 
         $this->call('POST', 'admin/account', $input);
         $this->assertRedirectedTo('account');
