@@ -78,7 +78,7 @@ class Configure extends Processor implements Command
             return $listener->updateConfigurationFailedValidation($validation->getMessageBag(), $extension->uid);
         }
 
-        $input['handles'] = str_replace(['{domain}', '{{domain}}'], '{{domain}}', $input['handles']);
+        $input['handles'] = \str_replace(['{domain}', '{{domain}}'], '{{domain}}', $input['handles']);
         unset($input['_token']);
 
         $memory = Foundation::memory();

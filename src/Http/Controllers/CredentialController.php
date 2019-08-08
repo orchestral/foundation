@@ -39,9 +39,9 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     public function show()
     {
-        set_meta('title', trans('orchestra/foundation::title.login'));
+        \set_meta('title', \trans('orchestra/foundation::title.login'));
 
-        return view('orchestra/foundation::credential.login');
+        return \view('orchestra/foundation::credential.login');
     }
 
     /**
@@ -95,7 +95,7 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     public function userLoginHasFailedAuthentication(array $input)
     {
-        $message = trans('orchestra/foundation::response.credential.invalid-combination');
+        $message = \trans('orchestra/foundation::response.credential.invalid-combination');
 
         return $this->redirectWithMessage($this->getRedirectToLoginPath(), $message, 'error')->withInput();
     }
@@ -110,7 +110,7 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     public function sendLockoutResponse(array $input, $seconds)
     {
-        $message = trans('auth.throttle', ['seconds' => $seconds]);
+        $message = \trans('auth.throttle', ['seconds' => $seconds]);
 
         return $this->redirectWithMessage($this->getRedirectToLoginPath(), $message, 'error')->withInput();
     }
@@ -124,7 +124,7 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     public function userHasLoggedIn(Authenticatable $user)
     {
-        messages('success', trans('orchestra/foundation::response.credential.logged-in'));
+        \messages('success', \trans('orchestra/foundation::response.credential.logged-in'));
 
         return Redirect::intended($this->getRedirectToAuthenticatedPath());
     }
@@ -136,7 +136,7 @@ class CredentialController extends AdminController implements AuthenticateListen
      */
     public function userHasLoggedOut()
     {
-        messages('success', trans('orchestra/foundation::response.credential.logged-out'));
+        \messages('success', \trans('orchestra/foundation::response.credential.logged-out'));
 
         return Redirect::intended($this->getRedirectToLoginPath(Input::get('redirect')));
     }

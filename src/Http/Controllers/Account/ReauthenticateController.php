@@ -29,7 +29,7 @@ class ReauthenticateController extends Controller
      */
     public function show()
     {
-        return view('orchestra/foundation::account.reauthenticate');
+        return \view('orchestra/foundation::account.reauthenticate');
     }
 
     /**
@@ -62,7 +62,7 @@ class ReauthenticateController extends Controller
      */
     public function userReauthenticateHasFailedValidation($errors)
     {
-        return $this->redirectWithErrors(handles('orchestra::sudo'), $errors);
+        return $this->redirectWithErrors(\handles('orchestra::sudo'), $errors);
     }
 
     /**
@@ -72,9 +72,9 @@ class ReauthenticateController extends Controller
      */
     protected function userHasFailedReauthentication()
     {
-        $message = trans('orchestra/foundation::response.credential.invalid-combination');
+        $message = \trans('orchestra/foundation::response.credential.invalid-combination');
 
-        return $this->redirectWithMessage(handles('orchestra::sudo'), $message, 'error');
+        return $this->redirectWithMessage(\handles('orchestra::sudo'), $message, 'error');
     }
 
     /**

@@ -32,6 +32,6 @@ abstract class ActionController extends Controller
     {
         Publisher::queue($extension->get('name'));
 
-        return $this->redirect(handles('orchestra::publisher'));
+        return $this->redirect(\handles('orchestra::publisher'));
     }
 }

@@ -60,9 +60,9 @@ class ProfileCreatorController extends AdminController implements Listener
      */
     public function showProfileCreator(array $data)
     {
-        set_meta('title', trans('orchestra/foundation::title.register'));
+        \set_meta('title', \trans('orchestra/foundation::title.register'));
 
-        return view('orchestra/foundation::credential.register', $data);
+        return \view('orchestra/foundation::credential.register', $data);
     }
 
     /**
@@ -86,7 +86,7 @@ class ProfileCreatorController extends AdminController implements Listener
      */
     public function createProfileFailed(array $errors)
     {
-        messages('error', trans('orchestra/foundation::response.db-failed', $errors));
+        \messages('error', \trans('orchestra/foundation::response.db-failed', $errors));
 
         return $this->redirect($this->getRedirectToRegisterPath())->withInput();
     }
@@ -98,8 +98,8 @@ class ProfileCreatorController extends AdminController implements Listener
      */
     public function profileCreatedWithoutNotification()
     {
-        messages('success', trans('orchestra/foundation::response.users.create'));
-        messages('error', trans('orchestra/foundation::response.credential.register.email-fail'));
+        \messages('success', \trans('orchestra/foundation::response.users.create'));
+        \messages('error', \trans('orchestra/foundation::response.credential.register.email-fail'));
 
         return Redirect::intended($this->getRedirectToLoginPath());
     }
@@ -111,8 +111,8 @@ class ProfileCreatorController extends AdminController implements Listener
      */
     public function profileCreated()
     {
-        messages('success', trans('orchestra/foundation::response.users.create'));
-        messages('success', trans('orchestra/foundation::response.credential.register.email-send'));
+        \messages('success', \trans('orchestra/foundation::response.users.create'));
+        \messages('success', \trans('orchestra/foundation::response.credential.register.email-send'));
 
         return Redirect::intended($this->getRedirectToLoginPath());
     }

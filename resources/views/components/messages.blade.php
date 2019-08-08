@@ -1,9 +1,9 @@
 @php
-$message = app('orchestra.messages')->retrieve();
+$message = app('orchestra.messages')->copy();
 $content = $content ?? '<div class="alert alert-:key">:message <button class="close" data-dismiss="alert">×</button></div>';
 @endphp
 
-@if($message instanceof Orchestra\Messages\MessageBag)
+@if($message instanceof Illuminate\Contracts\Support\MessageBag)
   @php
   $message->setFormat($content);
   @endphp

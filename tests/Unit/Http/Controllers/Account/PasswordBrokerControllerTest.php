@@ -56,7 +56,7 @@ class PasswordBrokerControllerTest extends TestCase
                 return $listener->resetLinkSent(PasswordBroker::RESET_LINK_SENT);
             });
 
-        Messages::shouldReceive('add')->once()->with('success', trans(PasswordBroker::RESET_LINK_SENT))->andReturnNull();
+        Messages::spy()->shouldReceive('add')->once()->with('success', trans(PasswordBroker::RESET_LINK_SENT))->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::forgot', [])->andReturn('forgot');
 
         $this->call('POST', 'admin/forgot', $input);
@@ -80,7 +80,7 @@ class PasswordBrokerControllerTest extends TestCase
                 return $listener->resetLinkFailed(PasswordBroker::INVALID_USER);
             });
 
-        Messages::shouldReceive('add')->once()->with('error', trans(PasswordBroker::INVALID_USER))->andReturnNull();
+        Messages::spy()->shouldReceive('add')->once()->with('error', trans(PasswordBroker::INVALID_USER))->andReturnNull();
         Foundation::shouldReceive('handles')->once()->with('orchestra::forgot', [])->andReturn('forgot');
 
         $this->call('POST', 'admin/forgot', $input);
@@ -156,7 +156,7 @@ class PasswordBrokerControllerTest extends TestCase
             });
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::/', [])->andReturn('dashboard');
-        Messages::shouldReceive('add')->once()->with('success', m::type('String'))->andReturnNull();
+        Messages::spy()->shouldReceive('add')->once()->with('success', m::type('String'))->andReturnNull();
 
         $this->call('POST', 'admin/forgot/reset', $input);
         $this->assertRedirectedTo('dashboard');
@@ -178,7 +178,7 @@ class PasswordBrokerControllerTest extends TestCase
             });
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken', [])->andReturn('reset');
-        Messages::shouldReceive('add')->once()->with('error', trans(PasswordBroker::INVALID_PASSWORD))->andReturnNull();
+        Messages::spy()->shouldReceive('add')->once()->with('error', trans(PasswordBroker::INVALID_PASSWORD))->andReturnNull();
 
         $this->call('POST', 'admin/forgot/reset', $input);
         $this->assertRedirectedTo('reset');
@@ -200,7 +200,7 @@ class PasswordBrokerControllerTest extends TestCase
             });
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken', [])->andReturn('reset');
-        Messages::shouldReceive('add')->once()->with('error', trans(PasswordBroker::INVALID_TOKEN))->andReturnNull();
+        Messages::spy()->shouldReceive('add')->once()->with('error', trans(PasswordBroker::INVALID_TOKEN))->andReturnNull();
 
         $this->call('POST', 'admin/forgot/reset', $input);
         $this->assertRedirectedTo('reset');
@@ -222,7 +222,7 @@ class PasswordBrokerControllerTest extends TestCase
             });
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken', [])->andReturn('reset');
-        Messages::shouldReceive('add')->once()->with('error', trans(PasswordBroker::INVALID_USER))->andReturnNull();
+        Messages::spy()->shouldReceive('add')->once()->with('error', trans(PasswordBroker::INVALID_USER))->andReturnNull();
 
         $this->call('POST', 'admin/forgot/reset', $input);
         $this->assertRedirectedTo('reset');

@@ -36,8 +36,8 @@ class DeactivateController extends ActionController implements Listener
     {
         $this->dispatch(new RefreshRouteCache());
 
-        $message = trans('orchestra/foundation::response.extensions.deactivate', $extension->getAttributes());
+        $message = \trans('orchestra/foundation::response.extensions.deactivate', $extension->getAttributes());
 
-        return $this->redirectWithMessage(handles('orchestra::extensions'), $message);
+        return $this->redirectWithMessage(\handles('orchestra::extensions'), $message);
     }
 }

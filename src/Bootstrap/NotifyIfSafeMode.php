@@ -3,7 +3,7 @@
 namespace Orchestra\Foundation\Bootstrap;
 
 use Orchestra\Support\Facades\Messages;
-use Orchestra\Contracts\Messages\MessageBag;
+use Illuminate\Contracts\Support\MessageBag;
 use Illuminate\Contracts\Foundation\Application;
 
 class NotifyIfSafeMode

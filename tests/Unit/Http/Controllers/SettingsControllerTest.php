@@ -105,7 +105,7 @@ class SettingsControllerTest extends TestCase
         $this->app->instance('Orchestra\Contracts\Memory\Provider', $memory);
 
         Foundation::shouldReceive('handles')->once()->with('orchestra::settings', [])->andReturn('settings');
-        Messages::shouldReceive('add')->once()->with('success', m::any())->andReturnSelf();
+        Messages::spy()->shouldReceive('add')->once()->with('success', m::any())->andReturnSelf();
 
         $this->call('POST', 'admin/settings', $input);
         $this->assertRedirectedTo('settings');
