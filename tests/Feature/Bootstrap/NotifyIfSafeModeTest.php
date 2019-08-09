@@ -18,7 +18,9 @@ class NotifyIfSafeModeTest extends TestCase
 
         $messages->shouldReceive('extend')->once()->with(m::type('Closure'))
                 ->andReturnUsing(function ($c) use ($messages) {
-                    return $c($messages);
+                    $c($messages);
+
+                    return $messages;
                 })
             ->shouldReceive('add')->once()->with('info', m::type('String'))->andReturnNull();
 
