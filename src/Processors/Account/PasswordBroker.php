@@ -76,7 +76,6 @@ class PasswordBroker extends Processor implements Command
         });
 
         $errors = [
-            Password::INVALID_PASSWORD,
             Password::INVALID_TOKEN,
             Password::INVALID_USER,
         ];

@@ -22,7 +22,7 @@ class AccountTest extends TestCase
         $app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $app['orchestra.app']->shouldReceive('handles');
-        $app['translator']->shouldReceive('trans');
+        $app['translator']->shouldReceive('get');
 
         Facade::clearResolvedInstances();
         Container::setInstance($app);

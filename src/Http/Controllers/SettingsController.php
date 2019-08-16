@@ -2,7 +2,7 @@
 
 namespace Orchestra\Foundation\Http\Controllers;
 
-use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
 use Orchestra\Foundation\Processors\Setting as Processor;
 use Orchestra\Contracts\Foundation\Listener\SystemUpdater;
 use Orchestra\Contracts\Foundation\Listener\SettingUpdater;
@@ -42,13 +42,14 @@ class SettingsController extends AdminController implements SystemUpdater, Setti
      *
      * POST (:orchestra)/settings
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Orchestra\Foundation\Processors\Setting  $processor
      *
      * @return mixed
      */
-    public function update(Processor $processor)
+    public function update(Request $request, Processor $processor)
     {
-        return $processor->update($this, Input::all());
+        return $processor->update($this, $request->all());
     }
 
     /**

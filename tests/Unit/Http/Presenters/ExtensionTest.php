@@ -29,7 +29,7 @@ class ExtensionTest extends TestCase
         $this->app['translator'] = m::mock('\Illuminate\Translation\Translator')->makePartial();
 
         $this->app['orchestra.app']->shouldReceive('handles');
-        $this->app['translator']->shouldReceive('trans');
+        $this->app['translator']->shouldReceive('get');
 
         Facade::clearResolvedInstances();
         Container::setInstance($this->app);

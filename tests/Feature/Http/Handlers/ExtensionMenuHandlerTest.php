@@ -32,7 +32,7 @@ class ExtensionMenuHandlerTest extends TestCase
         $this->instance('translator', $translator = m::mock('\Illuminate\Translator\Translator'));
 
         $acl->shouldReceive('canIf')->with('manage-orchestra')->once()->andReturn(true);
-        $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.extensions.list', [], null)->andReturn('extensions');
+        $translator->shouldReceive('get')->once()->with('orchestra/foundation::title.extensions.list', [], null)->andReturn('extensions');
         $foundation->shouldReceive('handles')->once()->with('orchestra::extensions')->andReturn('admin/extensions');
         $menu->shouldReceive('add')->once()->andReturnSelf()
             ->shouldReceive('title')->once()->with('extensions')->andReturnSelf()

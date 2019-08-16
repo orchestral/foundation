@@ -22,7 +22,7 @@ class SettingMenuHandlerTest extends TestCase
         $this->instance('translator', $translator = m::mock('\Illuminate\Translator\Translator'));
 
         $acl->shouldReceive('canIf')->with('manage-orchestra')->once()->andReturn(true);
-        $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.settings.list', [], null)->andReturn('settings');
+        $translator->shouldReceive('get')->once()->with('orchestra/foundation::title.settings.list', [], null)->andReturn('settings');
         $foundation->shouldReceive('handles')->once()->with('orchestra::settings')->andReturn('admin/settings');
         $menu->shouldReceive('add')->once()->andReturnSelf()
             ->shouldReceive('title')->once()->with('settings')->andReturnSelf()

@@ -2,8 +2,8 @@
 
 namespace Orchestra\Foundation\Http\Controllers\Extension;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Fluent;
-use Illuminate\Support\Facades\Input;
 use Orchestra\Support\Facades\Foundation;
 use Orchestra\Foundation\Jobs\RefreshRouteCache;
 use Orchestra\Contracts\Extension\Listener\Configure as Listener;
@@ -47,17 +47,18 @@ class ConfigureController extends Controller implements Listener
      *
      * POST (:orchestra)/extensions/configure/(:name)
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Orchestra\Foundation\Processors\Extension\Configure  $processor
      * @param  string  $vendor
      * @param  string|null  $package
      *
      * @return mixed
      */
-    public function update(Processor $processor, $vendor, $package = null)
+    public function update(Request $request, Processor $processor, $vendor, $package = null)
     {
         $extension = $this->getExtension($vendor, $package);
 
-        return $processor->update($this, $extension, Input::all());
+        return $processor->update($this, $extension, $request->all());
     }
 
     /**

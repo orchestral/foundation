@@ -140,9 +140,9 @@ class PasswordBrokerTest extends TestCase
         $password->shouldReceive('reset')->once()
             ->with($input, m::type('Closure'))
             ->andReturnUsing(function ($d, $c) {
-                return Password::INVALID_PASSWORD;
+                return Password::INVALID_TOKEN;
             });
-        $listener->shouldReceive('passwordResetHasFailed')->once()->with(Password::INVALID_PASSWORD)->andReturn('reset.failed');
+        $listener->shouldReceive('passwordResetHasFailed')->once()->with(Password::INVALID_TOKEN)->andReturn('reset.failed');
 
         $this->assertEquals('reset.failed', $stub->update($listener, $input));
     }

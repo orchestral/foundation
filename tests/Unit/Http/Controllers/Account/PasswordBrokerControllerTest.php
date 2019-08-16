@@ -163,28 +163,6 @@ class PasswordBrokerControllerTest extends TestCase
     }
 
     /**
-     * Test POST /admin/forgot/reset given invalid password.
-     *
-     * @test
-     */
-    public function testPostUpdateActionGivenInvalidPassword()
-    {
-        $input = $this->getInput();
-
-        $this->getProcessorMock()->shouldReceive('update')->once()
-            ->with(m::type('\Orchestra\Foundation\Http\Controllers\Account\PasswordBrokerController'), $input)
-            ->andReturnUsing(function ($listener) {
-                return $listener->passwordResetHasFailed(PasswordBroker::INVALID_PASSWORD);
-            });
-
-        Foundation::shouldReceive('handles')->once()->with('orchestra::forgot/reset/auniquetoken', [])->andReturn('reset');
-        Messages::spy()->shouldReceive('add')->once()->with('error', trans(PasswordBroker::INVALID_PASSWORD))->andReturnNull();
-
-        $this->call('POST', 'admin/forgot/reset', $input);
-        $this->assertRedirectedTo('reset');
-    }
-
-    /**
      * Test POST /admin/forgot/reset given invalid token.
      *
      * @test

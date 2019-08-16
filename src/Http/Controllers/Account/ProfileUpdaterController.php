@@ -2,7 +2,7 @@
 
 namespace Orchestra\Foundation\Http\Controllers\Account;
 
-use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
 use Orchestra\Foundation\Processors\Account\ProfileUpdater as Processor;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater as Listener;
 
@@ -27,13 +27,14 @@ class ProfileUpdaterController extends Controller implements Listener
      *
      * POST (:orchestra)/account
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Orchestra\Foundation\Processors\Account\ProfileUpdater  $processor
      *
      * @return mixed
      */
-    public function update(Processor $processor)
+    public function update(Request $request, Processor $processor)
     {
-        return $processor->update($this, Input::all());
+        return $processor->update($this, $request->all());
     }
 
     /**

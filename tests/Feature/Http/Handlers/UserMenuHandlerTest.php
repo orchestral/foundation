@@ -22,7 +22,7 @@ class UserMenuHandlerTest extends TestCase
         $this->instance('translator', $translator = m::mock('\Illuminate\Translator\Translator'));
 
         $acl->shouldReceive('canIf')->with('manage-users')->once()->andReturn(true);
-        $translator->shouldReceive('trans')->once()->with('orchestra/foundation::title.users.list', [], null)->andReturn('users');
+        $translator->shouldReceive('get')->once()->with('orchestra/foundation::title.users.list', [], null)->andReturn('users');
         $foundation->shouldReceive('handles')->once()->with('orchestra::users')->andReturn('admin/users');
         $menu->shouldReceive('add')->once()->andReturnSelf()
             ->shouldReceive('title')->once()->with('users')->andReturnSelf()

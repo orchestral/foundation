@@ -2,7 +2,7 @@
 
 namespace Orchestra\Foundation\Http\Controllers\Account;
 
-use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Orchestra\Foundation\Concerns\RedirectUsers;
 use Orchestra\Foundation\Http\Controllers\AdminController;
@@ -42,13 +42,14 @@ class ProfileCreatorController extends AdminController implements Listener
      *
      * POST (:orchestra)/register
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Orchestra\Foundation\Processors\Account\ProfileCreator  $processor
      *
      * @return mixed
      */
-    public function store(Processor $processor)
+    public function store(Request $request, Processor $processor)
     {
-        return $processor->store($this, Input::all());
+        return $processor->store($this, $request->all());
     }
 
     /**

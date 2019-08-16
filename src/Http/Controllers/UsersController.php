@@ -2,7 +2,7 @@
 
 namespace Orchestra\Foundation\Http\Controllers;
 
-use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
 use Orchestra\Foundation\Processors\User as Processor;
 use Orchestra\Contracts\Foundation\Listener\Account\UserViewer;
 use Orchestra\Contracts\Foundation\Listener\Account\UserCreator;
@@ -30,13 +30,14 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * GET (:orchestra)/users
      *
+     * @param \Illuminate\Http\Request  $request
      * @param  \Orchestra\Foundation\Processors\User  $processor
      *
      * @return mixed
      */
-    public function index(Processor $processor)
+    public function index(Request $request, Processor $processor)
     {
-        return $processor->view($this, Input::all());
+        return $processor->view($this, $request->all());
     }
 
     /**
@@ -73,13 +74,14 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * POST (:orchestra)/users
      *
+     * @param \Illuminate\Http\Request  $request
      * @param  \Orchestra\Foundation\Processors\User  $processor
      *
      * @return mixed
      */
-    public function store(Processor $processor)
+    public function store(Request $request, Processor $processor)
     {
-        return $processor->store($this, Input::all());
+        return $processor->store($this, $request->all());
     }
 
     /**
@@ -87,14 +89,15 @@ class UsersController extends AdminController implements UserCreator, UserRemove
      *
      * PUT (:orchestra)/users/$user
      *
+     * @param \Illuminate\Http\Request  $request
      * @param  \Orchestra\Foundation\Processors\User  $processor
      * @param  int|string  $user
      *
      * @return mixed
      */
-    public function update(Processor $processor, $user)
+    public function update(Request $request, Processor $processor, $user)
     {
-        return $processor->update($this, $user, Input::all());
+        return $processor->update($this, $user, $request->all());
     }
 
     /**

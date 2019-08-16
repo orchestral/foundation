@@ -4,7 +4,6 @@ namespace Orchestra\Foundation\Http\Controllers;
 
 use Laravie\Authen\Authen;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Orchestra\Foundation\Concerns\RedirectUsers;
@@ -18,6 +17,13 @@ use Orchestra\Contracts\Auth\Listener\DeauthenticateUser as DeauthenticateListen
 class CredentialController extends AdminController implements AuthenticateListener, DeauthenticateListener, ThrottlesListener
 {
     use RedirectUsers;
+
+    /**
+     * Redirect to after login URI.
+     *
+     * @var string|null
+     */
+    protected $redirectToPath = null;
 
     /**
      * Setup controller middleware.
@@ -49,10 +55,16 @@ class CredentialController extends AdminController implements AuthenticateListen
      *
      * POST (:orchestra)/login
      *
+     * @param \Illuminate\Http\Request  $request
+     * @param \Orchestra\Foundation\Processors\AuthenticateUser  $authenticate
+     * @param \Orchestra\Contracts\Auth\Command\ThrottlesLogins  $throttles
+     *
      * @return mixed
      */
     public function login(Request $request, AuthenticateUser $authenticate, ThrottlesCommand $throttles)
     {
+        $this->redirectToPath = $request->input('redirect');
+
         $username = Authen::getIdentifierName();
 
         $input = $request->only([$username, 'password', 'remember']);
@@ -67,10 +79,15 @@ class CredentialController extends AdminController implements AuthenticateListen
      *
      * DELETE (:bundle)/login
      *
+     * @param \Illuminate\Http\Request  $request
+     * @param \Orchestra\Foundation\Processors\DeauthenticateUser  $deauthenticate
+     *
      * @return mixed
      */
-    public function logout(DeauthenticateUser $deauthenticate)
+    public function logout(Request $request, DeauthenticateUser $deauthenticate)
     {
+        $this->redirectToPath = $request->input('redirect');
+
         return $deauthenticate($this);
     }
 
@@ -138,19 +155,7 @@ class CredentialController extends AdminController implements AuthenticateListen
     {
         \messages('success', \trans('orchestra/foundation::response.credential.logged-out'));
 
-        return Redirect::intended($this->getRedirectToLoginPath(Input::get('redirect')));
-    }
-
-    /**
-     * Get redirect to login path.
-     *
-     * @param  string|null  $redirect
-     *
-     * @return string
-     */
-    protected function getRedirectToLoginPath($redirect = null)
-    {
-        return $this->redirectUserTo('login', 'orchestra::login', $redirect);
+        return Redirect::intended($this->getRedirectToLoginPath());
     }
 
     /**
@@ -158,8 +163,18 @@ class CredentialController extends AdminController implements AuthenticateListen
      *
      * @return string
      */
-    protected function getRedirectToAuthenticatedPath($redirect = null)
+    protected function getRedirectToLoginPath(): string
     {
-        return $this->redirectUserTo('dashboard', 'orchestra::/', $redirect);
+        return $this->redirectUserTo('login', 'orchestra::login', $this->redirectToPath);
+    }
+
+    /**
+     * Get redirect to login path.
+     *
+     * @return string
+     */
+    protected function getRedirectToAuthenticatedPath(): string
+    {
+        return $this->redirectUserTo('dashboard', 'orchestra::/', $this->redirectToPath);
     }
 }
