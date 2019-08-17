@@ -14,11 +14,11 @@ if (! \function_exists('assetic')) {
      */
     function assetic(string $file, string $buildDirectory = 'build'): string
     {
-        try {
+        return \rescue(static function () use ($file, $buildDirectory) {
             return \asset(\elixir($file, $buildDirectory));
-        } catch (Exception $e) {
+        }, static function () use ($file) {
             return \asset($file);
-        }
+        }, false);
     }
 }
 
@@ -33,7 +33,7 @@ if (! \function_exists('carbonize')) {
      */
     function carbonize($datetime, ?string $timezone = 'UTC'): ?CarbonInterface
     {
-        try {
+        return \rescue(static function () use ($datetime, $timezone) {
             if ($datetime instanceof CarbonInterface) {
                 return \use_timezone($datetime, $timezone ?? $datetime->timezone);
             } elseif ($datetime instanceof DateTimeInterface) {
@@ -43,11 +43,7 @@ if (! \function_exists('carbonize')) {
             } elseif (\is_string($datetime)) {
                 return Carbon::parse($datetime, $timezone);
             }
-        } catch (Exception $e) {
-            //
-        }
-
-        return null;
+        }, null, false);
     }
 }
 

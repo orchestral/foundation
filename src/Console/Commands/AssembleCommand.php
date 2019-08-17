@@ -60,7 +60,7 @@ class AssembleCommand extends Command
 
         $this->call('extension:detect', ['--quiet' => true]);
 
-        try {
+        \rescue(function () use ($memory) {
             Collection::make($memory->get('extensions.active', []))
                 ->keys()->each(function ($extension) {
                     $options = ['name' => $extension, '--force' => true];
@@ -70,9 +70,7 @@ class AssembleCommand extends Command
                 });
 
             $this->laravel->make('orchestra.extension.provider')->writeFreshManifest();
-        } catch (PDOException $e) {
-            // Skip if application is unable to make connection to the database.
-        }
+        });
     }
 
     /**

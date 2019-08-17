@@ -2,7 +2,7 @@
 
 namespace Orchestra\Foundation\Providers;
 
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Container\Container;
 use Orchestra\Config\Console\ConfigCacheCommand;
 use Orchestra\Foundation\Console\Commands\ClearCompiledCommand;
 use Illuminate\Foundation\Providers\ArtisanServiceProvider as ServiceProvider;
@@ -28,7 +28,7 @@ class ArtisanServiceProvider extends ServiceProvider
      */
     protected function registerConfigCacheCommand()
     {
-        $this->app->singleton('command.config.cache', static function (Application $app) {
+        $this->app->singleton('command.config.cache', static function (Container $app) {
             return new ConfigCacheCommand($app->make('files'));
         });
     }

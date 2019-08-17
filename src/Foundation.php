@@ -204,11 +204,11 @@ class Foundation extends RouteManager implements FoundationContract
     {
         $this->registerBaseServices();
 
-        try {
-            $memory = $this->bootInstalledApplication();
-        } catch (Exception $e) {
-            $memory = $this->bootNewApplication();
-        }
+        $memory = \rescue(function () {
+            return $this->bootInstalledApplication();
+        }, function () {
+            return $this->bootNewApplication();
+        }, false);
 
         $this->services['memory'] = $memory;
         $this->app->instance('orchestra.platform.memory', $memory);

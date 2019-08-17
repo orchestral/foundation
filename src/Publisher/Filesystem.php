@@ -49,7 +49,7 @@ class Filesystem extends Uploader implements UploaderContract
         $app = $this->getContainer();
         $config = $this->destination($name, $recursively);
 
-        try {
+        \rescue(function () use ($app, $config, $name) {
             $basePath = "{$config->basePath}{$name}/";
 
             $this->changePermission(
@@ -57,12 +57,7 @@ class Filesystem extends Uploader implements UploaderContract
             );
 
             $this->prepareDirectory($basePath, 0777);
-        } catch (RuntimeException $e) {
-            // We found an exception with Filesystem, but it would be hard to say
-            // extension can't be activated, let's try activating the
-            // extension and if it failed, we should actually catching
-            // those exception instead.
-        }
+        });
 
         $app['orchestra.extension']->activate($name);
 
