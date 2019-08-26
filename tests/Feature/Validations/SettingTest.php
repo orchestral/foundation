@@ -100,25 +100,6 @@ class SettingTest extends TestCase
     /**
      * @test
      */
-    public function it_can_validate_for_mandrill()
-    {
-        $data = [
-            'site_name' => 'Orchestra Platform',
-            'email_address' => 'admin@orchestraplatform.com',
-            'email_driver' => 'mandrill',
-            'email_port' => 25,
-            'email_secret' => 'auniquetoken',
-        ];
-
-        $stub = $this->app->make(Setting::class)->on('mandrill')->with($data);
-
-        $this->assertInstanceOf('\Illuminate\Validation\Validator', $stub);
-        $this->assertTrue($stub->passes());
-    }
-
-    /**
-     * @test
-     */
     public function it_can_validate_for_ses()
     {
         $data = [

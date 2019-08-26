@@ -2,6 +2,7 @@
 
 namespace Orchestra\Foundation\Validations;
 
+use Illuminate\Validation\Rule;
 use Orchestra\Support\Validator;
 use Illuminate\Contracts\Validation\Validator as ValidatorResolver;
 
@@ -15,7 +16,7 @@ class Setting extends Validator
     protected $rules = [
         'site_name' => ['required'],
         'email_address' => ['required', 'email'],
-        'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun,mandrill,sparkpost'],
+        'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun'],
         'email_port' => ['numeric'],
     ];
 
@@ -66,7 +67,7 @@ class Setting extends Validator
     protected function onSes()
     {
         $this->rules['email_key'] = ['required'];
-        $this->rules['email_region'] = ['required', 'in:us-east-1,us-west-2,eu-west-1'];
+        $this->rules['email_region'] = ['required', Rule::in(['us-east-1', 'us-west-2', 'eu-west-1'])];
     }
 
     /**
@@ -89,18 +90,6 @@ class Setting extends Validator
      * @return void
      */
     protected function extendMailgun(ValidatorResolver $resolver)
-    {
-        $this->addRequiredForSecretField($resolver, 'email_secret', 'enable_change_secret');
-    }
-
-    /**
-     * Extend on update email using mandrill driver scenario.
-     *
-     * @param  \Illuminate\Contracts\Validation\Validator  $resolver
-     *
-     * @return void
-     */
-    protected function extendMandrill(ValidatorResolver $resolver)
     {
         $this->addRequiredForSecretField($resolver, 'email_secret', 'enable_change_secret');
     }

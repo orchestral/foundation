@@ -81,8 +81,6 @@ class Setting extends Presenter
                     'sendmail' => 'Sendmail',
                     'ses' => 'Amazon SES',
                     'mailgun' => 'Mailgun',
-                    'mandrill' => 'Mandrill',
-                    'sparkpost' => 'SparkPost',
                 ]);
 
             $fieldset->control('input:text', 'email_host')
