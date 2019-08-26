@@ -3,25 +3,6 @@
 use Carbon\CarbonInterface;
 use Illuminate\Support\Carbon;
 
-if (! \function_exists('assetic')) {
-    /**
-     * Get the path to a versioned Elixir file or fallback to original file.
-     *
-     * @param  string  $file
-     * @param  string  $buildDirectory
-     *
-     * @return string
-     */
-    function assetic(string $file, string $buildDirectory = 'build'): string
-    {
-        return \rescue(static function () use ($file, $buildDirectory) {
-            return \asset(\elixir($file, $buildDirectory));
-        }, static function () use ($file) {
-            return \asset($file);
-        }, false);
-    }
-}
-
 if (! \function_exists('carbonize')) {
     /**
      * Parse string to Carbon instance.
