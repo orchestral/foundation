@@ -15,7 +15,7 @@ use Orchestra\Foundation\Http\Middleware\RedirectIfInstalled;
 use Orchestra\Foundation\Http\Middleware\RedirectIfAuthenticated;
 use Orchestra\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
-abstract class MiddlewareServiceProvider extends ServiceProvider
+class HttpServiceProvider extends ServiceProvider
 {
     use MiddlewareProvider;
 
@@ -70,5 +70,22 @@ abstract class MiddlewareServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    abstract protected function bootRoutes(): void;
+    protected function bootRoutes(): void
+    {
+        if (! $this->app->routesAreCached()) {
+            $this->afterExtensionLoaded(function () {
+                $this->loadRoutes();
+            });
+        }
+    }
+
+    /**
+     * Load the application routes.
+     *
+     * @return void
+     */
+    protected function loadRoutes(): void
+    {
+        //
+    }
 }
