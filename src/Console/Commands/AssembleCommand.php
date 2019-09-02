@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation\Console\Commands;
 
-use PDOException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Orchestra\Contracts\Foundation\Foundation;
