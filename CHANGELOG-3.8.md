@@ -2,6 +2,22 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+## 3.8.3
+
+Released: 2019-09-02
+
+### Added
+
+* Added `Orchestra\Foundation\Providers\HttpServiceProvider`.
+
+### Changes
+
+* Use `Orchestra\Model\Eloquent::usesTransaction()`.
+
+### Deprecated
+
+* Deprecate `Orchestra\Foundation\Providers\MiddlewareServiceProvider`.
+
 ## 3.8.2
 
 Released: 2019-08-09
