@@ -26,7 +26,7 @@ abstract class Presenter implements PresenterContract
      */
     public function handles($url)
     {
-        return handles($url);
+        return \handles($url);
     }
 
     /**

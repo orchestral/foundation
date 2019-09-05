@@ -34,10 +34,10 @@ class Account extends Presenter
 
             $form->fieldset(static function (Fieldset $fieldset) {
                 $fieldset->control('input:text', 'email')
-                    ->label(trans('orchestra/foundation::label.users.email'));
+                    ->label(\trans('orchestra/foundation::label.users.email'));
 
                 $fieldset->control('input:text', 'fullname')
-                    ->label(trans('orchestra/foundation::label.users.fullname'));
+                    ->label(\trans('orchestra/foundation::label.users.fullname'));
             });
         });
     }
@@ -57,13 +57,13 @@ class Account extends Presenter
 
             $form->fieldset(function (Fieldset $fieldset) {
                 $fieldset->control('input:password', 'current_password')
-                    ->label(trans('orchestra/foundation::label.account.current_password'));
+                    ->label(\trans('orchestra/foundation::label.account.current_password'));
 
                 $fieldset->control('input:password', 'new_password')
-                    ->label(trans('orchestra/foundation::label.account.new_password'));
+                    ->label(\trans('orchestra/foundation::label.account.new_password'));
 
                 $fieldset->control('input:password', 'confirm_password')
-                    ->label(trans('orchestra/foundation::label.account.confirm_password'));
+                    ->label(\trans('orchestra/foundation::label.account.confirm_password'));
             });
         });
     }
