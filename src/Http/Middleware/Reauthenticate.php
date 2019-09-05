@@ -15,6 +15,6 @@ class Reauthenticate extends Middleware
      */
     protected function invalidated($request)
     {
-        return redirect(handles('orchestra::sudo'));
+        return \redirect(\handles('orchestra::sudo'));
     }
 }

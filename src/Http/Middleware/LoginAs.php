@@ -56,7 +56,7 @@ class LoginAs
     {
         $as = $request->input('_as');
 
-        if ($this->authorize() && ! is_null($as)) {
+        if ($this->authorize() && ! \is_null($as)) {
             $this->auth->loginUsingId($as);
 
             return $this->response->redirectTo($request->url());

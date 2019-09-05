@@ -16,7 +16,7 @@ class Setting extends Validator
     protected $rules = [
         'site_name' => ['required'],
         'email_address' => ['required', 'email'],
-        'email_driver' => ['required', 'in:mail,smtp,sendmail,ses,mailgun'],
+        'email_driver' => ['required', Rule::in('mail', 'smtp', 'sendmail', 'ses', 'mailgun')],
         'email_port' => ['numeric'],
     ];
 
