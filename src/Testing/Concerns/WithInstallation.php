@@ -29,7 +29,7 @@ trait WithInstallation
 
         $installer = $this->app->make(InstallationContract::class);
 
-        $installer->bootInstallerFilesForTesting();
+        $installer->bootInstallerFiles();
         $installer->migrate();
 
         $this->beforeApplicationDestroyed(static function () use ($artisan) {
