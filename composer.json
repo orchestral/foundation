@@ -28,7 +28,7 @@
     },
     "require": {
         "php": ">=7.1",
-        "laravel/framework": "~5.8.9",
+        "laravel/framework": "~5.8.35",
         "laravie/authen": "^2.1",
         "laravie/html": "~5.8.2",
         "mpociot/reauthenticate": "^1.3",
@@ -50,7 +50,7 @@
     "require-dev": {
         "mockery/mockery": "^1.2",
         "orchestra/installer": "~3.8.0",
-        "orchestra/testing": "~3.8.1"
+        "orchestra/testing": "~3.8.2"
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (~3.8).",
