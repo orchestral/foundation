@@ -80,19 +80,6 @@ class SupportServiceProvider extends ServiceProvider implements DeferrableProvid
     }
 
     /**
-     * Get configuration value.
-     *
-     * @param  string  $name
-     * @param  mixed  $default
-     *
-     * @return mixed
-     */
-    protected function getConfig(string $name, $default = null)
-    {
-        return $this->app->make('config')->get("orchestra/foundation::{$name}", $default);
-    }
-
-    /**
      * Get the services provided by the provider.
      *
      * @return array
