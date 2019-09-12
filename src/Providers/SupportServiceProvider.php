@@ -2,6 +2,7 @@
 
 namespace Orchestra\Foundation\Providers;
 
+use Orchestra\Model\HS;
 use Orchestra\Model\Role;
 use Orchestra\Foundation\Auth\User;
 use Illuminate\Support\ServiceProvider;
@@ -61,10 +62,8 @@ class SupportServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     protected function registerRoleEloquent(): void
     {
-        $this->app->bind('orchestra.role', function () {
-            $model = $this->getConfig('models.role', Role::class);
-
-            return new $model();
+        $this->app->bind('orchestra.role', static function () {
+            return Role::hs();
         });
     }
 
@@ -75,10 +74,8 @@ class SupportServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     protected function registerUserEloquent(): void
     {
-        $this->app->bind('orchestra.user', function () {
-            $model = $this->getConfig('models.user', User::class);
-
-            return new $model();
+        $this->app->bind('orchestra.user', static function () {
+            return User::hs();
         });
     }
 

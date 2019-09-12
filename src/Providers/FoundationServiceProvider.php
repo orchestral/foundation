@@ -2,8 +2,10 @@
 
 namespace Orchestra\Foundation\Providers;
 
+use Orchestra\Model\HS;
 use Laravie\Authen\Authen;
 use Orchestra\Foundation\Meta;
+use Orchestra\Foundation\Auth\User;
 use Orchestra\Foundation\Foundation;
 use Laravie\Authen\BootAuthenProvider;
 use Orchestra\Foundation\RouteResolver;
@@ -82,6 +84,8 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function registerFoundation(): void
     {
+        HS::override('User', User::class);
+
         $this->app['orchestra.installed'] = false;
 
         $this->app->singleton('orchestra.app', static function (Application $app) {
