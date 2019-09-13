@@ -2,6 +2,12 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+## Unreleased
+
+### Fixes
+
+* Fixes handling namespaced routing on `Orchestra\Foundation\Http\Middleware\VerifyCsrfToken`.
+
 ## 3.8.3
 
 Released: 2019-09-02
