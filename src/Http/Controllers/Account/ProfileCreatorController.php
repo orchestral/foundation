@@ -4,10 +4,10 @@ namespace Orchestra\Foundation\Http\Controllers\Account;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator as Listener;
 use Orchestra\Foundation\Concerns\RedirectUsers;
 use Orchestra\Foundation\Http\Controllers\AdminController;
 use Orchestra\Foundation\Processors\Account\ProfileCreator as Processor;
-use Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator as Listener;
 
 class ProfileCreatorController extends AdminController implements Listener
 {

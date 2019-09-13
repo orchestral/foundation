@@ -4,10 +4,10 @@ namespace Orchestra\Foundation\Http\Controllers\Extension;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Fluent;
-use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Jobs\RefreshRouteCache;
 use Orchestra\Contracts\Extension\Listener\Configure as Listener;
+use Orchestra\Foundation\Jobs\RefreshRouteCache;
 use Orchestra\Foundation\Processors\Extension\Configure as Processor;
+use Orchestra\Support\Facades\Foundation;
 
 class ConfigureController extends Controller implements Listener
 {

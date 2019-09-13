@@ -2,11 +2,11 @@
 
 namespace Orchestra\Tests\Unit\Processor\Account;
 
-use Mockery as m;
-use Orchestra\Testing\TestCase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Mockery as m;
 use Orchestra\Foundation\Processors\Account\PasswordUpdater;
+use Orchestra\Testing\TestCase;
 
 class PasswordUpdaterTest extends TestCase
 {

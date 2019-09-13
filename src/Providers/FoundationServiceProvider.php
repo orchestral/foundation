@@ -2,16 +2,18 @@
 
 namespace Orchestra\Foundation\Providers;
 
-use Laravie\Authen\Authen;
-use Orchestra\Foundation\Meta;
-use Orchestra\Foundation\Foundation;
-use Laravie\Authen\BootAuthenProvider;
-use Orchestra\Foundation\RouteResolver;
 use Illuminate\Contracts\Foundation\Application;
-use Orchestra\Support\Providers\ServiceProvider;
+use Laravie\Authen\Authen;
+use Laravie\Authen\BootAuthenProvider;
 use Orchestra\Contracts\Auth\Command\ThrottlesLogins;
-use Orchestra\Support\Providers\Concerns\AliasesProvider;
 use Orchestra\Foundation\Auth\Throttle\Basic as BasicThrottle;
+use Orchestra\Foundation\Auth\User;
+use Orchestra\Foundation\Foundation;
+use Orchestra\Foundation\Meta;
+use Orchestra\Foundation\RouteResolver;
+use Orchestra\Model\HS;
+use Orchestra\Support\Providers\Concerns\AliasesProvider;
+use Orchestra\Support\Providers\ServiceProvider;
 
 class FoundationServiceProvider extends ServiceProvider
 {
@@ -82,6 +84,8 @@ class FoundationServiceProvider extends ServiceProvider
      */
     protected function registerFoundation(): void
     {
+        HS::override('User', User::class);
+
         $this->app['orchestra.installed'] = false;
 
         $this->app->singleton('orchestra.app', static function (Application $app) {

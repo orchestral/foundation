@@ -2,8 +2,8 @@
 
 namespace Orchestra\Foundation\Bootstrap;
 
-use Orchestra\Html\Macros\Title;
 use Illuminate\Contracts\Foundation\Application;
+use Orchestra\Html\Macros\Title;
 
 class LoadExpresso
 {

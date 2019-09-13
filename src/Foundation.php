@@ -4,15 +4,15 @@ namespace Orchestra\Foundation;
 
 use Closure;
 use Exception;
-use Orchestra\Http\RouteManager;
-use Orchestra\Contracts\Extension\UrlGenerator;
 use Orchestra\Contracts\Authorization\Authorization;
-use Orchestra\Foundation\Http\Handlers\UserMenuHandler;
-use Orchestra\Contracts\Memory\Provider as MemoryProvider;
-use Orchestra\Foundation\Http\Handlers\SettingMenuHandler;
-use Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler;
-use Orchestra\Contracts\Foundation\Foundation as FoundationContract;
+use Orchestra\Contracts\Extension\UrlGenerator;
 use Orchestra\Contracts\Foundation\Application as ApplicationContract;
+use Orchestra\Contracts\Foundation\Foundation as FoundationContract;
+use Orchestra\Contracts\Memory\Provider as MemoryProvider;
+use Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler;
+use Orchestra\Foundation\Http\Handlers\SettingMenuHandler;
+use Orchestra\Foundation\Http\Handlers\UserMenuHandler;
+use Orchestra\Http\RouteManager;
 
 class Foundation extends RouteManager implements FoundationContract
 {

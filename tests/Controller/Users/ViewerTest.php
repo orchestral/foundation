@@ -2,8 +2,8 @@
 
 namespace Orchestra\Tests\Controller\Users;
 
-use Orchestra\Tests\Controller\TestCase;
 use Orchestra\Foundation\Testing\Installation;
+use Orchestra\Tests\Controller\TestCase;
 
 class ViewerTest extends TestCase
 {

@@ -2,8 +2,8 @@
 
 namespace Orchestra\Tests\Unit\Auth;
 
-use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Auth\User;
+use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
 {

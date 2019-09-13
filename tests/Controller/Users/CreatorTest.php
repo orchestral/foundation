@@ -4,9 +4,9 @@ namespace Orchestra\Tests\Controller\Users;
 
 use Mockery as m;
 use Orchestra\Foundation\Auth\User;
-use Orchestra\Tests\Controller\TestCase;
-use Orchestra\Foundation\Testing\Installation;
 use Orchestra\Foundation\Processors\User as UserProcessor;
+use Orchestra\Foundation\Testing\Installation;
+use Orchestra\Tests\Controller\TestCase;
 
 class CreatorTest extends TestCase
 {

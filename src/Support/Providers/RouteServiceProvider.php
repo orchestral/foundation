@@ -2,8 +2,8 @@
 
 namespace Orchestra\Foundation\Support\Providers;
 
-use Orchestra\Foundation\Support\Providers\Concerns\RouteProvider;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Orchestra\Foundation\Support\Providers\Concerns\RouteProvider;
 
 abstract class RouteServiceProvider extends ServiceProvider
 {

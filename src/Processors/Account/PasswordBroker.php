@@ -2,14 +2,14 @@
 
 namespace Orchestra\Foundation\Processors\Account;
 
+use Illuminate\Contracts\Auth\PasswordBroker as Password;
 use Illuminate\Support\Facades\Auth;
-use Orchestra\Model\User as Eloquent;
-use Orchestra\Foundation\Processors\Processor;
+use Orchestra\Contracts\Auth\Command\PasswordBroker as Command;
 use Orchestra\Contracts\Auth\Listener\PasswordReset;
 use Orchestra\Contracts\Auth\Listener\PasswordResetLink;
-use Illuminate\Contracts\Auth\PasswordBroker as Password;
-use Orchestra\Contracts\Auth\Command\PasswordBroker as Command;
+use Orchestra\Foundation\Processors\Processor;
 use Orchestra\Foundation\Validations\AuthenticateUser as Validator;
+use Orchestra\Model\User as Eloquent;
 
 class PasswordBroker extends Processor implements Command
 {

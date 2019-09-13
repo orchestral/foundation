@@ -2,11 +2,11 @@
 
 namespace Orchestra\Tests\Unit;
 
-use Orchestra\Testbench\TestCase;
 use Orchestra\Foundation\Providers\ArtisanServiceProvider;
-use Orchestra\Foundation\Providers\SupportServiceProvider;
-use Orchestra\Foundation\Providers\FoundationServiceProvider;
 use Orchestra\Foundation\Providers\ConsoleSupportServiceProvider;
+use Orchestra\Foundation\Providers\FoundationServiceProvider;
+use Orchestra\Foundation\Providers\SupportServiceProvider;
+use Orchestra\Testbench\TestCase;
 
 class ServiceProviderTest extends TestCase
 {

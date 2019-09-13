@@ -3,9 +3,9 @@
 namespace Orchestra\Tests\Feature\Processor\Account;
 
 use Mockery as m;
-use Orchestra\Tests\Feature\TestCase;
-use Orchestra\Foundation\Testing\Installation;
 use Orchestra\Foundation\Processors\Account\ProfileUpdater;
+use Orchestra\Foundation\Testing\Installation;
+use Orchestra\Tests\Feature\TestCase;
 
 class ProfileUpdaterTest extends TestCase
 {

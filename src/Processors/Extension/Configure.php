@@ -2,15 +2,15 @@
 
 namespace Orchestra\Foundation\Processors\Extension;
 
-use Illuminate\Support\Fluent;
 use Illuminate\Support\Facades\Event;
-use Orchestra\Support\Facades\Extension;
-use Orchestra\Support\Facades\Foundation;
+use Illuminate\Support\Fluent;
+use Orchestra\Contracts\Extension\Command\Configure as Command;
+use Orchestra\Contracts\Extension\Listener\Configure as Listener;
+use Orchestra\Foundation\Http\Presenters\Extension as Presenter;
 use Orchestra\Foundation\Processors\Processor;
 use Orchestra\Foundation\Validations\Extension as Validator;
-use Orchestra\Contracts\Extension\Command\Configure as Command;
-use Orchestra\Foundation\Http\Presenters\Extension as Presenter;
-use Orchestra\Contracts\Extension\Listener\Configure as Listener;
+use Orchestra\Support\Facades\Extension;
+use Orchestra\Support\Facades\Foundation;
 
 class Configure extends Processor implements Command
 {

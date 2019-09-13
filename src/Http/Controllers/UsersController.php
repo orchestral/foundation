@@ -3,11 +3,11 @@
 namespace Orchestra\Foundation\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Orchestra\Foundation\Processors\User as Processor;
-use Orchestra\Contracts\Foundation\Listener\Account\UserViewer;
 use Orchestra\Contracts\Foundation\Listener\Account\UserCreator;
 use Orchestra\Contracts\Foundation\Listener\Account\UserRemover;
 use Orchestra\Contracts\Foundation\Listener\Account\UserUpdater;
+use Orchestra\Contracts\Foundation\Listener\Account\UserViewer;
+use Orchestra\Foundation\Processors\User as Processor;
 
 class UsersController extends AdminController implements UserCreator, UserRemover, UserUpdater, UserViewer
 {

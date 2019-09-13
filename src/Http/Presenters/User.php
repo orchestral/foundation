@@ -3,12 +3,12 @@
 namespace Orchestra\Foundation\Http\Presenters;
 
 use Illuminate\Contracts\Auth\Guard;
+use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 use Orchestra\Contracts\Html\Form\Fieldset;
 use Orchestra\Contracts\Html\Form\Grid as FormGrid;
-use Orchestra\Contracts\Html\Table\Grid as TableGrid;
-use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 use Orchestra\Contracts\Html\Table\Builder as TableBuilder;
 use Orchestra\Contracts\Html\Table\Factory as TableFactory;
+use Orchestra\Contracts\Html\Table\Grid as TableGrid;
 
 class User extends Presenter
 {
@@ -53,12 +53,12 @@ class User extends Presenter
 
             // Add columns
             $table->column('fullname')
-                ->label(trans('orchestra/foundation::label.users.fullname'))
+                ->label(\trans('orchestra/foundation::label.users.fullname'))
                 ->escape(false)
                 ->value($this->getFullnameColumn());
 
             $table->column('email')
-                ->label(trans('orchestra/foundation::label.users.email'));
+                ->label(\trans('orchestra/foundation::label.users.email'));
 
             $this->appendTableColumns($model, $table);
         });
@@ -137,16 +137,16 @@ class User extends Presenter
 
             $form->fieldset(function (Fieldset $fieldset) {
                 $fieldset->control('input:text', 'email')
-                    ->label(trans('orchestra/foundation::label.users.email'));
+                    ->label(\trans('orchestra/foundation::label.users.email'));
 
                 $fieldset->control('input:text', 'fullname')
-                    ->label(trans('orchestra/foundation::label.users.fullname'));
+                    ->label(\trans('orchestra/foundation::label.users.fullname'));
 
                 $fieldset->control('input:password', 'password')
-                    ->label(trans('orchestra/foundation::label.users.password'));
+                    ->label(\trans('orchestra/foundation::label.users.password'));
 
                 $fieldset->control('select', 'roles[]')
-                    ->label(trans('orchestra/foundation::label.users.roles'))
+                    ->label(\trans('orchestra/foundation::label.users.roles'))
                     ->attributes(['multiple' => true])
                     ->options(static function () {
                         return \app('orchestra.role')->pluck('name', 'id');
@@ -168,9 +168,9 @@ class User extends Presenter
     {
         return function ($row) {
             $btn = [];
-            $btn[] = app('html')->link(
-                handles("orchestra::users/{$row->id}/edit"),
-                trans('orchestra/foundation::label.edit'),
+            $btn[] = \app('html')->link(
+                \handles("orchestra::users/{$row->id}/edit"),
+                \trans('orchestra/foundation::label.edit'),
                 [
                     'class' => 'btn btn-xs btn-label btn-warning',
                     'role' => 'edit',
@@ -178,10 +178,10 @@ class User extends Presenter
                 ]
             );
 
-            if (! is_null($this->user) && $this->user->id !== $row->id) {
-                $btn[] = app('html')->link(
-                    handles("orchestra::users/{$row->id}"),
-                    trans('orchestra/foundation::label.delete'),
+            if (! \optional($this->user)->id !== $row->id) {
+                $btn[] = \app('html')->link(
+                    \handles("orchestra::users/{$row->id}"),
+                    \trans('orchestra/foundation::label.delete'),
                     [
                         'class' => 'btn btn-xs btn-label btn-danger',
                         'role' => 'delete',
@@ -191,9 +191,9 @@ class User extends Presenter
                 );
             }
 
-            return app('html')->create(
+            return \app('html')->create(
                 'div',
-                app('html')->raw(implode('', $btn)),
+                \app('html')->raw(\implode('', $btn)),
                 ['class' => 'btn-group']
             );
         };
@@ -206,21 +206,21 @@ class User extends Presenter
      */
     protected function getFullnameColumn()
     {
-        return function ($row) {
+        return static function ($row) {
             $roles = $row->roles;
             $value = [];
 
             foreach ($roles as $role) {
-                $value[] = app('html')->create('span', e($role->name), [
+                $value[] = \app('html')->create('span', \e($role->name), [
                     'class' => 'label label-info',
                     'role' => 'role',
                 ]);
             }
 
-            return implode('', [
-                app('html')->create('strong', e($row->fullname)),
-                app('html')->create('br'),
-                app('html')->create('span', app('html')->raw(implode(' ', $value)), [
+            return \implode('', [
+                \app('html')->create('strong', e($row->fullname)),
+                \app('html')->create('br'),
+                \app('html')->create('span', \app('html')->raw(\implode(' ', $value)), [
                     'class' => 'meta',
                 ]),
             ]);

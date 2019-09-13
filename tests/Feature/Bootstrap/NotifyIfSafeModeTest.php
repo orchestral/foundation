@@ -3,8 +3,8 @@
 namespace Orchestra\Tests\Feature\Bootstrap;
 
 use Mockery as m;
-use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Bootstrap\NotifyIfSafeMode;
+use Orchestra\Tests\Feature\TestCase;
 
 class NotifyIfSafeModeTest extends TestCase
 {

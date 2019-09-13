@@ -2,9 +2,9 @@
 
 namespace Orchestra\Foundation\Support;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Fluent;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Support\Fluent;
+use Illuminate\Support\Str;
 
 abstract class MenuHandler
 {

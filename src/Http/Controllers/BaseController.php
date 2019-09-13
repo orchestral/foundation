@@ -2,9 +2,9 @@
 
 namespace Orchestra\Foundation\Http\Controllers;
 
-use Orchestra\Routing\Controller;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Orchestra\Routing\Concerns\ControllerResponse;
+use Orchestra\Routing\Controller;
 
 abstract class BaseController extends Controller
 {

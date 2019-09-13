@@ -3,10 +3,10 @@
 namespace Orchestra\Foundation\Processors;
 
 use Illuminate\Session\Store;
-use Orchestra\Contracts\Publisher\ServerException;
-use Orchestra\Foundation\Publisher\PublisherManager;
 use Orchestra\Contracts\Foundation\Command\AssetPublisher as Command;
 use Orchestra\Contracts\Foundation\Listener\AssetPublishing as Listener;
+use Orchestra\Contracts\Publisher\ServerException;
+use Orchestra\Foundation\Publisher\PublisherManager;
 
 class AssetPublisher extends Processor implements Command
 {

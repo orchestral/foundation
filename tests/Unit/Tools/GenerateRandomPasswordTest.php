@@ -2,8 +2,8 @@
 
 namespace Orchestra\Tests\Unit\Tools;
 
-use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Tools\GenerateRandomPassword;
+use PHPUnit\Framework\TestCase;
 
 class GenerateRandomPasswordTest extends TestCase
 {

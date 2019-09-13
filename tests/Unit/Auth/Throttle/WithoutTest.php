@@ -2,8 +2,8 @@
 
 namespace Orchestra\Tests\Unit\Auth\Throttle;
 
-use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Auth\Throttle\Without as WithoutThrottle;
+use PHPUnit\Framework\TestCase;
 
 class WithoutTest extends TestCase
 {

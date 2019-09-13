@@ -2,15 +2,15 @@
 
 namespace Orchestra\Foundation\Support\Providers;
 
-use RuntimeException;
-use Illuminate\Routing\Router;
-use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Contracts\Events\Dispatcher;
-use Orchestra\Support\Providers\Concerns\EventProvider;
-use Orchestra\Support\Providers\Concerns\PackageProvider;
-use Orchestra\Support\Providers\Concerns\MiddlewareProvider;
-use Orchestra\Foundation\Support\Providers\Concerns\RouteProvider;
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Routing\Router;
+use Orchestra\Foundation\Support\Providers\Concerns\RouteProvider;
+use Orchestra\Support\Providers\Concerns\EventProvider;
+use Orchestra\Support\Providers\Concerns\MiddlewareProvider;
+use Orchestra\Support\Providers\Concerns\PackageProvider;
+use RuntimeException;
 
 abstract class ModuleServiceProvider extends ServiceProvider
 {

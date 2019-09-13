@@ -2,8 +2,8 @@
 
 namespace Orchestra\Foundation\Providers;
 
-use Illuminate\Support\AggregateServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\AggregateServiceProvider;
 
 class ConsoleSupportServiceProvider extends AggregateServiceProvider implements DeferrableProvider
 {

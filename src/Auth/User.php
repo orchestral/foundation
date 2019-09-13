@@ -2,17 +2,17 @@
 
 namespace Orchestra\Foundation\Auth;
 
-use Illuminate\Support\Str;
-use Laravie\Authen\AuthenUser;
-use Orchestra\Model\User as Authenticatable;
-use Orchestra\Contracts\Notification\Recipient;
-use Orchestra\Foundation\Observers\UserObserver;
-use Illuminate\Notifications\RoutesNotifications;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Orchestra\Foundation\Notifications\Welcome as WelcomeNotification;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Notifications\RoutesNotifications;
+use Illuminate\Support\Str;
+use Laravie\Authen\AuthenUser;
+use Orchestra\Contracts\Notification\Recipient;
 use Orchestra\Foundation\Notifications\ResetPassword as ResetPasswordNotification;
+use Orchestra\Foundation\Notifications\Welcome as WelcomeNotification;
+use Orchestra\Foundation\Observers\UserObserver;
+use Orchestra\Model\User as Authenticatable;
 
 class User extends Authenticatable implements AuthorizableContract, CanResetPasswordContract, Recipient
 {

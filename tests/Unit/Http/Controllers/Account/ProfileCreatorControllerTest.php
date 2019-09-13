@@ -2,12 +2,12 @@
 
 namespace Orchestra\Tests\Unit\Http\Controllers\Account;
 
-use Mockery as m;
-use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\Messages;
-use Orchestra\Support\Facades\Foundation;
-use Orchestra\Testing\BrowserKit\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\View;
+use Mockery as m;
+use Orchestra\Support\Facades\Foundation;
+use Orchestra\Support\Facades\Messages;
+use Orchestra\Testing\BrowserKit\TestCase;
 
 class ProfileCreatorControllerTest extends TestCase
 {

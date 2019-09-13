@@ -3,9 +3,9 @@
 namespace Orchestra\Foundation\Providers;
 
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Foundation\Providers\ArtisanServiceProvider as ServiceProvider;
 use Orchestra\Config\Console\ConfigCacheCommand;
 use Orchestra\Foundation\Console\Commands\ClearCompiledCommand;
-use Illuminate\Foundation\Providers\ArtisanServiceProvider as ServiceProvider;
 
 class ArtisanServiceProvider extends ServiceProvider
 {

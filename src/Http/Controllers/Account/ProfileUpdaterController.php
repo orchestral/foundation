@@ -3,8 +3,8 @@
 namespace Orchestra\Foundation\Http\Controllers\Account;
 
 use Illuminate\Http\Request;
-use Orchestra\Foundation\Processors\Account\ProfileUpdater as Processor;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileUpdater as Listener;
+use Orchestra\Foundation\Processors\Account\ProfileUpdater as Processor;
 
 class ProfileUpdaterController extends Controller implements Listener
 {

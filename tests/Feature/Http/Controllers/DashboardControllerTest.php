@@ -2,8 +2,8 @@
 
 namespace Orchestra\Tests\Feature\Http\Controllers;
 
-use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Testing\Installation;
+use Orchestra\Tests\Feature\TestCase;
 
 class DashboardControllerTest extends TestCase
 {

@@ -3,9 +3,9 @@
 namespace Orchestra\Foundation\Http\Controllers\Extension;
 
 use Illuminate\Support\Fluent;
-use Orchestra\Foundation\Jobs\RefreshRouteCache;
-use Orchestra\Extension\Processors\Activator as Processor;
 use Orchestra\Contracts\Extension\Listener\Activator as Listener;
+use Orchestra\Extension\Processors\Activator as Processor;
+use Orchestra\Foundation\Jobs\RefreshRouteCache;
 
 class ActivateController extends ActionController implements Listener
 {

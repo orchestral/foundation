@@ -53,8 +53,8 @@
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (^5.0).",
-        "orchestra/installer": "Allow Orchestra Platform to be installed in new application (~3.10).",
-        "orchestra/testing": "Allow better unit testing support for Orchestra Platform (~3.10)."
+        "orchestra/installer": "Allow Orchestra Platform to be installed in new application (^5.0).",
+        "orchestra/testing": "Allow better unit testing support for Orchestra Platform (^5.0)."
     },
     "scripts": {
         "test": [

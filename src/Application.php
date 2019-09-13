@@ -2,15 +2,15 @@
 
 namespace Orchestra\Foundation;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Log\LogServiceProvider;
-use Illuminate\Foundation\PackageManifest;
 use Illuminate\Events\EventServiceProvider;
-use Orchestra\Routing\RoutingServiceProvider;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Application as BaseApplication;
+use Illuminate\Foundation\PackageManifest;
+use Illuminate\Log\LogServiceProvider;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Orchestra\Contracts\Foundation\Application as ApplicationContract;
+use Orchestra\Routing\RoutingServiceProvider;
 
 class Application extends BaseApplication implements ApplicationContract
 {

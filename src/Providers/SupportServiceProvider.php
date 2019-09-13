@@ -2,13 +2,14 @@
 
 namespace Orchestra\Foundation\Providers;
 
-use Orchestra\Model\Role;
-use Orchestra\Foundation\Auth\User;
-use Illuminate\Support\ServiceProvider;
-use Orchestra\Foundation\Publisher\Filesystem;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider;
+use Orchestra\Foundation\Auth\User;
+use Orchestra\Foundation\Publisher\Filesystem;
 use Orchestra\Foundation\Publisher\PublisherManager;
+use Orchestra\Model\HS;
+use Orchestra\Model\Role;
 
 class SupportServiceProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -61,10 +62,8 @@ class SupportServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     protected function registerRoleEloquent(): void
     {
-        $this->app->bind('orchestra.role', function () {
-            $model = $this->getConfig('models.role', Role::class);
-
-            return new $model();
+        $this->app->bind('orchestra.role', static function () {
+            return Role::hs();
         });
     }
 
@@ -75,24 +74,9 @@ class SupportServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     protected function registerUserEloquent(): void
     {
-        $this->app->bind('orchestra.user', function () {
-            $model = $this->getConfig('models.user', User::class);
-
-            return new $model();
+        $this->app->bind('orchestra.user', static function () {
+            return User::hs();
         });
-    }
-
-    /**
-     * Get configuration value.
-     *
-     * @param  string  $name
-     * @param  mixed  $default
-     *
-     * @return mixed
-     */
-    protected function getConfig(string $name, $default = null)
-    {
-        return $this->app->make('config')->get("orchestra/foundation::{$name}", $default);
     }
 
     /**

@@ -3,8 +3,8 @@
 namespace Orchestra\Foundation\Http\Controllers\Account;
 
 use Illuminate\Support\Facades\Redirect;
-use Orchestra\Reauthenticate\ReauthLimiter;
 use Orchestra\Foundation\Validations\Account as AccountValidator;
+use Orchestra\Reauthenticate\ReauthLimiter;
 
 class ReauthenticateController extends Controller
 {

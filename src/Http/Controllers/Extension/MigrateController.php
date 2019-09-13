@@ -3,8 +3,8 @@
 namespace Orchestra\Foundation\Http\Controllers\Extension;
 
 use Illuminate\Support\Fluent;
-use Orchestra\Extension\Processors\Migrator as Processor;
 use Orchestra\Contracts\Extension\Listener\Migrator as Listener;
+use Orchestra\Extension\Processors\Migrator as Processor;
 
 class MigrateController extends ActionController implements Listener
 {

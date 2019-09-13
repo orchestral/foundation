@@ -2,11 +2,11 @@
 
 namespace Orchestra\Tests\Unit\Processor\Account;
 
-use Mockery as m;
-use Orchestra\Testing\TestCase;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\PasswordBroker as Password;
+use Illuminate\Support\Facades\Auth;
+use Mockery as m;
 use Orchestra\Foundation\Processors\Account\PasswordBroker;
+use Orchestra\Testing\TestCase;
 
 class PasswordBrokerTest extends TestCase
 {

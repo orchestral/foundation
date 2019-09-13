@@ -2,8 +2,8 @@
 
 namespace Orchestra\Foundation\Support\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider;
 
 class ExtensionServiceProvider extends ServiceProvider implements DeferrableProvider
 {

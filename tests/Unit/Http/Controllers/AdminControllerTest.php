@@ -3,8 +3,8 @@
 namespace Orchestra\Tests\Unit\Http\Controllers;
 
 use Mockery as m;
-use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Http\Controllers\AdminController;
+use PHPUnit\Framework\TestCase;
 
 class AdminControllerTest extends TestCase
 {

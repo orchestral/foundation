@@ -3,10 +3,10 @@
 namespace Orchestra\Foundation\Http\Middleware;
 
 use Closure;
-use Orchestra\Contracts\Auth\Guard;
 use Illuminate\Contracts\Config\Repository;
-use Orchestra\Contracts\Foundation\Foundation;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Orchestra\Contracts\Auth\Guard;
+use Orchestra\Contracts\Foundation\Foundation;
 
 class Can
 {

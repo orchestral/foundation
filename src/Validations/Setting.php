@@ -2,9 +2,9 @@
 
 namespace Orchestra\Foundation\Validations;
 
+use Illuminate\Contracts\Validation\Validator as ValidatorResolver;
 use Illuminate\Validation\Rule;
 use Orchestra\Support\Validator;
-use Illuminate\Contracts\Validation\Validator as ValidatorResolver;
 
 class Setting extends Validator
 {

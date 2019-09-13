@@ -3,9 +3,9 @@
 namespace Orchestra\Foundation\Publisher;
 
 use Exception;
-use RuntimeException;
 use Illuminate\Support\Manager;
 use Orchestra\Memory\Memorizable;
+use RuntimeException;
 
 class PublisherManager extends Manager
 {
@@ -24,11 +24,11 @@ class PublisherManager extends Manager
     {
         $name = "orchestra.publisher.{$driver}";
 
-        if (! $this->app->bound($name)) {
+        if (! $this->container->bound($name)) {
             throw new RuntimeException("Unable to resolve [{$driver}] publisher");
         }
 
-        return $this->app->make($name);
+        return $this->container->make($name);
     }
 
     /**

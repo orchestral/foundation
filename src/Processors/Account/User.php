@@ -3,9 +3,9 @@
 namespace Orchestra\Foundation\Processors\Account;
 
 use Illuminate\Support\Facades\Event;
+use Orchestra\Foundation\Http\Presenters\Account as Presenter;
 use Orchestra\Foundation\Processors\Processor;
 use Orchestra\Foundation\Validations\Account as Validator;
-use Orchestra\Foundation\Http\Presenters\Account as Presenter;
 
 abstract class User extends Processor
 {

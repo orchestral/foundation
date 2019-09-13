@@ -2,9 +2,9 @@
 
 namespace Orchestra\Foundation\Bootstrap;
 
-use Orchestra\Support\Facades\Messages;
-use Illuminate\Contracts\Support\MessageBag;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\MessageBag;
+use Orchestra\Support\Facades\Messages;
 
 class NotifyIfSafeMode
 {

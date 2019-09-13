@@ -3,8 +3,8 @@
 namespace Orchestra\Tests\Unit\Processor;
 
 use Mockery as m;
-use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Processors\Account\ProfileDashboard;
+use PHPUnit\Framework\TestCase;
 
 class UserDashboardTest extends TestCase
 {

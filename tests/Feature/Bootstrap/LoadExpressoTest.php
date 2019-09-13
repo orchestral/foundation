@@ -2,9 +2,9 @@
 
 namespace Orchestra\Tests\Feature\Bootstrap;
 
+use Illuminate\Pagination\Paginator;
 use Mockery as m;
 use Orchestra\Support\Facades\Meta;
-use Illuminate\Pagination\Paginator;
 use Orchestra\Tests\Feature\TestCase;
 
 class LoadExpressoTest extends TestCase

@@ -2,17 +2,17 @@
 
 namespace Orchestra\Foundation\Processors;
 
-use Illuminate\Support\Fluent;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Config;
-use Orchestra\Contracts\Memory\Provider;
-use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Validations\Setting as Validator;
-use Orchestra\Foundation\Http\Presenters\Setting as Presenter;
-use Orchestra\Contracts\Foundation\Command\SystemUpdater as SystemUpdateCommand;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Fluent;
 use Orchestra\Contracts\Foundation\Command\SettingUpdater as SettingUpdateCommand;
-use Orchestra\Contracts\Foundation\Listener\SystemUpdater as SystemUpdateListener;
+use Orchestra\Contracts\Foundation\Command\SystemUpdater as SystemUpdateCommand;
 use Orchestra\Contracts\Foundation\Listener\SettingUpdater as SettingUpdateListener;
+use Orchestra\Contracts\Foundation\Listener\SystemUpdater as SystemUpdateListener;
+use Orchestra\Contracts\Memory\Provider;
+use Orchestra\Foundation\Http\Presenters\Setting as Presenter;
+use Orchestra\Foundation\Validations\Setting as Validator;
+use Orchestra\Support\Facades\Foundation;
 
 class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCommand
 {
@@ -88,7 +88,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
     public function update(SettingUpdateListener $listener, array $input)
     {
         $input = new Fluent($input);
-        $driver = $this->getValue($input['email_driver'], 'mail.driver');
+        $driver = $this->sanitizeInput($input['email_driver'], 'mail.driver');
 
         $validation = $this->validator->on($driver)->with($input->toArray());
 
@@ -104,7 +104,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
         $memory->put('email.driver', $driver);
 
         $memory->put('email.from', [
-            'address' => $this->getValue($input['email_address'], 'mail.from.address'),
+            'address' => $this->sanitizeInput($input['email_address'], 'mail.from.address'),
             'name' => $input['site_name'],
         ]);
 
@@ -116,17 +116,17 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
             $input['email_secret'] = $memory->secureGet('email.secret');
         }
 
-        $memory->put('email.host', $this->getValue($input['email_host'], 'mail.host'));
-        $memory->put('email.port', $this->getValue($input['email_port'], 'mail.port'));
-        $memory->put('email.username', $this->getValue($input['email_username'], 'mail.username'));
-        $memory->securePut('email.password', $this->getValue($input['email_password'], 'mail.password'));
-        $memory->put('email.encryption', $this->getValue($input['email_encryption'], 'mail.encryption'));
-        $memory->put('email.sendmail', $this->getValue($input['email_sendmail'], 'mail.sendmail'));
+        $memory->put('email.host', $this->sanitizeInput($input['email_host'], 'mail.host'));
+        $memory->put('email.port', $this->sanitizeInput($input['email_port'], 'mail.port'));
+        $memory->put('email.username', $this->sanitizeInput($input['email_username'], 'mail.username'));
+        $memory->securePut('email.password', $this->sanitizeInput($input['email_password'], 'mail.password'));
+        $memory->put('email.encryption', $this->sanitizeInput($input['email_encryption'], 'mail.encryption'));
+        $memory->put('email.sendmail', $this->sanitizeInput($input['email_sendmail'], 'mail.sendmail'));
         $memory->put('email.queue', ($input['email_queue'] === 'yes'));
-        $memory->securePut('email.key', $this->getValue($input['email_key'], "services.{$driver}.key"));
-        $memory->securePut('email.secret', $this->getValue($input['email_secret'], "services.{$driver}.secret"));
-        $memory->put('email.domain', $this->getValue($input['email_domain'], "services.{$driver}.domain"));
-        $memory->put('email.region', $this->getValue($input['email_region'], "services.{$driver}.region"));
+        $memory->securePut('email.key', $this->sanitizeInput($input['email_key'], "services.{$driver}.key"));
+        $memory->securePut('email.secret', $this->sanitizeInput($input['email_secret'], "services.{$driver}.secret"));
+        $memory->put('email.domain', $this->sanitizeInput($input['email_domain'], "services.{$driver}.domain"));
+        $memory->put('email.region', $this->sanitizeInput($input['email_region'], "services.{$driver}.region"));
 
         Event::dispatch('orchestra.saved: settings', [$memory, $input]);
 
@@ -156,7 +156,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
      *
      * @return mixed
      */
-    private function getValue($input, $alternative)
+    private function sanitizeInput($input, $alternative)
     {
         if (empty($input)) {
             $input = Config::get($alternative);

@@ -3,8 +3,8 @@
 namespace Orchestra\Foundation\Http\Middleware;
 
 use Closure;
-use Orchestra\Contracts\Auth\Guard;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Orchestra\Contracts\Auth\Guard;
 use Orchestra\Contracts\Authorization\Authorization;
 
 class LoginAs
@@ -56,7 +56,7 @@ class LoginAs
     {
         $as = $request->input('_as');
 
-        if ($this->authorize() && ! is_null($as)) {
+        if ($this->authorize() && ! \is_null($as)) {
             $this->auth->loginUsingId($as);
 
             return $this->response->redirectTo($request->url());

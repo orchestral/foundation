@@ -2,9 +2,9 @@
 
 namespace Orchestra\Foundation\Http\Presenters;
 
+use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 use Orchestra\Contracts\Html\Form\Fieldset;
 use Orchestra\Contracts\Html\Form\Grid as FormGrid;
-use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 
 class Setting extends Presenter
 {
@@ -44,16 +44,16 @@ class Setting extends Presenter
      */
     protected function application(FormGrid $form)
     {
-        $form->fieldset(trans('orchestra/foundation::label.settings.application'), function (Fieldset $fieldset) {
+        $form->fieldset(\trans('orchestra/foundation::label.settings.application'), function (Fieldset $fieldset) {
             $fieldset->control('input:text', 'site_name')
-                ->label(trans('orchestra/foundation::label.name'));
+                ->label(\trans('orchestra/foundation::label.name'));
 
             $fieldset->control('textarea', 'site_description')
-                ->label(trans('orchestra/foundation::label.description'))
+                ->label(\trans('orchestra/foundation::label.description'))
                 ->attributes(['rows' => 3]);
 
             $fieldset->control('select', 'site_registrable')
-                ->label(trans('orchestra/foundation::label.settings.user-registration'))
+                ->label(\trans('orchestra/foundation::label.settings.user-registration'))
                 ->attributes(['role' => 'agreement'])
                 ->options([
                     'yes' => 'Yes',
@@ -72,9 +72,9 @@ class Setting extends Presenter
      */
     protected function mailer(FormGrid $form, $model)
     {
-        $form->fieldset(trans('orchestra/foundation::label.settings.mail'), function (Fieldset $fieldset) use ($model) {
+        $form->fieldset(\trans('orchestra/foundation::label.settings.mail'), function (Fieldset $fieldset) use ($model) {
             $fieldset->control('select', 'email_driver')
-                ->label(trans('orchestra/foundation::label.email.driver'))
+                ->label(\trans('orchestra/foundation::label.email.driver'))
                 ->options([
                     'mail' => 'Mail',
                     'smtp' => 'SMTP',
@@ -84,44 +84,44 @@ class Setting extends Presenter
                 ]);
 
             $fieldset->control('input:text', 'email_host')
-                ->label(trans('orchestra/foundation::label.email.host'));
+                ->label(\trans('orchestra/foundation::label.email.host'));
 
             $fieldset->control('input:text', 'email_port')
-                ->label(trans('orchestra/foundation::label.email.port'));
+                ->label(\trans('orchestra/foundation::label.email.port'));
 
             $fieldset->control('input:text', 'email_address')
-                ->label(trans('orchestra/foundation::label.email.from'));
+                ->label(\trans('orchestra/foundation::label.email.from'));
 
             $fieldset->control('input:text', 'email_username')
-                ->label(trans('orchestra/foundation::label.email.username'));
+                ->label(\trans('orchestra/foundation::label.email.username'));
 
             $fieldset->control('input:password', 'email_password')
-                ->label(trans('orchestra/foundation::label.email.password'))
-                ->help(view('orchestra/foundation::settings._hidden', [
+                ->label(\trans('orchestra/foundation::label.email.password'))
+                ->help(\view('orchestra/foundation::settings._hidden', [
                     'value' => $model['email_password'],
                     'action' => 'change_password',
                     'field' => 'email_password',
                 ]));
 
             $fieldset->control('input:text', 'email_encryption')
-                ->label(trans('orchestra/foundation::label.email.encryption'));
+                ->label(\trans('orchestra/foundation::label.email.encryption'));
 
             $fieldset->control('input:text', 'email_key')
-                ->label(trans('orchestra/foundation::label.email.key'));
+                ->label(\trans('orchestra/foundation::label.email.key'));
 
             $fieldset->control('input:password', 'email_secret')
-                ->label(trans('orchestra/foundation::label.email.secret'))
-                ->help(view('orchestra/foundation::settings._hidden', [
+                ->label(\trans('orchestra/foundation::label.email.secret'))
+                ->help(\view('orchestra/foundation::settings._hidden', [
                     'value' => $model['email_secret'],
                     'action' => 'change_secret',
                     'field' => 'email_secret',
                 ]));
 
             $fieldset->control('input:text', 'email_domain')
-                ->label(trans('orchestra/foundation::label.email.domain'));
+                ->label(\trans('orchestra/foundation::label.email.domain'));
 
             $fieldset->control('select', 'email_region')
-                ->label(trans('orchestra/foundation::label.email.region'))
+                ->label(\trans('orchestra/foundation::label.email.region'))
                 ->options([
                     'us-east-1' => 'us-east-1',
                     'us-west-2' => 'us-west-2',
@@ -129,10 +129,10 @@ class Setting extends Presenter
                 ]);
 
             $fieldset->control('input:text', 'email_sendmail')
-                ->label(trans('orchestra/foundation::label.email.command'));
+                ->label(\trans('orchestra/foundation::label.email.command'));
 
             $fieldset->control('select', 'email_queue')
-                ->label(trans('orchestra/foundation::label.email.queue'))
+                ->label(\trans('orchestra/foundation::label.email.queue'))
                 ->attributes(['role' => 'agreement'])
                 ->options([
                     'yes' => 'Yes',
