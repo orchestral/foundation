@@ -2,18 +2,18 @@
 
 namespace Orchestra\Foundation\Providers;
 
-use Orchestra\Model\HS;
+use Illuminate\Contracts\Foundation\Application;
 use Laravie\Authen\Authen;
-use Orchestra\Foundation\Meta;
+use Laravie\Authen\BootAuthenProvider;
+use Orchestra\Contracts\Auth\Command\ThrottlesLogins;
+use Orchestra\Foundation\Auth\Throttle\Basic as BasicThrottle;
 use Orchestra\Foundation\Auth\User;
 use Orchestra\Foundation\Foundation;
-use Laravie\Authen\BootAuthenProvider;
+use Orchestra\Foundation\Meta;
 use Orchestra\Foundation\RouteResolver;
-use Illuminate\Contracts\Foundation\Application;
-use Orchestra\Support\Providers\ServiceProvider;
-use Orchestra\Contracts\Auth\Command\ThrottlesLogins;
+use Orchestra\Model\HS;
 use Orchestra\Support\Providers\Concerns\AliasesProvider;
-use Orchestra\Foundation\Auth\Throttle\Basic as BasicThrottle;
+use Orchestra\Support\Providers\ServiceProvider;
 
 class FoundationServiceProvider extends ServiceProvider
 {

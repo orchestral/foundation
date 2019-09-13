@@ -2,17 +2,17 @@
 
 namespace Orchestra\Foundation\Processors;
 
-use Illuminate\Support\Fluent;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Config;
-use Orchestra\Contracts\Memory\Provider;
-use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Validations\Setting as Validator;
-use Orchestra\Foundation\Http\Presenters\Setting as Presenter;
-use Orchestra\Contracts\Foundation\Command\SystemUpdater as SystemUpdateCommand;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Fluent;
 use Orchestra\Contracts\Foundation\Command\SettingUpdater as SettingUpdateCommand;
-use Orchestra\Contracts\Foundation\Listener\SystemUpdater as SystemUpdateListener;
+use Orchestra\Contracts\Foundation\Command\SystemUpdater as SystemUpdateCommand;
 use Orchestra\Contracts\Foundation\Listener\SettingUpdater as SettingUpdateListener;
+use Orchestra\Contracts\Foundation\Listener\SystemUpdater as SystemUpdateListener;
+use Orchestra\Contracts\Memory\Provider;
+use Orchestra\Foundation\Http\Presenters\Setting as Presenter;
+use Orchestra\Foundation\Validations\Setting as Validator;
+use Orchestra\Support\Facades\Foundation;
 
 class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCommand
 {

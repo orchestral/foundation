@@ -3,12 +3,12 @@
 namespace Orchestra\Foundation\Http\Presenters;
 
 use Illuminate\Contracts\Auth\Guard;
+use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 use Orchestra\Contracts\Html\Form\Fieldset;
 use Orchestra\Contracts\Html\Form\Grid as FormGrid;
-use Orchestra\Contracts\Html\Table\Grid as TableGrid;
-use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 use Orchestra\Contracts\Html\Table\Builder as TableBuilder;
 use Orchestra\Contracts\Html\Table\Factory as TableFactory;
+use Orchestra\Contracts\Html\Table\Grid as TableGrid;
 
 class User extends Presenter
 {

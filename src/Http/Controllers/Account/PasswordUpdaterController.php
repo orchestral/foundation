@@ -3,8 +3,8 @@
 namespace Orchestra\Foundation\Http\Controllers\Account;
 
 use Illuminate\Http\Request;
-use Orchestra\Foundation\Processors\Account\PasswordUpdater as Processor;
 use Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater as Listener;
+use Orchestra\Foundation\Processors\Account\PasswordUpdater as Processor;
 
 class PasswordUpdaterController extends Controller implements Listener
 {

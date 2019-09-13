@@ -2,10 +2,10 @@
 
 namespace Orchestra\Foundation\Publisher;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Fluent;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Fluent;
+use Illuminate\Support\Str;
 
 abstract class Uploader
 {

@@ -3,9 +3,9 @@
 namespace Orchestra\Foundation\Http\Controllers\Extension;
 
 use Illuminate\Support\Fluent;
-use Orchestra\Foundation\Jobs\RefreshRouteCache;
-use Orchestra\Extension\Processors\Deactivator as Processor;
 use Orchestra\Contracts\Extension\Listener\Deactivator as Listener;
+use Orchestra\Extension\Processors\Deactivator as Processor;
+use Orchestra\Foundation\Jobs\RefreshRouteCache;
 
 class DeactivateController extends ActionController implements Listener
 {

@@ -3,8 +3,8 @@
 namespace Orchestra\Foundation\Testing\Concerns;
 
 use Illuminate\Foundation\Testing\PendingCommand;
-use Orchestra\Installation\InstallerServiceProvider;
 use Orchestra\Contracts\Installation\Installation as InstallationContract;
+use Orchestra\Installation\InstallerServiceProvider;
 
 trait WithInstallation
 {

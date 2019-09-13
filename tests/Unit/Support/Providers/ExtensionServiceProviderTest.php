@@ -2,10 +2,10 @@
 
 namespace Orchestra\Tests\Unit\Support\Providers;
 
-use Mockery as m;
-use PHPUnit\Framework\TestCase;
 use Illuminate\Container\Container;
+use Mockery as m;
 use Orchestra\Foundation\Support\Providers\ExtensionServiceProvider;
+use PHPUnit\Framework\TestCase;
 
 class ExtensionServiceProviderTest extends TestCase
 {

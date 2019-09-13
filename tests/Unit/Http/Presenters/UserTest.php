@@ -2,14 +2,14 @@
 
 namespace Orchestra\Tests\Unit\Http\Presenters;
 
-use Mockery as m;
-use Illuminate\Support\Fluent;
-use PHPUnit\Framework\TestCase;
-use Illuminate\Support\Collection;
-use Illuminate\Support\HtmlString;
 use Illuminate\Container\Container;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Fluent;
+use Illuminate\Support\HtmlString;
+use Mockery as m;
 use Orchestra\Foundation\Http\Presenters\User;
+use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
 {

@@ -2,10 +2,10 @@
 
 namespace Orchestra\Foundation\Processors\Account;
 
-use Orchestra\Widget\WidgetManager;
-use Orchestra\Foundation\Processors\Processor;
 use Orchestra\Contracts\Foundation\Command\Account\ProfileDashboard as Command;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileDashboard as Listener;
+use Orchestra\Foundation\Processors\Processor;
+use Orchestra\Widget\WidgetManager;
 
 class ProfileDashboard extends Processor implements Command
 {

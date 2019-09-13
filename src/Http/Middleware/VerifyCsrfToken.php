@@ -2,11 +2,11 @@
 
 namespace Orchestra\Foundation\Http\Middleware;
 
-use Orchestra\Http\Concerns\PassThrough;
 use Illuminate\Contracts\Encryption\Encrypter;
-use Orchestra\Contracts\Foundation\Foundation;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
+use Orchestra\Contracts\Foundation\Foundation;
+use Orchestra\Http\Concerns\PassThrough;
 
 class VerifyCsrfToken extends BaseVerifier
 {

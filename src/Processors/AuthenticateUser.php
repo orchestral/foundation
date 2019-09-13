@@ -3,12 +3,12 @@
 namespace Orchestra\Foundation\Processors;
 
 use Illuminate\Support\Arr;
-use Orchestra\Contracts\Auth\Guard;
-use Orchestra\Model\User as Eloquent;
 use Orchestra\Contracts\Auth\Command\AuthenticateUser as Command;
+use Orchestra\Contracts\Auth\Command\ThrottlesLogins as ThrottlesCommand;
+use Orchestra\Contracts\Auth\Guard;
 use Orchestra\Contracts\Auth\Listener\AuthenticateUser as Listener;
 use Orchestra\Foundation\Validations\AuthenticateUser as Validator;
-use Orchestra\Contracts\Auth\Command\ThrottlesLogins as ThrottlesCommand;
+use Orchestra\Model\User as Eloquent;
 
 class AuthenticateUser extends Authenticate implements Command
 {

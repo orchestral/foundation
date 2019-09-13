@@ -2,15 +2,15 @@
 
 namespace Orchestra\Tests\Unit\Http\Controllers;
 
-use Mockery as m;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
-use Orchestra\Support\Facades\Messages;
+use Mockery as m;
 use Orchestra\Support\Facades\Extension;
-use Orchestra\Support\Facades\Publisher;
 use Orchestra\Support\Facades\Foundation;
+use Orchestra\Support\Facades\Messages;
+use Orchestra\Support\Facades\Publisher;
 use Orchestra\Testing\BrowserKit\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ExtensionsControllerTest extends TestCase
 {

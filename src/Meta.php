@@ -2,8 +2,8 @@
 
 namespace Orchestra\Foundation;
 
-use Orchestra\Support\Concerns\DataContainer;
 use Orchestra\Contracts\Support\DataContainer as DataContainerContract;
+use Orchestra\Support\Concerns\DataContainer;
 
 class Meta implements DataContainerContract
 {

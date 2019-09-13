@@ -3,9 +3,9 @@
 namespace Orchestra\Tests\Feature\Publisher;
 
 use Mockery as m;
-use Orchestra\Tests\Feature\TestCase;
-use Orchestra\Foundation\Testing\Installation;
 use Orchestra\Foundation\Publisher\PublisherManager;
+use Orchestra\Foundation\Testing\Installation;
+use Orchestra\Tests\Feature\TestCase;
 
 class PublisherManagerTest extends TestCase
 {

@@ -2,14 +2,14 @@
 
 namespace Orchestra\Foundation\Providers;
 
-use Orchestra\Model\HS;
-use Orchestra\Model\Role;
-use Orchestra\Foundation\Auth\User;
-use Illuminate\Support\ServiceProvider;
-use Orchestra\Foundation\Publisher\Filesystem;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider;
+use Orchestra\Foundation\Auth\User;
+use Orchestra\Foundation\Publisher\Filesystem;
 use Orchestra\Foundation\Publisher\PublisherManager;
+use Orchestra\Model\HS;
+use Orchestra\Model\Role;
 
 class SupportServiceProvider extends ServiceProvider implements DeferrableProvider
 {

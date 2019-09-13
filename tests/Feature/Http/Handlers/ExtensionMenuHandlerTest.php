@@ -2,10 +2,10 @@
 
 namespace Orchestra\Tests\Feature\Http\Handlers;
 
-use Mockery as m;
-use Orchestra\Testing\TestCase;
 use Illuminate\Container\Container;
+use Mockery as m;
 use Orchestra\Foundation\Http\Handlers\ExtensionMenuHandler;
+use Orchestra\Testing\TestCase;
 
 class ExtensionMenuHandlerTest extends TestCase
 {

@@ -2,9 +2,9 @@
 
 namespace Orchestra\Tests\Feature\Validations;
 
-use Orchestra\Tests\Feature\TestCase;
-use Orchestra\Foundation\Validations\Account;
 use Orchestra\Foundation\Testing\Installation;
+use Orchestra\Foundation\Validations\Account;
+use Orchestra\Tests\Feature\TestCase;
 
 class AccountTest extends TestCase
 {

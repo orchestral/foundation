@@ -5,18 +5,18 @@ namespace Orchestra\Foundation\Processors;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
-use Orchestra\Model\User as Eloquent;
-use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Validations\User as Validator;
-use Orchestra\Foundation\Http\Presenters\User as Presenter;
-use Orchestra\Contracts\Foundation\Command\Account\UserViewer as UserViewerCommand;
 use Orchestra\Contracts\Foundation\Command\Account\UserCreator as UserCreatorCommand;
 use Orchestra\Contracts\Foundation\Command\Account\UserRemover as UserRemoverCommand;
 use Orchestra\Contracts\Foundation\Command\Account\UserUpdater as UserUpdaterCommand;
-use Orchestra\Contracts\Foundation\Listener\Account\UserViewer as UserViewerListener;
+use Orchestra\Contracts\Foundation\Command\Account\UserViewer as UserViewerCommand;
 use Orchestra\Contracts\Foundation\Listener\Account\UserCreator as UserCreatorListener;
 use Orchestra\Contracts\Foundation\Listener\Account\UserRemover as UserRemoverListener;
 use Orchestra\Contracts\Foundation\Listener\Account\UserUpdater as UserUpdaterListener;
+use Orchestra\Contracts\Foundation\Listener\Account\UserViewer as UserViewerListener;
+use Orchestra\Foundation\Http\Presenters\User as Presenter;
+use Orchestra\Foundation\Validations\User as Validator;
+use Orchestra\Model\User as Eloquent;
+use Orchestra\Support\Facades\Foundation;
 
 class User extends Processor implements UserCreatorCommand, UserRemoverCommand, UserUpdaterCommand, UserViewerCommand
 {

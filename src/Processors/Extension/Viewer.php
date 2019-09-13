@@ -2,10 +2,10 @@
 
 namespace Orchestra\Foundation\Processors\Extension;
 
-use Orchestra\Contracts\Extension\Factory;
-use Orchestra\Foundation\Processors\Processor;
 use Orchestra\Contracts\Extension\Command\Viewer as Command;
+use Orchestra\Contracts\Extension\Factory;
 use Orchestra\Contracts\Extension\Listener\Viewer as Listener;
+use Orchestra\Foundation\Processors\Processor;
 
 class Viewer extends Processor implements Command
 {

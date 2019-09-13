@@ -5,9 +5,9 @@ namespace Orchestra\Foundation\Processors\Account;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Orchestra\Model\User as Eloquent;
 use Orchestra\Contracts\Foundation\Command\Account\PasswordUpdater as Command;
 use Orchestra\Contracts\Foundation\Listener\Account\PasswordUpdater as Listener;
+use Orchestra\Model\User as Eloquent;
 
 class PasswordUpdater extends User implements Command
 {

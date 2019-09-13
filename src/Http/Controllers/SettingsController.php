@@ -3,9 +3,9 @@
 namespace Orchestra\Foundation\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Orchestra\Foundation\Processors\Setting as Processor;
-use Orchestra\Contracts\Foundation\Listener\SystemUpdater;
 use Orchestra\Contracts\Foundation\Listener\SettingUpdater;
+use Orchestra\Contracts\Foundation\Listener\SystemUpdater;
+use Orchestra\Foundation\Processors\Setting as Processor;
 
 class SettingsController extends AdminController implements SystemUpdater, SettingUpdater
 {

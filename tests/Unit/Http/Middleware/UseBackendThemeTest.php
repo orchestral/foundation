@@ -3,8 +3,8 @@
 namespace Orchestra\Tests\Unit\Http\Middleware;
 
 use Mockery as m;
-use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Http\Middleware\UseBackendTheme;
+use PHPUnit\Framework\TestCase;
 
 class UseBackendThemeTest extends TestCase
 {

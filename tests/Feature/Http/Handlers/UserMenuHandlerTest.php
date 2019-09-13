@@ -3,8 +3,8 @@
 namespace Orchestra\Tests\Feature\Http\Handlers;
 
 use Mockery as m;
-use Orchestra\Testing\TestCase;
 use Orchestra\Foundation\Http\Handlers\UserMenuHandler;
+use Orchestra\Testing\TestCase;
 
 class UserMenuHandlerTest extends TestCase
 {

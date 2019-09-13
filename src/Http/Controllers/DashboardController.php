@@ -2,9 +2,9 @@
 
 namespace Orchestra\Foundation\Http\Controllers;
 
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Orchestra\Foundation\Processors\Account\ProfileDashboard as Processor;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileDashboard as Listener;
+use Orchestra\Foundation\Processors\Account\ProfileDashboard as Processor;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DashboardController extends AdminController implements Listener
 {

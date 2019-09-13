@@ -2,18 +2,18 @@
 
 namespace Orchestra\Foundation\Providers;
 
-use Illuminate\Routing\Router;
 use Illuminate\Contracts\Http\Kernel;
-use Orchestra\Foundation\Http\Middleware\Can;
-use Orchestra\Http\Middleware\RequireCsrfToken;
+use Illuminate\Routing\Router;
 use Orchestra\Foundation\Http\Middleware\Authenticate;
+use Orchestra\Foundation\Http\Middleware\Can;
 use Orchestra\Foundation\Http\Middleware\CanBeInstalled;
-use Orchestra\Foundation\Http\Middleware\Reauthenticate;
 use Orchestra\Foundation\Http\Middleware\CanRegisterUser;
-use Orchestra\Support\Providers\Concerns\MiddlewareProvider;
-use Orchestra\Foundation\Http\Middleware\RedirectIfInstalled;
+use Orchestra\Foundation\Http\Middleware\Reauthenticate;
 use Orchestra\Foundation\Http\Middleware\RedirectIfAuthenticated;
+use Orchestra\Foundation\Http\Middleware\RedirectIfInstalled;
 use Orchestra\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Orchestra\Http\Middleware\RequireCsrfToken;
+use Orchestra\Support\Providers\Concerns\MiddlewareProvider;
 
 class HttpServiceProvider extends ServiceProvider
 {

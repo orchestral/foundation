@@ -2,10 +2,10 @@
 
 namespace Orchestra\Foundation\Http\Presenters;
 
+use Orchestra\Contracts\Extension\Factory as ExtensionContract;
+use Orchestra\Contracts\Html\Form\Factory as FormFactory;
 use Orchestra\Contracts\Html\Form\Fieldset;
 use Orchestra\Contracts\Html\Form\Grid as FormGrid;
-use Orchestra\Contracts\Html\Form\Factory as FormFactory;
-use Orchestra\Contracts\Extension\Factory as ExtensionContract;
 
 class Extension extends Presenter
 {

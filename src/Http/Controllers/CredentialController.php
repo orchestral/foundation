@@ -2,17 +2,17 @@
 
 namespace Orchestra\Foundation\Http\Controllers;
 
-use Laravie\Authen\Authen;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Contracts\Auth\Authenticatable;
+use Laravie\Authen\Authen;
+use Orchestra\Contracts\Auth\Command\ThrottlesLogins as ThrottlesCommand;
+use Orchestra\Contracts\Auth\Listener\AuthenticateUser as AuthenticateListener;
+use Orchestra\Contracts\Auth\Listener\DeauthenticateUser as DeauthenticateListener;
+use Orchestra\Contracts\Auth\Listener\ThrottlesLogins as ThrottlesListener;
 use Orchestra\Foundation\Concerns\RedirectUsers;
 use Orchestra\Foundation\Processors\AuthenticateUser;
 use Orchestra\Foundation\Processors\DeauthenticateUser;
-use Orchestra\Contracts\Auth\Command\ThrottlesLogins as ThrottlesCommand;
-use Orchestra\Contracts\Auth\Listener\ThrottlesLogins as ThrottlesListener;
-use Orchestra\Contracts\Auth\Listener\AuthenticateUser as AuthenticateListener;
-use Orchestra\Contracts\Auth\Listener\DeauthenticateUser as DeauthenticateListener;
 
 class CredentialController extends AdminController implements AuthenticateListener, DeauthenticateListener, ThrottlesListener
 {

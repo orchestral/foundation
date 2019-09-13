@@ -3,8 +3,8 @@
 namespace Orchestra\Tests\Unit\Jobs;
 
 use Mockery as m;
-use PHPUnit\Framework\TestCase;
 use Orchestra\Foundation\Jobs\RefreshRouteCache;
+use PHPUnit\Framework\TestCase;
 
 class RefreshRouteCacheTest extends TestCase
 {

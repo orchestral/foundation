@@ -2,8 +2,8 @@
 
 namespace Orchestra\Foundation\Publisher;
 
-use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Filesystem\Filesystem as File;
 use Orchestra\Contracts\Publisher\Uploader as UploaderContract;
 
 class Filesystem extends Uploader implements UploaderContract

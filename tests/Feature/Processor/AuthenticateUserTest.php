@@ -3,9 +3,9 @@
 namespace Orchestra\Tests\Feature\Processor;
 
 use Mockery as m;
-use Orchestra\Tests\Feature\TestCase;
-use Orchestra\Foundation\Testing\Installation;
 use Orchestra\Foundation\Processors\AuthenticateUser;
+use Orchestra\Foundation\Testing\Installation;
+use Orchestra\Tests\Feature\TestCase;
 
 class AuthenticateUserTest extends TestCase
 {

@@ -2,8 +2,8 @@
 
 namespace Orchestra\Tests\Feature\Validation;
 
-use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Validations\User;
+use Orchestra\Tests\Feature\TestCase;
 
 class UserTest extends TestCase
 {

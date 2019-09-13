@@ -3,9 +3,9 @@
 namespace Orchestra\Foundation\Publisher;
 
 use Exception;
-use RuntimeException;
 use Illuminate\Support\Manager;
 use Orchestra\Memory\Memorizable;
+use RuntimeException;
 
 class PublisherManager extends Manager
 {

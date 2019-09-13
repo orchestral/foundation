@@ -3,9 +3,9 @@
 namespace Orchestra\Tests\Unit\Http\Presenters;
 
 use Mockery as m;
-use Orchestra\Testing\TestCase;
-use Orchestra\Foundation\RouteResolver;
 use Orchestra\Foundation\Http\Presenters\Presenter;
+use Orchestra\Foundation\RouteResolver;
+use Orchestra\Testing\TestCase;
 
 class PresenterTest extends TestCase
 {

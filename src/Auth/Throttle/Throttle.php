@@ -2,8 +2,8 @@
 
 namespace Orchestra\Foundation\Auth\Throttle;
 
-use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 
 abstract class Throttle

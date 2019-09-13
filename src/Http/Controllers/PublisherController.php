@@ -2,8 +2,8 @@
 
 namespace Orchestra\Foundation\Http\Controllers;
 
-use Orchestra\Foundation\Processors\AssetPublisher;
 use Orchestra\Contracts\Foundation\Listener\AssetPublishing as Listener;
+use Orchestra\Foundation\Processors\AssetPublisher;
 
 class PublisherController extends AdminController implements Listener
 {

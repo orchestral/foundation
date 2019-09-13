@@ -3,8 +3,8 @@
 namespace Orchestra\Foundation\Http\Middleware;
 
 use Closure;
-use Orchestra\Contracts\Auth\Guard;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Orchestra\Contracts\Auth\Guard;
 use Orchestra\Contracts\Authorization\Authorization;
 
 class LoginAs

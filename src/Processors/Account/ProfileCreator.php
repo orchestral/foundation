@@ -3,11 +3,11 @@
 namespace Orchestra\Foundation\Processors\Account;
 
 use Exception;
-use Orchestra\Model\User as Eloquent;
-use Orchestra\Support\Facades\Foundation;
-use Orchestra\Foundation\Tools\GenerateRandomPassword;
 use Orchestra\Contracts\Foundation\Command\Account\ProfileCreator as Command;
 use Orchestra\Contracts\Foundation\Listener\Account\ProfileCreator as Listener;
+use Orchestra\Foundation\Tools\GenerateRandomPassword;
+use Orchestra\Model\User as Eloquent;
+use Orchestra\Support\Facades\Foundation;
 
 class ProfileCreator extends User implements Command
 {

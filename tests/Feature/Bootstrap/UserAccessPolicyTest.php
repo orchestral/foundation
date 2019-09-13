@@ -3,8 +3,8 @@
 namespace Orchestra\Tests\Feature\Bootstrap;
 
 use Orchestra\Foundation\Auth\User;
-use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Testing\Installation;
+use Orchestra\Tests\Feature\TestCase;
 
 class UserAccessPolicyTest extends TestCase
 {

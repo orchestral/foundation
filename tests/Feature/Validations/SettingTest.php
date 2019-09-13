@@ -2,8 +2,8 @@
 
 namespace Orchestra\Tests\Feature\Validations;
 
-use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Validations\Setting;
+use Orchestra\Tests\Feature\TestCase;
 
 class SettingTest extends TestCase
 {

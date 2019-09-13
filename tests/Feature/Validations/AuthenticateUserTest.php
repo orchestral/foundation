@@ -2,8 +2,8 @@
 
 namespace Orchestra\Tests\Feature\Validations;
 
-use Orchestra\Tests\Feature\TestCase;
 use Orchestra\Foundation\Validations\AuthenticateUser;
+use Orchestra\Tests\Feature\TestCase;
 
 class AuthenticateUserTest extends TestCase
 {
