@@ -10,6 +10,7 @@ use Illuminate\Log\LogServiceProvider;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Orchestra\Contracts\Foundation\Application as ApplicationContract;
+use Orchestra\Model\HS;
 use Orchestra\Routing\RoutingServiceProvider;
 
 class Application extends BaseApplication implements ApplicationContract
@@ -157,6 +158,8 @@ class Application extends BaseApplication implements ApplicationContract
     public function flush()
     {
         parent::flush();
+
+        HS::flush();
 
         $this->booted = false;
         $this->hasBeenBootstrapped = false;

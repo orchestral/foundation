@@ -2,7 +2,9 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
-## Unreleased
+## 3.8.4
+
+Released: 2019-09-14
 
 ### Fixes
 
