@@ -33,7 +33,7 @@
         "laravie/html": "^6.0",
         "orchestra/asset": "^4.0",
         "orchestra/auth": "^4.0",
-        "orchestra/contracts": "^4.1",
+        "orchestra/contracts": "^4.0",
         "orchestra/extension": "^4.0",
         "orchestra/html": "^4.0",
         "orchestra/kernel": "^4.0",
