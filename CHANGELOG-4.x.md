@@ -4,11 +4,14 @@ This changelog references the relevant changes (bug and security fixes) done to 
 
 ## 4.0.0
 
+Released: 2019-09-14
+
 ### Changes
 
 * Update support for Laravel Framework v6.0+.
 * Change removed `Input` facade usage with `Illuminate\Http\Request` DI or `Request` facade whenever possible.
 * Replace `Mpociot\Reauthenticate` with `Orchestra\Reauthenticate`.
+* Resolve `User` and `Role` models using `Orchestra\Model\HS`.
 
 ### Deprecated
 
