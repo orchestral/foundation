@@ -49,7 +49,7 @@
     "require-dev": {
         "mockery/mockery": "^1.2",
         "orchestra/installer": "^4.0",
-        "orchestra/testing": "^4.0"
+        "orchestra/testing": "^4.0.1"
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (^4.0).",
