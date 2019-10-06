@@ -28,12 +28,12 @@
     },
     "require": {
         "php": ">=7.2",
-        "laravel/framework": "^6.0",
+        "laravel/framework": "^6.1",
         "laravie/authen": "^2.4",
         "laravie/html": "^6.0",
         "orchestra/asset": "^4.0",
         "orchestra/auth": "^4.0",
-        "orchestra/contracts": "^4.0",
+        "orchestra/contracts": "^4.1",
         "orchestra/extension": "^4.0",
         "orchestra/html": "^4.0",
         "orchestra/kernel": "^4.0",
@@ -47,14 +47,13 @@
         "orchestra/widget": "^4.0"
     },
     "require-dev": {
-        "mockery/mockery": "^1.2",
         "orchestra/installer": "^4.0",
-        "orchestra/testing": "^4.0.1"
+        "orchestra/testing": "^4.1"
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (^4.0).",
         "orchestra/installer": "Allow Orchestra Platform to be installed in new application (^4.0).",
-        "orchestra/testing": "Allow better unit testing support for Orchestra Platform (^4.0)."
+        "orchestra/testing": "Allow better unit testing support for Orchestra Platform (^4.1)."
     },
     "scripts": {
         "test": [
