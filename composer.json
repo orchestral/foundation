@@ -47,7 +47,6 @@
         "orchestra/widget": "^5.0"
     },
     "require-dev": {
-        "mockery/mockery": "^1.2",
         "orchestra/installer": "^5.0",
         "orchestra/testing": "^5.0"
     },
