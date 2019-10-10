@@ -48,12 +48,12 @@
     },
     "require-dev": {
         "orchestra/installer": "^4.0",
-        "orchestra/testing": "^4.0"
+        "orchestra/testing": "^4.0.1"
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (^4.0).",
         "orchestra/installer": "Allow Orchestra Platform to be installed in new application (^4.0).",
-        "orchestra/testing": "Allow better unit testing support for Orchestra Platform (^4.0)."
+        "orchestra/testing": "Allow better unit testing support for Orchestra Platform (^4.0.1)."
     },
     "scripts": {
         "test": [
