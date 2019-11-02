@@ -100,6 +100,8 @@ class ExtensionsControllerTest extends TestCase
         $memory = m::mock('\Orchestra\Contracts\Memory\Provider');
         list($presenter) = $this->bindDependencies();
 
+        $this->app->instance('orchestra.platform.memory', $memory);
+
         $memory->shouldReceive('get')->once()
                 ->with('extensions.active.laravel/framework.config', [])->andReturn([])
             ->shouldReceive('get')->once()
@@ -111,7 +113,7 @@ class ExtensionsControllerTest extends TestCase
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
         Extension::shouldReceive('finish')->once()->andReturnSelf();
-        Foundation::shouldReceive('memory')->twice()->andReturn($memory);
+        Foundation::shouldReceive('memory')->once()->andReturn($memory);
         View::shouldReceive('make')->once()
             ->with('orchestra/foundation::extensions.configure', m::type('Array'), [])
             ->andReturn('foo');

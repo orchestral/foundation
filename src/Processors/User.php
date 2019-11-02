@@ -49,7 +49,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
 
         // Get Users (with roles) and limit it to only 30 results for
         // pagination. Don't you just love it when pagination simply works.
-        $eloquent = User::hs()->search($search['keyword'])->hasRolesId($search['roles']);
+        $eloquent = UserEloquent::hs()->search($search['keyword'])->hasRolesId($search['roles']);
         $roles = Role::hs()->pluck('name', 'id');
 
         // Build users table HTML using a schema liked code structure.
@@ -180,7 +180,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      */
     public function destroy(UserRemoverListener $listener, $id)
     {
-        $user = User::hs()->findOrFail($id);
+        $user = UserEloquent::hs()->findOrFail($id);
 
         // Avoid self-deleting accident.
         if ((string) $user->id === (string) Auth::user()->id) {
@@ -211,7 +211,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      *
      * @return bool
      */
-    protected function saving(Eloquent $user, $input = [], $type = 'create')
+    protected function saving(UserEloquent $user, $input = [], $type = 'create')
     {
         $beforeEvent = ($type === 'create' ? 'creating' : 'updating');
         $afterEvent = ($type === 'create' ? 'created' : 'updated');
