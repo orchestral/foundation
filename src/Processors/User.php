@@ -4,7 +4,6 @@ namespace Orchestra\Foundation\Processors;
 
 use Exception;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Event;
 use Orchestra\Contracts\Foundation\Command\Account\UserCreator as UserCreatorCommand;
 use Orchestra\Contracts\Foundation\Command\Account\UserRemover as UserRemoverCommand;
 use Orchestra\Contracts\Foundation\Command\Account\UserUpdater as UserUpdaterCommand;
@@ -13,9 +12,10 @@ use Orchestra\Contracts\Foundation\Listener\Account\UserCreator as UserCreatorLi
 use Orchestra\Contracts\Foundation\Listener\Account\UserRemover as UserRemoverListener;
 use Orchestra\Contracts\Foundation\Listener\Account\UserUpdater as UserUpdaterListener;
 use Orchestra\Contracts\Foundation\Listener\Account\UserViewer as UserViewerListener;
+use Orchestra\Foundation\Auth\User as UserEloquent;
 use Orchestra\Foundation\Http\Presenters\User as Presenter;
 use Orchestra\Foundation\Validations\User as Validator;
-use Orchestra\Model\User as Eloquent;
+use Orchestra\Model\Role;
 use Orchestra\Support\Facades\Foundation;
 
 class User extends Processor implements UserCreatorCommand, UserRemoverCommand, UserUpdaterCommand, UserViewerCommand
@@ -49,13 +49,13 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
 
         // Get Users (with roles) and limit it to only 30 results for
         // pagination. Don't you just love it when pagination simply works.
-        $eloquent = Foundation::make('orchestra.user')->search($search['keyword'])->hasRolesId($search['roles']);
-        $roles = Foundation::make('orchestra.role')->pluck('name', 'id');
+        $eloquent = User::hs()->search($search['keyword'])->hasRolesId($search['roles']);
+        $roles = Role::hs()->pluck('name', 'id');
 
         // Build users table HTML using a schema liked code structure.
         $table = $this->presenter->table($eloquent);
 
-        Event::dispatch('orchestra.list: users', [$eloquent, $table]);
+        \event('orchestra.list: users', [$eloquent, $table]);
 
         // Once all event listening to `orchestra.list: users` is executed,
         // we can add we can now add the final column, edit and delete
@@ -81,7 +81,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      */
     public function create(UserCreatorListener $listener)
     {
-        $eloquent = Foundation::make('orchestra.user');
+        $eloquent = UserEloquent::hs();
         $form = $this->presenter->form($eloquent, 'create');
 
         $this->fireEvent('form', [$eloquent, $form]);
@@ -99,7 +99,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      */
     public function edit(UserUpdaterListener $listener, $id)
     {
-        $eloquent = Foundation::make('orchestra.user')->findOrFail($id);
+        $eloquent = UserEloquent::hs()->findOrFail($id);
         $form = $this->presenter->form($eloquent, 'update');
 
         $this->fireEvent('form', [$eloquent, $form]);
@@ -123,13 +123,11 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
             return $listener->createUserFailedValidation($validation->getMessageBag());
         }
 
-        $user = Foundation::make('orchestra.user');
-
-        $user->status = Eloquent::UNVERIFIED;
-        $user->password = $input['password'];
-
         try {
-            $this->saving($user, $input, 'create');
+            $this->saving(\tap(UserEloquent::hs(), static function ($user) use ($input) {
+                $user->status = UserEloquent::UNVERIFIED;
+                $user->password = $input['password'];
+            }), $input, 'create');
         } catch (Exception $e) {
             return $listener->createUserFailed(['error' => $e->getMessage()]);
         }
@@ -159,7 +157,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
             return $listener->updateUserFailedValidation($validation->getMessageBag(), $id);
         }
 
-        $user = Foundation::make('orchestra.user')->findOrFail($id);
+        $user = UserEloquent::hs()->findOrFail($id);
 
         ! empty($input['password']) && $user->password = $input['password'];
 
@@ -182,7 +180,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      */
     public function destroy(UserRemoverListener $listener, $id)
     {
-        $user = Foundation::make('orchestra.user')->findOrFail($id);
+        $user = User::hs()->findOrFail($id);
 
         // Avoid self-deleting accident.
         if ((string) $user->id === (string) Auth::user()->id) {
@@ -245,7 +243,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      */
     protected function fireEvent($type, array $parameters = [])
     {
-        Event::dispatch("orchestra.{$type}: users", $parameters);
-        Event::dispatch("orchestra.{$type}: user.account", $parameters);
+        \event("orchestra.{$type}: users", $parameters);
+        \event("orchestra.{$type}: user.account", $parameters);
     }
 }
