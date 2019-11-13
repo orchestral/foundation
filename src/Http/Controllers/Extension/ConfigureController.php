@@ -7,7 +7,6 @@ use Illuminate\Support\Fluent;
 use Orchestra\Contracts\Extension\Listener\Configure as Listener;
 use Orchestra\Foundation\Jobs\RefreshRouteCache;
 use Orchestra\Foundation\Processors\Extension\Configure as Processor;
-use Orchestra\Support\Facades\Foundation;
 
 class ConfigureController extends Controller implements Listener
 {
@@ -72,7 +71,7 @@ class ConfigureController extends Controller implements Listener
     {
         $name = $data['extension']->name;
 
-        \set_meta('title', Foundation::memory()->get("extensions.available.{$name}.name", $name));
+        \set_meta('title', \memorize("extensions.available.{$name}.name", $name));
         \set_meta('description', \trans('orchestra/foundation::title.extensions.configure'));
 
         return \view('orchestra/foundation::extensions.configure', $data);

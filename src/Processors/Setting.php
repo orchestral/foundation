@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation\Processors;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Fluent;
 use Orchestra\Contracts\Foundation\Command\SettingUpdater as SettingUpdateCommand;
@@ -159,7 +158,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
     private function sanitizeInput($input, $alternative)
     {
         if (empty($input)) {
-            $input = Config::get($alternative);
+            $input = \config($alternative);
         }
 
         return $input;

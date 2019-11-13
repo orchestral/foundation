@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation;
 
-use Illuminate\Support\Facades\Config;
 use Orchestra\Http\RouteResolver as Resolver;
 
 class RouteResolver extends Resolver
@@ -32,7 +31,7 @@ class RouteResolver extends Resolver
         // Orchestra Platform routing is managed by `orchestra/foundation::handles`
         // and can be manage using configuration.
         if (\in_array($name, ['orchestra'])) {
-            $url = Config::get('orchestra/foundation::handles', $default);
+            $url = \config('orchestra/foundation::handles', $default);
 
             return $this->app->make('orchestra.extension.url')->handle(
                 \is_string($url) ? $url : 'admin'
