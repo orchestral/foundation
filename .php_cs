@@ -1,7 +1,7 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-            ->in(__DIR__.'/resources')
+            ->in(__DIR__.'/config')
             ->in(__DIR__.'/src')
             ->in(__DIR__.'/tests');
 
@@ -11,7 +11,6 @@ return PhpCsFixer\Config::create()
                 '@Symfony' => true,
                 'array_syntax' => ['syntax' => 'short'],
                 'binary_operator_spaces' => ['align_double_arrow' => false, 'align_equals' => false],
-                'increment_style' => ['style' => 'post'],
                 'no_extra_blank_lines' => false,
                 'no_empty_comment' => false,
                 'no_extra_consecutive_blank_lines' => false,
