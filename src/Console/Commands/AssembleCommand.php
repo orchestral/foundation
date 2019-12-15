@@ -30,7 +30,7 @@ class AssembleCommand extends Command
      * @param  \Orchestra\Contracts\Foundation\Foundation  $foundation
      * @param  \Orchestra\Contracts\Memory\Provider  $memory
      *
-     * @return void
+     * @return int
      */
     public function handle(Foundation $foundation, Memory $memory)
     {
@@ -39,6 +39,8 @@ class AssembleCommand extends Command
         $this->refreshApplication($foundation, $memory);
 
         $this->optimizeApplication();
+
+        return 0;
     }
 
     /**

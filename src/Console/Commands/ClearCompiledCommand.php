@@ -24,7 +24,7 @@ class ClearCompiledCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return int
      */
     public function handle()
     {
@@ -36,5 +36,7 @@ class ClearCompiledCommand extends Command
         })->each(static function ($file) {
             @\unlink($file);
         });
+
+        return 0;
     }
 }
