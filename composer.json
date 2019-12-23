@@ -47,7 +47,7 @@
         "orchestra/widget": "^4.0"
     },
     "require-dev": {
-        "orchestra/installer": "^4.0",
+        "orchestra/installer": "^4.2",
         "orchestra/testing": "^4.1"
     },
     "suggest": {
