@@ -8,7 +8,6 @@ use Illuminate\Foundation\Application as BaseApplication;
 use Illuminate\Foundation\PackageManifest;
 use Illuminate\Log\LogServiceProvider;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Orchestra\Contracts\Foundation\Application as ApplicationContract;
 use Orchestra\Model\HS;
 use Orchestra\Routing\RoutingServiceProvider;
@@ -131,7 +130,8 @@ class Application extends BaseApplication implements ApplicationContract
     {
         $providers = Collection::make($this->config['app.providers'])
                         ->partition(static function ($provider) {
-                            return Str::startsWith($provider, ['Illuminate\\', 'Orchestra\\']);
+                            return \strpos($provider, 'Illuminate\\') === 0
+                                || \strpos($provider, 'Orchestra\\') === 0;
                         });
 
         $providers->splice(1, 0, [$this->make(PackageManifest::class)->providers()]);

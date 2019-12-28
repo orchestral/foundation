@@ -4,7 +4,6 @@ namespace Orchestra\Foundation\Support;
 
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Fluent;
-use Illuminate\Support\Str;
 
 abstract class MenuHandler
 {
@@ -170,7 +169,7 @@ abstract class MenuHandler
         $id = $this->getAttribute('id');
         $menus = $this->menu['with'] ?? [];
         $parent = $this->getAttribute('position');
-        $position = Str::startsWith($parent, '^:') ? $parent.'.' : '^:';
+        $position = \strpos($parent, '^:') === 0 ? $parent.'.' : '^:';
 
         foreach ((array) $menus as $class) {
             $menu = $this->container->make($class)
