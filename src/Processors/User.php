@@ -16,7 +16,6 @@ use Orchestra\Foundation\Auth\User as UserEloquent;
 use Orchestra\Foundation\Http\Presenters\User as Presenter;
 use Orchestra\Foundation\Validations\User as Validator;
 use Orchestra\Model\Role;
-use Orchestra\Support\Facades\Foundation;
 
 class User extends Processor implements UserCreatorCommand, UserRemoverCommand, UserUpdaterCommand, UserViewerCommand
 {

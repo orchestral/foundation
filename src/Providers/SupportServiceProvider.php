@@ -8,7 +8,6 @@ use Illuminate\Support\ServiceProvider;
 use Orchestra\Foundation\Auth\User;
 use Orchestra\Foundation\Publisher\Filesystem;
 use Orchestra\Foundation\Publisher\PublisherManager;
-use Orchestra\Model\HS;
 use Orchestra\Model\Role;
 
 class SupportServiceProvider extends ServiceProvider implements DeferrableProvider
