@@ -26,13 +26,10 @@ $factory->define(User::class, function (Generator $faker) {
     ];
 });
 
-$factory->defineAs(User::class, 'admin', function (Generator $faker) {
-    return [
-        'email' => $faker->safeEmail,
-        'fullname' => $faker->name,
-        'password' => '$2y$04$Ri4Tj1yi9EnO6EI3lS11suHnymOKbC63D85NeHHo74uk4dHe9eah2',
-        'email_verified_at' => now(),
-        'remember_token' => Str::random(10),
-        'status' => User::VERIFIED,
-    ];
+$factory->afterCreatingState(User::class, 'member', function (User $user, Generator $faker) {
+    $user->roles()->sync([2]);
+});
+
+$factory->afterCreatingState(User::class, 'admin', function (User $user, Generator $faker) {
+    $user->roles()->sync([1]);
 });
