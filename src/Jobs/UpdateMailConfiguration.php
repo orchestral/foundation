@@ -46,11 +46,11 @@ class UpdateMailConfiguration extends Job
 
         $memory->put('email', Arr::only($config, ['driver', 'host', 'port', 'encryption', 'sendmail']));
 
-        if ($config['username'] !== null) {
+        if (! \is_null($config['username'])) {
             $memory->securePut('email.username', $config['username']);
         }
 
-        if ($config['password'] !== null) {
+        if (! \is_null($config['password'])) {
             $memory->securePut('email.password', $config['password']);
         }
 
