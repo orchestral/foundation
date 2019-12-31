@@ -88,6 +88,9 @@ class CredentialController extends AdminController implements AuthenticateListen
     {
         $this->redirectToPath = $request->input('redirect');
 
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return $deauthenticate($this);
     }
 
