@@ -1,6 +1,6 @@
 <?php
 
-namespace Orchestra\Foundation\Job;
+namespace Orchestra\Foundation\Jobs;
 
 use Orchestra\Contracts\Authorization\Authorization;
 use Orchestra\Model\Role;

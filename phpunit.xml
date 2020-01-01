@@ -32,6 +32,7 @@
             <exclude>
                 <directory>resources/</directory>
                 <directory>routes/</directory>
+                <file>src/ComposerScripts.php</file>
             </exclude>
         </whitelist>
     </filter>
