@@ -2,6 +2,7 @@
 
 namespace Orchestra\Foundation\Jobs;
 
+use Illuminate\Support\Collection;
 use Orchestra\Contracts\Authorization\Authorization;
 use Orchestra\Model\Role;
 
@@ -16,9 +17,12 @@ class SyncDefaultAuthorization extends Job
      */
     public function handle(Authorization $acl)
     {
-        $actions = \config('orchestra/foundation::actions', [
-            'Manage Users', 'Manage Orchestra', 'Manage Roles', 'Manage Acl',
-        ]);
+        $actions = Collection::make(\config('orchestra/foundation::actions', []))
+            ->merge([
+                'Manage Users', 'Manage Orchestra', 'Manage Roles', 'Manage Acl',
+            ])
+            ->unique()
+            ->values();
 
         $attaches = [];
 
@@ -34,6 +38,6 @@ class SyncDefaultAuthorization extends Job
 
         $admin = Role::hs()->admin();
 
-        $acl->allow($admin->name, $actions);
+        $acl->allow($admin->name, $actions->all());
     }
 }
