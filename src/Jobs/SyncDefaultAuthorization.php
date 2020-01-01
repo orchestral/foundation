@@ -16,6 +16,14 @@ class SyncDefaultAuthorization extends Job
      */
     public function handle(Authorization $acl)
     {
+        if (! $acl->actions()->has('Manage Roles')) {
+            $acl->actions()->attach(['Manage Roles']);
+        }
+
+        if (! $acl->actions()->has('Manage Acl')) {
+            $acl->actions()->attach(['Manage Acl']);
+        }
+
         $admin = Role::hs()->admin();
 
         $acl->allow($admin->name, ['Manage Users', 'Manage Orchestra', 'Manage Roles', 'Manage Acl']);
