@@ -22,6 +22,18 @@ class Application extends BaseApplication implements ApplicationContract
     protected $vendorPath;
 
     /**
+     * Register the basic bindings into the container.
+     *
+     * @return void
+     */
+    protected function registerBaseBindings()
+    {
+        parent::registerBaseBindings();
+
+        HS::override('User', Auth\User::class);
+    }
+
+    /**
      * Register all of the base service providers.
      *
      * @return void

@@ -26,7 +26,6 @@ $factory->define(User::class, function (Generator $faker) {
     ];
 });
 
-
 $factory->afterCreatingState(User::class, 'member', function (User $user, Generator $faker) {
     $user->roles()->sync([2]);
 });

@@ -99,13 +99,14 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
      * Get the notification routing information for the given driver.
      *
      * @param  string  $driver
+     * @param  \Illuminate\Notifications\Notification|null  $notification
      *
      * @return mixed
      */
-    public function routeNotificationFor($driver)
+    public function routeNotificationFor($driver, $notification = null)
     {
         if (\method_exists($this, $method = 'routeNotificationFor'.Str::studly($driver))) {
-            return $this->{$method}();
+            return $this->{$method}($notification);
         }
 
         switch ($driver) {
@@ -113,8 +114,6 @@ class User extends Authenticatable implements AuthorizableContract, CanResetPass
                 return $this->notifications();
             case 'mail':
                 return $this->getRecipientEmail();
-            case 'nexmo':
-                return $this->getAttribute('phone_number');
         }
     }
 }
