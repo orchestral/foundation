@@ -31,6 +31,7 @@
         "laravel/framework": "^6.2",
         "laravie/authen": "^2.4",
         "laravie/html": "^6.0",
+        "nesbot/carbon": "^2.10",
         "orchestra/asset": "^4.0",
         "orchestra/auth": "^4.0",
         "orchestra/contracts": "^4.1",
