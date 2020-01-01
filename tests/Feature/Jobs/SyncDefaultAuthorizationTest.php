@@ -13,7 +13,7 @@ class SyncDefaultAuthorizationTest extends TestCase
     /** @test */
     public function it_can_be_synced()
     {
-        $acl = \app('orchestra.platform.acl');
+        $acl = $this->app->make('orchestra.platform.acl');
 
         $this->assertTrue($acl->canAs($this->adminUser, 'Manage Users'));
         $this->assertTrue($acl->canAs($this->adminUser, 'Manage Orchestra'));
