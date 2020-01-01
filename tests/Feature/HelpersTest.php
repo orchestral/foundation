@@ -5,40 +5,32 @@ namespace Orchestra\Tests\Feature;
 use Mockery as m;
 use Orchestra\Foundation\Testing\Installation;
 
-class HelperTest extends TestCase
+class HelpersTest extends TestCase
 {
     use Installation;
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_use_orchestra_helper()
     {
         $this->assertInstanceOf('\Orchestra\Contracts\Foundation\Foundation', orchestra());
         $this->assertInstanceOf('\Orchestra\Contracts\Memory\Provider', orchestra('memory'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_use_memorize_helper()
     {
-        $this->assertEquals('My Application', memorize('site.name'));
+        $this->assertEquals('Orchestra Platform', memorize('site.name'));
         $this->assertEquals('Laravel', memorize('site.platform', 'Laravel'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_use_handles_helper()
     {
         $this->assertEquals('http://localhost/foo', handles('app::foo'));
         $this->assertEquals('http://localhost/admin/login', handles('orchestra::login'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_use_get_meta_helper()
     {
         $this->instance('orchestra.meta', $meta = m::mock('\Orchestra\Foundation\Meta'));
@@ -48,9 +40,7 @@ class HelperTest extends TestCase
         $this->assertEquals('foobar', get_meta('title', 'foo'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_use_set_meta_helper()
     {
         $this->assertEquals(['title' => 'foo'], set_meta('title', 'foo'));

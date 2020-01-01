@@ -119,7 +119,7 @@ if (! \function_exists('use_timezone')) {
      */
     function use_timezone(CarbonInterface $carbon, string $timezone): CarbonInterface
     {
-        if ($carbon->timezone === $timezone) {
+        if ($carbon->tzName === $timezone) {
             return $carbon->copy();
         }
 
