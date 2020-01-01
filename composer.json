@@ -47,8 +47,8 @@
         "orchestra/widget": "^4.0"
     },
     "require-dev": {
-        "orchestra/installer": "^4.2",
-        "orchestra/testing": "^4.1"
+        "orchestra/installer": "^4.3",
+        "orchestra/testing": "^4.2"
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (^4.0).",

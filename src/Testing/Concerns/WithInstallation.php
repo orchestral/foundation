@@ -67,7 +67,7 @@ trait WithInstallation
 
         $installer->create($this->adminUser, [
             'site_name' => $config['name'] ?? 'Orchestra Platform',
-            'email' => $config['email'] ?? 'hello@orchestraplatform.com',
+            'email' => $config['email'] ?? $this->adminUser->email,
         ]);
 
         $this->app->instance('orchestra.installed', true);
