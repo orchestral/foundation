@@ -83,6 +83,17 @@ return [
 
     ],
 
+
+    /*
+    |----------------------------------------------------------------------
+    | ACL actions configuration for Orchestra Platform
+    |----------------------------------------------------------------------
+    */
+
+    'actions' => [
+        'Manage Users', 'Manage Orchestra', 'Manage Roles', 'Manage Acl',
+    ],
+
     /*
     |----------------------------------------------------------------------
     | Login Throttles for Orchestra Platform
