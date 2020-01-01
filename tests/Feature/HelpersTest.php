@@ -2,11 +2,10 @@
 
 namespace Orchestra\Tests\Feature;
 
-use Carbon\Carbon;
 use Mockery as m;
 use Orchestra\Foundation\Testing\Installation;
 
-class HelperTest extends TestCase
+class HelpersTest extends TestCase
 {
     use Installation;
 
@@ -47,23 +46,5 @@ class HelperTest extends TestCase
         $this->assertEquals(['title' => 'foo'], set_meta('title', 'foo'));
 
         $this->assertSame('foo', get_meta('title'));
-    }
-
-    /** @test */
-    public function it_can_use_timezone_helper()
-    {
-        $date = Carbon::now('UTC');
-
-        $duplicate = \use_timezone($date, 'UTC');
-
-        $this->assertNotSame($duplicate, $date);
-        $this->assertSame('UTC', (string) $date->timezone);
-        $this->assertSame('UTC', (string) $duplicate->timezone);
-        $this->assertSame($date->toDateTimeString(), $duplicate->toDateTimeString());
-
-        $duplicateTimezone = \use_timezone($date, 'Asia/Kuala_Lumpur');
-        $this->assertNotSame($duplicateTimezone, $date);
-        $this->assertSame('UTC', (string) $date->timezone);
-        $this->assertSame('Asia/Kuala_Lumpur', (string) $duplicateTimezone->timezone);
     }
 }
