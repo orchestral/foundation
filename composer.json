@@ -36,7 +36,7 @@
         "orchestra/contracts": "^4.1",
         "orchestra/extension": "^4.0.1",
         "orchestra/html": "^4.1",
-        "orchestra/kernel": "^4.0.1",
+        "orchestra/kernel": "^4.2",
         "orchestra/memory": "^4.0",
         "orchestra/messages": "^4.0",
         "orchestra/model": "^4.3",
