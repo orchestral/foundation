@@ -16,7 +16,10 @@ class SyncDefaultAuthorization extends Job
      */
     public function handle(Authorization $acl)
     {
-        $actions = \config('orchestra/foundation::actions', []);
+        $actions = \config('orchestra/foundation::actions', [
+            'Manage Users', 'Manage Orchestra', 'Manage Roles', 'Manage Acl',
+        ]);
+
         $attaches = [];
 
         foreach ($actions as $action) {
