@@ -1,6 +1,21 @@
 preset: package
 
 namespace: Orchestra\Foundation
+user-auth-provider: Orchestra\Foundation\Auth\User
+
+paths:
+  src: src
+  resource: resources
+
+factory:
+  path: database/factories
+
+migration:
+  path: database/migrations
+  prefix: ''
+
+console:
+  namespace: Orchestra\Foundation\Console\Commands
 
 provider:
   namespace: Orchestra\Foundation\Providers
