@@ -1,0 +1,9 @@
+preset: package
+
+namespace: Orchestra\Foundation
+
+provider:
+  namespace: Orchestra\Foundation\Providers
+
+testing:
+  namespace: Orchestra\Tests
