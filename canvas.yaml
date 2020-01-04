@@ -8,11 +8,7 @@ paths:
   resource: resources
 
 factory:
-  path: database/factories
-
-migration:
-  path: database/migrations
-  prefix: ''
+  path: tests/factories
 
 console:
   namespace: Orchestra\Foundation\Console\Commands
