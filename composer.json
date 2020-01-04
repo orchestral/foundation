@@ -47,6 +47,7 @@
         "orchestra/widget": "^5.0"
     },
     "require-dev": {
+        "orchestra/canvas": "^5.0",
         "orchestra/installer": "^5.0",
         "orchestra/testing": "^5.0"
     },

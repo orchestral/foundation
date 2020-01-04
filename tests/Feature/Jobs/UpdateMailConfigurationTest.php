@@ -22,6 +22,5 @@ class UpdateMailConfigurationTest extends TestCase
 
         $this->assertSame('My Platform', $memory->get('email.from.name'));
         $this->assertSame('crynobone@gmail.com', $memory->get('email.from.address'));
-
     }
 }

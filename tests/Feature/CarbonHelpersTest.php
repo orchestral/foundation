@@ -3,8 +3,6 @@
 namespace Orchestra\Tests\Feature;
 
 use Carbon\Carbon;
-use Mockery as m;
-use Orchestra\Foundation\Testing\Installation;
 
 class CarbonHelpersTest extends TestCase
 {
