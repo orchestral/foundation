@@ -2,6 +2,26 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+## 4.2.0
+
+Released: 2020-01-04
+
+### Added
+
+* Added `Orchestra\Foundation\Jobs\SyncDefaultAuthorization`.
+* Added `Orchestra\Foundation\Jobs\UpdateMailConfiguration`.
+
+### Changes
+
+* Improves eloquent hot-swap implementation. 
+* Generated installer will defaults to generated admin email from factory instead of hardcoded email address. 
+* Set command exit code.
+* Update `Orchestra\Foundation\Auth\User::routeNotificationFor()`.
+
+### Fixes
+
+* Fixes `use_timezone()` usage.
+
 ## 4.1.0
 
 Released: 2019-10-11
