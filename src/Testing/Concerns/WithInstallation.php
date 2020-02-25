@@ -2,7 +2,7 @@
 
 namespace Orchestra\Foundation\Testing\Concerns;
 
-use Illuminate\Foundation\Testing\PendingCommand;
+use Illuminate\Contracts\Console\Kernel as ConsoleKernel;
 use Orchestra\Contracts\Installation\Installation as InstallationContract;
 use Orchestra\Installation\InstallerServiceProvider;
 
@@ -15,12 +15,8 @@ trait WithInstallation
      */
     protected function makeInstaller(): InstallationContract
     {
-        $artisan = function ($command) {
-            \tap($this->artisan($command), static function ($console) {
-                if ($console instanceof PendingCommand) {
-                    $console->run();
-                }
-            });
+        $artisan = function ($command, array $parameters = []) {
+            $this->app[ConsoleKernel::class]->call($command, $parameters);
         };
 
         if (! $this->app->bound(InstallationContract::class)) {
@@ -33,7 +29,7 @@ trait WithInstallation
         $installer->migrate();
 
         $this->beforeApplicationDestroyed(static function () use ($artisan) {
-            $artisan('migrate:rollback');
+            $artisan('migrate:rollback', ['--no-interaction' => true]);
         });
 
         return $installer;
@@ -49,19 +45,15 @@ trait WithInstallation
      */
     protected function runInstallation(?InstallationContract $installer = null, array $config = [])
     {
-        $artisan = function ($command) {
-            \tap($this->artisan($command), static function ($console) {
-                if ($console instanceof PendingCommand) {
-                    $console->run();
-                }
-            });
+        $artisan = function ($command, array $parameters = []) {
+            $this->app[ConsoleKernel::class]->call($command, $parameters);
         };
 
         if (\is_null($installer)) {
             $installer = $this->makeInstaller();
         }
 
-        $artisan('migrate');
+        $artisan('migrate', ['--no-interaction' => true]);
 
         $this->adminUser = $this->createAdminUser();
 
@@ -73,7 +65,7 @@ trait WithInstallation
         $this->app->instance('orchestra.installed', true);
 
         $this->beforeApplicationDestroyed(function () use ($artisan) {
-            $artisan('migrate:rollback');
+            $artisan('migrate:rollback', ['--no-interaction' => true]);
             $this->app->instance('orchestra.installed', false);
         });
 
