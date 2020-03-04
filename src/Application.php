@@ -8,8 +8,8 @@ use Illuminate\Foundation\Application as BaseApplication;
 use Illuminate\Foundation\PackageManifest;
 use Illuminate\Log\LogServiceProvider;
 use Illuminate\Support\Collection;
+use Laravie\Dhosa\HotSwap;
 use Orchestra\Contracts\Foundation\Application as ApplicationContract;
-use Orchestra\Model\HS;
 use Orchestra\Routing\RoutingServiceProvider;
 
 class Application extends BaseApplication implements ApplicationContract
@@ -30,7 +30,7 @@ class Application extends BaseApplication implements ApplicationContract
     {
         parent::registerBaseBindings();
 
-        HS::override('User', Auth\User::class);
+        HotSwap::override('User', Auth\User::class);
     }
 
     /**
@@ -171,7 +171,7 @@ class Application extends BaseApplication implements ApplicationContract
     {
         parent::flush();
 
-        HS::flush();
+        HotSwap::flush();
 
         $this->booted = false;
         $this->hasBeenBootstrapped = false;
