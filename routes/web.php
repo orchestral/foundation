@@ -40,9 +40,11 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', static function 
     // Route to asset publishing.
     $router->get('publisher', 'PublisherController@show');
 
-    // Route to users.
-    $router->name('orchestra.')
-        ->resource('users', 'UsersController', ['except' => ['show']]);
+    $router->name('orchestra')
+        ->group(function ($router) {
+            // Route to users.
+            $router->resource('users', 'UsersController', ['except' => ['show']]);
+        });
 
     // Route for settings
     $router->get('settings', 'SettingsController@edit');
