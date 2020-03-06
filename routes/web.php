@@ -41,7 +41,8 @@ Foundation::namespaced('Orchestra\Foundation\Http\Controllers', static function 
     $router->get('publisher', 'PublisherController@show');
 
     // Route to users.
-    $router->resource('users', 'UsersController', ['except' => ['show']]);
+    $router->name('orchestra.')
+        ->resource('users', 'UsersController', ['except' => ['show']]);
 
     // Route for settings
     $router->get('settings', 'SettingsController@edit');
