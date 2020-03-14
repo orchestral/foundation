@@ -38,12 +38,12 @@ class MailConfigurationUpdater
 
         $this->memory->put('email', Arr::only($config, ['driver', 'host', 'port', 'encryption', 'sendmail']));
 
-        if ($config['mailer']['smtp']['username'] !== null) {
-            $this->memory->securePut('email.username', $config['mailer']['smtp']['username']);
+        if ($config['mailers']['smtp']['username'] !== null) {
+            $this->memory->securePut('email.username', $config['mailers']['smtp']['username']);
         }
 
-        if ($config['mailer']['smtp']['password'] !== null) {
-            $this->memory->securePut('email.password', $config['mailer']['smtp']['password']);
+        if ($config['mailers']['smtp']['password'] !== null) {
+            $this->memory->securePut('email.password', $config['mailers']['smtp']['password']);
         }
 
         $this->memory->put('email.from', [
