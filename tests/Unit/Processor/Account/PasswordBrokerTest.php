@@ -28,7 +28,7 @@ class PasswordBrokerTest extends TestCase
 
         $stub = new PasswordBroker($validator, $password);
 
-        $validator->shouldReceive('with')->once()->with($input)->andReturn($resolver);
+        $validator->shouldReceive('validate')->once()->with($input)->andReturn($resolver);
         $resolver->shouldReceive('fails')->once()->andReturn(false);
         $password->shouldReceive('sendResetLink')->once()
             ->with(['email' => $input['email']])->andReturn(Password::RESET_LINK_SENT);
@@ -54,7 +54,7 @@ class PasswordBrokerTest extends TestCase
 
         $stub = new PasswordBroker($validator, $password);
 
-        $validator->shouldReceive('with')->once()->with($input)->andReturn($resolver);
+        $validator->shouldReceive('validate')->once()->with($input)->andReturn($resolver);
         $resolver->shouldReceive('fails')->once()->andReturn(false);
         $password->shouldReceive('sendResetLink')->once()
             ->with(['email' => $input['email']])->andReturn(Password::INVALID_USER);
@@ -80,7 +80,7 @@ class PasswordBrokerTest extends TestCase
 
         $stub = new PasswordBroker($validator, $password);
 
-        $validator->shouldReceive('with')->once()->with($input)->andReturn($resolver);
+        $validator->shouldReceive('validate')->once()->with($input)->andReturn($resolver);
         $resolver->shouldReceive('fails')->once()->andReturn(true)
             ->shouldReceive('getMessageBag')->once()->andReturn([]);
         $listener->shouldReceive('resetLinkFailedValidation')->once()->with([])->andReturn('reset.failed.validation');

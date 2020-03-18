@@ -72,7 +72,8 @@ class Configure extends Processor implements Command
             return $listener->suspend(404);
         }
 
-        $validation = $this->validator->with($input, ["orchestra.validate: extension.{$extension->get('name')}"]);
+        $validation = $this->validator->listen(["orchestra.validate: extension.{$extension->get('name')}"])
+            ->validate($input);
 
         if ($validation->fails()) {
             return $listener->updateConfigurationFailedValidation($validation->getMessageBag(), $extension->uid);

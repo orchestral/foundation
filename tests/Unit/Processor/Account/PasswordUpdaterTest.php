@@ -56,8 +56,8 @@ class PasswordUpdaterTest extends TestCase
             ->shouldReceive('getAttribute')->once()->with('password')->andReturn('old.password')
             ->shouldReceive('setAttribute')->once()->with('password', $input['new_password'])->andReturnNull()
             ->shouldReceive('saveOrFail')->once()->andReturnNull();
-        $validator->shouldReceive('on')->once()->with('changePassword')->andReturnSelf()
-            ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
+        $validator->shouldReceive('state')->once()->with('change-password')->andReturnSelf()
+            ->shouldReceive('validate')->once()->with($input)->andReturn($resolver);
         $resolver->shouldReceive('fails')->once()->andReturn(false);
         $listener->shouldReceive('passwordUpdated')->once()->andReturn('password.updated');
 
@@ -111,8 +111,8 @@ class PasswordUpdaterTest extends TestCase
         $stub = new PasswordUpdater($presenter, $validator);
 
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id']);
-        $validator->shouldReceive('on')->once()->with('changePassword')->andReturnSelf()
-            ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
+        $validator->shouldReceive('state')->once()->with('change-password')->andReturnSelf()
+            ->shouldReceive('validate')->once()->with($input)->andReturn($resolver);
         $resolver->shouldReceive('fails')->once()->andReturn(true)
             ->shouldReceive('getMessageBag')->once()->andReturn([]);
         $listener->shouldReceive('updatePasswordFailedValidation')->once()
@@ -145,8 +145,8 @@ class PasswordUpdaterTest extends TestCase
             ->shouldReceive('getAttribute')->once()->with('password')->andReturn('old.password')
             ->shouldReceive('setAttribute')->once()->with('password', $input['new_password'])->andReturnNull()
             ->shouldReceive('saveOrFail')->once()->andThrow('\Exception');
-        $validator->shouldReceive('on')->once()->with('changePassword')->andReturnSelf()
-            ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
+        $validator->shouldReceive('state')->once()->with('change-password')->andReturnSelf()
+            ->shouldReceive('validate')->once()->with($input)->andReturn($resolver);
         $resolver->shouldReceive('fails')->once()->andReturn(false);
         $listener->shouldReceive('updatePasswordFailed')->once()->with(m::type('Array'))->andReturn('password.failed');
 
@@ -176,8 +176,8 @@ class PasswordUpdaterTest extends TestCase
 
         $user->shouldReceive('getAttribute')->once()->with('id')->andReturn($input['id'])
             ->shouldReceive('getAttribute')->once()->with('password')->andReturn('old.password');
-        $validator->shouldReceive('on')->once()->with('changePassword')->andReturnSelf()
-            ->shouldReceive('with')->once()->with($input)->andReturn($resolver);
+        $validator->shouldReceive('state')->once()->with('change-password')->andReturnSelf()
+            ->shouldReceive('validate')->once()->with($input)->andReturn($resolver);
         $resolver->shouldReceive('fails')->once()->andReturn(false);
         $listener->shouldReceive('verifyCurrentPasswordFailed')->once()->andReturn('current.password.failed');
 

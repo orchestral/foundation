@@ -49,7 +49,7 @@ class ProfileCreator extends User implements Command
             $password = $temporaryPassword = \resolve(GenerateRandomPassword::class)();
         }
 
-        $validation = $this->validator->on('register')->with($input);
+        $validation = $this->validator->state('register')->validate($input);
 
         // Validate user registration, if any errors is found redirect it
         // back to registration page with the errors

@@ -42,7 +42,7 @@ class PasswordUpdater extends User implements Command
             return $listener->abortWhenUserMismatched();
         }
 
-        $validation = $this->validator->on('changePassword')->with($input);
+        $validation = $this->validator->state('change-password')->validate($input);
 
         if ($validation->fails()) {
             return $listener->updatePasswordFailedValidation($validation->getMessageBag());

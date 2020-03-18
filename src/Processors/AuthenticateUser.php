@@ -36,7 +36,7 @@ class AuthenticateUser extends Authenticate implements Command
      */
     public function login(Listener $listener, array $input, ThrottlesCommand $throttles = null)
     {
-        $validation = $this->validator->on('login')->with($input);
+        $validation = $this->validator->state('login')->validate($input);
 
         // Validate user login, if any errors is found redirect it back to
         // login page with the errors.

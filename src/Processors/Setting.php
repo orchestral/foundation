@@ -89,7 +89,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
         $input = new Fluent($input);
         $driver = $this->sanitizeInput($input['email_driver'], 'mail.driver');
 
-        $validation = $this->validator->on($driver)->with($input->toArray());
+        $validation = $this->validator->state($driver)->validate($input->toArray());
 
         if ($validation->fails()) {
             return $listener->settingFailedValidation($validation->getMessageBag());

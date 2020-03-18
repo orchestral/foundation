@@ -42,7 +42,7 @@ class PasswordBroker extends Processor implements Command
      */
     public function store(PasswordResetLink $listener, array $input)
     {
-        $validation = $this->validator->with($input);
+        $validation = $this->validator->validate($input);
 
         if ($validation->fails()) {
             return $listener->resetLinkFailedValidation($validation->getMessageBag());

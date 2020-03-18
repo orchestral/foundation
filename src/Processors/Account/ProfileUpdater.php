@@ -43,7 +43,7 @@ class ProfileUpdater extends User implements Command
             return $listener->abortWhenUserMismatched();
         }
 
-        $validation = $this->validator->on('update')->with($input);
+        $validation = $this->validator->state('update')->validate($input);
 
         if ($validation->fails()) {
             return $listener->updateProfileFailedValidation($validation->getMessageBag());

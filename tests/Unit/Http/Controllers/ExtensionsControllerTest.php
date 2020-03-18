@@ -160,9 +160,8 @@ class ExtensionsControllerTest extends TestCase
             ->shouldReceive('put')->once()
                 ->with('extension_laravel/framework', ['handles' => 'foo'])->andReturnNull();
 
-        $validator->shouldReceive('with')->once()
-                ->with($input, ['orchestra.validate: extension.laravel/framework'])
-                ->andReturn($validation);
+        $validator->shouldReceive('listen')->once()->with(['orchestra.validate: extension.laravel/framework'])->andReturnSelf()
+            ->shouldReceive('validate')->once()->with($input)->andReturn($validation);
         $validation->shouldReceive('fails')->once()->andReturn(false);
 
         Extension::shouldReceive('started')->once()->with('laravel/framework')->andReturn(true);
@@ -210,9 +209,8 @@ class ExtensionsControllerTest extends TestCase
         list(, $validator) = $this->bindDependencies();
         $validation = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $validator->shouldReceive('with')->once()
-                ->with($input, ['orchestra.validate: extension.laravel/framework'])
-                ->andReturn($validation);
+        $validator->shouldReceive('listen')->once()->with(['orchestra.validate: extension.laravel/framework'])->andReturnSelf()
+            ->shouldReceive('validate')->once()->with($input)->andReturn($validation);
         $validation->shouldReceive('getMessageBag')->once()->andReturn([])
             ->shouldReceive('fails')->once()->andReturn(true);
 

@@ -42,7 +42,8 @@ class ReauthenticateController extends Controller
      */
     public function reauth(Request $request, AccountValidator $validator)
     {
-        $validation = $validator->on('reauthenticate')->with($request->only(['password']));
+        $validation = $validator->state('reauthenticate')
+            ->validate($request->only(['password']));
 
         if ($validation->fails()) {
             return $this->userReauthenticateHasFailedValidation($validation->getMessageBag());

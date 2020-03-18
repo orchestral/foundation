@@ -116,7 +116,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      */
     public function store(UserCreatorListener $listener, array $input)
     {
-        $validation = $this->validator->on('create')->with($input);
+        $validation = $this->validator->state('create')->validate($input);
 
         if ($validation->fails()) {
             return $listener->createUserFailedValidation($validation->getMessageBag());
@@ -150,7 +150,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
             return $listener->abortWhenUserMismatched();
         }
 
-        $validation = $this->validator->on('update')->with($input);
+        $validation = $this->validator->state('update')->validate($input);
 
         if ($validation->fails()) {
             return $listener->updateUserFailedValidation($validation->getMessageBag(), $id);

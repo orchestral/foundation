@@ -97,8 +97,8 @@ class SettingsControllerTest extends TestCase
             ->shouldReceive('securePut')->times(3)->andReturnNull()
             ->shouldReceive('secureGet')->once()->with('email.password')->andReturn('foo')
             ->shouldReceive('secureGet')->once()->with('email.secret')->andReturn('foo');
-        $validator->shouldReceive('on')->once()->with('smtp')->andReturnSelf()
-            ->shouldReceive('with')->once()->with($input)->andReturn($validation);
+        $validator->shouldReceive('state')->once()->with('smtp')->andReturnSelf()
+            ->shouldReceive('validate')->once()->with($input)->andReturn($validation);
 
         $validation->shouldReceive('fails')->once()->andReturn(false);
 
@@ -140,8 +140,8 @@ class SettingsControllerTest extends TestCase
         list(, $validator) = $this->bindDependencies();
         $validation = m::mock('\Illuminate\Contracts\Validation\Validator');
 
-        $validator->shouldReceive('on')->once()->with('smtp')->andReturnSelf()
-            ->shouldReceive('with')->once()->with($input)->andReturn($validation);
+        $validator->shouldReceive('state')->once()->with('smtp')->andReturnSelf()
+            ->shouldReceive('validate')->once()->with($input)->andReturn($validation);
 
         $validation->shouldReceive('fails')->once()->andReturn(true)
             ->shouldReceive('getMessageBag')->once()->andReturn([]);
