@@ -15,8 +15,16 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        $user->roles()->sync([
-            \config('orchestra/foundation::roles.member', 2),
-        ]);
+        $roleIds = [];
+
+        if ($user->relationLoaded('roles')) {
+            $roleIds = $user->getRelation('roles')->pluck('id')->all();
+        }
+
+        if (empty($roleIds)) {
+            $roleIds = [\config('orchestra/foundation::roles.member', 2)];
+        }
+
+        $user->roles()->sync($roleIds);
     }
 }
