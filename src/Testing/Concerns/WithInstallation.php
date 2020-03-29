@@ -75,7 +75,9 @@ trait WithInstallation
     /**
      * Create admin user.
      *
+     * @param  array  $attributes
+     *
      * @return \Orchestra\Foundation\Auth\User
      */
-    abstract protected function createAdminUser();
+    abstract protected function createAdminUser(array $attributes = []);
 }

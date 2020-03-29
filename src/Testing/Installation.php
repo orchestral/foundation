@@ -20,8 +20,8 @@ trait Installation
     {
         $this->afterApplicationCreated(function () {
             $this->adminUser = $this->app['orchestra.installed'] === false
-                                    ? $this->runInstallation()
-                                    : $this->app['orchestra.user']->newQuery()->first();
+                ? $this->runInstallation()
+                : $this->app['orchestra.user']->newQuery()->first();
         });
     }
 }
