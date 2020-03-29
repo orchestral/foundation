@@ -20,8 +20,6 @@ abstract class TestCase extends ApplicationTestCase
             'orchestra/memory::driver' => 'runtime.default',
             'auth.providers.users.model' => User::class,
         ]);
-
-        $this->loadFactoriesUsing($app, __DIR__.'/../factories');
     }
 
     /**
@@ -36,16 +34,6 @@ abstract class TestCase extends ApplicationTestCase
         $app->useVendorPath(__DIR__.'/../../vendor');
 
         return $app;
-    }
-
-    /**
-     * Create admin user.
-     *
-     * @return \Orchestra\Foundation\Auth\User
-     */
-    protected function createAdminUser()
-    {
-        return User::faker()->states('admin')->create();
     }
 
     /**
