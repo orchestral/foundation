@@ -16,6 +16,7 @@ class CreatorTest extends TestCase
     public function its_not_accessible_for_user()
     {
         $user = $this->createUserAsMember();
+        $user->loadMissing('roles');
 
         $this->actingAs($user)
             ->visit('admin/users/create')

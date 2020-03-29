@@ -39,6 +39,16 @@ abstract class TestCase extends ApplicationTestCase
     }
 
     /**
+     * Create admin user.
+     *
+     * @return \Orchestra\Foundation\Auth\User
+     */
+    protected function createAdminUser()
+    {
+        return User::faker()->states('admin')->create();
+    }
+
+    /**
      * Create user with member permission.
      *
      * @param  array  $attributes
@@ -47,8 +57,6 @@ abstract class TestCase extends ApplicationTestCase
      */
     protected function createUserAsMember(array $attributes = [])
     {
-        return tap(User::faker()->create($attributes), function ($user) {
-            $user->attachRole([2]);
-        });
+        return User::faker()->states('member')->create($attributes);
     }
 }

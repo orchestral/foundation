@@ -43,6 +43,16 @@ abstract class TestCase extends ApplicationTestCase
     }
 
     /**
+     * Create admin user.
+     *
+     * @return \Orchestra\Foundation\Auth\User
+     */
+    protected function createAdminUser()
+    {
+        return User::faker()->states('admin')->create();
+    }
+
+    /**
      * Create user with member permission.
      *
      * @param  array  $attributes
