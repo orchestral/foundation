@@ -27,7 +27,7 @@ class AuthenticateUserTest extends TestCase
             'password' => '123',
         ];
 
-        $stub = $this->app->make(AuthenticateUser::class)->with($data);
+        $stub = $this->app->make(AuthenticateUser::class)->validate($data);
 
         $this->assertInstanceOf('\Illuminate\Validation\Validator', $stub);
         $this->assertTrue($stub->passes());
@@ -41,7 +41,7 @@ class AuthenticateUserTest extends TestCase
             'password' => '123',
         ];
 
-        $stub = $this->app->make(AuthenticateUser::class)->on('login')->with($data);
+        $stub = $this->app->make(AuthenticateUser::class)->state('login')->validate($data);
 
         $this->assertInstanceOf('\Illuminate\Validation\Validator', $stub);
         $this->assertTrue($stub->passes());
