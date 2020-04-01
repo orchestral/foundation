@@ -26,7 +26,7 @@ class AccountTest extends TestCase
             'fullname' => 'Administrator',
         ];
 
-        $stub = $this->app->make(Account::class)->with($data);
+        $stub = $this->app->make(Account::class)->validate($data);
 
         $this->assertInstanceOf('\Illuminate\Validation\Validator', $stub);
         $this->assertTrue($stub->passes());
@@ -40,7 +40,7 @@ class AccountTest extends TestCase
             'fullname' => 'Administrator',
         ];
 
-        $stub = $this->app->make(Account::class)->on('register')->with($data);
+        $stub = $this->app->make(Account::class)->state('register')->validate($data);
 
         $this->assertInstanceOf('\Illuminate\Validation\Validator', $stub);
         $this->assertTrue($stub->passes());
@@ -61,7 +61,7 @@ class AccountTest extends TestCase
             'confirm_password' => ['same:new_password'],
         ];
 
-        $stub = $this->app->make(Account::class)->on('changePassword')->with($data);
+        $stub = $this->app->make(Account::class)->state('changePassword')->validate($data);
 
         $this->assertInstanceOf('\Illuminate\Validation\Validator', $stub);
         $this->assertTrue($stub->passes());

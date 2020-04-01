@@ -31,7 +31,7 @@ class SettingTest extends TestCase
             'email_port' => 25,
         ];
 
-        $stub = $this->app->make(Setting::class)->with($data);
+        $stub = $this->app->make(Setting::class)->validate($data);
 
         $this->assertInstanceOf('\Illuminate\Validation\Validator', $stub);
         $this->assertTrue($stub->passes());
@@ -52,7 +52,7 @@ class SettingTest extends TestCase
             'email_password' => '123456',
         ];
 
-        $stub = $this->app->make(Setting::class)->on('smtp')->with($data);
+        $stub = $this->app->make(Setting::class)->state('smtp')->validate($data);
 
         $this->assertInstanceOf('\Illuminate\Validation\Validator', $stub);
         $this->assertTrue($stub->passes());
@@ -71,7 +71,7 @@ class SettingTest extends TestCase
             'email_sendmail' => '/usr/bin/sendmail -t',
         ];
 
-        $stub = $this->app->make(Setting::class)->on('sendmail')->with($data);
+        $stub = $this->app->make(Setting::class)->state('sendmail')->validate($data);
 
         $this->assertInstanceOf('\Illuminate\Validation\Validator', $stub);
         $this->assertTrue($stub->passes());
@@ -91,7 +91,7 @@ class SettingTest extends TestCase
             'email_domain' => 'orchestraplatform.com',
         ];
 
-        $stub = $this->app->make(Setting::class)->on('mailgun')->with($data);
+        $stub = $this->app->make(Setting::class)->state('mailgun')->validate($data);
 
         $this->assertInstanceOf('\Illuminate\Validation\Validator', $stub);
         $this->assertTrue($stub->passes());
@@ -113,7 +113,7 @@ class SettingTest extends TestCase
         ];
 
 
-        $stub = $this->app->make(Setting::class)->on('ses')->with($data);
+        $stub = $this->app->make(Setting::class)->state('ses')->validate($data);
 
         $this->assertInstanceOf('\Illuminate\Validation\Validator', $stub);
         $this->assertTrue($stub->passes());
