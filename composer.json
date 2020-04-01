@@ -27,29 +27,29 @@
         }
     },
     "require": {
-        "php": ">=7.2",
-        "laravel/framework": "^7.3",
-        "laravie/authen": "^2.4",
-        "laravie/html": "^7.0",
-        "orchestra/asset": "^5.0",
-        "orchestra/auth": "^5.0",
-        "orchestra/contracts": "^5.0",
-        "orchestra/extension": "^5.0",
-        "orchestra/html": "^5.0",
-        "orchestra/kernel": "^5.1",
-        "orchestra/memory": "^5.0",
-        "orchestra/messages": "^5.0",
-        "orchestra/model": "^5.0",
-        "orchestra/notifier": "^5.0",
-        "orchestra/support": "^5.1",
-        "orchestra/translation": "^5.0",
-        "orchestra/view": "^5.0",
-        "orchestra/widget": "^5.0"
+        "php": ">=7.3",
+        "laravel/framework": "^8.0",
+        "laravie/authen": "dev-master",
+        "laravie/html": "dev-master",
+        "orchestra/asset": "^6.0",
+        "orchestra/auth": "^6.0",
+        "orchestra/contracts": "^6.0",
+        "orchestra/extension": "^6.0",
+        "orchestra/html": "^6.0",
+        "orchestra/kernel": "^6.0",
+        "orchestra/memory": "^6.0",
+        "orchestra/messages": "^6.0",
+        "orchestra/model": "^6.0",
+        "orchestra/notifier": "^6.0",
+        "orchestra/support": "^6.0",
+        "orchestra/translation": "^6.0",
+        "orchestra/view": "^6.0",
+        "orchestra/widget": "^6.0"
     },
     "require-dev": {
-        "orchestra/canvas": "^5.0",
-        "orchestra/installer": "^5.0",
-        "orchestra/testing": "^5.0"
+        "orchestra/canvas": "^6.0",
+        "orchestra/installer": "^6.0",
+        "orchestra/testing": "^6.0"
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (^5.0).",
@@ -73,7 +73,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "5.0-dev"
+            "dev-master": "6.0-dev"
         }
     },
     "minimum-stability": "dev"
