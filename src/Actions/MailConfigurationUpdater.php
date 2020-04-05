@@ -29,10 +29,11 @@ class MailConfigurationUpdater
      *
      * @param  string  $siteName
      * @param  string  $email
+     * @param  bool|null  $useQueue
      *
      * @return void
      */
-    public function __invoke(string $siteName, string $email): void
+    public function __invoke(string $siteName, string $email, ?bool $useQueue = null): void
     {
         $config = \config('mail');
 
@@ -44,6 +45,10 @@ class MailConfigurationUpdater
 
         if ($config['mailers']['smtp']['password'] !== null) {
             $this->memory->securePut('email.password', $config['mailers']['smtp']['password']);
+        }
+
+        if (! \is_null($useQueue)) {
+            $this->memory->put('email.queue', $useQueue);
         }
 
         $this->memory->put('email.from', [
