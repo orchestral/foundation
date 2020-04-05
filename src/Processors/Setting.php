@@ -102,6 +102,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
         $memory->put('site.registrable', ($input['site_registrable'] === 'yes'));
         $memory->put('email.driver', $driver);
 
+
         $memory->put('email.from', [
             'address' => $this->sanitizeInput($input['email_address'], 'mail.from.address'),
             'name' => $input['site_name'],
@@ -115,13 +116,15 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
             $input['email_secret'] = $memory->secureGet('email.secret');
         }
 
-        $memory->put('email.host', $this->sanitizeInput($input['email_host'], 'mail.host'));
-        $memory->put('email.port', $this->sanitizeInput($input['email_port'], 'mail.port'));
-        $memory->put('email.username', $this->sanitizeInput($input['email_username'], 'mail.username'));
-        $memory->securePut('email.password', $this->sanitizeInput($input['email_password'], 'mail.password'));
-        $memory->put('email.encryption', $this->sanitizeInput($input['email_encryption'], 'mail.encryption'));
-        $memory->put('email.sendmail', $this->sanitizeInput($input['email_sendmail'], 'mail.sendmail'));
+        $memory->put('email.host', $this->sanitizeInput($input['email_host'], 'mail.mailers.smtp.host'));
+        $memory->put('email.port', $this->sanitizeInput($input['email_port'], 'mail.mailers.smtp.port'));
+        $memory->put('email.username', $this->sanitizeInput($input['email_username'], 'mail.mailers.smtp.username'));
+        $memory->securePut('email.password', $this->sanitizeInput($input['email_password'], 'mail.mailers.smtp.password'));
+        $memory->put('email.encryption', $this->sanitizeInput($input['email_encryption'], 'mail.mailers.smtp.encryption'));
+        $memory->put('email.sendmail', $this->sanitizeInput($input['email_sendmail'], 'mail.mailers.sendmail.path'));
         $memory->put('email.queue', ($input['email_queue'] === 'yes'));
+
+        // API related configuration.
         $memory->securePut('email.key', $this->sanitizeInput($input['email_key'], "services.{$driver}.key"));
         $memory->securePut('email.secret', $this->sanitizeInput($input['email_secret'], "services.{$driver}.secret"));
         $memory->put('email.domain', $this->sanitizeInput($input['email_domain'], "services.{$driver}.domain"));

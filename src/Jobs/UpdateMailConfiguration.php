@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation\Jobs;
 
-use Illuminate\Support\Arr;
 use Orchestra\Contracts\Memory\Provider;
 
 class UpdateMailConfiguration extends Job
