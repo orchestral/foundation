@@ -4,6 +4,7 @@ namespace Orchestra\Foundation\Auth\Throttle;
 
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 
 abstract class Throttle
 {
@@ -78,7 +79,7 @@ abstract class Throttle
      */
     public function fireLockoutEvent()
     {
-        \event(new Lockout($this->request));
+        Event::dispatch(new Lockout($this->request));
     }
 
     /**
