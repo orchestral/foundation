@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+## 5.0.1
+
+Released: 2020-04-05
+
+### Fixes
+
+* Fixes fallback to configuration for mail setting.
+
 ## 5.0.0
 
 Released: 2020-04-03

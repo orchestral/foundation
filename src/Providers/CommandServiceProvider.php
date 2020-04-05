@@ -2,7 +2,6 @@
 
 namespace Orchestra\Foundation\Providers;
 
-use Illuminate\Contracts\Foundation\Application;
 use Orchestra\Foundation\Console\Commands\AssembleCommand;
 use Orchestra\Foundation\Console\Commands\ConfigureMailCommand;
 use Orchestra\Support\Providers\CommandServiceProvider as ServiceProvider;
