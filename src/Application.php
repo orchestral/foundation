@@ -141,15 +141,15 @@ class Application extends BaseApplication implements ApplicationContract
     public function registerConfiguredProviders()
     {
         $providers = Collection::make($this->config['app.providers'])
-                        ->partition(static function ($provider) {
-                            return \strpos($provider, 'Illuminate\\') === 0
-                                || \strpos($provider, 'Orchestra\\') === 0;
-                        });
+            ->partition(static function ($provider) {
+                return \strpos($provider, 'Illuminate\\') === 0
+                    || \strpos($provider, 'Orchestra\\') === 0;
+            });
 
         $providers->splice(1, 0, [$this->make(PackageManifest::class)->providers()]);
 
         (new ProviderRepository($this, new Filesystem(), $this->getCachedServicesPath()))
-                    ->load($providers->collapse()->toArray());
+            ->load($providers->collapse()->toArray());
     }
 
     /**

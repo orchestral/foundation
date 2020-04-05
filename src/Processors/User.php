@@ -4,6 +4,7 @@ namespace Orchestra\Foundation\Processors;
 
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
 use Orchestra\Contracts\Foundation\Command\Account\UserCreator as UserCreatorCommand;
 use Orchestra\Contracts\Foundation\Command\Account\UserRemover as UserRemoverCommand;
 use Orchestra\Contracts\Foundation\Command\Account\UserUpdater as UserUpdaterCommand;
@@ -54,7 +55,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
         // Build users table HTML using a schema liked code structure.
         $table = $this->presenter->table($eloquent);
 
-        \event('orchestra.list: users', [$eloquent, $table]);
+        Event::dispatch('orchestra.list: users', [$eloquent, $table]);
 
         // Once all event listening to `orchestra.list: users` is executed,
         // we can add we can now add the final column, edit and delete
@@ -242,7 +243,7 @@ class User extends Processor implements UserCreatorCommand, UserRemoverCommand, 
      */
     protected function fireEvent($type, array $parameters = [])
     {
-        \event("orchestra.{$type}: users", $parameters);
-        \event("orchestra.{$type}: user.account", $parameters);
+        Event::dispatch("orchestra.{$type}: users", $parameters);
+        Event::dispatch("orchestra.{$type}: user.account", $parameters);
     }
 }
