@@ -87,7 +87,7 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
     public function update(SettingUpdateListener $listener, array $input)
     {
         $input = new Fluent($input);
-        $driver = $this->sanitizeInput($input['email_driver'], 'mail.driver');
+        $driver = $this->filledOrConfig($input['email_driver'], 'mail.driver');
 
         $validation = $this->validator->state($driver)->validate($input->toArray());
 
@@ -102,9 +102,8 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
         $memory->put('site.registrable', ($input['site_registrable'] === 'yes'));
         $memory->put('email.driver', $driver);
 
-
         $memory->put('email.from', [
-            'address' => $this->sanitizeInput($input['email_address'], 'mail.from.address'),
+            'address' => $this->filledOrConfig($input['email_address'], 'mail.from.address'),
             'name' => $input['site_name'],
         ]);
 
@@ -116,19 +115,19 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
             $input['email_secret'] = $memory->secureGet('email.secret');
         }
 
-        $memory->put('email.host', $this->sanitizeInput($input['email_host'], 'mail.mailers.smtp.host'));
-        $memory->put('email.port', $this->sanitizeInput($input['email_port'], 'mail.mailers.smtp.port'));
-        $memory->put('email.username', $this->sanitizeInput($input['email_username'], 'mail.mailers.smtp.username'));
-        $memory->securePut('email.password', $this->sanitizeInput($input['email_password'], 'mail.mailers.smtp.password'));
-        $memory->put('email.encryption', $this->sanitizeInput($input['email_encryption'], 'mail.mailers.smtp.encryption'));
-        $memory->put('email.sendmail', $this->sanitizeInput($input['email_sendmail'], 'mail.mailers.sendmail.path'));
+        $memory->put('email.host', $this->filledOrConfig($input['email_host'], 'mail.mailers.smtp.host'));
+        $memory->put('email.port', $this->filledOrConfig($input['email_port'], 'mail.mailers.smtp.port'));
+        $memory->put('email.username', $this->filledOrConfig($input['email_username'], 'mail.mailers.smtp.username'));
+        $memory->securePut('email.password', $this->filledOrConfig($input['email_password'], 'mail.mailers.smtp.password'));
+        $memory->put('email.encryption', $this->filledOrConfig($input['email_encryption'], 'mail.mailers.smtp.encryption'));
+        $memory->put('email.sendmail', $this->filledOrConfig($input['email_sendmail'], 'mail.mailers.sendmail.path'));
         $memory->put('email.queue', ($input['email_queue'] === 'yes'));
 
         // API related configuration.
-        $memory->securePut('email.key', $this->sanitizeInput($input['email_key'], "services.{$driver}.key"));
-        $memory->securePut('email.secret', $this->sanitizeInput($input['email_secret'], "services.{$driver}.secret"));
-        $memory->put('email.domain', $this->sanitizeInput($input['email_domain'], "services.{$driver}.domain"));
-        $memory->put('email.region', $this->sanitizeInput($input['email_region'], "services.{$driver}.region"));
+        $memory->securePut('email.key', $this->filledOrConfig($input['email_key'], "services.{$driver}.key"));
+        $memory->securePut('email.secret', $this->filledOrConfig($input['email_secret'], "services.{$driver}.secret"));
+        $memory->put('email.domain', $this->filledOrConfig($input['email_domain'], "services.{$driver}.domain"));
+        $memory->put('email.region', $this->filledOrConfig($input['email_region'], "services.{$driver}.region"));
 
         Event::dispatch('orchestra.saved: settings', [$memory, $input]);
 
@@ -158,12 +157,12 @@ class Setting extends Processor implements SystemUpdateCommand, SettingUpdateCom
      *
      * @return mixed
      */
-    private function sanitizeInput($input, $alternative)
+    private function filledOrConfig($input, string $alternative)
     {
-        if (empty($input)) {
-            $input = \config($alternative);
+        if (\filled($input)) {
+            return $input;
         }
 
-        return $input;
+        return \config($alternative);
     }
 }
