@@ -36,7 +36,11 @@ class MailConfigurationUpdater
     {
         $config = \config('mail');
 
-        $this->memory->put('email', Arr::only($config, ['driver', 'host', 'port', 'encryption', 'sendmail']));
+        $this->memory->put('email.driver', Arr::get($config, 'default', 'smtp'));
+        $this->memory->put('email.host', Arr::get($config, 'mailers.smtp.host'));
+        $this->memory->put('email.port', Arr::get($config, 'mailers.smtp.port'));
+        $this->memory->put('email.encryption', Arr::get($config, 'mailers.smtp.encryption'));
+        $this->memory->put('email.sendmail', Arr::get($config, 'mailers.sendmail.path'));
 
         if ($config['mailers']['smtp']['username'] !== null) {
             $this->memory->securePut('email.username', $config['mailers']['smtp']['username']);
