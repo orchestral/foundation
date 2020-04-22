@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+## 5.0.2
+
+Released: 2020-04-22
+
+### Fixes
+
+* Fixes configurating email using `orchestra:configure-email` artisan command.
+
 ## 5.0.1
 
 Released: 2020-04-05
