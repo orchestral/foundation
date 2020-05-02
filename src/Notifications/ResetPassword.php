@@ -2,12 +2,15 @@
 
 namespace Orchestra\Foundation\Notifications;
 
-use Illuminate\Notifications\Notification;
-use Orchestra\Foundation\Auth\User;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Orchestra\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class ResetPassword extends Notification
 {
+    use Queueable;
+
     /**
      * The password reset token.
      *
@@ -35,11 +38,10 @@ class ResetPassword extends Notification
     }
 
     /**
-     * Get the notification's channels.
+     * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
-     *
-     * @return array|string
+     * @return array
      */
     public function via($notifiable)
     {
@@ -47,35 +49,36 @@ class ResetPassword extends Notification
     }
 
     /**
-     * Get the notification message for mail.
+     * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     *
-     * @return \Orchestra\Notifications\Messages\MailMessage
+     * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
         $email = $notifiable->getEmailForPasswordReset();
-        $expired = \config("auth.passwords.{$this->provider}.expire", 60);
         $url = \config('orchestra/foundation::routes.reset', 'orchestra::forgot/reset');
-        $title = \trans('orchestra/foundation::email.forgot.title');
 
-        $message = new MailMessage();
-
-        $message->title($title)
-                    ->level('warning')
-                    ->line(\trans('orchestra/foundation::email.forgot.message.intro'))
-                    ->action($title, \handles("{$url}/{$this->token}?email=".\urlencode($email)))
-                    ->line(\trans('orchestra/foundation::email.forgot.message.expired_in', \compact('expired')))
-                    ->line(\trans('orchestra/foundation::email.forgot.message.outro'));
-
-        if (! \is_null($view = \config("auth.passwords.{$this->provider}.email"))) {
-            $message->view($view, [
+        return (new MailMessage())
+            ->title(\trans('orchestra/foundation::email.forgot.title'))
+            ->markdown('notifications.emails.reset-password', [
                 'email' => $email,
                 'fullname' => $notifiable->getRecipientName(),
+                'url' => \handles("{$url}/{$this->token}?email=".\urlencode($email)),
+                'expiredIn' => \config("auth.passwords.{$this->provider}.expire", 60);
             ]);
-        }
+    }
 
-        return $message;
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function toArray($notifiable)
+    {
+        return [
+            //
+        ];
     }
 }
