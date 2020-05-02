@@ -6,7 +6,7 @@
 {{ trans('orchestra/foundation::email.register.message.email', \compact('email')) }}
 
 @unless(is_null($password))
-{{ trans('orchestra/foundation::email.register.message.password', \compact('password'))
+{{ trans('orchestra/foundation::email.register.message.password', \compact('password')) }}
 @endunless
 
 Thanks,<br>
