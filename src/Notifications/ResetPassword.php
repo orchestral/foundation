@@ -3,9 +3,8 @@
 namespace Orchestra\Foundation\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Orchestra\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Orchestra\Notifications\Messages\MailMessage;
 
 class ResetPassword extends Notification
 {
@@ -41,6 +40,7 @@ class ResetPassword extends Notification
      * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
+     *
      * @return array
      */
     public function via($notifiable)
@@ -52,6 +52,7 @@ class ResetPassword extends Notification
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
+     *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
