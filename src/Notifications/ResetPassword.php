@@ -61,24 +61,11 @@ class ResetPassword extends Notification
 
         return (new MailMessage())
             ->title(\trans('orchestra/foundation::email.forgot.title'))
-            ->markdown('notifications.emails.reset-password', [
+            ->markdown('orchestra/foundation::notifications.emails.reset-password', [
                 'email' => $email,
                 'fullname' => $notifiable->getRecipientName(),
                 'url' => \handles("{$url}/{$this->token}?email=".\urlencode($email)),
-                'expiredIn' => \config("auth.passwords.{$this->provider}.expire", 60);
+                'expiredIn' => \config("auth.passwords.{$this->provider}.expire", 60),
             ]);
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
     }
 }
