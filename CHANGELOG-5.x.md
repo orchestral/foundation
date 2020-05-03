@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+## 5.1.0
+
+Released: 2020-05-03
+
+### Changes
+
+* Use Laravel markdown email template for basic notification.
+
 ## 5.0.2
 
 Released: 2020-04-22
