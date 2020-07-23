@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+## 5.1.1
+
+Released: 2020-07-23
+
+### Fixes 
+
+* `email.username` doesn't need to be encrypted when running `orchestra:configure-email`.
+
 ## 5.1.0
 
 Released: 2020-05-03
