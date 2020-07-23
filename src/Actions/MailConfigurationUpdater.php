@@ -43,7 +43,7 @@ class MailConfigurationUpdater
         $this->memory->put('email.sendmail', Arr::get($config, 'mailers.sendmail.path'));
 
         if ($config['mailers']['smtp']['username'] !== null) {
-            $this->memory->securePut('email.username', $config['mailers']['smtp']['username']);
+            $this->memory->put('email.username', $config['mailers']['smtp']['username']);
         }
 
         if ($config['mailers']['smtp']['password'] !== null) {
