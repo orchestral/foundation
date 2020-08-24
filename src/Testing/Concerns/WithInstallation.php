@@ -53,7 +53,7 @@ trait WithInstallation
             $installer = $this->makeInstaller();
         }
 
-        $artisan('migrate', ['--no-interaction' => true]);
+        $this->runLaravelMigrations();
 
         $this->adminUser = $this->createAdminUser();
 
@@ -64,8 +64,7 @@ trait WithInstallation
 
         $this->app->instance('orchestra.installed', true);
 
-        $this->beforeApplicationDestroyed(function () use ($artisan) {
-            $artisan('migrate:rollback', ['--no-interaction' => true]);
+        $this->beforeApplicationDestroyed(function () {
             $this->app->instance('orchestra.installed', false);
         });
 

@@ -49,7 +49,7 @@
     "require-dev": {
         "orchestra/canvas": "^5.0",
         "orchestra/installer": "^5.0",
-        "orchestra/testing": "^5.0"
+        "orchestra/testing": "^5.1"
     },
     "suggest": {
         "orchestra/avatar": "Add gravatar support for Orchestra Platform (^5.0).",
