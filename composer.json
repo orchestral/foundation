@@ -30,7 +30,7 @@
         "php": ">=7.3",
         "laravel/framework": "^8.0",
         "laravie/authen": "^2.5",
-        "laravie/html": "^7.0",
+        "laravie/html": "^7.1",
         "orchestra/asset": "^6.0",
         "orchestra/auth": "^6.0",
         "orchestra/contracts": "^6.0",
