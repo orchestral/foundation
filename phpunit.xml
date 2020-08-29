@@ -1,47 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
-     backupStaticAttributes="false"
-     bootstrap="vendor/autoload.php"
-     colors="true"
-     convertErrorsToExceptions="true"
-     convertNoticesToExceptions="true"
-     convertWarningsToExceptions="true"
-     processIsolation="false"
-     stopOnError="false"
-     stopOnFailure="false"
-     verbose="true"
->
-
-    <testsuites>
-        <testsuite name="Controller">
-            <directory suffix="Test.php">./tests/Controller</directory>
-        </testsuite>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
-        </testsuite>
-        <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/Unit</directory>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src/</directory>
-            <file>src/helpers.php</file>
-
-            <exclude>
-                <directory>resources/</directory>
-                <directory>routes/</directory>
-                <directory>src/Publisher/</directory>
-                <file>src/ComposerScripts.php</file>
-            </exclude>
-        </whitelist>
-    </filter>
-
-    <php>
-        <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
-        <env name="DB_CONNECTION" value="testing"/>
-        <env name="MEMORY_DRIVER" value="runtime.default"/>
-        <env name="BCRYPT_ROUNDS" value="4"/>
-    </php>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnError="false"
+         stopOnFailure="false"
+         verbose="true">
+  <coverage includeUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">src/</directory>
+      <file>src/helpers.php</file>
+    </include>
+    <exclude>
+        <directory suffix=".php">resources/</directory>
+        <directory suffix=".php">routes/</directory>
+        <directory suffix=".php">src/Publisher/</directory>
+        <file>src/ComposerScripts.php</file>
+    </exclude>
+  </coverage>
+  <testsuites>
+    <testsuite name="Controller">
+      <directory suffix="Test.php">./tests/Controller</directory>
+    </testsuite>
+    <testsuite name="Feature">
+      <directory suffix="Test.php">./tests/Feature</directory>
+    </testsuite>
+    <testsuite name="Unit">
+      <directory suffix="Test.php">./tests/Unit</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
+    <env name="DB_CONNECTION" value="testing"/>
+    <env name="MEMORY_DRIVER" value="runtime.default"/>
+    <env name="BCRYPT_ROUNDS" value="4"/>
+  </php>
 </phpunit>

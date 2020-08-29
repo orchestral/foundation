@@ -2,11 +2,14 @@
 
 namespace Orchestra\Foundation\Notifications;
 
+use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Orchestra\Notifications\Messages\MailMessage;
 
 class Welcome extends Notification
 {
+    use Queueable;
+
     /**
      * The password.
      *
@@ -25,7 +28,7 @@ class Welcome extends Notification
     }
 
     /**
-     * Get the notification's channels.
+     * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
      *
@@ -37,31 +40,19 @@ class Welcome extends Notification
     }
 
     /**
-     * Get the notification message for mail.
+     * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
      *
-     * @return \Orchestra\Notifications\Messages\MailMessage
+     * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
-        $password = $this->password;
-
-        $message = new MailMessage();
-
-        $message->viewData = [
-            'email' => $email = $notifiable->getRecipientEmail(),
-            'fullname' => $notifiable->getRecipientName(),
-        ];
-
-        $message->title(\trans('orchestra/foundation::email.register.title'))
-                ->line(\trans('orchestra/foundation::email.register.message.intro'))
-                ->line(\trans('orchestra/foundation::email.register.message.email', \compact('email')));
-
-        if (! \is_null($this->password)) {
-            $message->line(\trans('orchestra/foundation::email.register.message.password', \compact('password')));
-        }
-
-        return $message;
+        return (new MailMessage())
+            ->markdown('orchestra/foundation::notifications.emails.welcome', [
+                'email' => $notifiable->getRecipientEmail(),
+                'fullname' => $notifiable->getRecipientName(),
+                'password' => $this->password,
+            ]);
     }
 }

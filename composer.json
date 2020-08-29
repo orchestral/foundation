@@ -29,8 +29,8 @@
     "require": {
         "php": ">=7.3",
         "laravel/framework": "^8.0",
-        "laravie/authen": "dev-master",
-        "laravie/html": "dev-master",
+        "laravie/authen": "^2.5",
+        "laravie/html": "^7.0",
         "orchestra/asset": "^6.0",
         "orchestra/auth": "^6.0",
         "orchestra/contracts": "^6.0",
