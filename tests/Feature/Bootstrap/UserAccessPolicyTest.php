@@ -3,6 +3,7 @@
 namespace Orchestra\Tests\Feature\Bootstrap;
 
 use Orchestra\Foundation\Auth\User;
+use Orchestra\Foundation\Testing\Factories\UserFactory;
 use Orchestra\Foundation\Testing\Installation;
 use Orchestra\Tests\Feature\TestCase;
 
@@ -33,7 +34,7 @@ class UserAccessPolicyTest extends TestCase
     /** @test */
     public function it_can_boot_for_user_with_multiple_roles()
     {
-        $user = User::faker()->create();
+        $user = UserFactory::new()->create();
         $user->attachRole([1, 2]);
 
         $this->assertEquals(

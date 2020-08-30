@@ -3,6 +3,7 @@
 namespace Orchestra\Tests\Controller;
 
 use Orchestra\Foundation\Auth\User;
+use Orchestra\Foundation\Testing\Factories\UserFactory;
 use Orchestra\Testing\BrowserKit\TestCase as ApplicationTestCase;
 
 abstract class TestCase extends ApplicationTestCase
@@ -49,8 +50,6 @@ abstract class TestCase extends ApplicationTestCase
      */
     protected function createUserAsMember(array $attributes = [])
     {
-        return tap(User::faker()->create($attributes), function ($user) {
-            $user->attachRole([2]);
-        });
+        return UserFactory::new()->member()->create($attributes);
     }
 }
