@@ -28,7 +28,7 @@
     },
     "require": {
         "php": ">=7.3",
-        "laravel/framework": "^8.0",
+        "laravel/framework": "^8.37",
         "laravie/authen": "^2.5",
         "laravie/html": "^7.1",
         "orchestra/asset": "^6.0",
