@@ -2,6 +2,14 @@
 
 This changelog references the relevant changes (bug and security fixes) done to `orchestra/foundation`.
 
+## 5.1.2
+
+Released: 2020-08-29
+
+### Changes
+
+* Trivial updates.
+
 ## 5.1.1
 
 Released: 2020-07-23
