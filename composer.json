@@ -27,7 +27,7 @@
         }
     },
     "require": {
-        "php": ">=7.3",
+        "php": "^7.3 || ^8.0",
         "laravel/framework": "^8.37",
         "laravie/authen": "^2.5",
         "laravie/html": "^7.1",
@@ -47,7 +47,7 @@
         "orchestra/widget": "^6.0"
     },
     "require-dev": {
-        "orchestra/canvas": "^6.0",
+        "orchestra/canvas": "^6.1",
         "orchestra/installer": "^6.0",
         "orchestra/testing": "^6.0"
     },
